@@ -3,7 +3,27 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Trap!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trap! The Game - Strategic Fun Picker | Daily Pick</title>
+    <meta name="description" content="Play Trap! - a fun and engaging game to pick names or make choices. Strategically place your trap and see who gets caught! Perfect for quick team decisions. From Daily Pick.">
+    <meta name="keywords" content="trap game, name picker game, strategy game, team game, fun decision maker, interactive game, daily pick">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dailypick.dev/trap.html">
+    <meta property="og:title" content="Trap! The Game - Strategic Fun Picker | Daily Pick">
+    <meta property="og:description" content="Strategically place your trap and see who gets caught! Perfect for quick team decisions.">
+    <meta property="og:image" content="https://dailypick.dev/assets/og-image-trap.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://dailypick.dev/trap.html">
+    <meta property="twitter:title" content="Trap! The Game - Strategic Fun Picker | Daily Pick">
+    <meta property="twitter:description" content="Strategically place your trap and see who gets caught! Perfect for quick team decisions.">
+    <meta property="twitter:image" content="https://dailypick.dev/assets/twitter-image-trap.png">
+
+    <link rel="canonical" href="https://dailypick.dev/trap.html">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -150,6 +170,53 @@
             margin-bottom: 10px;
             /* Space before update button */
         }
+
+        .seo-content-area {
+            background-color: #ffffff;
+            padding: 25px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e0e0e0;
+            max-width: 700px; /* Or adjust to fit your layout */
+            width: 90%;
+            margin: 30px auto; /* Spacing from game elements */
+            text-align: left;
+            line-height: 1.7;
+        }
+
+        .seo-content-area h2 {
+            color: #3498db; /* Friendly blue */
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .seo-content-area h3 {
+            color: #2980b9; /* Darker blue */
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.4em;
+        }
+
+        .seo-content-area p, .seo-content-area li {
+            color: #5d5d5d; /* Standard text color */
+            margin-bottom: 10px;
+        }
+
+        .seo-content-area ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .seo-content-area a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .seo-content-area a:hover {
+            text-decoration: underline;
+            color: #2980b9;
+        }
     </style>
 </head>
 
@@ -166,6 +233,30 @@
     <canvas id="gameCanvas" width="500" height="400"></canvas>
     <button id="trapBtn">🪤 Trap!</button>
     <div id="info"></div>
+
+    <div class="seo-content-area">
+        <h2>Welcome to Trap! - The Strategic Name Picker Game</h2>
+        <p>Trap! is an <strong>interactive game</strong> that adds a dash of strategy and excitement to the process of picking a name or making a choice. Instead of a simple random selection, participants (represented by colorful shapes) move around the canvas while you strategically place a "trap" (the microphone icon 🎤). The first one to enter the trap is selected! It's a perfect <strong>team game</strong> for quick, fun decisions.</p>
+
+        <h3>How to Play & Win</h3>
+        <ul>
+            <li>Enter the names of participants in the settings.</li>
+            <li>Click "Trap!" to place a trap randomly on the canvas.</li>
+            <li>Watch as the names (shapes) move around. The first one to move into the trap zone gets highlighted.</li>
+            <li>Click "Trap!" again to confirm your selection and remove them from the game, or to reset the trap if no one was caught.</li>
+            <li>The game continues until only one name remains, or you can play for a single selection.</li>
+        </ul>
+
+        <h3>Why Trap! is Great for Teams</h3>
+        <p>This <strong>fun decision maker</strong> is ideal for:</p>
+        <ul>
+            <li>Breaking the ice in meetings.</li>
+            <li>Deciding who leads the next stand-up or presents a demo.</li>
+            <li>Adding a playful element to task assignments.</li>
+            <li>Any situation where a bit of light-hearted competition can make choices more engaging.</li>
+        </ul>
+        <p>Looking for more ways to build team cohesion? Check out these <a href="https://www.mindtools.com/pages/article/newTMM_52.htm" target="_blank" rel="noopener noreferrer">Team Building Exercises</a> from MindTools.</p>
+    </div>
 
     <script>
         const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];

@@ -2,7 +2,27 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>Wheel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spin the Wheel - Fair Decision Maker | Daily Pick</title>
+<meta name="description" content="Spin our interactive decision wheel to fairly choose names, tasks, or anything! A fun and easy way to make random selections for your team or group. Part of Daily Pick.">
+<meta name="keywords" content="decision wheel, random name picker, spinner wheel, wheel of names, team tool, daily standup, randomizer, interactive wheel, daily pick">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dailypick.dev/wheel.html">
+<meta property="og:title" content="Spin the Wheel - Fair Decision Maker | Daily Pick">
+<meta property="og:description" content="A fun and easy way to make random selections for your team or group.">
+<meta property="og:image" content="https://dailypick.dev/assets/og-image-wheel.png">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://dailypick.dev/wheel.html">
+<meta property="twitter:title" content="Spin the Wheel - Fair Decision Maker | Daily Pick">
+<meta property="twitter:description" content="A fun and easy way to make random selections for your team or group.">
+<meta property="twitter:image" content="https://dailypick.dev/assets/twitter-image-wheel.png">
+
+<link rel="canonical" href="https://dailypick.dev/wheel.html">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
  body {
@@ -140,6 +160,53 @@
    z-index: 10;
    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.7));
  }
+
+ .seo-content-area {
+   background-color: #ffffff;
+   padding: 25px 30px;
+   border-radius: 15px;
+   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+   border: 1px solid #e0e0e0;
+   max-width: 700px; /* Or adjust to fit your layout */
+   width: 90%;
+   margin: 30px auto; /* Spacing from game elements */
+   text-align: left;
+   line-height: 1.7;
+ }
+
+ .seo-content-area h2 {
+   color: #3498db; /* Friendly blue */
+   margin-top: 0;
+   margin-bottom: 15px;
+   font-size: 1.8em;
+ }
+
+ .seo-content-area h3 {
+   color: #2980b9; /* Darker blue */
+   margin-top: 20px;
+   margin-bottom: 10px;
+   font-size: 1.4em;
+ }
+
+ .seo-content-area p, .seo-content-area li {
+   color: #5d5d5d; /* Standard text color */
+   margin-bottom: 10px;
+ }
+
+ .seo-content-area ul {
+   padding-left: 20px;
+   margin-bottom: 15px;
+ }
+
+ .seo-content-area a {
+   color: #3498db;
+   text-decoration: none;
+   font-weight: 600;
+ }
+ .seo-content-area a:hover {
+   text-decoration: underline;
+   color: #2980b9;
+ }
 </style>
 </head>
 <body>
@@ -159,6 +226,34 @@
 
 <button id="spinBtn">🎲 SPIN!</button>
 <div id="winner"></div>
+
+<div class="seo-content-area">
+    <h2>About the Decision Wheel & Making Fair Choices</h2>
+    <p>Our interactive <strong>Decision Wheel</strong> is more than just a game; it's a versatile tool designed to bring fairness and fun to any selection process. Whether you're trying to pick a name for a daily stand-up, assign tasks, or even choose where to go for lunch, the wheel provides an unbiased and engaging way to make a choice. By simply entering your list of names or options, you can spin the wheel and let chance decide!</p>
+
+    <h3>Why Use a Random Name Picker?</h3>
+    <ul>
+        <li><strong>Ensures Fairness:</strong> Eliminates bias in selection, making everyone feel the process is equitable. This is especially useful in team environments like <strong>daily standups</strong> or when distributing opportunities.</li>
+        <li><strong>Boosts Engagement:</strong> Turns a mundane selection task into an exciting moment. The anticipation of the spin can liven up meetings and group activities.</li>
+        <li><strong>Saves Time:</strong> Quickly make decisions without lengthy debates, especially for low-stakes choices.</li>
+        <li><strong>Versatile:</strong> Use it for educational purposes, as an icebreaker, for giveaways, or any scenario requiring random selection.</li>
+    </ul>
+
+    <h3>Tips for Effective Daily Stand-ups</h3>
+    <p>Using a <strong>spinner wheel</strong> can make your daily stand-ups more dynamic. To make them even more effective:</p>
+    <ul>
+        <li>Keep them short and focused (typically 15 minutes).</li>
+        <li>Ensure everyone participates. Our wheel helps with this!</li>
+        <li>Focus on the three key questions: What did I do yesterday? What will I do today? What obstacles are in my way?</li>
+    </ul>
+
+    <h3>Further Reading</h3>
+    <p>Learn more about making meetings more effective and the power of fair processes:</p>
+    <ul>
+        <li><a href="https://www.atlassian.com/team-playbook/plays/stand-up-meeting" target="_blank" rel="noopener noreferrer">Effective Stand-up Meetings - Atlassian Team Playbook</a></li>
+        <li><a href="https://www.scrum.org/resources/what-is-a-daily-scrum" target="_blank" rel="noopener noreferrer">What is a Daily Scrum? - Scrum.org</a></li>
+    </ul>
+</div>
 
 <script>
  const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];

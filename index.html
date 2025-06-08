@@ -1,9 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- SEO Meta Tags -->
+    <title>Daily Pick - Fun & Fair Team Decision Tools | Wheel, Speedway, Trap!</title>
+    <meta name="description" content="Make your daily stand-ups and team decisions more engaging with Daily Pick! Choose from fun games like the Decision Wheel, Speedway Racer, and Trap! to fairly pick names or set order.">
+    <meta name="keywords" content="daily pick, team tools, decision maker, name picker, stand-up games, wheel spinner, racing game, trap game, office games, team engagement, agile tools, scrum tools">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dailypick.dev/">
+    <meta property="og:title" content="Daily Pick - Fun & Fair Team Decision Tools">
+    <meta property="og:description" content="Engaging games like the Decision Wheel, Speedway Racer, and Trap! to make team decisions fun.">
+    <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png"> <!-- Create a general OG image for the main page -->
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://dailypick.dev/">
+    <meta property="twitter:title" content="Daily Pick - Fun & Fair Team Decision Tools">
+    <meta property="twitter:description" content="Engaging games like the Decision Wheel, Speedway Racer, and Trap! to make team decisions fun.">
+    <meta property="twitter:image" content="https://dailypick.dev/assets/twitter-image-main.png">
+
+    <link rel="canonical" href="https://dailypick.dev/">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Time! Your Cozy Corner</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
 
@@ -118,12 +138,69 @@
             }
         }
 
+        /* Styles for the new SEO content area on index page */
+        .intro-content-area {
+            background-color: #f9f9f9; /* Slightly different from game page cards for distinction */
+            padding: 25px 35px;
+            border-radius: 15px;
+            border: 1px solid #e7e7e7;
+            max-width: 750px;
+            width: 100%;
+            margin: 40px 0;
+            text-align: left;
+            line-height: 1.7;
+        }
+
+        .intro-content-area h2 {
+            color: #3498db;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.7em;
+            text-align: center;
+        }
+
+        .intro-content-area p {
+            color: #5d5d5d;
+            margin-bottom: 15px;
+        }
+
+        .intro-content-area strong {
+            color: #2980b9;
+        }
+
+        .intro-content-area ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+            list-style-type: '✨'; /* Fun list bullet */
+        }
+        .intro-content-area li {
+            padding-left: 10px;
+            margin-bottom: 8px;
+        }
+
+        #randomGameBtn {
+            background-color: #e67e22; /* Orange accent */
+            color: #ffffff;
+            padding: 12px 28px;
+            font-size: 1.1em;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 10px; /* Space above the intro content */
+        }
+        #randomGameBtn:hover, #randomGameBtn:focus {
+            background-color: #d35400; /* Darker orange */
+            transform: translateY(-2px);
+        }
+
     </style>
 </head>
 <body>
     <div class="main-container">
         <h1>Streamline Your Stand-ups!</h1>
-        <p class="sub-header">Make daily stand-ups more engaging and fair. Choose a fun way to set the speaking order, or just enjoy a quick team-building moment!</p>
+        <p class="sub-header">Make daily stand-ups and team decisions more engaging and fair with <strong>Daily Pick</strong>! Choose from our collection of fun interactive tools like the <strong>Decision Wheel</strong>, <strong>Speedway Racer</strong>, or the strategic <strong>Trap! Game</strong> to set speaking order, pick names, or just enjoy a quick team-building moment. Say goodbye to "who's next?" and hello to fun!</p>
 
         <div class="game-selection-area">
             <a href="wheel.html" class="game-card" aria-label="Play Wheel">
@@ -144,9 +221,42 @@
             <!-- Add more game cards here in the same format -->
         </div>
 
+        <button id="randomGameBtn">🎲 Pick a Random Game!</button>
+
+        <div class="intro-content-area">
+            <h2>Why Daily Pick?</h2>
+            <p>At <strong>Daily Pick</strong>, we believe that even routine tasks like daily stand-ups or making small team choices can be opportunities for engagement and fun. Our suite of simple, browser-based tools is designed to inject a bit of playfulness into your workday, fostering a more positive and collaborative environment.</p>
+            <p>Whether you're part of an <strong>Agile/Scrum team</strong> looking for a fair way to determine speaking order, a teacher needing a random student selector, or just want a quick, unbiased decision-maker, Daily Pick has a tool for you. Our games are:</p>
+            <ul>
+                <li><strong>Easy to Use:</strong> No complicated setups, just open and play.</li>
+                <li><strong>Fair & Unbiased:</strong> Leveraging randomness to ensure equitable selections.</li>
+                <li><strong>Engaging:</strong> Turning potentially mundane moments into interactive experiences.</li>
+                <li><strong>Versatile:</strong> Useful for various scenarios beyond just daily meetings.</li>
+            </ul>
+            <p>Explore our tools and see how a little bit of fun can make a big difference in your team's dynamics and productivity. We're always thinking of new ways to help teams connect and make decisions smoothly!</p>
+        </div>
+
+
         <p class="footer-note">
             Crafted to bring a smile to your workday and make <strong>team sync-ups</strong> a breeze. Enjoy!
         </p>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const randomGameBtn = document.getElementById('randomGameBtn');
+                const gameCards = document.querySelectorAll('.game-selection-area .game-card');
+
+                if (randomGameBtn && gameCards.length > 0) {
+                    randomGameBtn.addEventListener('click', () => {
+                        const randomIndex = Math.floor(Math.random() * gameCards.length);
+                        const randomGameLink = gameCards[randomIndex].href;
+                        if (randomGameLink) {
+                            window.location.href = randomGameLink;
+                        }
+                    });
+                }
+            });
+        </script>
     </div>
 </body>
 </html>
