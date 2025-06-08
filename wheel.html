@@ -12,6 +12,55 @@
    margin: 0;
    padding: 20px;
  }
+ #settingsToggleBtn {
+   position: absolute;
+   top: 20px;
+   right: 20px;
+   padding: 8px 15px;
+   font-size: 0.9em;
+   background: #555;
+   color: white;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   /* margin-bottom: 15px; Removed as it's now absolutely positioned */
+   transition: background 0.3s;
+ }
+ #settingsToggleBtn:hover {
+   background: #666;
+ }
+ #config-area {
+   position: absolute; /* Position it relative to the body */
+   top: 60px;      /* Below the settings button (adjust as needed) */
+   right: 20px;     /* Align with the settings button's right edge */
+   background: #333;
+   padding: 15px;
+   border-radius: 8px;
+   max-width: 450px;
+   /* margin-top: 30px; Removed as top positioning is used */
+   /* margin-left: auto; Removed for absolute positioning */
+   /* margin-right: auto; Removed for absolute positioning */
+   z-index: 20; /* Ensure it's above the wheel if they overlap */
+ }
+ #config-area label {
+   display: block;
+   margin-bottom: 8px;
+   font-size: 0.9em;
+   color: #ccc;
+ }
+ #namesInput {
+   width: 95%;
+   min-height: 60px;
+   padding: 8px;
+   border-radius: 4px;
+   border: 1px solid #555;
+   background: #2a2a2a;
+   color: #fff;
+ }
+ .config-hidden {
+   display: none;
+ }
+
  #wheel-container {
    position: relative;
    width: 425px;
@@ -26,7 +75,7 @@
    width: 425px;
    height: 425px;
  }
- #spinBtn {
+ #spinBtn, #updateNamesBtn {
    margin-top: 20px;
    padding: 10px 24px;
    font-size: 1.1em;
@@ -37,7 +86,11 @@
    cursor: pointer;
    transition: background 0.3s;
  }
- #spinBtn:hover {
+ #updateNamesBtn {
+   background: #f0ad4e; /* Orange for update */
+   margin-left: 10px;
+ }
+ #spinBtn:hover, #updateNamesBtn:hover {
    background: #00b34e;
  }
  #winner {
@@ -57,13 +110,20 @@
    border-right: 14px solid transparent;
    border-bottom: 22px solid red;
    z-index: 10;
-   filter: drop-shadow(0 0 3px black);
+   filter: drop-shadow(0 1px 2px rgba(0,0,0,0.7));
  }
 </style>
 </head>
 <body>
 
 <h1>🎯 Wheel of Standup</h1>
+
+<button id="settingsToggleBtn">⚙️ Show Settings</button>
+<div id="config-area" class="config-hidden">
+  <label for="namesInput">Enter names (one per line or comma-separated):</label>
+  <textarea id="namesInput" rows="4"></textarea>
+  <button id="updateNamesBtn">Update List</button>
+</div>
 
 <div id="wheel-container">
  <div id="indicator"></div>
@@ -74,7 +134,8 @@
 <div id="winner"></div>
 
 <script>
- const originalNames = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
+ const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
+ let originalNames = [...DEFAULT_NAMES];
  let remaining = [...originalNames];
 
  const canvas = document.getElementById("wheel");
@@ -82,9 +143,66 @@
  const spinBtn = document.getElementById("spinBtn");
  const winnerDiv = document.getElementById("winner");
  const radius = canvas.width / 2;
+ const namesInput = document.getElementById("namesInput");
+ const updateNamesBtn = document.getElementById("updateNamesBtn");
+ const settingsToggleBtn = document.getElementById("settingsToggleBtn");
+ const configArea = document.getElementById("config-area");
+
+ const LOCAL_STORAGE_KEY = 'wheelOfStandupNames';
 
  let isSpinning = false;
  let lastWinnerIndex = null;
+
+ function loadNamesFromStorage() {
+   const storedNamesJson = localStorage.getItem(LOCAL_STORAGE_KEY);
+   if (storedNamesJson) {
+     try {
+       const storedNames = JSON.parse(storedNamesJson);
+       if (Array.isArray(storedNames) && storedNames.length > 0) {
+         originalNames = [...storedNames];
+         namesInput.value = storedNames.join('\n');
+       } else {
+         namesInput.value = DEFAULT_NAMES.join('\n'); // Fallback if stored data is invalid
+       }
+     } catch (e) {
+       console.error("Error parsing names from localStorage:", e);
+       originalNames = [...DEFAULT_NAMES]; // Fallback on error
+       namesInput.value = DEFAULT_NAMES.join('\n');
+     }
+   } else {
+     originalNames = [...DEFAULT_NAMES];
+     namesInput.value = DEFAULT_NAMES.join('\n');
+   }
+   remaining = [...originalNames];
+ }
+
+ function saveNamesToStorage() {
+   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(originalNames));
+ }
+ function updateNamesFromInput() {
+   const inputText = namesInput.value.trim();
+   if (!inputText) {
+     alert("Please enter at least one name.");
+     return;
+   }
+   // Split by newline or comma, then trim whitespace and filter out empty strings
+   const newNames = inputText.split(/[\n,]+/).map(name => name.trim()).filter(name => name.length > 0);
+
+   if (newNames.length === 0) {
+     alert("No valid names found. Please check your input.");
+     return;
+   }
+
+   originalNames = [...newNames];
+   remaining = [...originalNames];
+   lastWinnerIndex = null;
+   isSpinning = false; // Stop any current spin
+   winnerDiv.innerText = "";
+   saveNamesToStorage(); // Save the new names
+   drawWheel(remaining, 0);
+   // Optionally hide config after update for cleaner UX
+   // toggleConfigArea(false);
+ }
 
  function drawWheel(names, rotationAngle = 0) {
    const angleStep = (2 * Math.PI) / names.length;
@@ -120,13 +238,14 @@
  function spinWheel() {
    if (isSpinning) return;
 
-   // Remove last winner if present
+   // If a winner was just selected, clicking spin again will remove them and spin for the rest
    if (lastWinnerIndex !== null) {
      remaining.splice(lastWinnerIndex, 1);
      lastWinnerIndex = null;
      winnerDiv.innerText = "";
      drawWheel(remaining, 0);
      if (remaining.length === 0) {
+       // All names from the current list have been picked
        winnerDiv.innerText = "✅ All done! Everyone has spoken.";
        remaining = [...originalNames]
        return;
@@ -134,7 +253,8 @@
    }
 
    if (remaining.length === 0) {
-     winnerDiv.innerText = "✅ All done!";
+     winnerDiv.innerText = "✅ All done! Update the list or spin again to restart.";
+     remaining = [...originalNames]; // Reset for next round if they spin again without updating
      return;
    }
 
@@ -169,11 +289,28 @@
    animate();
  }
 
- spinBtn.addEventListener("click", spinWheel);
+ function toggleConfigArea(show) {
+   if (show === undefined) { // Toggle if no specific state is passed
+     configArea.classList.toggle("config-hidden");
+   } else if (show) {
+     configArea.classList.remove("config-hidden");
+   } else {
+     configArea.classList.add("config-hidden");
+   }
+   settingsToggleBtn.textContent = configArea.classList.contains("config-hidden") ? "⚙️ Show Settings" : "⚙️ Hide Settings";
+ }
 
+ spinBtn.addEventListener("click", spinWheel);
+ updateNamesBtn.addEventListener("click", updateNamesFromInput);
+ settingsToggleBtn.addEventListener("click", () => toggleConfigArea());
+
+ // Initial setup
+ loadNamesFromStorage(); // Load names first
  drawWheel(remaining, 0);
+ // Ensure config is hidden by default (CSS class handles this, but explicit call is fine)
+ toggleConfigArea(false);
+
 </script>
 
 </body>
 </html>
-
