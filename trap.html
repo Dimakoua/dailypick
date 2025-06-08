@@ -4,60 +4,154 @@
 <head>
    <meta charset="UTF-8" />
    <title>Trap!</title>
+   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
    <style>
        body {
-           background: #111;
-           color: #eee;
-           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+           font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+           background-color: #f4f7f6; /* Soft off-white from index.html */
+           color: #5d5d5d; /* Dark grey text from index.html */
            text-align: center;
+           margin: 0;
            padding: 20px;
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           min-height: calc(100vh - 40px); /* Account for padding */
        }
 
-       canvas {
-           background: #222;
-           border: 3px solid #555;
-           display: block;
-           margin: 20px auto;
-           border-radius: 10px;
+       h1 {
+           font-size: 2.6em;
+           margin: 0 0 25px 0;
+           color: #3498db; /* Friendly blue from index.html */
+           font-weight: 700;
        }
 
-       button {
-           font-size: 1.3em;
-           padding: 12px 25px;
-           background: #ff5722;
+       #settingsToggleBtn {
+           position: absolute;
+           top: 20px;
+           right: 20px;
+           padding: 10px 18px;
+           font-size: 1em;
+           background-color: #3498db; /* Friendly blue */
+           color: #ffffff;
            border: none;
            border-radius: 8px;
            cursor: pointer;
-           color: white;
-           transition: background 0.3s;
+           transition: background-color 0.3s ease;
+           font-weight: 600;
+       }
+       #settingsToggleBtn:hover {
+           background-color: #2980b9; /* Darker blue */
        }
 
-       button:hover {
-           background: #e64a19;
+       #config-area {
+           position: absolute;
+           top: 75px; 
+           right: 20px;
+           background-color: #ffffff; 
+           padding: 25px 30px;
+           border-radius: 15px; 
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); 
+           border: 1px solid #e0e0e0; 
+           max-width: 450px;
+           z-index: 20;
+           text-align: left;
+       }
+       #config-area label {
+           display: block;
+           margin-bottom: 8px;
+           font-size: 1em;
+           color: #7f8c8d; 
+           font-weight: 600;
+       }
+       .config-hidden {
+           display: none;
+       }
+
+
+       canvas {
+           background-color: #ffffff; /* Clean white */
+           border: 1px solid #e0e0e0; /* Light border from index.html */
+           display: block;
+           margin: 20px auto;
+           border-radius: 15px; /* Softer radius from index.html */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /* Softer shadow from index.html */
+       }
+
+       button#trapBtn, button#updateNamesBtn { /* Target specific buttons */
+           font-size: 1.2em; /* Consistent with wheel.html */
+           padding: 12px 28px; /* Consistent with wheel.html */
+           background-color: #3498db; /* Friendly blue */
+           margin-top: 10px; /* Add some margin for updateNamesBtn */
+           border: none;
+           border-radius: 8px;
+           cursor: pointer;
+           color: #ffffff;
+           font-weight: 700;
+           transition: background-color 0.3s ease;
+       }
+       button#updateNamesBtn {
+           background-color: #e67e22; /* Orange like in wheel.html */
+       }
+
+       button#trapBtn:hover, button#updateNamesBtn:hover {
+           background-color: #2980b9; /* Darker blue */
+       }
+       button#updateNamesBtn:hover {
+           background-color: #d35400; /* Darker orange */
        }
 
        #info {
            margin-top: 15px;
-           font-size: 1.2em;
+           font-size: 1.3em; /* Slightly larger for info */
            min-height: 1.5em;
+           color: #2980b9; /* Darker blue for emphasis */
+           font-weight: 600;
+       }
+       #namesInput { /* Style for textarea */
+           width: 95%;
+           min-height: 60px;
+           padding: 10px;
+           border-radius: 8px;
+           border: 1px solid #ccc;
+           background-color: #f9f9f9;
+           color: #5d5d5d;
+           font-family: 'Nunito', sans-serif;
+           font-size: 0.95em;
+           margin-bottom: 10px; /* Space before update button */
        }
    </style>
 </head>
 
 <body>
+   <h1>🎯 Trap!</h1> <!-- Added exclamation to match title -->
 
-   <h1>🎯 Trap</h1>
+   <button id="settingsToggleBtn">⚙️ Show Settings</button>
+   <div id="config-area" class="config-hidden">
+       <label for="namesInput">Enter names (one per line or comma-separated):</label>
+       <textarea id="namesInput" rows="4"></textarea>
+       <button id="updateNamesBtn">Update List</button>
+   </div>
+
    <canvas id="gameCanvas" width="500" height="400"></canvas>
    <button id="trapBtn">🪤 Trap!</button>
    <div id="info"></div>
 
    <script>
+       const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
+       const LOCAL_STORAGE_KEY = 'namesList';
+
        const canvas = document.getElementById('gameCanvas');
        const ctx = canvas.getContext('2d');
        const trapBtn = document.getElementById('trapBtn');
        const info = document.getElementById('info');
+       const settingsToggleBtn = document.getElementById("settingsToggleBtn");
+       const configArea = document.getElementById("config-area");
+       const namesInput = document.getElementById("namesInput");
+       const updateNamesBtn = document.getElementById("updateNamesBtn");
 
-       const names = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
+       let originalNames = [...DEFAULT_NAMES];
+       let members = [];
        const shapes = ['circle', 'square', 'triangle', 'star', 'hexagon', 'diamond'];
        const colors = [
            '#f44336', // red
@@ -73,21 +167,50 @@
            '#795548', // brown
        ];
 
-       // Assign random shape and color for each team member
-       let members = names.map(name => ({
-           name,
-           shape: shapes[Math.floor(Math.random() * shapes.length)],
-           color: colors[Math.floor(Math.random() * colors.length)],
-           x: Math.random() * (canvas.width - 40) + 20,
-           y: Math.random() * (canvas.height - 40) + 20,
-           vx: (Math.random() * 2 + 1.2) * (Math.random() < 0.5 ? 1 : -1),
-           vy: (Math.random() * 2 + 1.2) * (Math.random() < 0.5 ? 1 : -1),
-           trapped: false,
-       }));
-
        const trapRadius = 60;
        let trap = null; // {x,y}
        let trapActive = false; // waiting for first user to enter trap if empty
+
+       function loadNamesFromStorage() {
+           const storedNamesJson = localStorage.getItem(LOCAL_STORAGE_KEY);
+           if (storedNamesJson) {
+               try {
+                   const storedNames = JSON.parse(storedNamesJson);
+                   if (Array.isArray(storedNames) && storedNames.length > 0) {
+                       originalNames = [...storedNames];
+                   }
+               } catch (e) {
+                   console.error("Error parsing names from localStorage:", e);
+                   originalNames = [...DEFAULT_NAMES];
+               }
+           } else {
+               originalNames = [...DEFAULT_NAMES];
+           }
+           namesInput.value = originalNames.join('\n');
+       }
+
+       function saveNamesToStorage() {
+           localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(originalNames));
+       }
+
+       function initializeMembers(currentNames) {
+           members = currentNames.map(name => ({
+               name,
+               shape: shapes[Math.floor(Math.random() * shapes.length)],
+               color: colors[Math.floor(Math.random() * colors.length)],
+               x: Math.random() * (canvas.width - 40) + 20,
+               y: Math.random() * (canvas.height - 40) + 20,
+               vx: (Math.random() * 1.5 + 0.8) * (Math.random() < 0.5 ? 1 : -1), // Slightly slower base speed
+               vy: (Math.random() * 1.5 + 0.8) * (Math.random() < 0.5 ? 1 : -1),
+               trapped: false,
+           }));
+           trapBtn.disabled = members.length === 0;
+           if (members.length === 0 && originalNames.length > 0) {
+               info.textContent = "All names selected! Update list to play again.";
+           } else if (members.length === 0 && originalNames.length === 0) {
+                info.textContent = "Please add names to the list.";
+           }
+       }
 
        function drawShape(m) {
            ctx.fillStyle = m.color;
@@ -141,8 +264,8 @@
            }
 
            // Draw name below
-           ctx.fillStyle = 'white';
-           ctx.font = '12px Arial';
+           ctx.fillStyle = '#5d5d5d'; // Dark grey for readability on white canvas
+           ctx.font = '12px Nunito, Arial, sans-serif';
            ctx.textAlign = 'center';
            ctx.fillText(m.name, m.x, m.y + 32);
 
@@ -351,7 +474,7 @@ function celebrateFinalUser(user) {
                ctx.rotate(card.rotation);
                ctx.fillStyle = card.color;
                ctx.fillRect(-20, -15, 40, 30);
-               ctx.strokeStyle = 'white';
+               ctx.strokeStyle = '#5d5d5d'; // Darker stroke for visibility
                ctx.lineWidth = 2;
                ctx.strokeRect(-20, -15, 40, 30);
                ctx.restore();
@@ -402,20 +525,12 @@ function celebrateFinalUser(user) {
            ctx.stroke();
        }
 
-
-
        function checkTrap() {
            if (!trap) return [];
 
-           if (members.length === 1) {
-               const lastUser = members[0];
-               info.textContent = `🎉 Final user: ${lastUser.name}!`;
-               trap = null;
-               trapActive = false;
-
-               // Stop the game loop by not calling gameLoop again
-               setTimeout(() => celebrateFinalUser(lastUser), 1000);
-           }
+           // The end game logic (celebrating the final user) is now primarily handled
+           // within the trapBtn event listener when the last member is removed.
+           // This function now focuses only on who is currently inside an active trap.
 
            if (trapActive) {
                // Waiting for first member to enter trap area
@@ -426,7 +541,7 @@ function celebrateFinalUser(user) {
                    if (Math.sqrt(dx * dx + dy * dy) <= trapRadius) {
                        m.trapped = true;
                        trapActive = false;
-                       info.textContent = `Trap caught: ${m.name}! Confirm by pressing Trap again.`;
+                       info.textContent = `🎯 ${m.name} in trap! Click 'Trap!' to confirm.`;
                        return [m];
                    }
                }
@@ -440,6 +555,27 @@ function celebrateFinalUser(user) {
                });
                return trappedMembers;
            }
+       }
+
+       function resetAndInitializeGame() {
+           initializeMembers(originalNames);
+           trap = null;
+           trapActive = false;
+           if (originalNames.length > 0) {
+               info.textContent = "List updated. Click 'Trap!' to begin.";
+           } else {
+               info.textContent = "Please add names to the list.";
+           }
+           trapBtn.disabled = originalNames.length === 0;
+       }
+
+       function updateNamesFromInput() {
+           const inputText = namesInput.value.trim();
+           const newNames = inputText ? inputText.split(/[\n,]+/).map(name => name.trim()).filter(name => name.length > 0) : [];
+           originalNames = newNames.length > 0 ? [...newNames] : [...DEFAULT_NAMES]; // Fallback to default if input is empty
+           namesInput.value = originalNames.join('\n'); // Reflect the actual list used
+           saveNamesToStorage();
+           resetAndInitializeGame();
        }
 
        function gameLoop() {
@@ -458,36 +594,65 @@ function celebrateFinalUser(user) {
            requestAnimationFrame(gameLoop);
        }
 
-       trapBtn.addEventListener('click', () => {
-           if (members.length === 0) {
-               info.textContent = "✅ All team members have been selected!";
-               trap = null;
-               trapActive = false;
-               return;
+       function toggleConfigArea(show) {
+           if (show === undefined) {
+               configArea.classList.toggle("config-hidden");
+           } else if (show) {
+               configArea.classList.remove("config-hidden");
+           } else {
+               configArea.classList.add("config-hidden");
            }
+           settingsToggleBtn.textContent = configArea.classList.contains("config-hidden") ? "⚙️ Show Settings" : "⚙️ Hide Settings";
+       }
 
-           if (trap) {
-               // Confirm selection and remove trapped member
-               const trapped = members.filter(m => m.trapped);
-               if (trapped.length > 0) {
-                   members = members.filter(m => !m.trapped);
+
+       trapBtn.addEventListener('click', () => {
+           if (trap) { // Trap is set, this click is to confirm/remove or reset trap
+               const caughtMembers = members.filter(m => m.trapped);
+               if (caughtMembers.length > 0) {
+                   const caughtMember = caughtMembers[0]; // Process one at a time
+                   members = members.filter(m => m.name !== caughtMember.name); // Remove from active list
+                   
                    trap = null;
                    trapActive = false;
-                   members.forEach(m => m.trapped = false);
+                   members.forEach(m => m.trapped = false); // Clear trapped status for any remaining
+
+                   if (members.length === 0) {
+                       info.innerHTML = `🎉 <strong>${caughtMember.name}</strong> was the last one!`;
+                       celebrateFinalUser(caughtMember);
+                       trapBtn.disabled = true; // Game over, disable button
+                   } else {
+                       info.innerHTML = `<strong>${caughtMember.name}</strong> trapped! ${members.length} remaining. Place next trap.`;
+                   }
                } else {
+                   // Trap was set, but no one was in it when clicked (or they moved out)
+                   info.textContent = "Trap missed! Place it again.";
                    trap = null;
                    trapActive = false;
                }
-           } else {
-               // Place new trap randomly
+           } else { // No trap set, this click is to place a trap
+               if (members.length === 0) {
+                   // This case should ideally be handled by the button's disabled state
+                   info.textContent = originalNames.length > 0 ? "Game over! Update list to play again." : "Please add names to the list.";
+                   return;
+               }
                const margin = trapRadius + 10;
                trap = {
                    x: Math.random() * (canvas.width - margin * 2) + margin,
                    y: Math.random() * (canvas.height - margin * 2) + margin
                };
                trapActive = true;
+               info.textContent = "Trap placed! Waiting for a catch...";
            }
        });
+
+       settingsToggleBtn.addEventListener("click", () => toggleConfigArea());
+       updateNamesBtn.addEventListener("click", updateNamesFromInput);
+
+       // Initial setup
+       loadNamesFromStorage();
+       initializeMembers(originalNames); // Initialize with loaded or default names
+       toggleConfigArea(false); // Hide config by default
 
        gameLoop();
    </script>

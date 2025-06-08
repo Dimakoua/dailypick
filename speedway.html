@@ -3,32 +3,78 @@
 <head>
 <meta charset="UTF-8" />
 <title>Stand-up Speedway</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
  body {
-   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
    text-align: center;
-   background: #2c3e50;
-   color: #ecf0f1;
+   background-color: #f4f7f6; /* Soft off-white from index.html */
+   color: #5d5d5d; /* Dark grey text from index.html */
    margin: 0;
    padding: 20px;
    display: flex;
    flex-direction: column;
    align-items: center;
+   min-height: calc(100vh - 40px); /* Account for padding */
  }
  h1 {
-   color: #e74c3c;
+   font-size: 2.6em;
+   margin: 0 0 25px 0;
+   color: #3498db; /* Friendly blue from index.html */
+   font-weight: 700;
  }
+
+ #settingsToggleBtn {
+   position: absolute;
+   top: 20px;
+   right: 20px;
+   padding: 10px 18px;
+   font-size: 1em;
+   background-color: #3498db; /* Friendly blue */
+   color: #ffffff;
+   border: none;
+   border-radius: 8px;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+   font-weight: 600;
+ }
+ #settingsToggleBtn:hover {
+   background-color: #2980b9; /* Darker blue */
+ }
+
+ #config-area {
+   position: absolute;
+   top: 75px; 
+   right: 20px;
+   background-color: #ffffff; 
+   padding: 25px 30px;
+   border-radius: 15px; 
+   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); 
+   border: 1px solid #e0e0e0; 
+   max-width: 450px;
+   z-index: 20;
+   text-align: left;
+ }
+ #config-area label {
+   display: block;
+   margin-bottom: 8px;
+   font-size: 1em;
+   color: #7f8c8d; 
+   font-weight: 600;
+ }
+ .config-hidden { display: none; }
+
  #track-container {
    width: 80%;
    max-width: 700px;
    height: auto; /* Adjust based on number of racers */
-   background: #34495e;
-   border: 5px solid #2c3e50;
-   border-radius: 10px;
+   background-color: #ffffff; /* Clean white */
+   border: 1px solid #e0e0e0; /* Light border */
+   border-radius: 15px; /* Softer radius */
    margin: 20px auto;
    position: relative;
    padding: 20px 0; /* Padding for top/bottom space */
-   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /* Softer shadow */
  }
  .racer {
    position: absolute; /* JS will set top and left */
@@ -39,76 +85,145 @@
    display: flex;
    align-items: center;
    justify-content: center; /* Keep centered for now, can adjust */
-   box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+   box-shadow: 0 2px 4px rgba(0,0,0,0.15); /* Softer shadow for racers */
    transition: left 0.1s linear; /* Smooths out the movement slightly */
+   color: #ffffff; /* White text on turtle */
  }
  #start-line, #finish-line-visual {
    position: absolute;
    top: 0;
    bottom: 0;
    width: 4px;
-   background-color: #ecf0f1;
+   background-color: #bdc3c7; /* Muted grey for lines */
  }
  #start-line { left: 5%; }
  #finish-line-visual { right: 5%; }
 
+ /* Shared card styles for controls and results area */
  #controls, #results-area {
-   margin-top: 20px;
-   background: #34495e;
+   background-color: #ffffff; /* Clean white */
    padding: 15px;
-   border-radius: 8px;
-   box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+   border-radius: 15px; /* Softer radius */
+   border: 1px solid #e0e0e0; /* Light border */
+   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /* Softer shadow */
+   /* width, max-width, and margin-top will be set individually */
  }
- #startRaceBtn {
+
+ .game-layout {
+   display: flex;
+   width: 90%; /* Adjust as needed for overall width */
+   max-width: 1100px; /* Max width for the side-by-side layout */
+   gap: 20px; /* Space between track and results */
+   margin: 20px 0; /* Vertical margin for the game area */
+   align-items: flex-start; /* Align items to the top */
+ }
+
+ #track-container { /* Original card styles are kept, layout adjusted for flex */
+   flex: 2; /* Track takes more space */
+   min-width: 0; /* Allows shrinking in flex layout */
+   margin: 0; /* Was '20px auto', now controlled by flex parent */
+   width: 80%;
+   max-width: 700px;
+ }
+
+ #results-area {
+   /* Inherits common styles from the rule above */
+   margin-left: auto; /* Pushes the element to the right */
+   margin-right: 0;  /* Aligns its right edge with the body's content box right edge */ /* This line will be removed by flex */
+   flex: 1; /* Results area takes less space */
+   min-width: 250px; /* Ensures results area doesn't get too small */
+   max-width: 350px; /* Optional: constrain max width of results */
+   margin: 0; /* Reset margin, positioning handled by .game-layout */
+ }
+ #results-area h2 {
+   color: #3498db; /* Friendly blue for sub-heading */
+   margin-top: 0;
+ }
+
+ button#startRaceBtn, button#updateNamesBtn {
    padding: 12px 25px;
    font-size: 1.2em;
-   background: #2ecc71;
-   color: white;
+   background-color: #3498db; /* Friendly blue */
+   color: #ffffff;
    border: none;
    border-radius: 8px;
    cursor: pointer;
-   transition: background 0.3s;
+   font-weight: 700;
+   transition: background-color 0.3s ease;
+   margin-top: 10px; /* For updateNamesBtn */
  }
- #startRaceBtn:hover {
-   background: #27ae60;
+
+
+ button#updateNamesBtn {
+   background-color: #e67e22; /* Orange */
  }
- #startRaceBtn:disabled {
-   background: #95a5a6;
+
+ button#startRaceBtn:hover, button#updateNamesBtn:hover {
+   background-color: #2980b9; /* Darker blue */
+ }
+ button#updateNamesBtn:hover {
+   background-color: #d35400; /* Darker orange */
+ }
+ button#startRaceBtn:disabled {
+   background-color: #95a5a6; /* Muted grey when disabled */
    cursor: not-allowed;
  }
+
  #standupOrderList {
    list-style-type: decimal;
    padding-left: 20px;
    text-align: left;
+   color: #5d5d5d; /* Standard text color */
  }
  #standupOrderList li {
    font-size: 1.1em;
    margin-bottom: 5px;
-   color: #f1c40f;
+   color: #2980b9; /* Darker blue for list items */
+   font-weight: 600;
+ }
+ #namesInput { /* Style for textarea */
+   width: 95%;
+   min-height: 60px;
+   padding: 10px;
+   border-radius: 8px;
+   border: 1px solid #ccc;
+   background-color: #f9f9f9;
+   color: #5d5d5d;
+   font-family: 'Nunito', sans-serif;
+   font-size: 0.95em;
+   margin-bottom: 10px; /* Space before update button */
  }
 </style>
 </head>
 <body>
-
 <h1>🏁 Stand-up Speedway 🏁</h1>
 
-<div id="track-container">
- <div id="start-line"></div>
- <div id="finish-line-visual"></div>
- <!-- Racers will be dynamically added here by JS -->
+<button id="settingsToggleBtn">⚙️ Show Settings</button>
+<div id="config-area" class="config-hidden">
+  <label for="namesInput">Enter racer names (one per line or comma-separated):</label>
+  <textarea id="namesInput" rows="4"></textarea>
+  <button id="updateNamesBtn">Update Racers</button>
 </div>
 
-<div id="controls">
+<div class="game-layout">
+  <div id="track-container">
+    <div id="start-line"></div>
+    <div id="finish-line-visual"></div>
+    <!-- Racers will be dynamically added here by JS -->
+  </div>
+  <div id="results-area">
+    <h2>Stand-up Order:</h2>
+    <ol id="standupOrderList"></ol>
+  </div>
+</div>
+
  <button id="startRaceBtn">🚀 Start Race!</button>
-</div>
-
-<div id="results-area">
- <h2>Stand-up Order:</h2>
- <ol id="standupOrderList"></ol>
-</div>
 
 <script>
- const team = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
+ const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
+ const LOCAL_STORAGE_KEY = 'namesList';
+ let originalNames = [...DEFAULT_NAMES];
+
  let racersData = []; // To store { name, element, position, finished, finishTime }
  let raceInProgress = false;
  let animationFrameId = null;
@@ -116,20 +231,53 @@
  const trackContainer = document.getElementById('track-container');
  const startRaceBtn = document.getElementById('startRaceBtn');
  const standupOrderList = document.getElementById('standupOrderList');
+ const settingsToggleBtn = document.getElementById("settingsToggleBtn");
+ const configArea = document.getElementById("config-area");
+ const namesInput = document.getElementById("namesInput");
+ const updateNamesBtn = document.getElementById("updateNamesBtn");
+
   // Calculate finish line based on percentage to be responsive
  const finishLinePercent = 90; // 90% of track width
+
+ function loadNamesFromStorage() {
+   const storedNamesJson = localStorage.getItem(LOCAL_STORAGE_KEY);
+   if (storedNamesJson) {
+     try {
+       const storedNames = JSON.parse(storedNamesJson);
+       if (Array.isArray(storedNames) && storedNames.length > 0) {
+         originalNames = [...storedNames];
+       }
+     } catch (e) {
+       console.error("Error parsing names from localStorage:", e);
+       originalNames = [...DEFAULT_NAMES]; // Fallback on error
+     }
+   } else {
+     originalNames = [...DEFAULT_NAMES];
+   }
+   namesInput.value = originalNames.join('\n');
+ }
+
+ function saveNamesToStorage() {
+   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(originalNames));
+ }
 
  function setupRacers() {
    trackContainer.querySelectorAll('.racer').forEach(el => el.remove()); // Clear old racers
    racersData = [];
    standupOrderList.innerHTML = ''; // Clear previous results
+   startRaceBtn.disabled = originalNames.length === 0;
+   startRaceBtn.textContent = "🚀 Start Race!";
+
+   if (originalNames.length === 0) {
+     trackContainer.style.height = '100px'; // Minimal height if no racers
+     return;
+   }
 
    const racerHeight = 30; // Adjusted to match new CSS height
    const verticalGap = 10;
-   const totalRacersHeight = team.length * (racerHeight + verticalGap) - verticalGap;
+   const totalRacersHeight = originalNames.length * (racerHeight + verticalGap) - verticalGap;
    trackContainer.style.height = `${Math.max(150, totalRacersHeight + 40)}px`; // +40 for padding
-
-   team.forEach((name, index) => {
+   originalNames.forEach((name, index) => {
      const racerElement = document.createElement('div');
      racerElement.classList.add('racer');
      // Display turtle emoji and then the first 3 letters of the name
@@ -193,6 +341,17 @@
    }
  }
 
+ function updateNamesFromInput() {
+   const inputText = namesInput.value.trim();
+   const newNames = inputText ? inputText.split(/[\n,]+/).map(name => name.trim()).filter(name => name.length > 0) : [];
+   originalNames = newNames.length > 0 ? [...newNames] : [...DEFAULT_NAMES];
+   namesInput.value = originalNames.join('\n');
+   saveNamesToStorage();
+   setupRacers(); // Re-setup racers with the new list
+   // Optionally hide config: toggleConfigArea(false);
+   if (raceInProgress) raceInProgress = false; // Stop current race if any
+ }
+
  startRaceBtn.addEventListener('click', () => {
    if (raceInProgress) return;
 
@@ -206,8 +365,24 @@
    animationFrameId = requestAnimationFrame(raceTick);
  });
 
+ function toggleConfigArea(show) {
+   if (show === undefined) {
+     configArea.classList.toggle("config-hidden");
+   } else if (show) {
+     configArea.classList.remove("config-hidden");
+   } else {
+     configArea.classList.add("config-hidden");
+   }
+   settingsToggleBtn.textContent = configArea.classList.contains("config-hidden") ? "⚙️ Show Settings" : "⚙️ Hide Settings";
+ }
+
+ settingsToggleBtn.addEventListener("click", () => toggleConfigArea());
+ updateNamesBtn.addEventListener("click", updateNamesFromInput);
+
  // Initial setup
+ loadNamesFromStorage();
  setupRacers();
+ toggleConfigArea(false); // Hide config by default
 </script>
 
 </body>

@@ -3,102 +3,130 @@
 <head>
 <meta charset="UTF-8" />
 <title>Wheel of Standup - Smaller</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
  body {
-   font-family: Arial, sans-serif;
+   font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
    text-align: center;
-   background: #222;
-   color: #fff;
+   background-color: #f4f7f6; /* Soft off-white from index.html */
+   color: #5d5d5d; /* Dark grey text from index.html */
    margin: 0;
    padding: 20px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   min-height: calc(100vh - 60px); /* Account for padding */
  }
+
+ h1 {
+   font-size: 2.6em;
+   margin: 0 0 25px 0;
+   color: #3498db; /* Friendly blue from index.html */
+   font-weight: 700;
+ }
+
  #settingsToggleBtn {
    position: absolute;
    top: 20px;
    right: 20px;
-   padding: 8px 15px;
-   font-size: 0.9em;
-   background: #555;
-   color: white;
+   padding: 10px 18px;
+   font-size: 1em;
+   background-color: #3498db; /* Friendly blue */
+   color: #ffffff;
    border: none;
-   border-radius: 5px;
+   border-radius: 8px;
    cursor: pointer;
-   /* margin-bottom: 15px; Removed as it's now absolutely positioned */
-   transition: background 0.3s;
+   transition: background-color 0.3s ease;
+   font-weight: 600;
  }
  #settingsToggleBtn:hover {
-   background: #666;
+   background-color: #2980b9; /* Darker blue */
  }
+
  #config-area {
-   position: absolute; /* Position it relative to the body */
-   top: 60px;      /* Below the settings button (adjust as needed) */
-   right: 20px;     /* Align with the settings button's right edge */
-   background: #333;
-   padding: 15px;
-   border-radius: 8px;
+   position: absolute;
+   top: 75px; /* Adjusted to be below new button size */
+   right: 20px;
+   background-color: #ffffff; /* Clean white from index.html */
+   padding: 25px 30px;
+   border-radius: 15px; /* Softer radius from index.html */
+   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /* Softer shadow from index.html */
+   border: 1px solid #e0e0e0; /* Light border from index.html */
    max-width: 450px;
-   /* margin-top: 30px; Removed as top positioning is used */
-   /* margin-left: auto; Removed for absolute positioning */
-   /* margin-right: auto; Removed for absolute positioning */
-   z-index: 20; /* Ensure it's above the wheel if they overlap */
+   z-index: 20;
+   text-align: left;
  }
+
  #config-area label {
    display: block;
    margin-bottom: 8px;
-   font-size: 0.9em;
-   color: #ccc;
+   font-size: 1em;
+   color: #7f8c8d; /* Muted grey from index.html */
+   font-weight: 600;
  }
+
  #namesInput {
    width: 95%;
    min-height: 60px;
-   padding: 8px;
-   border-radius: 4px;
-   border: 1px solid #555;
-   background: #2a2a2a;
-   color: #fff;
+   padding: 10px;
+   border-radius: 8px;
+   border: 1px solid #ccc; /* Slightly darker than #e0e0e0 for inputs */
+   background-color: #f9f9f9; /* Very light grey for inputs */
+   color: #5d5d5d; /* Dark grey text */
+   font-family: 'Nunito', sans-serif;
+   font-size: 0.95em;
  }
+
  .config-hidden {
    display: none;
  }
 
  #wheel-container {
    position: relative;
-   width: 425px;
-   margin: 0 auto;
+   width: 425px; /* Keep this size for the wheel */
+   margin: 20px auto; /* Add some margin */
  }
+
  canvas {
-   border: 4px solid #444;
+   border: 5px solid #e0e0e0; /* Consistent light border */
    border-radius: 50%;
-   background: #111;
+   background-color: #ffffff; /* White background for the wheel drawing area */
    display: block;
    margin: 0 auto;
-   width: 425px;
-   height: 425px;
+   /* width and height attributes on canvas tag will define drawing surface size */
  }
+
  #spinBtn, #updateNamesBtn {
    margin-top: 20px;
-   padding: 10px 24px;
-   font-size: 1.1em;
-   background: #00c853;
-   color: white;
+   padding: 12px 28px;
+   font-size: 1.2em;
+   font-weight: 700;
+   background-color: #3498db; /* Friendly blue */
+   color: #ffffff;
    border: none;
    border-radius: 8px;
    cursor: pointer;
-   transition: background 0.3s;
+   transition: background-color 0.3s ease;
  }
  #updateNamesBtn {
-   background: #f0ad4e; /* Orange for update */
+   background-color: #e67e22; /* A complementary orange for update, or use #2980b9 */
    margin-left: 10px;
  }
  #spinBtn:hover, #updateNamesBtn:hover {
-   background: #00b34e;
+   background-color: #2980b9; /* Darker blue for spin */
  }
+ #updateNamesBtn:hover {
+   background-color: #d35400; /* Darker orange for update */
+ }
+
  #winner {
-   font-size: 1.3em;
+   font-size: 1.6em;
    margin-top: 25px;
-   color: #ffeb3b;
+   color: #2980b9; /* Darker blue for emphasis */
    min-height: 1.5em;
+   font-weight: 600;
  }
+
  #indicator {
    position: absolute;
    top: -12px;
@@ -108,14 +136,13 @@
    height: 0;
    border-left: 14px solid transparent;
    border-right: 14px solid transparent;
-   border-bottom: 22px solid red;
+   border-bottom: 22px solid #e74c3c; /* A vibrant red, or use #3498db */
    z-index: 10;
    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.7));
  }
 </style>
 </head>
 <body>
-
 <h1>🎯 Wheel of Standup</h1>
 
 <button id="settingsToggleBtn">⚙️ Show Settings</button>
@@ -127,7 +154,7 @@
 
 <div id="wheel-container">
  <div id="indicator"></div>
- <canvas id="wheel" width="350" height="350"></canvas>
+ <canvas id="wheel" width="425" height="425"></canvas> <!-- Match CSS size -->
 </div>
 
 <button id="spinBtn">🎲 SPIN!</button>
@@ -148,7 +175,7 @@
  const settingsToggleBtn = document.getElementById("settingsToggleBtn");
  const configArea = document.getElementById("config-area");
 
- const LOCAL_STORAGE_KEY = 'wheelOfStandupNames';
+ const LOCAL_STORAGE_KEY = 'namesList';
 
  let isSpinning = false;
  let lastWinnerIndex = null;
@@ -219,14 +246,14 @@
      ctx.moveTo(radius, radius);
      ctx.arc(radius, radius, radius, angle, angle + angleStep);
      ctx.fillStyle = `hsl(${(i * 360) / names.length}, 80%, 60%)`;
-     ctx.fill();
+     ctx.fill();     
 
      // Draw text in the middle of each slice
      ctx.save();
      ctx.translate(radius, radius);
      ctx.rotate(angle + angleStep / 2);
      ctx.textAlign = "right";
-     ctx.fillStyle = "#000";
+     ctx.fillStyle = "#333333"; // Dark grey for better readability on lighter slices
      ctx.font = "bold 16px Arial";
      ctx.fillText(name, radius - 15, 6);
      ctx.restore();
