@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <!-- Viewport meta tag is already present and good -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speedway Racer - Fun Name Picker Game | Daily Pick</title>
+  <meta name="description"
+    content="Race to the finish with Speedway! A delightful turtle racing game to determine order or pick names. Liven up your daily stand-ups or team meetings. A Daily Pick game.">
+  <meta name="keywords"
+    content="speedway game, racing game, name picker, standup order, team game, turtle race, fun game, daily pick">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dailypick.dev/speedway.html">
+  <meta property="og:title" content="Speedway Racer - Fun Name Picker Game | Daily Pick">
+  <meta property="og:description"
+    content="A delightful turtle racing game to determine order or pick names for your team.">
+  <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.webp">
+
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://dailypick.dev/speedway.html">
+  <meta property="twitter:title" content="Speedway Racer - Fun Name Picker Game | Daily Pick">
+  <meta property="twitter:description"
+    content="A delightful turtle racing game to determine order or pick names for your team.">
+  <meta property="twitter:image" content="https://dailypick.dev/assets/twitter-image-speedway.png">
+
+  <link rel="canonical" href="https://dailypick.dev/speedway.html">
+  <!-- Favicon Links -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/assets/favicon/site.webmanifest">
+  <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+  <meta name="msapplication-TileColor" content="#2d89ef">
+  <meta name="theme-color" content="#ffffff">
+
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <h1>🏁 Speedway 🏁</h1>
+
+  <button id="settingsToggleBtn">⚙️ Show Settings</button>
+  <div id="config-area" class="config-hidden">
+    <label for="namesInput">Enter racer names (one per line or comma-separated):</label>
+    <textarea id="namesInput" rows="4"></textarea>
+    <button id="updateNamesBtn">Update Racers</button>
+  </div>
+
+  <div class="game-layout">
+    <div id="track-container">
+      <div id="start-line"></div>
+      <div id="finish-line-visual"></div>
+      <!-- Racers will be dynamically added here by JS -->
+    </div>
+    <div id="results-area">
+      <h2>Order:</h2>
+      <ol id="standupOrderList"></ol>
+    </div>
+  </div>
+
+  <button id="startRaceBtn">🚀 Start Race!</button>
+
+  <div class="seo-content-area">
+    <h2>Race to the Top with Speedway!</h2>
+    <p>Welcome to the <strong>Stand-up Speedway</strong>, where friendly competition meets daily planning! This
+      <strong>fun racing game</strong> provides an entertaining and visual way to determine the speaking order for your
+      daily stand-ups, pick names for a draw, or simply add a moment of light-hearted fun to your team's day. Each
+      participant gets a colorful turtle racer 🐢 – who will cross the finish line first?</p>
+
+    <h3>How Speedway Works</h3>
+    <ul>
+      <li>Add your team members' names in the settings. Each name gets a dedicated turtle racer.</li>
+      <li>Click "Start Race!" and watch the turtles dash across the track.</li>
+      <li>The order in which the turtles cross the finish line determines your sequence.</li>
+      <li>It's a game of chance, ensuring a different outcome every time and keeping things exciting!</li>
+    </ul>
+
+    <h3>Gamify Your Meetings and Boost Engagement</h3>
+    <p>Using tools like Speedway can transform routine activities into more engaging experiences. This <strong>gamified
+        approach</strong> to determining stand-up order can:</p>
+    <ul>
+      <li>Increase participation and attentiveness.</li>
+      <li>Foster a positive and fun team atmosphere.</li>
+      <li>Make daily rituals something to look forward to.</li>
+    </ul>
+    <p>For more ideas on making your work environment engaging, explore concepts on <a
+        href="https://www.gamification.co/" target="_blank" rel="noopener noreferrer">Gamification by Yu-kai Chou</a> or
+      learn about <a href="https://hbr.org/2018/07/the-surprising-power-of-playfulness-at-work" target="_blank"
+        rel="noopener noreferrer">the power of playfulness at work</a> from Harvard Business Review.</p>
+  </div>
+
+
+  <script>
+    const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
+    const LOCAL_STORAGE_KEY = 'namesList';
+    let originalNames = [...DEFAULT_NAMES];
+
+    const RACER_COLORS = [
+      '#e74c3c', // Alizarin
+      '#3498db', // Peter River
+      '#2ecc71', // Emerald
+      '#f1c40f', // Sun Flower
+      '#9b59b6', // Amethyst
+      '#e67e22', // Carrot
+      '#1abc9c', // Turquoise
+      '#34495e', // Wet Asphalt
+      '#d35400', // Pumpkin
+      '#27ae60', // Nephritis
+      '#c0392b', // Pomegranate
+    ];
+
+    let racersData = []; // To store { name, element, position, finished, finishTime }
+    let raceInProgress = false;
+    let animationFrameId = null;
+
+    const trackContainer = document.getElementById('track-container');
+    const startRaceBtn = document.getElementById('startRaceBtn');
+    const standupOrderList = document.getElementById('standupOrderList');
+    const settingsToggleBtn = document.getElementById("settingsToggleBtn");
+    const configArea = document.getElementById("config-area");
+    const namesInput = document.getElementById("namesInput");
+    const updateNamesBtn = document.getElementById("updateNamesBtn");
+
+    // Calculate finish line based on percentage to be responsive
+    const finishLinePercent = 90; // 90% of track width
+
+    function loadNamesFromStorage() {
+      const storedNamesJson = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (storedNamesJson) {
+        try {
+          const storedNames = JSON.parse(storedNamesJson);
+          if (Array.isArray(storedNames) && storedNames.length > 0) {
+            originalNames = [...storedNames];
+          }
+        } catch (e) {
+          console.error("Error parsing names from localStorage:", e);
+          originalNames = [...DEFAULT_NAMES]; // Fallback on error
+        }
+      } else {
+        originalNames = [...DEFAULT_NAMES];
+      }
+      namesInput.value = originalNames.join('\n');
+    }
+
+    function saveNamesToStorage() {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(originalNames));
+    }
+
+    function setupRacers() {
+      trackContainer.querySelectorAll('.racer').forEach(el => el.remove()); // Clear old racers
+      racersData = [];
+      standupOrderList.innerHTML = ''; // Clear previous results
+      startRaceBtn.disabled = originalNames.length === 0;
+      startRaceBtn.textContent = "🚀 Start Race!";
+
+      if (originalNames.length === 0) {
+        trackContainer.style.height = '100px'; // Minimal height if no racers
+        return;
+      }
+
+      const racerHeight = 30; // Adjusted to match new CSS height
+      const verticalGap = 10;
+      const totalRacersHeight = originalNames.length * (racerHeight + verticalGap) - verticalGap;
+      trackContainer.style.height = `${Math.max(150, totalRacersHeight + 40)}px`; // +40 for padding
+      originalNames.forEach((name, index) => {
+        const racerElement = document.createElement('div');
+        racerElement.classList.add('racer');
+        // Display turtle emoji and then the first 3 letters of the name
+        racerElement.innerHTML = `<span style="font-size: 24px;">🐢</span><span style="font-size: 0.7em; margin-left: 4px; filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.5));">${name.substring(0, 3)}</span>`;
+        racerElement.style.backgroundColor = RACER_COLORS[index % RACER_COLORS.length];
+
+        // Position racers at the start line (5% from left)
+        racerElement.style.left = `5%`;
+        racerElement.style.top = `${20 + index * (racerHeight + verticalGap)}px`; // Stagger vertically
+
+        trackContainer.appendChild(racerElement);
+        racersData.push({
+          name: name,
+          element: racerElement,
+          positionPercent: 5, // Start at 5%
+          finished: false,
+          finishTime: 0
+        });
+      });
+    }
+
+    function raceTick() {
+      if (!raceInProgress) return;
+
+      let allFinished = true;
+      const trackWidth = trackContainer.offsetWidth;
+
+      racersData.forEach(racer => {
+        if (!racer.finished) {
+          allFinished = false;
+          // Move by a random small percentage of the track width
+          const randomBoost = (Math.random() * 0.7) + 0.2; // Move between 0.2% and 0.7% of track width
+          racer.positionPercent += randomBoost;
+          racer.element.style.left = `${racer.positionPercent}%`;
+
+          if (racer.positionPercent >= finishLinePercent) {
+            racer.finished = true;
+            racer.finishTime = performance.now(); // More precise timing
+            racer.element.style.left = `${finishLinePercent}%`; // Snap to finish line
+
+            // Add to results - we'll sort later for display if needed, or just append
+            const listItem = document.createElement('li');
+            listItem.textContent = racer.name;
+            standupOrderList.appendChild(listItem); // Appends as they finish
+          }
+        }
+      });
+
+      if (allFinished) {
+        raceInProgress = false;
+        startRaceBtn.disabled = false;
+        startRaceBtn.textContent = "🏁 Race Again!";
+        // Sort and display final order if needed (currently appends as they finish)
+        // For example, if you wanted to sort by finishTime strictly:
+        // racersData.sort((a, b) => a.finishTime - b.finishTime);
+        // standupOrderList.innerHTML = ''; // Clear and re-populate
+        // racersData.forEach(r => { /* ... add li ... */ });
+        cancelAnimationFrame(animationFrameId);
+      } else {
+        animationFrameId = requestAnimationFrame(raceTick);
+      }
+    }
+
+    function updateNamesFromInput() {
+      const inputText = namesInput.value.trim();
+      const newNames = inputText ? inputText.split(/[\n,]+/).map(name => name.trim()).filter(name => name.length > 0) : [];
+      originalNames = newNames.length > 0 ? [...newNames] : [...DEFAULT_NAMES];
+      namesInput.value = originalNames.join('\n');
+      saveNamesToStorage();
+      setupRacers(); // Re-setup racers with the new list
+      // Optionally hide config: toggleConfigArea(false);
+      if (raceInProgress) raceInProgress = false; // Stop current race if any
+    }
+
+    startRaceBtn.addEventListener('click', () => {
+      if (raceInProgress) return;
+
+      raceInProgress = true;
+      startRaceBtn.disabled = true;
+      startRaceBtn.textContent = "🚦 Racing...";
+
+      // Reset racers for a new race
+      setupRacers(); // This also clears the results list
+
+      animationFrameId = requestAnimationFrame(raceTick);
+    });
+
+    function toggleConfigArea(show) {
+      if (show === undefined) {
+        configArea.classList.toggle("config-hidden");
+      } else if (show) {
+        configArea.classList.remove("config-hidden");
+      } else {
+        configArea.classList.add("config-hidden");
+      }
+      settingsToggleBtn.textContent = configArea.classList.contains("config-hidden") ? "⚙️ Show Settings" : "⚙️ Hide Settings";
+    }
+
+    settingsToggleBtn.addEventListener("click", () => toggleConfigArea());
+    updateNamesBtn.addEventListener("click", updateNamesFromInput);
+
+    // Initial setup
+    loadNamesFromStorage();
+    setupRacers();
+    toggleConfigArea(false); // Hide config by default
+  </script>
+
+</body>
+
+</html>
