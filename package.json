@@ -5,7 +5,7 @@
     "description": "A fun and interactive collection of mini-games designed to liven up team activities! Perfect for adding a bit of engagement to daily meetings or team-building sessions",
     "browserslist": "> 0.5%, last 2 versions, not dead",
     "scripts": {
-        "start": "parcel $(find . -name index.html  -not -path './dist/*') --no-source-maps",
+        "start": "parcel $(find . -name index.html  -not -path './dist/*') --no-source-maps && cp -r public/* dist/",
         "build": "parcel build $(find . -name index.html) --no-source-maps && cp -r public/* dist/"
     },
     "devDependencies": {
