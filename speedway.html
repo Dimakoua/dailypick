@@ -193,6 +193,48 @@
    font-size: 0.95em;
    margin-bottom: 10px; /* Space before update button */
  }
+
+ /* Responsive adjustments for smaller screens */
+ @media (max-width: 768px) {
+   body {
+     padding: 15px; /* Reduce body padding */
+     min-height: calc(100vh - 30px);
+   }
+
+   h1 {
+     font-size: 2em; /* Smaller heading */
+     margin-bottom: 20px;
+   }
+
+   #settingsToggleBtn {
+     /* Keep settings button accessible, could be adjusted if it overlaps with a centered config area */
+     /* For now, its absolute positioning relative to body might still be okay */
+   }
+
+   #config-area {
+     position: relative; /* Change from absolute to flow with content */
+     top: auto;
+     right: auto;
+     width: 95%;
+     max-width: 500px; /* Allow it to be reasonably wide but not overly so */
+     margin: 15px auto 20px auto; /* Center it and add some vertical margin */
+     z-index: 1; /* Ensure it's above static content if needed, but likely fine */
+   }
+
+   .game-layout {
+     flex-direction: column; /* Stack track and results vertically */
+     align-items: center;   /* Center items when stacked */
+     width: 100%;           /* Take full available width */
+     gap: 15px;             /* Reduce gap when stacked */
+   }
+
+   #track-container,
+   #results-area {
+     flex: none; /* Reset flex sizing */
+     width: 95%; /* Allow them to take most of the width */
+     max-width: none; /* Remove max-width constraint when stacked */
+   }
+ }
 </style>
 </head>
 <body>
