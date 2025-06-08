@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Time! Your Cozy Corner</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6; /* Soft off-white */
+            color: #5d5d5d; /* Dark grey for text */
+            margin: 0;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .main-container {
+            background-color: #ffffff; /* Clean white */
+            padding: 35px 45px;
+            border-radius: 20px; /* Softer, larger radius */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /* Softer shadow */
+            max-width: 800px;
+            width: 90%;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeInSmoothly 0.7s 0.2s ease-out forwards;
+        }
+
+        h1 {
+            font-size: 2.6em;
+            margin: 0 0 15px 0;
+            color: #3498db; /* Friendly blue */
+            font-weight: 700;
+        }
+
+        .sub-header {
+            font-size: 1.15em;
+            margin-bottom: 40px;
+            color: #7f8c8d; /* Muted grey */
+        }
+
+        .game-selection-area {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .game-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 25px 20px;
+            background-color: #f9f9f9; /* Very light grey for cards */
+            border: 1px solid #e0e0e0;
+            border-radius: 15px;
+            text-decoration: none;
+            color: #333;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .game-card:hover,
+        .game-card:focus {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(52, 152, 219, 0.15); /* Blueish shadow on hover */
+            border-color: #3498db;
+            outline: none; /* Custom focus handled by shadow and border */
+        }
+
+        .game-card .icon {
+            font-size: 2.8em; /* Larger emoji icons */
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .game-card:hover .icon,
+        .game-card:focus .icon {
+            transform: rotate(-10deg) scale(1.1);
+        }
+
+        .game-card h2 {
+            font-size: 1.4em;
+            margin: 0 0 8px 0;
+            color: #2980b9; /* Darker blue for titles */
+            font-weight: 600;
+        }
+
+        .game-card .description {
+            font-size: 0.9em;
+            color: #6c7a89; /* Softer grey for description */
+            line-height: 1.5;
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            font-size: 0.95em;
+            color: #95a5a6; /* Light grey for footer */
+        }
+
+        .footer-note strong {
+            color: #3498db;
+            font-weight: 600;
+        }
+
+        @keyframes fadeInSmoothly {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1>Streamline Your Stand-ups!</h1>
+        <p class="sub-header">Make daily stand-ups more engaging and fair. Choose a fun way to set the speaking order, or just enjoy a quick team-building moment!</p>
+
+        <div class="game-selection-area">
+            <a href="wheel.html" class="game-card" aria-label="Play Wheel of Standup">
+                <span class="icon" role="img" aria-hidden="true">🎡</span>
+                <h2>Wheel of Standup</h2>
+                <span class="description">A fair and fun spin to decide who shares updates next. Quick, easy, and no more 'who's first?' dilemmas!</span>
+            </a>
+            <a href="speedway.html" class="game-card" aria-label="Play Stand-up Speedway">
+                <span class="icon" role="img" aria-hidden="true">🐢</span>
+                <h2>Stand-up Speedway</h2>
+                <span class="description">A delightful turtle race to determine your team's stand-up sequence. May the best colleague (and their turtle) win!</span>
+            </a>
+            <a href="trap.html" class="game-card" aria-label="Play Trap!">
+                <span class="icon" role="img" aria-hidden="true">🎯</span>
+                <h2>Trap!</h2>
+                <span class="description">A lighthearted game of strategy. Great for a quick team brain-teaser or deciding who tackles the next coffee run!</span>
+            </a>
+            <!-- Add more game cards here in the same format -->
+        </div>
+
+        <p class="footer-note">
+            Crafted to bring a smile to your workday and make <strong>team sync-ups</strong> a breeze. Enjoy!
+        </p>
+    </div>
+</body>
+</html>

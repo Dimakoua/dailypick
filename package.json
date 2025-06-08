@@ -1,0 +1,10 @@
+{
+  "name": "dailypick",
+  "version": "1.0.0",
+  "description": "A fun and interactive collection of mini-games designed to liven up team activities! Perfect for adding a bit of engagement to daily meetings or team-building sessions",
+  "source": "src/index.html",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build"
+  }
+}

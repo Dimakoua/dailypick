@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8" />
+   <title>Trap!</title>
+   <style>
+       body {
+           background: #111;
+           color: #eee;
+           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+           text-align: center;
+           padding: 20px;
+       }
+
+       canvas {
+           background: #222;
+           border: 3px solid #555;
+           display: block;
+           margin: 20px auto;
+           border-radius: 10px;
+       }
+
+       button {
+           font-size: 1.3em;
+           padding: 12px 25px;
+           background: #ff5722;
+           border: none;
+           border-radius: 8px;
+           cursor: pointer;
+           color: white;
+           transition: background 0.3s;
+       }
+
+       button:hover {
+           background: #e64a19;
+       }
+
+       #info {
+           margin-top: 15px;
+           font-size: 1.2em;
+           min-height: 1.5em;
+       }
+   </style>
+</head>
+
+<body>
+
+   <h1>🎯 Trap</h1>
+   <canvas id="gameCanvas" width="500" height="400"></canvas>
+   <button id="trapBtn">🪤 Trap!</button>
+   <div id="info"></div>
+
+   <script>
+       const canvas = document.getElementById('gameCanvas');
+       const ctx = canvas.getContext('2d');
+       const trapBtn = document.getElementById('trapBtn');
+       const info = document.getElementById('info');
+
+       const names = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
+       const shapes = ['circle', 'square', 'triangle', 'star', 'hexagon', 'diamond'];
+       const colors = [
+           '#f44336', // red
+           '#2196f3', // blue
+           '#4caf50', // green
+           '#ffeb3b', // yellow
+           '#9c27b0', // purple
+           '#00bcd4', // cyan
+           '#ff9800', // orange
+           '#e91e63', // pink
+           '#8bc34a', // light green
+           '#3f51b5', // indigo
+           '#795548', // brown
+       ];
+
+       // Assign random shape and color for each team member
+       let members = names.map(name => ({
+           name,
+           shape: shapes[Math.floor(Math.random() * shapes.length)],
+           color: colors[Math.floor(Math.random() * colors.length)],
+           x: Math.random() * (canvas.width - 40) + 20,
+           y: Math.random() * (canvas.height - 40) + 20,
+           vx: (Math.random() * 2 + 1.2) * (Math.random() < 0.5 ? 1 : -1),
+           vy: (Math.random() * 2 + 1.2) * (Math.random() < 0.5 ? 1 : -1),
+           trapped: false,
+       }));
+
+       const trapRadius = 60;
+       let trap = null; // {x,y}
+       let trapActive = false; // waiting for first user to enter trap if empty
+
+       function drawShape(m) {
+           ctx.fillStyle = m.color;
+           ctx.strokeStyle = 'black';
+           ctx.lineWidth = 2;
+
+           ctx.beginPath();
+           switch (m.shape) {
+               case 'circle':
+                   ctx.arc(m.x, m.y, 15, 0, Math.PI * 2);
+                   ctx.fill();
+                   ctx.stroke();
+                   break;
+
+               case 'square':
+                   ctx.rect(m.x - 15, m.y - 15, 30, 30);
+                   ctx.fill();
+                   ctx.stroke();
+                   break;
+
+               case 'triangle':
+                   ctx.moveTo(m.x, m.y - 17);
+                   ctx.lineTo(m.x + 15, m.y + 15);
+                   ctx.lineTo(m.x - 15, m.y + 15);
+                   ctx.closePath();
+                   ctx.fill();
+                   ctx.stroke();
+                   break;
+
+               case 'star':
+                   drawStar(m.x, m.y, 5, 15, 6);
+                   ctx.fill();
+                   ctx.stroke();
+                   break;
+
+               case 'hexagon':
+                   drawPolygon(m.x, m.y, 6, 15);
+                   ctx.fill();
+                   ctx.stroke();
+                   break;
+
+               case 'diamond':
+                   ctx.moveTo(m.x, m.y - 17);
+                   ctx.lineTo(m.x + 15, m.y);
+                   ctx.lineTo(m.x, m.y + 17);
+                   ctx.lineTo(m.x - 15, m.y);
+                   ctx.closePath();
+                   ctx.fill();
+                   ctx.stroke();
+                   break;
+           }
+
+           // Draw name below
+           ctx.fillStyle = 'white';
+           ctx.font = '12px Arial';
+           ctx.textAlign = 'center';
+           ctx.fillText(m.name, m.x, m.y + 32);
+
+           // Highlight trapped members
+           if (m.trapped) {
+               ctx.strokeStyle = 'red';
+               ctx.lineWidth = 4;
+               ctx.beginPath();
+
+               switch (m.shape) {
+                   case 'circle':
+                       ctx.arc(m.x, m.y, 20, 0, Math.PI * 2);
+                       ctx.stroke();
+                       break;
+
+                   case 'square':
+                       ctx.rect(m.x - 20, m.y - 20, 40, 40);
+                       ctx.stroke();
+                       break;
+
+                   case 'triangle':
+                       ctx.moveTo(m.x, m.y - 22);
+                       ctx.lineTo(m.x + 20, m.y + 20);
+                       ctx.lineTo(m.x - 20, m.y + 20);
+                       ctx.closePath();
+                       ctx.stroke();
+                       break;
+
+                   case 'star':
+                       drawStar(m.x, m.y, 5, 20, 8); // Slightly bigger star outline
+                       ctx.stroke();
+                       break;
+
+                   case 'hexagon':
+                       drawPolygon(m.x, m.y, 6, 20);
+                       ctx.stroke();
+                       break;
+
+                   case 'diamond':
+                       ctx.moveTo(m.x, m.y - 22);
+                       ctx.lineTo(m.x + 20, m.y);
+                       ctx.lineTo(m.x, m.y + 22);
+                       ctx.lineTo(m.x - 20, m.y);
+                       ctx.closePath();
+                       ctx.stroke();
+                       break;
+               }
+           }
+       }
+
+       function drawStar(cx, cy, spikes, outerRadius, innerRadius) {
+           let rot = Math.PI / 2 * 3;
+           let x = cx;
+           let y = cy;
+           const step = Math.PI / spikes;
+
+           ctx.beginPath();
+           ctx.moveTo(cx, cy - outerRadius);
+           for (let i = 0; i < spikes; i++) {
+               x = cx + Math.cos(rot) * outerRadius;
+               y = cy + Math.sin(rot) * outerRadius;
+               ctx.lineTo(x, y);
+               rot += step;
+
+               x = cx + Math.cos(rot) * innerRadius;
+               y = cy + Math.sin(rot) * innerRadius;
+               ctx.lineTo(x, y);
+               rot += step;
+           }
+           ctx.lineTo(cx, cy - outerRadius);
+           ctx.closePath();
+       }
+
+       function drawPolygon(cx, cy, sides, radius) {
+           const angle = (2 * Math.PI) / sides;
+           ctx.beginPath();
+           for (let i = 0; i < sides; i++) {
+               const x = cx + radius * Math.cos(i * angle - Math.PI / 2);
+               const y = cy + radius * Math.sin(i * angle - Math.PI / 2);
+               if (i === 0) ctx.moveTo(x, y);
+               else ctx.lineTo(x, y);
+           }
+           ctx.closePath();
+       }
+
+       function moveMembers() {
+           members.forEach(m => {
+               if (m.trapped) return; // trapped don't move
+
+               m.x += m.vx;
+               m.y += m.vy;
+
+               if (m.x < 15) {
+                   m.x = 15;
+                   m.vx = -m.vx;
+               } else if (m.x > canvas.width - 15) {
+                   m.x = canvas.width - 15;
+                   m.vx = -m.vx;
+               }
+               if (m.y < 15) {
+                   m.y = 15;
+                   m.vy = -m.vy;
+               } else if (m.y > canvas.height - 15) {
+                   m.y = canvas.height - 15;
+                   m.vy = -m.vy;
+               }
+           });
+       }
+
+       function drawTrap() {
+           if (!trap) return;
+           ctx.beginPath();
+           ctx.strokeStyle = 'red';
+           ctx.lineWidth = 4;
+           ctx.setLineDash([10, 5]);
+           ctx.arc(trap.x, trap.y, trapRadius, 0, Math.PI * 2);
+           ctx.stroke();
+           ctx.setLineDash([]);
+
+           // Draw the mic emoji inside trap circle
+           ctx.font = '40px serif'; // Big enough to fit nicely
+           ctx.textAlign = 'center';
+           ctx.textBaseline = 'middle';
+           ctx.fillText('🎤', trap.x, trap.y);
+       }
+
+function celebrateFinalUser(user) {
+   const cards = [];
+   const cardCount = 60;
+   const startY = canvas.height - 50;
+
+   for (let i = 0; i < cardCount; i++) {
+       const fromLeft = i % 2 === 0;
+
+       cards.push({
+           x: fromLeft ? 30 : canvas.width - 30,
+           y: startY,
+           vx: (fromLeft ? 1 : -1) * (4 + Math.random() * 3),
+           vy: -12 - Math.random() * 5,
+           gravity: 0.5,
+           rotation: 0,
+           rotationSpeed: (Math.random() - 0.5) * 0.3,
+           delay: i * 5,
+           active: false,
+           color: user.color,
+           bounces: 0,
+           trail: []
+       });
+   }
+
+   let frame = 0;
+
+   function animate() {
+       ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+       ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+       for (const card of cards) {
+           if (!card.active && frame > card.delay) {
+               card.active = true;
+           }
+
+           if (card.active) {
+               // Update physics
+               card.vy += card.gravity;
+               card.x += card.vx;
+               card.y += card.vy;
+               card.rotation += card.rotationSpeed;
+
+               // Store trail point
+               card.trail.push({ x: card.x, y: card.y });
+               if (card.trail.length > 40) card.trail.shift(); // <- longer trail
+
+               // Bounce off walls
+               if (card.x < 10 || card.x > canvas.width - 10) {
+                   card.vx *= -1;
+               }
+
+               // Bounce off floor
+               if (card.y > canvas.height - 20) {
+                   card.y = canvas.height - 20;
+                   card.vy *= -0.9;
+                   card.bounces++;
+                   if (card.bounces < 6) {
+                       card.vy -= 5 + Math.random() * 5;
+                   }
+               }
+
+               // Draw trail
+               for (let i = 0; i < card.trail.length; i++) {
+                   const point = card.trail[i];
+                   const alpha = i / card.trail.length;
+
+                   ctx.save();
+                   ctx.globalAlpha = alpha * 0.8; // soft tail fade
+                   ctx.fillStyle = card.color;
+                   ctx.translate(point.x, point.y);
+                   ctx.rotate(card.rotation);
+                   ctx.fillRect(-10, -7, 20, 14);
+                   ctx.restore();
+               }
+
+               // Draw actual card
+               ctx.save();
+               ctx.globalAlpha = 1;
+               ctx.translate(card.x, card.y);
+               ctx.rotate(card.rotation);
+               ctx.fillStyle = card.color;
+               ctx.fillRect(-20, -15, 40, 30);
+               ctx.strokeStyle = 'white';
+               ctx.lineWidth = 2;
+               ctx.strokeRect(-20, -15, 40, 30);
+               ctx.restore();
+           }
+       }
+
+       frame++;
+       requestAnimationFrame(animate);
+   }
+   animate();
+}
+
+       function drawCelebrationShape(obj, x, y) {
+           ctx.fillStyle = obj.color;
+           ctx.strokeStyle = 'white';
+           ctx.lineWidth = 2;
+
+           ctx.beginPath();
+           switch (obj.shape) {
+               case 'circle':
+                   ctx.arc(x, y, 15, 0, Math.PI * 2);
+                   break;
+               case 'square':
+                   ctx.rect(x - 15, y - 15, 30, 30);
+                   break;
+               case 'triangle':
+                   ctx.moveTo(x, y - 17);
+                   ctx.lineTo(x + 15, y + 15);
+                   ctx.lineTo(x - 15, y + 15);
+                   ctx.closePath();
+                   break;
+               case 'star':
+                   drawStar(x, y, 5, 15, 6);
+                   break;
+               case 'hexagon':
+                   drawPolygon(x, y, 6, 15);
+                   break;
+               case 'diamond':
+                   ctx.moveTo(x, y - 17);
+                   ctx.lineTo(x + 15, y);
+                   ctx.lineTo(x, y + 17);
+                   ctx.lineTo(x - 15, y);
+                   ctx.closePath();
+                   break;
+           }
+
+           ctx.fill();
+           ctx.stroke();
+       }
+
+
+
+       function checkTrap() {
+           if (!trap) return [];
+
+           if (members.length === 1) {
+               const lastUser = members[0];
+               info.textContent = `🎉 Final user: ${lastUser.name}!`;
+               trap = null;
+               trapActive = false;
+
+               // Stop the game loop by not calling gameLoop again
+               setTimeout(() => celebrateFinalUser(lastUser), 1000);
+           }
+
+           if (trapActive) {
+               // Waiting for first member to enter trap area
+               for (const m of members) {
+                   if (m.trapped) continue;
+                   const dx = m.x - trap.x;
+                   const dy = m.y - trap.y;
+                   if (Math.sqrt(dx * dx + dy * dy) <= trapRadius) {
+                       m.trapped = true;
+                       trapActive = false;
+                       info.textContent = `Trap caught: ${m.name}! Confirm by pressing Trap again.`;
+                       return [m];
+                   }
+               }
+               return [];
+           } else {
+               // Trap is placed and trapActive is false - get trapped members (should be 0 or 1)
+               const trappedMembers = members.filter(m => {
+                   const dx = m.x - trap.x;
+                   const dy = m.y - trap.y;
+                   return Math.sqrt(dx * dx + dy * dy) <= trapRadius && m.trapped;
+               });
+               return trappedMembers;
+           }
+       }
+
+       function gameLoop() {
+           ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+           moveMembers();
+
+           if (trap && trapActive) {
+               checkTrap();
+           }
+
+           drawTrap();
+
+           members.forEach(drawShape);
+
+           requestAnimationFrame(gameLoop);
+       }
+
+       trapBtn.addEventListener('click', () => {
+           if (members.length === 0) {
+               info.textContent = "✅ All team members have been selected!";
+               trap = null;
+               trapActive = false;
+               return;
+           }
+
+           if (trap) {
+               // Confirm selection and remove trapped member
+               const trapped = members.filter(m => m.trapped);
+               if (trapped.length > 0) {
+                   members = members.filter(m => !m.trapped);
+                   trap = null;
+                   trapActive = false;
+                   members.forEach(m => m.trapped = false);
+               } else {
+                   trap = null;
+                   trapActive = false;
+               }
+           } else {
+               // Place new trap randomly
+               const margin = trapRadius + 10;
+               trap = {
+                   x: Math.random() * (canvas.width - margin * 2) + margin,
+                   y: Math.random() * (canvas.height - margin * 2) + margin
+               };
+               trapActive = true;
+           }
+       });
+
+       gameLoop();
+   </script>
+
+</body>
+
+</html>
