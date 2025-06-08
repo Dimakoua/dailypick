@@ -2,660 +2,690 @@
 <html lang="en">
 
 <head>
-   <meta charset="UTF-8" />
-   <title>Trap!</title>
-   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
-   <style>
-       body {
-           font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-           background-color: #f4f7f6; /* Soft off-white from index.html */
-           color: #5d5d5d; /* Dark grey text from index.html */
-           text-align: center;
-           margin: 0;
-           padding: 20px;
-           display: flex;
-           flex-direction: column;
-           align-items: center;
-           min-height: calc(100vh - 40px); /* Account for padding */
-       }
+    <meta charset="UTF-8" />
+    <title>Trap!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            /* Soft off-white from index.html */
+            color: #5d5d5d;
+            /* Dark grey text from index.html */
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: calc(100vh - 40px);
+            /* Account for padding */
+        }
 
-       h1 {
-           font-size: 2.6em;
-           margin: 0 0 25px 0;
-           color: #3498db; /* Friendly blue from index.html */
-           font-weight: 700;
-       }
+        h1 {
+            font-size: 2.6em;
+            margin: 0 0 25px 0;
+            color: #3498db;
+            /* Friendly blue from index.html */
+            font-weight: 700;
+        }
 
-       #settingsToggleBtn {
-           position: absolute;
-           top: 20px;
-           right: 20px;
-           padding: 10px 18px;
-           font-size: 1em;
-           background-color: #3498db; /* Friendly blue */
-           color: #ffffff;
-           border: none;
-           border-radius: 8px;
-           cursor: pointer;
-           transition: background-color 0.3s ease;
-           font-weight: 600;
-       }
-       #settingsToggleBtn:hover {
-           background-color: #2980b9; /* Darker blue */
-       }
+        #settingsToggleBtn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 18px;
+            font-size: 1em;
+            background-color: #3498db;
+            /* Friendly blue */
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: 600;
+        }
 
-       #config-area {
-           position: absolute;
-           top: 75px; 
-           right: 20px;
-           background-color: #ffffff; 
-           padding: 25px 30px;
-           border-radius: 15px; 
-           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); 
-           border: 1px solid #e0e0e0; 
-           max-width: 450px;
-           z-index: 20;
-           text-align: left;
-       }
-       #config-area label {
-           display: block;
-           margin-bottom: 8px;
-           font-size: 1em;
-           color: #7f8c8d; 
-           font-weight: 600;
-       }
-       .config-hidden {
-           display: none;
-       }
+        #settingsToggleBtn:hover {
+            background-color: #2980b9;
+            /* Darker blue */
+        }
+
+        #config-area {
+            position: absolute;
+            top: 75px;
+            right: 20px;
+            background-color: #ffffff;
+            padding: 25px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e0e0e0;
+            max-width: 450px;
+            z-index: 20;
+            text-align: left;
+        }
+
+        #config-area label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1em;
+            color: #7f8c8d;
+            font-weight: 600;
+        }
+
+        .config-hidden {
+            display: none;
+        }
 
 
-       canvas {
-           background-color: #ffffff; /* Clean white */
-           border: 1px solid #e0e0e0; /* Light border from index.html */
-           display: block;
-           margin: 20px auto;
-           border-radius: 15px; /* Softer radius from index.html */
-           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /* Softer shadow from index.html */
-       }
+        canvas {
+            background-color: #ffffff;
+            /* Clean white */
+            border: 1px solid #e0e0e0;
+            /* Light border from index.html */
+            display: block;
+            margin: 20px auto;
+            border-radius: 15px;
+            /* Softer radius from index.html */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            /* Softer shadow from index.html */
+        }
 
-       button#trapBtn, button#updateNamesBtn { /* Target specific buttons */
-           font-size: 1.2em; /* Consistent with wheel.html */
-           padding: 12px 28px; /* Consistent with wheel.html */
-           background-color: #3498db; /* Friendly blue */
-           margin-top: 10px; /* Add some margin for updateNamesBtn */
-           border: none;
-           border-radius: 8px;
-           cursor: pointer;
-           color: #ffffff;
-           font-weight: 700;
-           transition: background-color 0.3s ease;
-       }
-       button#updateNamesBtn {
-           background-color: #e67e22; /* Orange like in wheel.html */
-       }
+        button#trapBtn,
+        button#updateNamesBtn {
+            /* Target specific buttons */
+            font-size: 1.2em;
+            /* Consistent with wheel.html */
+            padding: 12px 28px;
+            /* Consistent with wheel.html */
+            background-color: #3498db;
+            /* Friendly blue */
+            margin-top: 10px;
+            /* Add some margin for updateNamesBtn */
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            color: #ffffff;
+            font-weight: 700;
+            transition: background-color 0.3s ease;
+        }
 
-       button#trapBtn:hover, button#updateNamesBtn:hover {
-           background-color: #2980b9; /* Darker blue */
-       }
-       button#updateNamesBtn:hover {
-           background-color: #d35400; /* Darker orange */
-       }
+        button#updateNamesBtn {
+            background-color: #e67e22;
+            /* Orange like in wheel.html */
+        }
 
-       #info {
-           margin-top: 15px;
-           font-size: 1.3em; /* Slightly larger for info */
-           min-height: 1.5em;
-           color: #2980b9; /* Darker blue for emphasis */
-           font-weight: 600;
-       }
-       #namesInput { /* Style for textarea */
-           width: 95%;
-           min-height: 60px;
-           padding: 10px;
-           border-radius: 8px;
-           border: 1px solid #ccc;
-           background-color: #f9f9f9;
-           color: #5d5d5d;
-           font-family: 'Nunito', sans-serif;
-           font-size: 0.95em;
-           margin-bottom: 10px; /* Space before update button */
-       }
-   </style>
+        button#trapBtn:hover,
+        button#updateNamesBtn:hover {
+            background-color: #2980b9;
+            /* Darker blue */
+        }
+
+        button#updateNamesBtn:hover {
+            background-color: #d35400;
+            /* Darker orange */
+        }
+
+        #info {
+            margin-top: 15px;
+            font-size: 1.3em;
+            /* Slightly larger for info */
+            min-height: 1.5em;
+            color: #2980b9;
+            /* Darker blue for emphasis */
+            font-weight: 600;
+        }
+
+        #namesInput {
+            /* Style for textarea */
+            width: 95%;
+            min-height: 60px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            color: #5d5d5d;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.95em;
+            margin-bottom: 10px;
+            /* Space before update button */
+        }
+    </style>
 </head>
 
 <body>
-   <h1>🎯 Trap!</h1> <!-- Added exclamation to match title -->
+    <h1>🎯 Trap!</h1> <!-- Added exclamation to match title -->
 
-   <button id="settingsToggleBtn">⚙️ Show Settings</button>
-   <div id="config-area" class="config-hidden">
-       <label for="namesInput">Enter names (one per line or comma-separated):</label>
-       <textarea id="namesInput" rows="4"></textarea>
-       <button id="updateNamesBtn">Update List</button>
-   </div>
+    <button id="settingsToggleBtn">⚙️ Show Settings</button>
+    <div id="config-area" class="config-hidden">
+        <label for="namesInput">Enter names (one per line or comma-separated):</label>
+        <textarea id="namesInput" rows="4"></textarea>
+        <button id="updateNamesBtn">Update List</button>
+    </div>
 
-   <canvas id="gameCanvas" width="500" height="400"></canvas>
-   <button id="trapBtn">🪤 Trap!</button>
-   <div id="info"></div>
+    <canvas id="gameCanvas" width="500" height="400"></canvas>
+    <button id="trapBtn">🪤 Trap!</button>
+    <div id="info"></div>
 
-   <script>
-       const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
-       const LOCAL_STORAGE_KEY = 'namesList';
+    <script>
+        const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
+        const LOCAL_STORAGE_KEY = 'namesList';
 
-       const canvas = document.getElementById('gameCanvas');
-       const ctx = canvas.getContext('2d');
-       const trapBtn = document.getElementById('trapBtn');
-       const info = document.getElementById('info');
-       const settingsToggleBtn = document.getElementById("settingsToggleBtn");
-       const configArea = document.getElementById("config-area");
-       const namesInput = document.getElementById("namesInput");
-       const updateNamesBtn = document.getElementById("updateNamesBtn");
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const trapBtn = document.getElementById('trapBtn');
+        const info = document.getElementById('info');
+        const settingsToggleBtn = document.getElementById("settingsToggleBtn");
+        const configArea = document.getElementById("config-area");
+        const namesInput = document.getElementById("namesInput");
+        const updateNamesBtn = document.getElementById("updateNamesBtn");
 
-       let originalNames = [...DEFAULT_NAMES];
-       let members = [];
-       const shapes = ['circle', 'square', 'triangle', 'star', 'hexagon', 'diamond'];
-       const colors = [
-           '#f44336', // red
-           '#2196f3', // blue
-           '#4caf50', // green
-           '#ffeb3b', // yellow
-           '#9c27b0', // purple
-           '#00bcd4', // cyan
-           '#ff9800', // orange
-           '#e91e63', // pink
-           '#8bc34a', // light green
-           '#3f51b5', // indigo
-           '#795548', // brown
-       ];
+        let originalNames = [...DEFAULT_NAMES];
+        let members = [];
+        const shapes = ['circle', 'square', 'triangle', 'star', 'hexagon', 'diamond'];
+        const colors = [
+            '#e74c3c', // Alizarin
+            '#3498db', // Peter River
+            '#2ecc71', // Emerald
+            '#f1c40f', // Sun Flower
+            '#9b59b6', // Amethyst
+            '#e67e22', // Carrot
+            '#1abc9c', // Turquoise
+            '#34495e', // Wet Asphalt
+            '#d35400', // Pumpkin
+            '#27ae60', // Nephritis
+            '#c0392b', // Pomegranate
+        ];
 
-       const trapRadius = 60;
-       let trap = null; // {x,y}
-       let trapActive = false; // waiting for first user to enter trap if empty
+        const trapRadius = 60;
+        let trap = null; // {x,y}
+        let trapActive = false; // waiting for first user to enter trap if empty
 
-       function loadNamesFromStorage() {
-           const storedNamesJson = localStorage.getItem(LOCAL_STORAGE_KEY);
-           if (storedNamesJson) {
-               try {
-                   const storedNames = JSON.parse(storedNamesJson);
-                   if (Array.isArray(storedNames) && storedNames.length > 0) {
-                       originalNames = [...storedNames];
-                   }
-               } catch (e) {
-                   console.error("Error parsing names from localStorage:", e);
-                   originalNames = [...DEFAULT_NAMES];
-               }
-           } else {
-               originalNames = [...DEFAULT_NAMES];
-           }
-           namesInput.value = originalNames.join('\n');
-       }
+        function loadNamesFromStorage() {
+            const storedNamesJson = localStorage.getItem(LOCAL_STORAGE_KEY);
+            if (storedNamesJson) {
+                try {
+                    const storedNames = JSON.parse(storedNamesJson);
+                    if (Array.isArray(storedNames) && storedNames.length > 0) {
+                        originalNames = [...storedNames];
+                    }
+                } catch (e) {
+                    console.error("Error parsing names from localStorage:", e);
+                    originalNames = [...DEFAULT_NAMES];
+                }
+            } else {
+                originalNames = [...DEFAULT_NAMES];
+            }
+            namesInput.value = originalNames.join('\n');
+        }
 
-       function saveNamesToStorage() {
-           localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(originalNames));
-       }
+        function saveNamesToStorage() {
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(originalNames));
+        }
 
-       function initializeMembers(currentNames) {
-           members = currentNames.map(name => ({
-               name,
-               shape: shapes[Math.floor(Math.random() * shapes.length)],
-               color: colors[Math.floor(Math.random() * colors.length)],
-               x: Math.random() * (canvas.width - 40) + 20,
-               y: Math.random() * (canvas.height - 40) + 20,
-               vx: (Math.random() * 1.5 + 0.8) * (Math.random() < 0.5 ? 1 : -1), // Slightly slower base speed
-               vy: (Math.random() * 1.5 + 0.8) * (Math.random() < 0.5 ? 1 : -1),
-               trapped: false,
-           }));
-           trapBtn.disabled = members.length === 0;
-           if (members.length === 0 && originalNames.length > 0) {
-               info.textContent = "All names selected! Update list to play again.";
-           } else if (members.length === 0 && originalNames.length === 0) {
+        function initializeMembers(currentNames) {
+            members = currentNames.map(name => ({
+                name,
+                shape: shapes[Math.floor(Math.random() * shapes.length)],
+                color: colors[Math.floor(Math.random() * colors.length)],
+                x: Math.random() * (canvas.width - 40) + 20,
+                y: Math.random() * (canvas.height - 40) + 20,
+                vx: (Math.random() * 1.5 + 0.8) * (Math.random() < 0.5 ? 1 : -1), // Slightly slower base speed
+                vy: (Math.random() * 1.5 + 0.8) * (Math.random() < 0.5 ? 1 : -1),
+                trapped: false,
+            }));
+            trapBtn.disabled = members.length === 0;
+            if (members.length === 0 && originalNames.length > 0) {
+                info.textContent = "All names selected! Update list to play again.";
+            } else if (members.length === 0 && originalNames.length === 0) {
                 info.textContent = "Please add names to the list.";
-           }
-       }
+            }
+        }
 
-       function drawShape(m) {
-           ctx.fillStyle = m.color;
-           ctx.strokeStyle = 'black';
-           ctx.lineWidth = 2;
+        function drawShape(m) {
+            ctx.fillStyle = m.color;
+            ctx.strokeStyle = 'black';
+            ctx.lineWidth = 2;
 
-           ctx.beginPath();
-           switch (m.shape) {
-               case 'circle':
-                   ctx.arc(m.x, m.y, 15, 0, Math.PI * 2);
-                   ctx.fill();
-                   ctx.stroke();
-                   break;
+            ctx.beginPath();
+            switch (m.shape) {
+                case 'circle':
+                    ctx.arc(m.x, m.y, 15, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+                    break;
 
-               case 'square':
-                   ctx.rect(m.x - 15, m.y - 15, 30, 30);
-                   ctx.fill();
-                   ctx.stroke();
-                   break;
+                case 'square':
+                    ctx.rect(m.x - 15, m.y - 15, 30, 30);
+                    ctx.fill();
+                    ctx.stroke();
+                    break;
 
-               case 'triangle':
-                   ctx.moveTo(m.x, m.y - 17);
-                   ctx.lineTo(m.x + 15, m.y + 15);
-                   ctx.lineTo(m.x - 15, m.y + 15);
-                   ctx.closePath();
-                   ctx.fill();
-                   ctx.stroke();
-                   break;
+                case 'triangle':
+                    ctx.moveTo(m.x, m.y - 17);
+                    ctx.lineTo(m.x + 15, m.y + 15);
+                    ctx.lineTo(m.x - 15, m.y + 15);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.stroke();
+                    break;
 
-               case 'star':
-                   drawStar(m.x, m.y, 5, 15, 6);
-                   ctx.fill();
-                   ctx.stroke();
-                   break;
+                case 'star':
+                    drawStar(m.x, m.y, 5, 15, 6);
+                    ctx.fill();
+                    ctx.stroke();
+                    break;
 
-               case 'hexagon':
-                   drawPolygon(m.x, m.y, 6, 15);
-                   ctx.fill();
-                   ctx.stroke();
-                   break;
+                case 'hexagon':
+                    drawPolygon(m.x, m.y, 6, 15);
+                    ctx.fill();
+                    ctx.stroke();
+                    break;
 
-               case 'diamond':
-                   ctx.moveTo(m.x, m.y - 17);
-                   ctx.lineTo(m.x + 15, m.y);
-                   ctx.lineTo(m.x, m.y + 17);
-                   ctx.lineTo(m.x - 15, m.y);
-                   ctx.closePath();
-                   ctx.fill();
-                   ctx.stroke();
-                   break;
-           }
+                case 'diamond':
+                    ctx.moveTo(m.x, m.y - 17);
+                    ctx.lineTo(m.x + 15, m.y);
+                    ctx.lineTo(m.x, m.y + 17);
+                    ctx.lineTo(m.x - 15, m.y);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.stroke();
+                    break;
+            }
 
-           // Draw name below
-           ctx.fillStyle = '#5d5d5d'; // Dark grey for readability on white canvas
-           ctx.font = '12px Nunito, Arial, sans-serif';
-           ctx.textAlign = 'center';
-           ctx.fillText(m.name, m.x, m.y + 32);
+            // Draw name below
+            ctx.fillStyle = '#5d5d5d'; // Dark grey for readability on white canvas
+            ctx.font = '12px Nunito, Arial, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(m.name, m.x, m.y + 32);
 
-           // Highlight trapped members
-           if (m.trapped) {
-               ctx.strokeStyle = 'red';
-               ctx.lineWidth = 4;
-               ctx.beginPath();
+            // Highlight trapped members
+            if (m.trapped) {
+                ctx.strokeStyle = 'red';
+                ctx.lineWidth = 4;
+                ctx.beginPath();
 
-               switch (m.shape) {
-                   case 'circle':
-                       ctx.arc(m.x, m.y, 20, 0, Math.PI * 2);
-                       ctx.stroke();
-                       break;
+                switch (m.shape) {
+                    case 'circle':
+                        ctx.arc(m.x, m.y, 20, 0, Math.PI * 2);
+                        ctx.stroke();
+                        break;
 
-                   case 'square':
-                       ctx.rect(m.x - 20, m.y - 20, 40, 40);
-                       ctx.stroke();
-                       break;
+                    case 'square':
+                        ctx.rect(m.x - 20, m.y - 20, 40, 40);
+                        ctx.stroke();
+                        break;
 
-                   case 'triangle':
-                       ctx.moveTo(m.x, m.y - 22);
-                       ctx.lineTo(m.x + 20, m.y + 20);
-                       ctx.lineTo(m.x - 20, m.y + 20);
-                       ctx.closePath();
-                       ctx.stroke();
-                       break;
+                    case 'triangle':
+                        ctx.moveTo(m.x, m.y - 22);
+                        ctx.lineTo(m.x + 20, m.y + 20);
+                        ctx.lineTo(m.x - 20, m.y + 20);
+                        ctx.closePath();
+                        ctx.stroke();
+                        break;
 
-                   case 'star':
-                       drawStar(m.x, m.y, 5, 20, 8); // Slightly bigger star outline
-                       ctx.stroke();
-                       break;
+                    case 'star':
+                        drawStar(m.x, m.y, 5, 20, 8); // Slightly bigger star outline
+                        ctx.stroke();
+                        break;
 
-                   case 'hexagon':
-                       drawPolygon(m.x, m.y, 6, 20);
-                       ctx.stroke();
-                       break;
+                    case 'hexagon':
+                        drawPolygon(m.x, m.y, 6, 20);
+                        ctx.stroke();
+                        break;
 
-                   case 'diamond':
-                       ctx.moveTo(m.x, m.y - 22);
-                       ctx.lineTo(m.x + 20, m.y);
-                       ctx.lineTo(m.x, m.y + 22);
-                       ctx.lineTo(m.x - 20, m.y);
-                       ctx.closePath();
-                       ctx.stroke();
-                       break;
-               }
-           }
-       }
+                    case 'diamond':
+                        ctx.moveTo(m.x, m.y - 22);
+                        ctx.lineTo(m.x + 20, m.y);
+                        ctx.lineTo(m.x, m.y + 22);
+                        ctx.lineTo(m.x - 20, m.y);
+                        ctx.closePath();
+                        ctx.stroke();
+                        break;
+                }
+            }
+        }
 
-       function drawStar(cx, cy, spikes, outerRadius, innerRadius) {
-           let rot = Math.PI / 2 * 3;
-           let x = cx;
-           let y = cy;
-           const step = Math.PI / spikes;
+        function drawStar(cx, cy, spikes, outerRadius, innerRadius) {
+            let rot = Math.PI / 2 * 3;
+            let x = cx;
+            let y = cy;
+            const step = Math.PI / spikes;
 
-           ctx.beginPath();
-           ctx.moveTo(cx, cy - outerRadius);
-           for (let i = 0; i < spikes; i++) {
-               x = cx + Math.cos(rot) * outerRadius;
-               y = cy + Math.sin(rot) * outerRadius;
-               ctx.lineTo(x, y);
-               rot += step;
+            ctx.beginPath();
+            ctx.moveTo(cx, cy - outerRadius);
+            for (let i = 0; i < spikes; i++) {
+                x = cx + Math.cos(rot) * outerRadius;
+                y = cy + Math.sin(rot) * outerRadius;
+                ctx.lineTo(x, y);
+                rot += step;
 
-               x = cx + Math.cos(rot) * innerRadius;
-               y = cy + Math.sin(rot) * innerRadius;
-               ctx.lineTo(x, y);
-               rot += step;
-           }
-           ctx.lineTo(cx, cy - outerRadius);
-           ctx.closePath();
-       }
+                x = cx + Math.cos(rot) * innerRadius;
+                y = cy + Math.sin(rot) * innerRadius;
+                ctx.lineTo(x, y);
+                rot += step;
+            }
+            ctx.lineTo(cx, cy - outerRadius);
+            ctx.closePath();
+        }
 
-       function drawPolygon(cx, cy, sides, radius) {
-           const angle = (2 * Math.PI) / sides;
-           ctx.beginPath();
-           for (let i = 0; i < sides; i++) {
-               const x = cx + radius * Math.cos(i * angle - Math.PI / 2);
-               const y = cy + radius * Math.sin(i * angle - Math.PI / 2);
-               if (i === 0) ctx.moveTo(x, y);
-               else ctx.lineTo(x, y);
-           }
-           ctx.closePath();
-       }
+        function drawPolygon(cx, cy, sides, radius) {
+            const angle = (2 * Math.PI) / sides;
+            ctx.beginPath();
+            for (let i = 0; i < sides; i++) {
+                const x = cx + radius * Math.cos(i * angle - Math.PI / 2);
+                const y = cy + radius * Math.sin(i * angle - Math.PI / 2);
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+        }
 
-       function moveMembers() {
-           members.forEach(m => {
-               if (m.trapped) return; // trapped don't move
+        function moveMembers() {
+            members.forEach(m => {
+                if (m.trapped) return; // trapped don't move
 
-               m.x += m.vx;
-               m.y += m.vy;
+                m.x += m.vx;
+                m.y += m.vy;
 
-               if (m.x < 15) {
-                   m.x = 15;
-                   m.vx = -m.vx;
-               } else if (m.x > canvas.width - 15) {
-                   m.x = canvas.width - 15;
-                   m.vx = -m.vx;
-               }
-               if (m.y < 15) {
-                   m.y = 15;
-                   m.vy = -m.vy;
-               } else if (m.y > canvas.height - 15) {
-                   m.y = canvas.height - 15;
-                   m.vy = -m.vy;
-               }
-           });
-       }
+                if (m.x < 15) {
+                    m.x = 15;
+                    m.vx = -m.vx;
+                } else if (m.x > canvas.width - 15) {
+                    m.x = canvas.width - 15;
+                    m.vx = -m.vx;
+                }
+                if (m.y < 15) {
+                    m.y = 15;
+                    m.vy = -m.vy;
+                } else if (m.y > canvas.height - 15) {
+                    m.y = canvas.height - 15;
+                    m.vy = -m.vy;
+                }
+            });
+        }
 
-       function drawTrap() {
-           if (!trap) return;
-           ctx.beginPath();
-           ctx.strokeStyle = 'red';
-           ctx.lineWidth = 4;
-           ctx.setLineDash([10, 5]);
-           ctx.arc(trap.x, trap.y, trapRadius, 0, Math.PI * 2);
-           ctx.stroke();
-           ctx.setLineDash([]);
+        function drawTrap() {
+            if (!trap) return;
+            ctx.beginPath();
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 4;
+            ctx.setLineDash([10, 5]);
+            ctx.arc(trap.x, trap.y, trapRadius, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.setLineDash([]);
 
-           // Draw the mic emoji inside trap circle
-           ctx.font = '40px serif'; // Big enough to fit nicely
-           ctx.textAlign = 'center';
-           ctx.textBaseline = 'middle';
-           ctx.fillText('🎤', trap.x, trap.y);
-       }
+            // Draw the mic emoji inside trap circle
+            ctx.font = '40px serif'; // Big enough to fit nicely
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🎤', trap.x, trap.y);
+        }
 
-function celebrateFinalUser(user) {
-   const cards = [];
-   const cardCount = 60;
-   const startY = canvas.height - 50;
+        function celebrateFinalUser(user) {
+            const cards = [];
+            const cardCount = 60;
+            const startY = canvas.height - 50;
 
-   for (let i = 0; i < cardCount; i++) {
-       const fromLeft = i % 2 === 0;
+            for (let i = 0; i < cardCount; i++) {
+                const fromLeft = i % 2 === 0;
 
-       cards.push({
-           x: fromLeft ? 30 : canvas.width - 30,
-           y: startY,
-           vx: (fromLeft ? 1 : -1) * (4 + Math.random() * 3),
-           vy: -12 - Math.random() * 5,
-           gravity: 0.5,
-           rotation: 0,
-           rotationSpeed: (Math.random() - 0.5) * 0.3,
-           delay: i * 5,
-           active: false,
-           color: user.color,
-           bounces: 0,
-           trail: []
-       });
-   }
+                cards.push({
+                    x: fromLeft ? 30 : canvas.width - 30,
+                    y: startY,
+                    vx: (fromLeft ? 1 : -1) * (4 + Math.random() * 3),
+                    vy: -12 - Math.random() * 5,
+                    gravity: 0.5,
+                    rotation: 0,
+                    rotationSpeed: (Math.random() - 0.5) * 0.3,
+                    delay: i * 5,
+                    active: false,
+                    color: user.color,
+                    bounces: 0,
+                    trail: []
+                });
+            }
 
-   let frame = 0;
+            let frame = 0;
 
-   function animate() {
-       ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
-       ctx.fillRect(0, 0, canvas.width, canvas.height);
+            function animate() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-       for (const card of cards) {
-           if (!card.active && frame > card.delay) {
-               card.active = true;
-           }
+                for (const card of cards) {
+                    if (!card.active && frame > card.delay) {
+                        card.active = true;
+                    }
 
-           if (card.active) {
-               // Update physics
-               card.vy += card.gravity;
-               card.x += card.vx;
-               card.y += card.vy;
-               card.rotation += card.rotationSpeed;
+                    if (card.active) {
+                        // Update physics
+                        card.vy += card.gravity;
+                        card.x += card.vx;
+                        card.y += card.vy;
+                        card.rotation += card.rotationSpeed;
 
-               // Store trail point
-               card.trail.push({ x: card.x, y: card.y });
-               if (card.trail.length > 40) card.trail.shift(); // <- longer trail
+                        // Store trail point
+                        card.trail.push({ x: card.x, y: card.y });
+                        if (card.trail.length > 40) card.trail.shift(); // <- longer trail
 
-               // Bounce off walls
-               if (card.x < 10 || card.x > canvas.width - 10) {
-                   card.vx *= -1;
-               }
+                        // Bounce off walls
+                        if (card.x < 10 || card.x > canvas.width - 10) {
+                            card.vx *= -1;
+                        }
 
-               // Bounce off floor
-               if (card.y > canvas.height - 20) {
-                   card.y = canvas.height - 20;
-                   card.vy *= -0.9;
-                   card.bounces++;
-                   if (card.bounces < 6) {
-                       card.vy -= 5 + Math.random() * 5;
-                   }
-               }
+                        // Bounce off floor
+                        if (card.y > canvas.height - 20) {
+                            card.y = canvas.height - 20;
+                            card.vy *= -0.9;
+                            card.bounces++;
+                            if (card.bounces < 6) {
+                                card.vy -= 5 + Math.random() * 5;
+                            }
+                        }
 
-               // Draw trail
-               for (let i = 0; i < card.trail.length; i++) {
-                   const point = card.trail[i];
-                   const alpha = i / card.trail.length;
+                        // Draw trail
+                        for (let i = 0; i < card.trail.length; i++) {
+                            const point = card.trail[i];
+                            const alpha = i / card.trail.length;
 
-                   ctx.save();
-                   ctx.globalAlpha = alpha * 0.8; // soft tail fade
-                   ctx.fillStyle = card.color;
-                   ctx.translate(point.x, point.y);
-                   ctx.rotate(card.rotation);
-                   ctx.fillRect(-10, -7, 20, 14);
-                   ctx.restore();
-               }
+                            ctx.save();
+                            ctx.globalAlpha = alpha * 0.8; // soft tail fade
+                            ctx.fillStyle = card.color;
+                            ctx.translate(point.x, point.y);
+                            ctx.rotate(card.rotation);
+                            ctx.fillRect(-10, -7, 20, 14);
+                            ctx.restore();
+                        }
 
-               // Draw actual card
-               ctx.save();
-               ctx.globalAlpha = 1;
-               ctx.translate(card.x, card.y);
-               ctx.rotate(card.rotation);
-               ctx.fillStyle = card.color;
-               ctx.fillRect(-20, -15, 40, 30);
-               ctx.strokeStyle = '#5d5d5d'; // Darker stroke for visibility
-               ctx.lineWidth = 2;
-               ctx.strokeRect(-20, -15, 40, 30);
-               ctx.restore();
-           }
-       }
+                        // Draw actual card
+                        ctx.save();
+                        ctx.globalAlpha = 1;
+                        ctx.translate(card.x, card.y);
+                        ctx.rotate(card.rotation);
+                        ctx.fillStyle = card.color;
+                        ctx.fillRect(-20, -15, 40, 30);
+                        ctx.strokeStyle = '#5d5d5d'; // Darker stroke for visibility
+                        ctx.lineWidth = 2;
+                        ctx.strokeRect(-20, -15, 40, 30);
+                        ctx.restore();
+                    }
+                }
 
-       frame++;
-       requestAnimationFrame(animate);
-   }
-   animate();
-}
+                frame++;
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
 
-       function drawCelebrationShape(obj, x, y) {
-           ctx.fillStyle = obj.color;
-           ctx.strokeStyle = 'white';
-           ctx.lineWidth = 2;
+        function drawCelebrationShape(obj, x, y) {
+            ctx.fillStyle = obj.color;
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 2;
 
-           ctx.beginPath();
-           switch (obj.shape) {
-               case 'circle':
-                   ctx.arc(x, y, 15, 0, Math.PI * 2);
-                   break;
-               case 'square':
-                   ctx.rect(x - 15, y - 15, 30, 30);
-                   break;
-               case 'triangle':
-                   ctx.moveTo(x, y - 17);
-                   ctx.lineTo(x + 15, y + 15);
-                   ctx.lineTo(x - 15, y + 15);
-                   ctx.closePath();
-                   break;
-               case 'star':
-                   drawStar(x, y, 5, 15, 6);
-                   break;
-               case 'hexagon':
-                   drawPolygon(x, y, 6, 15);
-                   break;
-               case 'diamond':
-                   ctx.moveTo(x, y - 17);
-                   ctx.lineTo(x + 15, y);
-                   ctx.lineTo(x, y + 17);
-                   ctx.lineTo(x - 15, y);
-                   ctx.closePath();
-                   break;
-           }
+            ctx.beginPath();
+            switch (obj.shape) {
+                case 'circle':
+                    ctx.arc(x, y, 15, 0, Math.PI * 2);
+                    break;
+                case 'square':
+                    ctx.rect(x - 15, y - 15, 30, 30);
+                    break;
+                case 'triangle':
+                    ctx.moveTo(x, y - 17);
+                    ctx.lineTo(x + 15, y + 15);
+                    ctx.lineTo(x - 15, y + 15);
+                    ctx.closePath();
+                    break;
+                case 'star':
+                    drawStar(x, y, 5, 15, 6);
+                    break;
+                case 'hexagon':
+                    drawPolygon(x, y, 6, 15);
+                    break;
+                case 'diamond':
+                    ctx.moveTo(x, y - 17);
+                    ctx.lineTo(x + 15, y);
+                    ctx.lineTo(x, y + 17);
+                    ctx.lineTo(x - 15, y);
+                    ctx.closePath();
+                    break;
+            }
 
-           ctx.fill();
-           ctx.stroke();
-       }
+            ctx.fill();
+            ctx.stroke();
+        }
 
-       function checkTrap() {
-           if (!trap) return [];
+        function checkTrap() {
+            if (!trap) return [];
 
-           // The end game logic (celebrating the final user) is now primarily handled
-           // within the trapBtn event listener when the last member is removed.
-           // This function now focuses only on who is currently inside an active trap.
+            // The end game logic (celebrating the final user) is now primarily handled
+            // within the trapBtn event listener when the last member is removed.
+            // This function now focuses only on who is currently inside an active trap.
 
-           if (trapActive) {
-               // Waiting for first member to enter trap area
-               for (const m of members) {
-                   if (m.trapped) continue;
-                   const dx = m.x - trap.x;
-                   const dy = m.y - trap.y;
-                   if (Math.sqrt(dx * dx + dy * dy) <= trapRadius) {
-                       m.trapped = true;
-                       trapActive = false;
-                       info.textContent = `🎯 ${m.name} in trap! Click 'Trap!' to confirm.`;
-                       return [m];
-                   }
-               }
-               return [];
-           } else {
-               // Trap is placed and trapActive is false - get trapped members (should be 0 or 1)
-               const trappedMembers = members.filter(m => {
-                   const dx = m.x - trap.x;
-                   const dy = m.y - trap.y;
-                   return Math.sqrt(dx * dx + dy * dy) <= trapRadius && m.trapped;
-               });
-               return trappedMembers;
-           }
-       }
+            if (trapActive) {
+                // Waiting for first member to enter trap area
+                for (const m of members) {
+                    if (m.trapped) continue;
+                    const dx = m.x - trap.x;
+                    const dy = m.y - trap.y;
+                    if (Math.sqrt(dx * dx + dy * dy) <= trapRadius) {
+                        m.trapped = true;
+                        trapActive = false;
+                        info.textContent = `🎯 ${m.name} in trap! Click 'Trap!' to confirm.`;
+                        return [m];
+                    }
+                }
+                return [];
+            } else {
+                // Trap is placed and trapActive is false - get trapped members (should be 0 or 1)
+                const trappedMembers = members.filter(m => {
+                    const dx = m.x - trap.x;
+                    const dy = m.y - trap.y;
+                    return Math.sqrt(dx * dx + dy * dy) <= trapRadius && m.trapped;
+                });
+                return trappedMembers;
+            }
+        }
 
-       function resetAndInitializeGame() {
-           initializeMembers(originalNames);
-           trap = null;
-           trapActive = false;
-           if (originalNames.length > 0) {
-               info.textContent = "List updated. Click 'Trap!' to begin.";
-           } else {
-               info.textContent = "Please add names to the list.";
-           }
-           trapBtn.disabled = originalNames.length === 0;
-       }
+        function resetAndInitializeGame() {
+            initializeMembers(originalNames);
+            trap = null;
+            trapActive = false;
+            if (originalNames.length > 0) {
+                info.textContent = "List updated. Click 'Trap!' to begin.";
+            } else {
+                info.textContent = "Please add names to the list.";
+            }
+            trapBtn.disabled = originalNames.length === 0;
+        }
 
-       function updateNamesFromInput() {
-           const inputText = namesInput.value.trim();
-           const newNames = inputText ? inputText.split(/[\n,]+/).map(name => name.trim()).filter(name => name.length > 0) : [];
-           originalNames = newNames.length > 0 ? [...newNames] : [...DEFAULT_NAMES]; // Fallback to default if input is empty
-           namesInput.value = originalNames.join('\n'); // Reflect the actual list used
-           saveNamesToStorage();
-           resetAndInitializeGame();
-       }
+        function updateNamesFromInput() {
+            const inputText = namesInput.value.trim();
+            const newNames = inputText ? inputText.split(/[\n,]+/).map(name => name.trim()).filter(name => name.length > 0) : [];
+            originalNames = newNames.length > 0 ? [...newNames] : [...DEFAULT_NAMES]; // Fallback to default if input is empty
+            namesInput.value = originalNames.join('\n'); // Reflect the actual list used
+            saveNamesToStorage();
+            resetAndInitializeGame();
+        }
 
-       function gameLoop() {
-           ctx.clearRect(0, 0, canvas.width, canvas.height);
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-           moveMembers();
+            moveMembers();
 
-           if (trap && trapActive) {
-               checkTrap();
-           }
+            if (trap && trapActive) {
+                checkTrap();
+            }
 
-           drawTrap();
+            drawTrap();
 
-           members.forEach(drawShape);
+            members.forEach(drawShape);
 
-           requestAnimationFrame(gameLoop);
-       }
+            requestAnimationFrame(gameLoop);
+        }
 
-       function toggleConfigArea(show) {
-           if (show === undefined) {
-               configArea.classList.toggle("config-hidden");
-           } else if (show) {
-               configArea.classList.remove("config-hidden");
-           } else {
-               configArea.classList.add("config-hidden");
-           }
-           settingsToggleBtn.textContent = configArea.classList.contains("config-hidden") ? "⚙️ Show Settings" : "⚙️ Hide Settings";
-       }
+        function toggleConfigArea(show) {
+            if (show === undefined) {
+                configArea.classList.toggle("config-hidden");
+            } else if (show) {
+                configArea.classList.remove("config-hidden");
+            } else {
+                configArea.classList.add("config-hidden");
+            }
+            settingsToggleBtn.textContent = configArea.classList.contains("config-hidden") ? "⚙️ Show Settings" : "⚙️ Hide Settings";
+        }
 
 
-       trapBtn.addEventListener('click', () => {
-           if (trap) { // Trap is set, this click is to confirm/remove or reset trap
-               const caughtMembers = members.filter(m => m.trapped);
-               if (caughtMembers.length > 0) {
-                   const caughtMember = caughtMembers[0]; // Process one at a time
-                   members = members.filter(m => m.name !== caughtMember.name); // Remove from active list
-                   
-                   trap = null;
-                   trapActive = false;
-                   members.forEach(m => m.trapped = false); // Clear trapped status for any remaining
+        trapBtn.addEventListener('click', () => {
+            if (trap) { // Trap is set, this click is to confirm/remove or reset trap
+                const caughtMembers = members.filter(m => m.trapped);
+                if (caughtMembers.length > 0) {
+                    const caughtMember = caughtMembers[0]; // Process one at a time
+                    members = members.filter(m => m.name !== caughtMember.name); // Remove from active list
 
-                   if (members.length === 0) {
-                       info.innerHTML = `🎉 <strong>${caughtMember.name}</strong> was the last one!`;
-                       celebrateFinalUser(caughtMember);
-                       trapBtn.disabled = true; // Game over, disable button
-                   } else {
-                       info.innerHTML = `<strong>${caughtMember.name}</strong> trapped! ${members.length} remaining. Place next trap.`;
-                   }
-               } else {
-                   // Trap was set, but no one was in it when clicked (or they moved out)
-                   info.textContent = "Trap missed! Place it again.";
-                   trap = null;
-                   trapActive = false;
-               }
-           } else { // No trap set, this click is to place a trap
-               if (members.length === 0) {
-                   // This case should ideally be handled by the button's disabled state
-                   info.textContent = originalNames.length > 0 ? "Game over! Update list to play again." : "Please add names to the list.";
-                   return;
-               }
-               const margin = trapRadius + 10;
-               trap = {
-                   x: Math.random() * (canvas.width - margin * 2) + margin,
-                   y: Math.random() * (canvas.height - margin * 2) + margin
-               };
-               trapActive = true;
-               info.textContent = "Trap placed! Waiting for a catch...";
-           }
-       });
+                    trap = null;
+                    trapActive = false;
+                    members.forEach(m => m.trapped = false); // Clear trapped status for any remaining
 
-       settingsToggleBtn.addEventListener("click", () => toggleConfigArea());
-       updateNamesBtn.addEventListener("click", updateNamesFromInput);
+                    if (members.length === 0) {
+                        info.innerHTML = `🎉 <strong>${caughtMember.name}</strong> was the last one!`;
+                        celebrateFinalUser(caughtMember);
+                        trapBtn.disabled = true; // Game over, disable button
+                    } else {
+                        info.innerHTML = `<strong>${caughtMember.name}</strong> trapped! ${members.length} remaining. Place next trap.`;
+                    }
+                } else {
+                    // Trap was set, but no one was in it when clicked (or they moved out)
+                    info.textContent = "Trap missed! Place it again.";
+                    trap = null;
+                    trapActive = false;
+                }
+            } else { // No trap set, this click is to place a trap
+                if (members.length === 0) {
+                    // This case should ideally be handled by the button's disabled state
+                    info.textContent = originalNames.length > 0 ? "Game over! Update list to play again." : "Please add names to the list.";
+                    return;
+                }
+                const margin = trapRadius + 10;
+                trap = {
+                    x: Math.random() * (canvas.width - margin * 2) + margin,
+                    y: Math.random() * (canvas.height - margin * 2) + margin
+                };
+                trapActive = true;
+                info.textContent = "Trap placed! Waiting for a catch...";
+            }
+        });
 
-       // Initial setup
-       loadNamesFromStorage();
-       initializeMembers(originalNames); // Initialize with loaded or default names
-       toggleConfigArea(false); // Hide config by default
+        settingsToggleBtn.addEventListener("click", () => toggleConfigArea());
+        updateNamesBtn.addEventListener("click", updateNamesFromInput);
 
-       gameLoop();
-   </script>
+        // Initial setup
+        loadNamesFromStorage();
+        initializeMembers(originalNames); // Initialize with loaded or default names
+        toggleConfigArea(false); // Hide config by default
+
+        gameLoop();
+    </script>
 
 </body>
 
