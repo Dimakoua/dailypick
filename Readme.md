@@ -23,11 +23,11 @@ The Game Hub is a masterfully crafted HTML page (with a sprinkle of CSS magic an
 
 1.  **Clone this repository** (if you're feeling fancy and want to host it yourself).
     ```bash
-    git clone https://your-repository-url.git
+    git clone git@github.com:Dimakoua/dailypick.git
     ```
 2.  **Navigate to the directory.**
     ```bash
-    cd your-project-directory
+    cd dailypick
     ```
 3.  **Open `index.html` in your favorite web browser.** Double-click it. Drag it into a browser window. Use a carrier pigeon to deliver the file path to your browser. Whatever works.
 4.  **Behold!** The Game Hub in all its glory.
