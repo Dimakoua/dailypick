@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Name Drop Pinball</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            font-family: sans-serif;
+            background: #111;
+            color: #fff;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #game-container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        canvas {
+            background: #222;
+            display: block;
+            flex-shrink: 0;
+        }
+
+        #sidebar {
+            width: 220px;
+            padding: 16px;
+            background: #1b1b1b;
+            box-shadow: inset 0 0 10px #000;
+            overflow-y: auto;
+        }
+
+        #sidebar h2 {
+            margin-top: 0;
+            font-weight: 600;
+        }
+
+        .name {
+            padding: 6px 4px;
+            border-bottom: 1px solid #444;
+            user-select: none;
+        }
+
+        .matched {
+            color: #0f0;
+            text-decoration: line-through;
+        }
+
+        #matched-names-container {
+            margin-top: 20px;
+            color: #0f0;
+            font-family: monospace;
+        }
+
+        #matched-names-list {
+            list-style: none;
+            padding-left: 10px;
+        }
+
+        #matched-names-list li {
+            margin-bottom: 6px;
+            opacity: 0.7;
+            transition: opacity 0.6s ease;
+        }
+
+        /* Animation: pulse glow */
+        .matched-animate {
+            animation: pulseGlow 1s ease forwards;
+        }
+
+        @keyframes pulseGlow {
+            0% {
+                opacity: 0.7;
+                text-shadow: none;
+            }
+
+            50% {
+                opacity: 1;
+                text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+            }
+
+            100% {
+                opacity: 0.9;
+                text-shadow: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="game-container">
+        <canvas id="game" width="800" height="600"></canvas>
+        <div id="sidebar">
+            <h2>Name List</h2>
+            <div id="name-list">
+                <div id="matched-names-container">
+                    <h3>Matched Names:</h3>
+                    <ul id="matched-names-list"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+
+</html>
