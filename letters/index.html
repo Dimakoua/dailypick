@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Falling Letters Pinball</title>
+    <style>
+        body { margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; background-color: #f0f0f0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        #gameContainer { display: flex; border: 2px solid #333; box-shadow: 0 0 15px rgba(0,0,0,0.2); background-color: #e0e0e0; }
+        #gameCanvas { border-right: 2px solid #333; display: block; }
+        #namesPanel { width: 250px; padding: 20px; background-color: #f9f9f9; overflow-y: auto; box-sizing: border-box; }
+        #namesPanel h2 { margin-top: 0; text-align: center; color: #333; }
+        .name-item { padding: 8px 5px; border-bottom: 1px solid #ddd; font-size: 16px; color: #555; transition: background-color 0.3s, transform 0.3s; }
+        .name-item.matched {
+            background-color: #c8e6c9; /* Light green */
+            color: #2e7d32; /* Darker green text */
+            font-weight: bold;
+            animation: highlightName 0.6s ease-in-out;
+            text-decoration: line-through;
+        }
+        @keyframes highlightName {
+            0% { transform: scale(1); background-color: #f9f9f9;}
+            50% { transform: scale(1.05); background-color: #a5d6a7; } /* Brighter green mid-animation */
+            100% { transform: scale(1); background-color: #c8e6c9; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Falling Letters Pinball</h1>
+    <div id="gameContainer">
+        <canvas id="gameCanvas"></canvas>
+        <div id="namesPanel">
+            <h2>Names to Match</h2>
+            <div id="namesList"></div>
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
