@@ -2,6 +2,7 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const namesPanel = document.getElementById('namesList');
 const restartButton = document.getElementById('restartButton');
+const appContainer = document.getElementById('appContainer');
 
 const CANVAS_WIDTH = 500;
 const CANVAS_HEIGHT = 650;
@@ -21,6 +22,11 @@ const GRAVITY = 0.08;
 const LETTER_SPAWN_INTERVAL = 500; // milliseconds
 let lastSpawnTime = 0;
 const LETTER_SIZE = 24;
+
+// Original dimensions for scaling logic
+const ORIGINAL_APP_WIDTH = 760; // Approx. width of h1 + gameContainer
+const ORIGINAL_APP_HEIGHT = 780; // Approx. height of h1 + gameContainer + button
+
 const DRAWER_HEIGHT = 60;
 const DRAWER_Y = CANVAS_HEIGHT - DRAWER_HEIGHT;
 
@@ -372,6 +378,29 @@ function setupObstacles() {
     obstacles.push(new Obstacle("bottom_peg", CANVAS_WIDTH / 2 - 7, DRAWER_Y - 30, 14, 14, 'circle', pinColor1));
 }
 
+function fitAppToScreen() {
+    if (!appContainer) return;
+
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
+    // Use a percentage of the viewport to leave some margin
+    const availableWidth = viewportWidth * 0.95;
+    const availableHeight = viewportHeight * 0.95;
+
+    const scaleX = availableWidth / ORIGINAL_APP_WIDTH;
+    const scaleY = availableHeight / ORIGINAL_APP_HEIGHT;
+
+    let scale = Math.min(scaleX, scaleY);
+
+    // Optional: Prevent upscaling beyond 1x if the original size fits comfortably
+    // if (ORIGINAL_APP_WIDTH <= availableWidth && ORIGINAL_APP_HEIGHT <= availableHeight) {
+    //     scale = Math.min(scale, 1);
+    // }
+
+    appContainer.style.transform = `scale(${scale})`;
+}
+
 function resetAndStartGame() {
     availableNames = [...initialNames];
     matchedNamesInOrder = []; // Reset the ordered list of matched names
@@ -395,6 +424,10 @@ function initGame() {
         restartButton.addEventListener('click', resetAndStartGame);
     }
     resetAndStartGame(); // Initial start of the game
+
+    // Add screen fitting logic
+    fitAppToScreen(); // Initial fit
+    window.addEventListener('resize', fitAppToScreen); // Fit on resize
 }
 
 initGame();
