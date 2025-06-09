@@ -103,23 +103,42 @@ class Obstacle {
     }
 }
 
-function getNeededStartingLetters() {
+function getNeededLettersToSpawn() {
     if (availableNames.length === 0) {
         return [];
     }
     const needed = new Set();
-    availableNames.forEach(name => {
-        if (name.length > 0) {
-            needed.add(name[0].toUpperCase());
+    const bufferLength = currentWordBuffer.length;
+
+    if (bufferLength === 0) { // No current prefix, need starting letters
+        availableNames.forEach(name => {
+            if (name.length > 0) {
+                needed.add(name[0].toUpperCase());
+            }
+        });
+    } else { // We have a prefix in currentWordBuffer, need the next letter
+        availableNames.forEach(name => {
+            const nameUpper = name.toUpperCase();
+            if (nameUpper.startsWith(currentWordBuffer) && nameUpper.length > bufferLength) {
+                needed.add(nameUpper[bufferLength]); // The character after the currentWordBuffer
+            }
+        });
+        // Fallback: If currentWordBuffer cannot be extended by any available name,
+        // revert to spawning any valid starting letter to break a potential deadlock.
+        if (needed.size === 0 && availableNames.length > 0) {
+             availableNames.forEach(name => {
+                if (name.length > 0) {
+                    needed.add(name[0].toUpperCase());
+                }
+            });
         }
-    });
+    }
     return Array.from(needed);
 }
 
 function spawnLetter() {
-    const neededChars = getNeededStartingLetters();
+    const neededChars = getNeededLettersToSpawn();
     let char;
-
     if (neededChars.length > 0) {
         char = neededChars[Math.floor(Math.random() * neededChars.length)];
     } else {
@@ -236,43 +255,64 @@ function checkCollisions() {
     });
 }
 
-function processLetterInDrawer(char) {
-    const currentAttempt = (currentWordBuffer + char).toUpperCase();
+// Helper function for completing a match
+function completeMatch(matchedName) {
+    animateMatchedName(matchedName);
+    matchedNamesInOrder.push(matchedName);
+    availableNames = availableNames.filter(n => n !== matchedName);
+    updateNamesDisplay();
+    currentWordBuffer = ""; // Reset buffer after a successful match
+}
 
-    let potentialMatches = availableNames.filter(name =>
+function processLetterInDrawer(char) {
+    const incomingCharUpper = char.toUpperCase();
+
+    // Scenario 1: Try extending the current buffer
+    const currentAttempt = (currentWordBuffer + incomingCharUpper).toUpperCase();
+    let potentialMatchesForAttempt = availableNames.filter(name =>
         name.toUpperCase().startsWith(currentAttempt)
     );
 
-    if (potentialMatches.length === 1) {
-        const matchedName = potentialMatches[0];
-        animateMatchedName(matchedName);
-        matchedNamesInOrder.push(matchedName); // Add to our ordered list
-        availableNames = availableNames.filter(n => n !== matchedName);
-        updateNamesDisplay();
-        currentWordBuffer = ""; // Reset buffer
-    } else if (potentialMatches.length > 1) {
-        currentWordBuffer = currentAttempt; // Extend buffer and wait
-    } else { // No match with the extended buffer
-        // Try with the current char alone
-        const charUpper = char.toUpperCase();
-        potentialMatches = availableNames.filter(name =>
-            name.toUpperCase().startsWith(charUpper)
+    if (potentialMatchesForAttempt.length === 1) {
+        completeMatch(potentialMatchesForAttempt[0]);
+        return;
+    }
+
+    if (potentialMatchesForAttempt.length > 1) {
+        currentWordBuffer = currentAttempt; // Extend buffer, still ambiguous
+        return;
+    }
+
+    // Scenario 2: currentAttempt matched 0 names.
+    // This means incomingCharUpper did not successfully extend currentWordBuffer.
+    // If currentWordBuffer itself was a valid prefix for multiple names,
+    // we want to keep it and discard incomingCharUpper for matching.
+    if (currentWordBuffer.length > 0) {
+        const potentialMatchesForExistingBuffer = availableNames.filter(name =>
+            name.toUpperCase().startsWith(currentWordBuffer)
         );
-        if (potentialMatches.length === 1) {
-            const matchedName = potentialMatches[0];
-            animateMatchedName(matchedName);
-            matchedNamesInOrder.push(matchedName); // Add to our ordered list
-            availableNames = availableNames.filter(n => n !== matchedName);
-            updateNamesDisplay();
-            currentWordBuffer = "";
-        } else if (potentialMatches.length > 1) {
-            currentWordBuffer = charUpper; // Start new buffer with current char
-        } else {
-            currentWordBuffer = ""; // No match at all, reset buffer
+        if (potentialMatchesForExistingBuffer.length > 1) {
+            // currentWordBuffer was a valid multi-match prefix (e.g., "A" for Aiden, Ava).
+            // The incomingCharUpper (e.g., "X") was not helpful.
+            // Keep currentWordBuffer as is and wait for a better letter.
+            return; // currentWordBuffer remains unchanged.
         }
     }
-}
 
+    // Scenario 3: currentAttempt matched 0, AND currentWordBuffer was not a multi-match prefix (or was empty).
+    // Try matching incomingCharUpper by itself as a new sequence start.
+    let potentialMatchesForSingleChar = availableNames.filter(name =>
+        name.toUpperCase().startsWith(incomingCharUpper)
+    );
+
+    if (potentialMatchesForSingleChar.length === 1) {
+        completeMatch(potentialMatchesForSingleChar[0]);
+    } else if (potentialMatchesForSingleChar.length > 1) {
+        currentWordBuffer = incomingCharUpper; // Start new buffer with this char
+    } else {
+        currentWordBuffer = ""; // No match at all, reset buffer
+    }
+}
 function gameLoop(timestamp) {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
