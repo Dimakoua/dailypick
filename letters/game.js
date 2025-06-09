@@ -1,6 +1,7 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const namesPanel = document.getElementById('namesList');
+const restartButton = document.getElementById('restartButton');
 
 const CANVAS_WIDTH = 500;
 const CANVAS_HEIGHT = 650;
@@ -12,9 +13,11 @@ let availableNames = [...initialNames];
 let fallingLetters = [];
 let obstacles = [];
 let currentWordBuffer = "";
+let gameLoopId = null;
+let gameIsOver = false;
 
 const GRAVITY = 0.08;
-const LETTER_SPAWN_INTERVAL = 2500; // milliseconds
+const LETTER_SPAWN_INTERVAL = 500; // milliseconds
 let lastSpawnTime = 0;
 const LETTER_SIZE = 24;
 const DRAWER_HEIGHT = 60;
@@ -29,6 +32,8 @@ class Letter {
         this.vx = (Math.random() - 0.5) * 1.5; // slight initial horizontal movement
         this.radius = LETTER_SIZE / 2;
         this.color = `hsl(${Math.random() * 360}, 80%, 60%)`;
+        this.rotation = 0;
+        this.angularVelocity = 0;
         this.hasBouncedThisFrame = {}; // Tracks bounces per obstacle per frame/short time
     }
 
@@ -36,6 +41,9 @@ class Letter {
         this.vy += GRAVITY;
         this.y += this.vy;
         this.x += this.vx;
+
+        this.rotation += this.angularVelocity;
+        this.angularVelocity *= 0.97; // Damping to slow down spin over time
 
         // Bounce off side walls
         if (this.x - this.radius < 0) {
@@ -50,15 +58,17 @@ class Letter {
     }
 
     draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+
         ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = "black";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.font = `bold ${LETTER_SIZE * 0.75}px Arial`;
-        ctx.fillText(this.char, this.x, this.y);
+        ctx.font = `bold ${LETTER_SIZE}px Arial`; // Use LETTER_SIZE more directly for font
+        ctx.fillText(this.char, 0, 0);
+
+        ctx.restore();
     }
 }
 
@@ -86,9 +96,30 @@ class Obstacle {
     }
 }
 
+function getNeededStartingLetters() {
+    if (availableNames.length === 0) {
+        return [];
+    }
+    const needed = new Set();
+    availableNames.forEach(name => {
+        if (name.length > 0) {
+            needed.add(name[0].toUpperCase());
+        }
+    });
+    return Array.from(needed);
+}
+
 function spawnLetter() {
-    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const char = alphabet[Math.floor(Math.random() * alphabet.length)];
+    const neededChars = getNeededStartingLetters();
+    let char;
+
+    if (neededChars.length > 0) {
+        char = neededChars[Math.floor(Math.random() * neededChars.length)];
+    } else {
+        // This should not happen if availableNames.length > 0 and spawnLetter is called.
+        return; // Don't spawn if no specifically needed starting letter is found.
+    }
+
     const x = Math.random() * (CANVAS_WIDTH - LETTER_SIZE * 2) + LETTER_SIZE;
     fallingLetters.push(new Letter(char, x, -LETTER_SIZE)); // Start off-screen
 }
@@ -185,9 +216,11 @@ function checkCollisions() {
 
             if (collided) {
                 letter.hasBouncedThisFrame[obstacle.id] = true;
+                // Add angular velocity for rotation
+                letter.angularVelocity += (Math.random() - 0.5) * 0.3; // Adjust spin intensity
+
                 setTimeout(() => { delete letter.hasBouncedThisFrame[obstacle.id]; }, 100); // Cooldown for this specific obstacle
-                 // Add a slight random spin for pinball feel
-                const spinFactor = 0.2 * (Math.random() - 0.5);
+                const spinFactor = 0.15 * (Math.random() - 0.5); // Keep existing pinball spin
                 letter.vx += -letter.vy * spinFactor * 0.1; // A bit of tangential velocity
                 letter.vy += letter.vx * spinFactor * 0.1;
             }
@@ -242,13 +275,13 @@ function gameLoop(timestamp) {
     ctx.fillText(currentWordBuffer || "DROP ZONE", CANVAS_WIDTH / 2, DRAWER_Y + DRAWER_HEIGHT / 2 + 8);
 
     // Spawn new letters
-    if (timestamp - lastSpawnTime > LETTER_SPAWN_INTERVAL) {
+    if (!gameIsOver && timestamp - lastSpawnTime > LETTER_SPAWN_INTERVAL) {
         if (availableNames.length > 0) { // Only spawn if names are left
             spawnLetter();
         }
         lastSpawnTime = timestamp;
     }
-
+    
     obstacles.forEach(obstacle => obstacle.draw());
 
     for (let i = fallingLetters.length - 1; i >= 0; i--) {
@@ -279,48 +312,84 @@ function gameLoop(timestamp) {
         ctx.fillStyle = "white";
         ctx.font = "bold 30px 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
         ctx.textAlign = "center";
-        ctx.fillText("All Names Matched!", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
-        // Consider adding a restart button here
+        ctx.fillText("All Names Matched!", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 15);
+        ctx.font = "16px 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+        ctx.fillText("Click Restart to play again.", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 20);
+
+        if (!gameIsOver) { // Show button only once
+            if(restartButton) restartButton.style.display = 'block';
+            gameIsOver = true;
+        }
         return; // Stop the game loop
     }
 
-    requestAnimationFrame(gameLoop);
+    gameLoopId = requestAnimationFrame(gameLoop);
+}
+
+function setupObstacles() {
+    obstacles = []; // Clear existing obstacles
+    const bumperColor = '#42a5f5'; // Blue
+    const pinColor1 = '#ff7043'; // Orange
+    const pinColor2 = '#66bb6a'; // Green
+    const guideColor = '#78909c'; // Blue-grey
+    const funnelColor = '#546e7a';   // Darker blue-grey
+
+    // Top bumpers to spread letters
+    obstacles.push(new Obstacle("top_bump1", CANVAS_WIDTH / 2 - 20, 80, 40, 40, 'circle', bumperColor));
+    obstacles.push(new Obstacle("top_bump2", CANVAS_WIDTH / 4, 130, 30, 30, 'circle', pinColor1));
+    obstacles.push(new Obstacle("top_bump3", CANVAS_WIDTH * 3 / 4 - 30, 130, 30, 30, 'circle', pinColor1));
+
+    // Side guides / walls
+    obstacles.push(new Obstacle("side_guide_L1", 20, 180, 20, 150, 'rect', guideColor));
+    obstacles.push(new Obstacle("side_guide_R1", CANVAS_WIDTH - 40, 180, 20, 150, 'rect', guideColor));
+
+    // Mid-field pins
+    obstacles.push(new Obstacle("mid_pin1", CANVAS_WIDTH / 2 - 60, 250, 25, 25, 'circle', pinColor2));
+    obstacles.push(new Obstacle("mid_pin2", CANVAS_WIDTH / 2 + 35, 250, 25, 25, 'circle', pinColor2));
+    obstacles.push(new Obstacle("mid_pin3", CANVAS_WIDTH / 2 - 12, 320, 25, 25, 'circle', bumperColor)); // Central
+
+    // Slanted deflectors
+    // For true slanted collision, polygon physics would be needed. These are rectangular approximations.
+    // We can simulate slants by making them thin and long, or by rotating them (which adds draw complexity if not using a library)
+    // For simplicity, using axis-aligned rectangles that guide.
+    obstacles.push(new Obstacle("slant_L", 80, 380, 100, 15, 'rect', guideColor));
+    obstacles.push(new Obstacle("slant_R", CANVAS_WIDTH - 180, 380, 100, 15, 'rect', guideColor));
+
+    // Lower funnel - creating a narrower passage
+    const funnelTopY = DRAWER_Y - 120;
+    const funnelOpeningWidth = 80; // How wide the opening to the drawer is
+    obstacles.push(new Obstacle("funnel_L_wall", 50, funnelTopY, CANVAS_WIDTH / 2 - 50 - funnelOpeningWidth / 2, 20, 'rect', funnelColor));
+    obstacles.push(new Obstacle("funnel_R_wall", CANVAS_WIDTH / 2 + funnelOpeningWidth / 2, funnelTopY, CANVAS_WIDTH / 2 - 50 - funnelOpeningWidth / 2, 20, 'rect', funnelColor));
+
+    obstacles.push(new Obstacle("funnel_L_slant", CANVAS_WIDTH / 2 - funnelOpeningWidth / 2 - 20, funnelTopY, 20, 100, 'rect', funnelColor));
+    obstacles.push(new Obstacle("funnel_R_slant", CANVAS_WIDTH / 2 + funnelOpeningWidth / 2, funnelTopY, 20, 100, 'rect', funnelColor));
+
+    // Small peg above drawer center to prevent letters getting stuck on the very edge of the funnel
+    obstacles.push(new Obstacle("bottom_peg", CANVAS_WIDTH / 2 - 7, DRAWER_Y - 30, 14, 14, 'circle', pinColor1));
+}
+
+function resetAndStartGame() {
+    availableNames = [...initialNames];
+    fallingLetters = [];
+    currentWordBuffer = "";
+    lastSpawnTime = performance.now(); 
+    gameIsOver = false;
+
+    // (id, x, y, width, height, type, color)
+    updateNamesDisplay();
+    if(restartButton) restartButton.style.display = 'none';
+    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT); // Clear canvas
+
+    if (gameLoopId) cancelAnimationFrame(gameLoopId); // Clear previous loop if any
+    gameLoopId = requestAnimationFrame(gameLoop);
 }
 
 function initGame() {
-    // Pinball-style obstacles
-    // (id, x, y, width, height, type, color)
-    obstacles.push(new Obstacle("bumper1", CANVAS_WIDTH / 2 - 25, 120, 50, 50, 'circle', '#ff7043')); // Orange bumper
-    obstacles.push(new Obstacle("bumper2", CANVAS_WIDTH / 2 - 100, 220, 40, 40, 'circle', '#42a5f5')); // Blue bumper
-    obstacles.push(new Obstacle("bumper3", CANVAS_WIDTH / 2 + 60, 220, 40, 40, 'circle', '#42a5f5')); // Blue bumper
-
-    obstacles.push(new Obstacle("rect1", 80, 280, 100, 20, 'rect', '#8d6e63')); // Brown rect
-    obstacles.push(new Obstacle("rect2", CANVAS_WIDTH - 180, 280, 100, 20, 'rect', '#8d6e63'));
-
-    obstacles.push(new Obstacle("bumper4", 50, 350, 30, 30, 'circle', '#66bb6a')); // Green bumper
-    obstacles.push(new Obstacle("bumper5", CANVAS_WIDTH - 80, 350, 30, 30, 'circle', '#66bb6a'));
-
-    obstacles.push(new Obstacle("long_rect", 30, 420, CANVAS_WIDTH - 60, 15, 'rect', '#78909c')); // Blue-grey rect
-    obstacles.push(new Obstacle("mid_rect", CANVAS_WIDTH / 2 - 80, 500, 160, 20, 'rect', '#78909c'));
-
-    // Slanted flipper-like guides (visual only, or simple rects)
-    // For actual flippers, you'd need more complex physics and controls
-    const guideY = DRAWER_Y - 70;
-    const guideHeight = 60;
-    const guideWidth = 15;
-    // Left guide (approximate slant with a thin rectangle)
-    // For a true slant, you'd use a polygon or rotate a rect, which adds complexity to collision.
-    // We'll use simple rectangles that act as funnels.
-    obstacles.push(new Obstacle("guideL1", CANVAS_WIDTH/2 - 100, guideY - 20, guideWidth, guideHeight, 'rect', '#546e7a'));
-    obstacles.push(new Obstacle("guideL2", CANVAS_WIDTH/2 - 60, guideY, guideWidth, guideHeight, 'rect', '#546e7a'));
-
-    // Right guide
-    obstacles.push(new Obstacle("guideR1", CANVAS_WIDTH/2 + 100 - guideWidth, guideY - 20, guideWidth, guideHeight, 'rect', '#546e7a'));
-    obstacles.push(new Obstacle("guideR2", CANVAS_WIDTH/2 + 60 - guideWidth, guideY, guideWidth, guideHeight, 'rect', '#546e7a'));
-
-
-    updateNamesDisplay();
-    requestAnimationFrame(gameLoop);
+    setupObstacles(); // Define obstacles
+    if (restartButton) {
+        restartButton.addEventListener('click', resetAndStartGame);
+    }
+    resetAndStartGame(); // Initial start of the game
 }
 
 initGame();
