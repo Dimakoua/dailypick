@@ -14,6 +14,8 @@ let availableNames = [...initialNames];
 let fallingLetters = [];
 let matchedNamesInOrder = []; // To store names in the order they are matched
 let obstacles = [];
+let flippers = [];
+let keysPressed = {}; // To track active keys for flippers
 let currentWordBuffer = "";
 let gameLoopId = null;
 let gameIsOver = false;
@@ -103,42 +105,129 @@ class Obstacle {
     }
 }
 
-function getNeededLettersToSpawn() {
+class Flipper {
+    constructor(id, x, y, width, height, isLeft, controlKey) {
+        this.id = id;
+        this.pivotX = x; // Pivot point
+        this.pivotY = y;
+        this.width = width;   // Length of the flipper
+        this.height = height; // Thickness of the flipper
+        this.isLeft = isLeft; // true for left flipper, false for right
+        this.controlKey = controlKey;
+
+        this.angle = this.isLeft ? Math.PI / 6 : Math.PI - Math.PI / 6; // Resting angle (30 degrees from horizontal)
+        this.targetAngle = this.angle;
+        this.maxAngleUp = this.isLeft ? -Math.PI / 6 : Math.PI + Math.PI / 6; // Active angle (-30 degrees)
+        this.minAngleDown = this.isLeft ? Math.PI / 6 : Math.PI - Math.PI / 6; // Resting angle
+
+        this.flipSpeed = 0.4; // Radians per update
+        this.returnSpeed = 0.15;
+        this.color = "#e91e63"; // Pinball flipper pink/red
+        this.isActive = false; // Is the control key pressed?
+    }
+
+    update() {
+        if (this.isActive) {
+            this.targetAngle = this.maxAngleUp;
+            if (this.isLeft) {
+                this.angle = Math.max(this.targetAngle, this.angle - this.flipSpeed);
+            } else {
+                this.angle = Math.min(this.targetAngle, this.angle + this.flipSpeed);
+            }
+        } else {
+            this.targetAngle = this.minAngleDown;
+            if (this.isLeft) {
+                this.angle = Math.min(this.targetAngle, this.angle + this.returnSpeed);
+            } else {
+                this.angle = Math.max(this.targetAngle, this.angle - this.returnSpeed);
+            }
+        }
+    }
+
+    draw() {
+        ctx.save();
+        ctx.translate(this.pivotX, this.pivotY);
+        ctx.rotate(this.angle);
+        // Draw the flipper rectangle. Since rotation is around (0,0) of this translated context,
+        // and we want the pivot at one end, we draw from (0, -height/2) to (width, height/2)
+        // if pivot is at the start of the width.
+        // If pivot is at (pivotX, pivotY), and we want it at the base of the flipper:
+        ctx.fillStyle = this.color;
+        ctx.fillRect(0, -this.height / 2, this.width, this.height);
+        ctx.restore();
+
+        // Optional: Draw pivot point for debugging
+        // ctx.fillStyle = 'yellow';
+        // ctx.beginPath();
+        // ctx.arc(this.pivotX, this.pivotY, 3, 0, Math.PI * 2);
+        // ctx.fill();
+    }
+
+    // Basic collision check with a letter (circle)
+    // This is a simplified version. More accurate physics would involve SAT or similar.
+    checkCollision(letter) {
+        // Transform letter's center to flipper's local coordinate system
+        const dx = letter.x - this.pivotX;
+        const dy = letter.y - this.pivotY;
+
+        const localLetterX = dx * Math.cos(-this.angle) - dy * Math.sin(-this.angle);
+        const localLetterY = dx * Math.sin(-this.angle) + dy * Math.cos(-this.angle);
+
+        // Now check collision with an AABB (0, -height/2) to (width, height/2)
+        const closestX = Math.max(0, Math.min(localLetterX, this.width));
+        const closestY = Math.max(-this.height / 2, Math.min(localLetterY, this.height / 2));
+
+        const distanceSquared = (localLetterX - closestX) ** 2 + (localLetterY - closestY) ** 2;
+
+        if (distanceSquared < letter.radius ** 2) {
+            // Collision detected
+            // Simple bounce: reverse velocity component perpendicular to flipper surface
+            // For a more "pinball" feel, the bounce should be stronger and influenced by flipper motion.
+
+            // Normal vector of the flipper surface in its local space (approximate)
+            // If hit on top surface: (0, -1), bottom: (0, 1)
+            // For simplicity, let's use a normal pointing "upwards" relative to the flipper
+            let normalLocalX = 0;
+            let normalLocalY = -1; // Assuming hit on the 'top' surface of the flipper
+
+            // Rotate normal back to world space
+            const normalWorldX = normalLocalX * Math.cos(this.angle) - normalLocalY * Math.sin(this.angle);
+            const normalWorldY = normalLocalX * Math.sin(this.angle) + normalLocalY * Math.cos(this.angle);
+
+            // Reflect velocity
+            const dot = letter.vx * normalWorldX + letter.vy * normalWorldY;
+            const bounceFactor = 1.5; // Make it a bit stronger than normal restitution
+            const flipperImpactSpeed = 0.5 * this.flipSpeed * (this.isActive ? 30 : 0) ; // Add some kick if flipper is active
+
+            letter.vx -= (1 + bounceFactor) * dot * normalWorldX;
+            letter.vy -= (1 + bounceFactor) * dot * normalWorldY - (this.isActive ? flipperImpactSpeed : 0) ;
+            
+            // Ensure letter is pushed out of flipper slightly
+            letter.x += normalWorldX * 2; // Push out a bit
+            letter.y += normalWorldY * 2;
+            return true;
+        }
+        return false;
+    }
+}
+
+function getNeededStartingLetters() {
     if (availableNames.length === 0) {
         return [];
     }
     const needed = new Set();
-    const bufferLength = currentWordBuffer.length;
-
-    if (bufferLength === 0) { // No current prefix, need starting letters
-        availableNames.forEach(name => {
-            if (name.length > 0) {
-                needed.add(name[0].toUpperCase());
-            }
-        });
-    } else { // We have a prefix in currentWordBuffer, need the next letter
-        availableNames.forEach(name => {
-            const nameUpper = name.toUpperCase();
-            if (nameUpper.startsWith(currentWordBuffer) && nameUpper.length > bufferLength) {
-                needed.add(nameUpper[bufferLength]); // The character after the currentWordBuffer
-            }
-        });
-        // Fallback: If currentWordBuffer cannot be extended by any available name,
-        // revert to spawning any valid starting letter to break a potential deadlock.
-        if (needed.size === 0 && availableNames.length > 0) {
-             availableNames.forEach(name => {
-                if (name.length > 0) {
-                    needed.add(name[0].toUpperCase());
-                }
-            });
+    availableNames.forEach(name => {
+        if (name.length > 0) {
+            needed.add(name[0].toUpperCase());
         }
-    }
+    });
     return Array.from(needed);
 }
 
 function spawnLetter() {
-    const neededChars = getNeededLettersToSpawn();
+    const neededChars = getNeededStartingLetters();
     let char;
+
     if (neededChars.length > 0) {
         char = neededChars[Math.floor(Math.random() * neededChars.length)];
     } else {
@@ -255,66 +344,111 @@ function checkCollisions() {
     });
 }
 
-// Helper function for completing a match
-function completeMatch(matchedName) {
-    animateMatchedName(matchedName);
-    matchedNamesInOrder.push(matchedName);
-    availableNames = availableNames.filter(n => n !== matchedName);
-    updateNamesDisplay();
-    currentWordBuffer = ""; // Reset buffer after a successful match
+function checkFlipperCollisions() {
+    fallingLetters.forEach(letter => {
+        flippers.forEach(flipper => {
+            flipper.checkCollision(letter);
+        });
+    });
 }
 
 function processLetterInDrawer(char) {
-    const incomingCharUpper = char.toUpperCase();
+    const currentAttempt = (currentWordBuffer + char).toUpperCase();
 
-    // Scenario 1: Try extending the current buffer
-    const currentAttempt = (currentWordBuffer + incomingCharUpper).toUpperCase();
-    let potentialMatchesForAttempt = availableNames.filter(name =>
+    let potentialMatches = availableNames.filter(name =>
         name.toUpperCase().startsWith(currentAttempt)
     );
 
-    if (potentialMatchesForAttempt.length === 1) {
-        completeMatch(potentialMatchesForAttempt[0]);
-        return;
-    }
-
-    if (potentialMatchesForAttempt.length > 1) {
-        currentWordBuffer = currentAttempt; // Extend buffer, still ambiguous
-        return;
-    }
-
-    // Scenario 2: currentAttempt matched 0 names.
-    // This means incomingCharUpper did not successfully extend currentWordBuffer.
-    // If currentWordBuffer itself was a valid prefix for multiple names,
-    // we want to keep it and discard incomingCharUpper for matching.
-    if (currentWordBuffer.length > 0) {
-        const potentialMatchesForExistingBuffer = availableNames.filter(name =>
-            name.toUpperCase().startsWith(currentWordBuffer)
+    if (potentialMatches.length === 1) {
+        const matchedName = potentialMatches[0];
+        animateMatchedName(matchedName);
+        matchedNamesInOrder.push(matchedName); // Add to our ordered list
+        availableNames = availableNames.filter(n => n !== matchedName);
+        updateNamesDisplay();
+        currentWordBuffer = ""; // Reset buffer
+    } else if (potentialMatches.length > 1) {
+        currentWordBuffer = currentAttempt; // Extend buffer and wait
+    } else { // No match with the extended buffer
+        // Try with the current char alone
+        const charUpper = char.toUpperCase();
+        potentialMatches = availableNames.filter(name =>
+            name.toUpperCase().startsWith(charUpper)
         );
-        if (potentialMatchesForExistingBuffer.length > 1) {
-            // currentWordBuffer was a valid multi-match prefix (e.g., "A" for Aiden, Ava).
-            // The incomingCharUpper (e.g., "X") was not helpful.
-            // Keep currentWordBuffer as is and wait for a better letter.
-            return; // currentWordBuffer remains unchanged.
+        if (potentialMatches.length === 1) {
+            const matchedName = potentialMatches[0];
+            animateMatchedName(matchedName);
+            matchedNamesInOrder.push(matchedName); // Add to our ordered list
+            availableNames = availableNames.filter(n => n !== matchedName);
+            updateNamesDisplay();
+            currentWordBuffer = "";
+        } else if (potentialMatches.length > 1) {
+            currentWordBuffer = charUpper; // Start new buffer with current char
+        } else {
+            currentWordBuffer = ""; // No match at all, reset buffer
         }
     }
-
-    // Scenario 3: currentAttempt matched 0, AND currentWordBuffer was not a multi-match prefix (or was empty).
-    // Try matching incomingCharUpper by itself as a new sequence start.
-    let potentialMatchesForSingleChar = availableNames.filter(name =>
-        name.toUpperCase().startsWith(incomingCharUpper)
-    );
-
-    if (potentialMatchesForSingleChar.length === 1) {
-        completeMatch(potentialMatchesForSingleChar[0]);
-    } else if (potentialMatchesForSingleChar.length > 1) {
-        currentWordBuffer = incomingCharUpper; // Start new buffer with this char
-    } else {
-        currentWordBuffer = ""; // No match at all, reset buffer
-    }
 }
+
 function gameLoop(timestamp) {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+    // --- Draw Pinball Table Background Placeholder Elements ---
+    // These are drawn on the canvas, under game elements.
+    // The main table color is set via CSS on #gameCanvas.
+    // You can replace these with a detailed background image later.
+
+    const tableDetailColor1 = "rgba(255, 255, 255, 0.05)"; // Very subtle light lines/areas
+    const tableDetailColor2 = "rgba(0, 0, 0, 0.1)";    // Subtle dark lines/areas
+    const lightPlaceholderColor = "rgba(255, 223, 186, 0.2)"; // Pale gold for "lights"
+
+    // Shooter Lane
+    const shooterLaneWidth = 70;
+    const shooterLaneX = CANVAS_WIDTH - shooterLaneWidth;
+    ctx.fillStyle = tableDetailColor2;
+    ctx.fillRect(shooterLaneX, 0, shooterLaneWidth, DRAWER_Y); // Stop before drawer
+    // Plunger placeholder
+    ctx.fillStyle = tableDetailColor1;
+    ctx.beginPath();
+    ctx.arc(shooterLaneX + shooterLaneWidth / 2, DRAWER_Y - 30, 10, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Top Arch / Rollover Lanes (visual placeholders)
+    const topArchY = 60;
+    const archSegmentWidth = CANVAS_WIDTH / 5;
+    for (let i = 0; i < 4; i++) {
+        ctx.fillStyle = (i % 2 === 0) ? tableDetailColor1 : tableDetailColor2;
+        ctx.fillRect(archSegmentWidth * i + (archSegmentWidth/4), topArchY, archSegmentWidth/2, 20);
+    }
+
+    // Side "Gutters" or "Return Lanes" (visual placeholders)
+    const gutterWidth = 30;
+    ctx.fillStyle = tableDetailColor2;
+    ctx.fillRect(0, CANVAS_HEIGHT * 0.3, gutterWidth, CANVAS_HEIGHT * 0.5); // Left gutter
+    ctx.fillRect(CANVAS_WIDTH - gutterWidth - shooterLaneWidth, CANVAS_HEIGHT * 0.3, gutterWidth, CANVAS_HEIGHT * 0.5); // Right gutter (avoid shooter)
+
+    // Placeholder "Lights" or "Targets"
+    const lightRadius = 15;
+    ctx.fillStyle = lightPlaceholderColor;
+    ctx.beginPath();
+    ctx.arc(CANVAS_WIDTH * 0.3, CANVAS_HEIGHT * 0.35, lightRadius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(CANVAS_WIDTH * 0.7, CANVAS_HEIGHT * 0.35, lightRadius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(CANVAS_WIDTH * 0.5, CANVAS_HEIGHT * 0.5, lightRadius * 1.2, 0, Math.PI * 2);
+    ctx.fill();
+
+    // "Flipper" area visual demarcation (static)
+    ctx.fillStyle = tableDetailColor1;
+    ctx.beginPath();
+    ctx.moveTo(CANVAS_WIDTH * 0.3, DRAWER_Y - 10);
+    ctx.lineTo(CANVAS_WIDTH * 0.7, DRAWER_Y - 10);
+    ctx.lineTo(CANVAS_WIDTH * 0.5, DRAWER_Y - 80);
+    ctx.closePath();
+    ctx.fill();
+
+    // --- End Pinball Table Background Elements ---
 
     // Draw Drawer
     ctx.fillStyle = "#c5cae9"; // Light indigo
@@ -333,6 +467,7 @@ function gameLoop(timestamp) {
     }
     
     obstacles.forEach(obstacle => obstacle.draw());
+    flippers.forEach(flipper => flipper.update() && flipper.draw()); // Update and draw flippers
 
     for (let i = fallingLetters.length - 1; i >= 0; i--) {
         const letter = fallingLetters[i];
@@ -352,6 +487,7 @@ function gameLoop(timestamp) {
 
     // Check collisions after all letters have updated their positions for this frame
     checkCollisions();
+    checkFlipperCollisions(); // Flipper collisions
 
     // Draw letters after collision resolution
     fallingLetters.forEach(letter => letter.draw());
@@ -416,6 +552,12 @@ function setupObstacles() {
 
     // Small peg above drawer center to prevent letters getting stuck on the very edge of the funnel
     obstacles.push(new Obstacle("bottom_peg", CANVAS_WIDTH / 2 - 7, DRAWER_Y - 30, 14, 14, 'circle', pinColor1));
+
+    // Add Flippers
+    const flipperWidth = 80;
+    const flipperHeight = 15;
+    flippers.push(new Flipper("flipperL", CANVAS_WIDTH / 2 - funnelOpeningWidth / 2 - flipperWidth * 0.1, DRAWER_Y - flipperHeight, flipperWidth, flipperHeight, true, ','));
+    flippers.push(new Flipper("flipperR", CANVAS_WIDTH / 2 + funnelOpeningWidth / 2 + flipperWidth * 0.1, DRAWER_Y - flipperHeight, flipperWidth, flipperHeight, false, '.'));
 }
 
 function fitAppToScreen() {
@@ -425,8 +567,8 @@ function fitAppToScreen() {
     const viewportHeight = window.innerHeight;
 
     // Use a percentage of the viewport to leave some margin
-    const availableWidth = viewportWidth * 0.95;
-    const availableHeight = viewportHeight * 0.95;
+    const availableWidth = viewportWidth * 0.6;
+    const availableHeight = viewportHeight * 0.6;
 
     const scaleX = availableWidth / ORIGINAL_APP_WIDTH;
     const scaleY = availableHeight / ORIGINAL_APP_HEIGHT;
@@ -434,9 +576,11 @@ function fitAppToScreen() {
     let scale = Math.min(scaleX, scaleY);
 
     // Optional: Prevent upscaling beyond 1x if the original size fits comfortably
-    // if (ORIGINAL_APP_WIDTH <= availableWidth && ORIGINAL_APP_HEIGHT <= availableHeight) {
-    //     scale = Math.min(scale, 1);
-    // }
+    if (ORIGINAL_APP_WIDTH * scale > availableWidth || ORIGINAL_APP_HEIGHT * scale > availableHeight) {
+        // If after initial scale, it's still too big, this means original was larger than 0.95*viewport
+    } else if (ORIGINAL_APP_WIDTH <= availableWidth && ORIGINAL_APP_HEIGHT <= availableHeight) { // Original fits comfortably
+        scale = Math.min(scale, 1); // Don't scale up beyond 100% if it already fits
+    }
 
     appContainer.style.transform = `scale(${scale})`;
 }
@@ -445,6 +589,7 @@ function resetAndStartGame() {
     availableNames = [...initialNames];
     matchedNamesInOrder = []; // Reset the ordered list of matched names
     fallingLetters = [];
+    // Flippers are setup once in setupObstacles, their state resets via isActive and angle updates
     currentWordBuffer = "";
     lastSpawnTime = performance.now(); 
     gameIsOver = false;
@@ -463,6 +608,25 @@ function initGame() {
     if (restartButton) {
         restartButton.addEventListener('click', resetAndStartGame);
     }
+
+    // Keyboard controls for flippers
+    window.addEventListener('keydown', (e) => {
+        keysPressed[e.key] = true;
+        flippers.forEach(flipper => {
+            if (flipper.controlKey === e.key) {
+                flipper.isActive = true;
+            }
+        });
+    });
+    window.addEventListener('keyup', (e) => {
+        delete keysPressed[e.key];
+        flippers.forEach(flipper => {
+            if (flipper.controlKey === e.key) {
+                flipper.isActive = false;
+            }
+        });
+    });
+
     resetAndStartGame(); // Initial start of the game
 
     // Add screen fitting logic
