@@ -5,22 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Falling Letters Pinball</title>
     <style>
-        body { 
-            margin: 0; 
-            display: flex; flex-direction: column; 
-            justify-content: center; align-items: center; 
-            min-height: 100vh; background-color: #333; /* Darker background for contrast */ 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            overflow: hidden; /* Hide scrollbars that might appear due to scaling */ }
+        body { margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; background-color: #f0f0f0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         #gameContainer { display: flex; border: 2px solid #333; box-shadow: 0 0 15px rgba(0,0,0,0.2); background-color: #e0e0e0; }
-        #gameCanvas {
-            border-right: 2px solid #333; display: block;
-            background-color: #2a3f54; /* Dark slate blue - placeholder pinball table color */
-            /* For an image background later: */
-            /* background-image: url('your-pinball-table-image.png'); */
-            /* background-size: cover; /* or contain, or specific dimensions */
-            /* background-repeat: no-repeat; */
-        }
+        #gameCanvas { border-right: 2px solid #333; display: block; }
         #namesPanel { width: 250px; padding: 20px; background-color: #f9f9f9; overflow-y: auto; box-sizing: border-box; }
         #namesPanel h2 { margin-top: 0; text-align: center; color: #333; }
         .name-item { padding: 8px 5px; border-bottom: 1px solid #ddd; font-size: 16px; color: #555; transition: background-color 0.3s, transform 0.3s; }
@@ -38,7 +25,7 @@
         }
         #appContainer {
             transition: transform 0.2s ease-out; /* Smooth scaling */
-            transform-origin: center center; 
+            /* transform-origin: top center; */ /* Uncomment if you prefer top alignment */
         }
     </style>
 </head>
