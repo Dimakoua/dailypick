@@ -11,6 +11,7 @@ canvas.height = CANVAS_HEIGHT;
 let initialNames = ["Sophia", "Jackson", "Olivia", "Liam", "Emma", "Noah", "Ava", "Aiden", "Isabella", "Lucas", "Mia", "Caden", "Riley", "Grayson", "Zoe", "Elijah", "Chloe", "Benjamin", "Lily", "Carter"];
 let availableNames = [...initialNames];
 let fallingLetters = [];
+let matchedNamesInOrder = []; // To store names in the order they are matched
 let obstacles = [];
 let currentWordBuffer = "";
 let gameLoopId = null;
@@ -126,18 +127,19 @@ function spawnLetter() {
 
 function updateNamesDisplay() {
     namesPanel.innerHTML = '';
-    const sortedNames = [...availableNames].sort();
-    const allMatchedNames = initialNames.filter(name => !availableNames.includes(name)).sort();
 
-    allMatchedNames.forEach(name => {
+    // Display matched names in the order they were matched
+    matchedNamesInOrder.forEach(name => {
         const nameEl = document.createElement('div');
         nameEl.classList.add('name-item', 'matched');
         nameEl.textContent = name;
         nameEl.id = `name-${name.toLowerCase().replace(/\s+/g, '-')}`;
         namesPanel.appendChild(nameEl);
     });
-
-    sortedNames.forEach(name => {
+    
+    // Display available (unmatched) names, sorted alphabetically
+    const sortedAvailableNames = [...availableNames].sort();
+    sortedAvailableNames.forEach(name => {
         const nameEl = document.createElement('div');
         nameEl.classList.add('name-item');
         nameEl.textContent = name;
@@ -238,6 +240,7 @@ function processLetterInDrawer(char) {
     if (potentialMatches.length === 1) {
         const matchedName = potentialMatches[0];
         animateMatchedName(matchedName);
+        matchedNamesInOrder.push(matchedName); // Add to our ordered list
         availableNames = availableNames.filter(n => n !== matchedName);
         updateNamesDisplay();
         currentWordBuffer = ""; // Reset buffer
@@ -252,6 +255,7 @@ function processLetterInDrawer(char) {
         if (potentialMatches.length === 1) {
             const matchedName = potentialMatches[0];
             animateMatchedName(matchedName);
+            matchedNamesInOrder.push(matchedName); // Add to our ordered list
             availableNames = availableNames.filter(n => n !== matchedName);
             updateNamesDisplay();
             currentWordBuffer = "";
@@ -370,6 +374,7 @@ function setupObstacles() {
 
 function resetAndStartGame() {
     availableNames = [...initialNames];
+    matchedNamesInOrder = []; // Reset the ordered list of matched names
     fallingLetters = [];
     currentWordBuffer = "";
     lastSpawnTime = performance.now(); 
