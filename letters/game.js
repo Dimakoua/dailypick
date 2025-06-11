@@ -3,14 +3,20 @@ const ctx = canvas.getContext('2d');
 const namesPanel = document.getElementById('namesList');
 const restartButton = document.getElementById('restartButton');
 const appContainer = document.getElementById('appContainer');
+const namesInputElement = document.getElementById('namesInput'); // For user input of names
+const updateNamesButton = document.getElementById('updateNamesBtn'); // Button to update names
+const settingsToggleBtn = document.getElementById('settingsToggleBtn'); // Button to show/hide settings
+const configArea = document.getElementById('config-area'); // The div containing settings
 
 const CANVAS_WIDTH = 500;
 const CANVAS_HEIGHT = 650;
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 
-let initialNames = ["Sophia", "Jackson", "Olivia", "Liam", "Emma", "Noah", "Ava", "Aiden", "Isabella", "Lucas", "Mia", "Caden", "Riley", "Grayson", "Zoe", "Elijah", "Chloe", "Benjamin", "Lily", "Carter"];
-let availableNames = [...initialNames];
+const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
+const LOCAL_STORAGE_KEY = 'fallingLettersGameNames'; // Keep specific key or change to 'namesList'
+let originalNames = [...DEFAULT_NAMES]; // This will hold the master list of names
+let availableNames = [...originalNames]; // Names currently available in the game
 let fallingLetters = [];
 let matchedNamesInOrder = []; // To store names in the order they are matched
 let obstacles = [];
@@ -360,6 +366,48 @@ function processLetterInDrawer(char) {
         currentWordBuffer = ""; // No match at all, reset buffer
     }
 }
+
+function loadNamesFromStorage() {
+    const storedNamesJson = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (storedNamesJson) {
+        try {
+            const storedNames = JSON.parse(storedNamesJson);
+            if (Array.isArray(storedNames) && storedNames.length > 0) {
+                originalNames = [...storedNames];
+            } else {
+                originalNames = [...DEFAULT_NAMES]; // Fallback if stored array is empty
+            }
+        } catch (e) {
+            console.error("Error parsing names from localStorage:", e);
+            originalNames = [...DEFAULT_NAMES]; // Fallback on error
+        }
+    } else {
+        originalNames = [...DEFAULT_NAMES];
+    }
+    if (namesInputElement) {
+        namesInputElement.value = originalNames.join('\n');
+    }
+    // availableNames will be set in resetAndStartGame based on originalNames
+}
+
+function saveNamesToStorage() {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(originalNames));
+}
+
+function updateNamesFromInput() {
+    if (!namesInputElement) return;
+    const inputText = namesInputElement.value.trim();
+    const newNames = inputText ? inputText.split(/[\n,]+/).map(name => name.trim()).filter(name => name.length > 0) : [];
+    originalNames = newNames.length > 0 ? [...newNames] : [...DEFAULT_NAMES];
+    
+    if (namesInputElement) { // Update textarea to reflect the processed list (e.g. if default was used)
+        namesInputElement.value = originalNames.join('\n');
+    }
+    saveNamesToStorage();
+    resetAndStartGame(); // This will re-initialize availableNames from the new originalNames
+    // Optionally hide config area after update
+    // toggleConfigArea(false); 
+}
 function gameLoop(timestamp) {
     // Clear canvas with a dark pinball-themed background
     ctx.fillStyle = '#0d001a'; // Very dark purple/blue, classic for pinball
@@ -552,14 +600,13 @@ function fitAppToScreen() {
 }
 
 function resetAndStartGame() {
-    availableNames = [...initialNames];
+    availableNames = [...originalNames]; // Use the potentially updated originalNames
     matchedNamesInOrder = []; // Reset the ordered list of matched names
     fallingLetters = [];
     currentWordBuffer = "";
     lastSpawnTime = performance.now(); 
     gameIsOver = false;
 
-    // (id, x, y, width, height, type, color)
     updateNamesDisplay();
     if(restartButton) restartButton.style.display = 'none';
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT); // Clear canvas
@@ -568,10 +615,30 @@ function resetAndStartGame() {
     gameLoopId = requestAnimationFrame(gameLoop);
 }
 
+function toggleConfigArea(show) {
+    if (!configArea || !settingsToggleBtn) return;
+    if (show === undefined) {
+        configArea.classList.toggle("config-hidden");
+    } else if (show) {
+        configArea.classList.remove("config-hidden");
+    } else {
+        configArea.classList.add("config-hidden");
+    }
+    settingsToggleBtn.textContent = configArea.classList.contains("config-hidden") ? "⚙️ Show Settings" : "⚙️ Hide Settings";
+}
+
 function initGame() {
+    loadNamesFromStorage(); // Load names from localStorage or use defaults
     setupObstacles(); // Define obstacles
+
     if (restartButton) {
         restartButton.addEventListener('click', resetAndStartGame);
+    }
+    if (updateNamesButton) {
+        updateNamesButton.addEventListener('click', updateNamesFromInput);
+    }
+    if (settingsToggleBtn) {
+        settingsToggleBtn.addEventListener('click', () => toggleConfigArea());
     }
     resetAndStartGame(); // Initial start of the game
 
@@ -580,4 +647,5 @@ function initGame() {
     window.addEventListener('resize', fitAppToScreen); // Fit on resize
 }
 
+toggleConfigArea(false); // Hide settings by default on load, called after initGame ensures elements exist
 initGame();

@@ -1,0 +1,364 @@
+body {
+    font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    background-color: #f4f7f6;
+    /* Soft off-white from index.html */
+    color: #5d5d5d;
+    /* Dark grey text from index.html */
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(100vh - 40px);
+    /* Account for padding */
+}
+
+h1 {
+    font-size: 2.6em;
+    margin: 0 0 25px 0;
+    color: #3498db;
+    font-weight: 700;
+}
+
+#settingsToggleBtn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 18px;
+    font-size: 1em;
+    background-color: #3498db;
+    /* Friendly blue */
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: 600;
+}
+
+#settingsToggleBtn:hover {
+    background-color: #2980b9;
+    /* Darker blue */
+}
+
+#config-area {
+    position: absolute;
+    top: 75px;
+    right: 20px;
+    background-color: #ffffff;
+    padding: 25px 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+    max-width: 450px;
+    z-index: 20;
+    text-align: left;
+}
+
+#config-area label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1em;
+    color: #7f8c8d;
+    font-weight: 600;
+}
+
+.config-hidden {
+    display: none;
+}
+
+#track-container {
+    width: 80%;
+    max-width: 700px;
+    height: auto;
+    /* Adjust based on number of racers */
+    background-color: #ffffff;
+    /* Clean white */
+    border: 1px solid #e0e0e0;
+    /* Light border */
+    border-radius: 15px;
+    /* Softer radius */
+    margin: 20px auto;
+    position: relative;
+    padding: 20px 0;
+    /* Padding for top/bottom space */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    /* Softer shadow */
+}
+
+.racer {
+    position: absolute;
+    /* JS will set top and left */
+    width: 80px;
+    /* Increased width for name + emoji */
+    height: 30px;
+    border-radius: 15px;
+    /* Rounded shape for a simple turtle body */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Keep centered for now, can adjust */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    /* Softer shadow for racers */
+    transition: left 0.1s linear;
+    /* Smooths out the movement slightly */
+    color: #ffffff;
+    /* White text on turtle */
+}
+
+#start-line,
+#finish-line-visual {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: #bdc3c7;
+    /* Muted grey for lines */
+}
+
+#start-line {
+    left: 5%;
+}
+
+#finish-line-visual {
+    right: 5%;
+}
+
+/* Shared card styles for controls and results area */
+#controls,
+#results-area {
+    background-color: #ffffff;
+    /* Clean white */
+    padding: 15px;
+    border-radius: 15px;
+    /* Softer radius */
+    border: 1px solid #e0e0e0;
+    /* Light border */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    /* Softer shadow */
+    /* width, max-width, and margin-top will be set individually */
+}
+
+.game-layout {
+    display: flex;
+    width: 90%;
+    /* Adjust as needed for overall width */
+    max-width: 1100px;
+    /* Max width for the side-by-side layout */
+    gap: 20px;
+    /* Space between track and results */
+    margin: 20px 0;
+    /* Vertical margin for the game area */
+    align-items: flex-start;
+    /* Align items to the top */
+}
+
+#track-container {
+    /* Original card styles are kept, layout adjusted for flex */
+    flex: 2;
+    /* Track takes more space */
+    min-width: 0;
+    /* Allows shrinking in flex layout */
+    margin: 0;
+    /* Was '20px auto', now controlled by flex parent */
+    width: 80%;
+    max-width: 700px;
+}
+
+#results-area {
+    /* Inherits common styles from the rule above */
+    margin-left: auto;
+    /* Pushes the element to the right */
+    margin-right: 0;
+    /* Aligns its right edge with the body's content box right edge */
+    /* This line will be removed by flex */
+    flex: 1;
+    /* Results area takes less space */
+    min-width: 250px;
+    /* Ensures results area doesn't get too small */
+    max-width: 350px;
+    /* Optional: constrain max width of results */
+    margin: 0;
+    /* Reset margin, positioning handled by .game-layout */
+}
+
+#results-area h2 {
+    color: #3498db;
+    /* Friendly blue for sub-heading */
+    margin-top: 0;
+}
+
+button#startRaceBtn,
+button#updateNamesBtn {
+    padding: 12px 25px;
+    font-size: 1.2em;
+    background-color: #3498db;
+    /* Friendly blue */
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+    /* For updateNamesBtn */
+}
+
+
+button#updateNamesBtn {
+    background-color: #e67e22;
+    /* Orange */
+}
+
+button#startRaceBtn:hover,
+button#updateNamesBtn:hover {
+    background-color: #2980b9;
+    /* Darker blue */
+}
+
+button#updateNamesBtn:hover {
+    background-color: #d35400;
+    /* Darker orange */
+}
+
+button#startRaceBtn:disabled {
+    background-color: #95a5a6;
+    /* Muted grey when disabled */
+    cursor: not-allowed;
+}
+
+#standupOrderList {
+    list-style-type: decimal;
+    padding-left: 20px;
+    text-align: left;
+    color: #5d5d5d;
+    /* Standard text color */
+}
+
+#standupOrderList li {
+    font-size: 1.1em;
+    margin-bottom: 5px;
+    color: #2980b9;
+    /* Darker blue for list items */
+    font-weight: 600;
+}
+
+#namesInput {
+    /* Style for textarea */
+    width: 95%;
+    min-height: 60px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    color: #5d5d5d;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95em;
+    margin-bottom: 10px;
+    /* Space before update button */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+        /* Reduce body padding */
+        min-height: calc(100vh - 30px);
+    }
+
+    h1 {
+        font-size: 2em;
+        /* Smaller heading */
+        margin-bottom: 20px;
+    }
+
+    #config-area {
+        position: relative;
+        /* Change from absolute to flow with content */
+        top: auto;
+        right: auto;
+        width: 95%;
+        max-width: 500px;
+        /* Allow it to be reasonably wide but not overly so */
+        margin: 15px auto 20px auto;
+        /* Center it and add some vertical margin */
+        z-index: 1;
+        /* Ensure it's above static content if needed, but likely fine */
+    }
+
+    .game-layout {
+        flex-direction: column;
+        /* Stack track and results vertically */
+        align-items: center;
+        /* Center items when stacked */
+        width: 100%;
+        /* Take full available width */
+        gap: 15px;
+        /* Reduce gap when stacked */
+    }
+
+    #track-container,
+    #results-area {
+        flex: none;
+        /* Reset flex sizing */
+        width: 95%;
+        /* Allow them to take most of the width */
+        max-width: none;
+        /* Remove max-width constraint when stacked */
+    }
+}
+
+.seo-content-area {
+    background-color: #ffffff;
+    padding: 25px 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+    max-width: 700px;
+    /* Or adjust to fit your layout */
+    width: 90%;
+    margin: 30px auto;
+    /* Spacing from game elements */
+    text-align: left;
+    line-height: 1.7;
+}
+
+.seo-content-area h2 {
+    color: #3498db;
+    /* Friendly blue */
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.8em;
+}
+
+.seo-content-area h3 {
+    color: #2980b9;
+    /* Darker blue */
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.4em;
+}
+
+.seo-content-area p,
+.seo-content-area li {
+    color: #5d5d5d;
+    /* Standard text color */
+    margin-bottom: 10px;
+}
+
+.seo-content-area ul {
+    padding-left: 20px;
+    margin-bottom: 15px;
+}
+
+.seo-content-area a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.seo-content-area a:hover {
+    text-decoration: underline;
+    color: #2980b9;
+}

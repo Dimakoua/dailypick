@@ -1,65 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <!-- Viewport meta tag is already present and good -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Falling Letters Pinball</title>
+    <title>Falling Letters Pinball - Engaging Name Picker | Daily Pick</title>
+    <meta name="description"
+        content="Play Falling Letters Pinball, a fun and interactive game to match names as they fall. A unique way to pick names for your team from Daily Pick.">
+    <meta name="keywords"
+        content="falling letters, pinball game, name picker, interactive game, team game, daily pick, letter matching, office games, agile tools">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dailypick.dev/letters/">
+    <meta property="og:title" content="Falling Letters Pinball - Engaging Name Picker | Daily Pick">
+    <meta property="og:description" content="A fun pinball-style letter matching game to pick names.">
+    <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.webp">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://dailypick.dev/letters/">
+    <meta property="twitter:title" content="Falling Letters Pinball - Engaging Name Picker | Daily Pick">
+    <meta property="twitter:description" content="A fun pinball-style letter matching game to pick names.">
+    <meta property="twitter:image" content="https://dailypick.dev/assets/twitter-image-main.png">
+
+    <link rel="canonical" href="https://dailypick.dev/letters/">
+    <!-- Favicon Links -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; background-color: #f0f0f0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         #gameContainer {
             display: flex;
             /* Original: border: 2px solid #333; box-shadow: 0 0 15px rgba(0,0,0,0.2); background-color: #e0e0e0; */
-            background-color: #6F4E37; /* Coffee brown - for a wooden cabinet look */
-            border: 15px solid #4A3B31; /* Darker, less saturated brown for the frame */
-            border-radius: 30px; /* Rounded corners for the cabinet */
-            padding: 15px; /* Space between cabinet edge and internal components */
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3); /* Outer shadow for depth */
+            background-color: #6F4E37;
+            /* Coffee brown - for a wooden cabinet look */
+            border: 15px solid #4A3B31;
+            /* Darker, less saturated brown for the frame */
+            border-radius: 30px;
+            /* Rounded corners for the cabinet */
+            padding: 15px;
+            /* Space between cabinet edge and internal components */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            /* Outer shadow for depth */
         }
+
         #gameCanvas {
             /* Original: border-right: 2px solid #333; */
             display: block;
-            background: linear-gradient(to bottom, #003366, #001a35); /* Deep blue gradient for playfield */
-            border-top-left-radius: 100px; /* Rounded top for pinball shape */
-            border-top-right-radius: 100px;/* Rounded top for pinball shape */
-            border-bottom-left-radius: 15px; /* Match container's inner curve */
-            border-bottom-right-radius: 0; /* Sharp corner towards namesPanel */
-            box-shadow: inset 0 0 25px rgba(0,0,0,0.7); /* Inner shadow for playfield depth */
-            border: none; /* Remove previous borders */
+            background: linear-gradient(to bottom, #003366, #001a35);
+            /* Deep blue gradient for playfield */
+            border-top-left-radius: 100px;
+            /* Rounded top for pinball shape */
+            border-top-right-radius: 100px;
+            /* Rounded top for pinball shape */
+            border-bottom-left-radius: 15px;
+            /* Match container's inner curve */
+            border-bottom-right-radius: 0;
+            /* Sharp corner towards namesPanel */
+            box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.7);
+            /* Inner shadow for playfield depth */
+            border: none;
+            /* Remove previous borders */
         }
+
         #namesPanel {
             width: 250px;
             padding: 20px;
             /* Original: background-color: #f9f9f9; */
-            background-color: #D7CCC8; /* Light grayish beige, like an old display panel */
+            background-color: #D7CCC8;
+            /* Light grayish beige, like an old display panel */
             overflow-y: auto;
             box-sizing: border-box;
-            border-left: 5px solid #4A3B31; /* Dark wood separator, matching cabinet frame */
-            border-top-right-radius: 15px; /* Match container's inner curve */
-            border-bottom-right-radius: 15px; /* Match container's inner curve */
+            border-left: 5px solid #4A3B31;
+            /* Dark wood separator, matching cabinet frame */
+            border-top-right-radius: 15px;
+            /* Match container's inner curve */
+            border-bottom-right-radius: 15px;
+            /* Match container's inner curve */
         }
-        #namesPanel h2 { margin-top: 0; text-align: center; color: #4A3B31; /* Dark brown text, matching wood accents */ }
-        .name-item { padding: 8px 5px; border-bottom: 1px solid #ddd; font-size: 16px; color: #555; transition: background-color 0.3s, transform 0.3s; }
+
+        #namesPanel h2 {
+            margin-top: 0;
+            text-align: center;
+            color: #4A3B31;
+            /* Dark brown text, matching wood accents */
+        }
+
+        .name-item {
+            padding: 8px 5px;
+            border-bottom: 1px solid #ddd;
+            font-size: 16px;
+            color: #555;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
         .name-item.matched {
-            background-color: #c8e6c9; /* Light green */
-            color: #2e7d32; /* Darker green text */
+            background-color: #c8e6c9;
+            /* Light green */
+            color: #2e7d32;
+            /* Darker green text */
             font-weight: bold;
             animation: highlightName 0.6s ease-in-out;
             text-decoration: line-through;
         }
+
         @keyframes highlightName {
-            0% { transform: scale(1); background-color: #f9f9f9;}
-            50% { transform: scale(1.05); background-color: #a5d6a7; } /* Brighter green mid-animation */
-            100% { transform: scale(1); background-color: #c8e6c9; }
-        }
-        #appContainer {
-            transition: transform 0.2s ease-out; /* Smooth scaling */
-            /* transform-origin: top center; */ /* Uncomment if you prefer top alignment */
+            0% {
+                transform: scale(1);
+                background-color: #D7CCC8;
+            }
+
+            /* Match namesPanel bg */
+            50% {
+                transform: scale(1.05);
+                background-color: #a5d6a7;
+            }
+
+            /* Brighter green mid-animation */
+            100% {
+                transform: scale(1);
+                background-color: #c8e6c9;
+            }
         }
     </style>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+    <h1>Falling Letters Pinball</h1>
+    <button id="settingsToggleBtn" class="styled-button">⚙️ Show Settings</button>
+
+    <div id="config-area" class="config-hidden">
+        <label for="namesInput">Enter racer names (one per line or comma-separated):</label>
+        <textarea id="namesInput" rows="4"></textarea>
+        <button id="updateNamesBtn">Update Racers</button>
+    </div>
     <div id="appContainer">
-        <h1>Falling Letters Pinball</h1>
         <div id="gameContainer">
             <canvas id="gameCanvas"></canvas>
             <div id="namesPanel">
@@ -67,8 +153,9 @@
                 <div id="namesList"></div>
             </div>
         </div>
-        <button id="restartButton" style="display:none; margin-top: 20px; padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">Restart Game</button>
+        <button id="restartButton" class="styled-button" style="display:none; margin-top: 20px;">Restart Game</button>
     </div>
     <script src="game.js"></script>
 </body>
+
 </html>
