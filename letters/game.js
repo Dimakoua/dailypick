@@ -30,6 +30,8 @@ const ORIGINAL_APP_HEIGHT = 780; // Approx. height of h1 + gameContainer + butto
 const DRAWER_HEIGHT = 60;
 const DRAWER_Y = CANVAS_HEIGHT - DRAWER_HEIGHT;
 
+const PINBALL_LIGHT_COLORS = ['#FF3333', '#33FF33', '#33CCFF', '#FFFF33', '#FF33FF', '#FF9933', '#FFFFFF']; // Vibrant, light-like colors
+
 class Letter {
     constructor(char, x, y) {
         this.char = char.toUpperCase();
@@ -38,7 +40,8 @@ class Letter {
         this.vy = 0; // vertical velocity
         this.vx = (Math.random() - 0.5) * 1.5; // slight initial horizontal movement
         this.radius = LETTER_SIZE / 2;
-        this.color = `hsl(${Math.random() * 360}, 80%, 60%)`;
+        // Use a predefined palette for a more pinball-like feel
+        this.color = PINBALL_LIGHT_COLORS[Math.floor(Math.random() * PINBALL_LIGHT_COLORS.length)];
         this.rotation = 0;
         this.angularVelocity = 0;
         this.hasBouncedThisFrame = {}; // Tracks bounces per obstacle per frame/short time
@@ -60,22 +63,28 @@ class Letter {
             this.x = CANVAS_WIDTH - this.radius;
             this.vx *= -0.7;
         }
-        // Reset bounce flags for next update cycle (or use timeouts within collision)
-        this.hasBouncedThisFrame = {};
+        // Note: hasBouncedThisFrame is managed by checkCollisions and its timeouts
     }
 
     draw() {
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.rotation);
-
+ 
+        // Add a shadow for a "glow" effect, common in pinball
+        ctx.shadowColor = this.color; 
+        ctx.shadowBlur = 8;
+ 
         ctx.fillStyle = this.color;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.font = `bold ${LETTER_SIZE}px Arial`; // Use LETTER_SIZE more directly for font
+        // Use a chunkier font for letters
+        ctx.font = `bold ${LETTER_SIZE}px 'Arial Black', Gadget, sans-serif`;
         ctx.fillText(this.char, 0, 0);
 
+        ctx.shadowBlur = 0; // Reset shadowBlur so it doesn't affect other elements
         ctx.restore();
+
     }
 }
 
@@ -88,11 +97,31 @@ class Obstacle {
         this.height = height;
         this.type = type; // 'rect' or 'circle'
         this.radius = type === 'circle' ? width / 2 : 0; // Assuming width is diameter for circle
-        this.color = color;
+        this.originalColor = color;
+        this.color = this.originalColor; // Current color
+        this.hitColor = '#FFFFFF'; // Color to flash to on hit (e.g., white)
+
+        // Hit animation properties
+        this.isAnimatingHit = false;
+        this.hitAnimationDuration = 8; // Short flash (in frames)
+        this.hitAnimationProgress = 0;
+    }
+
+    update() {
+        if (this.isAnimatingHit) {
+            this.hitAnimationProgress--;
+            if (this.hitAnimationProgress <= 0) {
+                this.isAnimatingHit = false;
+                this.color = this.originalColor; // Reset to original color
+            } else {
+                // Could add more complex logic here, like fading back
+                // For now, it just stays hitColor until duration ends
+            }
+        }
     }
 
     draw() {
-        ctx.fillStyle = this.color;
+        ctx.fillStyle = this.isAnimatingHit ? this.hitColor : this.color;
         if (this.type === 'rect') {
             ctx.fillRect(this.x, this.y, this.width, this.height);
         } else if (this.type === 'circle') {
@@ -211,10 +240,22 @@ function checkCollisions() {
                     // Normal (from closest point to letter center)
                     const normalX = distance > 0 ? dx / distance : 0;
                     const normalY = distance > 0 ? dy / distance : (letter.y < obstacle.y + obstacle.height / 2 ? -1 : 1);
-
+ 
                     const dot = letter.vx * normalX + letter.vy * normalY;
                     letter.vx -= (1 + restitution) * dot * normalX;
                     letter.vy -= (1 + restitution) * dot * normalY;
+
+                    // Nudge letters off horizontal shoulder steps if they land on top
+                    // normalY points from the obstacle surface towards the letter's center.
+                    // If normalY is strongly negative (e.g., < -0.85), it means the letter hit the top surface.
+                    if (normalY < -0.85) { 
+                        const nudgeSpeed = 0.45; // Small horizontal speed to prevent sticking
+                        if (obstacle.id.startsWith("funnel_L_shoulder_step") || obstacle.id.startsWith("slant_L")) {
+                            letter.vx += nudgeSpeed; // Nudge right
+                        } else if (obstacle.id.startsWith("funnel_R_shoulder_step") || obstacle.id.startsWith("slant_R")) {
+                            letter.vx -= nudgeSpeed; // Nudge left
+                        }
+                    }
                 }
             } else if (obstacle.type === 'circle') {
                 const obsCenterX = obstacle.x + obstacle.radius;
@@ -243,7 +284,13 @@ function checkCollisions() {
 
             if (collided) {
                 letter.hasBouncedThisFrame[obstacle.id] = true;
-                // Add angular velocity for rotation
+
+                // Trigger obstacle hit animation
+                if (!obstacle.isAnimatingHit) {
+                    obstacle.isAnimatingHit = true;
+                    obstacle.hitAnimationProgress = obstacle.hitAnimationDuration;
+                    obstacle.color = obstacle.hitColor; // Immediately change to hit color
+                }
                 letter.angularVelocity += (Math.random() - 0.5) * 0.3; // Adjust spin intensity
 
                 setTimeout(() => { delete letter.hasBouncedThisFrame[obstacle.id]; }, 100); // Cooldown for this specific obstacle
@@ -314,15 +361,27 @@ function processLetterInDrawer(char) {
     }
 }
 function gameLoop(timestamp) {
-    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    // Clear canvas with a dark pinball-themed background
+    ctx.fillStyle = '#0d001a'; // Very dark purple/blue, classic for pinball
+    ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-    // Draw Drawer
-    ctx.fillStyle = "#c5cae9"; // Light indigo
+    // Draw Drawer (Target Zone) with a more pinball-like style
+    // Base of the drawer
+    ctx.fillStyle = "#2c3e50"; // Dark slate gray, somewhat metallic
     ctx.fillRect(0, DRAWER_Y, CANVAS_WIDTH, DRAWER_HEIGHT);
-    ctx.fillStyle = "#303f9f"; // Darker indigo
+
+    // Inner "well" or highlight for depth
+    const drawerPadding = 4;
+    ctx.fillStyle = "#34495e"; // Slightly lighter slate gray
+    ctx.fillRect(drawerPadding, DRAWER_Y + drawerPadding, CANVAS_WIDTH - 2 * drawerPadding, DRAWER_HEIGHT - 2 * drawerPadding);
+
+    // Text in the drawer
+    ctx.fillStyle = "#ecf0f1"; // Light silver/white for text
     ctx.textAlign = "center";
-    ctx.font = "bold 22px 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
-    ctx.fillText(currentWordBuffer || "DROP ZONE", CANVAS_WIDTH / 2, DRAWER_Y + DRAWER_HEIGHT / 2 + 8);
+    // Using a more thematic font. Ensure 'Orbitron' is linked via CSS or use a common fallback.
+    // For 'Orbitron' or similar fonts, you might need to add: <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet"> to your HTML.
+    ctx.font = `bold ${LETTER_SIZE - 4}px 'Orbitron', sans-serif`;
+    ctx.fillText(currentWordBuffer || "TARGET ZONE", CANVAS_WIDTH / 2, DRAWER_Y + DRAWER_HEIGHT / 2 + (LETTER_SIZE - 4)/2 - 2); // Adjusted Y for vertical centering
 
     // Spawn new letters
     if (!gameIsOver && timestamp - lastSpawnTime > LETTER_SPAWN_INTERVAL) {
@@ -332,7 +391,10 @@ function gameLoop(timestamp) {
         lastSpawnTime = timestamp;
     }
     
-    obstacles.forEach(obstacle => obstacle.draw());
+    obstacles.forEach(obstacle => {
+        obstacle.update(); // Update animation state
+        obstacle.draw();
+    });
 
     for (let i = fallingLetters.length - 1; i >= 0; i--) {
         const letter = fallingLetters[i];
@@ -357,7 +419,8 @@ function gameLoop(timestamp) {
     fallingLetters.forEach(letter => letter.draw());
 
     if (availableNames.length === 0 && fallingLetters.length === 0) {
-        ctx.fillStyle = "rgba(0, 100, 0, 0.8)";
+        // Game Over message styling
+        ctx.fillStyle = "rgba(0, 50, 100, 0.85)"; // Darker, more thematic overlay
         ctx.fillRect(CANVAS_WIDTH / 4, CANVAS_HEIGHT / 3, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 4);
         ctx.fillStyle = "white";
         ctx.font = "bold 30px 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
@@ -378,44 +441,91 @@ function gameLoop(timestamp) {
 
 function setupObstacles() {
     obstacles = []; // Clear existing obstacles
-    const bumperColor = '#42a5f5'; // Blue
-    const pinColor1 = '#ff7043'; // Orange
-    const pinColor2 = '#66bb6a'; // Green
-    const guideColor = '#78909c'; // Blue-grey
-    const funnelColor = '#546e7a';   // Darker blue-grey
+    // Updated color palette for a more classic pinball feel
+    const bumperColor = '#E91E63'; // Vibrant Pink/Red (like classic bumpers)
+    const pinColor1 = '#FFEB3B';   // Bright Yellow (like lights or pins)
+    const pinColor2 = '#03A9F4';   // Bright Blue (another light/pin color)
+    const guideColor = '#757575';  // Medium Grey (for metallic guides)
+    const funnelColor = '#424242'; // Dark Grey (for funnel parts, more depth)
 
     // Top bumpers to spread letters
-    obstacles.push(new Obstacle("top_bump1", CANVAS_WIDTH / 2 - 20, 80, 40, 40, 'circle', bumperColor));
-    obstacles.push(new Obstacle("top_bump2", CANVAS_WIDTH / 4, 130, 30, 30, 'circle', pinColor1));
-    obstacles.push(new Obstacle("top_bump3", CANVAS_WIDTH * 3 / 4 - 30, 130, 30, 30, 'circle', pinColor1));
+    obstacles.push(new Obstacle("top_bump1", CANVAS_WIDTH / 2 - 20, 80, 40, 40, 'circle', pinColor1)); // Yellow
+    obstacles.push(new Obstacle("top_bump2", CANVAS_WIDTH / 4, 130, 30, 30, 'circle', bumperColor)); // Pink/Red
+    obstacles.push(new Obstacle("top_bump3", CANVAS_WIDTH * 3 / 4 - 30, 130, 30, 30, 'circle', bumperColor)); // Pink/Red
 
     // Side guides / walls
-    obstacles.push(new Obstacle("side_guide_L1", 20, 180, 20, 150, 'rect', guideColor));
-    obstacles.push(new Obstacle("side_guide_R1", CANVAS_WIDTH - 40, 180, 20, 150, 'rect', guideColor));
+    obstacles.push(new Obstacle("side_guide_L1", 40, 180, 20, 150, 'rect', guideColor));
+    obstacles.push(new Obstacle("side_guide_R1", CANVAS_WIDTH - 60, 180, 20, 150, 'rect', guideColor));
 
     // Mid-field pins
-    obstacles.push(new Obstacle("mid_pin1", CANVAS_WIDTH / 2 - 60, 250, 25, 25, 'circle', pinColor2));
-    obstacles.push(new Obstacle("mid_pin2", CANVAS_WIDTH / 2 + 35, 250, 25, 25, 'circle', pinColor2));
-    obstacles.push(new Obstacle("mid_pin3", CANVAS_WIDTH / 2 - 12, 320, 25, 25, 'circle', bumperColor)); // Central
+    obstacles.push(new Obstacle("mid_pin1", CANVAS_WIDTH / 2 - 60, 250, 25, 25, 'circle', pinColor2)); // Blue
+    obstacles.push(new Obstacle("mid_pin2", CANVAS_WIDTH / 2 + 35, 250, 25, 25, 'circle', pinColor2)); // Blue
+    obstacles.push(new Obstacle("mid_pin3", CANVAS_WIDTH / 2 - 12, 320, 25, 25, 'circle', pinColor1)); // Central Yellow
 
     // Slanted deflectors
     // For true slanted collision, polygon physics would be needed. These are rectangular approximations.
     // We can simulate slants by making them thin and long, or by rotating them (which adds draw complexity if not using a library)
     // For simplicity, using axis-aligned rectangles that guide.
-    obstacles.push(new Obstacle("slant_L", 80, 380, 100, 15, 'rect', guideColor));
-    obstacles.push(new Obstacle("slant_R", CANVAS_WIDTH - 180, 380, 100, 15, 'rect', guideColor));
+    obstacles.push(new Obstacle("slant_L", 80, 380, 100, 15, 'rect', funnelColor)); // Darker for contrast
+    obstacles.push(new Obstacle("slant_R", CANVAS_WIDTH - 180, 380, 100, 15, 'rect', funnelColor)); // Darker for contrast
 
     // Lower funnel - creating a narrower passage
     const funnelTopY = DRAWER_Y - 120;
     const funnelOpeningWidth = 80; // How wide the opening to the drawer is
-    obstacles.push(new Obstacle("funnel_L_wall", 50, funnelTopY, CANVAS_WIDTH / 2 - 50 - funnelOpeningWidth / 2, 20, 'rect', funnelColor));
-    obstacles.push(new Obstacle("funnel_R_wall", CANVAS_WIDTH / 2 + funnelOpeningWidth / 2, funnelTopY, CANVAS_WIDTH / 2 - 50 - funnelOpeningWidth / 2, 20, 'rect', funnelColor));
 
-    obstacles.push(new Obstacle("funnel_L_slant", CANVAS_WIDTH / 2 - funnelOpeningWidth / 2 - 20, funnelTopY, 20, 100, 'rect', funnelColor));
-    obstacles.push(new Obstacle("funnel_R_slant", CANVAS_WIDTH / 2 + funnelOpeningWidth / 2, funnelTopY, 20, 100, 'rect', funnelColor));
+    const shoulderTotalWidth = (CANVAS_WIDTH / 2 - 50 - funnelOpeningWidth / 2);
+    const totalShoulderDrop = Math.floor(shoulderTotalWidth * 0.10); // 10% drop over the shoulder width
 
-    // Small peg above drawer center to prevent letters getting stuck on the very edge of the funnel
-    obstacles.push(new Obstacle("bottom_peg", CANVAS_WIDTH / 2 - 7, DRAWER_Y - 30, 14, 14, 'circle', pinColor1));
+    const shoulderStepWidth = shoulderTotalWidth / 2;
+    const shoulderStepDrop = totalShoulderDrop / 2; // Each step contributes half the drop
+
+    // Left funnel shoulder (2 steps)
+    obstacles.push(new Obstacle(
+        "funnel_L_shoulder_step1",
+        0, // x
+        funnelTopY, // y
+        shoulderStepWidth, // width of this step
+        shoulderStepDrop,  // height of this step (also its vertical drop)
+        'rect',
+        funnelColor
+    ));
+    obstacles.push(new Obstacle(
+        "funnel_L_shoulder_step2",
+        50 + shoulderStepWidth, // x (starts after step1)
+        funnelTopY + shoulderStepDrop, // y (starts at bottom of step1)
+        shoulderStepWidth, // width of this step
+        shoulderStepDrop,  // height of this step
+        'rect',
+        funnelColor
+    ));
+
+    // Right funnel shoulder (2 steps)
+    const R_shoulder_X_start = CANVAS_WIDTH / 2 + funnelOpeningWidth / 2;
+    obstacles.push(new Obstacle(
+        "funnel_R_shoulder_step1",
+        CANVAS_WIDTH - shoulderStepWidth, // x
+        funnelTopY, // y
+        shoulderStepWidth,
+        shoulderStepDrop,
+        'rect',
+        funnelColor
+    ));
+    obstacles.push(new Obstacle(
+        "funnel_R_shoulder_step2",
+        R_shoulder_X_start,
+        funnelTopY + shoulderStepDrop, // y
+        shoulderStepWidth,
+        shoulderStepDrop,
+        'rect',
+        funnelColor
+    ));
+
+    // Adjust the vertical funnel passage walls to connect below the total drop of the shoulders
+    const funnelPassageStartY = funnelTopY + totalShoulderDrop;
+    const funnelPassageHeight = 100 - totalShoulderDrop; // Original passage depth was 100
+
+    obstacles.push(new Obstacle("funnel_L_passage", CANVAS_WIDTH / 2 - funnelOpeningWidth / 2 - 20, funnelPassageStartY, 20, funnelPassageHeight, 'rect', funnelColor));
+    obstacles.push(new Obstacle("funnel_R_passage", CANVAS_WIDTH / 2 + funnelOpeningWidth / 2, funnelPassageStartY, 20, funnelPassageHeight, 'rect', funnelColor));
 }
 
 function fitAppToScreen() {

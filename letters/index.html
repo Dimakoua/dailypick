@@ -6,10 +6,38 @@
     <title>Falling Letters Pinball</title>
     <style>
         body { margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; background-color: #f0f0f0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        #gameContainer { display: flex; border: 2px solid #333; box-shadow: 0 0 15px rgba(0,0,0,0.2); background-color: #e0e0e0; }
-        #gameCanvas { border-right: 2px solid #333; display: block; }
-        #namesPanel { width: 250px; padding: 20px; background-color: #f9f9f9; overflow-y: auto; box-sizing: border-box; }
-        #namesPanel h2 { margin-top: 0; text-align: center; color: #333; }
+        #gameContainer {
+            display: flex;
+            /* Original: border: 2px solid #333; box-shadow: 0 0 15px rgba(0,0,0,0.2); background-color: #e0e0e0; */
+            background-color: #6F4E37; /* Coffee brown - for a wooden cabinet look */
+            border: 15px solid #4A3B31; /* Darker, less saturated brown for the frame */
+            border-radius: 30px; /* Rounded corners for the cabinet */
+            padding: 15px; /* Space between cabinet edge and internal components */
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3); /* Outer shadow for depth */
+        }
+        #gameCanvas {
+            /* Original: border-right: 2px solid #333; */
+            display: block;
+            background: linear-gradient(to bottom, #003366, #001a35); /* Deep blue gradient for playfield */
+            border-top-left-radius: 100px; /* Rounded top for pinball shape */
+            border-top-right-radius: 100px;/* Rounded top for pinball shape */
+            border-bottom-left-radius: 15px; /* Match container's inner curve */
+            border-bottom-right-radius: 0; /* Sharp corner towards namesPanel */
+            box-shadow: inset 0 0 25px rgba(0,0,0,0.7); /* Inner shadow for playfield depth */
+            border: none; /* Remove previous borders */
+        }
+        #namesPanel {
+            width: 250px;
+            padding: 20px;
+            /* Original: background-color: #f9f9f9; */
+            background-color: #D7CCC8; /* Light grayish beige, like an old display panel */
+            overflow-y: auto;
+            box-sizing: border-box;
+            border-left: 5px solid #4A3B31; /* Dark wood separator, matching cabinet frame */
+            border-top-right-radius: 15px; /* Match container's inner curve */
+            border-bottom-right-radius: 15px; /* Match container's inner curve */
+        }
+        #namesPanel h2 { margin-top: 0; text-align: center; color: #4A3B31; /* Dark brown text, matching wood accents */ }
         .name-item { padding: 8px 5px; border-bottom: 1px solid #ddd; font-size: 16px; color: #555; transition: background-color 0.3s, transform 0.3s; }
         .name-item.matched {
             background-color: #c8e6c9; /* Light green */
