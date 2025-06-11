@@ -138,12 +138,12 @@
 
 <body>
     <h1>Falling Letters Pinball</h1>
-    <button id="settingsToggleBtn" class="styled-button">⚙️ Show Settings</button>
+    <button id="settingsToggleBtn">⚙️ Show Settings</button>
 
     <div id="config-area" class="config-hidden">
-        <label for="namesInput">Enter racer names (one per line or comma-separated):</label>
+        <label for="namesInput">Edit Names List (one name per line):</label>
         <textarea id="namesInput" rows="4"></textarea>
-        <button id="updateNamesBtn">Update Racers</button>
+        <button id="updateNamesButton">Update Names & Restart Game</button>
     </div>
     <div id="appContainer">
         <div id="gameContainer">
@@ -153,7 +153,11 @@
                 <div id="namesList"></div>
             </div>
         </div>
-        <button id="restartButton" class="styled-button" style="display:none; margin-top: 20px;">Restart Game</button>
+        <button id="restartButton" style="display:none; margin-top: 20px;">Restart Game</button>
+    </div>
+
+    <div class="seo-content-area">
+        <!-- You can add your SEO-friendly content for the Falling Letters Pinball game here -->
     </div>
     <script src="game.js"></script>
 </body>

@@ -8,13 +8,13 @@ const updateNamesButton = document.getElementById('updateNamesBtn'); // Button t
 const settingsToggleBtn = document.getElementById('settingsToggleBtn'); // Button to show/hide settings
 const configArea = document.getElementById('config-area'); // The div containing settings
 
-const CANVAS_WIDTH = 500;
+const CANVAS_WIDTH = 450;
 const CANVAS_HEIGHT = 650;
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 
 const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
-const LOCAL_STORAGE_KEY = 'fallingLettersGameNames'; // Keep specific key or change to 'namesList'
+const LOCAL_STORAGE_KEY = 'namesList';
 let originalNames = [...DEFAULT_NAMES]; // This will hold the master list of names
 let availableNames = [...originalNames]; // Names currently available in the game
 let fallingLetters = [];

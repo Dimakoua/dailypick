@@ -189,7 +189,7 @@ h1 {
     margin-top: 0;
 }
 
-button#startRaceBtn,
+button#restartButton,
 button#updateNamesBtn {
     padding: 12px 25px;
     font-size: 1.2em;
@@ -211,7 +211,7 @@ button#updateNamesBtn {
     /* Orange */
 }
 
-button#startRaceBtn:hover,
+button#restartButton:hover,
 button#updateNamesBtn:hover {
     background-color: #2980b9;
     /* Darker blue */
@@ -222,7 +222,7 @@ button#updateNamesBtn:hover {
     /* Darker orange */
 }
 
-button#startRaceBtn:disabled {
+button#restartButton:disabled {
     background-color: #95a5a6;
     /* Muted grey when disabled */
     cursor: not-allowed;
