@@ -9,7 +9,7 @@ const settingsToggleBtn = document.getElementById('settingsToggleBtn'); // Butto
 const configArea = document.getElementById('config-area'); // The div containing settings
 
 const CANVAS_WIDTH = 450;
-const CANVAS_HEIGHT = 650;
+const CANVAS_HEIGHT = 675;
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 

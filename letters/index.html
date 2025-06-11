@@ -143,9 +143,9 @@
     <div id="config-area" class="config-hidden">
         <label for="namesInput">Edit Names List (one name per line):</label>
         <textarea id="namesInput" rows="4"></textarea>
-        <button id="updateNamesButton">Update Names & Restart Game</button>
+        <button id="updateNamesBtn">Update Names & Restart Game</button>
     </div>
-    <div id="appContainer">
+    <div id="appContainer" style="display: flex; flex-direction: column; align-items: center;">
         <div id="gameContainer">
             <canvas id="gameCanvas"></canvas>
             <div id="namesPanel">
@@ -157,7 +157,26 @@
     </div>
 
     <div class="seo-content-area">
-        <!-- You can add your SEO-friendly content for the Falling Letters Pinball game here -->
+        <h2>Dive into Falling Letters Pinball - A Unique Name Picker!</h2>
+        <p>Welcome to <strong>Falling Letters Pinball</strong>, an exciting and visually engaging game from Daily Pick designed to make picking names more fun! Watch as letters tumble down the pinball-style playfield. Your goal? Type out the names from your list as the corresponding letters fall into the target zone. It’s a race against gravity and a test of your typing speed!</p>
+
+        <h3>How to Play & Match</h3>
+        <ul>
+            <li><strong>Set Your List:</strong> Use the settings to enter the names you want to include in the game.</li>
+            <li><strong>Letters Fall:</strong> Letters needed for the available names will start dropping from the top of the pinball machine.</li>
+            <li><strong>Type to Match:</strong> As letters enter the "Target Zone" at the bottom, they contribute to forming a name. If the sequence of letters matches the start of one or more names in your list, the buffer in the target zone will update.</li>
+            <li><strong>Complete Names:</strong> Successfully type out a full name, and it gets marked as "matched," disappearing from the active list.</li>
+            <li><strong>Clear the Board:</strong> The game continues until all names have been successfully matched and cleared from the board.</li>
+        </ul>
+
+        <h3>Why Falling Letters Pinball is a Hit:</h3>
+        <ul>
+            <li><strong>Engaging & Interactive:</strong> A dynamic alternative to static name pickers.</li>
+            <li><strong>Visually Appealing:</strong> The pinball theme with bouncing letters adds a playful touch.</li>
+            <li><strong>Fair & Fun:</strong> While there's a skill element, the random fall of letters keeps it lighthearted.</li>
+            <li><strong>Perfect for Teams:</strong> A great way to decide who goes next, assign tasks, or just add a bit of fun to meetings.</li>
+        </ul>
+        <p>Challenge your team and see who can clear their name list the fastest with <strong>Falling Letters Pinball</strong>! It’s a fresh take on random selection, brought to you by Daily Pick.</p>
     </div>
     <script src="game.js"></script>
 </body>
