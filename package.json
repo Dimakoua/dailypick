@@ -4,15 +4,23 @@
     "source": "index.html",
     "description": "A fun and interactive collection of mini-games designed to liven up team activities! Perfect for adding a bit of engagement to daily meetings or team-building sessions",
     "browserslist": "> 0.5%, last 2 versions, not dead",
-    "scripts": {
-        "start": "parcel $(find . -name index.html  -not -path './dist/*') --no-source-maps && cp -r public/* dist/",
-        "build": "parcel build $(find . -name index.html) --no-source-maps && cp -r public/* dist/"
-    },
     "devDependencies": {
+        "@11ty/eleventy": "^3.1.1",
         "@parcel/packager-raw-url": "^2.14.4",
         "@parcel/transformer-jsonld": "^2.14.4",
         "@parcel/transformer-webmanifest": "^2.14.4",
+        "concurrently": "^9.1.2",
         "parcel": "^2.14.0",
         "svgo": "^3.3.2"
+    },
+    "scripts": {
+        "clean": "rm -rf dist _site .parcel-cache",
+        "eleventy:build": "npx @11ty/eleventy",
+        "parcel:build": "parcel build index.html --no-source-maps --dist-dir dist",
+        "assets:copy": "if [ -d public ]; then cp -r public/. dist/; fi; if [ -d _site ]; then mkdir -p dist/blog && cp -r _site/. dist/blog/; fi",
+        "build": "npm run clean && npm run eleventy:build && npm run parcel:build && npm run assets:copy",
+        "eleventy:serve": "npx @11ty/eleventy --serve --watch --port=8081",
+        "parcel:serve": "parcel index.html --port 8080",
+        "start": "concurrently \"npm:eleventy:serve\" \"npm:parcel:serve\""
     }
 }

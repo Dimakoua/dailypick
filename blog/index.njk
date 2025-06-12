@@ -1,0 +1,33 @@
+---
+layout: base.njk
+title: Daily Pick Blog
+description: Articles, insights, and updates from the Daily Pick team. Discover tips on team engagement, productivity, and making work more fun.
+permalink: /blog/index.html # Ensures this page is accessible at yourdomain.com/blog/
+eleventyNavigation:
+  key: Blog
+  order: 2
+---
+
+<div class="main-container blog-listing">
+    <h1>{{ title }}</h1>
+    <p class="sub-header">{{ description }}</p>
+
+    {% if collections.post and collections.post.length > 0 %}
+        <ul class="post-list">
+            {%- for post in collections.post | reverse -%} {# reverse to show newest first #}
+            <li class="post-list-item">
+                <h2><a href="{{ post.url | url }}">{{ post.data.title }}</a></h2>
+                <p class="post-meta">
+                    <time datetime="{{ post.date.toISOString() }}">{{ post.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}</time>
+                    {% if post.data.tags and post.data.tags.length > 0 %}
+                        <span class="post-tags"> | Tags: {% for tag in post.data.tags %}<a href="/blog/tags/{{ tag | slugify }}/" class="tag">{{ tag }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</span>
+                    {% endif %}
+                </p>
+                {% if post.data.description %}<p class="post-excerpt">{{ post.data.description }}</p>{% endif %}
+            </li>
+            {%- endfor -%}
+        </ul>
+    {% else %}
+        <p>No blog posts yet. Check back soon!</p>
+    {% endif %}
+</div>

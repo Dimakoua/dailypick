@@ -1,0 +1,22 @@
+---
+layout: base.njk
+---
+<article class="main-container blog-post-content">
+    <h1>{{ title }}</h1>
+    <p class="post-meta">
+        Published on: 
+        <time datetime="{{ page.date.toISOString() }}">
+            {{ page.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}
+        </time>
+        {% if author %}
+            by {{ author }}
+        {% endif %}
+    </p>
+    
+    {% if tags and tags.length > 0 %}
+        <p class="post-tags">Tags: {% for tag in tags %}<a href="/blog/tags/{{ tag | slugify }}/" class="tag">{{ tag }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>
+    {% endif %}
+
+    {{ content | safe }}
+
+</article>

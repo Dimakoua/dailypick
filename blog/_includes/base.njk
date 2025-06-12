@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags from content or global data -->
+    <title>{{ title or metadata.siteTitle }}</title>
+    <meta name="description" content="{{ description or metadata.siteDescription }}">
+    {% if keywords %}<meta name="keywords" content="{{ keywords }}">{% endif %}
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ metadata.url }}{{ page.url }}">
+    <meta property="og:title" content="{{ title or metadata.siteTitle }}">
+    <meta property="og:description" content="{{ description or metadata.siteDescription }}">
+    <meta property="og:image" content="{{ metadata.url }}{{ ogImage or metadata.defaultOgImage }}">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ metadata.url }}{{ page.url }}">
+    <meta property="twitter:title" content="{{ title or metadata.siteTitle }}">
+    <meta property="twitter:description" content="{{ description or metadata.siteDescription }}">
+    <meta property="twitter:image" content="{{ metadata.url }}{{ twitterImage or metadata.defaultTwitterImage }}">
+
+    <link rel="canonical" href="{{ metadata.url }}{{ page.url }}">
+    
+    <!-- Favicon Links -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav>
+            <a href="/">Home</a>
+            <a href="/blog/">Blog</a> <!-- We'll create this page later -->
+        </nav>
+    </header>
+
+    <main>
+        {{ content | safe }}
+    </main>
+
+    <footer>
+        <p class="footer-note">
+            Crafted to bring a smile to your workday and make <strong>team sync-ups</strong> a breeze. Enjoy! &copy; {{ metadata.currentYear }} {{ metadata.authorName }}
+        </p>
+    </footer>
+    
+    <!-- Any global scripts can go here -->
+</body>
+</html>

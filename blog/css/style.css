@@ -1,0 +1,115 @@
+/* Add to /Users/dmytro/fun/dailypick/css/style.css */
+
+/* Blog Listing Styles */
+.blog-listing .sub-header {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.post-list {
+    list-style: none;
+    padding: 0;
+    max-width: 700px;
+    margin: 30px auto 0;
+    text-align: left;
+}
+
+.post-list-item {
+    background-color: #fdfdfd;
+    padding: 20px 25px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.post-list-item h2 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.post-list-item h2 a {
+    text-decoration: none;
+    color: #2980b9;
+}
+.post-list-item h2 a:hover {
+    text-decoration: underline;
+    color: #3498db;
+}
+
+.post-meta {
+    font-size: 0.85em;
+    color: #7f8c8d;
+    margin-bottom: 10px;
+}
+
+.post-tags .tag {
+    background-color: #e7f3fe;
+    color: #2980b9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    text-decoration: none;
+}
+.post-tags .tag:hover {
+    background-color: #d0e7fd;
+}
+
+.post-excerpt {
+    font-size: 0.95em;
+    color: #5d5d5d;
+    line-height: 1.6;
+}
+
+/* Individual Blog Post Styles (for later) */
+.blog-post-content {
+    max-width: 700px;
+    margin: 20px auto;
+    text-align: left;
+    line-height: 1.7;
+}
+.blog-post-content h1, /* For the main title if not using page.data.title */
+.blog-post-content h2,
+.blog-post-content h3,
+.blog-post-content h4 {
+    color: #3498db;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+.blog-post-content p {
+    margin-bottom: 1em;
+}
+.blog-post-content ul,
+.blog-post-content ol {
+    margin-bottom: 1em;
+    padding-left: 30px;
+}
+.blog-post-content li {
+    margin-bottom: 0.5em;
+}
+.blog-post-content blockquote {
+    border-left: 4px solid #3498db;
+    padding-left: 15px;
+    margin-left: 0;
+    font-style: italic;
+    color: #555;
+}
+.blog-post-content code {
+    background-color: #f0f0f0;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+}
+.blog-post-content pre {
+    background-color: #2d2d2d; /* Dark background for code blocks */
+    color: #f8f8f2; /* Light text for code blocks */
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto; /* For horizontal scrolling if code is too wide */
+    font-family: 'Courier New', Courier, monospace;
+}
+.blog-post-content pre code {
+    background-color: transparent;
+    padding: 0;
+}
