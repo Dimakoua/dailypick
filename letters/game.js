@@ -592,9 +592,9 @@ function fitAppToScreen() {
     let scale = Math.min(scaleX, scaleY);
 
     // Optional: Prevent upscaling beyond 1x if the original size fits comfortably
-    // if (ORIGINAL_APP_WIDTH <= availableWidth && ORIGINAL_APP_HEIGHT <= availableHeight) {
-    //     scale = Math.min(scale, 1);
-    // }
+    if (ORIGINAL_APP_WIDTH <= availableWidth && ORIGINAL_APP_HEIGHT <= availableHeight) {
+        scale = Math.min(scale, 1);
+    }
 
     appContainer.style.transform = `scale(${scale})`;
 }
