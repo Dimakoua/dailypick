@@ -52,9 +52,6 @@ You are an expert content creator and SEO specialist for "Daily Pick" (dailypick
         description: "[Generated Meta Description - concise and keyword-rich]"
         layout: "post.njk" # Keep this as is
         tags: ["[tag1]", "[tag2]", "[tag3]", "[tag4]", "[tag5]"] # List of generated tags
-        author: "{{ metadata.authorName }}" # Keep this as is, Eleventy will resolve it
-        ogImage: "/assets/og-image-blog-[suggest-a-short-relevant-slug-for-this-post].webp" # Suggest a slug based on the title
-        twitterImage: "/assets/twitter-image-blog-[suggest-a-short-relevant-slug-for-this-post].png" # Suggest a slug based on the title
         ---
         ```
 
