@@ -1,0 +1,188 @@
+name: Generate Weekly Blog Post
+
+on:
+  # workflow_dispatch: # You can keep this for manual runs if needed
+  schedule:
+    # Runs every Monday at 10:00 AM UTC. Adjust as needed.
+    # Cron syntax: minute hour day(of_month) month day(of_week)
+    - cron: '0 10 * * 1'
+
+jobs:
+  generate_article:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required to commit and push changes
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Git user
+        run: |
+          git config --global user.name "Daily Pick AI Bot"
+          git config --global user.email "bot@dailypick.dev"
+
+      - name: Prepare Prompt
+        id: prepare_prompt
+        run: |
+          PROMPT_TEMPLATE_FILE="blog/prompt.md" # Relative to repo root
+
+          if [ ! -f "$PROMPT_TEMPLATE_FILE" ]; then
+            echo "::error::Prompt template file not found at $PROMPT_TEMPLATE_FILE"
+            exit 1
+          fi
+          
+          # The prompt file will be used directly. 
+          # Ensure blog/prompt.md is ready or the AI handles the placeholder.
+          echo "prompt_file=${PROMPT_TEMPLATE_FILE}" >> $GITHUB_OUTPUT
+          echo "Using prompt file: $PROMPT_TEMPLATE_FILE"
+
+      - name: Call Gemini API
+        id: call_gemini
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          PROMPT_CONTENT_FILE="${{ steps.prepare_prompt.outputs.prompt_file }}"
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "::error::GEMINI_API_KEY secret is not set."
+            exit 1
+          fi
+          if [ ! -f "$PROMPT_CONTENT_FILE" ]; then
+            echo "::error::Temporary prompt file not found."
+            exit 1
+          fi
+
+          PROMPT_TEXT=$(cat "$PROMPT_CONTENT_FILE")
+
+          # Construct JSON payload using jq for robustness
+          JSON_PAYLOAD=$(jq -n --arg prompt_text "$PROMPT_TEXT" \
+            '{contents: [{parts: [{text: $prompt_text}]}]}')
+
+          echo "Sending request to Gemini API..."
+          # Using Gemini 1.5 Flash model.
+          API_RESPONSE=$(curl --fail -sS -X POST \
+            -H "Content-Type: application/json" \
+            -d "$JSON_PAYLOAD" \
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=$GEMINI_API_KEY")
+
+          if [ $? -ne 0 ]; then
+            echo "::error::Gemini API call failed."
+            # Consider logging parts of API_RESPONSE if it's safe and helps debug, e.g. error message
+            # echo "Debug Response: $API_RESPONSE" # Be cautious with full response logging
+            exit 1
+          fi
+
+          # Extract the generated text. 
+          # For gemini-1.5-flash-latest, it's typically candidates[0].content.parts[0].text
+          GENERATED_MARKDOWN=$(echo "$API_RESPONSE" | jq -r '.candidates[0].content.parts[0].text')
+
+          if [ -z "$GENERATED_MARKDOWN" ] || [ "$GENERATED_MARKDOWN" == "null" ]; then
+            echo "::error::Failed to extract markdown from Gemini API response or response was empty."
+            echo "Full API Response (first 500 chars for brevity): $(echo "$API_RESPONSE" | head -c 500)"
+            exit 1
+          fi
+          
+          echo "$GENERATED_MARKDOWN" > generated_article_raw.md
+          echo "article_raw_path=generated_article_raw.md" >> $GITHUB_OUTPUT
+          echo "Successfully received response from Gemini API."
+
+      - name: Process and Save Article
+        id: process_article
+        run: |
+          RAW_ARTICLE_PATH="${{ steps.call_gemini.outputs.article_raw_path }}"
+          if [ ! -f "$RAW_ARTICLE_PATH" ]; then
+            echo "::error::Raw article file not found at $RAW_ARTICLE_PATH"
+            exit 1
+          fi
+
+          RAW_CONTENT=$(cat "$RAW_ARTICLE_PATH")
+
+          # 1. Extract title from the raw markdown's frontmatter
+          ARTICLE_TITLE_LINE=$(echo "$RAW_CONTENT" | grep -m1 '^title: ')
+          if [ -z "$ARTICLE_TITLE_LINE" ]; then
+            echo "::error::Could not find 'title:' in the generated article's frontmatter."
+            echo "--- Raw Content Start ---"
+            cat "$RAW_ARTICLE_PATH"
+            echo "--- Raw Content End ---"
+            exit 1
+          fi
+          ARTICLE_TITLE=$(echo "$ARTICLE_TITLE_LINE" | sed -n 's/^title: "\(.*\)"/\1/p')
+          if [ -z "$ARTICLE_TITLE" ]; then
+             ARTICLE_TITLE=$(echo "$ARTICLE_TITLE_LINE" | sed -n 's/^title: *\(.*\)/\1/p') # Handle no quotes or spaces
+             if [ -z "$ARTICLE_TITLE" ]; then
+                echo "::error::Could not parse title from line: $ARTICLE_TITLE_LINE"
+                exit 1
+             fi
+          fi
+          echo "Extracted title: $ARTICLE_TITLE"
+
+          # 2. Slugify the title
+          SLUGIFIED_TITLE=$(echo "$ARTICLE_TITLE" | tr '[:upper:]' '[:lower:]' | sed -e 's/[^a-z0-9]\+/-/g' -e 's/^-+\|-+$//g')
+          if [ -z "$SLUGIFIED_TITLE" ]; then
+            echo "::warning::Failed to generate a clean slug from title. Using a fallback."
+            SLUGIFIED_TITLE="article-$(date +%s)"
+          fi
+          echo "Slugified title: $SLUGIFIED_TITLE"
+
+          # 3. Prepare filename and check for duplicates
+          ARTICLE_DATE=$(date +'%Y-%m-%d')
+          FINAL_FILENAME_NO_EXT="${ARTICLE_DATE}-${SLUGIFIED_TITLE}"
+          FINAL_ARTICLE_PATH="blog/posts/${FINAL_FILENAME_NO_EXT}.md" # Ensure this path matches your Eleventy setup
+
+          # Check if a file with this exact name already exists
+          if [ -f "$FINAL_ARTICLE_PATH" ]; then
+            echo "::error::Article with exact filename $FINAL_ARTICLE_PATH already exists. Halting."
+            exit 1
+          fi
+          # Check if a file with a similar slug (ignoring date) already exists
+          EXISTING_SLUG_FILES=$(find blog/posts -name "*-${SLUGIFIED_TITLE}.md" -print)
+          if [ -n "$EXISTING_SLUG_FILES" ]; then
+             echo "::error::An article with a similar slug '${SLUGIFIED_TITLE}' already exists: $EXISTING_SLUG_FILES. Halting to prevent potential duplicate content."
+             exit 1
+          fi
+
+          # 4. Modify the AI's response (frontmatter adjustments)
+          # Replace date placeholder (AI is asked to use [YYYY-MM-DD] or "YYYY-MM-DD")
+          MODIFIED_CONTENT=$(echo "$RAW_CONTENT" | sed "s|date: \"\[YYYY-MM-DD\]\"|date: \"$ARTICLE_DATE\"|" | sed "s|date: \[YYYY-MM-DD\]|date: \"$ARTICLE_DATE\"|")
+          
+          # Replace ogImage and twitterImage slug placeholders
+          # AI is asked to use: ...blog-[suggest-a-short-relevant-slug-for-this-post].webp
+          MODIFIED_CONTENT=$(echo "$MODIFIED_CONTENT" | sed "s|/assets/og-image-blog-\[suggest-a-short-relevant-slug-for-this-post\].webp|/assets/og-image-blog-$SLUGIFIED_TITLE.webp|g")
+          MODIFIED_CONTENT=$(echo "$MODIFIED_CONTENT" | sed "s|/assets/twitter-image-blog-\[suggest-a-short-relevant-slug-for-this-post\].png|/assets/twitter-image-blog-$SLUGIFIED_TITLE.png|g")
+
+          # Ensure layout and author are as per prompt (AI should handle this, but good to be aware)
+          # Example: Check if layout is present, if not, add it.
+          # if ! echo "$MODIFIED_CONTENT" | grep -q "^layout: \"post.njk\""; then
+          #   MODIFIED_CONTENT=$(echo -e "---\nlayout: \"post.njk\"\n$(echo "$MODIFIED_CONTENT" | sed '1d')") # Crude way to insert if missing
+          # fi
+
+
+          echo "$MODIFIED_CONTENT" > "$FINAL_ARTICLE_PATH"
+          echo "Saved processed article to $FINAL_ARTICLE_PATH"
+          echo "article_title_output=$ARTICLE_TITLE" >> $GITHUB_OUTPUT # Use a unique name for output
+          echo "article_file_path_output=$FINAL_ARTICLE_PATH" >> $GITHUB_OUTPUT # Use a unique name for output
+
+      - name: Commit and push new article
+        run: |
+          ARTICLE_TITLE_FOR_COMMIT="${{ steps.process_article.outputs.article_title_output }}"
+          ARTICLE_FILE_PATH_FOR_COMMIT="${{ steps.process_article.outputs.article_file_path_output }}"
+
+          if [ -z "$ARTICLE_FILE_PATH_FOR_COMMIT" ]; then
+            echo "::error::Article file path not set. Cannot commit."
+            exit 1
+          fi
+
+          git add "$ARTICLE_FILE_PATH_FOR_COMMIT"
+          
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes to commit. Article might be empty or processing failed to produce a new file."
+            # This could also mean the file was created but is identical to an existing one (though duplicate check should prevent)
+          else
+            COMMIT_MESSAGE="feat(blog): Add new article - $ARTICLE_TITLE_FOR_COMMIT"
+            echo "Committing with message: $COMMIT_MESSAGE"
+            git commit -m "$COMMIT_MESSAGE"
+            
+            echo "Pushing changes to branch ${{ github.ref_name }}..."
+            git push origin HEAD:${{ github.ref_name }} # Push to the current branch
+          fi
