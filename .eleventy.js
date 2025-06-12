@@ -28,7 +28,7 @@ module.exports = function(eleventyConfig) {
       input: ".", // Process files from the project root
       includes: "blog/_includes", // Layouts are in blog/_includes
       data: "blog/_data", // Global data is in blog/_data
-      output: "_site" // Default output folder
+      output: "dist" // Default output folder
     },
     // Template engines to process
     templateFormats: [

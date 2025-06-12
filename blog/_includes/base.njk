@@ -14,15 +14,8 @@
     <meta property="og:url" content="{{ metadata.url }}{{ page.url }}">
     <meta property="og:title" content="{{ title or metadata.siteTitle }}">
     <meta property="og:description" content="{{ description or metadata.siteDescription }}">
-    <meta property="og:image" content="{{ metadata.url }}{{ ogImage or metadata.defaultOgImage }}">
+    <meta property="og:image" content="{{ metadata.url }}{{ metadata.defaultOgImage }}">
     
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="{{ metadata.url }}{{ page.url }}">
-    <meta property="twitter:title" content="{{ title or metadata.siteTitle }}">
-    <meta property="twitter:description" content="{{ description or metadata.siteDescription }}">
-    <meta property="twitter:image" content="{{ metadata.url }}{{ twitterImage or metadata.defaultTwitterImage }}">
-
     <link rel="canonical" href="{{ metadata.url }}{{ page.url }}">
     
     <!-- Favicon Links -->

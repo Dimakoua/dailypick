@@ -1,12 +1,9 @@
 ---
 title: "Beyond 'Not It!': How Fair Decision Tools Revolutionize Team Dynamics & Productivity"
-date: 2024-06-08 # You can update this to the actual publishing date
+date: 2024-06-08
 description: "Eliminate bias and awkwardness in team decisions! Learn how fair selection tools like Daily Pick can boost productivity, fairness, and create a more positive team environment."
 layout: "post.njk"
 tags: ["team decisions", "fairness at work", "productivity tools", "team collaboration", "unbiased selection", "workplace culture"]
-author: "{{ metadata.authorName }}"
-ogImage: "/assets/og-image-blog-decisions.webp" # Create a relevant OG image
-twitterImage: "/assets/twitter-image-blog-decisions.png" # Create a relevant Twitter image
 ---
 
 We've all been there. That moment in a team meeting when a less-than-desirable task needs an owner, or someone needs to be chosen for a specific role. The air fills with a chorus of crickets, averted gazes, and the silent, universal chant of "Not it!"
@@ -32,7 +29,7 @@ Introducing a structured, unbiased method for making selections offers numerous 
 *   **Reduces Anxiety:** No more pressure to volunteer or fear of being singled out. The "blame" (if any) falls on the impartial tool!
 *   **Saves Time:** A quick spin of a wheel or a tap on a game interface is much faster than lengthy discussions or awkward silences.
 *   **Increases Transparency:** The selection process is open and clear to everyone, fostering trust.
-*   **Injects Fun:** Let's face it, a little game is more enjoyable than a tense decision-making moment. Tools like a [Decision Wheel](/games/decision-wheel/) or a playful [Speedway Racer](/games/speedway-racer/) game can lighten the mood instantly.
+*   **Injects Fun:** Let's face it, a little game is more enjoyable than a tense decision-making moment. Tools like a [Decision Wheel](/wheel/) or a playful [Speedway Racer](/speedway/) game can lighten the mood instantly.
 
 ## Where Can You Use Fair Decision Tools?
 
@@ -45,7 +42,7 @@ The applications are broader than you might think:
 *   **Deciding on a Tie-Breaker:** When the team is split on a minor decision.
 *   **Gamifying Learning:** Who answers the next quiz question in a training session?
 
-Imagine using a fun, visual tool like [Trap!](/games/trap/) to randomly select someone for a task – the playful suspense can turn a mundane moment into a shared laugh.
+Imagine using a fun, visual tool like [Trap!](/trap/) to randomly select someone for a task – the playful suspense can turn a mundane moment into a shared laugh.
 
 ## It's About More Than Just Picking a Name
 

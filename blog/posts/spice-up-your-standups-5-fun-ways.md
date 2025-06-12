@@ -1,12 +1,9 @@
 ---
 title: "Spice Up Your Stand-ups: 5 Fun Ways to Pick Who Goes Next (and Boost Team Morale!)"
-date: 2024-06-10 # You can update this to the actual publishing date
+date: 2024-06-10
 description: "Tired of dull daily stand-ups? Discover 5 fun and fair ways to choose who speaks next, improve team engagement, and make your agile meetings more enjoyable with Daily Pick!"
 layout: "post.njk"
 tags: ["team engagement", "daily stand-up", "agile meetings", "fun at work", "productivity", "team morale"]
-author: "{{ metadata.authorName }}"
-ogImage: "/assets/og-image-blog-standups.webp" # Create a relevant OG image
-twitterImage: "/assets/twitter-image-blog-standups.png" # Create a relevant Twitter image
 ---
 
 Let's be honest, the daily stand-up. It's essential, yes. But can it sometimes feel a *tad* repetitive? The same order, the same polite-but-slightly-forced "you go next," or the awkward silence until someone bravely steps up. What if we told you that deciding who speaks next could actually be... fun? And fair? And even a mini morale booster?
@@ -27,12 +24,12 @@ Before we dive into the "how," let's quickly touch on the "why":
 ### 1. The Digital Decision Wheel
 
 Ah, the classic wheel of fortune, but for your team! Input everyone's name, give it a virtual spin, and voila – your next speaker is chosen. It's quick, visually engaging, and undeniably fair.
-*Psst... Daily Pick has a snazzy [Decision Wheel](/games/decision-wheel/) that's perfect for this!*
+*Psst... Daily Pick has a snazzy [Decision Wheel](/wheel/) that's perfect for this!*
 
 ### 2. "Speedway Racer" Start
 
 Imagine a mini virtual race where each team member is a car. The first one to cross the "finish line" (randomly determined, of course) gets to kick off the updates. It adds a playful, competitive (but friendly!) edge.
-*Hint: Our [Speedway Racer](/games/speedway-racer/) game can make this a reality in seconds!*
+*Hint: Our [Speedway Racer](/speedway/) game can make this a reality in seconds!*
 
 ### 3. The "Pass the Virtual Baton"
 
@@ -45,7 +42,7 @@ This one adds a little icebreaker element. The person whose turn it is shares tw
 ### 5. The "Trap! Master"
 
 For a bit of suspense and a quick laugh, a game like "Trap!" can be a hilarious way to select someone. Each player picks a spot, and one by one, traps are revealed. The last one standing (or the first one "trapped," depending on how you want to play it) is up!
-*Check out [Trap! by Daily Pick](/games/trap/) for an easy way to implement this.*
+*Check out [Trap! by Daily Pick](/trap/) for an easy way to implement this.*
 
 ## Make it Your Own
 
