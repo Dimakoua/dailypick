@@ -3,29 +3,43 @@
 
   <url>
     <loc>https://dailypick.dev/</loc>
-    <lastmod>2025-06-08</lastmod>
-    <changefreq>daily</changefreq>
+    <lastmod>2025-06-12</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://dailypick.dev/wheel/</loc>
     <lastmod>2025-06-08</lastmod>
-    <changefreq>daily</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://dailypick.dev/trap/</loc>
     <lastmod>2025-06-08</lastmod>
-    <changefreq>daily</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://dailypick.dev/speedway/</loc>
     <lastmod>2025-06-08</lastmod>
-    <changefreq>daily</changefreq>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://dailypick.dev/letters/</loc>
+    <lastmod>2025-06-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://dailypick.dev/blog/</loc>
+    <lastmod>2025-06-12</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
