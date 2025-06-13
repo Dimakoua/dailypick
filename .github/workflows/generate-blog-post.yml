@@ -82,6 +82,11 @@ jobs:
             exit 1
           fi
           
+          # Clean the GENERATED_MARKDOWN: remove potential ```markdown at the start and ``` at the end.
+          # This ensures the content is raw markdown.
+          GENERATED_MARKDOWN=$(echo "$GENERATED_MARKDOWN" | sed 's/^```markdown\s*//I; s/\s*```$//')
+          # The 'I' flag for sed might not be standard; if issues, remove 'I' and ensure prompt is clear about 'markdown' casing.
+          # A more portable way if 'markdown' casing is fixed: sed 's/^```markdown\s*//' | sed 's/\s*```$//'
           echo "$GENERATED_MARKDOWN" > generated_article_raw.md
           echo "article_raw_path=generated_article_raw.md" >> $GITHUB_OUTPUT
           echo "Successfully received response from Gemini API."
@@ -141,14 +146,37 @@ jobs:
              exit 1
           fi
 
-          # 4. Modify the AI's response (frontmatter adjustments)
-          # Replace date placeholder (AI is asked to use [YYYY-MM-DD] or "YYYY-MM-DD")
-          MODIFIED_CONTENT=$(echo "$RAW_CONTENT" | sed "s|date: \"\[YYYY-MM-DD\]\"|date: \"$ARTICLE_DATE\"|" | sed "s|date: \[YYYY-MM-DD\]|date: \"$ARTICLE_DATE\"|")
+          # 4. Modify the AI's response (frontmatter adjustments and ensuring quotes)
+          MODIFIED_CONTENT="$RAW_CONTENT"
+
+          # 4a. Ensure 'date' is correctly set and quoted.
+          # AI is prompted for date: "[YYYY-MM-DD]". This replaces the placeholder and ensures quotes.
+          MODIFIED_CONTENT=$(echo "$MODIFIED_CONTENT" | sed \
+            -e "s|date: \"\[YYYY-MM-DD\]\"|date: \"$ARTICLE_DATE\"|" \
+            -e "s|date: \[YYYY-MM-DD\]|date: \"$ARTICLE_DATE\"|")
+
+          # 4b. Ensure 'title' is correctly quoted using the extracted ARTICLE_TITLE.
+          # Escape ARTICLE_TITLE for use in sed's RHS (handles '/', '&', and '"' within the title)
+          ESCAPED_ARTICLE_TITLE=$(printf '%s\n' "$ARTICLE_TITLE" | sed -e 's/[\/&]/\\&/g' -e 's/"/\\"/g')
+          # Replace the entire title line to ensure it's correctly formatted and quoted.
+          MODIFIED_CONTENT=$(echo "$MODIFIED_CONTENT" | sed -E "s/^title: .*/title: \"$ESCAPED_ARTICLE_TITLE\"/")
+
+          # 4c. Ensure 'description' value is quoted.
+          # This operates on the line directly as we haven't extracted the description value separately.
+          # It handles cases where description might be unquoted or already quoted by the AI.
+          MODIFIED_CONTENT=$(echo "$MODIFIED_CONTENT" | sed -E \
+            '/^description: / {
+                s/^description: *(".*") *$/description: \1/; # Already correctly quoted (trim surrounding spaces)
+                t end_desc
+                s/^description: *(.*[^ ]) *$/description: "\1"/; # Not quoted or improperly quoted, quote it (trim trailing spaces from value)
+                :end_desc
+            }')
           
-          # Replace ogImage and twitterImage slug placeholders
+          # 4d. Replace ogImage and twitterImage slug placeholders
           # AI is asked to use: ...blog-[suggest-a-short-relevant-slug-for-this-post].webp
-          MODIFIED_CONTENT=$(echo "$MODIFIED_CONTENT" | sed "s|/assets/og-image-blog-\[suggest-a-short-relevant-slug-for-this-post\].webp|/assets/og-image-blog-$SLUGIFIED_TITLE.webp|g")
-          MODIFIED_CONTENT=$(echo "$MODIFIED_CONTENT" | sed "s|/assets/twitter-image-blog-\[suggest-a-short-relevant-slug-for-this-post\].png|/assets/twitter-image-blog-$SLUGIFIED_TITLE.png|g")
+          MODIFIED_CONTENT=$(echo "$MODIFIED_CONTENT" | sed \
+            -e "s|/assets/og-image-blog-\[suggest-a-short-relevant-slug-for-this-post\].webp|/assets/og-image-blog-$SLUGIFIED_TITLE.webp|g" \
+            -e "s|/assets/twitter-image-blog-\[suggest-a-short-relevant-slug-for-this-post\].png|/assets/twitter-image-blog-$SLUGIFIED_TITLE.png|g")
 
           # Ensure layout and author are as per prompt (AI should handle this, but good to be aware)
           # Example: Check if layout is present, if not, add it.

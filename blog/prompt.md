@@ -80,6 +80,7 @@ The chosen Focus/Angle **must align with Daily Pick's core themes** (fun, fairne
 
 **Important Instructions for the AI Generating the Post:**
 *   Carefully replace all bracketed placeholders `[]` in the frontmatter and content with specifically generated, relevant information.
+*   Your response should be *only* the raw Markdown content, starting directly with the `---` of the frontmatter. Do NOT wrap the entire response in a Markdown code block (i.e., do not start with ` ```markdown ` and end with ` ``` `).
 *   Ensure all links to Daily Pick tools use the correct relative paths (e.g., `/wheel/`, `/speedway/`, `/trap/`, `/letters/`) and the homepage link is `/`, blog link is `/blog/`, post link is `/posts/[name-of-post]`.
 *   The primary goal is to provide genuine value to the reader. Promotion of Daily Pick should feel like a natural, helpful suggestion, not a forced sales pitch.
 *   Be creative and original with the content while staying true to the Daily Pick brand voice and mission.
