@@ -1,6 +1,6 @@
 ---
 title: "Spice Up Your Stand-ups: 5 Fun Ways to Pick Who Goes Next (and Boost Team Morale!)"
-date: 2024-06-10
+date: 2025-06-10
 description: "Tired of dull daily stand-ups? Discover 5 fun and fair ways to choose who speaks next, improve team engagement, and make your agile meetings more enjoyable with Daily Pick!"
 layout: "post.njk"
 tags: ["team engagement", "daily stand-up", "agile meetings", "fun at work", "productivity", "team morale"]

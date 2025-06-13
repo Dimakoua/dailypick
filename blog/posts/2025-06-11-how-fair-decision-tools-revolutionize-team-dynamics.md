@@ -1,6 +1,6 @@
 ---
 title: "Beyond 'Not It!': How Fair Decision Tools Revolutionize Team Dynamics & Productivity"
-date: 2024-06-08
+date: 2025-06-11
 description: "Eliminate bias and awkwardness in team decisions! Learn how fair selection tools like Daily Pick can boost productivity, fairness, and create a more positive team environment."
 layout: "post.njk"
 tags: ["team decisions", "fairness at work", "productivity tools", "team collaboration", "unbiased selection", "workplace culture"]
