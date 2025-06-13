@@ -34,6 +34,9 @@ jobs:
           
           # The prompt file will be used directly. 
           # Ensure blog/prompt.md is ready or the AI handles the placeholder.
+          CURRENT_SYSTEM_DATE=$(date +'%Y-%m-%d')
+          echo "Current system date: $CURRENT_SYSTEM_DATE"
+          echo "current_date_iso=${CURRENT_SYSTEM_DATE}" >> $GITHUB_OUTPUT
           echo "prompt_file=${PROMPT_TEMPLATE_FILE}" >> $GITHUB_OUTPUT
           echo "Using prompt file: $PROMPT_TEMPLATE_FILE"
 
@@ -42,6 +45,7 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
+          CURRENT_DATE_FOR_PROMPT="${{ steps.prepare_prompt.outputs.current_date_iso }}"
           PROMPT_CONTENT_FILE="${{ steps.prepare_prompt.outputs.prompt_file }}"
           if [ -z "$GEMINI_API_KEY" ]; then
             echo "::error::GEMINI_API_KEY secret is not set."
@@ -53,6 +57,8 @@ jobs:
           fi
 
           PROMPT_TEXT=$(cat "$PROMPT_CONTENT_FILE")
+          # Inject the current date into the prompt text
+          PROMPT_TEXT=$(echo "$PROMPT_TEXT" | sed "s|\`\[CURRENT_DATE_FOR_AI_CONTEXT\]\`|\`$CURRENT_DATE_FOR_PROMPT\`|g")
 
           # Construct JSON payload using jq for robustness
           JSON_PAYLOAD=$(jq -n --arg prompt_text "$PROMPT_TEXT" \
