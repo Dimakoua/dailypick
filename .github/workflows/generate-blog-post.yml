@@ -31,40 +31,108 @@ jobs:
             echo "::error::Prompt template file not found at $PROMPT_TEMPLATE_FILE"
             exit 1
           fi
-          
-          # The prompt file will be used directly. 
-          # Ensure blog/prompt.md is ready or the AI handles the placeholder.
+
           CURRENT_SYSTEM_DATE=$(date +'%Y-%m-%d')
           echo "Current system date: $CURRENT_SYSTEM_DATE"
+
+          echo "Fetching recent article titles..."
+          RECENT_TITLES_MARKDOWN_LIST=""
+          # List up to 10 most recently modified markdown files in blog/posts/
+          # Using `ls -1t` which sorts by modification time (newest first).
+          # Suppress error if no files are found.
+          RECENT_FILES=$(ls -1t blog/posts/*.md 2>/dev/null | head -n 10)
+
+          if [ -n "$RECENT_FILES" ]; then
+            echo "Found recent files to process for titles:"
+            echo "$RECENT_FILES"
+            while IFS= read -r file_path; do
+              if [ -f "$file_path" ]; then
+                # Extract title from frontmatter (handles "title: '...'" or 'title: ...')
+                TITLE_LINE=$(grep -m1 '^title: ' "$file_path")
+                ARTICLE_TITLE=""
+                if [ -n "$TITLE_LINE" ]; then
+                  # Try to extract quoted title first
+                  ARTICLE_TITLE=$(echo "$TITLE_LINE" | sed -n 's/^title: "\(.*\)"/\1/p')
+                  if [ -z "$ARTICLE_TITLE" ]; then
+                    # Try to extract unquoted title (trimming leading/trailing whitespace from value)
+                    ARTICLE_TITLE=$(echo "$TITLE_LINE" | sed -n 's/^title: *\(.*[^ ]\) */\1/p')
+                  fi
+                fi
+
+                if [ -n "$ARTICLE_TITLE" ]; then
+                  # Append as a markdown list item, ensuring quotes around the title
+                  # Escape double quotes within the title itself for the markdown list
+                  ESCAPED_ARTICLE_TITLE_FOR_LIST=$(echo "$ARTICLE_TITLE" | sed 's/"/\\"/g')
+                  if [ -z "$RECENT_TITLES_MARKDOWN_LIST" ]; then
+                    RECENT_TITLES_MARKDOWN_LIST="- \"$ESCAPED_ARTICLE_TITLE_FOR_LIST\""
+                  else
+                    RECENT_TITLES_MARKDOWN_LIST="${RECENT_TITLES_MARKDOWN_LIST}\n- \"$ESCAPED_ARTICLE_TITLE_FOR_LIST\""
+                  fi
+                  echo "  Extracted title: $ARTICLE_TITLE from $file_path"
+                else
+                  echo "  ::warning::Could not extract title from $file_path"
+                fi
+              fi
+            done <<< "$RECENT_FILES"
+          else
+            echo "No recent blog posts found in blog/posts/."
+            RECENT_TITLES_MARKDOWN_LIST="No recent articles found to list." # Provide a default message
+          fi
+
+          echo "Recent titles markdown list for prompt:"
+          echo -e "$RECENT_TITLES_MARKDOWN_LIST"
+
           echo "current_date_iso=${CURRENT_SYSTEM_DATE}" >> $GITHUB_OUTPUT
           echo "prompt_file=${PROMPT_TEMPLATE_FILE}" >> $GITHUB_OUTPUT
+          echo "recent_titles_list<<EOF" >> $GITHUB_OUTPUT
+          echo -e "$RECENT_TITLES_MARKDOWN_LIST" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
           echo "Using prompt file: $PROMPT_TEMPLATE_FILE"
 
       - name: Call Gemini API
         id: call_gemini
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          # These env vars will be used by envsubst for prompt templating
+          DP_CURRENT_DATE_FOR_AI_CONTEXT: "${{ steps.prepare_prompt.outputs.current_date_iso }}"
+          DP_RECENT_ARTICLE_TITLES_LIST: ${{ steps.prepare_prompt.outputs.recent_titles_list }}
         run: |
-          CURRENT_DATE_FOR_PROMPT="${{ steps.prepare_prompt.outputs.current_date_iso }}"
-          PROMPT_CONTENT_FILE="${{ steps.prepare_prompt.outputs.prompt_file }}"
+          PROMPT_TEMPLATE_FILE="${{ steps.prepare_prompt.outputs.prompt_file }}"
+
           if [ -z "$GEMINI_API_KEY" ]; then
             echo "::error::GEMINI_API_KEY secret is not set."
             exit 1
           fi
-          if [ ! -f "$PROMPT_CONTENT_FILE" ]; then
-            echo "::error::Temporary prompt file not found."
+          if [ ! -f "$PROMPT_TEMPLATE_FILE" ]; then
+            echo "::error::Prompt template file not found: $PROMPT_TEMPLATE_FILE"
             exit 1
           fi
 
-          PROMPT_TEXT=$(cat "$PROMPT_CONTENT_FILE")
-          # Inject the current date into the prompt text
-          PROMPT_TEXT=$(echo "$PROMPT_TEXT" | sed "s|\`\[CURRENT_DATE_FOR_AI_CONTEXT\]\`|\`$CURRENT_DATE_FOR_PROMPT\`|g")
+          # Debug: Show env vars that envsubst will use
+          echo "DP_CURRENT_DATE_FOR_AI_CONTEXT: $DP_CURRENT_DATE_FOR_AI_CONTEXT"
+          echo "DP_RECENT_ARTICLE_TITLES_LIST:"
+          echo "$DP_RECENT_ARTICLE_TITLES_LIST"
+
+          # Use envsubst to prepare the prompt text by substituting environment variables.
+          # This requires your prompt.md to use placeholders like ${DP_VAR_NAME}
+          PROMPT_TEXT=$(envsubst < "$PROMPT_TEMPLATE_FILE")
+
+          if [ -z "$PROMPT_TEXT" ]; then
+              echo "::error::envsubst failed to produce prompt text or the result is empty."
+              echo "--- Template content ($PROMPT_TEMPLATE_FILE) ---"
+              cat "$PROMPT_TEMPLATE_FILE"
+              echo "--- End of template content ---"
+              exit 1
+          fi
 
           # Construct JSON payload using jq for robustness
           JSON_PAYLOAD=$(jq -n --arg prompt_text "$PROMPT_TEXT" \
             '{contents: [{parts: [{text: $prompt_text}]}]}')
 
-          echo "Sending request to Gemini API..."
+          echo "Sending request to Gemini API with prompt (first 500 chars):"
+          echo "$PROMPT_TEXT" | head -c 500
+          echo # Newline for clarity after potentially truncated prompt
+
           # Using Gemini 1.5 Flash model.
           API_RESPONSE=$(curl --fail -sS -X POST \
             -H "Content-Type: application/json" \
