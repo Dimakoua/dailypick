@@ -175,6 +175,17 @@ jobs:
 
           RAW_CONTENT=$(cat "$RAW_ARTICLE_PATH")
 
+          # Check for leading empty lines or content before '---'
+          # The `grep -q '^---'` checks if the content starts with '---'
+          if ! echo "$RAW_CONTENT" | grep -q '^---'; then
+            echo "::error::Generated article content does not start with '---' frontmatter delimiter as expected."
+            echo "This might indicate leading empty lines or other unexpected characters at the beginning."
+            echo "--- Raw Content Start (first 200 characters) ---"
+            echo "$RAW_CONTENT" | head -c 200
+            echo -e "\n--- Raw Content End ---"
+            exit 1
+          fi
+
           # 1. Extract title from the raw markdown's frontmatter
           ARTICLE_TITLE_LINE=$(echo "$RAW_CONTENT" | grep -m1 '^title: ')
           if [ -z "$ARTICLE_TITLE_LINE" ]; then
