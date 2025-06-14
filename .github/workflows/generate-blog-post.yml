@@ -130,7 +130,6 @@ jobs:
             '{contents: [{parts: [{text: $prompt_text}]}]}')
 
           echo "Sending request to Gemini API with prompt (first 500 chars):"
-          echo "$PROMPT_TEXT" | head -c 500
           echo # Newline for clarity after potentially truncated prompt
 
           # Using Gemini 1.5 Flash model.
