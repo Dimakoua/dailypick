@@ -9,6 +9,7 @@ module.exports = function(eleventyConfig) {
   
   // Add passthrough copy for game directories and their assets
   eleventyConfig.addPassthroughCopy("wheel");
+  eleventyConfig.addPassthroughCopy({ "public": "." });
   eleventyConfig.addPassthroughCopy("speedway");
   eleventyConfig.addPassthroughCopy("trap");
   eleventyConfig.addPassthroughCopy("letters");
