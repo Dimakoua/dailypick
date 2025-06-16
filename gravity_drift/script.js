@@ -3,6 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const ctx = canvas.getContext('2d');
     const startButton = document.getElementById('startButton');
     const leaderboardDiv = document.getElementById('leaderboard');
+    const settingsToggleBtn = document.getElementById('settingsToggleBtn');
+    const configArea = document.getElementById('config-area');
+    const namesInputElement = document.getElementById('namesInput');
+    const updateNamesButton = document.getElementById('updateNamesBtn');
     const leaderboardList = document.getElementById('leaderboardList');
 
     // Game settings & Constants
@@ -29,11 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const G = 0.5; // Gravitational constant (tweak for gameplay)
-    const NUM_ROCKETS_PER_LAUNCH = 5;
     const ROCKET_RADIUS = 4; // Visual size
     const STAR_COUNT = 250;
     const HEAVY_STAR_BORDER_THICKNESS = 15; // Visual thickness of the boundary
-    const FUEL_CONSUMPTION_RATE = 0.2; // Fuel units per second
+    const FUEL_CONSUMPTION_RATE = 0.9; // Fuel units per second
     const MAX_TRAIL_LENGTH = 200;
     const SUN_POSITION = new Vector2D(canvas.width / 2, canvas.height / 2);
     const SUN_RADIUS = 20;
@@ -45,9 +48,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const ASTEROID_MAX_RADIUS = 15;
     const ASTEROID_BASE_MASS = 50; // Base mass, can be varied
     const ASTEROID_SUN_RESTITUTION = 0.3; // Bounciness factor for asteroid-sun collision
+    const ASTEROID_FIXED_SUN_BOUNCE_SPEED = 10; // Increased from 5 for a more noticeable bounce
 
     // Name configuration similar to letters/game.js
-    const GRAVITY_DRIFT_NAMES_KEY = 'gravityDriftRocketNames';
+    const GRAVITY_DRIFT_NAMES_KEY = 'namesList';
     const DEFAULT_ROCKET_NAMES = [ // Using names from letters/game.js config as a base
         "Kate", "Andre", "Juan", "Dmytro", "Vetura",
         "Zachary", "Lindsay"
@@ -182,9 +186,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (dotProductSun < 0) {
                     this.velocity.x -= (1 + ASTEROID_SUN_RESTITUTION) * dotProductSun * normalFromSun.x;
                     this.velocity.y -= (1 + ASTEROID_SUN_RESTITUTION) * dotProductSun * normalFromSun.y;
-                    // When an asteroid hits the sun, also significantly dampen its overall velocity
-                    // to simulate energy absorption or partial destruction.
-                    this.velocity.mult(0.7); // Reduce velocity by 30% upon Sun impact
+                    
+                    // Set the speed to a fixed value after bouncing, preserving the new direction
+                    if (this.velocity.magSq() > 0) { // Ensure it's not a zero vector
+                        this.velocity.normalize().mult(ASTEROID_FIXED_SUN_BOUNCE_SPEED);
+                    } else {
+                        // If velocity somehow became zero, push it directly away from the sun
+                        this.velocity.set(normalFromSun.x, normalFromSun.y).mult(ASTEROID_FIXED_SUN_BOUNCE_SPEED);
+                    }
                 }
             }
 
@@ -406,7 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (this.finishOrder === null) {
                         this.finishOrder = nextFinishOrder++;
                     }
-                    this.finishReason = `Trapped by Asteroid (${this.name})`; // More specific reason
+                    this.finishReason = `Trapped by Asteroid`; // More specific reason
                     return; // End update for this frame
                 }
             }
@@ -488,8 +497,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             configurableRocketNames = [...DEFAULT_ROCKET_NAMES]; // No stored names, use default
         }
-        // Note: Unlike the letters game, Gravity Drift doesn't currently have a UI 
-        // to input/update these names, so no corresponding input field update here.
+        if (namesInputElement) {
+            namesInputElement.value = configurableRocketNames.join('\n');
+        }
     }
 
      function initAsteroids() {
@@ -558,14 +568,10 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        for (let i = 0; i < NUM_ROCKETS_PER_LAUNCH; i++) {
-            let baseName = configurableRocketNames[i % configurableRocketNames.length];
-            let rocketName = baseName;
-            // If NUM_ROCKETS_PER_LAUNCH exceeds the number of unique names in configurableRocketNames, append a number
-            if (i >= configurableRocketNames.length) {
-                rocketName = `${baseName} ${Math.floor(i / ROCKET_NAMES_LIST.length) + 1}`;
-            }
-            
+        // Launch one rocket for each name in the configurable list
+        for (let i = 0; i < configurableRocketNames.length; i++) {
+            const rocketName = configurableRocketNames[i]; // Each rocket gets a unique name
+
             let launchDirection;
             const targetablePlanets = planets.filter(p => p !== earthPlanet);
 
@@ -588,11 +594,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const startPos = Vector2D.add(earthPlanet.position, launchDirection.clone().mult(earthPlanet.radius + ROCKET_RADIUS + 2)); // +2 for a small buffer
 
             // Increased initial speed relative to Earth: (e.g., 30-50 units/sec)
-            const launchSpeedRelativeToEarth = (Math.random() * 0.5 + 1.0) * 20; // Reduced from (Math.random() * 1.0 + 1.5) * 20;
+            const launchSpeedRelativeToEarth = (Math.random() * 0.1 + 1.0) * 10; // Reduced from (Math.random() * 1.0 + 1.5) * 20;
             const launchVelocityRelativeToEarth = launchDirection.clone().mult(launchSpeedRelativeToEarth);
 
             const initialRocketVelocity = Vector2D.add(earthPlanet.velocity, launchVelocityRelativeToEarth);
-            const initialFuel = Math.random() * 60 + 40; // Random fuel (40-100)
+            const initialFuel = Math.random() * 10 + 20; // Random fuel (40-100)
             rockets.push(new Rocket(i, rocketName, startPos, initialRocketVelocity, initialFuel));
         }
     }
@@ -731,9 +737,36 @@ document.addEventListener('DOMContentLoaded', () => {
         leaderboardDiv.classList.remove('hidden');
     }
 
+    function updateNamesFromInput() {
+        if (!namesInputElement) return;
+        const inputText = namesInputElement.value.trim();
+        const newNames = inputText ? inputText.split(/[\n,]+/).map(name => name.trim()).filter(name => name.length > 0) : [];
+        configurableRocketNames = newNames.length > 0 ? [...newNames] : [...DEFAULT_ROCKET_NAMES];
+        
+        if (namesInputElement) { // Update textarea to reflect the processed list (e.g. if default was used)
+            namesInputElement.value = configurableRocketNames.join('\n');
+        }
+        localStorage.setItem(GRAVITY_DRIFT_NAMES_KEY, JSON.stringify(configurableRocketNames)); // Save to local storage
+        startGame(); // Restart game with new names
+        // Optionally hide config area after update
+        // toggleConfigArea(false); 
+    }
+
+    function toggleConfigArea(show) {
+        if (!configArea || !settingsToggleBtn) return;
+        if (show === undefined) {
+            configArea.classList.toggle("config-hidden");
+        } else if (show) {
+            configArea.classList.remove("config-hidden");
+        } else {
+            configArea.classList.add("config-hidden");
+        }
+        settingsToggleBtn.textContent = configArea.classList.contains("config-hidden") ? "⚙️ Show Settings" : "⚙️ Hide Settings";
+    }
     // Initial setup
     startButton.addEventListener('click', startGame);
-
+    if (updateNamesButton) updateNamesButton.addEventListener('click', updateNamesFromInput);
+    if (settingsToggleBtn) settingsToggleBtn.addEventListener('click', () => toggleConfigArea());
     loadConfigurableRocketNames(); // Load names before any game logic that might use them
     
     function initialDraw() {
@@ -755,5 +788,6 @@ document.addEventListener('DOMContentLoaded', () => {
         drawHeavyStarSkies();
     }
 
+    toggleConfigArea(false); // Hide settings by default on load
     initialDraw(); // Perform an initial draw of the static scene
 });
