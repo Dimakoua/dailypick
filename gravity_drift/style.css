@@ -1,8 +1,9 @@
 body {
-    font-family: 'Arial', sans-serif;
+    /* Using Nunito for consistency with the main dailypick.dev site */
+    font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #1a1a2e; /* Dark space blue */
     color: #e0e0e0; /* Light grey text */
-    margin: 0;
+    margin: 0; 
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -10,6 +11,7 @@ body {
     justify-content: center;
     min-height: 100vh;
     box-sizing: border-box;
+    overflow-x: hidden; /* Prevent horizontal scrollbars from scaled content */
 }
 
 .game-container {
@@ -17,11 +19,12 @@ body {
     flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
+    /* Margins might need adjustment after scaling, or rely on body padding */
     border: 2px solid #4a4a70;
     box-shadow: 0 0 15px #7f7fd5, 0 0 25px #7f7fd5 inset;
     border-radius: 10px;
     padding: 10px;
-    background-color: #0a0a1a; /* Even darker for canvas backdrop */
+    background-color: #0a0a1a; 
 }
 
 #gameCanvas {
@@ -36,8 +39,8 @@ body {
 #startButton {
     padding: 10px 20px;
     font-size: 16px;
-    background-color: #FFD700; /* Gold */
-    color: #1a1a2e; /* Dark blue text */
+    background-color: #3498db; /* Friendly blue from main site */
+    color: #ffffff; /* White text for contrast */
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -45,7 +48,7 @@ body {
 }
 
 #startButton:hover {
-    background-color: #f0c000; /* Darker gold */
+    background-color: #2980b9; /* Darker blue from main site */
 }
 
 #leaderboard {
@@ -64,7 +67,7 @@ body {
 #leaderboard h2 {
     margin-top: 0;
     text-align: center;
-    color: #FFD700; /* Gold color for the title */
+    color: #3498db; /* Friendly blue from main site */
 }
 
 #leaderboard ul {
@@ -86,7 +89,7 @@ body {
 }
 
 #leaderboard li b {
-    color: #87CEFA; /* Light sky blue for names */
+    color: #ecf0f1; /* Light silver/white for good contrast, similar to pinball drawer text */
 }
 
 /* Keep the hidden class to control visibility via JavaScript */
@@ -153,8 +156,8 @@ body {
 #config-area button {
     padding: 10px 15px;
     font-size: 14px;
-    background-color: #FFD700; /* Gold, like the start button */
-    color: #1a1a2e;
+    background-color: #3498db; /* Friendly blue from main site */
+    color: #ffffff; /* White text for contrast */
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -162,5 +165,117 @@ body {
 }
 
 #config-area button:hover {
-    background-color: #f0c000; /* Darker gold */
+    background-color: #2980b9; /* Darker blue from main site */
+}
+
+/* SEO Content Area Styles */
+.seo-content {
+    background-color: #f9f9f9; /* Match .intro-content-area from index.html */
+    color: #5d5d5d; /* Match main text color from index.html */
+    padding: 25px 35px; /* Match .intro-content-area */
+    border-radius: 15px; /* Match .intro-content-area */
+    border: 1px solid #e7e7e7; /* Match .intro-content-area */
+    /* box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); Removed for closer match to .intro-content-area */
+    max-width: 750px; /* Match .intro-content-area */
+    width: 100%; /* Match .intro-content-area (within its centered margin context) */
+    margin: 40px auto; /* Match .intro-content-area vertical margin, keep auto for horizontal centering */
+    text-align: left; /* Override body's center align for better readability */
+    line-height: 1.7;
+}
+
+.seo-content h1 {
+    color: #3498db; /* Friendly blue from main site */
+    font-size: 2.2em; /* Adjusted for prominence, similar to main site H1 */
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+.seo-content h2 {
+    color: #3498db; /* Match .intro-content-area h2 color from index.html */
+    font-size: 1.7em; /* Match .intro-content-area h2 */
+    margin-top: 25px; /* Spacing from previous element or H1 */
+    margin-bottom: 15px; /* Match .intro-content-area h2 */
+    /* border-bottom: 1px solid #4a4a70; Removed */
+    /* padding-bottom: 5px; Removed */
+    text-align: center; /* Match .intro-content-area h2 */
+}
+
+.seo-content p {
+    margin-bottom: 15px;
+}
+
+.seo-content strong {
+    color: #2980b9; /* Match strong color from index.html .intro-content-area */
+}
+
+.seo-content ul {
+    list-style-type: '✨'; /* Using a fun emoji bullet */
+    padding-left: 20px; /* Match .intro-content-area ul */
+    margin-bottom: 15px; /* Match .intro-content-area ul */
+}
+
+.seo-content li {
+    padding-left: 10px;
+    margin-bottom: 8px;
+}
+
+/* --- Responsive Adjustments --- */
+
+@media (max-width: 850px) { /* Slightly wider than the game container's original width */
+    body {
+        padding: 10px; /* Reduce body padding */
+    }
+
+    #leaderboard, #config-area {
+        position: relative; /* Change from absolute to flow with content */
+        width: 90%;
+        max-width: 400px; /* Limit width on medium screens */
+        right: auto;
+        top: auto;
+        margin: 20px auto; /* Center it */
+        float: none; /* Ensure no floating */
+        z-index: 100; /* Keep above normal flow if needed, but less than modals */
+    }
+
+    #settingsToggleBtn {
+        position: relative; /* Bring into the normal document flow */
+        top: auto;          /* Reset absolute positioning */
+        right: auto;        /* Reset absolute positioning */
+        margin-top: 20px;   /* Add some space above */
+        margin-bottom: 15px; /* Add space below, before config area or game container */
+        /* z-index will default to auto, which is fine in normal flow */
+    }
+
+    .seo-content {
+        padding: 20px;
+        margin: 20px auto;
+    }
+
+    .seo-content h1 {
+        font-size: 1.8em;
+    }
+    .seo-content h2 {
+        font-size: 1.4em;
+    }
+}
+
+@media (max-width: 480px) { /* Smaller phone screens */
+    #leaderboard, #config-area {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+    #leaderboard h2, #config-area label {
+        font-size: 1.1em;
+    }
+    #config-area textarea {
+        min-height: 50px;
+    }
+
+    .seo-content {
+        padding: 15px;
+        font-size: 0.9em;
+    }
+    .seo-content h1 { font-size: 1.6em; }
+    .seo-content h2 { font-size: 1.3em; }
 }

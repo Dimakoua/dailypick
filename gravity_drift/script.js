@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
     const startButton = document.getElementById('startButton');
+    const gameContainer = document.querySelector('.game-container'); // Get the game container
     const leaderboardDiv = document.getElementById('leaderboard');
     const settingsToggleBtn = document.getElementById('settingsToggleBtn');
     const configArea = document.getElementById('config-area');
@@ -12,6 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Game settings & Constants
     canvas.width = 800;
     canvas.height = 600;
+
+    // Original dimensions for scaling logic (based on .game-container's content)
+    const ORIGINAL_GAME_WIDTH = 824; // Approx. 800 (canvas) + 2*10 (padding) + 2*2 (border)
+    const ORIGINAL_GAME_HEIGHT = 679; // Approx. 600 (canvas) + 2*10 (padding) + 2*2 (border) + 15 (controls margin) + 40 (button height)
 
     class Vector2D {
         constructor(x = 0, y = 0) {
@@ -763,6 +768,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         settingsToggleBtn.textContent = configArea.classList.contains("config-hidden") ? "⚙️ Show Settings" : "⚙️ Hide Settings";
     }
+
+    function fitGameToScreen() {
+        if (!gameContainer) return;
+
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        // Consider available space, leaving some margin perhaps
+        const availableWidth = viewportWidth * 0.98; // Use 98% to avoid scrollbars with scaling
+        const availableHeight = viewportHeight * 0.90; // Leave more vertical space for other UI
+
+        const scaleX = availableWidth / ORIGINAL_GAME_WIDTH;
+        const scaleY = availableHeight / ORIGINAL_GAME_HEIGHT;
+
+        let scale = Math.min(scaleX, scaleY);
+
+        // Optional: Prevent upscaling beyond 1x if the original size fits comfortably
+        if (ORIGINAL_GAME_WIDTH <= availableWidth && ORIGINAL_GAME_HEIGHT <= availableHeight) {
+            scale = Math.min(scale, 1);
+        }
+        gameContainer.style.transformOrigin = 'center top'; // Scale from top-center
+        gameContainer.style.transform = `scale(${scale})`;
+    }
     // Initial setup
     startButton.addEventListener('click', startGame);
     if (updateNamesButton) updateNamesButton.addEventListener('click', updateNamesFromInput);
@@ -789,5 +817,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     toggleConfigArea(false); // Hide settings by default on load
+    fitGameToScreen(); // Initial fit
     initialDraw(); // Perform an initial draw of the static scene
+
+    window.addEventListener('resize', fitGameToScreen); // Fit on resize
 });
