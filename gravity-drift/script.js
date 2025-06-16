@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ASTEROID_MAX_RADIUS = 15;
     const ASTEROID_BASE_MASS = 50; // Base mass, can be varied
     const ASTEROID_SUN_RESTITUTION = 0.3; // Bounciness factor for asteroid-sun collision
-    const ASTEROID_FIXED_SUN_BOUNCE_SPEED = 10; // Increased from 5 for a more noticeable bounce
+    const ASTEROID_FIXED_SUN_BOUNCE_SPEED = 30; // Increased from 5 for a more noticeable bounce
 
     // Name configuration similar to letters/game.js
     const GRAVITY_DRIFT_NAMES_KEY = 'namesList';
@@ -599,7 +599,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const startPos = Vector2D.add(earthPlanet.position, launchDirection.clone().mult(earthPlanet.radius + ROCKET_RADIUS + 2)); // +2 for a small buffer
 
             // Increased initial speed relative to Earth: (e.g., 30-50 units/sec)
-            const launchSpeedRelativeToEarth = (Math.random() * 0.1 + 1.0) * 10; // Reduced from (Math.random() * 1.0 + 1.5) * 20;
+            const launchSpeedRelativeToEarth = (Math.random() * 0.6 + 1.0) * 10; // Reduced from (Math.random() * 1.0 + 1.5) * 20;
             const launchVelocityRelativeToEarth = launchDirection.clone().mult(launchSpeedRelativeToEarth);
 
             const initialRocketVelocity = Vector2D.add(earthPlanet.velocity, launchVelocityRelativeToEarth);
