@@ -41,10 +41,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const SUN_MASS = 15000; // Significantly more massive than planets
     const EARTH_NAME = "Earth";
 
+    // Name configuration similar to letters/game.js
+    const GRAVITY_DRIFT_NAMES_KEY = 'gravityDriftRocketNames';
+    const DEFAULT_ROCKET_NAMES = [ // Using names from letters/game.js config as a base
+        "Kate", "Andre", "Juan", "Dmytro", "Vetura",
+        "Zachary", "Lindsay"
+    ];
+    let configurableRocketNames = [...DEFAULT_ROCKET_NAMES]; // This will hold the names to be used
+
     let stars = [];
     let planets = [];
     let rockets = [];
     let gameRunning = false;
+    let nextFinishOrder = 1; // Counter for assigning finish order
     let lastTime = 0;
     let earthPlanet = null;
 
@@ -134,6 +143,10 @@ document.addEventListener('DOMContentLoaded', () => {
             this.isLanded = false;
             this.landedOnPlanetName = null;
             this.distanceTraveled = 0;
+            this.finishOrder = null; // Will store the order in which the rocket finishes
+            this.finishReason = "";  // Reason for finishing (landed, lost, out of fuel)
+            this.landedPlanet = null; // Store the planet object it landed on
+            this.relativeLandingPosition = null; // Store position relative to the landed planet's center
         }
 
         applyForce(force) {
@@ -141,12 +154,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         update(dt, planets, canvasWidth, canvasHeight, earthName) {
-            if (this.isLanded || this.isLost) return;
-
+            // If already landed, update position to stick to the planet and update trail.
+            if (this.isLanded && this.landedPlanet) {
+                this.position = Vector2D.add(this.landedPlanet.position, this.relativeLandingPosition);
+                this.velocity.set(this.landedPlanet.velocity.x, this.landedPlanet.velocity.y);
+                
+                this.trail.push(this.position.clone()); // Keep drawing trail for landed rocket
+                if (this.trail.length > MAX_TRAIL_LENGTH) {
+                    this.trail.shift();
+                }
+                return;
+            }
+            // If lost, no more updates.
+            if (this.isLost) {
+                return;
+            }
+            
             if (this.fuel > 0) {
                 this.fuel -= FUEL_CONSUMPTION_RATE * dt;
-                if (this.fuel < 0) this.fuel = 0;
-            }
+                if (this.fuel < 0) this.fuel = 0;            }
 
             // Apply Sun's gravity
             const directionToSun = Vector2D.sub(SUN_POSITION, this.position);
@@ -181,25 +207,53 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.trail.shift();
             }
 
-            if (this.position.x < 0 || this.position.x > canvasWidth ||
-                this.position.y < 0 || this.position.y > canvasHeight) {
-                this.isLost = true;
-                return;
-            }
+            // --- Check for End Conditions ---
 
+            // 1. Check Landing (only if not already landed or lost)
             for (const planet of planets) {
                 if (planet.isLaunchPlanet && planet.name === earthName) continue;
 
                 const distToPlanetCenter = Vector2D.sub(planet.position, this.position).mag();
-                if (distToPlanetCenter < planet.radius + this.radius) {
+                if (distToPlanetCenter < planet.radius + this.radius) { // Using this.radius for collision check
                     this.isLanded = true;
                     this.landedOnPlanetName = planet.name;
-                    this.velocity.set(0, 0);
-                    // Snap to surface-ish
-                    const landingDir = Vector2D.sub(this.position, planet.position).normalize();
-                    this.position = Vector2D.add(planet.position, landingDir.mult(planet.radius));
-                    return;
+                    this.landedPlanet = planet;
+
+                    // Calculate and store relative position for sticking to the planet.
+                    // The rocket's center will be ROCKET_RADIUS * 0.8 units above the planet's surface.
+                    const directionFromPlanetCenterToRocket = Vector2D.sub(this.position, planet.position).normalize();
+                    this.relativeLandingPosition = directionFromPlanetCenterToRocket.mult(planet.radius + ROCKET_RADIUS * 0.8);
+                    
+                    // Snap current absolute position and velocity based on the new relative landing.
+                    this.position = Vector2D.add(this.landedPlanet.position, this.relativeLandingPosition);
+                    this.velocity.set(this.landedPlanet.velocity.x, this.landedPlanet.velocity.y);
+
+                    if (this.finishOrder === null) {
+                        this.finishOrder = nextFinishOrder++;
+                    }
+                    this.finishReason = `Landed on ${this.landedOnPlanetName}`;
+                    return; // End update for this frame, will be handled by the landed logic next frame.
                 }
+            }
+
+            // 2. Check Boundary Loss (if not landed)
+            if (this.position.x < 0 || this.position.x > canvasWidth ||
+                this.position.y < 0 || this.position.y > canvasHeight) {
+                this.isLost = true;
+                if (this.finishOrder === null) {
+                    this.finishOrder = nextFinishOrder++;
+                }
+                this.finishReason = "Lost (Boundary)";
+                return; // End update for this frame
+            }
+
+            // 3. Check Out of Fuel (if not landed or lost, and fuel just ran out this frame)
+            // This check is implicitly handled by the fuel update logic at the beginning of the active rocket section.
+            // If fuel becomes <= 0, and finishOrder is null, it will be set.
+            if (this.fuel <= 0 && this.finishOrder === null) {
+                 this.finishOrder = nextFinishOrder++;
+                 this.finishReason = "Drifting (Out of Fuel)";
+                 // Rocket continues to drift, so no return here. Its active journey for scoring is over.
             }
         }
 
@@ -232,7 +286,35 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.closePath();
             ctx.fill();
             ctx.restore();
+
+            // Draw the rocket's name
+            ctx.fillStyle = "rgba(255, 255, 255, 0.7)"; // Light color for the name
+            ctx.font = "9px Arial";
+            ctx.textAlign = "center";
+            ctx.fillText(this.name, this.position.x, this.position.y - this.radius - 7); // Position above the rocket
+            ctx.restore();
         }
+    }
+
+    function loadConfigurableRocketNames() {
+        const storedNamesJson = localStorage.getItem(GRAVITY_DRIFT_NAMES_KEY);
+        if (storedNamesJson) {
+            try {
+                const storedNames = JSON.parse(storedNamesJson);
+                if (Array.isArray(storedNames) && storedNames.length > 0) {
+                    configurableRocketNames = [...storedNames];
+                } else {
+                    configurableRocketNames = [...DEFAULT_ROCKET_NAMES]; // Fallback if stored array is empty
+                }
+            } catch (e) {
+                console.error("Error parsing rocket names from localStorage for Gravity Drift:", e);
+                configurableRocketNames = [...DEFAULT_ROCKET_NAMES]; // Fallback on error
+            }
+        } else {
+            configurableRocketNames = [...DEFAULT_ROCKET_NAMES]; // No stored names, use default
+        }
+        // Note: Unlike the letters game, Gravity Drift doesn't currently have a UI 
+        // to input/update these names, so no corresponding input field update here.
     }
 
     function initStars() {
@@ -273,7 +355,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         for (let i = 0; i < NUM_ROCKETS_PER_LAUNCH; i++) {
-            const rocketName = `Drifter-${String.fromCharCode(65 + i)}`;
+            let baseName = configurableRocketNames[i % configurableRocketNames.length];
+            let rocketName = baseName;
+            // If NUM_ROCKETS_PER_LAUNCH exceeds the number of unique names, append a number for uniqueness within the batch
+            if (i >= configurableRocketNames.length) {
+                rocketName = `${baseName} ${Math.floor(i / ROCKET_NAMES_LIST.length) + 1}`;
+            }
             
             let launchDirection;
             const targetablePlanets = planets.filter(p => p !== earthPlanet);
@@ -315,6 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gameRunning = true;
         leaderboardDiv.classList.add('hidden');
         leaderboardList.innerHTML = '';
+        nextFinishOrder = 1; // Reset finish order counter for the new game
         
         initStars(); // Keep stars consistent or re-randomize
         initPlanets(); // This will re-randomize planet starting positions
@@ -359,7 +447,7 @@ document.addEventListener('DOMContentLoaded', () => {
         rockets.forEach(rocket => rocket.draw(ctx));
 
         // --- Check game end condition ---
-        const allRocketsFinished = rockets.length > 0 && rockets.every(r => r.isLanded || r.isLost);
+        const allRocketsFinished = rockets.length > 0 && rockets.every(r => r.finishOrder !== null);
         if (allRocketsFinished) {
             endGame();
         } else {
@@ -411,16 +499,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function displayLeaderboard() {
         leaderboardList.innerHTML = '';
-        const sortedRockets = [...rockets].sort((a, b) => b.distanceTraveled - a.distanceTraveled);
+        // Sort rockets by their finishOrder. Rockets without a finishOrder (shouldn't happen if game ends correctly) go last.
+        const sortedRockets = [...rockets].sort((a, b) => {
+            if (a.finishOrder === null && b.finishOrder === null) return 0; // Or sort by name if both unfinished
+            if (a.finishOrder === null) return 1; // Unfinished 'a' goes after finished 'b'
+            if (b.finishOrder === null) return -1; // Unfinished 'b' goes after finished 'a'
+            return a.finishOrder - b.finishOrder;
+        });
 
         sortedRockets.forEach(rocket => {
             const li = document.createElement('li');
-            let statusText = rocket.isLost ? "Lost (Boundary)" : `Landed on ${rocket.landedOnPlanetName}`;
-            if (!rocket.isLanded && !rocket.isLost) { // Should not happen if game ended, but as a fallback
-                statusText = "Still Drifting...";
+            let statusText = rocket.finishReason;
+
+            if (!statusText) { // Fallback, though finishReason should always be set if finishOrder is
+                if (rocket.isLanded) statusText = `Landed on ${rocket.landedOnPlanetName}`;
+                else if (rocket.isLost) statusText = "Lost (Boundary)";
+                else if (rocket.fuel <= 0) statusText = "Drifting (Out of Fuel)";
+                else statusText = "Still Active"; // Should not appear if game ended
             }
             
-            li.innerHTML = `<b>${rocket.name}</b>: ${statusText} <br> Fuel: ${rocket.initialFuel.toFixed(0)} | Dist: ${rocket.distanceTraveled.toFixed(0)}`;
+            const orderDisplay = rocket.finishOrder !== null ? `Order: ${rocket.finishOrder} | ` : '';
+            li.innerHTML = `<b>${rocket.name}</b>: ${statusText} <br> ${orderDisplay}Fuel Left: ${rocket.fuel.toFixed(0)} | Dist: ${rocket.distanceTraveled.toFixed(0)}`;
             leaderboardList.appendChild(li);
         });
         leaderboardDiv.classList.remove('hidden');
@@ -428,6 +527,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial setup
     startButton.addEventListener('click', startGame);
+
+    loadConfigurableRocketNames(); // Load names before any game logic that might use them
     
     function initialDraw() {
         ctx.fillStyle = '#0a0a1a';
