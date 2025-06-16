@@ -250,8 +250,28 @@ canvas {
     h1 { font-size: 1.8em; }
     #settingsToggleBtn { font-size: 0.9em; padding: 8px 15px; }
     #config-area { padding: 15px; }
-    #namesInput { min-height: 50px; font-size: 0.9em; }
     #spinBtn, #updateNamesBtn { font-size: 1em; padding: 10px 15px; }
     #winner { font-size: 1.3em; }
     .seo-content-area { padding: 15px; font-size: 0.9em; }
+}
+
+@media (max-width: 390px) { /* Adjustments for smaller iPhones */
+    body {
+        padding: 10px;
+        min-height: calc(100vh - 20px);
+    }
+    h1 { font-size: 1.6em; margin-bottom: 15px; }
+    #settingsToggleBtn { font-size: 0.85em; padding: 6px 12px; margin: 10px auto; }
+    #config-area { padding: 10px; }
+    #namesInput { min-height: 40px; font-size: 0.85em; }
+    #spinBtn, #updateNamesBtn { font-size: 0.9em; padding: 8px 12px; }
+    #winner { font-size: 1.1em; }
+
+    #wheel-container { max-width: 300px; /* Further reduce wheel size if needed */ }
+    canvas { border-width: 3px; } /* Thinner border for canvas */
+    #indicator { border-left-width: 10px; border-right-width: 10px; border-bottom-width: 18px; top: -10px; }
+
+    .seo-content-area { padding: 10px; font-size: 0.85em; }
+    .seo-content-area h2 { font-size: 1.3em; }
+    .seo-content-area h3 { font-size: 1.1em; }
 }

@@ -326,15 +326,37 @@ button#startRaceBtn:disabled {
         min-height: calc(100vh - 20px);
     }
     h1 { font-size: 1.8em; margin-bottom: 15px; }
-    #settingsToggleBtn { font-size: 0.9em; padding: 8px 15px; }
+    #settingsToggleBtn { font-size: 0.9em; padding: 8px 15px; margin: 10px auto; } /* Ensure margin auto for centering */
     #config-area { padding: 15px; }
     #namesInput { min-height: 50px; font-size: 0.9em; }
     button#startRaceBtn, button#updateNamesBtn { font-size: 1em; padding: 10px 15px; }
     #standupOrderList li { font-size: 1em; }
 
+    #track-container { padding: 10px 0; } /* Reduce track padding */
+    .racer { height: 25px; width: 70px; } /* Slightly smaller racers */
+
     .seo-content-area { padding: 15px; font-size: 0.9em; }
     .seo-content-area h2 { font-size: 1.5em; }
     .seo-content-area h3 { font-size: 1.2em; }
+}
+
+@media (max-width: 390px) { /* Adjustments for smaller iPhones */
+    body {
+        padding: 5px;
+        min-height: calc(100vh - 10px);
+    }
+    h1 { font-size: 1.6em; margin-bottom: 10px; }
+    #settingsToggleBtn { font-size: 0.85em; padding: 6px 12px; }
+    #config-area { padding: 10px; }
+    #namesInput { min-height: 40px; font-size: 0.85em; }
+    button#startRaceBtn, button#updateNamesBtn { font-size: 0.9em; padding: 8px 12px; }
+    #standupOrderList li { font-size: 0.9em; }
+
+    .racer { height: 22px; width: 65px; } /* Even smaller racers */
+
+    .seo-content-area { padding: 10px; font-size: 0.85em; }
+    .seo-content-area h2 { font-size: 1.3em; }
+    .seo-content-area h3 { font-size: 1.1em; }
 }
 
 .seo-content-area {
@@ -350,6 +372,7 @@ button#startRaceBtn:disabled {
     /* Spacing from game elements */
     text-align: left;
     line-height: 1.7;
+    width: auto;
 }
 
 .seo-content-area h2 {

@@ -432,7 +432,7 @@ button#restartButton:disabled {
 
     .seo-content-area {
         padding: var(--spacing-l) var(--spacing-xl);
-        width: 95%;
+        width: auto;
     }
 
     .seo-content-area h2 {
@@ -442,6 +442,44 @@ button#restartButton:disabled {
     .seo-content-area h3 {
         font-size: 1.2rem;
     }
+}
+
+/* Responsive adjustments for very small screens (e.g., smaller iPhones) */
+@media (max-width: 390px) {
+    body {
+        padding: var(--spacing-s); /* Further reduce body padding */
+        min-height: calc(100vh - (var(--spacing-s) * 2));
+    }
+
+    h1 {
+        font-size: 1.6rem; /* Smaller main heading */
+        margin-bottom: var(--spacing-m);
+    }
+
+    #settingsToggleBtn {
+        padding: var(--spacing-xs) var(--spacing-m); /* Smaller padding */
+        font-size: 0.85rem;
+        /* top and right are fine from previous media query if it's in flow */
+        margin: var(--spacing-m) auto; /* Adjust margin if needed */
+    }
+
+    #config-area {
+        padding: var(--spacing-m) var(--spacing-l); /* Smaller padding */
+        width: 95%;
+    }
+    #config-area label { font-size: 0.9rem; }
+    #namesInput { font-size: 0.85rem; min-height: 50px; }
+    button#updateNamesBtn { font-size: 0.9rem; padding: var(--spacing-s) var(--spacing-m); }
+
+    button#restartButton { font-size: 0.9rem; padding: var(--spacing-s) var(--spacing-m); }
+
+    #namesPanel { padding: var(--spacing-m); width: 200px; /* Adjust if too wide */ }
+    .name-item { font-size: 14px; padding: 6px 4px; }
+
+    /* Assuming .seo-content-area might be added later, similar to other pages */
+    .seo-content-area { padding: var(--spacing-m); font-size: 0.85rem;  width: auto; }
+    .seo-content-area h2 { font-size: 1.3rem; }
+    .seo-content-area h3 { font-size: 1.1rem; }
 }
 
 .seo-content-area {
@@ -455,6 +493,7 @@ button#restartButton:disabled {
     margin: var(--spacing-xxxl) auto; /* Spacing from game elements */
     text-align: left;
     line-height: 1.7;
+    width: auto;
 }
 
 .seo-content-area h2 {

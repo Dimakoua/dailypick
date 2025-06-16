@@ -177,10 +177,10 @@ body {
     border: 1px solid #e7e7e7; /* Match .intro-content-area */
     /* box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); Removed for closer match to .intro-content-area */
     max-width: 750px; /* Match .intro-content-area */
-    width: 100%; /* Match .intro-content-area (within its centered margin context) */
     margin: 40px auto; /* Match .intro-content-area vertical margin, keep auto for horizontal centering */
     text-align: left; /* Override body's center align for better readability */
     line-height: 1.7;
+    width: auto;
 }
 
 .seo-content h1 {

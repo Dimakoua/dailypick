@@ -156,6 +156,7 @@ button#updateNamesBtn:hover {
     /* Spacing from game elements */
     text-align: left;
     line-height: 1.7;
+    width: auto;
 }
 
 .seo-content-area h2 {
