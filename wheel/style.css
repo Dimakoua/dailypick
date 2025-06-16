@@ -9,6 +9,7 @@ body {
     flex-direction: column;
     align-items: center;
     min-height: calc(100vh - 60px);
+    overflow-x: hidden; /* Prevent horizontal scrollbars */
 }
 
 h1 {
@@ -192,4 +193,65 @@ canvas {
 .seo-content-area a:hover {
     text-decoration: underline;
     color: #2980b9;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+        min-height: calc(100vh - 30px);
+    }
+
+    h1 {
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+
+    #settingsToggleBtn {
+        position: relative;
+        top: auto;
+        right: auto;
+        display: block;
+        margin: 15px auto;
+        width: fit-content;
+    }
+
+    #config-area {
+        position: relative;
+        top: auto;
+        right: auto;
+        width: 90%;
+        max-width: 450px;
+        margin: 15px auto 20px auto;
+        padding: 20px;
+    }
+
+    #wheel-container {
+        width: 90%;
+        max-width: 380px; /* Adjust if wheel needs to be smaller */
+    }
+
+    #spinBtn,
+    #updateNamesBtn {
+        font-size: 1.1em;
+        padding: 10px 20px;
+    }
+
+    .seo-content-area {
+        width: 95%;
+        padding: 20px;
+        margin-top: 20px;
+    }
+    .seo-content-area h2 { font-size: 1.6em; }
+    .seo-content-area h3 { font-size: 1.3em; }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 1.8em; }
+    #settingsToggleBtn { font-size: 0.9em; padding: 8px 15px; }
+    #config-area { padding: 15px; }
+    #namesInput { min-height: 50px; font-size: 0.9em; }
+    #spinBtn, #updateNamesBtn { font-size: 1em; padding: 10px 15px; }
+    #winner { font-size: 1.3em; }
+    .seo-content-area { padding: 15px; font-size: 0.9em; }
 }

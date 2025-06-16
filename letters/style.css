@@ -50,6 +50,7 @@ body {
     align-items: center;
     min-height: calc(100vh - (var(--spacing-xl) * 2)); /* Account for top/bottom padding */
 }
+body { overflow-x: hidden; /* Prevent horizontal scrollbars from scaled content */ }
 
 /* Styles for Falling Letters Pinball Game */
 #gameContainer {
@@ -354,6 +355,16 @@ button#restartButton:disabled {
     h1 {
         font-size: 2rem; /* Smaller heading */
         margin-bottom: var(--spacing-xl);
+    }
+
+    #settingsToggleBtn {
+        position: relative; /* Change from absolute to flow with content */
+        top: auto;
+        right: auto;
+        display: block; /* Allow margin auto for centering */
+        margin: var(--spacing-l) auto; /* Center it and add vertical margin */
+        width: fit-content; /* Adjust width to content */
+        z-index: 1;
     }
 
     #config-area {
