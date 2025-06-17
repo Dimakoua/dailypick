@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const leaderboardList = document.getElementById('leaderboardList');
 
     // Game settings & Constants
-    canvas.width = 800;
-    canvas.height = 600;
+    canvas.width = 850;
+    canvas.height = 650;
 
     // Original dimensions for scaling logic (based on .game-container's content)
     const ORIGINAL_GAME_WIDTH = 824; // Approx. 800 (canvas) + 2*10 (padding) + 2*2 (border)
@@ -38,11 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const G = 0.5; // Gravitational constant (tweak for gameplay)
-    const ROCKET_RADIUS = 4; // Visual size
+    const ROCKET_RADIUS = 6; // Updated for emoji size; effectively collision radius & half emoji height.
     const STAR_COUNT = 250;
     const HEAVY_STAR_BORDER_THICKNESS = 15; // Visual thickness of the boundary
     const FUEL_CONSUMPTION_RATE = 0.9; // Fuel units per second
-    const MAX_TRAIL_LENGTH = 200;
+    const MAX_TRAIL_LENGTH = 150;
     const SUN_POSITION = new Vector2D(canvas.width / 2, canvas.height / 2);
     const SUN_RADIUS = 20;
     const LAUNCH_SPREAD_ANGLE = Math.PI / 1.5; // Approx 120 degrees total spread ( +/- 60 deg from target)
@@ -467,22 +467,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.rotate(angle);
             }
 
-            ctx.fillStyle = this.color;
-            ctx.beginPath();
-            ctx.moveTo(this.radius * 1.5, 0); // Nose
-            ctx.lineTo(-this.radius * 0.75, -this.radius * 0.75); // Back left
-            ctx.lineTo(-this.radius * 0.75, this.radius * 0.75);  // Back right
-            ctx.closePath();
-            ctx.fill();
+            // --- Draw Rocket Emoji ---
+            const emojiSize = this.radius * 2; // Emoji will be roughly this.radius * 2 pixels high/wide
+            ctx.font = `${emojiSize}px sans-serif`; // Use a generic font family for broad emoji support
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle"; // Center the emoji vertically and horizontally
+            ctx.fillText("🚀", 0, 0); // Draw emoji at the transformed origin (0,0)
+            // --- End Rocket Emoji ---
+
             ctx.restore();
 
-            // Draw the rocket's name
+            // Draw the rocket's name - uses the updated this.radius
             ctx.fillStyle = "#FFFF33"; // Bright yellow for high visibility
-            // ctx.fillStyle = "rgba(255, 255, 255, 0.7)"; // Light color for the name
             ctx.font = "11px Arial";
             ctx.textAlign = "center";
             ctx.fillText(this.name, this.position.x, this.position.y - this.radius - 7); // Position above the rocket
-            ctx.restore();
         }
     }
 
