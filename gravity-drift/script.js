@@ -599,7 +599,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const startPos = Vector2D.add(earthPlanet.position, launchDirection.clone().mult(earthPlanet.radius + ROCKET_RADIUS + 2)); // +2 for a small buffer
 
             // Increased initial speed relative to Earth: (e.g., 30-50 units/sec)
-            const launchSpeedRelativeToEarth = (Math.random() * 0.6 + 1.0) * 10; // Reduced from (Math.random() * 1.0 + 1.5) * 20;
+            const launchSpeedRelativeToEarth = (Math.random() * 0.6 + 2.0) * 10; // Reduced from (Math.random() * 1.0 + 1.5) * 20;
             const launchVelocityRelativeToEarth = launchDirection.clone().mult(launchSpeedRelativeToEarth);
 
             const initialRocketVelocity = Vector2D.add(earthPlanet.velocity, launchVelocityRelativeToEarth);
@@ -716,12 +716,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function displayLeaderboard() {
         leaderboardList.innerHTML = '';
-        // Sort rockets by their finishOrder. Rockets without a finishOrder (shouldn't happen if game ends correctly) go last.
         const sortedRockets = [...rockets].sort((a, b) => {
-            if (a.finishOrder === null && b.finishOrder === null) return 0; // Or sort by name if both unfinished
-            if (a.finishOrder === null) return 1; // Unfinished 'a' goes after finished 'b'
-            if (b.finishOrder === null) return -1; // Unfinished 'b' goes after finished 'a'
-            return a.finishOrder - b.finishOrder;
+            return a.distanceTraveled - b.distanceTraveled; // Sort by distance in descending order
         });
 
         sortedRockets.forEach(rocket => {
