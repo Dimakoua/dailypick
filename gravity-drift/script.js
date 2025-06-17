@@ -122,8 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.beginPath();
             ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2);
             ctx.fill();
-            ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
-            ctx.font = "10px Arial";
+            ctx.fillStyle = "rgba(255, 255, 255)";
+            ctx.font = "12px Arial";
             ctx.textAlign = "center";
             ctx.fillText(this.name, this.position.x, this.position.y - this.radius - 5);
         }
@@ -477,8 +477,9 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.restore();
 
             // Draw the rocket's name
-            ctx.fillStyle = "rgba(255, 255, 255, 0.7)"; // Light color for the name
-            ctx.font = "9px Arial";
+            ctx.fillStyle = "#FFFF33"; // Bright yellow for high visibility
+            // ctx.fillStyle = "rgba(255, 255, 255, 0.7)"; // Light color for the name
+            ctx.font = "11px Arial";
             ctx.textAlign = "center";
             ctx.fillText(this.name, this.position.x, this.position.y - this.radius - 7); // Position above the rocket
             ctx.restore();
