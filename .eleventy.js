@@ -1,3 +1,5 @@
+const sitemap = require("@quasibit/eleventy-plugin-sitemap");
+
 module.exports = function(eleventyConfig) {
   // Tell Eleventy to watch your CSS changes for live reload.
   eleventyConfig.addWatchTarget("./blog/css/");
@@ -17,12 +19,28 @@ module.exports = function(eleventyConfig) {
   // If you have other static assets like JS files for your games, add them here too.
   // eleventyConfig.addPassthroughCopy("js");
 
+  // Sitemap Plugin
+  eleventyConfig.addPlugin(sitemap, {
+    sitemap: {
+      // This is required by the plugin to build absolute URLs
+      hostname: "https://dailypick.dev",
+    },
+  });
+
   // Collections: Create a 'post' collection from all markdown files in 'blog/posts'
   eleventyConfig.addCollection("post", function(collectionApi) {
     // The input directory is already set to "./blog", so "posts/*.md" is relative to that.
     return collectionApi.getFilteredByGlob("./blog/posts/**/*.md");
     // With input dir as root, the glob needs to be relative to root.
     // return collectionApi.getFilteredByGlob("./blog/posts/**/*.md"); // This remains correct
+  });
+
+  // Create a custom collection for the sitemap that excludes the README.md file.
+  eleventyConfig.addCollection("sitemap", function(collectionApi) {
+    return collectionApi.getAll().filter((item) => {
+      // The input directory is '.', so the path for the root README is './README.md'
+      return item.inputPath !== './README.md';
+    });
   });
 
   return {
