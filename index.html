@@ -42,7 +42,7 @@ permalink: /index.html
             background-color: #f4f7f6; /* Soft off-white */
             color: #5d5d5d; /* Dark grey for text */
             margin: 0;
-            padding: 30px;
+            padding: 95px 30px 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -205,9 +205,59 @@ permalink: /index.html
             transform: translateY(-2px);
         }
 
+        /* Header Styles */
+        .site-header {
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+            padding: 0 30px;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 800px; /* Aligns with main-container */
+            height: 65px;
+        }
+
+        .site-header .site-title {
+            font-size: 1.6em;
+            font-weight: 700;
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .site-header nav a {
+            font-weight: 600;
+            color: #5d5d5d;
+            text-decoration: none;
+            margin-left: 25px;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .site-header nav a:hover {
+            color: #2980b9;
+        }
     </style>
 </head>
 <body>
+    <header class="site-header">
+        <div class="header-content">
+            <a href="/" class="site-title">Daily Pick</a>
+            <nav>
+                <a href="/blog/">Blog</a>
+            </nav>
+        </div>
+    </header>
     <div class="main-container">
         <h1>Streamline Your Stand-ups!</h1>
         <p class="sub-header">Make daily stand-ups and team decisions more engaging and fair with <strong>Daily Pick</strong>! Choose from our collection of fun interactive tools like the <strong>Decision Wheel</strong>, <strong>Speedway Racer</strong>, or the strategic <strong>Trap! Game</strong> to set speaking order, pick names, or just enjoy a quick team-building moment. Say goodbye to "who's next?" and hello to fun!</p>

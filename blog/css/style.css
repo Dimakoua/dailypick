@@ -1,14 +1,17 @@
 /* Global Resets & Base Styles */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     margin: 0;
-    padding: 0;
+    padding-top: 65px; /* Account for fixed header */
     background-color: #f4f7f6; /* Light, neutral background */
-    color: #333; /* Dark grey for text for good contrast */
+    color: #5d5d5d; /* Dark grey for text, consistent with index.html */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    text-align: center; /* For centering main-container */
 }
 
 main {
@@ -20,7 +23,7 @@ a {
     color: #007bff; /* Professional and accessible blue */
     text-decoration: none;
     transition: color 0.3s ease;
-}
+} 
 
 a:hover, a:focus {
     color: #0056b3; /* Darker blue on hover */
@@ -45,72 +48,54 @@ h2 {
     font-size: 2rem;
 }
 
+/* Default paragraph styling */
 p {
     margin-bottom: 1em;
 }
 
 /* Header Styling */
 .site-header {
-    background-color: #3498db; /* A friendly, inviting blue */
-    padding: 0.8em 0; /* Adjusted padding for a sleeker look */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    /* text-align: center; Removed to allow flexbox layout */
-}
-
-.header-container {
-    max-width: 1100px; /* Adjust as per your site's content width */
-    margin: 0 auto;
-    padding: 0 20px; /* Horizontal padding for content within the header */
+    background-color: #ffffff; /* White background, consistent with main site */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06); /* Soft shadow */
+    padding: 0 30px; /* Horizontal padding */
+    box-sizing: border-box; /* Include padding in width */
+    position: fixed; /* Fixed at the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure it's above other content */
     display: flex;
-    justify-content: space-between; /* Site title on left, nav on right */
+    justify-content: center; /* Center the header content */
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between; /* Space out title and nav */
     align-items: center;
+    width: 100%;
+    max-width: 800px; /* Aligns with main-container */
+    height: 65px; /* Fixed height for header */
 }
 
-.site-title-link {
-    color: #ffffff;
-    font-size: 1.8em; /* Make the site title prominent */
-    font-weight: bold;
-    text-decoration: none;
-    font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif; /* Consistent with h1 */
-    transition: color 0.3s ease;
-}
-
-.site-title-link:hover,
-.site-title-link:focus {
-    color: #ffc107; /* Fun yellow accent on hover */
+.site-header .site-title {
+    font-size: 1.6em;
+    font-weight: 700;
+    color: #3498db; /* Blue color for site title */
     text-decoration: none;
 }
 
-.site-nav {
-    /* Styles for the <nav> container itself, if needed */
-}
-
-.site-nav a {
-    color: #ffffff;
-    margin-left: 25px; /* Spacing between navigation items */
-    font-weight: bold;
-    font-size: 1.1em;
-    padding: 0.6em 1.2em; /* Slightly more padding for better clickability */
-    border-radius: 5px;
+.site-header nav a {
+    font-weight: 600;
+    color: #5d5d5d; /* Dark grey for nav links */
     text-decoration: none;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    position: relative; /* For pseudo-element animation */
-    overflow: hidden; /* Ensures ::after doesn't spill out */
+    margin-left: 25px; /* Spacing between nav items */
+    transition: color 0.2s ease-in-out;
 }
 
-.site-nav a:hover,
-.site-nav a:focus {
-    background-color: #2980b9; /* Darker shade on hover */
-    color: #ffffff; /* Ensure text color remains white */
-    text-decoration: none;
+.site-header nav a:hover {
+    color: #2980b9; /* Darker blue on hover */
 }
-
-
-
-.site-nav a:hover::after,
-.site-nav a:focus::after {
-    left: 0; /* Slide in on hover/focus */
-}
+ 
 /* Main Content Area */
 .main-container {
     max-width: 800px;
@@ -122,13 +107,14 @@ p {
 }
 
 /* Blog Listing Specifics */
+/* Space between header and content, and bottom padding */
 .blog-listing {
     text-align: center; /* Center the H1 and the "No posts" message */
 }
 
 .blog-listing .sub-header {
     font-size: 1.2em;
-    color: #555;
+   color: #555;
     margin-bottom: 2em;
     text-align: center;
 }
@@ -140,7 +126,7 @@ p {
 }
 
 .post-list-item {
-    background-color: #fdfdfd;
+    background-color: #fdfdfd; /* White background for post cards */
     border: 1px solid #e0e0e0;
     padding: 20px;
     margin-bottom: 20px;
@@ -154,21 +140,22 @@ p {
 }
 
 .post-list-item h2 a {
-    color: #3498db; /* Consistent link color */
+    color: #3498db;
 }
 
 .post-list-item h2 a:hover {
-    color: #2980b9;
+    text-decoration: underline;
 }
 
 .post-meta {
     font-size: 0.9em;
-    color: #777;
-    margin-bottom: 0.5em;
+    color: #7f8c8d; /* Muted grey for meta info */
+    margin-bottom: 15px;
 }
 
 .post-excerpt {
-    color: #444;
+    color: #5d5d5d; /* Dark grey for excerpt text */
+    line-height: 1.6;
 }
 
 /* Blog Post Content Specifics */
@@ -185,7 +172,7 @@ p {
 
 .tag {
     display: inline-block;
-    background-color: #ffc107; /* Fun yellow accent for tags */
+    background-color: #eaf4fc; /* Light blue for tags */
     color: #333;
     padding: 0.3em 0.7em;
     margin-right: 5px;
@@ -196,7 +183,7 @@ p {
 }
 
 .tag:hover {
-    background-color: #e0a800; /* Darker yellow on hover */
+    background-color: #d0e7fb;
     color: #000;
     text-decoration: none;
 }

@@ -31,12 +31,10 @@
 </head>
 <body>
     <header class="site-header">
-        <div class="header-container">
-            {# Use the first part of siteTitle (e.g., "Daily Pick") as the main link #}
-            <a href="/" class="site-title-link">{{ metadata.siteTitle.split(' - ')[0] | escape }}</a>
-            <nav class="site-nav">
+        <div class="header-content">
+            <a href="/" class="site-title">Daily Pick</a>
+            <nav>
                 <a href="/blog/">Blog</a>
-                {# You can add more navigation links here if needed, e.g., <a href="/about/">About</a> #}
             </nav>
         </div>
     </header>
