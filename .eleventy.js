@@ -37,9 +37,11 @@ module.exports = function(eleventyConfig) {
 
   // Create a custom collection for the sitemap that excludes the README.md file.
   eleventyConfig.addCollection("sitemap", function(collectionApi) {
-    return collectionApi.getAll().filter((item) => {
-      // The input directory is '.', so the path for the root README is './README.md'
-      return item.inputPath !== './README.md';
+    // Define a list of file paths to exclude from the sitemap.
+    const excludedPaths = ['./README.md', './blog/prompt.md'];
+
+    return collectionApi.getAll().filter(item => {
+      return !excludedPaths.includes(item.inputPath);
     });
   });
 
