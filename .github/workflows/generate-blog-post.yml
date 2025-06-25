@@ -17,6 +17,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' 
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
       - name: Set up Git user
         run: |
           git config --global user.name "Daily Pick AI Bot"
@@ -274,7 +283,21 @@ jobs:
           echo "article_title_output=$ARTICLE_TITLE" >> $GITHUB_OUTPUT # Use a unique name for output
           echo "article_file_path_output=$FINAL_ARTICLE_PATH" >> $GITHUB_OUTPUT # Use a unique name for output
 
-      - name: Commit and push new article
+      - name: Build site and update sitemap
+        run: |
+          echo "Building site with Eleventy to generate sitemap..."
+          npx eleventy
+
+          SITEMAP_PATH="dist/sitemap.xml"
+          if [ -f "$SITEMAP_PATH" ]; then
+            echo "Sitemap generated at $SITEMAP_PATH. Copying to project root."
+            cp "$SITEMAP_PATH" ./sitemap.xml
+          else
+            echo "::error::Sitemap not found at $SITEMAP_PATH after build. Check Eleventy config and sitemap template."
+            exit 1
+          fi
+
+      - name: Commit and push changes
         run: |
           ARTICLE_TITLE_FOR_COMMIT="${{ steps.process_article.outputs.article_title_output }}"
           ARTICLE_FILE_PATH_FOR_COMMIT="${{ steps.process_article.outputs.article_file_path_output }}"
@@ -285,13 +308,14 @@ jobs:
           fi
 
           git add "$ARTICLE_FILE_PATH_FOR_COMMIT"
+          git add sitemap.xml
           
           # Check if there are changes to commit
           if git diff --staged --quiet; then
             echo "No changes to commit. Article might be empty or processing failed to produce a new file."
             # This could also mean the file was created but is identical to an existing one (though duplicate check should prevent)
           else
-            COMMIT_MESSAGE="feat(blog): Add new article - $ARTICLE_TITLE_FOR_COMMIT"
+            COMMIT_MESSAGE="feat(blog): Add article '$ARTICLE_TITLE_FOR_COMMIT' and update sitemap"
             echo "Committing with message: $COMMIT_MESSAGE"
             git commit -m "$COMMIT_MESSAGE"
             
