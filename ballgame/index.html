@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Collaborative Ball Game | Daily Pick</title>
-    <meta name="description" content="A real-time collaborative game where users push a ball around a shared canvas.">
+    <title>Trap Ball Game | Daily Pick</title>
+    <meta name="description" content="A real-time collaborative game where users work together to push a ball into moving traps.">
 
     <!-- Favicon Links (copy from other games if needed) -->
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
@@ -30,46 +30,194 @@
 </head>
 
 <body>
-    <h1>🔴 Collaborative Ball Game 🔴</h1>
-    <p>Click anywhere on the canvas to push the ball!</p>
+    <h1>🔴 Trap Ball 🔴</h1>
+    <p>Click to push the ball into the traps! The game ends when all traps are filled.</p>
 
-    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <!-- Settings Area, similar to Speedway -->
+    <button id="settingsToggleBtn">⚙️ Show Settings</button>
+    <div id="config-area" class="config-hidden">
+        <label for="namesInput">Enter player names (one per line or comma-separated):</label>
+        <textarea id="namesInput" rows="4"></textarea>
+        <button id="updateNamesBtn">Update & Start New Game</button>
+    </div>
+
+    <div id="game-container">
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        <div id="game-over-overlay">
+            <h2>Game Over!</h2>
+            <p>Order of captured players:</p>
+            <ol id="winner-list"></ol>
+            <p class="new-game-text">New game starting soon...</p>
+        </div>
+    </div>
+
+    <div id="captured-list-container">
+        <h2>Captured Players:</h2>
+        <ul id="captured-list">
+            <!-- Captured players will be listed here -->
+        </ul>
+    </div>
 
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
+        const gameOverOverlay = document.getElementById('game-over-overlay');
+        const winnerList = document.getElementById('winner-list');
+        const capturedList = document.getElementById('captured-list');
+        const settingsToggleBtn = document.getElementById("settingsToggleBtn");
+        const configArea = document.getElementById("config-area");
+        const namesInput = document.getElementById("namesInput");
+        const updateNamesBtn = document.getElementById("updateNamesBtn");
 
         // Connect to the same Socket.IO server that serves the page
         const socket = io();
 
-        let ball = { x: canvas.width / 2, y: canvas.height / 2, radius: 20, color: '#e74c3c' };
+        // Client-side game state
+        let ball = { x: canvas.width / 2, y: canvas.height / 2, radius: 15, color: '#e74c3c' };
+        let traps = []; // Store trap objects from the server, initialized as an array
+        const TRAP_RADIUS = 25; // Must match server
 
-        // Listen for updated ball state from the server
-        socket.on('ball-state-update', (serverBallState) => {
-            ball.x = serverBallState.x;
-            ball.y = serverBallState.y;
-            // Velocity (vx, vy) is managed by the server, clients only need position
+        // Name management constants and variables
+        const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
+        const LOCAL_STORAGE_KEY = 'namesList'; // Same key as Speedway
+        let playerNames = [...DEFAULT_NAMES];
+
+        // Listen for the comprehensive game state update from the server
+        socket.on('game-state-update', (gameState) => {
+            ball.x = gameState.ball.x;
+            ball.y = gameState.ball.y;
+            traps = gameState.traps;
         });
+
+        // Update the list of captured players
+        socket.on('trap-captured', (data) => {
+            const listItem = document.createElement('li');
+            listItem.textContent = data.userName;
+            capturedList.appendChild(listItem);
+        });
+
+        // Handle game over
+        socket.on('game-over', (finalOrder) => {
+            winnerList.innerHTML = ''; // Clear previous list
+            finalOrder.forEach(name => {
+                const li = document.createElement('li');
+                li.textContent = name;
+                winnerList.appendChild(li);
+            });
+            gameOverOverlay.style.display = 'flex';
+
+            // The server will send a 'game-reset' event, so we don't need a timeout here
+        });
+
+        // Listen for the game reset event from the server
+        socket.on('game-reset', () => {
+            console.log("Game has been reset by the server.");
+            gameOverOverlay.style.display = 'none';
+            capturedList.innerHTML = '';
+        })
 
         // Handle mouse clicks to apply force
         canvas.addEventListener('click', (event) => {
             const rect = canvas.getBoundingClientRect();
             const clickX = event.clientX - rect.left;
             const clickY = event.clientY - rect.top;
-
-            // Emit the click position to the server
             socket.emit('apply-force', { clickX, clickY });
         });
+
+        // --- Name Management and UI Functions ---
+
+        function loadNamesFromStorage() {
+            const storedNamesJson = localStorage.getItem(LOCAL_STORAGE_KEY);
+            if (storedNamesJson) {
+                try {
+                    const storedNames = JSON.parse(storedNamesJson);
+                    if (Array.isArray(storedNames) && storedNames.length > 0) {
+                        playerNames = [...storedNames];
+                    }
+                } catch (e) {
+                    console.error("Error parsing names from localStorage:", e);
+                    playerNames = [...DEFAULT_NAMES]; // Fallback on error
+                }
+            } else {
+                playerNames = [...DEFAULT_NAMES];
+            }
+            namesInput.value = playerNames.join('\n');
+        }
+
+        function saveNamesToStorage() {
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(playerNames));
+        }
+
+        function updateNamesFromInput() {
+            const inputText = namesInput.value.trim();
+            const newNames = inputText ? inputText.split(/[\n,]+/).map(name => name.trim()).filter(name => name.length > 0) : [];
+            playerNames = newNames.length > 0 ? [...newNames] : [...DEFAULT_NAMES];
+            namesInput.value = playerNames.join('\n');
+            saveNamesToStorage();
+            // Emit to server to reset the game for everyone with the new names
+            socket.emit('reset-game-with-names', playerNames);
+            toggleConfigArea(false); // Hide config after updating
+        }
+
+        function toggleConfigArea(show) {
+            if (show === undefined) {
+                configArea.classList.toggle("config-hidden");
+            } else if (show) {
+                configArea.classList.remove("config-hidden");
+            } else {
+                configArea.classList.add("config-hidden");
+            }
+            settingsToggleBtn.textContent = configArea.classList.contains("config-hidden") ? "⚙️ Show Settings" : "⚙️ Hide Settings";
+        }
+
+        settingsToggleBtn.addEventListener("click", () => toggleConfigArea());
+        updateNamesBtn.addEventListener("click", updateNamesFromInput);
+
 
         // Game rendering loop
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+
+            // Draw traps
+            // The server now sends an array, not an object
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.font = '12px Nunito';
+            for (const trap of traps) {
+                ctx.beginPath();
+                ctx.arc(trap.x, trap.y, TRAP_RADIUS, 0, Math.PI * 2);
+                if (trap.active) {
+                    ctx.fillStyle = 'rgba(52, 152, 219, 0.5)'; // Active trap color
+                    ctx.strokeStyle = '#3498db';
+                    ctx.lineWidth = 2;
+                    ctx.fill();
+                    ctx.stroke();
+                    ctx.fillStyle = '#2c3e50';
+                    ctx.fillText(trap.userName, trap.x, trap.y);
+                } else {
+                    ctx.fillStyle = 'rgba(127, 140, 141, 0.5)'; // Inactive trap color
+                    ctx.strokeStyle = '#7f8c8d';
+                    ctx.lineWidth = 1;
+                    ctx.fill();
+                    ctx.stroke();
+                    ctx.fillStyle = '#ecf0f1';
+                    ctx.fillText(trap.userName, trap.x, trap.y);
+                }
+            }
+
+            // Draw ball
             ctx.beginPath();
             ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
             ctx.fillStyle = ball.color;
             ctx.fill();
             requestAnimationFrame(draw); // Loop
         }
+
+        // --- Initial Setup ---
+        loadNamesFromStorage();
+        toggleConfigArea(false); // Start with settings hidden
+        // On load, request the server to set up the game if it hasn't started yet.
+        socket.emit('request-initial-setup', playerNames);
         draw(); // Start the drawing loop
     </script>
 </body>
