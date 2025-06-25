@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collaborative Ball Game | Daily Pick</title>
+    <meta name="description" content="A real-time collaborative game where users push a ball around a shared canvas.">
+
+    <!-- Favicon Links (copy from other games if needed) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Game Specific Styles -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Socket.IO client for real-time features -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <!-- Universal Collaboration Module (for cursors) -->
+    <link rel="stylesheet" href="/assets/css/collaboration.css">
+    <script src="/assets/js/collaboration.js" defer></script>
+</head>
+
+<body>
+    <h1>🔴 Collaborative Ball Game 🔴</h1>
+    <p>Click anywhere on the canvas to push the ball!</p>
+
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Connect to the same Socket.IO server that serves the page
+        const socket = io();
+
+        let ball = { x: canvas.width / 2, y: canvas.height / 2, radius: 20, color: '#e74c3c' };
+
+        // Listen for updated ball state from the server
+        socket.on('ball-state-update', (serverBallState) => {
+            ball.x = serverBallState.x;
+            ball.y = serverBallState.y;
+            // Velocity (vx, vy) is managed by the server, clients only need position
+        });
+
+        // Handle mouse clicks to apply force
+        canvas.addEventListener('click', (event) => {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const clickY = event.clientY - rect.top;
+
+            // Emit the click position to the server
+            socket.emit('apply-force', { clickX, clickY });
+        });
+
+        // Game rendering loop
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fillStyle = ball.color;
+            ctx.fill();
+            requestAnimationFrame(draw); // Loop
+        }
+        draw(); // Start the drawing loop
+    </script>
+</body>
+
+</html>

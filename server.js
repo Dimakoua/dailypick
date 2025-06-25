@@ -2,6 +2,8 @@ const express = require('express');
 const http = require('http');
 const path = require('path');
 const { Server } = require("socket.io");
+// Import game modules
+const initializeBallGame = require('./ballgame/ball-game.js');
 
 const app = express();
 const server = http.createServer(app);
@@ -19,6 +21,9 @@ const io = new Server(server, {
     methods: ["GET", "POST"]
   }
 });
+
+// --- Initialize Game Modules ---
+const handleBallGameConnection = initializeBallGame(io);
 
 // --- Real-time Collaboration Logic ---
 const ANIMAL_NAMES = [
@@ -50,6 +55,9 @@ io.on('connection', (socket) => {
             socket.broadcast.emit('user-activity', broadcastData);
         }
     });
+
+    // --- Game-Specific Connection Handling ---
+    handleBallGameConnection(socket);
 
     socket.on('disconnect', () => {
         const disconnectedUser = connectedUsers[socket.id];
