@@ -186,7 +186,7 @@ function initializeBallGame(io) {
                 gameActive = false;
                 io.emit('game-over', capturedUserNames);
                 // Reset the game with the same players after a delay
-                setTimeout(() => resetGame(io), 5000);
+                // setTimeout(() => resetGame(io), 5000);
             }
         }
 
