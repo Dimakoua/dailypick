@@ -8,12 +8,18 @@ const TRAP_RADIUS = 25; // Constant for traps
 const BALL_FRICTION = 0.98; // Reduces velocity over time
 const FORCE_MULTIPLIER = 0.5; // How much a click affects velocity
 const SERVER_TICK_RATE = 1000 / 60; // 60 updates per second
+const SPECIAL_EFFECT_DURATION = 3000; // 3 seconds for effects
 
 // Game state (authoritative on the server)
 let ballState = { x: GAME_CANVAS_WIDTH / 2, y: GAME_CANVAS_HEIGHT / 2, vx: 0, vy: 0 };
 let traps = []; // Store traps as an array of objects
 let capturedUserNames = []; // List of users whose traps were hit
 let gameActive = true; // To control game state
+let activeEffects = {
+    speedBoost: false,
+    sizeChange: 1, // 1 is normal size, >1 is bigger, <1 is smaller
+    trapFrenzy: false
+};
 
 /**
  * Creates a new set of traps based on a list of names.
@@ -51,6 +57,51 @@ function resetGame(io) {
     gameActive = true;
     // A specific event clients can listen to for clearing lists
     io.emit('game-reset');
+}
+
+/**
+ * Triggers a random special effect and notifies clients.
+ * @param {import('socket.io').Server} io - The main Socket.IO server instance.
+ * @returns {string} The name of the chosen effect.
+ */
+function triggerRandomEffect(io) {
+    // 'none' is included to make effects less frequent and more special.
+    const effects = ['speedBoost', 'sizeChange', 'trapFrenzy', 'none', 'none', 'none'];
+    const chosenEffect = effects[Math.floor(Math.random() * effects.length)];
+
+    console.log(`Triggering effect: ${chosenEffect}`);
+
+    switch (chosenEffect) {
+        case 'speedBoost':
+            if (!activeEffects.speedBoost) {
+                activeEffects.speedBoost = true;
+                ballState.vx *= 2.5;
+                ballState.vy *= 2.5;
+                setTimeout(() => { activeEffects.speedBoost = false; }, SPECIAL_EFFECT_DURATION);
+            }
+            break;
+        case 'sizeChange':
+            if (activeEffects.sizeChange === 1) {
+                const newSize = Math.random() > 0.5 ? 2 : 0.5; // Double or half size
+                activeEffects.sizeChange = newSize;
+                setTimeout(() => { activeEffects.sizeChange = 1; }, SPECIAL_EFFECT_DURATION);
+            }
+            break;
+        case 'trapFrenzy':
+            if (!activeEffects.trapFrenzy) {
+                activeEffects.trapFrenzy = true;
+                traps.forEach(t => {
+                    if (t.active) { t.vx *= 2; t.vy *= 2; }
+                });
+                setTimeout(() => {
+                    activeEffects.trapFrenzy = false;
+                    // Reset speeds to normal random values
+                    traps.forEach(t => { if (t.active) { t.vx = (Math.random() - 0.5) * 1.5; t.vy = (Math.random() - 0.5) * 1.5; } });
+                }, SPECIAL_EFFECT_DURATION);
+            }
+            break;
+    }
+    return chosenEffect;
 }
 
 /**
@@ -117,10 +168,11 @@ function initializeBallGame(io) {
                 const dy = ballState.y - trap.y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
 
-                if (distance < BALL_RADIUS + TRAP_RADIUS) {
+                if (distance < (BALL_RADIUS * activeEffects.sizeChange) + TRAP_RADIUS) {
                     trap.active = false;
                     capturedUserNames.push(trap.userName);
-                    io.emit('trap-captured', { trapId: trap.id, userName: trap.userName });
+                    const effect = triggerRandomEffect(io);
+                    io.emit('trap-captured', { trapId: trap.id, userName: trap.userName, effect: effect });
                     capturedThisTick = true;
                 }
             }
@@ -139,7 +191,7 @@ function initializeBallGame(io) {
         }
 
         // Broadcast the updated game state to all connected clients
-        io.emit('game-state-update', { ball: ballState, traps });
+        io.emit('game-state-update', { ball: ballState, traps, activeEffects });
     }, SERVER_TICK_RATE);
 
     // This function will be called for each new client connection

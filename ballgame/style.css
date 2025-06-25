@@ -185,3 +185,39 @@ canvas {
     font-weight: 600;
     white-space: nowrap;
 }
+
+/* Style for the effect notification */
+.effect-notification {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(44, 62, 80, 0.9);
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 1.8em;
+    font-weight: 700;
+    z-index: 2000;
+    animation: fadeInOut 2.5s ease-in-out forwards;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -20px);
+    }
+    15% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+    85% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+    }
+}
