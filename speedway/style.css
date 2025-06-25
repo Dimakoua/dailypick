@@ -14,7 +14,6 @@ body {
     /* Account for padding */
     overflow-x: hidden; /* Prevent horizontal scrollbars */
 }
-
 h1 {
     font-size: 2.6em;
     margin: 0 0 25px 0;

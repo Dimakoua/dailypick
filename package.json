@@ -10,9 +10,14 @@
     },
     "scripts": {
         "clean": "rm -rf dist _site .parcel-cache",
-        "eleventy:build": "eleventy",
+        "build:eleventy": "eleventy",
         "assets:copy": "if [ -d _site ]; then mkdir -p dist && cp -R _site/. dist/; fi",
-        "build": "npm run clean && npm run eleventy:build && npm run assets:copy",
-        "start": "eleventy --serve --watch --port=8080"
+        "build": "npm run clean && npm run build:eleventy && npm run assets:copy",
+        "start": "node server.js",
+        "dev": "eleventy --serve --watch --port=8080"
+    },
+    "dependencies": {
+        "express": "^4.19.2",
+        "socket.io": "^4.7.5"
     }
 }
