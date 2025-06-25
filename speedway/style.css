@@ -71,8 +71,6 @@ h1 {
 }
 
 #track-container {
-    width: 80%;
-    max-width: 700px;
     height: auto;
     /* Adjust based on number of racers */
     background-color: #ffffff;
@@ -146,9 +144,9 @@ h1 {
     display: flex;
     width: 90%;
     /* Adjust as needed for overall width */
-    max-width: 1100px;
+    /* max-width: 1100px; */
     /* Max width for the side-by-side layout */
-    gap: 20px;
+    gap: 30px;
     /* Space between track and results */
     margin: 20px 0;
     /* Vertical margin for the game area */
@@ -164,8 +162,7 @@ h1 {
     /* Allows shrinking in flex layout */
     margin: 0;
     /* Was '20px auto', now controlled by flex parent */
-    width: 80%;
-    max-width: 700px;
+    width: 90%;
 }
 
 #results-area {
@@ -177,9 +174,9 @@ h1 {
     /* This line will be removed by flex */
     flex: 1;
     /* Results area takes less space */
-    min-width: 250px;
+    min-width: 100px;
     /* Ensures results area doesn't get too small */
-    max-width: 350px;
+    max-width: 150px;
     /* Optional: constrain max width of results */
     margin: 0;
     /* Reset margin, positioning handled by .game-layout */

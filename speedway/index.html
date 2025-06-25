@@ -191,7 +191,7 @@
         if (!racer.finished) {
           allFinished = false;
           // Move by a random small percentage of the track width
-          const randomBoost = (Math.random() * 0.7) + 0.2; // Move between 0.2% and 0.7% of track width
+          const randomBoost = (Math.random() * 0.4) - 0.1; // Move between 0.2% and 0.7% of track width
           racer.positionPercent += randomBoost;
           racer.element.style.left = `${racer.positionPercent}%`;
 
