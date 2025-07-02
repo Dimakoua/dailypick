@@ -180,6 +180,17 @@ jobs:
           cat "${{ steps.call_gemini.outputs.article_raw_path }}"
           echo "--- End of generated_article_raw.md ---"
 
+      - name: Clean up temporary files
+        if: success() && steps.call_gemini.outputs.article_raw_path != ''
+        run: |
+          RAW_ARTICLE_PATH="${{ steps.call_gemini.outputs.article_raw_path }}"
+          if [ -f "$RAW_ARTICLE_PATH" ]; then
+            echo "Removing temporary raw article file: $RAW_ARTICLE_PATH"
+            rm "$RAW_ARTICLE_PATH"
+          else
+            echo "Temporary raw article file not found, no cleanup needed: $RAW_ARTICLE_PATH"
+          fi
+
       - name: Process and Save Article
         id: process_article
         run: |
