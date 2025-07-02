@@ -20,7 +20,276 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <!-- Game Specific Styles -->
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            background-color: #f0f2f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        h1 {
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #startGameBtn, #restartGameBtn {
+            background-color: #2ecc71;
+        }
+
+        #startGameBtn:hover, #restartGameBtn:hover {
+            background-color: #27ae60;
+        }
+
+        #updateNamesBtn {
+            background-color: #f39c12;
+        }
+
+        #updateNamesBtn:hover {
+            background-color: #e67e22;
+        }
+
+        #copySessionUrlBtn {
+            background-color: #9b59b6;
+        }
+
+        #copySessionUrlBtn:hover {
+            background-color: #8e44ad;
+        }
+
+        #sessionInfo {
+            background-color: #ecf0f1;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            display: none; /* Hidden by default */
+        }
+
+        #sessionInfo span {
+            font-weight: bold;
+            color: #2c3e50;
+            word-break: break-all; /* Ensure long IDs wrap */
+        }
+
+        #game-container {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            border: 5px solid #34495e;
+            border-radius: 15px;
+            background-color: #ecf0f1;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        #game-over-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(44, 62, 80, 0.9);
+            color: white;
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            z-index: 10;
+            border-radius: 10px;
+        }
+
+        #game-over-overlay h2 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            color: #f1c40f;
+        }
+
+        #game-over-overlay p {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        #game-over-overlay ol {
+            list-style: decimal inside;
+            padding: 0;
+            margin: 0 0 20px 0;
+            font-size: 1.1em;
+        }
+
+        #game-over-overlay li {
+            margin-bottom: 5px;
+        }
+
+        #config-area {
+            background-color: #ecf0f1;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .config-hidden {
+            display: none !important;
+        }
+
+        #config-area label {
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        #namesInput {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            resize: vertical;
+        }
+
+        #captured-list-container {
+            background-color: #ecf0f1;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        #captured-list-container h2 {
+            color: #34495e;
+            margin-top: 0;
+        }
+
+        #captured-list {
+            list-style: none;
+            padding: 0;
+            max-height: 150px;
+            overflow-y: auto;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+
+        #captured-list li {
+            background-color: #f9f9f9;
+            padding: 8px 12px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .effect-notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(241, 196, 15, 0.9);
+            color: #2c3e50;
+            padding: 20px 30px;
+            border-radius: 15px;
+            font-size: 2.5em;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            animation: fadeInOut 2.5s forwards;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            10% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            90% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 820px) {
+            #game-container {
+                width: 95%;
+                height: auto; /* Allow height to adjust */
+                aspect-ratio: 4 / 3; /* Maintain aspect ratio */
+            }
+            body {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            p {
+                font-size: 0.9em;
+            }
+            button {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            #config-area, #captured-list-container {
+                width: 95%;
+                padding: 15px;
+            }
+            .effect-notification {
+                font-size: 1.8em;
+                padding: 15px 20px;
+            }
+        }
+    </style>
 
     <!-- Socket.IO client for real-time features -->
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
@@ -32,6 +301,13 @@
 <body>
     <h1>🔴 Momentum Mayhem 🔴</h1>
     <p>Click to push the ball into the traps! The game ends when all traps are filled.</p>
+
+    <div id="sessionInfo" style="display: none;">
+        Session ID: <span id="currentSessionIdDisplay"></span>
+        <button id="copySessionUrlBtn">Copy Session URL</button>
+    </div>
+
+    <button id="startGameBtn">Start New Game</button>
 
     <!-- Settings Area, similar to Speedway -->
     <button id="settingsToggleBtn">⚙️ Show Settings</button>
@@ -47,7 +323,7 @@
             <h2>Game Over!</h2>
             <p>Order of captured players:</p>
             <ol id="winner-list"></ol>
-            <!-- <p class="new-game-text">New game starting soon...</p> -->
+            <button id="restartGameBtn">Start New Game</button>
         </div>
     </div>
 
@@ -68,6 +344,11 @@
         const configArea = document.getElementById("config-area");
         const namesInput = document.getElementById("namesInput");
         const updateNamesBtn = document.getElementById("updateNamesBtn");
+        const restartGameBtn = document.getElementById('restartGameBtn');
+        const startGameBtn = document.getElementById('startGameBtn');
+        const sessionInfoDiv = document.getElementById('sessionInfo');
+        const currentSessionIdDisplay = document.getElementById('currentSessionIdDisplay');
+        const copySessionUrlBtn = document.getElementById('copySessionUrlBtn');
 
         // Connect to the same Socket.IO server that serves the page
         const socket = io();
@@ -87,7 +368,26 @@
         const LOCAL_STORAGE_KEY = 'namesList'; // Same key as Speedway
         let playerNames = [...DEFAULT_NAMES];
 
-        // Listen for the comprehensive game state update from the server
+        // --- Session Management Variables ---
+        let currentSessionId = null;
+
+        // Function to get session ID from URL
+        function getSessionIdFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('sessionId');
+        }
+
+        // Function to update URL with session ID
+        function updateUrlWithSessionId(sessionId) {
+            const newUrl = window.location.origin + window.location.pathname + `?sessionId=${sessionId}`;
+            window.history.pushState({ path: newUrl }, '', newUrl);
+            currentSessionIdDisplay.textContent = sessionId;
+            sessionInfoDiv.style.display = 'block'; // Show session info
+            startGameBtn.style.display = 'none'; // Hide start game button once session is active
+        }
+
+        // --- Socket.IO Event Listeners ---
+
         socket.on('game-state-update', (gameState) => {
             ball.x = gameState.ball.x;
             ball.y = gameState.ball.y;
@@ -95,7 +395,6 @@
             activeEffects = gameState.activeEffects; // Get active effects from server
         });
 
-        // Update the list of captured players
         socket.on('trap-captured', (data) => {
             const listItem = document.createElement('li');
             listItem.textContent = data.userName;
@@ -114,7 +413,6 @@
             }
         });
 
-        // Handle game over
         socket.on('game-over', (finalOrder) => {
             winnerList.innerHTML = ''; // Clear previous list
             finalOrder.forEach(name => {
@@ -123,25 +421,82 @@
                 winnerList.appendChild(li);
             });
             gameOverOverlay.style.display = 'flex';
-
-            // The server will send a 'game-reset' event, so we don't need a timeout here
         });
 
-        // Listen for the game reset event from the server
         socket.on('game-reset', () => {
-            console.log("Game has been reset by the server.");
+            console.log("Game has been reset by the server for this session.");
             gameOverOverlay.style.display = 'none';
             capturedList.innerHTML = '';
-        })
+        });
 
-        // Handle mouse clicks to apply force
+        // New: Handle session creation success
+        socket.on('session-created', (data) => {
+            currentSessionId = data.sessionId;
+            updateUrlWithSessionId(currentSessionId);
+            console.log(`New session created: ${currentSessionId}`);
+            // After creating, we also need to tell the server to set up the game with names
+            socket.emit('reset-game-with-names', { sessionId: currentSessionId, names: playerNames });
+        });
+
+        // New: Handle joining an existing session success
+        socket.on('join-session-success', (data) => {
+            currentSessionId = data.sessionId;
+            updateUrlWithSessionId(currentSessionId);
+            console.log(`Joined session: ${currentSessionId}`);
+            // The server will send the initial game-state-update after successful join
+        });
+
+        // New: Handle joining session failure (e.g., invalid ID)
+        socket.on('join-session-failed', (data) => {
+            console.error(`Failed to join session: ${data.message}`);
+            // Optionally, display an error message to the user
+            alert(`Could not join session: ${data.message}. Starting a new game instead.`);
+            // Fallback to creating a new session
+            requestNewSession();
+        });
+
+
+        // --- User Interaction Event Listeners ---
+
         canvas.addEventListener('click', (event) => {
+            if (!currentSessionId) {
+                console.warn('Cannot apply force: No active session.');
+                return;
+            }
             const rect = canvas.getBoundingClientRect();
             const clickX = event.clientX - rect.left;
             const clickY = event.clientY - rect.top;
             // playSound('push'); // Placeholder for a push sound
-            socket.emit('apply-force', { clickX, clickY });
+            socket.emit('apply-force', { sessionId: currentSessionId, clickX, clickY });
         });
+
+        settingsToggleBtn.addEventListener("click", () => toggleConfigArea());
+        updateNamesBtn.addEventListener("click", updateNamesFromInput);
+        restartGameBtn.addEventListener('click', () => {
+            if (!currentSessionId) {
+                // If somehow no session, create a new one
+                requestNewSession();
+                return;
+            }
+            // Use the same mechanism as updating names to reset the game for everyone in THIS session
+            socket.emit('reset-game-with-names', { sessionId: currentSessionId, names: playerNames });
+        });
+
+        startGameBtn.addEventListener('click', () => {
+            requestNewSession();
+        });
+
+        copySessionUrlBtn.addEventListener('click', () => {
+            const sessionUrl = window.location.href;
+            document.execCommand('copy'); // Fallback for older browsers
+            navigator.clipboard.writeText(sessionUrl).then(() => {
+                alert('Session URL copied to clipboard!');
+            }).catch(err => {
+                console.error('Could not copy text: ', err);
+                alert('Failed to copy URL. Please copy it manually from the address bar.');
+            });
+        });
+
 
         // --- Name Management and UI Functions ---
 
@@ -173,8 +528,14 @@
             playerNames = newNames.length > 0 ? [...newNames] : [...DEFAULT_NAMES];
             namesInput.value = playerNames.join('\n');
             saveNamesToStorage();
-            // Emit to server to reset the game for everyone with the new names
-            socket.emit('reset-game-with-names', playerNames);
+            
+            if (currentSessionId) {
+                // Emit to server to reset the game for everyone in this session with the new names
+                socket.emit('reset-game-with-names', { sessionId: currentSessionId, names: playerNames });
+            } else {
+                // If no session active, start a new one with these names
+                requestNewSession();
+            }
             toggleConfigArea(false); // Hide config after updating
         }
 
@@ -189,8 +550,27 @@
             settingsToggleBtn.textContent = configArea.classList.contains("config-hidden") ? "⚙️ Show Settings" : "⚙️ Hide Settings";
         }
 
-        settingsToggleBtn.addEventListener("click", () => toggleConfigArea());
-        updateNamesBtn.addEventListener("click", updateNamesFromInput);
+        // --- Session Initialization Logic ---
+
+        function requestNewSession() {
+            // Request the server to create a new session
+            console.log('Requesting new session from server...');
+            socket.emit('create-session', { names: playerNames });
+        }
+
+        function initializeSession() {
+            const urlSessionId = getSessionIdFromUrl();
+            if (urlSessionId) {
+                // If session ID found in URL, try to join it
+                console.log(`Attempting to join session from URL: ${urlSessionId}`);
+                socket.emit('join-session', { sessionId: urlSessionId, names: playerNames });
+            } else {
+                // No session ID in URL, show "Start New Game" button
+                console.log('No session ID in URL. Displaying "Start New Game" button.');
+                startGameBtn.style.display = 'block';
+                sessionInfoDiv.style.display = 'none';
+            }
+        }
 
         // --- Visual Effects Functions ---
 
@@ -299,8 +679,7 @@
         // --- Initial Setup ---
         loadNamesFromStorage();
         toggleConfigArea(false); // Start with settings hidden
-        // On load, request the server to set up the game if it hasn't started yet.
-        socket.emit('request-initial-setup', playerNames);
+        initializeSession(); // Determine whether to create or join a session
         draw(); // Start the drawing loop
     </script>
 </body>

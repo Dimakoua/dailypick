@@ -10,66 +10,111 @@ const FORCE_MULTIPLIER = 0.5; // How much a click affects velocity
 const SERVER_TICK_RATE = 1000 / 60; // 60 updates per second
 const SPECIAL_EFFECT_DURATION = 3000; // 3 seconds for effects
 
-// Game state (authoritative on the server)
-let ballState = { x: GAME_CANVAS_WIDTH / 2, y: GAME_CANVAS_HEIGHT / 2, vx: 0, vy: 0 };
-let traps = []; // Store traps as an array of objects
-let capturedUserNames = []; // List of users whose traps were hit
-let gameActive = true; // To control game state
-let activeEffects = {
-    speedBoost: false,
-    sizeChange: 1, // 1 is normal size, >1 is bigger, <1 is smaller
-    trapFrenzy: false
-};
+// Central storage for all active game sessions
+// Each key is a sessionId, and each value is an object containing the game state for that session.
+const gameSessions = new Map();
 
 /**
- * Creates a new set of traps based on a list of names.
- * This function is called when a client wants to set up or reset the game.
- * @param {string[]} names - An array of player names.
- * @param {import('socket.io').Server} io - The main Socket.IO server instance.
+ * Generates a unique session ID.
+ * @returns {string} A unique ID for a game session.
  */
-function setupNewGame(names, io) {
-    console.log("Setting up new game with names:", names);
-    traps = names.map((name, index) => ({
-        id: `${Date.now()}-${index}`, // Unique ID for the trap
-        userName: name,
-        active: true,
-        // The rest will be set by resetGame
-        x: 0, y: 0, vx: 0, vy: 0,
-    }));
-    resetGame(io); // Reset ball, set trap positions, and broadcast
+function generateSessionId() {
+    // A simple way to generate a unique ID, could use a more robust UUID library in production.
+    return Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
 }
 
 /**
- * Resets the game to its initial state.
+ * Creates a new game session or initializes an existing one.
+ * @param {string} sessionId - The ID of the session to create or update.
+ * @param {string[]} names - An array of player names for the traps.
+ * @param {import('socket.io').Server} io - The main Socket.IO server instance.
+ * @returns {object} The newly created or updated game session object.
  */
-function resetGame(io) {
-    console.log("Resetting game...");
-    ballState = { x: GAME_CANVAS_WIDTH / 2, y: GAME_CANVAS_HEIGHT / 2, vx: 0, vy: 0 };
-    capturedUserNames = [];
+function createOrUpdateGameSession(sessionId, names, io) {
+    console.log(`Creating/Updating game session: ${sessionId} with names:`, names);
+
+    // Initialize the session state if it doesn't exist
+    if (!gameSessions.has(sessionId)) {
+        gameSessions.set(sessionId, {
+            ballState: { x: GAME_CANVAS_WIDTH / 2, y: GAME_CANVAS_HEIGHT / 2, vx: 0, vy: 0 },
+            traps: [],
+            capturedUserNames: [],
+            gameActive: true,
+            activeEffects: {
+                speedBoost: false,
+                sizeChange: 1,
+                trapFrenzy: false
+            },
+            // Store the IO instance or emit to the specific room later
+            ioRoom: io.to(sessionId) // Store a reference to the specific Socket.IO room
+        });
+    }
+
+    const session = gameSessions.get(sessionId);
+
+    // Create traps based on names for this session
+    session.traps = names.map((name, index) => ({
+        id: `${Date.now()}-${index}`, // Unique ID for the trap
+        userName: name,
+        active: true,
+        x: 0, y: 0, vx: 0, vy: 0, // Will be set by resetGame
+    }));
+
+    resetGame(sessionId, io); // Reset ball, set trap positions, and broadcast to this session
+    return session;
+}
+
+/**
+ * Resets a specific game session to its initial state.
+ * @param {string} sessionId - The ID of the session to reset.
+ * @param {import('socket.io').Server} io - The main Socket.IO server instance.
+ */
+function resetGame(sessionId, io) {
+    const session = gameSessions.get(sessionId);
+    if (!session) {
+        console.warn(`Attempted to reset non-existent session: ${sessionId}`);
+        return;
+    }
+
+    console.log(`Resetting game for session: ${sessionId}`);
+    session.ballState = { x: GAME_CANVAS_WIDTH / 2, y: GAME_CANVAS_HEIGHT / 2, vx: 0, vy: 0 };
+    session.capturedUserNames = [];
+    session.activeEffects = { speedBoost: false, sizeChange: 1, trapFrenzy: false }; // Reset effects
+
     // Reset all existing traps to be active and give them new random positions/velocities
-    traps.forEach(trap => {
+    session.traps.forEach(trap => {
         trap.active = true;
         trap.x = TRAP_RADIUS + Math.random() * (GAME_CANVAS_WIDTH - TRAP_RADIUS * 2);
         trap.y = TRAP_RADIUS + Math.random() * (GAME_CANVAS_HEIGHT - TRAP_RADIUS * 2);
         trap.vx = (Math.random() - 0.5) * 1.5;
         trap.vy = (Math.random() - 0.5) * 1.5;
     });
-    gameActive = true;
-    // A specific event clients can listen to for clearing lists
-    io.emit('game-reset');
+    session.gameActive = true;
+
+    // Emit to the specific room for this session
+    io.to(sessionId).emit('game-reset');
 }
 
 /**
- * Triggers a random special effect and notifies clients.
+ * Triggers a random special effect for a specific session and notifies clients in that session.
+ * @param {string} sessionId - The ID of the session.
  * @param {import('socket.io').Server} io - The main Socket.IO server instance.
  * @returns {string} The name of the chosen effect.
  */
-function triggerRandomEffect(io) {
+function triggerRandomEffect(sessionId, io) {
+    const session = gameSessions.get(sessionId);
+    if (!session) {
+        console.warn(`Attempted to trigger effect for non-existent session: ${sessionId}`);
+        return 'none';
+    }
+
+    const { ballState, activeEffects, traps } = session;
+
     // 'none' is included to make effects less frequent and more special.
     const effects = ['speedBoost', 'sizeChange', 'trapFrenzy', 'none', 'none', 'none'];
     const chosenEffect = effects[Math.floor(Math.random() * effects.length)];
 
-    console.log(`Triggering effect: ${chosenEffect}`);
+    console.log(`Session ${sessionId}: Triggering effect: ${chosenEffect}`);
 
     switch (chosenEffect) {
         case 'speedBoost':
@@ -111,95 +156,145 @@ function triggerRandomEffect(io) {
 function initializeBallGame(io) {
     // --- Server-side Game Loop for Physics and Logic ---
     setInterval(() => {
-        if (!gameActive) return; // Don't run physics if game is over
+        // Iterate over all active game sessions
+        for (const [sessionId, session] of gameSessions.entries()) {
+            if (!session.gameActive) continue; // Don't run physics if game is over for this session
 
-        // Apply friction to ball
-        ballState.vx *= BALL_FRICTION;
-        ballState.vy *= BALL_FRICTION;
+            const { ballState, traps, capturedUserNames, activeEffects } = session;
 
-        // Update position
-        ballState.x += ballState.vx;
-        ballState.y += ballState.vy;
+            // Apply friction to ball
+            ballState.vx *= BALL_FRICTION;
+            ballState.vy *= BALL_FRICTION;
 
-        // Handle ball collisions with canvas edges
-        if (ballState.x - BALL_RADIUS < 0) {
-            ballState.x = BALL_RADIUS;
-            ballState.vx *= -1; // Reverse velocity
-        } else if (ballState.x + BALL_RADIUS > GAME_CANVAS_WIDTH) {
-            ballState.x = GAME_CANVAS_WIDTH - BALL_RADIUS;
-            ballState.vx *= -1;
-        }
-        if (ballState.y - BALL_RADIUS < 0) {
-            ballState.y = BALL_RADIUS;
-            ballState.vy *= -1;
-        } else if (ballState.y + BALL_RADIUS > GAME_CANVAS_HEIGHT) {
-            ballState.y = GAME_CANVAS_HEIGHT - BALL_RADIUS;
-            ballState.vy *= -1;
-        }
+            // Update position
+            ballState.x += ballState.vx;
+            ballState.y += ballState.vy;
 
-        // --- Update Trap Positions (make them move) ---
-        for (const trap of traps) {
-            // Only move active traps
-            trap.x += trap.vx;
-            trap.y += trap.vy;
-
-            // Handle trap collisions with canvas edges
-            if (trap.x - TRAP_RADIUS < 0) {
-                trap.x = TRAP_RADIUS;
-                trap.vx *= -1;
-            } else if (trap.x + TRAP_RADIUS > GAME_CANVAS_WIDTH) {
-                trap.x = GAME_CANVAS_WIDTH - TRAP_RADIUS;
-                trap.vx *= -1;
+            // Handle ball collisions with canvas edges
+            if (ballState.x - BALL_RADIUS < 0) {
+                ballState.x = BALL_RADIUS;
+                ballState.vx *= -1; // Reverse velocity
+            } else if (ballState.x + BALL_RADIUS > GAME_CANVAS_WIDTH) {
+                ballState.x = GAME_CANVAS_WIDTH - BALL_RADIUS;
+                ballState.vx *= -1;
             }
-            if (trap.y - TRAP_RADIUS < 0) {
-                trap.y = TRAP_RADIUS;
-                trap.vy *= -1;
-            } else if (trap.y + TRAP_RADIUS > GAME_CANVAS_HEIGHT) {
-                trap.y = GAME_CANVAS_HEIGHT - TRAP_RADIUS;
-                trap.vy *= -1;
+            if (ballState.y - BALL_RADIUS < 0) {
+                ballState.y = BALL_RADIUS;
+                ballState.vy *= -1;
+            } else if (ballState.y + BALL_RADIUS > GAME_CANVAS_HEIGHT) {
+                ballState.y = GAME_CANVAS_HEIGHT - BALL_RADIUS;
+                ballState.vy *= -1;
             }
-        }
 
-        // --- Trap Collision Detection ---
-        let capturedThisTick = false;
-        for (const trap of traps) {
-            if (trap.active) {
-                const dx = ballState.x - trap.x;
-                const dy = ballState.y - trap.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
+            // --- Update Trap Positions (make them move) ---
+            for (const trap of traps) {
+                // Only move active traps
+                trap.x += trap.vx;
+                trap.y += trap.vy;
 
-                if (distance < (BALL_RADIUS * activeEffects.sizeChange) + TRAP_RADIUS) {
-                    trap.active = false;
-                    capturedUserNames.push(trap.userName);
-                    const effect = triggerRandomEffect(io);
-                    io.emit('trap-captured', { trapId: trap.id, userName: trap.userName, effect: effect });
-                    capturedThisTick = true;
+                // Handle trap collisions with canvas edges
+                if (trap.x - TRAP_RADIUS < 0) {
+                    trap.x = TRAP_RADIUS;
+                    trap.vx *= -1;
+                } else if (trap.x + TRAP_RADIUS > GAME_CANVAS_WIDTH) {
+                    trap.x = GAME_CANVAS_WIDTH - TRAP_RADIUS;
+                    trap.vx *= -1;
+                }
+                if (trap.y - TRAP_RADIUS < 0) {
+                    trap.y = TRAP_RADIUS;
+                    trap.vy *= -1;
+                } else if (trap.y + TRAP_RADIUS > GAME_CANVAS_HEIGHT) {
+                    trap.y = GAME_CANVAS_HEIGHT - TRAP_RADIUS;
+                    trap.vy *= -1;
                 }
             }
-        }
 
-        // --- Game Over Check ---
-        if (capturedThisTick && gameActive) {
-            const allTrapsHit = traps.length > 0 && traps.every(trap => !trap.active);
-            if (allTrapsHit) {
-                console.log("Game Over!");
-                gameActive = false;
-                io.emit('game-over', capturedUserNames);
-                // Reset the game with the same players after a delay
-                // setTimeout(() => resetGame(io), 5000);
+            // --- Trap Collision Detection ---
+            let capturedThisTick = false;
+            for (const trap of traps) {
+                if (trap.active) {
+                    const dx = ballState.x - trap.x;
+                    const dy = ballState.y - trap.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < (BALL_RADIUS * activeEffects.sizeChange) + TRAP_RADIUS) {
+                        trap.active = false;
+                        capturedUserNames.push(trap.userName);
+                        const effect = triggerRandomEffect(sessionId, io); // Pass sessionId
+                        io.to(sessionId).emit('trap-captured', { trapId: trap.id, userName: trap.userName, effect: effect });
+                        capturedThisTick = true;
+                    }
+                }
             }
-        }
 
-        // Broadcast the updated game state to all connected clients
-        io.emit('game-state-update', { ball: ballState, traps, activeEffects });
+            // --- Game Over Check ---
+            if (capturedThisTick && session.gameActive) {
+                const allTrapsHit = traps.length > 0 && traps.every(trap => !trap.active);
+                if (allTrapsHit) {
+                    console.log(`Session ${sessionId}: Game Over!`);
+                    session.gameActive = false;
+                    io.to(sessionId).emit('game-over', capturedUserNames);
+                    // Optionally, remove session after a delay or on explicit client request
+                    // setTimeout(() => gameSessions.delete(sessionId), 300000); // Remove after 5 minutes of inactivity
+                }
+            }
+
+            // Broadcast the updated game state to all connected clients in this session's room
+            io.to(sessionId).emit('game-state-update', { ball: ballState, traps, activeEffects });
+        }
     }, SERVER_TICK_RATE);
 
     // This function will be called for each new client connection
     return function handleConnection(socket) {
-        // Listen for force application from this specific client
+        // Event for a client to request creating a new session
+        socket.on('create-session', (data) => {
+            const newSessionId = generateSessionId();
+            // Create the session with default names or names provided by the client
+            const names = (data && Array.isArray(data.names) && data.names.length > 0) ? data.names : ['Player1', 'Player2', 'Player3'];
+            createOrUpdateGameSession(newSessionId, names, io);
+            socket.join(newSessionId); // Join the new session's room
+            console.log(`Socket ${socket.id} created and joined new session: ${newSessionId}`);
+            socket.emit('session-created', { sessionId: newSessionId });
+        });
+
+        // Event for a client to join an existing session
+        socket.on('join-session', (data) => {
+            const { sessionId, names } = data;
+            if (!sessionId || typeof sessionId !== 'string') {
+                console.warn(`Socket ${socket.id} attempted to join with invalid sessionId: ${sessionId}`);
+                socket.emit('join-session-failed', { message: 'Invalid session ID.' });
+                return;
+            }
+
+            // If session doesn't exist, create it (e.g., if first user to visit URL)
+            if (!gameSessions.has(sessionId)) {
+                console.log(`Socket ${socket.id} joining and creating new session: ${sessionId}`);
+                // Use provided names, or default if none
+                const initialNames = (Array.isArray(names) && names.length > 0) ? names : ['Player1', 'Player2', 'Player3'];
+                createOrUpdateGameSession(sessionId, initialNames, io);
+            } else {
+                console.log(`Socket ${socket.id} joined existing session: ${sessionId}`);
+            }
+
+            socket.join(sessionId); // Join the specific room for this session
+            const session = gameSessions.get(sessionId);
+            // Send initial state to the newly joined client
+            socket.emit('game-state-update', { ball: session.ballState, traps: session.traps, activeEffects: session.activeEffects });
+            socket.emit('join-session-success', { sessionId: sessionId });
+        });
+
+        // Listen for force application from this specific client within a session
         socket.on('apply-force', (data) => {
-            const dx = data.clickX - ballState.x;
-            const dy = data.clickY - ballState.y;
+            const { sessionId, clickX, clickY } = data;
+            const session = gameSessions.get(sessionId);
+            if (!session || !session.gameActive) {
+                console.warn(`Apply force to non-existent or inactive session: ${sessionId}`);
+                return;
+            }
+
+            const { ballState } = session;
+            const dx = clickX - ballState.x;
+            const dy = clickY - ballState.y;
             const magnitude = Math.sqrt(dx * dx + dy * dy);
 
             if (magnitude > 0) {
@@ -219,23 +314,23 @@ function initializeBallGame(io) {
             }
         });
 
-        // Listen for a client's request to set up the game on initial load.
-        // This will only run if the game hasn't started yet.
-        socket.on('request-initial-setup', (names) => {
-            if (traps.length === 0 && Array.isArray(names) && names.length > 0 && names.every(n => typeof n === 'string')) {
-                console.log('Initial game setup by first client.');
-                setupNewGame(names, io);
+        // Listen for a client explicitly resetting the game with a new list of names for a specific session.
+        socket.on('reset-game-with-names', (data) => {
+            const { sessionId, names } = data;
+            // Basic validation
+            if (!sessionId || typeof sessionId !== 'string' || !Array.isArray(names) || names.length === 0 || !names.every(n => typeof n === 'string')) {
+                console.warn(`Invalid reset-game-with-names request for session: ${sessionId}`);
+                return;
             }
+            console.log(`Session ${sessionId}: Game reset requested by a client.`);
+            createOrUpdateGameSession(sessionId, names, io); // This will reset and update traps
         });
 
-        // Listen for a client explicitly resetting the game with a new list of names.
-        // This will reset the game for everyone.
-        socket.on('reset-game-with-names', (names) => {
-            // Basic validation
-            if (Array.isArray(names) && names.length > 0 && names.every(n => typeof n === 'string')) {
-                console.log('Game reset requested by a client.');
-                setupNewGame(names, io);
-            }
+        // Handle client disconnection
+        socket.on('disconnect', () => {
+            // In a real application, you might want to track which sessions a socket was in
+            // and potentially clean up sessions if they become empty.
+            console.log(`Socket ${socket.id} disconnected.`);
         });
     };
 }
