@@ -20,12 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let myIdentity = {};
 
     socket.on('connect', () => {
-        console.log('Connected to real-time server with ID:', socket.id);
+        // console.log('Connected to real-time server with ID:', socket.id);
     });
 
     socket.on('assign-identity', (identity) => {
         myIdentity = identity;
-        console.log('Assigned identity:', myIdentity.name);
+        // console.log('Assigned identity:', myIdentity.name);
     });
 
     // 4. Listen for local mouse movements and emit them
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const cursor = document.getElementById(`cursor-${userData.id}`);
             if (cursor) {
                 cursor.remove();
-                console.log(`User ${userData.name} left, removing cursor.`);
+                // console.log(`User ${userData.name} left, removing cursor.`);
             }
         }
     });

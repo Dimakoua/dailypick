@@ -1,116 +1,190 @@
 body {
     font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
-    background-color: #f4f7f6;
-    color: #5d5d5d;
+    background-color: #f4f7f6; /* Soft off-white from Speedway */
+    color: #5d5d5d; /* Dark grey text from Speedway */
     margin: 0;
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 100vh;
-    overflow-x: hidden;
+    min-height: calc(100vh - 40px); /* Account for padding */
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 h1 {
-    font-size: 2.6em;
-    margin: 0 0 10px 0;
-    color: #e74c3c; /* Red for the ball game */
+    font-size: 2.6em; /* Larger heading like Speedway */
+    margin: 0 0 25px 0;
+    color: #3498db; /* Friendly blue from Speedway */
     font-weight: 700;
 }
 
 p {
+    margin-top: 0;
     margin-bottom: 20px;
+    text-align: center;
+    color: #5d5d5d; /* Consistent text color */
 }
 
-/* Styles for Settings/Config Area */
-#settingsToggleBtn {
-    background-color: #95a5a6;
-    color: white;
+/* General Button Styles - Adapted from Speedway */
+button {
+    padding: 12px 25px;
+    font-size: 1.2em;
+    background-color: #3498db; /* Friendly blue */
+    color: #ffffff;
     border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.2s;
-    margin-bottom: 10px;
+    font-weight: 700;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Consistent shadow */
+    margin: 5px; /* Keep some margin */
 }
 
-#settingsToggleBtn:hover {
-    background-color: #7f8c8d;
+button:hover {
+    background-color: #2980b9; /* Darker blue */
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Specific Button Overrides */
+#startGameBtn, #restartGameBtn {
+    background-color: #2ecc71; /* Emerald green */
+}
+
+#startGameBtn:hover, #restartGameBtn:hover {
+    background-color: #27ae60; /* Darker emerald */
+}
+
+#updateNamesBtn {
+    background-color: #e67e22; /* Carrot orange */
+}
+
+#updateNamesBtn:hover {
+    background-color: #d35400; /* Darker orange */
+}
+
+#copySessionUrlBtn {
+    background-color: #9b59b6; /* Amethyst purple */
+    font-size: 1em; /* Smaller font for this button */
+    padding: 8px 15px; /* Smaller padding */
+}
+
+#copySessionUrlBtn:hover {
+    background-color: #8e44ad; /* Darker purple */
+}
+
+button:disabled {
+    background-color: #95a5a6; /* Muted grey when disabled */
+    cursor: not-allowed;
+}
+
+/* Card-like containers - Adapted from Speedway */
+#sessionInfo,
+#captured-list-container {
+    background-color: #ffffff; /* Clean white */
+    padding: 25px 30px; /* Generous padding */
+    border-radius: 15px; /* Softer radius */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /* Softer shadow */
+    border: 1px solid #e0e0e0; /* Light border */
+    margin: 15px auto; /* Center and add vertical margin */
+    width: 90%;
+    max-width: 600px; /* Max width for these info/config blocks */
+    text-align: left; /* Align content left within these cards */
+    box-sizing: border-box; /* Include padding/border in width */
+}
+
+#sessionInfo {
+    text-align: center; /* Center text within session info */
+    display: none; /* Hidden by default, JS toggles */
+    font-size: 1.1em;
+    color: #2c3e50;
+}
+
+#sessionInfo span {
+    font-weight: bold;
+    color: #3498db; /* Friendly blue for session ID */
+    word-break: break-all; /* Ensure long IDs wrap */
+}
+
+#settingsToggleBtn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 18px;
+    font-size: 1em;
+    background-color: #3498db;
+    /* Friendly blue */
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: 600;
 }
 
 #config-area {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.07);
-    margin-top: 0;
-    width: 800px;
-    box-sizing: border-box;
+    position: absolute;
+    top: 75px;
+    right: 20px;
+    background-color: #ffffff;
+    padding: 25px 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+    max-width: 450px;
+    z-index: 20;
     text-align: left;
-    transition: all 0.4s ease-in-out;
-    overflow: hidden;
-    max-height: 500px; /* Allow space to expand */
-    opacity: 1;
-}
-
-#config-area.config-hidden {
-    max-height: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    opacity: 0;
-    border: none;
 }
 
 #config-area label {
     display: block;
     margin-bottom: 8px;
+    font-size: 1em;
+    color: #7f8c8d;
     font-weight: 600;
-    color: #34495e;
 }
 
-#config-area textarea {
-    width: 100%;
+.config-hidden {
+    display: none !important;
+}
+
+#namesInput {
+    width: calc(100% - 20px); /* Account for padding */
+    min-height: 60px; /* Consistent height */
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 8px;
     border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    color: #5d5d5d;
     font-family: 'Nunito', sans-serif;
-    box-sizing: border-box;
+    font-size: 0.95em;
     margin-bottom: 10px;
-    min-height: 80px;
-}
-
-#config-area button {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.2s;
-}
-
-#config-area button:hover {
-    background-color: #2980b9;
+    resize: vertical;
 }
 
 #game-container {
     position: relative;
+    width: 95%; /* Make it responsive */
+    max-width: 850px; /* Original max width */
+    height: auto; /* Allow height to adjust */
+    aspect-ratio: 4 / 3; /* Maintain 800x600 aspect ratio */
+    border: 5px solid #34495e; /* Keep the strong border for game area */
+    border-radius: 15px;
+    background-color: #ecf0f1;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Keep strong shadow for game area */
     margin-bottom: 20px;
-    /* Set explicit size to match canvas for overlay positioning */
-    width: 800px;
-    height: 600px;
 }
 
 canvas {
-    border: 2px solid #3498db; /* Blue border for the game area */
-    background-color: #ffffff;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    border-radius: 10px;
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
 #game-over-overlay {
@@ -119,105 +193,184 @@ canvas {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(44, 62, 80, 0.85);
+    background-color: rgba(44, 62, 80, 0.95); /* Slightly darker overlay */
     color: white;
     display: none; /* Hidden by default */
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    font-size: 1.5em;
-    border-radius: 10px;
     z-index: 10;
+    border-radius: 10px; /* Match container radius */
 }
 
 #game-over-overlay h2 {
-    margin: 0;
-    color: #e74c3c;
+    font-size: 3em;
+    margin-bottom: 10px;
+    color: #f1c40f; /* Sun Flower yellow */
 }
 
 #game-over-overlay p {
-    color: #ecf0f1;
-    margin: 10px 0;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    color: #ecf0f1; /* Light grey text */
 }
 
-#game-over-overlay .new-game-text {
-    font-size: 0.7em;
-    margin-top: 20px;
+#game-over-overlay ol {
+    list-style: decimal inside;
+    padding: 0;
+    margin: 0 0 20px 0;
+    font-size: 1.1em;
+    color: #ecf0f1; /* Light grey list numbers */
 }
 
-#winner-list {
-    list-style-type: decimal;
-    padding-left: 40px;
-    color: #bdc3c7;
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-#captured-list-container {
-    width: 800px;
-    text-align: left;
-    background: #fff;
-    padding: 15px 25px;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    box-sizing: border-box;
+#game-over-overlay li {
+    margin-bottom: 5px;
+    color: #ecf0f1; /* Light grey list items */
 }
 
 #captured-list-container h2 {
+    color: #3498db; /* Friendly blue for sub-heading */
     margin-top: 0;
-    color: #34495e;
-    border-bottom: 2px solid #ecf0f1;
-    padding-bottom: 10px;
 }
 
 #captured-list {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
-    margin: 0;
-    columns: 3;
-    column-gap: 20px;
+    max-height: 150px;
+    overflow-y: auto;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
 }
 
 #captured-list li {
-    padding: 5px 0;
-    color: #27ae60;
+    background-color: #f9f9f9;
+    padding: 8px 12px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    color: #2980b9; /* Darker blue for list items */
     font-weight: 600;
-    white-space: nowrap;
 }
 
-/* Style for the effect notification */
 .effect-notification {
     position: fixed;
-    top: 20px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(44, 62, 80, 0.9);
-    color: #fff;
-    padding: 15px 30px;
-    border-radius: 50px;
-    font-size: 1.8em;
-    font-weight: 700;
-    z-index: 2000;
-    animation: fadeInOut 2.5s ease-in-out forwards;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    transform: translate(-50%, -50%);
+    background-color: rgba(241, 196, 15, 0.9);
+    color: #2c3e50;
+    padding: 20px 30px;
+    border-radius: 15px;
+    font-size: 2.5em;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    animation: fadeInOut 2.5s forwards;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes fadeInOut {
-    0% {
-        opacity: 0;
-        transform: translate(-50%, -20px);
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+    10% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    90% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(1.2); }
+}
+
+/* Responsive adjustments - Adapted from Speedway */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+        min-height: calc(100vh - 30px);
     }
-    15% {
-        opacity: 1;
-        transform: translate(-50%, 0);
+
+    h1 {
+        font-size: 2em;
+        margin-bottom: 20px;
     }
-    85% {
-        opacity: 1;
-        transform: translate(-50%, 0);
+
+    button { /* General button adjustments for smaller screens */
+        padding: 10px 20px;
+        font-size: 1em;
     }
-    100% {
-        opacity: 0;
-        transform: translate(-50%, 20px);
+
+    #settingsToggleBtn { /* Specific adjustment for settings button */
+        margin: 15px auto;
+    }
+
+    #sessionInfo,
+    #config-area,
+    #captured-list-container {
+        padding: 15px;
+        width: 95%; /* Take more width on smaller screens */
+        max-width: none; /* Remove max-width constraint */
+    }
+
+    #namesInput {
+        min-height: 50px;
+        font-size: 0.9em;
+    }
+
+    #game-container {
+        width: 95%;
+        height: auto;
+        aspect-ratio: 4 / 3;
+    }
+
+    .effect-notification {
+        font-size: 1.8em;
+        padding: 15px 20px;
     }
 }
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+        min-height: calc(100vh - 20px);
+    }
+    h1 { font-size: 1.8em; margin-bottom: 15px; }
+    button { font-size: 0.9em; padding: 8px 15px; }
+    #settingsToggleBtn { font-size: 0.9em; padding: 8px 15px; margin: 10px auto; }
+    #sessionInfo, #config-area, #captured-list-container { padding: 10px; }
+    #namesInput { min-height: 40px; font-size: 0.85em; }
+    #game-over-overlay h2 { font-size: 2.2em; }
+    #game-over-overlay p { font-size: 1em; }
+    #game-over-overlay ol { font-size: 1em; }
+    #captured-list li { font-size: 0.9em; }
+    .effect-notification { font-size: 1.5em; padding: 12px 18px; }
+}
+
+/* Collaboration Cursors Styles - Integrated from collaboration.css */
+.remote-cursor {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    border: none;
+    pointer-events: none; /* Allows clicks to pass through */
+    z-index: 99; /* Below game-over-overlay, above canvas */
+    transform: translate(-50%, -50%); /* Center the cursor on the mouse position */
+}
+
+.remote-cursor svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+}
+
+.remote-cursor-name {
+    position: absolute;
+    top: 100%; /* Position below the cursor SVG */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.7em;
+    white-space: nowrap;
+    opacity: 0.8;
+}
+
+#captured-list-container {
+    display: none; /* Hidden by default */
+};
