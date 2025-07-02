@@ -252,7 +252,7 @@ jobs:
           # Escape ARTICLE_TITLE for use in sed's RHS (handles '/', '&', and '"' within the title)
           ESCAPED_ARTICLE_TITLE=$(printf '%s\n' "$ARTICLE_TITLE" | sed -e 's/[\/&]/\\&/g' -e 's/"/\\"/g')
           # Replace the entire title line to ensure it's correctly formatted and quoted.
-          MODIFIED_CONTENT=$(echo "$MODIFIED_CONTENT" | sed -E "s/^title: .*/title: \"$ESCAPED_ARTICLE_TITLE\"/")
+          MODIFIED_CONTENT=$(echo "$MODIFIED_CONTENT" | sed -E "s/^[[:space:]]*title:.*$/title: \"$ESCAPED_ARTICLE_TITLE\"/")
 
           # 4c. Ensure 'description' value is quoted.
           # This operates on the line directly as we haven't extracted the description value separately.
