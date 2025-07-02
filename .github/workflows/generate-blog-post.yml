@@ -202,7 +202,7 @@ jobs:
           # This finds the first '---', then processes from there.
           CLEANED_CONTENT=$(echo "$RAW_CONTENT" | awk '/^---$/ {flag=1; next} flag')
           # Add the frontmatter delimiters back, ensuring no leading blanks for the first ---
-          CLEANED_CONTENT="$CLEANED_CONTENT"
+          CLEANED_CONTENT="---$CLEANED_CONTENT"
           
           echo "--- Cleaned Content (after initial trim, before frontmatter processing) ---"
           echo "$CLEANED_CONTENT"
