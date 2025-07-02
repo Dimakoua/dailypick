@@ -180,17 +180,6 @@ jobs:
           cat "${{ steps.call_gemini.outputs.article_raw_path }}"
           echo "--- End of generated_article_raw.md ---"
 
-      - name: Clean up temporary files
-        if: success() && steps.call_gemini.outputs.article_raw_path != ''
-        run: |
-          RAW_ARTICLE_PATH="${{ steps.call_gemini.outputs.article_raw_path }}"
-          if [ -f "$RAW_ARTICLE_PATH" ]; then
-            echo "Removing temporary raw article file: $RAW_ARTICLE_PATH"
-            rm "$RAW_ARTICLE_PATH"
-          else
-            echo "Temporary raw article file not found, no cleanup needed: $RAW_ARTICLE_PATH"
-          fi
-
       - name: Process and Save Article
         id: process_article
         run: |
@@ -301,6 +290,17 @@ jobs:
           echo "article_title_output=$ARTICLE_TITLE" >> $GITHUB_OUTPUT # Use a unique name for output
           echo "article_file_path_output=$FINAL_ARTICLE_PATH" >> $GITHUB_OUTPUT # Use a unique name for output
 
+      - name: Clean up temporary files
+        if: success() && steps.call_gemini.outputs.article_raw_path != ''
+        run: |
+          RAW_ARTICLE_PATH="${{ steps.call_gemini.outputs.article_raw_path }}"
+          if [ -f "$RAW_ARTICLE_PATH" ]; then
+            echo "Removing temporary raw article file: $RAW_ARTICLE_PATH"
+            rm "$RAW_ARTICLE_PATH"
+          else
+            echo "Temporary raw article file not found, no cleanup needed: $RAW_ARTICLE_PATH"
+          fi
+          
       - name: Build site and update sitemap
         run: |
           echo "Building site with Eleventy to generate sitemap..."
