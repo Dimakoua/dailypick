@@ -184,11 +184,39 @@ jobs:
 
           RAW_CONTENT=$(cat "$RAW_ARTICLE_PATH")
 
+          echo "--- Raw Content from AI (before cleaning) ---"
+          cat "$RAW_ARTICLE_PATH"
+          echo "--- End Raw Content ---"
+          
+          # --- NEW CLEANING STEPS ---
+          # 1. Remove any leading blank lines or non-printable characters before the first '---'
+          CLEANED_CONTENT=$(echo "$RAW_CONTENT" | sed -E '/^---$/!d; :a; N; /\n---$/!ba; s/^[[:space:]\p{C}]*---/---/' | sed '1,/^---$/!b; /^---$/!d')
+          
+          # This sed command is a bit complex:
+          # '/^---$/!d; :a; N; /\n---$/!ba;' : Deletes lines until the first '---', then reads up to the second '---'.
+          # 's/^[[:space:]\p{C}]*---/---/' : Removes leading spaces and control characters (including newlines from prev step) before the first '---'.
+          # The second `sed` is a fallback to ensure initial non-frontmatter lines are gone.
+          # We need to refine this to specifically target *before* the first '---'
+
+          # Let's use a simpler, more targeted approach to remove leading blank lines/garbage before '---'
+          # This finds the first '---', then processes from there.
+          CLEANED_CONTENT=$(echo "$RAW_CONTENT" | awk '/^---$/ {flag=1; next} flag')
+          # Add the frontmatter delimiters back, ensuring no leading blanks for the first ---
+          CLEANED_CONTENT="---\n$CLEANED_CONTENT"
+          
+          echo "--- Cleaned Content (after initial trim, before frontmatter processing) ---"
+          echo "$CLEANED_CONTENT"
+          echo "--- End Cleaned Content ---"
+
+          # Now, use CLEANED_CONTENT for further processing
+          RAW_CONTENT="$CLEANED_CONTENT" # Reassign to RAW_CONTENT for consistency with subsequent steps
+
+
           # Check for leading empty lines or content before '---'
           # The `grep -q '^---'` checks if the content starts with '---'
+          # This check becomes less critical if initial cleaning is robust, but still good to have.
           if ! echo "$RAW_CONTENT" | grep -q '^---'; then
-            echo "::error::Generated article content does not start with '---' frontmatter delimiter as expected."
-            echo "This might indicate leading empty lines or other unexpected characters at the beginning."
+            echo "::error::Generated article content does not start with '---' frontmatter delimiter as expected after cleaning."
             echo "--- Raw Content Start (first 200 characters) ---"
             echo "$RAW_CONTENT" | head -c 200
             echo -e "\n--- Raw Content End ---"
@@ -196,25 +224,23 @@ jobs:
           fi
 
           # 1. Extract title from the raw markdown's frontmatter
-          ARTICLE_TITLE_LINE=$(echo "$RAW_CONTENT" | grep -m1 '^title: ')
-          if [ -z "$ARTICLE_TITLE_LINE" ]; then
-            echo "::error::Could not find 'title:' in the generated article's frontmatter."
-            echo "--- Raw Content Start ---"
-            cat "$RAW_ARTICLE_PATH"
-            echo "--- Raw Content End ---"
+          # Use grep -oP to extract the title more robustly, and trim whitespace
+          # This pattern looks for 'title:' followed by optional space, then captures anything until the end of the line.
+          # It then removes leading/trailing quotes and spaces.
+          ARTICLE_TITLE=$(echo "$RAW_CONTENT" | grep -m1 -oP '^[[:space:]]*title:[[:space:]]*(["'\''`]?)(.*?)\1[[:space:]]*$' | sed -E 's/^[[:space:]]*title:[[:space:]]*//; s/^["'\''`]?//; s/["'\''`]?$//; s/[[:space:]]*$//')
+
+          if [ -z "$ARTICLE_TITLE" ]; then
+            echo "::error::Could not extract or parse title from the generated article's frontmatter."
+            echo "The line where we expected title:"
+            echo "$RAW_CONTENT" | grep -m1 '^title:'
+            echo "--- Raw Content Where Title Was Searched ---"
+            echo "$RAW_CONTENT" | head -n 10 # Show top 10 lines
+            echo "--- End Raw Content ---"
             exit 1
           fi
-          ARTICLE_TITLE=$(echo "$ARTICLE_TITLE_LINE" | sed -n 's/^title: "\(.*\)"/\1/p')
-          if [ -z "$ARTICLE_TITLE" ]; then
-             ARTICLE_TITLE=$(echo "$ARTICLE_TITLE_LINE" | sed -n 's/^title: *\(.*\)/\1/p') # Handle no quotes or spaces
-             if [ -z "$ARTICLE_TITLE" ]; then
-                echo "::error::Could not parse title from line: $ARTICLE_TITLE_LINE"
-                exit 1
-             fi
-          fi
-          echo "Extracted title: $ARTICLE_TITLE"
+          echo "Extracted title: '$ARTICLE_TITLE'" # Print with quotes to see if there are leading/trailing spaces
 
-          # 2. Slugify the title
+          # 2. Slugify the title (existing code, should be fine)
           SLUGIFIED_TITLE=$(echo "$ARTICLE_TITLE" | tr '[:upper:]' '[:lower:]' | sed -e 's/[^a-z0-9]\+/-/g' -e 's/^-+\|-+$//g')
           if [ -z "$SLUGIFIED_TITLE" ]; then
             echo "::warning::Failed to generate a clean slug from title. Using a fallback."
@@ -222,17 +248,15 @@ jobs:
           fi
           echo "Slugified title: $SLUGIFIED_TITLE"
 
-          # 3. Prepare filename and check for duplicates
+          # 3. Prepare filename and check for duplicates (existing code, should be fine)
           ARTICLE_DATE=$(date +'%Y-%m-%d')
           FINAL_FILENAME_NO_EXT="${ARTICLE_DATE}-${SLUGIFIED_TITLE}"
-          FINAL_ARTICLE_PATH="blog/posts/${FINAL_FILENAME_NO_EXT}.md" # Ensure this path matches your Eleventy setup
+          FINAL_ARTICLE_PATH="blog/posts/${FINAL_FILENAME_NO_EXT}.md"
 
-          # Check if a file with this exact name already exists
           if [ -f "$FINAL_ARTICLE_PATH" ]; then
             echo "::error::Article with exact filename $FINAL_ARTICLE_PATH already exists. Halting."
             exit 1
           fi
-          # Check if a file with a similar slug (ignoring date) already exists
           EXISTING_SLUG_FILES=$(find blog/posts -name "*-${SLUGIFIED_TITLE}.md" -print)
           if [ -n "$EXISTING_SLUG_FILES" ]; then
              echo "::error::An article with a similar slug '${SLUGIFIED_TITLE}' already exists: $EXISTING_SLUG_FILES. Halting to prevent potential duplicate content."
@@ -240,10 +264,11 @@ jobs:
           fi
 
           # 4. Modify the AI's response (frontmatter adjustments and ensuring quotes)
+          # We start with the RAW_CONTENT that was just cleaned.
           MODIFIED_CONTENT="$RAW_CONTENT"
 
           # 4a. Ensure 'date' is correctly set and quoted.
-          # AI is prompted for date: "[YYYY-MM-DD]". This replaces the placeholder and ensures quotes.
+          # This sed command is already robust for the date replacement.
           MODIFIED_CONTENT=$(echo "$MODIFIED_CONTENT" | sed \
             -e "s|date: \"\[YYYY-MM-DD\]\"|date: \"$ARTICLE_DATE\"|" \
             -e "s|date: \[YYYY-MM-DD\]|date: \"$ARTICLE_DATE\"|")
@@ -252,36 +277,27 @@ jobs:
           # Escape ARTICLE_TITLE for use in sed's RHS (handles '/', '&', and '"' within the title)
           ESCAPED_ARTICLE_TITLE=$(printf '%s\n' "$ARTICLE_TITLE" | sed -e 's/[\/&]/\\&/g' -e 's/"/\\"/g')
           # Replace the entire title line to ensure it's correctly formatted and quoted.
+          # This sed ensures NO leading spaces for the 'title:' key itself.
           MODIFIED_CONTENT=$(echo "$MODIFIED_CONTENT" | sed -E "s/^[[:space:]]*title:.*$/title: \"$ESCAPED_ARTICLE_TITLE\"/")
 
-          # 4c. Ensure 'description' value is quoted.
-          # This operates on the line directly as we haven't extracted the description value separately.
-          # It handles cases where description might be unquoted or already quoted by the AI.
+          # 4c. Ensure 'description' value is quoted. (Existing code, seems fine)
           MODIFIED_CONTENT=$(echo "$MODIFIED_CONTENT" | sed -E \
             '/^description: / {
-                s/^description: *(".*") *$/description: \1/; # Already correctly quoted (trim surrounding spaces)
+                s/^description: *(".*") *$/description: \1/;
                 t end_desc
-                s/^description: *(.*[^ ]) *$/description: "\1"/; # Not quoted or improperly quoted, quote it (trim trailing spaces from value)
+                s/^description: *(.*[^ ]) *$/description: "\1"/;
                 :end_desc
             }')
           
-          # 4d. Replace ogImage and twitterImage slug placeholders
-          # AI is asked to use: ...blog-[suggest-a-short-relevant-slug-for-this-post].webp
+          # 4d. Replace ogImage and twitterImage slug placeholders (Existing code, seems fine)
           MODIFIED_CONTENT=$(echo "$MODIFIED_CONTENT" | sed \
             -e "s|/assets/og-image-blog-\[suggest-a-short-relevant-slug-for-this-post\].webp|/assets/og-image-blog-$SLUGIFIED_TITLE.webp|g" \
             -e "s|/assets/twitter-image-blog-\[suggest-a-short-relevant-slug-for-this-post\].png|/assets/twitter-image-blog-$SLUGIFIED_TITLE.png|g")
 
-          # Ensure layout and author are as per prompt (AI should handle this, but good to be aware)
-          # Example: Check if layout is present, if not, add it.
-          # if ! echo "$MODIFIED_CONTENT" | grep -q "^layout: \"post.njk\""; then
-          #   MODIFIED_CONTENT=$(echo -e "---\nlayout: \"post.njk\"\n$(echo "$MODIFIED_CONTENT" | sed '1d')") # Crude way to insert if missing
-          # fi
-
-
           echo "$MODIFIED_CONTENT" > "$FINAL_ARTICLE_PATH"
           echo "Saved processed article to $FINAL_ARTICLE_PATH"
-          echo "article_title_output=$ARTICLE_TITLE" >> $GITHUB_OUTPUT # Use a unique name for output
-          echo "article_file_path_output=$FINAL_ARTICLE_PATH" >> $GITHUB_OUTPUT # Use a unique name for output
+          echo "article_title_output=$ARTICLE_TITLE" >> $GITHUB_OUTPUT
+          echo "article_file_path_output=$FINAL_ARTICLE_PATH" >> $GITHUB_OUTPUT
 
       - name: Build site and update sitemap
         run: |
