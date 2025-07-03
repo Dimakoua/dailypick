@@ -16,6 +16,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("trap");
   eleventyConfig.addPassthroughCopy("letters");
   eleventyConfig.addPassthroughCopy("gravity-drift");
+  eleventyConfig.addPassthroughCopy("ballgame");
   // If you have other static assets like JS files for your games, add them here too.
   // eleventyConfig.addPassthroughCopy("js");
 
