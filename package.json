@@ -7,7 +7,7 @@
     "devDependencies": {
         "@11ty/eleventy": "^3.1.1",
         "@quasibit/eleventy-plugin-sitemap": "^2.2.0",
-        "nodemon": "^3.1.0"
+        "pm2": "^5.4.0"
     },
     "scripts": {
         "clean": "rm -rf dist _site .parcel-cache",
@@ -15,8 +15,11 @@
         "assets:copy": "if [ -d _site ]; then mkdir -p dist && cp -R _site/. dist/; fi",
         "build": "npm run clean && npm run build:eleventy && npm run assets:copy",
         "dev:ui": "eleventy --serve --watch --port=8080",
-        "dev": "NODE_ENV=development nodemon server.js",
-        "start": "NODE_ENV=production node server.js"
+        "dev": "NODE_ENV=development node server.js",
+        "start": "npm run build && NODE_ENV=production pm2 start server.js --name dailypick",
+        "stop": "pm2 stop dailypick",
+        "restart": "pm2 restart dailypick",
+        "logs": "pm2 logs dailypick"
     },
     "dependencies": {
         "express": "^4.19.2",
