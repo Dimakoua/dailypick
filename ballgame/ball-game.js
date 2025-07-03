@@ -1,5 +1,3 @@
-// --- Collaborative Ball Game Module ---
-
 // Game constants
 const GAME_CANVAS_WIDTH = 800;
 const GAME_CANVAS_HEIGHT = 600;

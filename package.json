@@ -13,8 +13,10 @@
         "build:eleventy": "eleventy",
         "assets:copy": "if [ -d _site ]; then mkdir -p dist && cp -R _site/. dist/; fi",
         "build": "npm run clean && npm run build:eleventy && npm run assets:copy",
+        "dev": "eleventy --serve --watch --port=8080",
         "start": "node server.js",
-        "dev": "eleventy --serve --watch --port=8080"
+        "prestart:prod": "npm run build",
+        "start:prod": "NODE_ENV=production node server.js"
     },
     "dependencies": {
         "express": "^4.19.2",

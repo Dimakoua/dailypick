@@ -1,8 +1,8 @@
 body {
     font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
-    background-color: #f4f7f6; /* Soft off-white from Speedway */
-    color: #5d5d5d; /* Dark grey text from Speedway */
+    background-color: #f4f7f6;
+    color: #5d5d5d;
     margin: 0;
     padding: 20px;
     display: flex;
@@ -13,9 +13,9 @@ body {
 }
 
 h1 {
-    font-size: 2.6em; /* Larger heading like Speedway */
+    font-size: 2.6em;
     margin: 0 0 25px 0;
-    color: #3498db; /* Friendly blue from Speedway */
+    color: #3498db;
     font-weight: 700;
 }
 
@@ -26,11 +26,10 @@ p {
     color: #5d5d5d; /* Consistent text color */
 }
 
-/* General Button Styles - Adapted from Speedway */
 button {
     padding: 12px 25px;
     font-size: 1.2em;
-    background-color: #3498db; /* Friendly blue */
+    background-color: #3498db;
     color: #ffffff;
     border: none;
     border-radius: 8px;
@@ -70,8 +69,8 @@ button:active {
 
 #copySessionUrlBtn {
     background-color: #9b59b6; /* Amethyst purple */
-    font-size: 1em; /* Smaller font for this button */
-    padding: 8px 15px; /* Smaller padding */
+    font-size: 1em;
+    padding: 8px 15px;
 }
 
 #copySessionUrlBtn:hover {
@@ -83,7 +82,7 @@ button:disabled {
     cursor: not-allowed;
 }
 
-/* Card-like containers - Adapted from Speedway */
+
 #sessionInfo,
 #captured-list-container {
     background-color: #ffffff; /* Clean white */
@@ -118,7 +117,6 @@ button:disabled {
     padding: 10px 18px;
     font-size: 1em;
     background-color: #3498db;
-    /* Friendly blue */
     color: #ffffff;
     border: none;
     border-radius: 8px;
@@ -276,7 +274,7 @@ canvas {
     100% { opacity: 0; transform: translate(-50%, -50%) scale(1.2); }
 }
 
-/* Responsive adjustments - Adapted from Speedway */
+
 @media (max-width: 768px) {
     body {
         padding: 15px;
@@ -288,12 +286,12 @@ canvas {
         margin-bottom: 20px;
     }
 
-    button { /* General button adjustments for smaller screens */
+    button {
         padding: 10px 20px;
         font-size: 1em;
     }
 
-    #settingsToggleBtn { /* Specific adjustment for settings button */
+    #settingsToggleBtn {
         margin: 15px auto;
     }
 
@@ -302,7 +300,7 @@ canvas {
     #captured-list-container {
         padding: 15px;
         width: 95%; /* Take more width on smaller screens */
-        max-width: none; /* Remove max-width constraint */
+        max-width: none;
     }
 
     #namesInput {
@@ -337,38 +335,6 @@ canvas {
     #game-over-overlay ol { font-size: 1em; }
     #captured-list li { font-size: 0.9em; }
     .effect-notification { font-size: 1.5em; padding: 12px 18px; }
-}
-
-/* Collaboration Cursors Styles - Integrated from collaboration.css */
-.remote-cursor {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: transparent;
-    border: none;
-    pointer-events: none; /* Allows clicks to pass through */
-    z-index: 99; /* Below game-over-overlay, above canvas */
-    transform: translate(-50%, -50%); /* Center the cursor on the mouse position */
-}
-
-.remote-cursor svg {
-    width: 100%;
-    height: 100%;
-    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
-}
-
-.remote-cursor-name {
-    position: absolute;
-    top: 100%; /* Position below the cursor SVG */
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 0.7em;
-    white-space: nowrap;
-    opacity: 0.8;
 }
 
 #captured-list-container {

@@ -13,11 +13,12 @@ const PORT = process.env.PORT || 8081;
 const PUBLIC_DIR = path.join(__dirname, 'dist'); // Serve files from the 'dist' directory
 
 // --- Socket.IO Setup ---
+const isProduction = process.env.NODE_ENV === 'production';
+const corsOrigin = isProduction ? "https://dailypick.dev" : "*";
+
 const io = new Server(server, {
   cors: {
-    // In production, you should restrict this to your domain.
-    // e.g., origin: "https://dailypick.dev"
-    origin: "*", 
+    origin: corsOrigin,
     methods: ["GET", "POST"]
   }
 });
@@ -80,6 +81,12 @@ app.use((req, res) => {
 
 // --- Start Server ---
 server.listen(PORT, () => {
-    console.log(`🚀 Server running at http://localhost:${PORT}`);
-    console.log(`   Serving static files from: ${PUBLIC_DIR}`);
+    if (isProduction) {
+        console.log(`🚀 Production server started on port ${PORT}`);
+        console.log(`   CORS origin restricted to: ${corsOrigin}`);
+    } else {
+        console.log(`🚀 Development server running at http://localhost:${PORT}`);
+        console.log(`   Serving static files from: ${PUBLIC_DIR}`);
+        console.log(`   CORS origin: ${corsOrigin}`);
+    }
 });
