@@ -1,0 +1,15 @@
+name = "dailypick"
+main = "src/index.js"
+compatibility_date = "2024-03-14"
+
+# Enable and configure the Durable Object for game sessions.
+# This makes the `GameSession` class in your code available as a binding.
+[[durable_objects.bindings]]
+name = "GAME_SESSION"
+class_name = "GameSession"
+
+# Define the migration for the Durable Object.
+# This is required for deploying Durable Objects.
+[[migrations]]
+tag = "v1"
+new_classes = ["GameSession"]
