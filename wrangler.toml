@@ -14,4 +14,4 @@ bindings = [
 
 [[migrations]]
 tag = "v2"
-new_classes = ["CollaborationSession", "BallGameSession"]
+new_sqlite_classes = ["CollaborationSession", "BallGameSession"]
