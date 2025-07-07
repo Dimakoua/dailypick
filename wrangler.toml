@@ -15,3 +15,6 @@ bindings = [
 [[migrations]]
 tag = "v2"
 new_sqlite_classes = ["CollaborationSession", "BallGameSession"]
+
+[observability.logs]
+enabled = true
