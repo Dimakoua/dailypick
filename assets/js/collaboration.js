@@ -24,8 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
         url.searchParams.set('cursors_session_id', sessionId);
         window.history.pushState({ path: url.href }, '', url.href);
     }
-
-    const ws = new WebSocket(`ws://${window.location.host}/api/collaboration/websocket?session_id=${sessionId}`);
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const ws = new WebSocket(`${protocol}://${window.location.host}/api/collaboration/websocket?session_id=${sessionId}`);
 
     ws.onopen = () => {
         console.log('Connected to real-time server');
