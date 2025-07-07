@@ -4,7 +4,7 @@ main = "worker.js"
 compatibility_date = "2025-07-01"
 
 [site]
-bucket = "./dist"
+bucket = "."
 
 [durable_objects]
 bindings = [
