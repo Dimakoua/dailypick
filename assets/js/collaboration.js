@@ -14,11 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. Connect to the WebSocket server
     const url = new URL(window.location.href);
-    let sessionId = url.searchParams.get('session_id');
+    let sessionId = url.searchParams.get('cursors_session_id');
+    if (!sessionId) {
+        sessionId = url.searchParams.get('session_id');
+    }
 
     if (!sessionId) {
         sessionId = crypto.randomUUID();
-        url.searchParams.set('session_id', sessionId);
+        url.searchParams.set('cursors_session_id', sessionId);
         window.history.pushState({ path: url.href }, '', url.href);
     }
 
@@ -35,11 +38,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    let ownUserId = null;
+
     // 5. Listen for activity from other users and display their cursors
     ws.onmessage = (event) => {
         const data = JSON.parse(event.data);
 
-        if (data.type === 'user-activity') {
+        if (data.type === 'user-id') {
+            ownUserId = data.id;
+        } else if (data.type === 'user-activity') {
+            if (data.id === ownUserId) {
+                return; // Don't display own cursor
+            }
+
             let cursor = document.getElementById(`cursor-${data.id}`);
             if (!cursor) {
                 cursor = document.createElement('div');

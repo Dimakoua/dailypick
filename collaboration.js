@@ -41,8 +41,11 @@ export class CollaborationSession {
     const userName = this.getAvailableAnimalName(sessionUsers);
     sessionUsers.set(userId, { ws: server, name: userName });
 
+    // Send the user their own ID
+    server.send(JSON.stringify({ type: 'user-id', id: userId }));
+
     // Send the current user list to the new user
-    const userList = Array.from(sessionUsers.values()).map((u, id) => ({ id, name: u.name }));
+    const userList = Array.from(sessionUsers.entries()).map(([id, u]) => ({ id, name: u.name }));
     server.send(JSON.stringify({ type: 'user-list', users: userList }));
 
     server.addEventListener('message', async (event) => {
