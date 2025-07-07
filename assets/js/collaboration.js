@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.history.pushState({ path: url.href }, '', url.href);
     }
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const ws = new WebSocket(`${protocol}://${window.location.host}/api/collaboration/websocket?session_id=${sessionId}`);
+    const ws = new WebSocket(`${protocol}//${window.location.host}/api/collaboration/websocket?session_id=${sessionId}`);
 
     ws.onopen = () => {
         console.log('Connected to real-time server');
