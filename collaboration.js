@@ -2,7 +2,7 @@
 export class CollaborationSession {
   constructor(state, env) {
     this.state = state;
-    this.users = new Map();
+    this.sessions = new Map();
     this.env = env;
     this.animalNames = [
       'Alligator', 'Bear', 'Cheetah', 'Dolphin', 'Eagle', 'Fox', 'Gorilla', 'Hedgehog',
@@ -14,24 +14,36 @@ export class CollaborationSession {
 
   async fetch(request) {
     const url = new URL(request.url);
+    const sessionId = url.searchParams.get('session_id');
+
+    if (!sessionId) {
+      return new Response('Missing session_id', { status: 400 });
+    }
 
     if (url.pathname.endsWith('/websocket')) {
       const { 0: client, 1: server } = new WebSocketPair();
-
-      await this.handleSession(server);
-
+      await this.handleSession(server, sessionId);
       return new Response(null, { status: 101, webSocket: client });
     } else {
       return new Response('Not found', { status: 404 });
     }
   }
 
-  async handleSession(server) {
+  async handleSession(server, sessionId) {
     server.accept();
 
+    if (!this.sessions.has(sessionId)) {
+      this.sessions.set(sessionId, new Map());
+    }
+    const sessionUsers = this.sessions.get(sessionId);
+
     const userId = crypto.randomUUID();
-    const userName = this.getAvailableAnimalName();
-    this.users.set(userId, { ws: server, name: userName });
+    const userName = this.getAvailableAnimalName(sessionUsers);
+    sessionUsers.set(userId, { ws: server, name: userName });
+
+    // Send the current user list to the new user
+    const userList = Array.from(sessionUsers.values()).map((u, id) => ({ id, name: u.name }));
+    server.send(JSON.stringify({ type: 'user-list', users: userList }));
 
     server.addEventListener('message', async (event) => {
       const data = JSON.parse(event.data);
@@ -44,25 +56,30 @@ export class CollaborationSession {
           x: data.x,
           y: data.y,
         };
-
-        this.broadcast(JSON.stringify(broadcastData));
+        this.broadcast(sessionId, JSON.stringify(broadcastData));
       }
     });
 
     server.addEventListener('close', () => {
-      this.users.delete(userId);
-      this.broadcast(JSON.stringify({ type: 'user-left', id: userId, name: userName }));
+      sessionUsers.delete(userId);
+      if (sessionUsers.size === 0) {
+        this.sessions.delete(sessionId);
+      }
+      this.broadcast(sessionId, JSON.stringify({ type: 'user-left', id: userId, name: userName }));
     });
   }
 
-  broadcast(message) {
-    for (const user of this.users.values()) {
-      user.ws.send(message);
+  broadcast(sessionId, message) {
+    const sessionUsers = this.sessions.get(sessionId);
+    if (sessionUsers) {
+      for (const user of sessionUsers.values()) {
+        user.ws.send(message);
+      }
     }
   }
 
-  getAvailableAnimalName() {
-    const usedNames = new Set(Array.from(this.users.values()).map(u => u.name));
+  getAvailableAnimalName(users) {
+    const usedNames = new Set(Array.from(users.values()).map(u => u.name));
     const availableNames = this.animalNames.filter(name => !usedNames.has(name));
 
     if (availableNames.length > 0) {

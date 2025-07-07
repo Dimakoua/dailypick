@@ -13,7 +13,15 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // 3. Connect to the WebSocket server
-    const sessionId = 'default-session'; // You can make this dynamic
+    const url = new URL(window.location.href);
+    let sessionId = url.searchParams.get('session_id');
+
+    if (!sessionId) {
+        sessionId = crypto.randomUUID();
+        url.searchParams.set('session_id', sessionId);
+        window.history.pushState({ path: url.href }, '', url.href);
+    }
+
     const ws = new WebSocket(`ws://${window.location.host}/api/collaboration/websocket?session_id=${sessionId}`);
 
     ws.onopen = () => {
@@ -49,8 +57,26 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             cursor.style.left = `${data.x}px`;
             cursor.style.top = `${data.y}px`;
+        } else if (data.type === 'user-left') {
+            const cursor = document.getElementById(`cursor-${data.id}`);
+            if (cursor) {
+                cursor.remove();
+            }
+        } else if (data.type === 'user-list') {
+            const allRemoteCursorIds = Array.from(document.querySelectorAll('.remote-cursor')).map(c => c.id);
+            const activeUserIds = data.users.map(u => `cursor-${u.id}`);
+
+            for (const cursorId of allRemoteCursorIds) {
+                if (!activeUserIds.includes(cursorId)) {
+                    const cursor = document.getElementById(cursorId);
+                    if (cursor) {
+                        cursor.remove();
+                    }
+                }
+            }
         }
     };
+
 
     // 6. Handle user disconnection to remove their cursor
     ws.onclose = () => {

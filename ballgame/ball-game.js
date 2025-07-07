@@ -20,7 +20,6 @@ const sessionInfoDiv = document.getElementById('sessionInfo');
 const currentSessionIdDisplay = document.getElementById('currentSessionIdDisplay');
 const copySessionUrlBtn = document.getElementById('copySessionUrlBtn');
 const gameContainer = document.getElementById('game-container');
-const notificationArea = document.getElementById('notificationArea'); // Assuming you have this for effects
 
 // WebSocket instance
 let ws = null;
@@ -244,8 +243,6 @@ function createPopAnimation(x, y) {
 }
 
 function showEffectNotification(effectName) {
-    if (!notificationArea) return; // Ensure notificationArea exists
-
     const notification = document.createElement('div');
     notification.className = 'effect-notification';
     let text = '';
@@ -253,15 +250,11 @@ function showEffectNotification(effectName) {
         case 'speedBoost': text = 'SPEED BOOST!'; break;
         case 'sizeChange': text = 'SIZE CHANGE!'; break;
         case 'trapFrenzy': text = 'TRAP FRENZY!'; break;
-        case 'none': return; // Don't show notification for 'none' effect
     }
     notification.textContent = text;
-    notificationArea.appendChild(notification); // Append to the designated area
-    console.log(`[Client Debug] Displaying effect notification: ${text}`);
-
+    document.body.appendChild(notification);
     setTimeout(() => {
         notification.remove();
-        console.log(`[Client Debug] Removed effect notification: ${text}`);
     }, 2500);
 }
 
