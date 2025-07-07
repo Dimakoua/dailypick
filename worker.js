@@ -2,6 +2,9 @@ import { Router } from 'itty-router';
 import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
 import { CollaborationSession } from './collaboration.js';
 import { BallGameSession } from './ballgame/ball-game-session.js';
+import manifest from '__STATIC_CONTENT_MANIFEST';
+
+const assetManifest = JSON.parse(manifest);
 
 const router = Router();
 
@@ -59,7 +62,6 @@ router.get('/ballgame', async (request, env, ctx) => {
 
     // Serve the main index.html for the /ballgame path, regardless of query params
     try {
-        const assetManifest = JSON.parse(env.__STATIC_CONTENT_MANIFEST);
         const options = {
             mapRequestToAsset: req => new Request(new URL('/ballgame/index.html', req.url), req)
         };
@@ -88,7 +90,6 @@ export default {
 
         // If the router didn't handle it, proceed with static asset serving.
         try {
-            const assetManifest = JSON.parse(env.__STATIC_CONTENT_MANIFEST);
             const options = {
                 mapRequestToAsset: req => {
                     const url = new URL(req.url);
@@ -127,7 +128,6 @@ export default {
             console.error(`[Worker Debug] Error serving static asset for ${request.url}:`, e.message, e.stack);
             // Attempt to serve 404.html as a fallback
             try {
-                const assetManifest = JSON.parse(env.__STATIC_CONTENT_MANIFEST);
                 const notFoundResponse = await getAssetFromKV(
                     { request: new Request(new URL('/404.html', request.url), request), waitUntil: ctx.waitUntil.bind(ctx) },
                     { ASSET_NAMESPACE: env.__STATIC_CONTENT, ASSET_MANIFEST: assetManifest }
