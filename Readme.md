@@ -50,3 +50,4 @@ Spotted a bug? Have an idea for the next blockbuster mini-game to add to the hub
 5. Open a Pull Request!
 
 We welcome contributions, especially if they involve more games or funnier descriptions.
+
