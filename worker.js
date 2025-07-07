@@ -59,12 +59,13 @@ router.get('/ballgame', async (request, env, ctx) => {
 
     // Serve the main index.html for the /ballgame path, regardless of query params
     try {
+        const assetManifest = JSON.parse(env.__STATIC_CONTENT_MANIFEST);
         const options = {
             mapRequestToAsset: req => new Request(new URL('/ballgame/index.html', req.url), req)
         };
         const assetResponse = await getAssetFromKV(
             { request, waitUntil: ctx.waitUntil.bind(ctx) },
-            { ...options, ASSET_NAMESPACE: env.__STATIC_CONTENT, ASSET_MANIFEST: env.__STATIC_CONTENT_MANIFEST }
+            { ...options, ASSET_NAMESPACE: env.__STATIC_CONTENT, ASSET_MANIFEST: assetManifest }
         );
         console.log(`[Worker Debug] Successfully served /index.html for /ballgame route with status: ${assetResponse.status}`);
         return assetResponse;
@@ -87,6 +88,7 @@ export default {
 
         // If the router didn't handle it, proceed with static asset serving.
         try {
+            const assetManifest = JSON.parse(env.__STATIC_CONTENT_MANIFEST);
             const options = {
                 mapRequestToAsset: req => {
                     const url = new URL(req.url);
@@ -108,7 +110,7 @@ export default {
 
             const assetResponse = await getAssetFromKV(
                 { request, waitUntil: ctx.waitUntil.bind(ctx) },
-                { ...options, ASSET_NAMESPACE: env.__STATIC_CONTENT, ASSET_MANIFEST: env.__STATIC_CONTENT_MANIFEST }
+                { ...options, ASSET_NAMESPACE: env.__STATIC_CONTENT, ASSET_MANIFEST: assetManifest }
             );
 
             // Ensure assetResponse is a valid Response object
@@ -125,9 +127,10 @@ export default {
             console.error(`[Worker Debug] Error serving static asset for ${request.url}:`, e.message, e.stack);
             // Attempt to serve 404.html as a fallback
             try {
+                const assetManifest = JSON.parse(env.__STATIC_CONTENT_MANIFEST);
                 const notFoundResponse = await getAssetFromKV(
                     { request: new Request(new URL('/404.html', request.url), request), waitUntil: ctx.waitUntil.bind(ctx) },
-                    { ASSET_NAMESPACE: env.__STATIC_CONTENT, ASSET_MANIFEST: env.__STATIC_CONTENT_MANIFEST }
+                    { ASSET_NAMESPACE: env.__STATIC_CONTENT, ASSET_MANIFEST: assetManifest }
                 );
 
                 // Ensure notFoundResponse is a valid Response object
