@@ -97,6 +97,7 @@ function connectWebSocket(sessionIdToJoin = null, namesForInitialization = null)
              ws.send(JSON.stringify({ type: 'reset-game-with-names', names: namesForInitialization }));
         }
         updateUrlWithSessionId(currentSessionId);
+        startCursorsCollaboration();
     };
 
     ws.onmessage = (event) => {
@@ -436,6 +437,27 @@ if (copySessionUrlBtn) {
         }
     });
 }
+
+// How to Play Modal Logic
+const howToPlayModal = document.getElementById('how-to-play-modal');
+const howToPlayBtn = document.getElementById('howToPlayBtn');
+const closeBtn = document.querySelector('.close-btn');
+
+howToPlayBtn.addEventListener('click', () => {
+    console.log('How to Play button clicked');
+    howToPlayModal.classList.add('modal');
+    howToPlayModal.classList.add('modal');
+});
+
+closeBtn.addEventListener('click', () => {
+    howToPlayModal.classList.remove('modal');
+});
+
+window.addEventListener('click', (event) => {
+    if (event.target == howToPlayModal) {
+       howToPlayModal.classList.remove('modal');
+    }
+});
 
 // --- Initial Setup ---
 function initializeSession() {

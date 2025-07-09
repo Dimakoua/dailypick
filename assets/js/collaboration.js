@@ -1,4 +1,5 @@
-document.addEventListener('DOMContentLoaded', () => {
+function startCursorsCollaboration() {
+
     // --- Universal Real-time Collaboration Module ---
 
     // 1. Inject the cursor container into the body
@@ -47,9 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.type === 'user-id') {
             ownUserId = data.id;
         } else if (data.type === 'user-activity') {
-            if (data.id === ownUserId) {
-                return; // Don't display own cursor
-            }
+            // if (data.id === ownUserId) {
+            //     return; // Don't display own cursor
+            // }
 
             let cursor = document.getElementById(`cursor-${data.id}`);
             if (!cursor) {
@@ -93,4 +94,4 @@ document.addEventListener('DOMContentLoaded', () => {
     ws.onclose = () => {
         console.log('Disconnected from real-time server');
     };
-});
+};

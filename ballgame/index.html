@@ -34,6 +34,7 @@
     </div>
 
     <button id="startGameBtn">Start New Game</button>
+    <button id="howToPlayBtn">How to Play</button>
 
     <!-- Settings Area, similar to Speedway -->
     <button id="settingsToggleBtn">⚙️ Show Settings</button>
@@ -58,6 +59,38 @@
         <ul id="captured-list">
             <!-- Captured players will be listed here -->
         </ul>
+    </div>
+
+    <div id="how-to-play-modal" class="hidden">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>How to Play Momentum Mayhem</h2>
+            <div class="guide-section">
+                <h3>Objective</h3>
+                <p>The goal of the game is to work together with other players to push the red ball into all of the moving blue traps. The game is over when every trap has captured the ball.</p>
+            </div>
+            <div class="guide-section">
+                <h3>Controls</h3>
+                <p>Simply click anywhere on the game canvas. A force will be applied to the ball, pushing it away from your click. The closer you click to the ball, the stronger the push.</p>
+            </div>
+            <div class="guide-section">
+                <h3>The Traps</h3>
+                <p>The blue circles on the screen are the traps. Each trap is assigned to a player name. When the ball enters a trap, that player's name is added to the "Captured Players" list, and the trap disappears.</p>
+            </div>
+            <div class="guide-section">
+                <h3>Special Effects</h3>
+                <p>Capturing a trap can trigger a random special effect that changes the game dynamics for a short period. These include:</p>
+                <ul>
+                    <li><strong>Speed Boost:</strong> The ball's speed is dramatically increased.</li>
+                    <li><strong>Size Change:</strong> The ball becomes either much larger or smaller.</li>
+                    <li><strong>Trap Frenzy:</strong> All remaining traps move at a much faster speed.</li>
+                </ul>
+            </div>
+            <div class="guide-section">
+                <h3>Multiplayer</h3>
+                <p>This game is designed for collaboration! Share the session URL with your friends to have them join your game. All players control the same ball in real-time. You can customize the names of the players/traps in the settings menu.</p>
+            </div>
+        </div>
     </div>
 
     <script src="/ballgame/ball-game.js"></script>
