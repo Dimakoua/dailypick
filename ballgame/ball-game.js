@@ -266,7 +266,6 @@ function handleServerMessage(data) {
         case 'countdown':
             const remaining = Math.max(0, data.startTime - Date.now());
             const countdownEl = document.getElementById('countdown');
-            console.log(remaining)
             if (remaining > 100) {
                 countdownOverlay.style.display = 'flex';
                 countdownEl.innerText = Math.ceil(remaining / 1000);

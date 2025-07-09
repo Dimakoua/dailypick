@@ -25,51 +25,47 @@ export class BallGameSession {
 
     // Use blockConcurrencyWhile to ensure state is loaded/initialized before any messages are processed.
     this.state.blockConcurrencyWhile(async () => {
-        let storedGameState = await this.state.storage.get('gameState');
+      let storedGameState = await this.state.storage.get('gameState');
 
-        if (storedGameState) {
-            this.gameState = storedGameState;
-            console.log(`[DO Debug] Loaded existing game state for DO ID: ${this.state.id}. GameActive: ${this.gameState.gameActive}, Ball X: ${this.gameState.ballState.x?.toFixed(2)}, Y: ${this.gameState.ballState.y?.toFixed(2)}`);
+      if (storedGameState) {
+        this.gameState = storedGameState;
+        console.log(`[DO Debug] Loaded existing game state for DO ID: ${this.state.id}. GameActive: ${this.gameState.gameActive}, Ball X: ${this.gameState.ballState.x?.toFixed(2)}, Y: ${this.gameState.ballState.y?.toFixed(2)}`);
 
-            // Ensure gameActive is true if it was persisted as such.
-            // If the game ended previously, it might be false.
-            // Decide if you want a reloaded DO to resume a 'game over' state or reset it.
-            // For now, let's assume if it loads, it resumes its active status.
-            console.log('this.gameState');
-            console.log(this.gameState);
-            if (this.gameState.gameActive) {
-                this.startGameLoop(); // Attempt to start the loop
-            }else if (!this.gameState.gameActive || this.gameState.gameStatus === 'game-over') {
-                this.broadcast(JSON.stringify({ type: 'game-over', capturedUserNames: this.gameState.capturedUserNames, sessionId: this.state.id }));
-            } else {
-                console.log(`[DO Debug] Game state loaded but game is not active for DO ID ${this.state.id}.`);
-                // If game is not active, clients will only see the final state unless reset.
-            }
-
+        // Ensure gameActive is true if it was persisted as such.
+        // If the game ended previously, it might be false.
+        // Decide if you want a reloaded DO to resume a 'game over' state or reset it.
+        // For now, let's assume if it loads, it resumes its active status.
+        if (this.gameState.gameActive) {
+          this.startGameLoop(); // Attempt to start the loop
         } else {
-            console.log(`[DO Debug] No existing game state found for DO ID ${this.state.id}. Initializing new game state.`);
-            // Initialize with default names for a brand new DO instance
-            await this.initializeGameState(['Player1', 'Player2', 'Player3']);
-            console.log(`[DO Debug] BallGameSession initialized (new) for DO ID: ${this.state.id}`);
+          console.log(`[DO Debug] Game state loaded but game is not active for DO ID ${this.state.id}.`);
+          // If game is not active, clients will only see the final state unless reset.
         }
+
+      } else {
+        console.log(`[DO Debug] No existing game state found for DO ID ${this.state.id}. Initializing new game state.`);
+        // Initialize with default names for a brand new DO instance
+        await this.initializeGameState(['Player1', 'Player2', 'Player3']);
+        console.log(`[DO Debug] BallGameSession initialized (new) for DO ID: ${this.state.id}`);
+      }
     });
   }
 
   // Helper to manage the game loop interval
   startGameLoop() {
     if (!this.gameLoopInterval) {
-        this.gameLoopInterval = setInterval(() => this.gameLoop(), this.SERVER_TICK_RATE);
-        console.log(`[DO Debug] Game loop started for DO ID ${this.state.id}.`);
+      this.gameLoopInterval = setInterval(() => this.gameLoop(), this.SERVER_TICK_RATE);
+      console.log(`[DO Debug] Game loop started for DO ID ${this.state.id}.`);
     } else {
-        console.log(`[DO Debug] Game loop already running for DO ID ${this.state.id}.`);
+      console.log(`[DO Debug] Game loop already running for DO ID ${this.state.id}.`);
     }
   }
 
   stopGameLoop() {
     if (this.gameLoopInterval) {
-        clearInterval(this.gameLoopInterval);
-        this.gameLoopInterval = null;
-        console.log(`[DO Debug] Game loop stopped for DO ID ${this.state.id}.`);
+      clearInterval(this.gameLoopInterval);
+      this.gameLoopInterval = null;
+      console.log(`[DO Debug] Game loop stopped for DO ID ${this.state.id}.`);
     }
   }
 
@@ -146,21 +142,34 @@ export class BallGameSession {
 
     // Immediately send the current game state to the newly joined client
     if (this.gameState) {
-        if (this.gameState.gameActive && !this.gameLoopInterval) {
-            console.log(`[DO Debug] User ${userId} connected to active game in DO ID ${this.state.id}. Restarting game loop.`);
-            this.startGameLoop();
-        }
-
-        server.send(JSON.stringify({
-            type: 'game-state-update',
-            ball: this.gameState.ballState,
-            traps: this.gameState.traps,
-            activeEffects: this.gameState.activeEffects,
+      if (this.gameState.gameActive && !this.gameLoopInterval) {
+        console.log(`[DO Debug] User ${userId} connected to active game in DO ID ${this.state.id}. Restarting game loop.`);
+        this.startGameLoop();
+      } else if (this.gameState.gameStatus === 'game-over') {
+        this.broadcast(JSON.stringify({ type: 'game-over', capturedUserNames: this.gameState.capturedUserNames, sessionId: this.state.id }));
+      } else if (this.gameState.gameStatus === 'countdown') {
+        if (Date.now() >= this.gameState.startTime) {
+          this.gameState.gameStatus = 'running';
+          this.gameState.gameActive = true;
+        } else {
+          this.broadcast(JSON.stringify({
+            type: 'countdown',
+            startTime: this.gameState.startTime,
             sessionId: this.state.id
-        }));
+          }));
+        }
+      }
+
+      server.send(JSON.stringify({
+        type: 'game-state-update',
+        ball: this.gameState.ballState,
+        traps: this.gameState.traps,
+        activeEffects: this.gameState.activeEffects,
+        sessionId: this.state.id
+      }));
     } else {
-        // This case should ideally not happen if blockConcurrencyWhile ensures state is ready
-        console.warn(`[DO Debug] gameState is not ready when new user ${userId} connected to DO ID ${this.state.id}.`);
+      // This case should ideally not happen if blockConcurrencyWhile ensures state is ready
+      console.warn(`[DO Debug] gameState is not ready when new user ${userId} connected to DO ID ${this.state.id}.`);
     }
     server.send(JSON.stringify({ type: 'join-session-success', sessionId: this.state.id }));
 
@@ -209,9 +218,9 @@ export class BallGameSession {
 
       // Add a check to reset velocity if it becomes NaN/Infinity
       if (isNaN(ballState.vx) || isNaN(ballState.vy)) {
-          console.error(`[DO Debug] Ball velocity became NaN/Infinity during force application for DO ID ${this.state.id}. Resetting velocity.`);
-          ballState.vx = 0;
-          ballState.vy = 0;
+        console.error(`[DO Debug] Ball velocity became NaN/Infinity during force application for DO ID ${this.state.id}. Resetting velocity.`);
+        ballState.vx = 0;
+        ballState.vy = 0;
       }
 
       const maxSpeed = 10;
@@ -232,8 +241,8 @@ export class BallGameSession {
         this.gameState.gameActive = true;
       } else {
         // broadcast countdown time
-        this.broadcast(JSON.stringify({ 
-          type: 'countdown', 
+        this.broadcast(JSON.stringify({
+          type: 'countdown',
           startTime: this.gameState.startTime,
           sessionId: this.state.id
         }));
@@ -242,12 +251,12 @@ export class BallGameSession {
     }
 
     if (!this.gameState.gameActive) {
-        // If the game is not active, stop the loop if it's somehow still running
-        if (this.gameLoopInterval) {
-            console.warn(`[DO Debug] Game loop found active but gameActive is false for DO ID ${this.state.id}. Stopping loop.`);
-            this.stopGameLoop();
-        }
-        return;
+      // If the game is not active, stop the loop if it's somehow still running
+      if (this.gameLoopInterval) {
+        console.warn(`[DO Debug] Game loop found active but gameActive is false for DO ID ${this.state.id}. Stopping loop.`);
+        this.stopGameLoop();
+      }
+      return;
     }
 
     const { ballState, traps, capturedUserNames, activeEffects } = this.gameState;
@@ -262,11 +271,11 @@ export class BallGameSession {
 
     // Ensure ball position doesn't become NaN/Infinity after movement
     if (isNaN(ballState.x) || isNaN(ballState.y)) {
-        console.error(`[DO Debug] Ball position became NaN/Infinity after movement for DO ID ${this.state.id}. Resetting position.`);
-        ballState.x = this.GAME_CANVAS_WIDTH / 2;
-        ballState.y = this.GAME_CANVAS_HEIGHT / 2;
-        ballState.vx = 0;
-        ballState.vy = 0;
+      console.error(`[DO Debug] Ball position became NaN/Infinity after movement for DO ID ${this.state.id}. Resetting position.`);
+      ballState.x = this.GAME_CANVAS_WIDTH / 2;
+      ballState.y = this.GAME_CANVAS_HEIGHT / 2;
+      ballState.vx = 0;
+      ballState.vy = 0;
     }
 
     // Handle ball collisions with canvas edges
@@ -289,33 +298,33 @@ export class BallGameSession {
     // Update Trap Positions (make them move)
     for (const trap of traps) {
       if (trap.active) { // Only move active traps
-          trap.x += trap.vx;
-          trap.y += trap.vy;
+        trap.x += trap.vx;
+        trap.y += trap.vy;
 
-          // Ensure trap position doesn't become NaN/Infinity
-          if (isNaN(trap.x) || isNaN(trap.y)) {
-              console.error(`[DO Debug] Trap ${trap.userName} position became NaN/Infinity for DO ID ${this.state.id}. Resetting position.`);
-              trap.x = this.TRAP_RADIUS + Math.random() * (this.GAME_CANVAS_WIDTH - this.TRAP_RADIUS * 2);
-              trap.y = this.TRAP_RADIUS + Math.random() * (this.GAME_CANVAS_HEIGHT - this.TRAP_RADIUS * 2);
-              trap.vx = (Math.random() - 0.5) * 1.5;
-              trap.vy = (Math.random() - 0.5) * 1.5;
-          }
+        // Ensure trap position doesn't become NaN/Infinity
+        if (isNaN(trap.x) || isNaN(trap.y)) {
+          console.error(`[DO Debug] Trap ${trap.userName} position became NaN/Infinity for DO ID ${this.state.id}. Resetting position.`);
+          trap.x = this.TRAP_RADIUS + Math.random() * (this.GAME_CANVAS_WIDTH - this.TRAP_RADIUS * 2);
+          trap.y = this.TRAP_RADIUS + Math.random() * (this.GAME_CANVAS_HEIGHT - this.TRAP_RADIUS * 2);
+          trap.vx = (Math.random() - 0.5) * 1.5;
+          trap.vy = (Math.random() - 0.5) * 1.5;
+        }
 
-          // Handle trap collisions with canvas edges
-          if (trap.x - this.TRAP_RADIUS < 0) {
-            trap.x = this.TRAP_RADIUS;
-            trap.vx *= -1;
-          } else if (trap.x + this.TRAP_RADIUS > this.GAME_CANVAS_WIDTH) {
-            trap.x = this.GAME_CANVAS_WIDTH - this.TRAP_RADIUS;
-            trap.vx *= -1;
-          }
-          if (trap.y - this.TRAP_RADIUS < 0) {
-            trap.y = this.TRAP_RADIUS;
-            trap.vy *= -1;
-          } else if (trap.y + this.TRAP_RADIUS > this.GAME_CANVAS_HEIGHT) {
-            trap.y = this.GAME_CANVAS_HEIGHT - this.TRAP_RADIUS;
-            trap.vy *= -1;
-          }
+        // Handle trap collisions with canvas edges
+        if (trap.x - this.TRAP_RADIUS < 0) {
+          trap.x = this.TRAP_RADIUS;
+          trap.vx *= -1;
+        } else if (trap.x + this.TRAP_RADIUS > this.GAME_CANVAS_WIDTH) {
+          trap.x = this.GAME_CANVAS_WIDTH - this.TRAP_RADIUS;
+          trap.vx *= -1;
+        }
+        if (trap.y - this.TRAP_RADIUS < 0) {
+          trap.y = this.TRAP_RADIUS;
+          trap.vy *= -1;
+        } else if (trap.y + this.TRAP_RADIUS > this.GAME_CANVAS_HEIGHT) {
+          trap.y = this.GAME_CANVAS_HEIGHT - this.TRAP_RADIUS;
+          trap.vy *= -1;
+        }
       }
     }
 
@@ -357,21 +366,21 @@ export class BallGameSession {
     // Broadcast the updated game state to all connected clients in this session
     // Only broadcast if there are connected users and game is active
     if (this.users.size > 0 && this.gameState.gameActive) { // Only broadcast if active and users
-        const messageToSend = {
-            type: 'game-state-update',
-            ball: ballState,
-            traps, // Ensure traps are included
-            activeEffects,
-            sessionId: this.state.id
-        };
-        console.log(`[DO Debug] Broadcasting game-state-update for DO ID ${this.state.id}. Ball Pos: (${ballState.x.toFixed(2)}, ${ballState.y.toFixed(2)}), Traps Active: ${traps.filter(t => t.active).length}`);
-        this.broadcast(JSON.stringify(messageToSend));
+      const messageToSend = {
+        type: 'game-state-update',
+        ball: ballState,
+        traps, // Ensure traps are included
+        activeEffects,
+        sessionId: this.state.id
+      };
+      console.log(`[DO Debug] Broadcasting game-state-update for DO ID ${this.state.id}. Ball Pos: (${ballState.x.toFixed(2)}, ${ballState.y.toFixed(2)}), Traps Active: ${traps.filter(t => t.active).length}`);
+      this.broadcast(JSON.stringify(messageToSend));
     } else if (this.users.size === 0) {
-        // No users, so loop should be stopped by handleSession close event.
-        // If it's still running here, it's a bug.
-        console.warn(`[DO Debug] Game loop still running with no users for DO ID ${this.state.id}.`);
+      // No users, so loop should be stopped by handleSession close event.
+      // If it's still running here, it's a bug.
+      console.warn(`[DO Debug] Game loop still running with no users for DO ID ${this.state.id}.`);
     } else if (!this.gameState.gameActive) {
-        console.log(`[DO Debug] Game not active, not broadcasting game-state-update for DO ID ${this.state.id}.`);
+      console.log(`[DO Debug] Game not active, not broadcasting game-state-update for DO ID ${this.state.id}.`);
     }
   }
 
@@ -407,18 +416,18 @@ export class BallGameSession {
           activeEffects.trapFrenzy = true;
           traps.forEach(t => {
             if (t.active) {
-                t.vx *= 2; // Double trap speed
-                t.vy *= 2;
+              t.vx *= 2; // Double trap speed
+              t.vy *= 2;
             }
           });
           setTimeout(() => {
             activeEffects.trapFrenzy = false;
             // Reset trap speeds after frenzy
             traps.forEach(t => {
-                if (t.active) {
-                    t.vx = (Math.random() - 0.5) * 1.5;
-                    t.vy = (Math.random() - 0.5) * 1.5;
-                }
+              if (t.active) {
+                t.vx = (Math.random() - 0.5) * 1.5;
+                t.vy = (Math.random() - 0.5) * 1.5;
+              }
             });
           }, this.SPECIAL_EFFECT_DURATION);
         }
