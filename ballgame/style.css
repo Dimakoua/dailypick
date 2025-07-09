@@ -1,3 +1,43 @@
+:root {
+    --font-primary: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    --color-bg-body: #f4f7f6;
+    --color-text-body: #5d5d5d;
+    --color-text-heading: #3498db;
+    --color-text-label: #7f8c8d;
+    --color-text-list-item: #2980b9;
+    --color-text-light: #ffffff;
+
+    --color-primary: #3498db;
+    --color-primary-dark: #2980b9;
+    --color-secondary: #e67e22;
+    --color-secondary-dark: #d35400;
+
+    --color-border-light: #e0e0e0;
+    --color-border-medium: #ccc;
+    --color-line: #bdc3c7;
+    --color-disabled: #95a5a6;
+
+    --color-bg-card: #ffffff;
+    --color-bg-input: #f9f9f9;
+
+    --shadow-card: 0 10px 25px rgba(0, 0, 0, 0.08);
+    --shadow-racer: 0 2px 4px rgba(0, 0, 0, 0.15);
+
+    --border-radius-soft: 15px;
+    --border-radius-standard: 8px;
+
+    --spacing-xs: 0.3125rem; /* 5px */
+    --spacing-s: 0.5rem;    /* 8px */
+    --spacing-m: 0.625rem;  /* 10px */
+    --spacing-l: 0.9375rem; /* 15px */
+    --spacing-xl: 1.25rem;  /* 20px */
+    --spacing-xxl: 1.5625rem;/* 25px */
+    --spacing-xxxl: 1.875rem;/* 30px */
+
+    font-size: 100%; /* Base for rem units, typically 16px */
+}
+
 body {
     font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
@@ -478,4 +518,55 @@ canvas {
     #countdown {
         font-size: 4em;
     }
+}
+
+
+.seo-content-area {
+    background-color: var(--color-bg-card);
+    padding: var(--spacing-xxl) var(--spacing-xxxl);
+    border-radius: var(--border-radius-soft);
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--color-border-light);
+    max-width: 700px; /* Or adjust to fit your layout */
+    width: 90%;
+    margin: var(--spacing-xxxl) auto; /* Spacing from game elements */
+    text-align: left;
+    line-height: 1.7;
+    width: auto;
+}
+
+.seo-content-area h2 {
+    color: var(--color-text-heading); /* Friendly blue */
+    margin-top: 0;
+    margin-bottom: var(--spacing-l);
+    font-size: 1.8rem;
+}
+
+.seo-content-area h3 {
+    color: var(--color-primary-dark); /* Darker blue */
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-m);
+    font-size: 1.4rem;
+}
+
+.seo-content-area p,
+.seo-content-area li {
+    color: var(--color-text-body); /* Standard text color */
+    margin-bottom: var(--spacing-m);
+}
+
+.seo-content-area ul {
+    padding-left: var(--spacing-xl);
+    margin-bottom: var(--spacing-l);
+}
+
+.seo-content-area a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.seo-content-area a:hover {
+    text-decoration: underline;
+    color: var(--color-primary-dark);
 }
