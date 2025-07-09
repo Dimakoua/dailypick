@@ -35,8 +35,12 @@ export class BallGameSession {
             // If the game ended previously, it might be false.
             // Decide if you want a reloaded DO to resume a 'game over' state or reset it.
             // For now, let's assume if it loads, it resumes its active status.
+            console.log('this.gameState');
+            console.log(this.gameState);
             if (this.gameState.gameActive) {
                 this.startGameLoop(); // Attempt to start the loop
+            }else if (!this.gameState.gameActive || this.gameState.gameStatus === 'game-over') {
+                this.broadcast(JSON.stringify({ type: 'game-over', capturedUserNames: this.gameState.capturedUserNames, sessionId: this.state.id }));
             } else {
                 console.log(`[DO Debug] Game state loaded but game is not active for DO ID ${this.state.id}.`);
                 // If game is not active, clients will only see the final state unless reset.
@@ -92,7 +96,9 @@ export class BallGameSession {
       ballState: { x: this.GAME_CANVAS_WIDTH / 2, y: this.GAME_CANVAS_HEIGHT / 2, vx: 0, vy: 0, radius: this.SERVER_BALL_RADIUS, color: "#E32636" },
       traps: [],
       capturedUserNames: [],
-      gameActive: true, // Crucial: New games start as active
+      gameStatus: 'countdown',
+      startTime: Date.now() + 30000,
+      gameActive: false,
       activeEffects: {
         speedBoost: false,
         sizeChange: 1,
@@ -218,7 +224,24 @@ export class BallGameSession {
   }
 
   async gameLoop() {
-    if (!this.gameState || !this.gameState.gameActive) {
+    if (!this.gameState) return;
+
+    if (this.gameState.gameStatus === 'countdown') {
+      if (Date.now() >= this.gameState.startTime) {
+        this.gameState.gameStatus = 'running';
+        this.gameState.gameActive = true;
+      } else {
+        // broadcast countdown time
+        this.broadcast(JSON.stringify({ 
+          type: 'countdown', 
+          startTime: this.gameState.startTime,
+          sessionId: this.state.id
+        }));
+        return;
+      }
+    }
+
+    if (!this.gameState.gameActive) {
         // If the game is not active, stop the loop if it's somehow still running
         if (this.gameLoopInterval) {
             console.warn(`[DO Debug] Game loop found active but gameActive is false for DO ID ${this.state.id}. Stopping loop.`);
@@ -321,6 +344,7 @@ export class BallGameSession {
       if (allTrapsHit) {
         console.log(`[DO Debug] DO ID ${this.state.id}: Game Over! All traps captured.`);
         this.gameState.gameActive = false; // Set game to inactive
+        this.gameState.gameStatus = 'game-over';
         this.stopGameLoop(); // Stop the game loop on game over
         this.broadcast(JSON.stringify({ type: 'game-over', capturedUserNames, sessionId: this.state.id }));
       }

@@ -261,7 +261,19 @@ function showEffectNotification(effectName) {
 
 
 function handleServerMessage(data) {
+    const countdownOverlay = document.getElementById('countdown-overlay');
     switch (data.type) {
+        case 'countdown':
+            const remaining = Math.max(0, data.startTime - Date.now());
+            const countdownEl = document.getElementById('countdown');
+            console.log(remaining)
+            if (remaining > 100) {
+                countdownOverlay.style.display = 'flex';
+                countdownEl.innerText = Math.ceil(remaining / 1000);
+            } else {
+                countdownOverlay.style.display = 'none';
+            }
+            break;
         case 'game-state-update':
             // CRITICAL LOG: Check the incoming ball data
             // console.log('[Client Debug] Received game-state-update. Data.ball:', data.ball); // Too verbose for continuous
@@ -291,6 +303,7 @@ function handleServerMessage(data) {
             showGameOver(data.capturedUserNames);
             break;
         case 'game-reset':
+            console.log(data)
             console.log(`[Client Debug] Game reset for session: ${data.sessionId}`);
             // Reset client-side state for a fresh start based on server's reset
             ball = { x: canvas.width / 2, y: canvas.height / 2, radius: BALL_RADIUS, color: '#e74c3c' }; // Default client ball for immediate draw
@@ -298,10 +311,12 @@ function handleServerMessage(data) {
             activeEffects = { speedBoost: false, sizeChange: 1, trapFrenzy: false };
             if (capturedList) capturedList.innerHTML = '';
             if (gameOverOverlay) gameOverOverlay.style.display = 'none';
+            if (countdownOverlay) countdownOverlay.style.display = 'none';
             break;
         case 'join-session-success':
-            console.log(`[Client Debug] Successfully joined session: ${data.sessionId}`);
-            console.log(data)
+            console.log(`[Client Debug] Successfully joined session: ${data.sessionId.name}`);
+            currentSessionId = data.sessionId.name;
+            updateUrlWithSessionId(currentSessionId);
             break;
         default:
             console.warn('[Client Debug] Unknown message type:', data.type);
@@ -446,17 +461,11 @@ const closeBtn = document.querySelector('.close-btn');
 howToPlayBtn.addEventListener('click', () => {
     console.log('How to Play button clicked');
     howToPlayModal.classList.add('modal');
-    howToPlayModal.classList.add('modal');
+    howToPlayModal.classList.remove('hidden');
 });
 
 closeBtn.addEventListener('click', () => {
-    howToPlayModal.classList.remove('modal');
-});
-
-window.addEventListener('click', (event) => {
-    if (event.target == howToPlayModal) {
-       howToPlayModal.classList.remove('modal');
-    }
+    howToPlayModal.classList.add('hidden');
 });
 
 // --- Initial Setup ---
