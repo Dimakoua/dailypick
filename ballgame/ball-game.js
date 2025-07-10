@@ -313,8 +313,11 @@ function handleServerMessage(data) {
             if (countdownOverlay) countdownOverlay.style.display = 'none';
             break;
         case 'join-session-success':
-            console.log(`[Client Debug] Successfully joined session: ${data.sessionId.name}`);
-            currentSessionId = data.sessionId.name;
+            console.log(`[Client Debug] Successfully joined session:`, data);
+            currentSessionId = data;
+            if(data?.sessionId?.name){
+                currentSessionId = data.sessionId.name;
+            }
             updateUrlWithSessionId(currentSessionId);
             break;
         default:
