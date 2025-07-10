@@ -122,7 +122,7 @@ function connectWebSocket(sessionIdToJoin = null, namesForInitialization = null)
             if (sessionInfoDiv) sessionInfoDiv.style.display = 'none';
             if (restartGameBtn) restartGameBtn.style.display = 'none';
         } else { // If a session ID was present, but disconnect occurred (might try to reconnect)
-            if (startGameBtn) startGameBtn.style.display = 'none'; // Keep start hidden
+            if (startGameBtn) startGameBtn.style.display = 'none';      // Keep start hidden
             if (restartGameBtn) restartGameBtn.style.display = 'block'; // Keep restart visible
             if (sessionInfoDiv) sessionInfoDiv.style.display = 'block'; // Keep session info visible
         }
