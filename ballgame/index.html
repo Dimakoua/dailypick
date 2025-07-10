@@ -5,9 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Momentum Mayhem | Daily Pick</title>
-    <meta name="description" content="A real-time collaborative physics game where users work together to push a ball into moving traps, triggering chaotic special effects.">
+    <meta name="description"
+        content="A real-time collaborative physics game where users work together to push a ball into moving traps, triggering chaotic special effects. Perfect for daily standups, team building, and remote team engagement.">
+    <meta name="keywords"
+        content="daily standup game, team building game, online multiplayer game, collaborative game, physics game, remote team engagement, Scrum game, Agile game, icebreaker, virtual team building, browser game, meeting game, team bonding, sprint planning, project management">
 
-    <!-- Favicon Links (copy from other games if needed) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dailypick.dev/momentum-mayhem/">
+    <meta property="og:title" content="🔴 Momentum Mayhem: Collaborative Physics Game for Teams | Daily Pick">
+    <meta property="og:description"
+        content="Boost your daily standups and team building! Work together in Momentum Mayhem, a real-time collaborative physics game where you push a ball into moving traps with chaotic special effects. Play free on Daily Pick!">
+    <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
+
+
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
@@ -16,11 +26,9 @@
     <meta name="msapplication-TileColor" content="#2d89ef">
     <meta name="theme-color" content="#ffffff">
 
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <!-- Socket.IO client for real-time features -->
-    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <link rel="stylesheet" href="/ballgame/style.css">
+    <link rel="stylesheet" href="/assets/css/collaboration.css">
     <script src="/assets/js/collaboration.js" defer></script>
 </head>
 
@@ -34,8 +42,8 @@
     </div>
 
     <button id="startGameBtn">Start New Game</button>
+    <button id="howToPlayBtn">How to Play</button>
 
-    <!-- Settings Area, similar to Speedway -->
     <button id="settingsToggleBtn">⚙️ Show Settings</button>
     <div id="config-area" class="config-hidden">
         <label for="namesInput">Enter player names (one per line or comma-separated):</label>
@@ -45,6 +53,9 @@
 
     <div id="game-container">
         <canvas id="gameCanvas" width="800" height="600"></canvas>
+        <div id="countdown-overlay">
+            <div id="countdown"></div>
+        </div>
         <div id="game-over-overlay">
             <h2>Game Over!</h2>
             <p>Order of captured players:</p>
@@ -56,360 +67,112 @@
     <div id="captured-list-container">
         <h2>Captured Players:</h2>
         <ul id="captured-list">
-            <!-- Captured players will be listed here -->
         </ul>
     </div>
 
-    <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const gameOverOverlay = document.getElementById('game-over-overlay');
-        const winnerList = document.getElementById('winner-list');
-        const capturedList = document.getElementById('captured-list');
-        const settingsToggleBtn = document.getElementById("settingsToggleBtn");
-        const configArea = document.getElementById("config-area");
-        const namesInput = document.getElementById("namesInput");
-        const updateNamesBtn = document.getElementById("updateNamesBtn");
-        const restartGameBtn = document.getElementById('restartGameBtn');
-        const startGameBtn = document.getElementById('startGameBtn');
-        const sessionInfoDiv = document.getElementById('sessionInfo');
-        const currentSessionIdDisplay = document.getElementById('currentSessionIdDisplay');
-        const copySessionUrlBtn = document.getElementById('copySessionUrlBtn');
-        const gameContainer = document.getElementById('game-container'); // Get game container for cursor positioning
+    <div id="how-to-play-modal" class="hidden">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>How to Play Momentum Mayhem</h2>
+            <div class="guide-section">
+                <h3>Objective</h3>
+                <p>The goal of the game is to work together with other players to push the red ball into all of the
+                    moving blue traps. The game is over when every trap has captured the ball.</p>
+            </div>
+            <div class="guide-section">
+                <h3>Controls</h3>
+                <p>Simply click anywhere on the game canvas. A force will be applied to the ball, pushing it away from
+                    your click. The closer you click to the ball, the stronger the push.</p>
+            </div>
+            <div class="guide-section">
+                <h3>The Traps</h3>
+                <p>The blue circles on the screen are the traps. Each trap is assigned to a player name. When the ball
+                    enters a trap, that player's name is added to the "Captured Players" list, and the trap disappears.
+                </p>
+            </div>
+            <div class="guide-section">
+                <h3>Special Effects</h3>
+                <p>Capturing a trap can trigger a random special effect that changes the game dynamics for a short
+                    period. These include:</p>
+                <ul>
+                    <li><strong>Speed Boost:</strong> The ball's speed is dramatically increased.</li>
+                    <li><strong>Size Change:</strong> The ball becomes either much larger or smaller.</li>
+                    <li><strong>Trap Frenzy:</strong> All remaining traps move at a much faster speed.</li>
+                </ul>
+            </div>
+            <div class="guide-section">
+                <h3>Multiplayer</h3>
+                <p>This game is designed for collaboration! Share the session URL with your friends to have them join
+                    your game. All players control the same ball in real-time. You can customize the names of the
+                    players/traps in the settings menu.</p>
+            </div>
+        </div>
+    </div>
 
-        // Connect to the same Socket.IO server that serves the page
-        const socket = io();
+    <script src="/ballgame/ball-game.js"></script>
 
-        // Client-side game state
-        let ball = { x: canvas.width / 2, y: canvas.height / 2, radius: 15, color: '#e74c3c' };
-        let traps = []; // Store trap objects from the server
-        let activeEffects = {}; // Store active effects from the server
-        const TRAP_RADIUS = 25; // Must match server
+    <div class="seo-content-area">
+        <h1>Transform Your Team Meetings with Momentum Mayhem!</h1>
+        <p>Looking for an engaging and fresh way to energize your <strong>daily standup meetings</strong>? Or perhaps
+            you need a dynamic <strong>icebreaker</strong> for your <strong>team-building activities</strong>,
+            <strong>Scrum ceremonies</strong>, or <strong>Agile retrospectives</strong>? Look no further than
+            <strong>Momentum Mayhem</strong>, the real-time collaborative physics game designed to inject fun, energy,
+            and teamwork into any group setting!</p>
 
-        // For visual effects
-        let particles = [];
-        let popAnimations = [];
+        <h2>What is Momentum Mayhem?</h2>
+        <p>Momentum Mayhem is an innovative <strong>online multiplayer game</strong> where players work together to
+            achieve a shared goal. It's the perfect blend of <strong>physics-based gameplay</strong> and
+            <strong>collaborative strategy</strong>, making it ideal for boosting communication and team cohesion. In
+            this <strong>interactive browser game</strong>, you and your teammates collectively control a ball, aiming
+            to guide it into moving traps. Each trap represents a participant, and successfully capturing a trap adds
+            their name to the "captured" list, adding a playful twist to your team interactions.</p>
 
-        // Name management constants and variables
-        const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
-        const LOCAL_STORAGE_KEY = 'namesList'; // Same key as Speedway
-        let playerNames = [...DEFAULT_NAMES];
+        <h2>Key Features for Enhanced Team Interaction:</h2>
+        <ul>
+            <li><strong>Real-time Collaboration:</strong> Experience seamless <strong>synchronous gameplay</strong> as
+                all players contribute to controlling the same ball. This fosters immediate feedback and encourages
+                shared decision-making, perfect for <strong>remote teams</strong> and <strong>distributed
+                    workforces</strong>.</li>
+            <li><strong>Engaging Physics Engine:</strong> The intuitive click-to-push mechanic provides a satisfying and
+                responsive gameplay experience. The closer you click to the ball, the more powerful your push, adding a
+                layer of strategic depth.</li>
+            <li><strong>Dynamic Traps and Player Assignment:</strong> Assign specific <strong>team members</strong> or
+                <strong>project roles</strong> to each trap, turning the game into a personalized experience. This can
+                be a playful way to determine the order of speakers in a standup or assign tasks.</li>
+            <li><strong>Chaotic Special Effects:</strong> Keep things exciting with unpredictable special effects like
+                <strong>Speed Boosts</strong>, <strong>Size Changes</strong>, and <strong>Trap Frenzy</strong>. These
+                random modifiers ensure no two games are exactly alike, promoting adaptability and quick thinking –
+                valuable traits in any <strong>project management</strong> environment.</li>
+            <li><strong>Easy Session Sharing:</strong> With a unique session URL, inviting your colleagues to join is
+                effortless. Momentum Mayhem is a fantastic <strong>virtual team-building game</strong> that requires no
+                downloads or complex setups.</li>
+            <li><strong>Customizable Player Names:</strong> Tailor the game to your team by entering individual names
+                for each trap. This personal touch makes the experience even more relevant for your <strong>sprint
+                    planning</strong> or <strong>team bonding exercises</strong>.</li>
+        </ul>
 
-        // --- Session Management Variables ---
-        let currentSessionId = null;
+        <h2>Beyond Daily Standups: Versatile Applications</h2>
+        <p>While perfectly suited for <strong>daily Scrum meetings</strong>, Momentum Mayhem's versatility extends to
+            various other scenarios:</p>
+        <ul>
+            <li><strong>Team Icebreakers:</strong> Start any meeting, workshop, or training session with a fun and
+                interactive activity to get everyone energized and engaged.</li>
+            <li><strong>Remote Team Engagement:</strong> Combat Zoom fatigue and foster a sense of connection among
+                geographically dispersed teams.</li>
+            <li><strong>Educational Tool:</strong> Use the game to demonstrate basic physics principles in an engaging
+                way for <strong>online learning</strong> environments.</li>
+            <li><strong>Casual Team Bonding:</strong> Simply enjoy a lighthearted gaming session with your colleagues
+                during a break or as a Friday afternoon activity.</li>
+            <li><strong>Brainstorming Sessions:</strong> The collaborative nature can even spark creative thinking
+                before a <strong>strategy session</strong> or <strong>problem-solving workshop</strong>.</li>
+        </ul>
 
-        // Function to get session ID from URL
-        function getSessionIdFromUrl() {
-            const params = new URLSearchParams(window.location.search);
-            return params.get('sessionId');
-        }
-
-        // Function to update URL with session ID
-        function updateUrlWithSessionId(sessionId) {
-            const newUrl = window.location.origin + window.location.pathname + `?sessionId=${sessionId}`;
-            window.history.pushState({ path: newUrl }, '', newUrl);
-            currentSessionIdDisplay.textContent = sessionId;
-            sessionInfoDiv.style.display = 'block'; // Show session info
-            startGameBtn.style.display = 'none'; // Hide start game button once session is active
-        }
-
-        // --- Socket.IO Event Listeners ---
-
-        socket.on('game-state-update', (gameState) => {
-            ball.x = gameState.ball.x;
-            ball.y = gameState.ball.y;
-            traps = gameState.traps;
-            activeEffects = gameState.activeEffects; // Get active effects from server
-        });
-
-        socket.on('trap-captured', (data) => {
-            const listItem = document.createElement('li');
-            listItem.textContent = data.userName;
-            capturedList.appendChild(listItem);
-
-            // playSound('capture'); // Placeholder for a capture sound
-
-            // Find the captured trap to get its position for the animation
-            const capturedTrap = traps.find(t => t.id === data.trapId);
-            if (capturedTrap) {
-                createPopAnimation(capturedTrap.x, capturedTrap.y);
-            }
-
-            if (data.effect && data.effect !== 'none') {
-                showEffectNotification(data.effect);
-            }
-        });
-
-        socket.on('game-over', (finalOrder) => {
-            winnerList.innerHTML = ''; // Clear previous list
-            finalOrder.forEach(name => {
-                const li = document.createElement('li');
-                li.textContent = name;
-                winnerList.appendChild(li);
-            });
-            gameOverOverlay.style.display = 'flex';
-        });
-
-        socket.on('game-reset', () => {
-            // console.log("Game has been reset by the server for this session.");
-            gameOverOverlay.style.display = 'none';
-            capturedList.innerHTML = '';
-        });
-
-        // New: Handle session creation success
-        socket.on('session-created', (data) => {
-            currentSessionId = data.sessionId;
-            updateUrlWithSessionId(currentSessionId);
-            // console.log(`New session created: ${currentSessionId}`);
-            // After creating, we also need to tell the server to set up the game with names
-            socket.emit('reset-game-with-names', { sessionId: currentSessionId, names: playerNames });
-        });
-
-        // New: Handle joining an existing session success
-        socket.on('join-session-success', (data) => {
-            currentSessionId = data.sessionId;
-            updateUrlWithSessionId(currentSessionId);
-            // console.log(`Joined session: ${currentSessionId}`);
-            // The server will send the initial game-state-update after successful join
-        });
-
-        // New: Handle joining session failure (e.g., invalid ID)
-        socket.on('join-session-failed', (data) => {
-            console.error(`Failed to join session: ${data.message}`);
-            // Optionally, display an error message to the user
-            alert(`Could not join session: ${data.message}. Starting a new game instead.`);
-            // Fallback to creating a new session
-            requestNewSession();
-        });
-
-
-        // --- User Interaction Event Listeners ---
-
-        canvas.addEventListener('click', (event) => {
-            if (!currentSessionId) {
-                console.warn('Cannot apply force: No active session.');
-                return;
-            }
-            const rect = canvas.getBoundingClientRect();
-            const clickX = event.clientX - rect.left;
-            const clickY = event.clientY - rect.top;
-            // playSound('push'); // Placeholder for a push sound
-            socket.emit('apply-force', { sessionId: currentSessionId, clickX, clickY });
-        });
-
-        settingsToggleBtn.addEventListener("click", () => toggleConfigArea());
-        updateNamesBtn.addEventListener("click", updateNamesFromInput);
-        restartGameBtn.addEventListener('click', () => {
-            if (!currentSessionId) {
-                // If somehow no session, create a new one
-                requestNewSession();
-                return;
-            }
-            // Use the same mechanism as updating names to reset the game for everyone in THIS session
-            socket.emit('reset-game-with-names', { sessionId: currentSessionId, names: playerNames });
-        });
-
-        startGameBtn.addEventListener('click', () => {
-            requestNewSession();
-        });
-
-        copySessionUrlBtn.addEventListener('click', () => {
-            const sessionUrl = window.location.href;
-            // Use document.execCommand('copy') as navigator.clipboard.writeText() may not work due to iFrame restrictions.
-            const tempInput = document.createElement('input');
-            document.body.appendChild(tempInput);
-            tempInput.value = sessionUrl;
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
-            alert('Session URL copied to clipboard!');
-        });
-
-
-        // --- Name Management and UI Functions ---
-
-        function loadNamesFromStorage() {
-            const storedNamesJson = localStorage.getItem(LOCAL_STORAGE_KEY);
-            if (storedNamesJson) {
-                try {
-                    const storedNames = JSON.parse(storedNamesJson);
-                    if (Array.isArray(storedNames) && storedNames.length > 0) {
-                        playerNames = [...storedNames];
-                    }
-                } catch (e) {
-                    console.error("Error parsing names from localStorage:", e);
-                    playerNames = [...DEFAULT_NAMES]; // Fallback on error
-                }
-            } else {
-                playerNames = [...DEFAULT_NAMES];
-            }
-            namesInput.value = playerNames.join('\n');
-        }
-
-        function saveNamesToStorage() {
-            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(playerNames));
-        }
-
-        function updateNamesFromInput() {
-            const inputText = namesInput.value.trim();
-            const newNames = inputText ? inputText.split(/[\n,]+/).map(name => name.trim()).filter(name => name.length > 0) : [];
-            playerNames = newNames.length > 0 ? [...newNames] : [...DEFAULT_NAMES];
-            namesInput.value = playerNames.join('\n');
-            saveNamesToStorage();
-            
-            if (currentSessionId) {
-                // Emit to server to reset the game for everyone in this session with the new names
-                socket.emit('reset-game-with-names', { sessionId: currentSessionId, names: playerNames });
-            } else {
-                // If no session active, start a new one with these names
-                requestNewSession();
-            }
-            toggleConfigArea(false); // Hide config after updating
-        }
-
-        function toggleConfigArea(show) {
-            if (show === undefined) {
-                configArea.classList.toggle("config-hidden");
-            } else if (show) {
-                configArea.classList.remove("config-hidden");
-            } else {
-                configArea.classList.add("config-hidden");
-            }
-            settingsToggleBtn.textContent = configArea.classList.contains("config-hidden") ? "⚙️ Show Settings" : "⚙️ Hide Settings";
-        }
-
-        // --- Session Initialization Logic ---
-
-        function requestNewSession() {
-            // Request the server to create a new session
-            // console.log('Requesting new session from server...');
-            socket.emit('create-session', { names: playerNames });
-        }
-
-        function initializeSession() {
-            const urlSessionId = getSessionIdFromUrl();
-            if (urlSessionId) {
-                // If session ID found in URL, try to join it
-                // console.log(`Attempting to join session from URL: ${urlSessionId}`);
-                socket.emit('join-session', { sessionId: urlSessionId, names: playerNames });
-            } else {
-                // No session ID in URL, show "Start New Game" button
-                // console.log('No session ID in URL. Displaying "Start New Game" button.');
-                startGameBtn.style.display = 'block';
-                sessionInfoDiv.style.display = 'none';
-            }
-        }
-
-        // --- Visual Effects Functions ---
-
-        function createPopAnimation(x, y) {
-            const particleCount = 30;
-            const hue = Math.random() * 360;
-            for (let i = 0; i < particleCount; i++) {
-                popAnimations.push({
-                    x: x,
-                    y: y,
-                    vx: (Math.random() - 0.5) * 10,
-                    vy: (Math.random() - 0.5) * 10,
-                    size: Math.random() * 6 + 2,
-                    life: 1, // 1 = 100% life
-                    color: `hsl(${hue}, 90%, 60%)`
-                });
-            }
-        }
-
-        function showEffectNotification(effectName) {
-            const notification = document.createElement('div');
-            notification.className = 'effect-notification';
-            let text = '';
-            switch (effectName) {
-                case 'speedBoost': text = 'SPEED BOOST!'; break;
-                case 'sizeChange': text = 'SIZE CHANGE!'; break;
-                case 'trapFrenzy': text = 'TRAP FRENZY!'; break;
-            }
-            notification.textContent = text;
-            document.body.appendChild(notification);
-            setTimeout(() => {
-                notification.remove();
-            }, 2500);
-        }
-
-        // Game rendering loop
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-
-            // --- Draw Visual Effects ---
-
-            // Create ball trail particles
-            const currentBallRadius = ball.radius * (activeEffects.sizeChange || 1);
-            particles.push({ x: ball.x, y: ball.y, size: currentBallRadius * 0.5, life: 1 });
-
-            // Update and draw ball trail
-            for (let i = particles.length - 1; i >= 0; i--) {
-                const p = particles[i];
-                p.life -= 0.04;
-                if (p.life <= 0) { particles.splice(i, 1); } 
-                else {
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(231, 76, 60, ${p.life * 0.5})`;
-                    ctx.fill();
-                }
-            }
-
-            // Update and draw pop animations
-            for (let i = popAnimations.length - 1; i >= 0; i--) {
-                const p = popAnimations[i];
-                p.x += p.vx; p.y += p.vy; p.life -= 0.03; p.vx *= 0.98; p.vy *= 0.98;
-                if (p.life <= 0) { popAnimations.splice(i, 1); } 
-                else {
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
-                    ctx.fillStyle = `${p.color.slice(0, -1)}, ${p.life})`; // hsl() -> hsla()
-                    ctx.fill();
-                }
-            }
-
-            // Draw traps
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.font = '12px Nunito';
-            for (const trap of traps) {
-                ctx.beginPath();
-                ctx.arc(trap.x, trap.y, TRAP_RADIUS, 0, Math.PI * 2);
-                if (trap.active) {
-                    ctx.fillStyle = 'rgba(52, 152, 219, 0.5)'; // Active trap color (Peter River blue)
-                    ctx.strokeStyle = '#3498db';
-                    ctx.lineWidth = 2;
-                    ctx.fill();
-                    ctx.stroke();
-                    ctx.fillStyle = '#2c3e50'; /* Wet Asphalt for text */
-                    ctx.fillText(trap.userName, trap.x, trap.y);
-                } else {
-                    ctx.fillStyle = 'rgba(127, 140, 141, 0.5)'; // Inactive trap color (Asbestos grey)
-                    ctx.strokeStyle = '#7f8c8d';
-                    ctx.lineWidth = 1;
-                    ctx.fill();
-                    ctx.stroke();
-                    ctx.fillStyle = '#ecf0f1'; /* Clouds light for text */
-                    ctx.fillText(trap.userName, trap.x, trap.y);
-                }
-            }
-
-            // Draw ball
-            ctx.beginPath();
-            ctx.arc(ball.x, ball.y, currentBallRadius, 0, Math.PI * 2);
-            ctx.fillStyle = ball.color; /* Alizarin red */
-            ctx.fill();
-            requestAnimationFrame(draw); // Loop
-        }
-
-        // --- Initial Setup ---
-        loadNamesFromStorage();
-        toggleConfigArea(false); // Start with settings hidden
-        initializeSession(); // Determine whether to create or join a session
-        draw(); // Start the drawing loop
-    </script>
+        <h2>Get Started with Momentum Mayhem Today!</h2>
+        <p>Ready to transform your routine meetings into an exciting <strong>team experience</strong>? Momentum Mayhem
+            is more than just a game; it's a tool for <strong>improving team dynamics</strong>, boosting morale, and
+            making collaboration genuinely enjoyable. Try it now and see how this unique <strong>collaborative online
+                game</strong> can benefit your team!</p>
+    </div>
 </body>
 
 </html>

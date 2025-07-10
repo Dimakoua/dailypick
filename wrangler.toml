@@ -1,0 +1,20 @@
+
+name = "dailypick"
+main = "worker.js"
+compatibility_date = "2025-07-01"
+
+[site]
+bucket = "./dist"
+
+[durable_objects]
+bindings = [
+  { name = "COLLABORATION_SESSION", class_name = "CollaborationSession" },
+  { name = "BALL_GAME_SESSION", class_name = "BallGameSession" }
+]
+
+[[migrations]]
+tag = "v2"
+new_sqlite_classes = ["CollaborationSession", "BallGameSession"]
+
+[observability.logs]
+enabled = false
