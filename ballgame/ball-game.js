@@ -20,6 +20,7 @@ const sessionInfoDiv = document.getElementById('sessionInfo');
 const currentSessionIdDisplay = document.getElementById('currentSessionIdDisplay');
 const copySessionUrlBtn = document.getElementById('copySessionUrlBtn');
 const gameContainer = document.getElementById('game-container');
+const requestResultInPIPBtn = document.getElementById('requestResultInPIP');
 
 // WebSocket instance
 let ws = null;
@@ -223,6 +224,12 @@ function requestNewSession() {
     connectWebSocket(null, playerNames);
 }
 
+function requestResultInPIP() {
+    console.log('[Client Debug] Requesting request result in PIP...');
+    // When requesting a new session, we initiate a connection and pass the current playerNames
+    requestPictureInPicture(gameOverOverlay)
+}
+
 function restartCurrentGame() {
     console.log('[Client Debug] Restarting current game...');
     if (gameOverOverlay) gameOverOverlay.style.display = 'none';
@@ -266,7 +273,7 @@ function handleServerMessage(data) {
         case 'countdown':
             const remaining = Math.max(0, data.startTime - Date.now());
             const countdownEl = document.getElementById('countdown');
-            if (remaining > 100) {
+            if (remaining > 500) {
                 countdownOverlay.style.display = 'flex';
                 countdownEl.innerText = Math.ceil(remaining / 1000);
             } else {
@@ -434,6 +441,9 @@ if (updateNamesBtn) {
 if (startGameBtn) {
     startGameBtn.addEventListener('click', requestNewSession);
 }
+if (requestResultInPIPBtn) {
+    requestResultInPIPBtn.addEventListener('click', requestResultInPIP);
+}
 if (restartGameBtn) {
     restartGameBtn.addEventListener('click', restartCurrentGame);
 }
@@ -465,6 +475,23 @@ closeBtn.addEventListener('click', () => {
     howToPlayModal.classList.add('hidden');
 });
 
+async function requestPictureInPicture(child) {
+  // Open a Picture-in-Picture window
+  const pipWindow = await documentPictureInPicture.requestWindow({
+    width: 200,
+    height: 400,
+  });
+
+  // Load styles into the PiP window
+  const link = pipWindow.document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = "/ballgame/style.css";
+  pipWindow.document.head.appendChild(link);
+
+  // Move the child element into the PiP window
+  const clonedChild = child.cloneNode(true);
+  pipWindow.document.body.appendChild(clonedChild);
+}
 // --- Initial Setup ---
 function initializeSession() {
     loadNamesFromStorage(); // Load names first
