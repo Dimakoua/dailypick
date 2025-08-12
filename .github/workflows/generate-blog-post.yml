@@ -319,6 +319,8 @@ jobs:
           fi
 
       - name: Commit and push changes
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           ARTICLE_TITLE_FOR_COMMIT="${{ steps.process_article.outputs.article_title_output }}"
           ARTICLE_FILE_PATH_FOR_COMMIT="${{ steps.process_article.outputs.article_file_path_output }}"
