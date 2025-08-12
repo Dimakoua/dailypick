@@ -11,7 +11,8 @@ jobs:
   generate_article:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Required to commit and push changes
+      contents: write
+      pull-requests: write
     
     steps:
       - name: Checkout repository
