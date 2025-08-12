@@ -328,18 +328,28 @@ jobs:
             exit 1
           fi
 
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
           git add "$ARTICLE_FILE_PATH_FOR_COMMIT"
           git add sitemap.xml
-          
+
           # Check if there are changes to commit
           if git diff --staged --quiet; then
             echo "No changes to commit. Article might be empty or processing failed to produce a new file."
-            # This could also mean the file was created but is identical to an existing one (though duplicate check should prevent)
           else
             COMMIT_MESSAGE="feat(blog): Add article '$ARTICLE_TITLE_FOR_COMMIT' and update sitemap"
             echo "Committing with message: $COMMIT_MESSAGE"
             git commit -m "$COMMIT_MESSAGE"
-            
-            echo "Pushing changes to branch ${{ github.ref_name }}..."
-            git push origin HEAD:${{ github.ref_name }} # Push to the current branch
+
+            # Create a unique branch name to comply with branch protection rules
+            BRANCH_NAME="auto/blog-post-$(date +%Y%m%d%H%M%S)"
+            git checkout -b "$BRANCH_NAME"
+
+            echo "Pushing changes to branch $BRANCH_NAME..."
+            git push origin "$BRANCH_NAME"
+
+            echo "Creating pull request..."
+            gh pr create --title "$COMMIT_MESSAGE" --body "Automated blog post addition." --base main --head "$BRANCH_NAME"
           fi
+
