@@ -134,11 +134,14 @@ jobs:
               exit 1
           fi
 
+          echo "PROMPT_TEXT:"
+          echo "$PROMPT_TEXT"
+
           # Construct JSON payload using jq for robustness
           JSON_PAYLOAD=$(jq -n --arg prompt_text "$PROMPT_TEXT" \
             '{contents: [{parts: [{text: $prompt_text}]}]}')
 
-          echo "Sending request to Gemini API with prompt (first 500 chars):"
+          echo "Sending request to Gemini API with prompt:"
           echo # Newline for clarity after potentially truncated prompt
 
           # Using Gemini 1.5 Flash model.
