@@ -25,6 +25,12 @@ module.exports = function(eleventyConfig) {
     sitemap: {
       hostname: "https://dailypick.dev",
       lastmodDateOnly: true,
+      xmlns: {
+        news: false,
+        xhtml: false,
+        image: false,
+        video: false,
+      },
     },
   });
 
