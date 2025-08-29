@@ -235,3 +235,46 @@ footer {
 .footer-note strong {
     color: #ffc107; /* Highlight with accent color */
 }
+
+/* Pagination Styling */
+.pagination {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.pagination-list {
+    display: inline-flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    border: 1px solid #ddd;
+}
+
+.pagination-list li {
+    margin: 0;
+}
+
+.pagination-list a {
+    display: block;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: #333;
+    background-color: #fff;
+    border-right: 1px solid #ddd;
+}
+
+.pagination-list li:last-child a {
+    border-right: 0;
+}
+
+.pagination-list a:hover {
+    background-color: #f5f5f5;
+}
+
+.pagination-list a[aria-current="page"] {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+}
