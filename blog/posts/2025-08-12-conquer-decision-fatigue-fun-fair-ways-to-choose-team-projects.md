@@ -48,4 +48,4 @@ Daily Pick is designed to make these techniques simpler and more engaging. Our t
 
 Choosing team projects doesn't have to be a stressful ordeal. By implementing these fun and fair strategies and embracing the power of randomness, you can boost team morale, increase productivity, and ensure everyone feels valued and heard. Ready to revolutionize your project selection process?
 
-Ready to make your team decisions less of a drag and more of a delight? Explore the fun and fair tools at Daily Pick today!
+Ready to make your team decisions less of a drag and more of a delight? Explore the fun and fair tools at Daily [Pick today!](https://dailypick.dev)

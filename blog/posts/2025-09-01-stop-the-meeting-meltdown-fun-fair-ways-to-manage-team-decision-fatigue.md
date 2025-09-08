@@ -1,7 +1,6 @@
-
 ---
 title: "Stop the Meeting Meltdown: Fun & Fair Ways to Manage Team Decision Fatigue"
-date: 2024-10-27
+date: 2025-09-01
 description: "Is decision fatigue crippling your team's productivity? Discover fun, fair, and quick methods to make team choices easier, boosting morale and efficiency. Learn how to leverage Daily Pick's tools for a smoother workflow!"
 layout: "post.njk"
 tags: ["team building", "decision making", "meeting facilitation", "productivity", "agile", "remote work", "workplace culture"]
@@ -57,4 +56,4 @@ How are your current methods working?  Are they truly fair?  Are they leading to
 
 Decision fatigue is a serious issue, but it doesn't have to be a constant battle. By incorporating fun, fair, and quick methods into your team's workflow, you can significantly reduce decision overload, boost morale, and enhance overall productivity.  Daily Pick's tools are designed to help streamline this process, allowing you to focus on what matters most: your team's success.
 
-Ready to make your team decisions less of a drag and more of a delight? Explore the fun and fair tools at Daily Pick today! [/]
+Ready to make your team decisions less of a drag and more of a delight? Explore the fun and fair tools at Daily [Pick today!](https://dailypick.dev)
