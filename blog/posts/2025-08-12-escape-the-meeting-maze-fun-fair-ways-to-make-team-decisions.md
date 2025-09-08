@@ -44,4 +44,4 @@ The above mentioned tools are a great starting point, but don’t forget about y
 Escaping the meeting maze isn’t about avoiding decisions; it’s about making them in a way that is both efficient and enjoyable. By incorporating fun, fairness, and the right tools—such as Daily Pick's innovative decision-making games—you can transform your team's approach to decision-making, creating a more collaborative, productive, and ultimately more enjoyable work environment.
 
 
-Ready to make your team decisions less of a drag and more of a delight? Explore the fun and fair tools at Daily Pick today!  [link to Daily Pick Homepage]
+Ready to make your team decisions less of a drag and more of a delight? Explore the fun and fair tools at Daily [Pick today!](https://dailypick.dev)
