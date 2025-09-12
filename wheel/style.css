@@ -228,7 +228,6 @@ canvas {
 
     #wheel-container {
         width: 90%;
-        max-width: 380px; /* Adjust if wheel needs to be smaller */
     }
 
     #spinBtn,
@@ -238,7 +237,6 @@ canvas {
     }
 
     .seo-content-area {
-        width: 95%;
         padding: 20px;
         margin-top: 20px;
     }

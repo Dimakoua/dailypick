@@ -20,6 +20,7 @@ const sessionInfoDiv = document.getElementById('sessionInfo');
 const currentSessionIdDisplay = document.getElementById('currentSessionIdDisplay');
 const copySessionUrlBtn = document.getElementById('copySessionUrlBtn');
 const gameContainer = document.getElementById('game-container');
+const requestResultInPIPBtn = document.getElementById('requestResultInPIP');
 
 // WebSocket instance
 let ws = null;
@@ -123,9 +124,7 @@ function connectWebSocket(sessionIdToJoin = null, namesForInitialization = null)
             if (restartGameBtn) restartGameBtn.style.display = 'none';
         } else { // If a session ID was present, but disconnect occurred (might try to reconnect)
             if (startGameBtn) startGameBtn.style.display = 'none'; // Keep start hidden
-            if (restartGameBtn) restartGameBtn.style.display = 'block'; // Keep restart visible
             if (sessionInfoDiv) sessionInfoDiv.style.display = 'block'; // Keep session info visible
-        }
         // alert('Disconnected from game. Please refresh or try again.'); // Consider if this alert is always desired
         ws = null; // Clear the WebSocket instance
     };
@@ -223,15 +222,13 @@ function requestNewSession() {
     connectWebSocket(null, playerNames);
 }
 
-function restartCurrentGame() {
-    console.log('[Client Debug] Restarting current game...');
+
     if (gameOverOverlay) gameOverOverlay.style.display = 'none';
     if (capturedList) capturedList.innerHTML = '';
     
     if (currentSessionId) {
         // When restarting an existing session, we connect to the same ID but also
         // tell the server to reset the game with the current playerNames.
-        connectWebSocket(currentSessionId, playerNames);
     } else {
         alert('No active session to restart. Please start a new game.');
         if (startGameBtn) startGameBtn.style.display = 'block'; // Show start game button if no session
@@ -266,7 +263,8 @@ function handleServerMessage(data) {
         case 'countdown':
             const remaining = Math.max(0, data.startTime - Date.now());
             const countdownEl = document.getElementById('countdown');
-            if (remaining > 100) {
+
+            if (remaining > 500) {
                 countdownOverlay.style.display = 'flex';
                 countdownEl.innerText = Math.ceil(remaining / 1000);
             } else {
@@ -282,11 +280,7 @@ function handleServerMessage(data) {
                 console.error('[Client Debug] Invalid ball data received from server:', data.ball);
             }
             traps = data.traps;
-            activeEffects = data.activeEffects;
-            // The server now sends effect in 'trap-captured' or can send separate 'effect-triggered'
-            // If the server sends `activeEffects` and you want notification here, add logic.
             // For now, `showEffectNotification` is called on 'trap-captured' as before.
-            break;
         case 'trap-captured':
             const capturedTrap = traps.find(t => t.id === data.trapId);
             if (capturedTrap) {
@@ -313,9 +307,7 @@ function handleServerMessage(data) {
             if (countdownOverlay) countdownOverlay.style.display = 'none';
             break;
         case 'join-session-success':
-            console.log(`[Client Debug] Successfully joined session: ${data.sessionId.name}`);
-            currentSessionId = data.sessionId.name;
-            updateUrlWithSessionId(currentSessionId);
+            console.log(`[Client Debug] Successfully joined session:`, data);
             break;
         default:
             console.warn('[Client Debug] Unknown message type:', data.type);
@@ -435,6 +427,10 @@ if (updateNamesBtn) {
 }
 if (startGameBtn) {
     startGameBtn.addEventListener('click', requestNewSession);
+}
+
+if (requestResultInPIPBtn) {
+    requestResultInPIPBtn.addEventListener('click', requestResultInPIP);
 }
 if (restartGameBtn) {
     restartGameBtn.addEventListener('click', restartCurrentGame);

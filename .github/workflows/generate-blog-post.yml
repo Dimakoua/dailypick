@@ -11,7 +11,8 @@ jobs:
   generate_article:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Required to commit and push changes
+      contents: write
+      pull-requests: write
     
     steps:
       - name: Checkout repository
@@ -134,11 +135,14 @@ jobs:
               exit 1
           fi
 
+          echo "PROMPT_TEXT:"
+          echo "$PROMPT_TEXT"
+
           # Construct JSON payload using jq for robustness
           JSON_PAYLOAD=$(jq -n --arg prompt_text "$PROMPT_TEXT" \
             '{contents: [{parts: [{text: $prompt_text}]}]}')
 
-          echo "Sending request to Gemini API with prompt (first 500 chars):"
+          echo "Sending request to Gemini API with prompt:"
           echo # Newline for clarity after potentially truncated prompt
 
           # Using Gemini 1.5 Flash model.
@@ -316,6 +320,8 @@ jobs:
           fi
 
       - name: Commit and push changes
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           ARTICLE_TITLE_FOR_COMMIT="${{ steps.process_article.outputs.article_title_output }}"
           ARTICLE_FILE_PATH_FOR_COMMIT="${{ steps.process_article.outputs.article_file_path_output }}"
@@ -325,18 +331,28 @@ jobs:
             exit 1
           fi
 
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
           git add "$ARTICLE_FILE_PATH_FOR_COMMIT"
           git add sitemap.xml
-          
+
           # Check if there are changes to commit
           if git diff --staged --quiet; then
             echo "No changes to commit. Article might be empty or processing failed to produce a new file."
-            # This could also mean the file was created but is identical to an existing one (though duplicate check should prevent)
           else
             COMMIT_MESSAGE="feat(blog): Add article '$ARTICLE_TITLE_FOR_COMMIT' and update sitemap"
             echo "Committing with message: $COMMIT_MESSAGE"
             git commit -m "$COMMIT_MESSAGE"
-            
-            echo "Pushing changes to branch ${{ github.ref_name }}..."
-            git push origin HEAD:${{ github.ref_name }} # Push to the current branch
+
+            # Create a unique branch name to comply with branch protection rules
+            BRANCH_NAME="auto/blog-post-$(date +%Y%m%d%H%M%S)"
+            git checkout -b "$BRANCH_NAME"
+
+            echo "Pushing changes to branch $BRANCH_NAME..."
+            git push origin "$BRANCH_NAME"
+
+            echo "Creating pull request..."
+            gh pr create --title "$COMMIT_MESSAGE" --body "Automated blog post addition." --base main --head "$BRANCH_NAME"
           fi
+

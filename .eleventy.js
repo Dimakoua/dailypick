@@ -24,8 +24,14 @@ module.exports = function(eleventyConfig) {
   // Sitemap Plugin
   eleventyConfig.addPlugin(sitemap, {
     sitemap: {
-      // This is required by the plugin to build absolute URLs
       hostname: "https://dailypick.dev",
+      lastmodDateOnly: true,
+      xmlns: {
+        news: false,
+        xhtml: false,
+        image: false,
+        video: false,
+      },
     },
   });
 
@@ -42,9 +48,28 @@ module.exports = function(eleventyConfig) {
     // Define a list of file paths to exclude from the sitemap.
     const excludedPaths = ['./Readme.md', './blog/prompt.md'];
 
-    return collectionApi.getAll().filter(item => {
+    const items = collectionApi.getAll().filter(item => {
       return !excludedPaths.includes(item.inputPath);
     });
+
+    for (const item of items) {
+      if (!item.data.sitemap) {
+        item.data.sitemap = {};
+      }
+
+      if (item.url === '/') {
+        item.data.sitemap.changefreq = 'daily';
+        item.data.sitemap.priority = 1.0;
+      } else if (item.inputPath.startsWith('./blog/posts/')) {
+        item.data.sitemap.changefreq = 'weekly';
+        item.data.sitemap.priority = 0.8;
+      } else {
+        item.data.sitemap.changefreq = 'monthly';
+        item.data.sitemap.priority = 0.5;
+      }
+    }
+
+    return items;
   });
 
   return {

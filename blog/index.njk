@@ -2,7 +2,12 @@
 layout: base.njk
 title: Daily Pick Blog
 description: Articles, insights, and updates from the Daily Pick team. Discover tips on team engagement, productivity, and making work more fun.
-permalink: /blog/index.html
+pagination:
+  data: collections.post
+  size: 5
+  alias: posts
+  reverse: true
+permalink: /blog/{% if pagination.pageNumber > 0 %}page/{{ pagination.pageNumber + 1 }}/{% endif %}index.html
 eleventyNavigation:
   key: Blog
   order: 2
@@ -12,9 +17,9 @@ eleventyNavigation:
     <h1>{{ title }}</h1>
     <p class="sub-header">{{ description }}</p>
 
-    {% if collections.post and collections.post.length > 0 %}
+    {% if posts and posts.length > 0 %}
         <ul class="post-list">
-            {%- for post in collections.post | reverse -%} {# reverse to show newest first #}
+            {%- for post in posts -%}
             <li class="post-list-item">
                 <h2><a href="{{ post.url | url }}">{{ post.data.title }}</a></h2>
                 <p class="post-meta">
@@ -27,6 +32,20 @@ eleventyNavigation:
             </li>
             {%- endfor -%}
         </ul>
+
+        <nav class="pagination">
+            <ul class="pagination-list">
+                {% if pagination.href.previous %}
+                    <li><a href="{{ pagination.href.previous | url }}">‹ Newer</a></li>
+                {% endif %}
+                {%- for pageEntry in pagination.pages %}
+                    <li><a href="{{ pagination.hrefs[ loop.index0 ] | url }}" {% if page.url == pagination.hrefs[ loop.index0 ] %}aria-current="page"{% endif %}>{{ loop.index }}</a></li>
+                {%- endfor %}
+                {% if pagination.href.next %}
+                    <li><a href="{{ pagination.href.next | url }}">Older ›</a></li>
+                {% endif %}
+            </ul>
+        </nav>
     {% else %}
         <p>No blog posts yet. Check back soon!</p>
     {% endif %}
