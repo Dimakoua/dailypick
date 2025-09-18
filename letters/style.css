@@ -98,6 +98,31 @@ body { overflow-x: hidden; /* Prevent horizontal scrollbars from scaled content 
     color: #4A3B31; /* Dark brown text, matching wood accents */
 }
 
+#namesPanel .pip-trigger {
+    width: 100%;
+    margin: 12px 0 16px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #6d4c41 0%, #8d6e63 100%);
+    color: #fdfaf6;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 6px 12px rgba(77, 52, 44, 0.35);
+}
+
+#namesPanel .pip-trigger::before {
+    content: '🪟';
+    font-size: 1.1em;
+}
+
+#namesPanel .pip-trigger:hover {
+    background: linear-gradient(135deg, #8d6e63 0%, #a1887f 100%);
+}
+
 .name-item {
     padding: 8px 5px;
     border-bottom: 1px solid #ddd;

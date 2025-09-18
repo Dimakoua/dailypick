@@ -32,6 +32,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="/assets/js/results-pip.js" defer></script>
 </head>
 
 <body>
@@ -48,6 +49,12 @@
             <canvas id="gameCanvas"></canvas>
             <div id="namesPanel">
                 <h2>Names to Match</h2>
+                <button id="lettersPipBtn" class="pip-trigger" type="button"
+                    data-pip-target="#namesPanel"
+                    data-pip-title="Falling Letters Status"
+                    data-pip-exclude="#lettersPipBtn"
+                    data-pip-width="320"
+                    data-pip-height="480">Open in Picture in Picture</button>
                 <div id="namesList"></div>
             </div>
         </div>

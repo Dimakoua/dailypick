@@ -20,7 +20,6 @@ const sessionInfoDiv = document.getElementById('sessionInfo');
 const currentSessionIdDisplay = document.getElementById('currentSessionIdDisplay');
 const copySessionUrlBtn = document.getElementById('copySessionUrlBtn');
 const gameContainer = document.getElementById('game-container');
-const requestResultInPIPBtn = document.getElementById('requestResultInPIP');
 
 // WebSocket instance
 let ws = null;
@@ -222,16 +221,15 @@ function requestNewSession() {
     connectWebSocket(null, playerNames);
 }
 
-
+function restartCurrentGame() {
     if (gameOverOverlay) gameOverOverlay.style.display = 'none';
     if (capturedList) capturedList.innerHTML = '';
-    
+
     if (currentSessionId) {
-        // When restarting an existing session, we connect to the same ID but also
-        // tell the server to reset the game with the current playerNames.
+        connectWebSocket(currentSessionId, playerNames);
     } else {
         alert('No active session to restart. Please start a new game.');
-        if (startGameBtn) startGameBtn.style.display = 'block'; // Show start game button if no session
+        if (startGameBtn) startGameBtn.style.display = 'block';
     }
 }
 
@@ -429,9 +427,6 @@ if (startGameBtn) {
     startGameBtn.addEventListener('click', requestNewSession);
 }
 
-if (requestResultInPIPBtn) {
-    requestResultInPIPBtn.addEventListener('click', requestResultInPIP);
-}
 if (restartGameBtn) {
     restartGameBtn.addEventListener('click', restartCurrentGame);
 }

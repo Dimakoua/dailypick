@@ -70,6 +70,32 @@ body {
     color: #3498db; /* Friendly blue from main site */
 }
 
+#leaderboard .pip-trigger {
+    width: 100%;
+    margin: 10px 0 12px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.25), rgba(52, 152, 219, 0.1));
+    color: #ecf0f1;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+#leaderboard .pip-trigger::before {
+    content: '🪟';
+    font-size: 1.1em;
+}
+
+#leaderboard .pip-trigger:hover {
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.4), rgba(52, 152, 219, 0.2));
+}
+
 #leaderboard ul {
     list-style-type: none;
     padding: 0;

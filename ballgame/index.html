@@ -29,6 +29,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/ballgame/style.css">
     <link rel="stylesheet" href="/assets/css/collaboration.css">
+    <script src="/assets/js/results-pip.js" defer></script>
     <script src="/assets/js/collaboration.js" defer></script>
 </head>
 
@@ -61,7 +62,12 @@
             <p>Order of captured players:</p>
             <ol id="winner-list"></ol>
             <button id="restartGameBtn">Start New Game</button>
-            <button id="requestResultInPIP">Open in Picture in Picture</button>
+            <button id="requestResultInPIP" class="pip-trigger" type="button"
+                data-pip-target="#game-over-overlay"
+                data-pip-title="Momentum Mayhem Results"
+                data-pip-exclude="#requestResultInPIP"
+                data-pip-width="340"
+                data-pip-height="420">Open in Picture in Picture</button>
             
         </div>
     </div>

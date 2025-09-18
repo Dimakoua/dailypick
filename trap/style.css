@@ -84,7 +84,8 @@ canvas {
 }
 
 button#trapBtn,
-button#updateNamesBtn {
+button#updateNamesBtn,
+button#trapPipBtn {
     /* Target specific buttons */
     font-size: 1.2em;
     /* Consistent with wheel.html */
@@ -107,8 +108,23 @@ button#updateNamesBtn {
     /* Orange like in wheel.html */
 }
 
+button#trapPipBtn {
+    margin-top: 16px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+button#trapPipBtn::before {
+    content: '🪟';
+    font-size: 1.1em;
+}
+
 button#trapBtn:hover,
-button#updateNamesBtn:hover {
+button#updateNamesBtn:hover,
+button#trapPipBtn:hover {
     background-color: #2980b9;
     /* Darker blue */
 }
@@ -116,6 +132,10 @@ button#updateNamesBtn:hover {
 button#updateNamesBtn:hover {
     background-color: #d35400;
     /* Darker orange */
+}
+
+button#trapPipBtn:hover {
+    background: linear-gradient(135deg, #2980b9, #2471a3);
 }
 
 #info {
