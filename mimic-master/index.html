@@ -65,8 +65,16 @@
         <p class="privacy-note">All processing happens in the browser. We only send your display name and reaction results to the room leaderboard.</p>
     </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.20.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection@2.0.1"></script>
+<!-- Core libraries -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+
+<!-- Hand Pose Detection -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection"></script>
+
+<!-- Optional: MediaPipe runtime -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands"></script>
     <script src="script.js"></script>
 </body>
 </html>
