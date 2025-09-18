@@ -124,6 +124,7 @@ function connectWebSocket(sessionIdToJoin = null, namesForInitialization = null)
         } else { // If a session ID was present, but disconnect occurred (might try to reconnect)
             if (startGameBtn) startGameBtn.style.display = 'none'; // Keep start hidden
             if (sessionInfoDiv) sessionInfoDiv.style.display = 'block'; // Keep session info visible
+        }
         // alert('Disconnected from game. Please refresh or try again.'); // Consider if this alert is always desired
         ws = null; // Clear the WebSocket instance
     };
