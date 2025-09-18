@@ -2,6 +2,7 @@ import { Router } from 'itty-router';
 import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
 import { CollaborationSession } from './collaboration.js';
 import { BallGameSession } from './ballgame/ball-game-session.js';
+import { MimicGameSession } from './mimic-master/mimic-game-session.js';
 import manifest from '__STATIC_CONTENT_MANIFEST';
 
 const assetManifest = JSON.parse(manifest);
@@ -46,6 +47,21 @@ router.get('/api/ballgame/websocket', (request, env) => {
     console.log("[Worker Debug] BallGame WS: Mapping session_id to Durable Object ID:", durableObjectId.toString());
 
     const durableObject = env.BALL_GAME_SESSION.get(durableObjectId);
+    return durableObject.fetch(request);
+});
+
+router.get('/api/mimic-master/websocket', (request, env) => {
+    console.log('[Worker Debug] Request /api/mimic-master WebSocket received.');
+    const url = new URL(request.url);
+    const id = url.searchParams.get('session_id');
+
+    if (!id) {
+        console.error('[Worker Debug] Mimic Master WS: Missing session_id query parameter.');
+        return new Response('Missing session_id query parameter', { status: 400 });
+    }
+
+    const durableObjectId = env.MIMIC_GAME_SESSION.idFromName(id);
+    const durableObject = env.MIMIC_GAME_SESSION.get(durableObjectId);
     return durableObject.fetch(request);
 });
 
@@ -150,4 +166,4 @@ export default {
     },
 };
 
-export { CollaborationSession, BallGameSession };
+export { CollaborationSession, BallGameSession, MimicGameSession };
