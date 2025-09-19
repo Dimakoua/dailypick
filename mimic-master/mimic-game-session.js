@@ -54,7 +54,7 @@ export class MimicGameSession {
       if (this.hostId === clientId) {
         this.hostId = null;
         if (this.clients.size > 0) {
-          this.hostId = Array.from(this.clients.keys())[0];
+          this.hostId = this.clients.keys().next().value;
         }
         this.broadcastHostStatus();
       }

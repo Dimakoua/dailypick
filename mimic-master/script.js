@@ -59,7 +59,38 @@
   let ws = null;
   let sessionId = null;
   let userId = null;
-  let playerName = localStorage.getItem(LOCAL_NAME_KEY) || "";
+  const ADJECTIVES = [
+    "Quick",
+    "Lazy",
+    "Sleepy",
+    "Noisy",
+    "Hungry",
+    "Happy",
+    "Funny",
+    "Crazy",
+    "Angry",
+    "Lucky",
+  ];
+  const NOUNS = [
+    "Fox",
+    "Dog",
+    "Cat",
+    "Cow",
+    "Pig",
+    "Duck",
+    "Hen",
+    "Horse",
+    "Lion",
+    "Tiger",
+  ];
+
+  function generateRandomName() {
+    const adj = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)];
+    const noun = NOUNS[Math.floor(Math.random() * NOUNS.length)];
+    return `${adj} ${noun}`;
+  }
+
+  let playerName = localStorage.getItem(LOCAL_NAME_KEY) || generateRandomName();
   let isHost = false;
   let roundActive = false;
   let currentPrompt = null;
@@ -172,6 +203,9 @@
     if (ws && ws.readyState === WebSocket.OPEN) ws.close();
     sessionId = targetSessionId;
     isHost = isHostPlayer;
+    if (isHost) {
+      sessionStorage.setItem(`mimic-master-host-${sessionId}`, "true");
+    }
     const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
     const wsUrl = new URL(
       `/api/mimic-master/websocket?session_id=${sessionId}`,
@@ -184,8 +218,8 @@
       sessionStatus.textContent = `Connected to room ${sessionId}`;
       copyLinkBtn.disabled = false;
       startGameBtn.disabled = !cameraActive || !isHost;
-      waitingMessage.style.display = isHost ? 'none' : 'block';
-      startGameBtn.style.display = isHost ? 'block' : 'none'; // Ensure button visibility
+      waitingMessage.style.display = isHost ? "none" : "block";
+      startGameBtn.style.display = isHost ? "block" : "none"; // Ensure button visibility
       if (playerName) sendPlayerName(playerName, isHost);
       setStatus("Connected. Start a reaction round when ready.");
     };
@@ -200,9 +234,9 @@
       sessionStatus.textContent = "Disconnected.";
       copyLinkBtn.disabled = true;
       if (isHost) {
-      startGameBtn.disabled = true;
-    }
-      waitingMessage.style.display = 'none';
+        startGameBtn.disabled = true;
+      }
+      waitingMessage.style.display = "none";
       setStatus("Connection closed.");
     };
     ws.onerror = () => setStatus("WebSocket error.");
@@ -212,6 +246,19 @@
     switch (message.type) {
       case "user-id":
         userId = message.id;
+        break;
+      case "host-status":
+        isHost = message.hostId === userId;
+        sessionStorage.setItem(
+          `mimic-master-host-${sessionId}`,
+          isHost.toString()
+        );
+        startGameBtn.style.display = isHost ? "block" : "none";
+        waitingMessage.style.display = isHost ? "none" : "block";
+        startGameBtn.disabled = !isHost || !cameraActive;
+        if (isHost) {
+          setStatus("You are the new host. Start the next round when ready.");
+        }
         break;
       case "leaderboard":
         updatePlayerList(message.entries);
@@ -298,8 +345,14 @@
     };
 
     const thumbVec = { x: thumbTip.x - thumbIP.x, y: thumbTip.y - thumbIP.y };
-    const palmAxis = { x: points[9].x - points[0].x, y: points[9].y - points[0].y };
-    const radialDir = { x: indexMCP.x - pinkyMCP.x, y: indexMCP.y - pinkyMCP.y };
+    const palmAxis = {
+      x: points[9].x - points[0].x,
+      y: points[9].y - points[0].y,
+    };
+    const radialDir = {
+      x: indexMCP.x - pinkyMCP.x,
+      y: indexMCP.y - pinkyMCP.y,
+    };
 
     const dot = (a, b) =>
       (a.x * b.x + a.y * b.y) /
@@ -318,13 +371,12 @@
       Math.hypot(thumbTip.x - palmCenter.x, thumbTip.y - palmCenter.y) >
       palmSize * 0.6;
 
-    const thumbExtended = thumbLong && (thumbSideways || thumbVertical || thumbFar);
+    const thumbExtended =
+      thumbLong && (thumbSideways || thumbVertical || thumbFar);
 
     // === Other fingers ===
-    const indexExtended =
-      points[8].y < points[6].y - palmSize * sensitivity;
-    const middleExtended =
-      points[12].y < points[10].y - palmSize * sensitivity;
+    const indexExtended = points[8].y < points[6].y - palmSize * sensitivity;
+    const middleExtended = points[12].y < points[10].y - palmSize * sensitivity;
     const ringExtended =
       points[16].y < points[14].y - palmSize * (sensitivity * 0.8);
     const pinkyExtended =
@@ -338,9 +390,6 @@
       pinky: pinkyExtended,
     };
   }
-
-
-
 
   // ✨ NEW: Draw hand skeleton in debug mode
   function drawHandDebug(hand) {
@@ -476,7 +525,10 @@
     "session_id"
   );
   if (existingSessionId) {
-    connectToRoom(existingSessionId);
+    const wasHost =
+      sessionStorage.getItem(`mimic-master-host-${existingSessionId}`) ===
+      "true";
+    connectToRoom(existingSessionId, wasHost);
     updateUrlWithSession(existingSessionId);
     setStatus("Joined room. Save your name and enable camera to play.");
   }
