@@ -25,6 +25,7 @@
     <meta name="theme-color" content="#1a1a2e"> <!-- Theme color matching the game's dark background -->
 
     <link rel="stylesheet" href="./style.css">
+    <script src="/assets/js/results-pip.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -44,6 +45,12 @@
     </div>
     <div id="leaderboard" class="hidden">
         <h2>Leaderboard</h2>
+        <button id="gravityPipBtn" class="pip-trigger" type="button"
+            data-pip-target="#leaderboard"
+            data-pip-title="Gravity Drift Leaderboard"
+            data-pip-exclude="#gravityPipBtn"
+            data-pip-width="360"
+            data-pip-height="440">Open in Picture in Picture</button>
         <ul id="leaderboardList"></ul>
     </div>
     <script src="./script.js"></script>

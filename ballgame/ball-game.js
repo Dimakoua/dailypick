@@ -20,7 +20,6 @@ const sessionInfoDiv = document.getElementById('sessionInfo');
 const currentSessionIdDisplay = document.getElementById('currentSessionIdDisplay');
 const copySessionUrlBtn = document.getElementById('copySessionUrlBtn');
 const gameContainer = document.getElementById('game-container');
-const requestResultInPIPBtn = document.getElementById('requestResultInPIP');
 
 // WebSocket instance
 let ws = null;
@@ -123,8 +122,7 @@ function connectWebSocket(sessionIdToJoin = null, namesForInitialization = null)
             if (sessionInfoDiv) sessionInfoDiv.style.display = 'none';
             if (restartGameBtn) restartGameBtn.style.display = 'none';
         } else { // If a session ID was present, but disconnect occurred (might try to reconnect)
-            if (startGameBtn) startGameBtn.style.display = 'none';      // Keep start hidden
-            if (restartGameBtn) restartGameBtn.style.display = 'block'; // Keep restart visible
+            if (startGameBtn) startGameBtn.style.display = 'none'; // Keep start hidden
             if (sessionInfoDiv) sessionInfoDiv.style.display = 'block'; // Keep session info visible
         }
         // alert('Disconnected from game. Please refresh or try again.'); // Consider if this alert is always desired
@@ -224,24 +222,15 @@ function requestNewSession() {
     connectWebSocket(null, playerNames);
 }
 
-function requestResultInPIP() {
-    console.log('[Client Debug] Requesting request result in PIP...');
-    // When requesting a new session, we initiate a connection and pass the current playerNames
-    requestPictureInPicture(gameOverOverlay)
-}
-
 function restartCurrentGame() {
-    console.log('[Client Debug] Restarting current game...');
     if (gameOverOverlay) gameOverOverlay.style.display = 'none';
     if (capturedList) capturedList.innerHTML = '';
-    
+
     if (currentSessionId) {
-        // When restarting an existing session, we connect to the same ID but also
-        // tell the server to reset the game with the current playerNames.
         connectWebSocket(currentSessionId, playerNames);
     } else {
         alert('No active session to restart. Please start a new game.');
-        if (startGameBtn) startGameBtn.style.display = 'block'; // Show start game button if no session
+        if (startGameBtn) startGameBtn.style.display = 'block';
     }
 }
 
@@ -273,6 +262,7 @@ function handleServerMessage(data) {
         case 'countdown':
             const remaining = Math.max(0, data.startTime - Date.now());
             const countdownEl = document.getElementById('countdown');
+
             if (remaining > 500) {
                 countdownOverlay.style.display = 'flex';
                 countdownEl.innerText = Math.ceil(remaining / 1000);
@@ -289,11 +279,7 @@ function handleServerMessage(data) {
                 console.error('[Client Debug] Invalid ball data received from server:', data.ball);
             }
             traps = data.traps;
-            activeEffects = data.activeEffects;
-            // The server now sends effect in 'trap-captured' or can send separate 'effect-triggered'
-            // If the server sends `activeEffects` and you want notification here, add logic.
             // For now, `showEffectNotification` is called on 'trap-captured' as before.
-            break;
         case 'trap-captured':
             const capturedTrap = traps.find(t => t.id === data.trapId);
             if (capturedTrap) {
@@ -441,9 +427,7 @@ if (updateNamesBtn) {
 if (startGameBtn) {
     startGameBtn.addEventListener('click', requestNewSession);
 }
-if (requestResultInPIPBtn) {
-    requestResultInPIPBtn.addEventListener('click', requestResultInPIP);
-}
+
 if (restartGameBtn) {
     restartGameBtn.addEventListener('click', restartCurrentGame);
 }
@@ -475,23 +459,6 @@ closeBtn.addEventListener('click', () => {
     howToPlayModal.classList.add('hidden');
 });
 
-async function requestPictureInPicture(child) {
-  // Open a Picture-in-Picture window
-  const pipWindow = await documentPictureInPicture.requestWindow({
-    width: 200,
-    height: 400,
-  });
-
-  // Load styles into the PiP window
-  const link = pipWindow.document.createElement("link");
-  link.rel = "stylesheet";
-  link.href = "/ballgame/style.css";
-  pipWindow.document.head.appendChild(link);
-
-  // Move the child element into the PiP window
-  const clonedChild = child.cloneNode(true);
-  pipWindow.document.body.appendChild(clonedChild);
-}
 // --- Initial Setup ---
 function initializeSession() {
     loadNamesFromStorage(); // Load names first

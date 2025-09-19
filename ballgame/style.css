@@ -90,6 +90,19 @@ button:active {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.pip-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.05em;
+    padding-inline: 22px;
+}
+
+.pip-trigger::before {
+    content: '📺';
+    font-size: 1.1em;
+}
+
 /* Specific Button Overrides */
 #startGameBtn, #restartGameBtn {
     background-color: #2ecc71; /* Emerald green */

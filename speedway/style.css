@@ -187,6 +187,32 @@ h1 {
     margin-top: 0;
 }
 
+#results-area .pip-trigger {
+    width: 100%;
+    margin: 12px 0 15px;
+    padding: 10px 18px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 6px 12px rgba(41, 128, 185, 0.25);
+}
+
+#results-area .pip-trigger::before {
+    content: '🪟';
+    font-size: 1.1em;
+}
+
+#results-area .pip-trigger:hover {
+    background: linear-gradient(135deg, #2980b9, #1f6391);
+}
+
 button#startRaceBtn,
 button#updateNamesBtn {
     padding: 12px 25px;

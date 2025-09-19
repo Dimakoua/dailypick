@@ -9,12 +9,17 @@ bucket = "./dist"
 [durable_objects]
 bindings = [
   { name = "COLLABORATION_SESSION", class_name = "CollaborationSession" },
-  { name = "BALL_GAME_SESSION", class_name = "BallGameSession" }
+  { name = "BALL_GAME_SESSION", class_name = "BallGameSession" },
+  { name = "MIMIC_GAME_SESSION", class_name = "MimicGameSession" }
 ]
 
 [[migrations]]
 tag = "v2"
 new_sqlite_classes = ["CollaborationSession", "BallGameSession"]
+
+[[migrations]]
+tag = "v3"
+new_sqlite_classes = ["MimicGameSession"]
 
 [observability.logs]
 enabled = false
