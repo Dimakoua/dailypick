@@ -212,7 +212,7 @@
         updateLeaderboard(message.entries);
         break;
       case "game-start":
-        startReactionRound();
+        handleGameStart();
         break;
     }
   }
@@ -239,15 +239,16 @@
     return PROMPTS[Math.floor(Math.random() * PROMPTS.length)];
   }
 
-  function startReactionRound() {
-    if (!isHost) return; // Only host can start the round
+  function requestStartReactionRound() {
+    if (!isHost) return;
     if (!cameraActive) return setStatus("Enable your camera first.");
     if (!sessionId || !ws || ws.readyState !== WebSocket.OPEN)
       return setStatus("Connect to a room first.");
     if (!playerName) return setStatus("Set your display name.");
-
-    // Send game-start message to server
     ws.send(JSON.stringify({ type: "game-start" }));
+  }
+
+  function handleGameStart() {
     startGameBtn.disabled = true;
     consecutiveMatches = 0;
     roundActive = false;
@@ -365,7 +366,6 @@ function getFingerState(hand, sensitivity = 0.25) {
     detector
       .estimateHands(video, { flipHorizontal: true })
       .then((hands) => {
-        console.log("Hands detected:", hands); // 👈 add this
         ctx.clearRect(0, 0, overlay.width, overlay.height);
         if (hands && hands.length > 0) {
           if (debug) hands.forEach(drawHandDebug);
@@ -447,7 +447,7 @@ function getFingerState(hand, sensitivity = 0.25) {
       startGameBtn.disabled = false;
   });
 
-  startGameBtn.addEventListener("click", startReactionRound);
+  startGameBtn.addEventListener("click", requestStartReactionRound);
 
   window.addEventListener("beforeunload", () => {
     if (ws) ws.close();
