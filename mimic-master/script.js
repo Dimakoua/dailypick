@@ -247,6 +247,19 @@
       case "user-id":
         userId = message.id;
         break;
+      case "host-status":
+        isHost = message.hostId === userId;
+        sessionStorage.setItem(
+          `mimic-master-host-${sessionId}`,
+          isHost.toString()
+        );
+        startGameBtn.style.display = isHost ? "block" : "none";
+        waitingMessage.style.display = isHost ? "none" : "block";
+        startGameBtn.disabled = !isHost || !cameraActive;
+        if (isHost) {
+          setStatus("You are the new host. Start the next round when ready.");
+        }
+        break;
       case "leaderboard":
         updatePlayerList(message.entries);
         break;
