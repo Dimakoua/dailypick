@@ -1,4 +1,3 @@
-
 ---
 title: "Escape the Meeting Maze: Fun & Fair Ways to Choose Team Projects"
 date: 2024-10-27
