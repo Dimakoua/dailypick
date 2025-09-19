@@ -8,9 +8,11 @@
   const playerNameInput = document.getElementById("playerNameInput");
   const saveNameBtn = document.getElementById("saveNameBtn");
   const startRoomBtn = document.getElementById("startRoomBtn");
+  const joinRoomBtn = document.getElementById("joinRoomBtn");
   const copyLinkBtn = document.getElementById("copyLinkBtn");
   const enableCameraBtn = document.getElementById("enableCameraBtn");
-  const startRoundBtn = document.getElementById("startRoundBtn");
+  const startGameBtn = document.getElementById("startGameBtn");
+  const waitingMessage = document.getElementById("waitingMessage");
   const sessionStatus = document.getElementById("sessionStatus");
   const leaderboardList = document.getElementById("leaderboardList");
 
@@ -58,6 +60,7 @@
   let sessionId = null;
   let userId = null;
   let playerName = localStorage.getItem(LOCAL_NAME_KEY) || "";
+  let isHost = false;
   let roundActive = false;
   let currentPrompt = null;
   let roundStartTime = null;
@@ -160,9 +163,10 @@
       .catch(() => setStatus("Unable to copy link."));
   }
 
-  function connectToRoom(targetSessionId) {
+  function connectToRoom(targetSessionId, isHostPlayer = false) {
     if (ws && ws.readyState === WebSocket.OPEN) ws.close();
     sessionId = targetSessionId;
+    isHost = isHostPlayer;
     const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
     const wsUrl = new URL(
       `/api/mimic-master/websocket?session_id=${sessionId}`,
@@ -174,8 +178,10 @@
     ws.onopen = () => {
       sessionStatus.textContent = `Connected to room ${sessionId}`;
       copyLinkBtn.disabled = false;
-      startRoundBtn.disabled = !cameraActive;
-      if (playerName) sendPlayerName(playerName);
+      startGameBtn.disabled = !cameraActive || !isHost;
+      waitingMessage.style.display = isHost ? 'none' : 'block';
+      startGameBtn.style.display = isHost ? 'block' : 'none'; // Ensure button visibility
+      if (playerName) sendPlayerName(playerName, isHost);
       setStatus("Connected. Start a reaction round when ready.");
     };
     ws.onmessage = (event) => {
@@ -188,7 +194,10 @@
     ws.onclose = () => {
       sessionStatus.textContent = "Disconnected.";
       copyLinkBtn.disabled = true;
-      startRoundBtn.disabled = true;
+      if (isHost) {
+      startGameBtn.disabled = true;
+    }
+      waitingMessage.style.display = 'none';
       setStatus("Connection closed.");
     };
     ws.onerror = () => setStatus("WebSocket error.");
@@ -201,6 +210,9 @@
         break;
       case "leaderboard":
         updateLeaderboard(message.entries);
+        break;
+      case "game-start":
+        startReactionRound();
         break;
     }
   }
@@ -228,11 +240,15 @@
   }
 
   function startReactionRound() {
+    if (!isHost) return; // Only host can start the round
     if (!cameraActive) return setStatus("Enable your camera first.");
     if (!sessionId || !ws || ws.readyState !== WebSocket.OPEN)
       return setStatus("Connect to a room first.");
     if (!playerName) return setStatus("Set your display name.");
-    startRoundBtn.disabled = true;
+
+    // Send game-start message to server
+    ws.send(JSON.stringify({ type: "game-start" }));
+    startGameBtn.disabled = true;
     consecutiveMatches = 0;
     roundActive = false;
     currentPrompt = null;
@@ -388,7 +404,7 @@ function getFingerState(hand, sensitivity = 0.25) {
               roundActive = false;
               promptDisplay.textContent = `✅ ${currentPrompt.label}`;
               setStatus(`Matched in ${formatMs(reactionMs)}.`);
-              startRoundBtn.disabled = false;
+              startGameBtn.disabled = false;
               reportReactionTime(reactionMs);
               currentPrompt = null;
             }
@@ -415,7 +431,8 @@ function getFingerState(hand, sensitivity = 0.25) {
   startRoomBtn.addEventListener("click", () => {
     const id = generateSessionId();
     updateUrlWithSession(id);
-    connectToRoom(id);
+    isHost = true;
+    connectToRoom(id, true);
     setRoundReadyState();
   });
   copyLinkBtn.addEventListener("click", copyInviteLink);
@@ -426,11 +443,11 @@ function getFingerState(hand, sensitivity = 0.25) {
       console.error("Detector init failed", err);
       setStatus("Unable to load hand detector.");
     });
-    if (cameraActive && ws && ws.readyState === WebSocket.OPEN)
-      startRoundBtn.disabled = false;
+    if (cameraActive && ws && ws.readyState === WebSocket.OPEN && isHost)
+      startGameBtn.disabled = false;
   });
 
-  startRoundBtn.addEventListener("click", startReactionRound);
+  startGameBtn.addEventListener("click", startReactionRound);
 
   window.addEventListener("beforeunload", () => {
     if (ws) ws.close();

@@ -24,6 +24,7 @@
             <span class="control-label">Room</span>
             <div class="inline-controls">
                 <button id="startRoomBtn" type="button">Start New Room</button>
+                <button id="joinRoomBtn" type="button" style="display:none;">Join Room</button>
                 <button id="copyLinkBtn" type="button" disabled>Copy Invite Link</button>
             </div>
             <p id="sessionStatus" class="status">Not connected</p>
@@ -32,7 +33,9 @@
             <span class="control-label">Play</span>
             <div class="inline-controls">
                 <button id="enableCameraBtn" type="button">Enable Camera</button>
-                <button id="startRoundBtn" type="button" disabled>Start Reaction Round</button>
+                <button id="startGameBtn" type="button" disabled style="display:none;">Start Game</button>
+                <p id="waitingMessage" style="display:none;">Waiting for host to start game...</p>
+            </div>
             </div>
             <p id="roundHint" class="hint">Enable your camera to begin.</p>
         </div>

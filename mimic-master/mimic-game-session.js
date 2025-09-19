@@ -4,6 +4,7 @@ export class MimicGameSession {
     this.env = env;
     this.clients = new Map();
     this.leaderboard = [];
+    this.hostId = null;
 
     this.state.blockConcurrencyWhile(async () => {
       const stored = await this.state.storage.get('leaderboard');
@@ -30,9 +31,14 @@ export class MimicGameSession {
     const clientId = crypto.randomUUID();
     this.clients.set(clientId, { ws: server, name: null });
 
+    if (this.hostId === null) {
+      this.hostId = clientId;
+    }
+
     server.send(JSON.stringify({ type: 'user-id', id: clientId }));
     this.sendLeaderboard(server);
     this.broadcastUserList();
+    this.broadcastHostStatus();
 
     server.addEventListener('message', (event) => {
       try {
@@ -45,6 +51,13 @@ export class MimicGameSession {
 
     server.addEventListener('close', () => {
       this.clients.delete(clientId);
+      if (this.hostId === clientId) {
+        this.hostId = null;
+        if (this.clients.size > 0) {
+          this.hostId = Array.from(this.clients.keys())[0];
+        }
+        this.broadcastHostStatus();
+      }
       this.broadcastUserList();
     });
   }
@@ -56,21 +69,30 @@ export class MimicGameSession {
 
     switch (data.type) {
       case 'set-name':
-        this.updateClientName(clientId, data.name);
+        this.updateClientName(clientId, data.name, data.isHost);
         break;
       case 'report-score':
         this.recordScore(clientId, data);
+        break;
+      case 'game-start':
+        if (clientId === this.hostId) {
+          this.broadcast({ type: 'game-start' });
+        }
         break;
       default:
         break;
     }
   }
 
-  updateClientName(clientId, rawName) {
+  updateClientName(clientId, rawName, isHost = false) {
     const client = this.clients.get(clientId);
     if (!client) return;
     const name = this.sanitizeName(rawName);
     client.name = name;
+    if (isHost) {
+      this.hostId = clientId;
+      this.broadcastHostStatus();
+    }
     this.broadcastUserList();
   }
 
@@ -132,6 +154,10 @@ export class MimicGameSession {
   broadcastUserList() {
     const users = Array.from(this.clients.entries()).map(([id, data]) => ({ id, name: data.name || 'Player' }));
     this.broadcast({ type: 'user-list', users });
+  }
+
+  broadcastHostStatus() {
+    this.broadcast({ type: 'host-status', hostId: this.hostId });
   }
 
   broadcast(message) {
