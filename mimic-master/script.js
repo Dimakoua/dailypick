@@ -59,7 +59,38 @@
   let ws = null;
   let sessionId = null;
   let userId = null;
-  let playerName = localStorage.getItem(LOCAL_NAME_KEY) || "";
+  const ADJECTIVES = [
+    "Quick",
+    "Lazy",
+    "Sleepy",
+    "Noisy",
+    "Hungry",
+    "Happy",
+    "Funny",
+    "Crazy",
+    "Angry",
+    "Lucky",
+  ];
+  const NOUNS = [
+    "Fox",
+    "Dog",
+    "Cat",
+    "Cow",
+    "Pig",
+    "Duck",
+    "Hen",
+    "Horse",
+    "Lion",
+    "Tiger",
+  ];
+
+  function generateRandomName() {
+    const adj = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)];
+    const noun = NOUNS[Math.floor(Math.random() * NOUNS.length)];
+    return `${adj} ${noun}`;
+  }
+
+  let playerName = localStorage.getItem(LOCAL_NAME_KEY) || generateRandomName();
   let isHost = false;
   let roundActive = false;
   let currentPrompt = null;
