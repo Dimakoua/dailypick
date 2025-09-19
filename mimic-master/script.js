@@ -85,19 +85,24 @@
     currentPrompt = null;
   }
 
-  function updateLeaderboard(entries) {
+  function updatePlayerList(entries) {
     leaderboardList.innerHTML = "";
     if (!entries || entries.length === 0) {
       const placeholder = document.createElement("li");
-      placeholder.textContent = "Be the first to set a time.";
+      placeholder.textContent = "No players in the room yet.";
       leaderboardList.appendChild(placeholder);
       return;
     }
     entries.forEach((entry, index) => {
       const li = document.createElement("li");
-      const displayName = entry.name || `Player ${index + 1}`;
+      let displayName = entry.name || `Player ${index + 1}`;
+      if (entry.id === userId) {
+        displayName += " (You)";
+      }
       const best =
-        typeof entry.bestTime === "number" ? formatMs(entry.bestTime) : "—";
+        typeof entry.bestTime === "number"
+          ? formatMs(entry.bestTime)
+          : "Waiting…";
       li.innerHTML = `<strong>${displayName}</strong> · ${best}`;
       leaderboardList.appendChild(li);
     });
@@ -209,7 +214,10 @@
         userId = message.id;
         break;
       case "leaderboard":
-        updateLeaderboard(message.entries);
+        updatePlayerList(message.entries);
+        break;
+      case "user-list":
+        updatePlayerList(message.users);
         break;
       case "game-start":
         handleGameStart();
@@ -267,61 +275,69 @@
     }, delay);
   }
 
-function getFingerState(hand, sensitivity = 0.25) {
-  const points = hand?.keypoints;
-  if (!points || points.length < 21) return null;
+  function getFingerState(hand, sensitivity = 0.25) {
+    const points = hand?.keypoints;
+    if (!points || points.length < 21) return null;
 
-  // Palm size = wrist (0) → middle knuckle (9)
-  const palmSize = Math.hypot(
-    points[0].x - points[9].x,
-    points[0].y - points[9].y
-  );
+    // Palm size = wrist (0) → middle knuckle (9)
+    const palmSize = Math.hypot(
+      points[0].x - points[9].x,
+      points[0].y - points[9].y
+    );
 
-  // === Thumb landmarks ===
-  const thumbTip = points[4];
-  const thumbIP  = points[3];
-  const thumbCMC = points[1];
-  const indexMCP = points[5];
-  const pinkyMCP = points[17];
+    // === Thumb landmarks ===
+    const thumbTip = points[4];
+    const thumbIP = points[3];
+    const thumbCMC = points[1];
+    const indexMCP = points[5];
+    const pinkyMCP = points[17];
 
-  const palmCenter = {
-    x: (points[0].x + points[9].x + points[5].x + points[17].x) / 4,
-    y: (points[0].y + points[9].y + points[5].y + points[17].y) / 4,
-  };
+    const palmCenter = {
+      x: (points[0].x + points[9].x + points[5].x + points[17].x) / 4,
+      y: (points[0].y + points[9].y + points[5].y + points[17].y) / 4,
+    };
 
-  const thumbVec  = { x: thumbTip.x - thumbIP.x, y: thumbTip.y - thumbIP.y };
-  const palmAxis  = { x: points[9].x - points[0].x, y: points[9].y - points[0].y };
-  const radialDir = { x: indexMCP.x - pinkyMCP.x, y: indexMCP.y - pinkyMCP.y };
+    const thumbVec = { x: thumbTip.x - thumbIP.x, y: thumbTip.y - thumbIP.y };
+    const palmAxis = { x: points[9].x - points[0].x, y: points[9].y - points[0].y };
+    const radialDir = { x: indexMCP.x - pinkyMCP.x, y: indexMCP.y - pinkyMCP.y };
 
-  const dot = (a, b) =>
-    (a.x * b.x + a.y * b.y) /
-    (Math.hypot(a.x, a.y) * Math.hypot(b.x, b.y) || 1);
+    const dot = (a, b) =>
+      (a.x * b.x + a.y * b.y) /
+      (Math.hypot(a.x, a.y) * Math.hypot(b.x, b.y) || 1);
 
-  // Thumb considered extended if:
-  // (A) sideways relative to palm,
-  // (B) vertical (thumbs-up),
-  // (C) clearly separated from palm center (open ✋ case)
-  const thumbSideways = dot(thumbVec, radialDir) > 0.45;       // increased threshold
-  const thumbVertical = Math.abs(dot(thumbVec, palmAxis)) > 0.7;
-  const thumbLong     = Math.hypot(thumbTip.x - thumbIP.x, thumbTip.y - thumbIP.y) > palmSize * 0.3;
-  const thumbFar      = Math.hypot(thumbTip.x - palmCenter.x, thumbTip.y - palmCenter.y) > palmSize * 0.7;
+    // Thumb considered extended if:
+    // (A) sideways relative to palm,
+    // (B) vertical (thumbs-up),
+    // (C) clearly separated from palm center (open ✋ case)
+    const thumbSideways = dot(thumbVec, radialDir) > 0.35; // relaxed a bit
+    const thumbVertical = Math.abs(dot(thumbVec, palmAxis)) > 0.6;
+    const thumbLong =
+      Math.hypot(thumbTip.x - thumbIP.x, thumbTip.y - thumbIP.y) >
+      palmSize * 0.25;
+    const thumbFar =
+      Math.hypot(thumbTip.x - palmCenter.x, thumbTip.y - palmCenter.y) >
+      palmSize * 0.6;
 
-  const thumbExtended = thumbLong && (thumbSideways || thumbVertical || thumbFar);
+    const thumbExtended = thumbLong && (thumbSideways || thumbVertical || thumbFar);
 
-  // === Other fingers ===
-  const indexExtended  = points[8].y  < points[6].y  - palmSize * sensitivity;
-  const middleExtended = points[12].y < points[10].y - palmSize * sensitivity;
-  const ringExtended   = points[16].y < points[14].y - palmSize * (sensitivity * 0.9);
-  const pinkyExtended  = points[20].y < points[18].y - palmSize * (sensitivity * 0.9);
+    // === Other fingers ===
+    const indexExtended =
+      points[8].y < points[6].y - palmSize * sensitivity;
+    const middleExtended =
+      points[12].y < points[10].y - palmSize * sensitivity;
+    const ringExtended =
+      points[16].y < points[14].y - palmSize * (sensitivity * 0.8);
+    const pinkyExtended =
+      points[20].y < points[18].y - palmSize * (sensitivity * 0.6);
 
-  return {
-    thumb:  thumbExtended,
-    index:  indexExtended,
-    middle: middleExtended,
-    ring:   ringExtended,
-    pinky:  pinkyExtended,
-  };
-}
+    return {
+      thumb: thumbExtended,
+      index: indexExtended,
+      middle: middleExtended,
+      ring: ringExtended,
+      pinky: pinkyExtended,
+    };
+  }
 
 
 
