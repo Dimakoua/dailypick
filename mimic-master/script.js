@@ -301,18 +301,18 @@ function getFingerState(hand, sensitivity = 0.25) {
   // (A) sideways relative to palm,
   // (B) vertical (thumbs-up),
   // (C) clearly separated from palm center (open ✋ case)
-  const thumbSideways = dot(thumbVec, radialDir) > 0.35;       // relaxed a bit
-  const thumbVertical = Math.abs(dot(thumbVec, palmAxis)) > 0.6;
-  const thumbLong     = Math.hypot(thumbTip.x - thumbIP.x, thumbTip.y - thumbIP.y) > palmSize * 0.25;
-  const thumbFar      = Math.hypot(thumbTip.x - palmCenter.x, thumbTip.y - palmCenter.y) > palmSize * 0.6;
+  const thumbSideways = dot(thumbVec, radialDir) > 0.45;       // increased threshold
+  const thumbVertical = Math.abs(dot(thumbVec, palmAxis)) > 0.7;
+  const thumbLong     = Math.hypot(thumbTip.x - thumbIP.x, thumbTip.y - thumbIP.y) > palmSize * 0.3;
+  const thumbFar      = Math.hypot(thumbTip.x - palmCenter.x, thumbTip.y - palmCenter.y) > palmSize * 0.7;
 
   const thumbExtended = thumbLong && (thumbSideways || thumbVertical || thumbFar);
 
   // === Other fingers ===
   const indexExtended  = points[8].y  < points[6].y  - palmSize * sensitivity;
   const middleExtended = points[12].y < points[10].y - palmSize * sensitivity;
-  const ringExtended   = points[16].y < points[14].y - palmSize * (sensitivity * 0.8);
-  const pinkyExtended  = points[20].y < points[18].y - palmSize * (sensitivity * 0.6);
+  const ringExtended   = points[16].y < points[14].y - palmSize * (sensitivity * 0.9);
+  const pinkyExtended  = points[20].y < points[18].y - palmSize * (sensitivity * 0.9);
 
   return {
     thumb:  thumbExtended,
