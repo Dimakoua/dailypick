@@ -149,7 +149,7 @@ jobs:
           API_RESPONSE=$(curl --fail -sS -X POST \
             -H "Content-Type: application/json" \
             -d "$JSON_PAYLOAD" \
-            "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-latest:generateContent?key=$GEMINI_API_KEY")
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=$GEMINI_API_KEY")
 
           if [ $? -ne 0 ]; then
             echo "::error::Gemini API call failed."
