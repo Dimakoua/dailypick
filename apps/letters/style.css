@@ -151,7 +151,6 @@ button#restartButton:disabled {
   display: flex;
   gap: 0;
   width: 100%;
-  max-width: 400px;
   max-width: var(--letters-max);
   box-sizing: border-box;
 
