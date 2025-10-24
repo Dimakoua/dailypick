@@ -1,15 +1,15 @@
 :root {
-    --font-primary: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-primary: var(--brand-font-family, 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif);
 
-    --color-bg-body: #f4f7f6;
-    --color-text-body: #5d5d5d;
-    --color-text-heading: #3498db;
+    --color-bg-body: var(--brand-background, #f4f7f6);
+    --color-text-body: var(--brand-text, #5d5d5d);
+    --color-text-heading: var(--brand-heading, #3498db);
     --color-text-label: #7f8c8d;
     --color-text-list-item: #2980b9;
     --color-text-light: #ffffff;
 
-    --color-primary: #3498db;
-    --color-primary-dark: #2980b9;
+    --color-primary: var(--brand-accent, #3498db);
+    --color-primary-dark: var(--brand-accent-strong, #2980b9);
     --color-secondary: #e67e22;
     --color-secondary-dark: #d35400;
 
@@ -18,8 +18,8 @@
     --color-line: #bdc3c7;
     --color-disabled: #95a5a6;
 
-    --color-bg-card: #ffffff;
-    --color-bg-input: #f9f9f9;
+    --color-bg-card: var(--brand-surface, #ffffff);
+    --color-bg-input: rgba(255, 255, 255, 0.92);
 
     --shadow-card: 0 10px 25px rgba(0, 0, 0, 0.08);
     --shadow-racer: 0 2px 4px rgba(0, 0, 0, 0.15);

@@ -1,0 +1,243 @@
+:root {
+  --brand-font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --brand-background: #f4f7f6;
+  --brand-surface: #ffffff;
+  --brand-text: #34495e;
+  --brand-heading: #2d3e50;
+  --brand-subtle-text: #7f8c8d;
+  --brand-border: #dde4eb;
+  --brand-accent: #3498db;
+  --brand-accent-strong: #2980b9;
+  --brand-accent-muted: rgba(52, 152, 219, 0.12);
+  --brand-radius: 18px;
+  --brand-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --brand-logo: none;
+  --app-header-offset: 120px;
+}
+
+body {
+  margin: 0;
+  color: var(--brand-text);
+  font-family: var(--brand-font-family);
+  background: var(--brand-background);
+  min-height: 100vh;
+}
+
+.site-header {
+  width: 100%;
+  padding: 20px min(5vw, 48px);
+  box-sizing: border-box;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  background: none;
+  align-self: stretch;
+}
+
+.site-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(221, 228, 235, 0.6);
+  z-index: -1;
+}
+
+.site-header .header-content {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.site-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 800;
+  font-size: 1.4rem;
+  letter-spacing: 0.01em;
+  color: var(--brand-heading);
+  text-decoration: none;
+}
+
+.site-title .brand-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--brand-accent);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.4);
+  background-image: var(--brand-logo);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.3rem;
+}
+
+.site-header nav {
+  display: inline-flex;
+  gap: 16px;
+}
+
+.site-header nav a {
+  color: var(--brand-subtle-text);
+  font-weight: 600;
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.site-header nav a:hover,
+.site-header nav a:focus-visible {
+  color: var(--brand-heading);
+  background: var(--brand-accent-muted);
+  outline: none;
+}
+
+.site-header .branding-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: var(--brand-subtle-text);
+}
+
+.site-header .branding-controls svg {
+  width: 18px;
+  height: 18px;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px min(5vw, 56px) 60px;
+  box-sizing: border-box;
+  gap: 32px;
+}
+
+.app-card {
+  width: min(100%, 1040px);
+  background: var(--brand-surface);
+  border-radius: var(--brand-radius);
+  box-shadow: var(--brand-shadow);
+  padding: clamp(24px, 5vw, 48px);
+  box-sizing: border-box;
+}
+
+.app-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.app-button {
+  background: var(--brand-accent);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-button:hover,
+.app-button:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(52, 152, 219, 0.2);
+  outline: none;
+}
+
+.app-button--secondary {
+  background: rgba(52, 152, 219, 0.12);
+  color: var(--brand-accent-strong);
+}
+
+.app-section-heading {
+  color: var(--brand-heading);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  margin: 0 0 18px;
+  font-weight: 700;
+}
+
+.app-subheading {
+  color: var(--brand-subtle-text);
+  font-size: 1.05rem;
+  margin: 0 0 24px;
+  line-height: 1.6;
+}
+
+.app-footer-note {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--brand-subtle-text);
+  text-align: center;
+}
+
+.app-footer-note strong {
+  color: var(--brand-accent-strong);
+}
+
+.app-panel {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: calc(var(--brand-radius) - 4px);
+  border: 1px solid rgba(221, 228, 235, 0.7);
+  padding: clamp(20px, 4vw, 32px);
+  margin-bottom: 24px;
+}
+
+.app-panel:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 720px) {
+  :root {
+    --app-header-offset: 96px;
+  }
+
+  .site-header {
+    padding: 16px 20px;
+  }
+
+  .site-header::before {
+    background: rgba(255, 255, 255, 0.92);
+  }
+
+  .site-header .header-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .site-header nav {
+    justify-content: space-between;
+  }
+
+  .app-shell {
+    padding: 20px 18px 40px;
+  }
+
+  .app-card {
+    padding: 24px 20px;
+  }
+
+  .site-header .branding-controls {
+    justify-content: center;
+  }
+}

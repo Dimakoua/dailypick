@@ -46,6 +46,7 @@ wrangler.toml         # Cloudflare deployment configuration
 - Shared front-end assets should live under `assets/` (e.g., `assets/css`, `assets/js`).
 - When adding a new game, place its static files inside `apps/<game>/` and register any Worker routes or Durable Objects from `packages/worker/worker.js`.
 - Blog posts should include canonical URLs (`https://dailypick.dev/blog/<slug>/`) and descriptive SEO front matter.
+- Shared theming primitives (color, typography, layout) live in `assets/css/theme.css`; game-specific styles should prefer CSS custom properties like `--brand-accent` to inherit future branding config.
 
 ## Deployment Notes
 - The Eleventy build runs as part of the scheduled blog workflow to refresh `sitemap.xml`.

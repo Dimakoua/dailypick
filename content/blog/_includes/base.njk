@@ -58,16 +58,24 @@
     <meta name="msapplication-TileColor" content="#2d89ef">
     <meta name="theme-color" content="#ffffff">
 
+    <link rel="stylesheet" href="/assets/css/theme.css">
     <link rel="stylesheet" href="/css/style.css">
     {% if headExtra %}{{ headExtra | safe }}{% endif %}
 </head>
 <body>
     <header class="site-header">
         <div class="header-content">
-            <a href="/" class="site-title">Daily Pick</a>
+            <a href="/" class="site-title">
+                <span class="brand-mark" aria-hidden="true">🎯</span>
+                <span class="brand-name">Daily Pick</span>
+            </a>
             <nav>
+                <a href="/">Play</a>
                 <a href="/blog/">Blog</a>
             </nav>
+            <div class="branding-controls">
+                <span>Own these colors soon? Branding controls coming.</span>
+            </div>
         </div>
     </header>
 

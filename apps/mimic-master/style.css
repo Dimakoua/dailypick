@@ -1,7 +1,7 @@
 body {
-    font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f7f6;
-    color: #4e5a63;
+    font-family: var(--brand-font-family, 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif);
+    background-color: var(--brand-background, #f4f7f6);
+    color: var(--brand-text, #4e5a63);
     margin: 0;
     padding: 30px 20px 60px;
     display: flex;
@@ -12,14 +12,14 @@ body {
 h1 {
     margin: 10px 0;
     font-size: 2.6rem;
-    color: #2a7cc1;
+    color: var(--brand-accent, #2a7cc1);
     text-align: center;
 }
 
 .tagline {
     margin: 0 0 30px 0;
     font-size: 1.1rem;
-    color: #6b7a88;
+    color: var(--brand-subtle-text, #6b7a88);
     text-align: center;
     max-width: 680px;
 }
@@ -27,10 +27,10 @@ h1 {
 .controls {
     width: 100%;
     max-width: 860px;
-    background: #ffffff;
+    background: var(--brand-surface, #ffffff);
     border-radius: 16px;
     padding: 24px 26px;
-    box-shadow: 0 12px 28px rgba(26, 107, 182, 0.08);
+    box-shadow: 0 12px 28px rgba(52, 152, 219, 0.12);
     display: grid;
     gap: 18px;
     margin-bottom: 32px;

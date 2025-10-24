@@ -1,6 +1,6 @@
 body {
     /* Using Nunito for consistency with the main dailypick.dev site */
-    font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: var(--brand-font-family, 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif);
     background-color: #1a1a2e; /* Dark space blue */
     color: #e0e0e0; /* Light grey text */
     margin: 0; 
@@ -8,7 +8,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     min-height: 100vh;
     box-sizing: border-box;
     overflow-x: hidden; /* Prevent horizontal scrollbars from scaled content */
@@ -39,8 +39,8 @@ body {
 #startButton {
     padding: 10px 20px;
     font-size: 16px;
-    background-color: #3498db; /* Friendly blue from main site */
-    color: #ffffff; /* White text for contrast */
+    background-color: var(--brand-accent, #3498db); /* Friendly blue from main site */
+    color: var(--brand-surface, #ffffff); /* White text for contrast */
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -48,12 +48,12 @@ body {
 }
 
 #startButton:hover {
-    background-color: #2980b9; /* Darker blue from main site */
+    background-color: var(--brand-accent-strong, #2980b9); /* Darker blue from main site */
 }
 
 #leaderboard {
     position: absolute; /* Or 'fixed' if you want it to stay in place while scrolling */
-    top: 150px;
+    top: calc(var(--app-header-offset, 110px) + 30px);
     right: 20px;
     width: 250px; /* Adjust as needed */
     background-color: rgba(0, 0, 0, 0.7);
@@ -126,7 +126,7 @@ body {
 /* Settings Area Styles */
 #settingsToggleBtn {
     position: absolute;
-    top: 20px;
+    top: var(--app-header-offset, 110px);
     right: 20px;
     background-color: #4a4a70; /* A muted purple/blue */
     color: white;
@@ -146,7 +146,7 @@ body {
 
 #config-area {
     position: absolute;
-    top: 60px; /* Position it below the settings button (20px button top + ~30px button height + 10px gap) */
+    top: calc(var(--app-header-offset, 110px) + 40px); /* Position relative to branded header */
     right: 20px;
     background-color: rgba(10, 10, 26, 0.85); /* Dark, slightly transparent */
     padding: 20px;

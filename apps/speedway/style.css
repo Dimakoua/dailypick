@@ -1,16 +1,16 @@
 :root {
-    --speedway-background: linear-gradient(180deg, #f4f7f6 0%, #ffffff 100%);
-    --speedway-track: #ffffff;
+    --speedway-background: linear-gradient(180deg, var(--brand-background, #f4f7f6) 0%, var(--brand-surface, #ffffff) 100%);
+    --speedway-track: var(--brand-surface, #ffffff);
     --speedway-lane-color: #bdc3c7;
-    --speedway-accent: #3498db;
+    --speedway-accent: var(--brand-accent, #3498db);
     --speedway-logo-url: none;
 }
 
 body {
-    font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: var(--brand-font-family, 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif);
     text-align: center;
-    background: var(--speedway-background, linear-gradient(180deg, #f4f7f6 0%, #ffffff 100%));
-    color: #5d5d5d;
+    background: var(--speedway-background);
+    color: var(--brand-text, #5d5d5d);
     margin: 0;
     padding: 20px;
     display: flex;
@@ -29,12 +29,12 @@ h1 {
 
 #settingsToggleBtn {
     position: absolute;
-    top: 20px;
+    top: var(--app-header-offset, 110px);
     right: 20px;
     padding: 10px 18px;
     font-size: 1em;
-    background-color: var(--speedway-accent, #3498db);
-    color: #ffffff;
+    background-color: var(--speedway-accent);
+    color: var(--brand-surface, #ffffff);
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -48,7 +48,7 @@ h1 {
 
 #config-area {
     position: absolute;
-    top: 75px;
+    top: calc(var(--app-header-offset, 110px) + 55px);
     right: 20px;
     background-color: rgba(255, 255, 255, 0.95);
     padding: 25px 30px;

@@ -30,6 +30,7 @@
     <meta name="theme-color" content="#ffffff">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/theme.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
 
@@ -199,57 +200,22 @@
             transform: translateY(-2px);
         }
 
-        /* Header Styles */
-        .site-header {
-            background-color: #ffffff;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-            padding: 0 30px;
-            box-sizing: border-box;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            max-width: 800px; /* Aligns with main-container */
-            height: 65px;
-        }
-
-        .site-header .site-title {
-            font-size: 1.6em;
-            font-weight: 700;
-            color: #3498db;
-            text-decoration: none;
-        }
-
-        .site-header nav a {
-            font-weight: 600;
-            color: #5d5d5d;
-            text-decoration: none;
-            margin-left: 25px;
-            transition: color 0.2s ease-in-out;
-        }
-
-        .site-header nav a:hover {
-            color: #2980b9;
-        }
     </style>
 </head>
 <body>
     <header class="site-header">
         <div class="header-content">
-            <a href="/" class="site-title">Daily Pick</a>
+            <a href="/" class="site-title">
+                <span class="brand-mark" aria-hidden="true">🎯</span>
+                <span class="brand-name">Daily Pick</span>
+            </a>
             <nav>
+                <a href="/">Play</a>
                 <a href="/blog/">Blog</a>
             </nav>
+            <div class="branding-controls">
+                <span>Make it yours: brand configuration coming soon.</span>
+            </div>
         </div>
     </header>
     <div class="main-container">
