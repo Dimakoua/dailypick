@@ -11,7 +11,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    text-align: center; /* For centering main-container */
+    text-align: left; /* Default left alignment for body copy */
 }
 
 main {
@@ -104,6 +104,7 @@ p {
     background-color: #ffffff;
     border-radius: 8px; /* Rounded corners for a softer, modern look */
     box-shadow: 0 0 15px rgba(0,0,0,0.07);
+    text-align: left; /* Ensure article content stays left-aligned */
 }
 
 /* Blog Listing Specifics */
