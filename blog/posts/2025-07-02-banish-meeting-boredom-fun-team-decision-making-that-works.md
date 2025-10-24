@@ -4,6 +4,15 @@ date: 2025-07-02
 description: "Tired of tedious team decisions? Discover fun, fair, and efficient methods to boost engagement and make choices everyone's happy with. Learn how to use games and tools to simplify decision-making and energize your team!"
 layout: "post.njk"
 tags: ["team building", "decision making", "productivity hacks", "workplace culture", "team dynamics", "meeting facilitation", "agile methodology"]
+canonical: "https://dailypick.dev/blog/posts/2025-07-02-banish-meeting-boredom-fun-team-decision-making-that-works/"
+author: "Daily Pick"
+updated: 2025-07-02
+section: "Team Decisions"
+keywords: "team building, decision making, productivity hacks, workplace culture, team dynamics, meeting facilitation, agile methodology"
+ogImage: "/assets/og-image-main.png"
+ogImageAlt: "Team celebrating after using Daily Pick to choose their next project"
+twitterImage: "/assets/og-image-main.png"
+twitterImageAlt: "Team celebrating after using Daily Pick to choose their next project"
 ---
 
 # Banish Meeting Boredom: Fun Team Decision-Making That Works

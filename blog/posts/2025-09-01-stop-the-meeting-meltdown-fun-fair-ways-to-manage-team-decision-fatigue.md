@@ -4,6 +4,15 @@ date: 2025-09-01
 description: "Is decision fatigue crippling your team's productivity? Discover fun, fair, and quick methods to make team choices easier, boosting morale and efficiency. Learn how to leverage Daily Pick's tools for a smoother workflow!"
 layout: "post.njk"
 tags: ["team building", "decision making", "meeting facilitation", "productivity", "agile", "remote work", "workplace culture"]
+canonical: "https://dailypick.dev/blog/posts/2025-09-01-stop-the-meeting-meltdown-fun-fair-ways-to-manage-team-decision-fatigue/"
+author: "Daily Pick"
+updated: 2025-09-01
+section: "Team Decisions"
+keywords: "team building, decision making, meeting facilitation, productivity, agile, remote work, workplace culture"
+ogImage: "/assets/og-image-main.png"
+ogImageAlt: "Team relaxing after a productive Daily Pick session that prevented decision fatigue"
+twitterImage: "/assets/og-image-main.png"
+twitterImageAlt: "Team relaxing after a productive Daily Pick session that prevented decision fatigue"
 ---
 
 ## Stop the Meeting Meltdown: Fun & Fair Ways to Manage Team Decision Fatigue

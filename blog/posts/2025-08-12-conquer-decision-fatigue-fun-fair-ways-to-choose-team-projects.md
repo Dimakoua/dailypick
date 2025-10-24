@@ -4,6 +4,15 @@ date: 2024-10-27
 description: "Tired of endless project debates?  Discover fun, fair, and fast methods to assign team projects, boosting morale and efficiency.  Learn how Daily Pick's tools can help!"
 layout: "post.njk"
 tags: ["team building", "project management", "agile", "decision making", "workplace culture", "productivity", "fairness"]
+canonical: "https://dailypick.dev/blog/posts/2025-08-12-conquer-decision-fatigue-fun-fair-ways-to-choose-team-projects/"
+author: "Daily Pick"
+updated: 2025-08-12
+section: "Project Planning"
+keywords: "team building, project management, agile, decision making, workplace culture, productivity, fairness"
+ogImage: "/assets/og-image-main.png"
+ogImageAlt: "Team comparing project ideas while a Daily Pick decision wheel highlights the winning choice"
+twitterImage: "/assets/og-image-main.png"
+twitterImageAlt: "Team comparing project ideas while a Daily Pick decision wheel highlights the winning choice"
 ---
 
 ## Conquer Decision Fatigue: Fun & Fair Ways to Choose Team Projects

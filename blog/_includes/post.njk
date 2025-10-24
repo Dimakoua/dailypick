@@ -1,6 +1,77 @@
 ---
 layout: base.njk
 ---
+{% set ogType = "article" %}
+{% if not canonical %}
+    {% set canonical = metadata.url + page.url %}
+{% endif %}
+{% set author = author or metadata.authorName %}
+{% set publishedDateIso = page.date.toISOString() %}
+{% set updatedDate = page.date %}
+{% if updated and updated.toISOString %}
+    {% set updatedDate = updated %}
+{% endif %}
+{% set updatedDateIso = updatedDate.toISOString() %}
+{% set preferredOgImage = ogImage or metadata.defaultOgImage %}
+{% if preferredOgImage and not preferredOgImage.startsWith("http") %}
+    {% set preferredOgImage = metadata.url + preferredOgImage %}
+{% endif %}
+{% set ogImage = preferredOgImage %}
+{% if not twitterImage %}
+    {% set twitterImage = preferredOgImage %}
+{% endif %}
+{% if not ogImageAlt %}
+    {% set ogImageAlt = title %}
+{% endif %}
+{% if not twitterImageAlt %}
+    {% set twitterImageAlt = ogImageAlt %}
+{% endif %}
+{% set logoImage = metadata.defaultOgImage %}
+{% if logoImage and not logoImage.startsWith("http") %}
+    {% set logoImage = metadata.url + logoImage %}
+{% endif %}
+{% set articleTags = tags or [] %}
+{% if not keywords and articleTags.length %}
+    {% set keywords = articleTags | join(", ") %}
+{% endif %}
+{% set articleStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": title,
+    "description": description or metadata.siteDescription,
+    "image": preferredOgImage,
+    "author": {
+        "@type": "Organization",
+        "name": author
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": metadata.authorName,
+        "logo": {
+            "@type": "ImageObject",
+            "url": logoImage
+        }
+    },
+    "datePublished": publishedDateIso,
+    "dateModified": updatedDateIso,
+    "mainEntityOfPage": canonical,
+    "url": canonical,
+    "keywords": articleTags | join(", "),
+    "articleSection": section or "Blog"
+} %}
+{% set headExtra %}
+    <meta property="article:published_time" content="{{ publishedDateIso }}">
+    <meta property="article:modified_time" content="{{ updatedDateIso }}">
+    <meta property="article:author" content="{{ author }}">
+    <meta property="article:section" content="{{ section or 'Blog' }}">
+    {% for tag in articleTags %}
+        <meta property="article:tag" content="{{ tag }}">
+    {% endfor %}
+    {% if preferredOgImage %}<meta property="og:image" content="{{ preferredOgImage }}">{% endif %}
+    <script type="application/ld+json">
+        {{ articleStructuredData | dump | safe }}
+    </script>
+{% endset %}
 <article class="main-container blog-post-content">
     <h1>{{ title }}</h1>
     <p class="post-meta">

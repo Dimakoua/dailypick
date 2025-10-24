@@ -4,6 +4,15 @@ date: 2025-06-11
 description: "Eliminate bias and awkwardness in team decisions! Learn how fair selection tools like Daily Pick can boost productivity, fairness, and create a more positive team environment."
 layout: "post.njk"
 tags: ["team decisions", "fairness at work", "productivity tools", "team collaboration", "unbiased selection", "workplace culture"]
+canonical: "https://dailypick.dev/blog/posts/2025-06-11-how-fair-decision-tools-revolutionize-team-dynamics/"
+author: "Daily Pick"
+updated: 2025-06-11
+section: "Team Decisions"
+keywords: "team decisions, fairness at work, productivity tools, team collaboration, unbiased selection, workplace culture"
+ogImage: "/assets/og-image-main.png"
+ogImageAlt: "Coworkers smiling around a laptop while Daily Pick selects a teammate for a task"
+twitterImage: "/assets/og-image-main.png"
+twitterImageAlt: "Coworkers smiling around a laptop while Daily Pick selects a teammate for a task"
 ---
 
 We've all been there. That moment in a team meeting when a less-than-desirable task needs an owner, or someone needs to be chosen for a specific role. The air fills with a chorus of crickets, averted gazes, and the silent, universal chant of "Not it!"

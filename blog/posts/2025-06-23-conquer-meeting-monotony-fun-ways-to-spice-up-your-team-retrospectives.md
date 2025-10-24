@@ -4,6 +4,15 @@ date: 2025-06-23
 description: "Retrospectives don't have to be a drag! Discover creative, engaging activities to make your Agile ceremonies more effective and enjoyable.  Learn how to boost team morale, gather valuable feedback, and improve future sprints with fun and fairness."
 layout: "post.njk"
 tags: ["agile methodology", "retrospective", "team building", "productivity hacks", "workplace culture", "meeting facilitation", "team dynamics"]
+canonical: "https://dailypick.dev/blog/posts/2025-06-23-conquer-meeting-monotony-fun-ways-to-spice-up-your-team-retrospectives/"
+author: "Daily Pick"
+updated: 2025-06-23
+section: "Retrospectives"
+keywords: "agile methodology, retrospective, team building, productivity hacks, workplace culture, meeting facilitation, team dynamics"
+ogImage: "/assets/og-image-main.png"
+ogImageAlt: "Agile team running a lively retrospective with Daily Pick prompts on a whiteboard"
+twitterImage: "/assets/og-image-main.png"
+twitterImageAlt: "Agile team running a lively retrospective with Daily Pick prompts on a whiteboard"
 ---
 
 # Conquer Meeting Monotony: Fun Ways to Spice Up Your Team Retrospectives

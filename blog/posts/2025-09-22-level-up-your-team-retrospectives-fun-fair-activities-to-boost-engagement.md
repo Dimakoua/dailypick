@@ -4,6 +4,15 @@ date: 2025-09-22
 description: "Tired of boring retrospectives?  Learn how to inject fun and fairness into your agile ceremonies with engaging activities that boost team morale and uncover actionable insights. Discover simple yet effective techniques to ensure everyone feels heard and valued."
 layout: "post.njk"
 tags: ["team building", "agile", "retrospective", "teamwork", "engagement", "productivity", "fairness"]
+canonical: "https://dailypick.dev/blog/posts/2025-09-22-level-up-your-team-retrospectives-fun-fair-activities-to-boost-engagement/"
+author: "Daily Pick"
+updated: 2025-09-22
+section: "Retrospectives"
+keywords: "team building, agile, retrospective, teamwork, engagement, productivity, fairness"
+ogImage: "/assets/og-image-main.png"
+ogImageAlt: "Scrum team gathered around a vibrant retrospective board enhanced with Daily Pick activities"
+twitterImage: "/assets/og-image-main.png"
+twitterImageAlt: "Scrum team gathered around a vibrant retrospective board enhanced with Daily Pick activities"
 ---
 
 ## Level Up Your Team Retrospectives: Fun & Fair Activities to Boost Engagement

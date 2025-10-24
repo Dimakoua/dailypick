@@ -4,6 +4,15 @@ date: 2025-09-17
 description: "Tired of endless project debates? Discover fun, fair, and fast methods to choose team projects, boosting morale and productivity.  Learn how to use decision wheels and other simple tools to make the process engaging and unbiased."
 layout: "post.njk"
 tags: ["team building", "project management", "agile", "decision making", "workplace culture", "remote work", "meeting facilitation"]
+canonical: "https://dailypick.dev/blog/posts/2025-09-15-escape-the-meeting-maze-fun-fair-ways-to-choose-team-projects/"
+author: "Daily Pick"
+updated: 2025-09-17
+section: "Project Planning"
+keywords: "team building, project management, agile, decision making, workplace culture, remote work, meeting facilitation"
+ogImage: "/assets/og-image-main.png"
+ogImageAlt: "Project team smiling as Daily Pick helps them select their next initiative"
+twitterImage: "/assets/og-image-main.png"
+twitterImageAlt: "Project team smiling as Daily Pick helps them select their next initiative"
 ---
 
 ## Escape the Meeting Maze: Fun & Fair Ways to Choose Team Projects

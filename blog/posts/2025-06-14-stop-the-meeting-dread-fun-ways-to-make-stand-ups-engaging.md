@@ -4,6 +4,15 @@ date: 2025-06-14
 description: "Dreading daily stand-ups? Transform your team's daily huddle from a monotonous chore into an energizing, productive, and even fun experience with these simple yet effective strategies. Learn how to boost engagement and collaboration with Daily Pick's tools!"
 layout: "post.njk"
 tags: ["stand-up meetings", "team engagement", "meeting facilitation", "productivity hacks", "agile methodology", "team building", "remote work"]
+canonical: "https://dailypick.dev/blog/posts/2025-06-14-stop-the-meeting-dread-fun-ways-to-make-stand-ups-engaging/"
+author: "Daily Pick"
+updated: 2025-06-14
+section: "Stand-ups"
+keywords: "stand-up meetings, team engagement, meeting facilitation, productivity hacks, agile methodology, team building, remote work"
+ogImage: "/assets/og-image-main.png"
+ogImageAlt: "Scrum master energizing a stand-up while a Daily Pick game decides the next speaker"
+twitterImage: "/assets/og-image-main.png"
+twitterImageAlt: "Scrum master energizing a stand-up while a Daily Pick game decides the next speaker"
 ---
 
 # Stop the Meeting Dread: Fun Ways to Make Stand-Ups Engaging

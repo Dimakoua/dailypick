@@ -4,6 +4,15 @@ date: 2025-06-10
 description: "Tired of dull daily stand-ups? Discover 5 fun and fair ways to choose who speaks next, improve team engagement, and make your agile meetings more enjoyable with Daily Pick!"
 layout: "post.njk"
 tags: ["team engagement", "daily stand-up", "agile meetings", "fun at work", "productivity", "team morale"]
+canonical: "https://dailypick.dev/blog/posts/2025-06-10-spice-up-your-standups-5-fun-ways/"
+author: "Daily Pick"
+updated: 2025-06-10
+section: "Stand-ups"
+keywords: "team engagement, daily stand-up, agile meetings, fun at work, productivity, team morale"
+ogImage: "/assets/og-image-main.png"
+ogImageAlt: "Daily stand-up team laughing while a Daily Pick decision wheel selects the next speaker"
+twitterImage: "/assets/og-image-main.png"
+twitterImageAlt: "Daily stand-up team laughing while a Daily Pick decision wheel selects the next speaker"
 ---
 
 Let's be honest, the daily stand-up. It's essential, yes. But can it sometimes feel a *tad* repetitive? The same order, the same polite-but-slightly-forced "you go next," or the awkward silence until someone bravely steps up. What if we told you that deciding who speaks next could actually be... fun? And fair? And even a mini morale booster?

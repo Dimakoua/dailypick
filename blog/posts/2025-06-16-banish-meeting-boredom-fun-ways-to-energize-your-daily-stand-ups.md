@@ -4,6 +4,15 @@ date: 2025-06-16
 description: "Is your daily stand-up a drag? Learn how to inject fun and fairness into your team's daily huddle with creative activities and simple tools. Boost engagement and team morale with these actionable tips from Daily Pick!"
 layout: "post.njk"
 tags: ["team building", "agile methodology", "productivity hacks", "decision making", "workplace culture", "remote work", "meeting facilitation"]
+canonical: "https://dailypick.dev/blog/posts/2025-06-16-banish-meeting-boredom-fun-ways-to-energize-your-daily-stand-ups/"
+author: "Daily Pick"
+updated: 2025-06-16
+section: "Stand-ups"
+keywords: "team building, agile methodology, productivity hacks, decision making, workplace culture, remote work, meeting facilitation"
+ogImage: "/assets/og-image-main.png"
+ogImageAlt: "Remote teammates high-fiving over video while using Daily Pick to energize a stand-up"
+twitterImage: "/assets/og-image-main.png"
+twitterImageAlt: "Remote teammates high-fiving over video while using Daily Pick to energize a stand-up"
 ---
 
 # Banish Meeting Boredom: Fun Ways to Energize Your Daily Stand-Ups

@@ -4,6 +4,15 @@ date: 2024-10-27
 description: "Tired of endless team debates? Discover fun, fair, and efficient decision-making methods that boost morale and productivity.  Learn how to use games and tools to make choices everyone agrees on!"
 layout: "post.njk"
 tags: ["team building", "agile", "productivity", "decision making", "workplace culture", "remote work", "meeting facilitation"]
+canonical: "https://dailypick.dev/blog/posts/2025-08-12-escape-the-meeting-maze-fun-fair-ways-to-make-team-decisions/"
+author: "Daily Pick"
+updated: 2025-08-12
+section: "Team Decisions"
+keywords: "team building, agile, productivity, decision making, workplace culture, remote work, meeting facilitation"
+ogImage: "/assets/og-image-main.png"
+ogImageAlt: "Hybrid team smiling as a Daily Pick wheel helps them escape decision gridlock"
+twitterImage: "/assets/og-image-main.png"
+twitterImageAlt: "Hybrid team smiling as a Daily Pick wheel helps them escape decision gridlock"
 ---
 
 Escape the Meeting Maze: Fun & Fair Ways to Make Team Decisions
