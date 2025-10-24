@@ -1,6 +1,6 @@
 
 name = "dailypick"
-main = "worker.js"
+main = "packages/worker/worker.js"
 compatibility_date = "2025-07-01"
 
 [site]

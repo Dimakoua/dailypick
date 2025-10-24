@@ -1,0 +1,515 @@
+:root {
+    --speedway-background: linear-gradient(180deg, #f4f7f6 0%, #ffffff 100%);
+    --speedway-track: #ffffff;
+    --speedway-lane-color: #bdc3c7;
+    --speedway-accent: #3498db;
+    --speedway-logo-url: none;
+}
+
+body {
+    font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    background: var(--speedway-background, linear-gradient(180deg, #f4f7f6 0%, #ffffff 100%));
+    color: #5d5d5d;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(100vh - 40px);
+    overflow-x: hidden;
+}
+
+h1 {
+    font-size: 2.6em;
+    margin: 0 0 25px 0;
+    color: var(--speedway-accent, #3498db);
+    font-weight: 700;
+}
+
+#settingsToggleBtn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 18px;
+    font-size: 1em;
+    background-color: var(--speedway-accent, #3498db);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: filter 0.3s ease;
+    font-weight: 600;
+}
+
+#settingsToggleBtn:hover {
+    filter: brightness(0.9);
+}
+
+#config-area {
+    position: absolute;
+    top: 75px;
+    right: 20px;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 25px 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    max-width: 450px;
+    z-index: 20;
+    text-align: left;
+    backdrop-filter: blur(6px);
+}
+
+#config-area label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1em;
+    color: #7f8c8d;
+    font-weight: 600;
+}
+
+#config-area textarea,
+#config-area select,
+#config-area input[type="color"],
+#config-area input[type="file"] {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+    font-family: inherit;
+}
+
+#config-area textarea {
+    min-height: 80px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    color: #5d5d5d;
+    font-size: 0.95em;
+}
+
+#config-area hr {
+    border: none;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.06);
+    margin: 18px 0;
+}
+
+.theme-custom-fields {
+    display: grid;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.theme-custom-fields label {
+    margin-bottom: 4px;
+}
+
+.theme-custom-fields input[type="color"] {
+    width: 100%;
+    height: 42px;
+    padding: 0;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.secondary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    background-color: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    color: #4f4f4f;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.secondary-button:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+    color: #333333;
+}
+
+.config-hidden {
+    display: none;
+}
+
+.game-layout {
+    display: flex;
+    width: 90%;
+    max-width: 1100px;
+    gap: 30px;
+    margin: 20px 0;
+    align-items: flex-start;
+}
+
+#track-container {
+    flex: 2;
+    min-width: 0;
+    margin: 0;
+    width: 90%;
+    position: relative;
+    background-color: var(--speedway-track, #ffffff);
+    background-image: linear-gradient(to bottom, transparent, transparent),
+        repeating-linear-gradient(
+            to bottom,
+            transparent,
+            transparent 45px,
+            var(--speedway-lane-color, #bdc3c7) 45px,
+            var(--speedway-lane-color, #bdc3c7) 47px
+        );
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 15px;
+    margin: 20px auto;
+    padding: 20px 0;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+#track-container::after {
+    content: "";
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 70px;
+    height: 70px;
+    background-image: var(--speedway-logo-url);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.18;
+    pointer-events: none;
+}
+
+.racer {
+    position: absolute;
+    width: 80px;
+    height: 30px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    transition: left 0.1s linear, transform 0.2s ease;
+    color: #ffffff;
+}
+
+.racer.finished {
+    box-shadow: 0 0 18px rgba(0, 0, 0, 0.35), 0 0 24px rgba(52, 152, 219, 0.6);
+    transform: scale(1.06);
+}
+
+.racer-emoji {
+    font-size: 24px;
+}
+
+.racer-name {
+    font-size: 0.7em;
+    margin-left: 4px;
+    text-transform: uppercase;
+    filter: drop-shadow(1px 1px 0px rgba(0, 0, 0, 0.45));
+}
+
+#start-line,
+#finish-line-visual {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: var(--speedway-lane-color, #bdc3c7);
+}
+
+#start-line {
+    left: 5%;
+}
+
+#finish-line-visual {
+    right: 5%;
+}
+
+#results-area {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    flex: 1;
+    min-width: 120px;
+    max-width: 180px;
+    margin: 0;
+}
+
+#results-area h2 {
+    color: var(--speedway-accent, #3498db);
+    margin-top: 0;
+}
+
+#results-area .pip-trigger {
+    width: 100%;
+    margin: 12px 0 15px;
+    padding: 10px 18px;
+    background: var(--speedway-accent, #3498db);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 6px 12px rgba(41, 128, 185, 0.25);
+    transition: filter 0.2s ease;
+}
+
+#results-area .pip-trigger::before {
+    content: '🪟';
+    font-size: 1.1em;
+}
+
+#results-area .pip-trigger:hover {
+    filter: brightness(0.9);
+}
+
+button#startRaceBtn,
+button#updateNamesBtn {
+    padding: 12px 25px;
+    font-size: 1.2em;
+    background-color: var(--speedway-accent, #3498db);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    margin-top: 10px;
+}
+
+button#startRaceBtn:hover,
+button#updateNamesBtn:hover {
+    filter: brightness(0.9);
+    transform: translateY(-1px);
+}
+
+button#startRaceBtn:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+}
+
+#standupOrderList {
+    list-style-type: decimal;
+    padding-left: 20px;
+    text-align: left;
+    color: #5d5d5d;
+}
+
+#standupOrderList li {
+    font-size: 1.05em;
+    margin-bottom: 8px;
+    color: var(--speedway-accent, #2980b9);
+    font-weight: 600;
+    list-style-position: inside;
+}
+
+#standupOrderList li.finished-entry {
+    background: rgba(0, 0, 0, 0.04);
+    border-left: 4px solid var(--speedway-accent, #3498db);
+    border-radius: 6px;
+    padding: 6px 10px;
+    color: #2d2d2d;
+}
+
+.logo-preview {
+    margin-top: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.logo-preview img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.seo-content-area {
+    background-color: #ffffff;
+    padding: 25px 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    max-width: 700px;
+    width: 90%;
+    margin: 30px auto;
+    text-align: left;
+    line-height: 1.7;
+}
+
+.seo-content-area h2 {
+    color: var(--speedway-accent, #3498db);
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.8em;
+}
+
+.seo-content-area h3 {
+    color: var(--speedway-accent, #2980b9);
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.4em;
+}
+
+.seo-content-area p,
+.seo-content-area li {
+    color: #5d5d5d;
+    margin-bottom: 10px;
+}
+
+.seo-content-area ul {
+    padding-left: 20px;
+    margin-bottom: 15px;
+}
+
+.seo-content-area a {
+    color: var(--speedway-accent, #3498db);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.seo-content-area a:hover {
+    text-decoration: underline;
+    color: #1f4f7a;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+        min-height: calc(100vh - 30px);
+    }
+
+    h1 {
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+
+    #settingsToggleBtn {
+        position: relative;
+        top: auto;
+        right: auto;
+        display: block;
+        margin: 15px auto;
+        width: fit-content;
+    }
+
+    #config-area {
+        position: relative;
+        top: auto;
+        right: auto;
+        width: 95%;
+        max-width: 500px;
+        margin: 15px auto 20px auto;
+        z-index: 1;
+    }
+
+    .game-layout {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 15px;
+    }
+
+    #track-container,
+    #results-area {
+        flex: none;
+        width: 95%;
+        max-width: none;
+    }
+
+    #results-area {
+        max-width: 320px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+        min-height: calc(100vh - 20px);
+    }
+
+    h1 {
+        font-size: 1.8em;
+        margin-bottom: 15px;
+    }
+
+    #settingsToggleBtn {
+        font-size: 0.9em;
+        padding: 8px 15px;
+        margin: 10px auto;
+    }
+
+    #config-area {
+        padding: 15px;
+    }
+
+    textarea,
+    select {
+        font-size: 0.95em;
+    }
+
+    button#startRaceBtn,
+    button#updateNamesBtn {
+        font-size: 1em;
+        padding: 10px 15px;
+    }
+
+    #track-container {
+        padding: 10px 0;
+    }
+
+    .racer {
+        height: 26px;
+        width: 70px;
+    }
+
+    .seo-content-area {
+        padding: 15px;
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 390px) {
+    body {
+        padding: 6px;
+        min-height: calc(100vh - 12px);
+    }
+
+    h1 {
+        font-size: 1.6em;
+        margin-bottom: 12px;
+    }
+
+    #settingsToggleBtn {
+        font-size: 0.85em;
+        padding: 6px 12px;
+    }
+
+    #config-area {
+        padding: 12px;
+    }
+
+    .racer {
+        height: 22px;
+        width: 62px;
+    }
+
+    #standupOrderList li {
+        font-size: 0.95em;
+    }
+}

@@ -35,7 +35,7 @@ jobs:
       - name: Prepare Prompt
         id: prepare_prompt
         run: |
-          PROMPT_TEMPLATE_FILE="blog/prompt.md" # Relative to repo root
+          PROMPT_TEMPLATE_FILE="content/blog/prompt.md" # Relative to repo root
 
           if [ ! -f "$PROMPT_TEMPLATE_FILE" ]; then
             echo "::error::Prompt template file not found at $PROMPT_TEMPLATE_FILE"
@@ -47,10 +47,10 @@ jobs:
 
           echo "Fetching recent article titles..."
           RECENT_TITLES_MARKDOWN_LIST=""
-          # List up to 10 most recently modified markdown files in blog/posts/
+          # List up to 10 most recently modified markdown files in content/blog/posts/
           # Using `ls -1t` which sorts by modification time (newest first).
           # Suppress error if no files are found.
-          RECENT_FILES=$(ls -1t blog/posts/*.md 2>/dev/null | head -n 10)
+          RECENT_FILES=$(ls -1t content/blog/posts/*.md 2>/dev/null | head -n 10)
 
           if [ -n "$RECENT_FILES" ]; then
             echo "Found recent files to process for titles:"
@@ -85,7 +85,7 @@ jobs:
               fi
             done <<< "$RECENT_FILES"
           else
-            echo "No recent blog posts found in blog/posts/."
+            echo "No recent blog posts found in content/blog/posts/."
             RECENT_TITLES_MARKDOWN_LIST="No recent articles found to list." # Provide a default message
           fi
 
@@ -236,7 +236,7 @@ jobs:
           # 3. Prepare filename and check for duplicates
           ARTICLE_DATE=$(date +'%Y-%m-%d')
           FINAL_FILENAME_NO_EXT="${ARTICLE_DATE}-${SLUGIFIED_TITLE}"
-          FINAL_ARTICLE_PATH="blog/posts/${FINAL_FILENAME_NO_EXT}.md" # Ensure this path matches your Eleventy setup
+          FINAL_ARTICLE_PATH="content/blog/posts/${FINAL_FILENAME_NO_EXT}.md" # Ensure this path matches your Eleventy setup
 
           # Check if a file with this exact name already exists
           if [ -f "$FINAL_ARTICLE_PATH" ]; then
@@ -244,7 +244,7 @@ jobs:
             exit 1
           fi
           # Check if a file with a similar slug (ignoring date) already exists
-          EXISTING_SLUG_FILES=$(find blog/posts -name "*-${SLUGIFIED_TITLE}.md" -print)
+          EXISTING_SLUG_FILES=$(find content/blog/posts -name "*-${SLUGIFIED_TITLE}.md" -print)
           if [ -n "$EXISTING_SLUG_FILES" ]; then
              echo "::error::An article with a similar slug '${SLUGIFIED_TITLE}' already exists: $EXISTING_SLUG_FILES. Halting to prevent potential duplicate content."
              exit 1
