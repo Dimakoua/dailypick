@@ -1,558 +1,337 @@
+/* =========================================================
+   Falling Letters Pinball (page styles)
+   - Harmonized with home.css + glass.css tokens
+   - Sticky header offset, glass surfaces, pinball vibe retained
+   ========================================================= */
+
+/* ---- Page tokens (lean on global ones if present) ---- */
 :root {
-    --font-primary: var(--brand-font-family, 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif);
-
-    --color-bg-body: var(--brand-background, #f4f7f6);
-    --color-text-body: var(--brand-text, #5d5d5d);
-    --color-text-heading: var(--brand-heading, #3498db);
-    --color-text-label: #7f8c8d;
-    --color-text-list-item: #2980b9;
-    --color-text-light: #ffffff;
-
-    --color-primary: var(--brand-accent, #3498db);
-    --color-primary-dark: var(--brand-accent-strong, #2980b9);
-    --color-secondary: #e67e22;
-    --color-secondary-dark: #d35400;
-
-    --color-border-light: #e0e0e0;
-    --color-border-medium: #ccc;
-    --color-line: #bdc3c7;
-    --color-disabled: #95a5a6;
-
-    --color-bg-card: var(--brand-surface, #ffffff);
-    --color-bg-input: rgba(255, 255, 255, 0.92);
-
-    --shadow-card: 0 10px 25px rgba(0, 0, 0, 0.08);
-    --shadow-racer: 0 2px 4px rgba(0, 0, 0, 0.15);
-
-    --border-radius-soft: 15px;
-    --border-radius-standard: 8px;
-
-    --spacing-xs: 0.3125rem; /* 5px */
-    --spacing-s: 0.5rem;    /* 8px */
-    --spacing-m: 0.625rem;  /* 10px */
-    --spacing-l: 0.9375rem; /* 15px */
-    --spacing-xl: 1.25rem;  /* 20px */
-    --spacing-xxl: 1.5625rem;/* 25px */
-    --spacing-xxxl: 1.875rem;/* 30px */
-
-    font-size: 100%; /* Base for rem units, typically 16px */
+  --letters-max: 780px;
+  --letters-panel-w: 280px; /* width of Names panel on desktop */
 }
 
+/* Smooth anchor/nav offset under sticky header */
+html {
+  scroll-padding-top: calc(var(--header-h, 64px) + 12px);
+}
+
+/* ---- Base layout (keep center alignment, remove body conflicts) ---- */
 body {
-    font-family: var(--font-primary);
-    text-align: center;
-    background-color: var(--color-bg-body); /* Soft off-white */
-    color: var(--color-text-body); /* Dark grey text */
-    margin: 0;
-    padding: var(--spacing-xl);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: calc(100vh - (var(--spacing-xl) * 2)); /* Account for top/bottom padding */
-}
-body { overflow-x: hidden; /* Prevent horizontal scrollbars from scaled content */ }
-
-/* Styles for Falling Letters Pinball Game */
-#gameContainer {
-    display: flex;
-    background-color: #6F4E37; /* Coffee brown - for a wooden cabinet look */
-    border: 15px solid #4A3B31; /* Darker, less saturated brown for the frame */
-    border-radius: 30px; /* Rounded corners for the cabinet */
-    padding: 15px; /* Space between cabinet edge and internal components */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Outer shadow for depth */
-    width: 100%; /* Responsive up to max-width */
-    max-width: 1000px; /* Max width for the game container on large screens */
-    box-sizing: border-box; /* Include padding and border in width/max-width */
-    /* Centering is handled by #appContainer's align-items: center */
+  font-family: var(--font-sans, 'Nunito', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif);
+  color: var(--gray-700, #374151);
+  background: var(--brand-background, #f4f7f6);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100dvh;
+  overflow-x: hidden;
 }
 
-#gameCanvas {
-    display: block;
-    background: linear-gradient(to bottom, #003366, #001a35); /* Deep blue gradient for playfield */
-    border-top-left-radius: 100px; /* Rounded top for pinball shape */
-    border-top-right-radius: 100px; /* Rounded top for pinball shape */
-    border-bottom-left-radius: 15px; /* Match container's inner curve */
-    border-bottom-right-radius: 0; /* Sharp corner towards namesPanel */
-    box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.7); /* Inner shadow for playfield depth */
-    border: none; /* Remove previous borders */
-    min-width: 0; /* Allow canvas to shrink below its intrinsic content size */
-    /* Height will be determined by the canvas.height attribute set in JS,
-       and the browser will scale the rendered content to fit this flex item's dimensions. */
-}
-
-#namesPanel {
-    width: 250px;
-    padding: 20px;
-    background-color: #D7CCC8; /* Light grayish beige, like an old display panel */
-    overflow-y: auto;
-    box-sizing: border-box;
-    border-left: 5px solid #4A3B31; /* Dark wood separator, matching cabinet frame */
-    border-top-right-radius: 15px; /* Match container's inner curve */
-    border-bottom-right-radius: 15px; /* Match container's inner curve */
-    flex-shrink: 0; /* Prevent names panel from shrinking */
-}
-
-#namesPanel h2 {
-    margin-top: 0;
-    text-align: center;
-    color: #4A3B31; /* Dark brown text, matching wood accents */
-}
-
-#namesPanel .pip-trigger {
-    width: 100%;
-    margin: 12px 0 16px;
-    padding: 10px 16px;
-    background: linear-gradient(135deg, #6d4c41 0%, #8d6e63 100%);
-    color: #fdfaf6;
-    border: none;
-    border-radius: 10px;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    box-shadow: 0 6px 12px rgba(77, 52, 44, 0.35);
-}
-
-#namesPanel .pip-trigger::before {
-    content: '🪟';
-    font-size: 1.1em;
-}
-
-#namesPanel .pip-trigger:hover {
-    background: linear-gradient(135deg, #8d6e63 0%, #a1887f 100%);
-}
-
-.name-item {
-    padding: 8px 5px;
-    border-bottom: 1px solid #ddd;
-    font-size: 16px;
-    color: #555;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-.name-item.matched {
-    background-color: #c8e6c9; /* Light green */
-    color: #2e7d32; /* Darker green text */
-    font-weight: bold;
-    animation: highlightName 0.6s ease-in-out;
-    text-decoration: line-through;
-}
-
-@keyframes highlightName {
-    0% {
-        transform: scale(1);
-        background-color: #D7CCC8; /* Match namesPanel bg */
-    }
-
-    50% {
-        transform: scale(1.05);
-        background-color: #a5d6a7; /* Brighter green mid-animation */
-    }
-
-    100% {
-        transform: scale(1);
-        background-color: #c8e6c9;
-    }
-}
-
+/* Title aligns with global palette */
 h1 {
-    font-size: 2.6rem;
-    margin: 0 0 var(--spacing-xxl) 0;
-    color: var(--color-text-heading);
-    font-weight: 700;
+  font-size: clamp(2rem, 2.6rem, 3rem);
+  margin: calc(var(--header-h, 64px) + 12px) 0 22px;
+  color: var(--blue, #3498db);
+  font-weight: 800;
+  text-align: center;
 }
 
+/* ---- Settings toggle + config panel (glass) ---- */
 #settingsToggleBtn {
-    position: absolute;
-    top: var(--spacing-xl);
-    right: var(--spacing-xl);
-    padding: var(--spacing-m) 1.125rem; /* 10px 18px */
-    font-size: 1rem;
-    background-color: var(--color-primary); /* Friendly blue */
-    color: var(--color-text-light);
-    border: none;
-    border-radius: var(--border-radius-standard);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-weight: 600;
+  /* glassy primary button matching .btn--accent tone */
+  display: inline-block;
+  padding: 10px 18px;
+  font-size: 1rem;
+  font-weight: 700;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: var(--radius-md, 10px);
+  cursor: pointer;
+  color: #fff;
+  background: linear-gradient(
+    to bottom right,
+    rgba(52, 152, 219, 0.9),
+    rgba(41, 128, 185, 0.9)
+  );
+  backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+  transition: transform .2s ease, box-shadow .2s ease, background-color .3s ease;
 }
-
-#settingsToggleBtn:hover {
-    background-color: var(--color-primary-dark); /* Darker blue */
+#settingsToggleBtn:hover,
+#settingsToggleBtn:focus-visible {
+  outline: none;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.16);
 }
 
 #config-area {
-    position: absolute;
-    top: 4.6875rem; /* 75px */
-    right: var(--spacing-xl);
-    background-color: var(--color-bg-card);
-    padding: var(--spacing-xxl) var(--spacing-xxxl);
-    border-radius: var(--border-radius-soft);
-    box-shadow: var(--shadow-card);
-    border: 1px solid var(--color-border-light);
-    max-width: 450px;
-    z-index: 20;
-    text-align: left;
+  position: fixed; /* avoids overlap with game canvas; sits below header */
+  top: calc(var(--header-h, 64px) + 10px);
+  right: clamp(10px, 4vw, 28px);
+  z-index: 30;
+  background: var(--glass-bg-strong, rgba(255,255,255,0.18));
+  border: 1px solid var(--glass-border, rgba(255,255,255,0.38));
+  backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+  border-radius: var(--radius-lg, 15px);
+  box-shadow: var(--glass-shadow, 0 8px 30px rgba(0,0,0,0.15));
+  padding: 22px 26px;
+  max-width: 460px;
+  text-align: left;
 }
-
 #config-area label {
-    display: block;
-    margin-bottom: var(--spacing-s);
-    font-size: 1rem;
-    color: var(--color-text-label);
-    font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+  color: var(--gray-600, #6b7280);
+  font-weight: 700;
 }
-
-.config-hidden {
-    display: none;
-}
-
-#track-container {
-    width: 80%;
-    max-width: 700px;
-    height: auto;
-    background-color: var(--color-bg-card); /* Clean white */
-    border: 1px solid var(--color-border-light); /* Light border */
-    border-radius: var(--border-radius-soft); /* Softer radius */
-    margin: var(--spacing-xl) auto;
-    position: relative;
-    padding: var(--spacing-xl) 0; /* Padding for top/bottom space */
-    box-shadow: var(--shadow-card); /* Softer shadow */
-}
-
-.racer {
-    position: absolute;
-    /* JS will set top and left */
-    width: 80px;
-    /* Increased width for name + emoji */
-    height: 1.875rem; /* 30px */
-    border-radius: var(--border-radius-soft); /* Rounded shape */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-racer); /* Softer shadow for racers */
-    transition: left 0.1s linear;
-    color: var(--color-text-light); /* White text on turtle */
-}
-
-#start-line,
-#finish-line-visual {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 4px;
-    background-color: var(--color-line); /* Muted grey for lines */
-}
-
-#start-line {
-    left: 5%;
-}
-
-#finish-line-visual {
-    right: 5%;
-}
-
-/* Shared card styles for controls and results area */
-#controls,
-#results-area {
-    background-color: var(--color-bg-card); /* Clean white */
-    padding: var(--spacing-l);
-    border-radius: var(--border-radius-soft); /* Softer radius */
-    border: 1px solid var(--color-border-light); /* Light border */
-    box-shadow: var(--shadow-card); /* Softer shadow */
-    /* width, max-width, and margin-top will be set individually */
-}
-
-.game-layout {
-    display: flex;
-    width: 90%;
-    /* Adjust as needed for overall width */
-    max-width: 1100px;
-    gap: var(--spacing-xl); /* Space between track and results */
-    margin: var(--spacing-xl) 0; /* Vertical margin for the game area */
-    align-items: flex-start;
-    /* Align items to the top */
-}
-
-#track-container {
-    /* Original card styles are kept, layout adjusted for flex */
-    flex: 2;
-    /* Track takes more space */
-    min-width: 0;
-    /* Allows shrinking in flex layout */
-    margin: 0;
-    /* Was '20px auto', now controlled by flex parent */
-    width: 80%;
-    max-width: 700px;
-}
-
-#results-area {
-    /* Inherits common styles from the rule above */
-    margin-left: auto;
-    /* Pushes the element to the right */
-    margin-right: 0;
-    /* Aligns its right edge with the body's content box right edge */
-    /* This line will be removed by flex */
-    flex: 1;
-    /* Results area takes less space */
-    min-width: 250px;
-    /* Ensures results area doesn't get too small */
-    max-width: 350px;
-    /* Optional: constrain max width of results */
-    margin: 0;
-    /* Reset margin, positioning handled by .game-layout */
-}
-
-#results-area h2 {
-    color: var(--color-text-heading); /* Friendly blue for sub-heading */
-    margin-top: 0;
-}
-
-button#restartButton,
-button#updateNamesBtn {
-    padding: 0.75rem var(--spacing-xxl); /* 12px 25px */
-    font-size: 1.2rem;
-    background-color: var(--color-primary); /* Friendly blue */
-    color: var(--color-text-light);
-    border: none;
-    border-radius: var(--border-radius-standard);
-    cursor: pointer;
-    font-weight: 700;
-    transition: background-color 0.3s ease;
-    margin-top: var(--spacing-m); /* For updateNamesBtn */
-}
-
-
-button#updateNamesBtn {
-    background-color: var(--color-secondary); /* Orange */
-}
-
-button#restartButton:hover,
-button#updateNamesBtn:hover {
-    background-color: var(--color-primary-dark); /* Darker blue */
-}
-
-button#updateNamesBtn:hover {
-    background-color: var(--color-secondary-dark); /* Darker orange */
-}
-
-button#restartButton:disabled {
-    background-color: var(--color-disabled); /* Muted grey when disabled */
-    cursor: not-allowed;
-}
-
-#standupOrderList {
-    list-style-type: decimal;
-    padding-left: var(--spacing-xl);
-    text-align: left;
-    color: var(--color-text-body); /* Standard text color */
-}
-
-#standupOrderList li {
-    font-size: 1.1rem;
-    margin-bottom: var(--spacing-xs);
-    color: var(--color-text-list-item); /* Darker blue for list items */
-    font-weight: 600;
-}
+.config-hidden { display: none; }
 
 #namesInput {
-    /* Style for textarea */
-    width: 95%;
-    min-height: 60px;
-    padding: var(--spacing-m);
-    border-radius: var(--border-radius-standard);
-    border: 1px solid var(--color-border-medium);
-    background-color: var(--color-bg-input);
-    color: var(--color-text-body);
-    font-family: var(--font-primary);
-    font-size: 0.95rem;
-    margin-bottom: var(--spacing-m); /* Space before update button */
+  width: 100%;
+  min-height: 72px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md, 10px);
+  border: 1px solid var(--gray-200, #e7e7e7);
+  background: rgba(255,255,255,0.92);
+  color: var(--gray-700, #374151);
+  font-size: .95rem;
+  font-family: inherit;
+  margin: 0 0 10px;
 }
 
-/* Responsive adjustments for smaller screens */
-@media (max-width: 768px) {
-    body {
-        padding: var(--spacing-l); /* Reduce body padding */
-        min-height: calc(100vh - (var(--spacing-l) * 2));
-    }
-
-    h1 {
-        font-size: 2rem; /* Smaller heading */
-        margin-bottom: var(--spacing-xl);
-    }
-
-    #settingsToggleBtn {
-        position: relative; /* Change from absolute to flow with content */
-        top: auto;
-        right: auto;
-        display: block; /* Allow margin auto for centering */
-        margin: var(--spacing-l) auto; /* Center it and add vertical margin */
-        width: fit-content; /* Adjust width to content */
-        z-index: 1;
-    }
-
-    #config-area {
-        position: relative;
-        /* Change from absolute to flow with content */
-        top: auto;
-        right: auto;
-        width: 90%; /* Adjusted from 95% for consistency with other elements */
-        max-width: 500px;
-        /* Allow it to be reasonably wide but not overly so */
-        margin: var(--spacing-l) auto var(--spacing-xl) auto; /* Center it and add vertical margin */
-        z-index: 1;
-        /* Ensure it's above static content if needed, but likely fine */
-    }
-
-    .game-layout {
-        flex-direction: column;
-        /* Stack track and results vertically */
-        align-items: center;
-        /* Center items when stacked */
-        width: 100%;
-        gap: var(--spacing-l); /* Reduce gap when stacked */
-    }
-
-    #track-container,
-    #results-area {
-        flex: none;
-        /* Reset flex sizing */
-        width: 95%;
-        /* Allow them to take most of the width, consistent with namesInput */
-        max-width: none;
-        /* Remove max-width constraint when stacked */
-    }
+/* Update + Restart use consistent button styling */
+button#updateNamesBtn,
+button#restartButton {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 800;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: var(--radius-md, 10px);
+  cursor: pointer;
+  color: #fff;
+  transition: transform .2s ease, box-shadow .2s ease, background-color .3s ease;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+  backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+}
+button#updateNamesBtn { 
+  background: linear-gradient(to bottom right, rgba(230,126,34,0.9), rgba(211,84,0,0.9));
+}
+button#restartButton { 
+  background: linear-gradient(to bottom right, rgba(52,152,219,0.9), rgba(41,128,185,0.9));
+  margin-top: 16px;
+}
+button#updateNamesBtn:hover,
+button#updateNamesBtn:focus-visible,
+button#restartButton:hover,
+button#restartButton:focus-visible {
+  outline: none;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.16);
+}
+button#restartButton:disabled {
+  background: rgba(149,165,166,0.7);
+  cursor: not-allowed;
+  box-shadow: none;
 }
 
-/* Responsive adjustments for very small screens */
-@media (max-width: 480px) {
-    body {
-        padding: var(--spacing-m);
-        min-height: calc(100vh - (var(--spacing-m) * 2));
-    }
-
-    h1 {
-        font-size: 1.8rem;
-        margin-bottom: var(--spacing-l);
-    }
-
-    #settingsToggleBtn {
-        padding: var(--spacing-s) var(--spacing-l);
-        font-size: 0.9rem;
-        top: var(--spacing-m);
-        right: var(--spacing-m);
-    }
-
-    #config-area {
-        padding: var(--spacing-l) var(--spacing-xl);
-        width: 95%; /* Take up more space on very small screens */
-    }
-
-    button#restartButton,
-    button#updateNamesBtn {
-        padding: var(--spacing-s) var(--spacing-l); /* Slightly smaller padding */
-        font-size: 1rem;
-    }
-
-    .seo-content-area {
-        padding: var(--spacing-l) var(--spacing-xl);
-        width: auto;
-    }
-
-    .seo-content-area h2 {
-        font-size: 1.5rem;
-    }
-
-    .seo-content-area h3 {
-        font-size: 1.2rem;
-    }
+/* ---- Game shell (glass frame + subtle wood trim) ---- */
+#appContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, var(--letters-max));
+  margin: 6px auto 0;
 }
 
-/* Responsive adjustments for very small screens (e.g., smaller iPhones) */
-@media (max-width: 390px) {
-    body {
-        padding: var(--spacing-s); /* Further reduce body padding */
-        min-height: calc(100vh - (var(--spacing-s) * 2));
-    }
+#gameContainer {
+  display: flex;
+  gap: 0;
+  width: 100%;
+  max-width: 400px;
+  max-width: var(--letters-max);
+  box-sizing: border-box;
 
-    h1 {
-        font-size: 1.6rem; /* Smaller main heading */
-        margin-bottom: var(--spacing-m);
-    }
-
-    #settingsToggleBtn {
-        padding: var(--spacing-xs) var(--spacing-m); /* Smaller padding */
-        font-size: 0.85rem;
-        /* top and right are fine from previous media query if it's in flow */
-        margin: var(--spacing-m) auto; /* Adjust margin if needed */
-    }
-
-    #config-area {
-        padding: var(--spacing-m) var(--spacing-l); /* Smaller padding */
-        width: 95%;
-    }
-    #config-area label { font-size: 0.9rem; }
-    #namesInput { font-size: 0.85rem; min-height: 50px; }
-    button#updateNamesBtn { font-size: 0.9rem; padding: var(--spacing-s) var(--spacing-m); }
-
-    button#restartButton { font-size: 0.9rem; padding: var(--spacing-s) var(--spacing-m); }
-
-    #namesPanel { padding: var(--spacing-m); width: 200px; /* Adjust if too wide */ }
-    .name-item { font-size: 14px; padding: 6px 4px; }
-
-    /* Assuming .seo-content-area might be added later, similar to other pages */
-    .seo-content-area { padding: var(--spacing-m); font-size: 0.85rem;  width: auto; }
-    .seo-content-area h2 { font-size: 1.3rem; }
-    .seo-content-area h3 { font-size: 1.1rem; }
+  /* glass body with wood trim to keep "pinball" personality */
+  background: var(--glass-bg-strong, rgba(255,255,255,0.18));
+  backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+  border: 12px solid #4a3b31;                  /* wood trim */
+  border-radius: 28px;
+  box-shadow: 0 14px 36px rgba(0,0,0,0.18);
+  padding: 14px;
 }
 
+/* Canvas stays deep-blue pinball field with inner glow */
+#gameCanvas {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  border-top-left-radius: 90px;
+  border-top-right-radius: 90px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 0;
+  background: linear-gradient(to bottom, #0a3a6b, #041a35);
+  box-shadow: inset 0 0 25px rgba(0,0,0,0.6);
+  border: none;
+}
+
+/* Names panel becomes a tidy glass sidebar */
+#namesPanel {
+  width: var(--letters-panel-w);
+  padding: 18px 16px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  background: var(--glass-bg, rgba(255,255,255,0.12));
+  border-left: 5px solid #4a3b31;              /* wood separator */
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+  box-shadow: inset 0 0 0 1px var(--glass-border, rgba(255,255,255,0.38));
+}
+#namesPanel h2 {
+  margin: 0 0 10px;
+  text-align: center;
+  color: var(--blue-600, #2980b9);
+  font-weight: 800;
+}
+
+/* PiP trigger uses a subtle brown -> matches wood, but glassy */
+#namesPanel .pip-trigger {
+  width: 100%;
+  margin: 12px 0 14px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  background: linear-gradient(135deg, rgba(109,76,65,0.9) 0%, rgba(141,110,99,0.9) 100%);
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  box-shadow: 0 10px 20px rgba(77,52,44,0.3);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+#namesPanel .pip-trigger::before { content: '🪟'; font-size: 1.05em; }
+#namesPanel .pip-trigger:hover,
+#namesPanel .pip-trigger:focus-visible {
+  outline: none;
+  transform: translateY(-1px);
+  box-shadow: 0 14px 26px rgba(77,52,44,0.34);
+}
+
+/* Names list items */
+.name-item {
+  padding: 7px 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.18);
+  font-size: 15px;
+  color: var(--gray-700, #374151);
+  transition: background-color .25s ease, transform .25s ease;
+}
+.name-item.matched {
+  background: rgba(46, 125, 50, 0.15);
+  color: #2e7d32;
+  font-weight: 800;
+  text-decoration: line-through;
+  animation: highlightName .5s ease-in-out;
+}
+@keyframes highlightName {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+/* ---- Results / controls shell (if used on this page later) ---- */
+#controls, #results-area {
+  background: var(--glass-bg, rgba(255,255,255,0.12));
+  border: 1px solid var(--glass-border, rgba(255,255,255,0.38));
+  border-radius: var(--radius-lg, 15px);
+  box-shadow: var(--glass-shadow, 0 8px 30px rgba(0,0,0,0.15));
+  padding: 16px;
+}
+
+/* ---- SEO content adopts intro glass card look ---- */
 .seo-content-area {
-    background-color: var(--color-bg-card);
-    padding: var(--spacing-xxl) var(--spacing-xxxl);
-    border-radius: var(--border-radius-soft);
-    box-shadow: var(--shadow-card);
-    border: 1px solid var(--color-border-light);
-    max-width: 700px; /* Or adjust to fit your layout */
-    width: 90%;
-    margin: var(--spacing-xxxl) auto; /* Spacing from game elements */
-    text-align: left;
-    line-height: 1.7;
-    width: auto;
+  background: var(--glass-bg, rgba(255,255,255,0.12));
+  border: 1px solid var(--glass-border, rgba(255,255,255,0.38));
+  border-radius: var(--radius-lg, 15px);
+  box-shadow: var(--glass-shadow, 0 8px 30px rgba(0,0,0,0.15));
+  padding: 24px 28px;
+  max-width: 780px;
+  width: min(92%, 780px);
+  margin: 28px auto 0;
+  text-align: left;
+  line-height: 1.7;
 }
-
 .seo-content-area h2 {
-    color: var(--color-text-heading); /* Friendly blue */
-    margin-top: 0;
-    margin-bottom: var(--spacing-l);
-    font-size: 1.8rem;
+  color: var(--blue, #3498db);
+  margin: 0 0 12px;
+  font-size: 1.6rem;
+  text-align: center;
 }
-
 .seo-content-area h3 {
-    color: var(--color-primary-dark); /* Darker blue */
-    margin-top: var(--spacing-xl);
-    margin-bottom: var(--spacing-m);
-    font-size: 1.4rem;
+  color: var(--blue-600, #2980b9);
+  margin: 18px 0 8px;
+  font-size: 1.25rem;
 }
-
-.seo-content-area p,
-.seo-content-area li {
-    color: var(--color-text-body); /* Standard text color */
-    margin-bottom: var(--spacing-m);
-}
-
-.seo-content-area ul {
-    padding-left: var(--spacing-xl);
-    margin-bottom: var(--spacing-l);
-}
-
 .seo-content-area a {
-    color: var(--color-primary);
-    text-decoration: none;
-    font-weight: 600;
+  color: var(--blue-600, #2980b9);
+  text-decoration: none;
+  font-weight: 700;
+}
+.seo-content-area a:hover { text-decoration: underline; }
+
+/* ---- Responsive ---- */
+@media (max-width: 980px) {
+  :root { --letters-panel-w: 250px; }
+}
+@media (max-width: 820px) {
+  #config-area {
+    position: relative; /* drop into flow on small screens */
+    top: auto; right: auto;
+    margin: 10px auto 14px;
+    width: min(95%, 560px);
+  }
+
+  #gameContainer {
+    flex-direction: column;
+    padding: 12px;
+  }
+  #gameCanvas {
+    border-top-right-radius: 28px; /* unify radius when stacked */
+    border-bottom-right-radius: 12px;
+  }
+  #namesPanel {
+    width: 100%;
+    border-left: 0;
+    border-top: 5px solid #4a3b31;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    margin-top: 10px;
+  }
+
+  button#restartButton { width: fit-content; }
+}
+@media (max-width: 520px) {
+  h1 { margin-top: calc(var(--header-h, 64px) + 8px); font-size: 1.9rem; }
+  #settingsToggleBtn { width: fit-content; }
+  .seo-content-area { padding: 18px 16px; }
 }
 
-.seo-content-area a:hover {
-    text-decoration: underline;
-    color: var(--color-primary-dark);
+/* ---- Dark mode tuning ---- */
+@media (prefers-color-scheme: dark) {
+  body { background: #0b1220; color: var(--gray-900, #e5e7eb); }
+  #namesPanel .name-item { color: var(--gray-900, #e5e7eb); }
+}
+
+/* ---- Reduced motion: disable fancy transitions ---- */
+@media (prefers-reduced-motion: reduce) {
+  #settingsToggleBtn,
+  .pip-trigger,
+  button#updateNamesBtn,
+  button#restartButton,
+  .name-item {
+    transition: none !important;
+    transform: none !important;
+  }
 }

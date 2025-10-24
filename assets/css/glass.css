@@ -1,0 +1,346 @@
+/* ==========================================================================
+   Daily Pick — Liquid Glass Add-on
+   - Frosted glass cards, animated “liquid” gradient orbs, and subtle sheens
+   - Designed to layer on top of your existing theme/home CSS
+   - Safe fallbacks if backdrop-filter isn’t supported
+   ========================================================================== */
+
+:root {
+  /* Glass tokens */
+  --glass-bg: rgba(255, 255, 255, 0.12);
+  --glass-bg-strong: rgba(255, 255, 255, 0.18);
+  --glass-border: rgba(255, 255, 255, 0.38);
+  --glass-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  --glass-blur: 14px;
+  --glass-sheen: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.45) 40%,
+    rgba(255, 255, 255, 0) 80%
+  );
+
+  /* Orb colors tuned to brand blues/orange */
+  --orb-blue: radial-gradient(circle at 30% 30%, #5fb6e9 0%, rgba(95,182,233,0.0) 60%);
+  --orb-indigo: radial-gradient(circle at 70% 40%, #6f8cfb 0%, rgba(111,140,251,0.0) 60%);
+  --orb-orange: radial-gradient(circle at 40% 70%, #f39c12 0%, rgba(243,156,18,0.0) 65%);
+}
+
+/* Dark mode tuning */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --glass-bg: rgba(15, 23, 42, 0.35);
+    --glass-bg-strong: rgba(15, 23, 42, 0.48);
+    --glass-border: rgba(255, 255, 255, 0.20);
+    --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+
+    --orb-blue: radial-gradient(circle at 25% 35%, #3498db 0%, rgba(52,152,219,0) 60%);
+    --orb-indigo: radial-gradient(circle at 75% 45%, #6366f1 0%, rgba(99,102,241,0) 60%);
+    --orb-orange: radial-gradient(circle at 45% 75%, #f59e0b 0%, rgba(245,158,11,0) 65%);
+  }
+}
+
+/* =========================================================
+   Liquid “orbs” background
+   ========================================================= */
+.bg-orbs {
+  position: fixed;
+  inset: -10vmax;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bg-orbs .orb {
+  position: absolute;
+  width: 55vmax;
+  height: 55vmax;
+  opacity: 0.45;
+  filter: blur(60px) saturate(120%);
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+.bg-orbs .orb--1 {
+  left: -10vmax;
+  top: -8vmax;
+  background: var(--orb-blue);
+  animation: floatA 18s ease-in-out infinite alternate;
+}
+.bg-orbs .orb--2 {
+  right: -12vmax;
+  top: 10vmax;
+  background: var(--orb-indigo);
+  animation: floatB 22s ease-in-out infinite alternate;
+}
+.bg-orbs .orb--3 {
+  left: 5vmax;
+  bottom: -12vmax;
+  background: var(--orb-orange);
+  animation: floatC 20s ease-in-out infinite alternate;
+}
+
+@keyframes floatA {
+  from { transform: translateY(0) translateX(0) scale(1); }
+  to   { transform: translateY(3vmax) translateX(2vmax) scale(1.05); }
+}
+@keyframes floatB {
+  from { transform: translateY(0) translateX(0) scale(1); }
+  to   { transform: translateY(-3vmax) translateX(-2vmax) scale(1.08); }
+}
+@keyframes floatC {
+  from { transform: translateY(0) translateX(0) scale(1); }
+  to   { transform: translateY(2vmax) translateX(-2vmax) scale(1.04); }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .bg-orbs .orb { animation: none !important; }
+}
+
+/* =========================================================
+   Frosted glass panels (cards, intro block, hero button)
+   ========================================================= */
+.game-card,
+.intro__content,
+.btn--accent {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Stronger glass for body text legibility */
+.intro__content { background: var(--glass-bg-strong); }
+
+/* Card sheen */
+.game-card::before,
+.game-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.game-card::before {
+  background: linear-gradient(to bottom, rgba(255,255,255,0.25), transparent 35%);
+  border-radius: inherit;
+  opacity: 0.6;
+  mix-blend-mode: soft-light;
+}
+.game-card::after {
+  background: linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.45) 40%, rgba(255,255,255,0) 80%);
+  width: 140%;
+  height: 200%;
+  top: -50%;
+  left: -20%;
+  transform: rotate(-18deg) translateX(-20%);
+  transition: transform .6s ease, opacity .4s ease;
+  opacity: 0.0;
+}
+.game-card:hover::after,
+.game-card:focus-visible::after {
+  transform: rotate(-18deg) translateX(10%);
+  opacity: 0.7;
+}
+
+.game-card:hover .game-card__icon,
+.game-card:focus-visible .game-card__icon {
+  filter: drop-shadow(0 6px 10px rgba(52,152,219,0.35));
+}
+
+/* Buttons: keep accent but glassy */
+.btn--accent {
+  background: linear-gradient(
+      to bottom right,
+      rgba(230, 126, 34, 0.85),
+      rgba(211, 84, 0, 0.85)
+    );
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  text-shadow: 0 1px 1px rgba(0,0,0,0.25);
+}
+.btn--accent:hover,
+.btn--accent:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.22);
+}
+
+/* Hero subtitle legibility */
+.hero__subtitle { text-shadow: 0 1px 1px rgba(255,255,255,0.35); }
+@media (prefers-color-scheme: dark) {
+  .hero__subtitle { text-shadow: 0 1px 1px rgba(0,0,0,0.45); }
+}
+
+/* Fallbacks when backdrop-filter is unavailable */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .game-card,
+  .intro__content,
+  .btn--accent {
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(0, 0, 0, 0.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    .game-card,
+    .intro__content,
+    .btn--accent {
+      background: rgba(17, 24, 39, 0.94);
+      border-color: rgba(255, 255, 255, 0.10);
+    }
+  }
+  .bg-orbs .orb { opacity: 0.25; filter: blur(40px) saturate(110%); }
+}
+
+/* High-contrast/forced colors */
+@media (forced-colors: active) {
+  .game-card,
+  .intro__content,
+  .btn--accent {
+    background: Canvas;
+    border: 1px solid CanvasText;
+    box-shadow: none;
+  }
+  .bg-orbs { display: none; }
+}
+
+
+/* Footer */
+
+/* 1) Base: make a single .footer-note look like a glass "pill" */
+.footer-note {
+  position: relative;
+  display: inline-block;
+  max-width: min(900px, 90vw);
+  margin: 48px auto 0;
+  padding: 14px 18px;
+  border-radius: var(--radius-lg, 15px);
+  text-align: center;
+  line-height: 1.6;
+
+  /* Glass */
+  background: var(--glass-bg-strong, rgba(255,255,255,.18));
+  border: 1px solid var(--glass-border, rgba(255,255,255,.38));
+  backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+  box-shadow: var(--glass-shadow, 0 8px 30px rgba(0,0,0,.15));
+
+  /* Type */
+  color: var(--gray-600, #6b7280);
+  font-size: .98rem;
+}
+
+/* Center the pill in common layouts */
+.footer-note { display: block; }
+.footer-note { margin-left: auto; margin-right: auto; }
+
+/* Accent the strong text */
+.footer-note strong {
+  color: var(--blue-600, #2980b9);
+  font-weight: 700;
+}
+
+/* Subtle top divider sheen */
+.footer-note::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -12px;
+  width: 160px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent);
+  opacity: .6;
+  pointer-events: none;
+}
+
+/* Gentle sweeping sheen on hover/focus for a “liquid” feel */
+.footer-note::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.4) 40%, rgba(255,255,255,0) 80%);
+  transform: translateX(-25%);
+  opacity: 0;
+  transition: transform .6s ease, opacity .4s ease;
+  pointer-events: none;
+}
+.footer-note:hover::after,
+.footer-note:focus-within::after {
+  transform: translateX(15%);
+  opacity: .35;
+}
+
+/* Links inside the footer note (if you add any later) */
+.footer-note a {
+  color: var(--blue-600, #2980b9);
+  text-underline-offset: 2px;
+}
+.footer-note a:hover { text-decoration: underline; }
+.footer-note a:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(41,128,185,.35);
+  border-radius: 6px;
+}
+
+/* 2) Enhanced (optional): full-width footer bar when wrapped */
+.site-footer {
+  margin-top: 56px;
+  border-top: 1px solid var(--glass-border, rgba(255,255,255,.38));
+  background:
+    linear-gradient(to bottom, rgba(255,255,255,.06), rgba(255,255,255,.10)),
+    var(--glass-bg, rgba(255,255,255,.12));
+  backdrop-filter: blur(calc(var(--glass-blur, 14px) - 2px)) saturate(160%);
+  -webkit-backdrop-filter: blur(calc(var(--glass-blur, 14px) - 2px)) saturate(160%);
+  box-shadow: 0 -8px 30px rgba(0,0,0,.08);
+}
+.site-footer__inner {
+  max-width: var(--container, 1100px);
+  padding: 20px var(--gutter, 24px);
+  margin-inline: auto;
+}
+/* When inside the bar, render text clean (no pill) */
+.site-footer .footer-note {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Dark mode tuning */
+@media (prefers-color-scheme: dark) {
+  .footer-note { color: var(--gray-600, #cbd5e1); }
+}
+
+/* Reduced motion: disable sheen animation */
+@media (prefers-reduced-motion: reduce) {
+  .footer-note::after { transition: none; transform: none; opacity: 0 !important; }
+}
+
+/* Backdrop-filter fallback */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .footer-note {
+    background: rgba(255,255,255,.92);
+    border-color: rgba(0,0,0,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    .footer-note {
+      background: rgba(17,24,39,.94);
+      border-color: rgba(255,255,255,.10);
+    }
+  }
+  .site-footer {
+    background: rgba(255,255,255,.9);
+  }
+}
+
+/* High-contrast/forced colors */
+@media (forced-colors: active) {
+  .footer-note,
+  .site-footer {
+    background: Canvas;
+    border: 1px solid CanvasText;
+    box-shadow: none;
+  }
+  .footer-note::before,
+  .footer-note::after { display: none; }
+}

@@ -1,26 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <!-- SEO Meta Tags -->
-    <title>Daily Pick - Fun & Fair Team Decision Tools | Wheel, Speedway, Trap!</title>
-    <meta name="description" content="Make your daily stand-ups and team decisions more engaging with Daily Pick! Choose from fun games like the Decision Wheel, Speedway Racer, and Trap! to fairly pick names or set order.">
-    <meta name="keywords" content="daily pick, team tools, decision maker, name picker, stand-up games, wheel spinner, racing game, trap game, office games, team engagement, agile tools, scrum tools">
 
-    <!-- Open Graph / Facebook -->
+<head>
+    <!-- SEO -->
+    <meta charset="UTF-8" />
+    <title>Daily Pick - Fun & Fair Team Decision Tools | Wheel, Speedway, Trap!</title>
+    <meta name="description"
+        content="Make your daily stand-ups and team decisions more engaging with Daily Pick! Choose from fun games like the Decision Wheel, Speedway Racer, and Trap! to fairly pick names or set order.">
+    <meta name="keywords"
+        content="daily pick, team tools, decision maker, name picker, stand-up games, wheel spinner, racing game, trap game, office games, team engagement, agile tools, scrum tools">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="canonical" href="https://dailypick.dev/" />
+
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://dailypick.dev/">
     <meta property="og:title" content="Daily Pick - Fun & Fair Team Decision Tools">
-    <meta property="og:description" content="Engaging games like the Decision Wheel, Speedway Racer, and Trap! to make team decisions fun.">
-    <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png"> 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://dailypick.dev/">
-    <meta property="twitter:title" content="Daily Pick - Fun & Fair Team Decision Tools">
-    <meta property="twitter:description" content="Engaging games like the Decision Wheel, Speedway Racer, and Trap! to make team decisions fun.">
-    <meta property="twitter:image" content="https://dailypick.dev/assets/twitter-image-main.png">
+    <meta property="og:description"
+        content="Engaging games like the Decision Wheel, Speedway Racer, and Trap! to make team decisions fun.">
+    <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
 
-    <link rel="canonical" href="https://dailypick.dev/">
-    <!-- Favicon Links -->
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://dailypick.dev/">
+    <meta name="twitter:title" content="Daily Pick - Fun & Fair Team Decision Tools">
+    <meta name="twitter:description"
+        content="Engaging games like the Decision Wheel, Speedway Racer, and Trap! to make team decisions fun.">
+    <meta name="twitter:image" content="https://dailypick.dev/assets/twitter-image-main.png">
+
+    <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
@@ -28,91 +36,160 @@
     <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
     <meta name="msapplication-TileColor" content="#2d89ef">
     <meta name="theme-color" content="#ffffff">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Fonts (performance) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
     <link rel="stylesheet" href="/assets/css/theme.css">
-    <style>
-    </style>
     <link rel="stylesheet" href="/assets/css/home.css">
+    <link rel="stylesheet" href="/assets/css/glass.css">
+    <!-- Structured Data (basic) -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Daily Pick",
+    "url": "https://dailypick.dev/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://dailypick.dev/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
 </head>
+
 <body>
+    <!-- Skip link for a11y -->
+    <a class="skip-link" href="#main">Skip to main content</a>
+
     {% include "header.html" %}
-    <main class="main-container" style="padding-top: 5rem;">
-        <h1>Streamline Your Stand-ups!</h1>
-        <p class="sub-header">Make daily stand-ups and team decisions more engaging and fair with <strong>Daily Pick</strong>! Choose from our collection of fun interactive tools like the <strong>Decision Wheel</strong>, <strong>Speedway Racer</strong>, or the strategic <strong>Trap! Game</strong> to set speaking order, pick names, or just enjoy a quick team-building moment. Say goodbye to "who's next?" and hello to fun!</p>
 
-        <div class="game-selection-area">
-            <a href="/apps/wheel/" class="game-card" aria-label="Play Wheel">
-                <span class="icon" role="img" aria-hidden="true">🎡</span>
-                <h2>Wheel</h2>
-                <span class="description">A fair and fun spin to decide who shares updates next. Quick, easy, and no more 'who's first?' dilemmas!</span>
-            </a>
-            <a href="/apps/speedway/" class="game-card" aria-label="Play Speedway">
-                <span class="icon" role="img" aria-hidden="true">🐢</span>
-                <h2>Speedway</h2>
-                <span class="description">A delightful turtle race to determine your team's stand-up sequence. May the best colleague (and their turtle) win!</span>
-            </a>
-            <a href="/apps/trap/" class="game-card" aria-label="Play Trap!">
-                <span class="icon" role="img" aria-hidden="true">🎯</span>
-                <h2>Trap!</h2>
-                <span class="description">A lighthearted game of strategy. Great for a quick team brain-teaser or deciding who tackles the next coffee run!</span>
-            </a>
-            <a href="/apps/letters/" class="game-card" aria-label="Play Falling Letters Pinball">
-                <span class="icon" role="img" aria-hidden="true">🕹️</span>
-                <h2>Falling Letters Pinball</h2>
-                <span class="description">Match names by typing letters as they tumble down a pinball playfield. A fun test of speed and accuracy!</span>
-            </a>
-            <a href="/apps/gravity-drift/" class="game-card" aria-label="Play Gravity Drift">
-                <span class="icon" role="img" aria-hidden="true">🚀</span>
-                <h2>Gravity Drift</h2>
-                <span class="description">Launch rockets and navigate asteroid fields. A space-themed adventure of trajectory and fuel management!</span>
-            </a>
-            <a href="/apps/ballgame/" class="game-card" aria-label="Play Momentum Mayhem">
-                <span class="icon" role="img" aria-hidden="true">🔴</span>
-                <h2>Momentum Mayhem</h2>
-                <span class="description">Unleash physics-based chaos! Push the ball into moving traps, triggering wild special effects with every capture.</span>
-            </a>
-            <a href="/apps/mimic-master/" class="game-card" aria-label="Play Mimic Master">
-                <span class="icon" role="img" aria-hidden="true">🖐️</span>
-                <h2>Mimic Master</h2>
-                <span class="description">Match numbers or emojis with your hands and climb the shared reaction-time leaderboard.</span>
-            </a>
-        </div>
+    <main id="main" class="main-container">
+        <header class="hero">
+            <h1 class="hero__title">Streamline Your Stand-ups!</h1>
+            <p class="hero__subtitle">
+                Make daily stand-ups and team decisions more engaging and fair with <strong>Daily Pick</strong>!
+                Choose from our collection of fun interactive tools like the <strong>Decision Wheel</strong>,
+                <strong>Speedway Racer</strong>, or the strategic <strong>Trap! Game</strong> to set speaking order,
+                pick names, or just enjoy a quick team-building moment.
+            </p>
+            <button id="randomGameBtn" class="btn btn--accent" type="button" aria-describedby="randomGameHelp">
+                🎲 Pick a Random Game!
+            </button>
+            <p id="randomGameHelp" class="visually-hidden">Press to jump to a randomly selected game page.</p>
+            <p id="announce" class="visually-hidden" aria-live="polite" aria-atomic="true"></p>
+            <noscript>
+                <p class="nojs">Tip: enable JavaScript to use the random game button.</p>
+            </noscript>
+        </header>
 
-        <button id="randomGameBtn">🎲 Pick a Random Game!</button>
+        <section class="game-selection" aria-labelledby="games-heading">
+            <h2 id="games-heading" class="section-title">Pick Your Game</h2>
 
-        <div class="intro-content-area">
-            <h2>Why Daily Pick?</h2>
-            <p>At <strong>Daily Pick</strong>, we believe that even routine tasks like daily stand-ups or making small team choices can be opportunities for engagement and fun. Our suite of simple, browser-based tools is designed to inject a bit of playfulness into your workday, fostering a more positive and collaborative environment.</p>
-            <p>Whether you're part of an <strong>Agile/Scrum team</strong> looking for a fair way to determine speaking order, a teacher needing a random student selector, or just want a quick, unbiased decision-maker, Daily Pick has a tool for you. Our games are:</p>
-            <ul>
-                <li><strong>Easy to Use:</strong> No complicated setups, just open and play.</li>
-                <li><strong>Fair & Unbiased:</strong> Leveraging randomness to ensure equitable selections.</li>
-                <li><strong>Engaging:</strong> Turning potentially mundane moments into interactive experiences.</li>
-                <li><strong>Versatile:</strong> Useful for various scenarios beyond just daily meetings.</li>
+            <!-- List improves semantics & screen reader navigation -->
+            <ul class="game-grid" role="list">
+                <li class="game-grid__item">
+                    <a href="/apps/wheel/" class="game-card" data-game="wheel" aria-label="Play Wheel">
+                        <span class="game-card__icon" aria-hidden="true">🎡</span>
+                        <span class="game-card__title">Wheel</span>
+                        <span class="game-card__desc">A fair and fun spin to decide who shares updates next. Quick,
+                            easy, and no more “who’s first?” dilemmas!</span>
+                    </a>
+                </li>
+
+                <li class="game-grid__item">
+                    <a href="/apps/speedway/" class="game-card" data-game="speedway" aria-label="Play Speedway">
+                        <span class="game-card__icon" aria-hidden="true">🐢</span>
+                        <span class="game-card__title">Speedway</span>
+                        <span class="game-card__desc">A delightful turtle race to determine your team’s stand-up
+                            sequence. May the best colleague (and their turtle) win!</span>
+                    </a>
+                </li>
+
+                <li class="game-grid__item">
+                    <a href="/apps/trap/" class="game-card" data-game="trap" aria-label="Play Trap!">
+                        <span class="game-card__icon" aria-hidden="true">🎯</span>
+                        <span class="game-card__title">Trap!</span>
+                        <span class="game-card__desc">A lighthearted game of strategy. Great for a quick team
+                            brain-teaser or deciding who tackles the next coffee run!</span>
+                    </a>
+                </li>
+
+                <li class="game-grid__item">
+                    <a href="/apps/letters/" class="game-card" data-game="letters"
+                        aria-label="Play Falling Letters Pinball">
+                        <span class="game-card__icon" aria-hidden="true">🕹️</span>
+                        <span class="game-card__title">Falling Letters Pinball</span>
+                        <span class="game-card__desc">Match names by typing letters as they tumble down a pinball
+                            playfield. A fun test of speed and accuracy!</span>
+                    </a>
+                </li>
+
+                <li class="game-grid__item">
+                    <a href="/apps/gravity-drift/" class="game-card" data-game="gravity-drift"
+                        aria-label="Play Gravity Drift">
+                        <span class="game-card__icon" aria-hidden="true">🚀</span>
+                        <span class="game-card__title">Gravity Drift</span>
+                        <span class="game-card__desc">Launch rockets and navigate asteroid fields. A space-themed
+                            adventure of trajectory and fuel management!</span>
+                    </a>
+                </li>
+
+                <li class="game-grid__item">
+                    <a href="/apps/ballgame/" class="game-card" data-game="momentum-mayhem"
+                        aria-label="Play Momentum Mayhem">
+                        <span class="game-card__icon" aria-hidden="true">🔴</span>
+                        <span class="game-card__title">Momentum Mayhem</span>
+                        <span class="game-card__desc">Unleash physics-based chaos! Push the ball into moving traps,
+                            triggering wild special effects with every capture.</span>
+                    </a>
+                </li>
+
+                <li class="game-grid__item">
+                    <a href="/apps/mimic-master/" class="game-card" data-game="mimic-master"
+                        aria-label="Play Mimic Master">
+                        <span class="game-card__icon" aria-hidden="true">🖐️</span>
+                        <span class="game-card__title">Mimic Master</span>
+                        <span class="game-card__desc">Match numbers or emojis with your hands and climb the shared
+                            reaction-time leaderboard.</span>
+                    </a>
+                </li>
             </ul>
-            <p>Explore our tools and see how a little bit of fun can make a big difference in your team's dynamics and productivity. We're always thinking of new ways to help teams connect and make decisions smoothly!</p>
-        </div>
+        </section>
 
+        <section class="intro" aria-labelledby="why-heading">
+            <h2 id="why-heading" class="section-title">Why Daily Pick?</h2>
+            <div class="intro__content">
+                <p>At <strong>Daily Pick</strong>, we believe that even routine tasks like daily stand-ups or making
+                    small team choices can be opportunities for engagement and fun. Our suite of simple, browser-based
+                    tools is designed to inject a bit of playfulness into your workday, fostering a more positive and
+                    collaborative environment.</p>
+                <p>Whether you're part of an <strong>Agile/Scrum team</strong> looking for a fair way to determine
+                    speaking order, a teacher needing a random student selector, or just want a quick, unbiased
+                    decision-maker, Daily Pick has a tool for you. Our games are:</p>
+                <ul class="intro__list">
+                    <li><strong>Easy to Use:</strong> No complicated setups, just open and play.</li>
+                    <li><strong>Fair &amp; Unbiased:</strong> Leveraging randomness to ensure equitable selections.</li>
+                    <li><strong>Engaging:</strong> Turning potentially mundane moments into interactive experiences.
+                    </li>
+                    <li><strong>Versatile:</strong> Useful for various scenarios beyond just daily meetings.</li>
+                </ul>
+                <p>Explore our tools and see how a little bit of fun can make a big difference in your team's dynamics
+                    and productivity. We're always thinking of new ways to help teams connect and make decisions
+                    smoothly!</p>
+            </div>
+        </section>
 
         {% include "footer.html" %}
-
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const randomGameBtn = document.getElementById('randomGameBtn');
-                const gameCards = document.querySelectorAll('.game-selection-area .game-card');
-
-                if (randomGameBtn && gameCards.length > 0) {
-                    randomGameBtn.addEventListener('click', () => {
-                        const randomIndex = Math.floor(Math.random() * gameCards.length);
-                        const randomGameLink = gameCards[randomIndex].href;
-                        if (randomGameLink) {
-                            window.location.href = randomGameLink;
-                        }
-                    });
-                }
-            });
-        </script>
     </main>
+
+    <!-- JS -->
+    <script src="/assets/js/home.js" type="module" defer></script>
 </body>
+{% include "bg-orbs.html" %}
+
 </html>

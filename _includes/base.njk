@@ -59,36 +59,22 @@
     <meta name="theme-color" content="#ffffff">
 
     <link rel="stylesheet" href="/assets/css/theme.css">
+    <link rel="stylesheet" href="/assets/css/home.css">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/assets/css/glass.css">
     {% if headExtra %}{{ headExtra | safe }}{% endif %}
 </head>
 <body>
-    <header class="site-header">
-        <div class="header-content">
-            <a href="/" class="site-title">
-                <span class="brand-mark" aria-hidden="true">🎯</span>
-                <span class="brand-name">Daily Pick</span>
-            </a>
-            <nav>
-                <a href="/">Play</a>
-                <a href="/blog/">Blog</a>
-            </nav>
-            <div class="branding-controls">
-                <span>Own these colors soon? Branding controls coming.</span>
-            </div>
-        </div>
-    </header>
+{% include "header.html" %}
 
     <main>
         {{ content | safe }}
     </main>
 
-    <footer>
-        <p class="footer-note">
-            Crafted to bring a smile to your workday and make <strong>team sync-ups</strong> a breeze. Enjoy! &copy; {{ metadata.currentYear }} {{ metadata.authorName }}
-        </p>
-    </footer>
+{% include "footer.html" %}
+
     
     <!-- Any global scripts can go here -->
 </body>
+{% include "bg-orbs.html" %}
 </html>

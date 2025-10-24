@@ -1,24 +1,6 @@
 /* Global Resets & Base Styles */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
 
-body {
-    font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding-top: 65px; /* Account for fixed header */
-    background-color: #f4f7f6; /* Light, neutral background */
-    color: #5d5d5d; /* Dark grey for text, consistent with index.html */
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    text-align: left; /* Default left alignment for body copy */
-}
-
-main {
-    flex-grow: 1;
-    padding-bottom: 40px; /* Ensure footer doesn't overlap content */
-}
-
 a {
     color: #007bff; /* Professional and accessible blue */
     text-decoration: none;
@@ -53,49 +35,7 @@ p {
     margin-bottom: 1em;
 }
 
-/* Header Styling */
-.site-header {
-    background-color: #ffffff; /* White background, consistent with main site */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06); /* Soft shadow */
-    padding: 0 30px; /* Horizontal padding */
-    box-sizing: border-box; /* Include padding in width */
-    position: fixed; /* Fixed at the top */
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000; /* Ensure it's above other content */
-    display: flex;
-    justify-content: center; /* Center the header content */
-}
 
-.header-content {
-    display: flex;
-    justify-content: space-between; /* Space out title and nav */
-    align-items: center;
-    width: 100%;
-    max-width: 800px; /* Aligns with main-container */
-    height: 65px; /* Fixed height for header */
-}
-
-.site-header .site-title {
-    font-size: 1.6em;
-    font-weight: 700;
-    color: #3498db; /* Blue color for site title */
-    text-decoration: none;
-}
-
-.site-header nav a {
-    font-weight: 600;
-    color: #5d5d5d; /* Dark grey for nav links */
-    text-decoration: none;
-    margin-left: 25px; /* Spacing between nav items */
-    transition: color 0.2s ease-in-out;
-}
-
-.site-header nav a:hover {
-    color: #2980b9; /* Darker blue on hover */
-}
- 
 /* Main Content Area */
 .main-container {
     max-width: 800px;
