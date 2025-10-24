@@ -67,7 +67,7 @@ module.exports = function(eleventyConfig) {
   return {
     dir: {
       input: ".", // Process files from the project root
-      includes: "content/blog/_includes", // Layouts are in content/blog/_includes
+      includes: "_includes", // Layouts are in _includes
       data: "content/blog/_data", // Global data is in content/blog/_data
       output: "dist" // Default output folder
     },

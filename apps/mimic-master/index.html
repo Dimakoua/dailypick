@@ -10,19 +10,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="site-header">
-        <div class="header-content">
-            <a href="/" class="site-title">
-                <span class="brand-mark" aria-hidden="true">🎯</span>
-                <span class="brand-name">Daily Pick</span>
-            </a>
-            <nav>
-                <a href="/">Play</a>
-                <a href="/blog/">Blog</a>
-            </nav>
-            <div class="branding-controls">White-label controls coming soon.</div>
-        </div>
-    </header>
+    {% include "header.html" %}
 
     <h1>🖐️ Mimic Master</h1>
     <p class="tagline">Match the prompt with your hands, beat the countdown, and see who reacts fastest in your room.</p>
@@ -94,5 +82,6 @@
 <!-- Optional: MediaPipe runtime -->
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands"></script>
     <script src="script.js"></script>
+    {% include "footer.html" %}
 </body>
 </html>

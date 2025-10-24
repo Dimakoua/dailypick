@@ -62,19 +62,7 @@
 </head>
 
 <body>
-    <header class="site-header">
-        <div class="header-content">
-            <a href="/" class="site-title">
-                <span class="brand-mark" aria-hidden="true">🎯</span>
-                <span class="brand-name">Daily Pick</span>
-            </a>
-            <nav>
-                <a href="/">Play</a>
-                <a href="/blog/">Blog</a>
-            </nav>
-            <div class="branding-controls">Brand kit support is on the roadmap.</div>
-        </div>
-    </header>
+    {% include "header.html" %}
 
     <h1>🕹️ Falling Letters Pinball 🕹️</h1>
     <button id="settingsToggleBtn">⚙️ Show Settings</button>
@@ -131,6 +119,7 @@
         <p>Challenge your crew and see who can clear their name list the fastest with <strong>Falling Letters Pinball</strong>. It’s a playful, fairness-first name picker designed by Daily Pick to make every meeting or class feel like game time.</p>
     </div>
     <script src="game.js"></script>
+    {% include "footer.html" %}
 </body>
 
 </html>

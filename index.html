@@ -32,193 +32,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/css/theme.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
-
-        body {
-            font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6; /* Soft off-white */
-            color: #5d5d5d; /* Dark grey for text */
-            margin: 0;
-            padding: 95px 30px 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-            line-height: 1.6;
-        }
-
-        .main-container {
-            background-color: #ffffff; /* Clean white */
-            padding: 35px 45px;
-            border-radius: 20px; /* Softer, larger radius */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /* Softer shadow */
-            max-width: 800px;
-            width: 90%;
-            opacity: 1;
-            transform: translateY(15px);
-        }
-
-        h1 {
-            font-size: 2.6em;
-            margin: 0 0 15px 0;
-            color: #3498db; /* Friendly blue */
-            font-weight: 700;
-        }
-
-        .sub-header {
-            font-size: 1.15em;
-            margin-bottom: 40px;
-            color: #7f8c8d; /* Muted grey */
-        }
-
-        .game-selection-area {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-
-        .game-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 25px 20px;
-            background-color: #f9f9f9; /* Very light grey for cards */
-            border: 1px solid #e0e0e0;
-            border-radius: 15px;
-            text-decoration: none;
-            color: #333;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-        }
-
-        .game-card:hover,
-        .game-card:focus {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 12px 30px rgba(52, 152, 219, 0.15); /* Blueish shadow on hover */
-            border-color: #3498db;
-            outline: none; /* Custom focus handled by shadow and border */
-        }
-
-        .game-card .icon {
-            font-size: 2.8em; /* Larger emoji icons */
-            margin-bottom: 15px;
-            transition: transform 0.3s ease;
-        }
-
-        .game-card:hover .icon,
-        .game-card:focus .icon {
-            transform: rotate(-10deg) scale(1.1);
-        }
-
-        .game-card h2 {
-            font-size: 1.4em;
-            margin: 0 0 8px 0;
-            color: #2980b9; /* Darker blue for titles */
-            font-weight: 600;
-        }
-
-        .game-card .description {
-            font-size: 0.9em;
-            color: #6c7a89; /* Softer grey for description */
-            line-height: 1.5;
-        }
-
-        .footer-note {
-            margin-top: 30px;
-            font-size: 0.95em;
-            color: #95a5a6; /* Light grey for footer */
-        }
-
-        .footer-note strong {
-            color: #3498db;
-            font-weight: 600;
-        }
-
-        @keyframes fadeInSmoothly {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Styles for the new SEO content area on index page */
-        .intro-content-area {
-            background-color: #f9f9f9; /* Slightly different from game page cards for distinction */
-            padding: 25px 35px;
-            border-radius: 15px;
-            border: 1px solid #e7e7e7;
-            max-width: 750px;
-            margin: 40px 0;
-            text-align: left;
-            line-height: 1.7;
-        }
-
-        .intro-content-area h2 {
-            color: #3498db;
-            margin-top: 0;
-            margin-bottom: 15px;
-            font-size: 1.7em;
-            text-align: center;
-        }
-
-        .intro-content-area p {
-            color: #5d5d5d;
-            margin-bottom: 15px;
-        }
-
-        .intro-content-area strong {
-            color: #2980b9;
-        }
-
-        .intro-content-area ul {
-            padding-left: 20px;
-            margin-bottom: 15px;
-            list-style-type: '✨'; /* Fun list bullet */
-        }
-        .intro-content-area li {
-            padding-left: 10px;
-            margin-bottom: 8px;
-        }
-
-        #randomGameBtn {
-            background-color: #e67e22; /* Orange accent */
-            color: #ffffff;
-            padding: 12px 28px;
-            font-size: 1.1em;
-            font-weight: 600;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            margin-top: 10px; /* Space above the intro content */
-        }
-        #randomGameBtn:hover, #randomGameBtn:focus {
-            background-color: #d35400; /* Darker orange */
-            transform: translateY(-2px);
-        }
-
     </style>
+    <link rel="stylesheet" href="/assets/css/home.css">
 </head>
 <body>
-    <header class="site-header">
-        <div class="header-content">
-            <a href="/" class="site-title">
-                <span class="brand-mark" aria-hidden="true">🎯</span>
-                <span class="brand-name">Daily Pick</span>
-            </a>
-            <nav>
-                <a href="/">Play</a>
-                <a href="/blog/">Blog</a>
-            </nav>
-            <div class="branding-controls">
-                <span>Make it yours: brand configuration coming soon.</span>
-            </div>
-        </div>
-    </header>
-    <div class="main-container">
+    {% include "header.html" %}
+    <main class="main-container" style="padding-top: 5rem;">
         <h1>Streamline Your Stand-ups!</h1>
         <p class="sub-header">Make daily stand-ups and team decisions more engaging and fair with <strong>Daily Pick</strong>! Choose from our collection of fun interactive tools like the <strong>Decision Wheel</strong>, <strong>Speedway Racer</strong>, or the strategic <strong>Trap! Game</strong> to set speaking order, pick names, or just enjoy a quick team-building moment. Say goodbye to "who's next?" and hello to fun!</p>
 
@@ -276,9 +95,7 @@
         </div>
 
 
-        <p class="footer-note">
-            Crafted to bring a smile to your workday and make <strong>team sync-ups</strong> a breeze. Enjoy!
-        </p>
+        {% include "footer.html" %}
 
         <script>
             document.addEventListener('DOMContentLoaded', () => {
@@ -296,6 +113,6 @@
                 }
             });
         </script>
-    </div>
+    </main>
 </body>
 </html>

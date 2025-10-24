@@ -66,19 +66,7 @@
 </head>
 
 <body>
-  <header class="site-header">
-    <div class="header-content">
-      <a href="/" class="site-title">
-        <span class="brand-mark" aria-hidden="true">🎯</span>
-        <span class="brand-name">Daily Pick</span>
-      </a>
-      <nav>
-        <a href="/">Play</a>
-        <a href="/blog/">Blog</a>
-      </nav>
-      <div class="branding-controls">Flexible branding coming soon.</div>
-    </div>
-  </header>
+  {% include "header.html" %}
 
   <h1>🏁 Speedway: Turtle Race Name Picker 🏁</h1>
 
@@ -635,7 +623,7 @@
     toggleConfigArea(false);
   </script>
 
-
+  {% include "footer.html" %}
 </body>
 
 </html>

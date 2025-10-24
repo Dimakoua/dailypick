@@ -32,19 +32,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <header class="site-header">
-        <div class="header-content">
-            <a href="/" class="site-title">
-                <span class="brand-mark" aria-hidden="true">🎯</span>
-                <span class="brand-name">Daily Pick</span>
-            </a>
-            <nav>
-                <a href="/">Play</a>
-                <a href="/blog/">Blog</a>
-            </nav>
-            <div class="branding-controls">Customize the cosmos soon.</div>
-        </div>
-    </header>
+    {% include "header.html" %}
 
     <button id="settingsToggleBtn">⚙️ Show Settings</button>
 
@@ -100,5 +88,6 @@
         </ul>
         <p>Gravity Drift offers a rewarding challenge for fans of <strong>space simulation games</strong> and <strong>strategy games</strong> alike. Launch your rockets today and see if you have what it takes to master the drift!</p>
     </div>
+    {% include "footer.html" %}
 </body>
 </html>
