@@ -126,15 +126,6 @@ h1 {
   content: "";
   position: absolute; inset: 12px;
   border-radius: calc(var(--radius-lg, 15px) - 8px);
-  background:
-    repeating-linear-gradient(
-      to bottom,
-      transparent 0,
-      transparent 45px,
-      var(--lane-alpha) 45px,
-      var(--lane-alpha) 47px
-    ),
-    linear-gradient(180deg, color-mix(in srgb, var(--speedway-track, #ffffff) 88%, transparent), rgba(255,255,255,.92));
   pointer-events: none;
 }
 

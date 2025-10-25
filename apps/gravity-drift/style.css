@@ -32,9 +32,6 @@ body {
   background: linear-gradient(to bottom right, rgba(52,152,219,.9), rgba(41,128,185,.9));
   box-shadow: 0 10px 24px rgba(0,0,0,.18);
   transition: transform .2s ease, box-shadow .2s ease, background-color .3s ease;
-  position: fixed;
-  top: calc(var(--header-h, 64px) + 10px);
-  right: clamp(10px, 4vw, 28px);
   z-index: 40;
 }
 #settingsToggleBtn:hover,
