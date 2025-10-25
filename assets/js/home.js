@@ -68,7 +68,7 @@ function applyBackdropClass() {
 function initRandomGameButton() {
   const btn = document.getElementById('randomGameBtn');
   const announceEl = document.getElementById('announce');
-  const links = document.querySelectorAll('.game-grid .game-card');
+  const links = document.querySelectorAll('.game-grid .game-card[data-category="standup"]');
 
   if (!btn || links.length === 0) return;
 
