@@ -1,88 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mimic Master - Daily Pick</title>
-    <meta name="description" content="Match the on-screen prompt with your hands, race the clock, and climb the room leaderboard in Mimic Master by Daily Pick.">
+    <title>Mimic Master - Lightning Reaction Game | Daily Pick</title>
+    <meta name="description"
+        content="Start a Mimic Master room, enable your camera, and see who can match the on-screen prompt fastest. Real-time leaderboards keep every round competitive.">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/theme.css">
+    <link rel="stylesheet" href="/assets/css/glass.css">
     <link rel="stylesheet" href="style.css">
     <script src="/assets/js/brand-config.js" defer></script>
 </head>
+
 <body>
+    {% include "bg-orbs.html" %}
     {% include "header.html" %}
 
-    <h1>🖐️ Mimic Master</h1>
-    <p class="tagline">Match the prompt with your hands, beat the countdown, and see who reacts fastest in your room.</p>
+    <main class="mimic-page" aria-labelledby="mimicHeading">
+        <header class="hero-card glass-card">
+            <div>
+                <p class="hero-eyebrow">Reaction Challenge</p>
+                <h1 id="mimicHeading">🖐️ Mimic Master</h1>
+                <p class="hero-subtitle">
+                    Match the on-screen prompt with your hands, beat the countdown, and climb the shared leaderboard. Perfect
+                    for lightning-fast energy boosts during planning or retro breaks.
+                </p>
+            </div>
+            <div class="hero-meta">
+                <span id="sessionStatus" class="status-pill" aria-live="polite" aria-atomic="true">Not connected</span>
+                <button id="copyLinkBtn" class="ghost-btn" type="button" disabled>Copy invite link</button>
+            </div>
+        </header>
 
-    <section class="controls">
-        <div class="control-block">
-            <label for="playerNameInput">Display name</label>
-            <div class="inline-controls">
-                <input id="playerNameInput" type="text" maxlength="24" placeholder="e.g. Alex" autocomplete="off">
-                <button id="saveNameBtn" type="button">Save</button>
-            </div>
-        </div>
-        <div class="control-block">
-            <span class="control-label">Room</span>
-            <div class="inline-controls">
-                <button id="startRoomBtn" type="button">Start New Room</button>
-                <button id="joinRoomBtn" type="button" style="display:none;">Join Room</button>
-                <button id="copyLinkBtn" type="button" disabled>Copy Invite Link</button>
-            </div>
-            <p id="sessionStatus" class="status">Not connected</p>
-        </div>
-        <div class="control-block">
-            <span class="control-label">Play</span>
-            <div class="inline-controls">
-                <button id="enableCameraBtn" type="button">Enable Camera</button>
-                <button id="startGameBtn" type="button" disabled style="display:none;">Start Game</button>
-                <p id="waitingMessage" style="display:none;">Waiting for host to start game...</p>
-            </div>
-            </div>
-            <p id="roundHint" class="hint">Enable your camera to begin.</p>
-        </div>
-    </section>
+        <section class="mimic-grid">
+            <article class="controls-card glass-card" aria-label="Room controls">
+                <div class="control-block">
+                    <label for="playerNameInput">Display name</label>
+                    <div class="inline-controls">
+                        <input id="playerNameInput" type="text" maxlength="24" placeholder="e.g. Alex" autocomplete="off">
+                        <button id="saveNameBtn" type="button">Save</button>
+                    </div>
+                </div>
 
-    <section class="game-layout">
-        <div class="video-panel">
-            <div class="video-wrapper">
-                <video id="video" playsinline autoplay muted></video>
-                <canvas id="overlay"></canvas>
-                <div id="promptDisplay">Ready?</div>
-                <div id="statusMessage"></div>
-            </div>
-        </div>
-        <section class="leaderboard-panel">
-            <h2>Players in Room</h2>
-            <ol id="leaderboardList"></ol>
-            <p class="leaderboard-note">We keep your fastest matching time for the current room.</p>
+                <div class="control-block">
+                    <span class="control-label">Room</span>
+                    <div class="inline-controls">
+                        <button id="startRoomBtn" type="button">Start new room</button>
+                        <button id="joinRoomBtn" type="button" style="display:none;">Join room</button>
+                    </div>
+                </div>
+
+                <div class="control-block">
+                    <span class="control-label">Play</span>
+                    <div class="inline-controls">
+                        <button id="enableCameraBtn" type="button">Enable camera</button>
+                        <button id="startGameBtn" type="button" disabled style="display:none;">Start reaction round</button>
+                    </div>
+                    <p id="waitingMessage" class="hint" style="display:none;">Waiting for host to start the next round…</p>
+                    <p id="roundHint" class="hint">Enable your camera to begin.</p>
+                </div>
+            </article>
+
+            <article class="video-card glass-card">
+                <div class="video-wrapper">
+                    <video id="video" playsinline autoplay muted></video>
+                    <canvas id="overlay"></canvas>
+                    <div id="promptDisplay">Ready?</div>
+                    <div id="statusMessage"></div>
+                </div>
+            </article>
+
+            <article class="side-card glass-card">
+                <section class="leaderboard-panel">
+                    <div class="panel-header">
+                        <h2>Players in room</h2>
+                        <button id="startRoomBtnHidden" type="button" class="sr-only" aria-hidden="true"></button>
+                    </div>
+                    <ol id="leaderboardList"></ol>
+                    <p class="leaderboard-note">We keep your fastest matching time for the active room.</p>
+                </section>
+
+                <section class="tips-panel">
+                    <h3>How it works</h3>
+                    <ul>
+                        <li>Set a display name and start a room. Share the invite link with teammates.</li>
+                        <li>Enable your camera, then tap “Start reaction round”. A random number or emoji appears after a short delay.</li>
+                        <li>Mimic the prompt. As soon as your hands match, your reaction time locks in.</li>
+                        <li>The leaderboard updates live so everyone sees the fastest response.</li>
+                    </ul>
+                    <p class="privacy-note">All gesture detection runs in your browser. Only your display name and reaction
+                        results are shared with the room.</p>
+                </section>
+            </article>
         </section>
-    </section>
+    </main>
 
-    <section class="help-section">
-        <h2>How it works</h2>
-        <ul>
-            <li>Set a display name and start a new room. Share the invite link so teammates can join.</li>
-            <li>Enable your camera, then tap “Start Reaction Round”. A random number or emoji will appear after a short delay.</li>
-            <li>Mimic the prompt with your hands. We detect raised fingers or gestures. As soon as it matches, your time stops.</li>
-            <li>The fastest reaction in the room climbs to the top of the leaderboard. Try to beat your personal best!</li>
-        </ul>
-        <p class="privacy-note">All processing happens in the browser. We only send your display name and reaction results to the room leaderboard.</p>
-    </section>
+    <!-- Core libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
 
-<!-- Core libraries -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+    <!-- Hand Pose Detection -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection"></script>
 
-<!-- Hand Pose Detection -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection"></script>
-
-<!-- Optional: MediaPipe runtime -->
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands"></script>
+    <!-- Optional: MediaPipe runtime -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands"></script>
     <script src="script.js"></script>
     {% include "footer.html" %}
 </body>
+
 </html>
