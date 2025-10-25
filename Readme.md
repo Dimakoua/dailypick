@@ -15,6 +15,7 @@ apps/                 # Standalone mini-game front-ends copied straight to dist/
   gravity-drift/
   letters/
   mimic-master/
+  planning-poker/
   speedway/
   trap/
   wheel/
@@ -38,8 +39,16 @@ wrangler.toml         # Cloudflare deployment configuration
 - Durable Objects:
   - `CollaborationSession` – manages cross-game cursor state
   - `BallGameSession` – real-time physics session for Momentum Mayhem
-  - `MimicGameSession` – room state for Mimic Master
+- `MimicGameSession` – room state for Mimic Master
+- `PlanningPokerSession` – multiplayer Fibonacci voting with reveal/reset controls
 - Update Worker logic alongside any associated game code in `apps/<game>/` to keep protocol and UI changes synchronized.
+
+## Planning Poker Hub
+- Front-end location: `apps/planning-poker/` served at `/apps/planning-poker/`.
+- WebSocket endpoint: `/api/planning-poker/websocket?session_id=<code>` backed by the `PlanningPokerSession` Durable Object.
+- Host workflow: first person in a room becomes host (auto-fails over if they disconnect).
+- Features: Fibonacci deck, hidden picks until reveal, room story label, automatic vote summaries (counts + averages) that can be copied into Jira or any backlog tool.
+- Rounds: reveal locks in results; “New round” clears selections and increments the internal round counter.
 
 ## Conventions
 - Treat `dist/` as disposable build output and avoid committing manual edits.
@@ -52,3 +61,22 @@ wrangler.toml         # Cloudflare deployment configuration
 - The Eleventy build runs as part of the scheduled blog workflow to refresh `sitemap.xml`.
 - `wrangler.toml` points to `dist/` as the static bucket; ensure `npm run build` succeeds before deploying.
 - Secrets for the blog generation workflow (e.g., `GEMINI_API_KEY`) must be managed in the GitHub repository settings.
+
+
+
+ideas
+
+A few quick additions that would resonate with scrum ceremonies:
+
+Retro Roulette: Wheel of “Mad/Sad/Glad”, “4Ls”, “Sailboat” prompts; spins land on a theme and participant, keeping retros fresh.
+
+
+Risk Radar: Collaborative board where team drags blockers/risks into quadrants (impact vs likelihood); timer + celebratory reveal for focus.
+
+Sprint Goal Slot Machine: Input backlog items, pull the lever to surface potential sprint objectives along with suggested KPIs to discuss.
+
+Stand-up Variants: e.g., a “Daily Dice” that rolls through categories (“Blockers”, “Wins”, “Shout-outs”) to break monotony.
+
+Swarm Sprint: Mini game where avatars chase backlog bugs; progress bars mapped to real tasks to gamify bug bashes.
+
+Each keeps the playful vibe while aligning with key scrum events—happy to mock up flows for any of them.

@@ -3,6 +3,7 @@ import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
 import { CollaborationSession } from '../shared/collaboration.js';
 import { BallGameSession } from '../../apps/ballgame/ball-game-session.js';
 import { MimicGameSession } from '../../apps/mimic-master/mimic-game-session.js';
+import { PlanningPokerSession } from '../../apps/planning-poker/planning-poker-session.js';
 import manifest from '__STATIC_CONTENT_MANIFEST';
 
 const assetManifest = JSON.parse(manifest);
@@ -62,6 +63,21 @@ router.get('/api/mimic-master/websocket', (request, env) => {
 
     const durableObjectId = env.MIMIC_GAME_SESSION.idFromName(id);
     const durableObject = env.MIMIC_GAME_SESSION.get(durableObjectId);
+    return durableObject.fetch(request);
+});
+
+router.get('/api/planning-poker/websocket', (request, env) => {
+    console.log('[Worker Debug] Request /api/planning-poker WebSocket received.');
+    const url = new URL(request.url);
+    const id = url.searchParams.get('session_id');
+
+    if (!id) {
+        console.error('[Worker Debug] Planning Poker WS: Missing session_id query parameter.');
+        return new Response('Missing session_id query parameter', { status: 400 });
+    }
+
+    const durableObjectId = env.PLANNING_POKER_SESSION.idFromName(id);
+    const durableObject = env.PLANNING_POKER_SESSION.get(durableObjectId);
     return durableObject.fetch(request);
 });
 
@@ -172,4 +188,4 @@ export default {
     },
 };
 
-export { CollaborationSession, BallGameSession, MimicGameSession };
+export { CollaborationSession, BallGameSession, MimicGameSession, PlanningPokerSession };
