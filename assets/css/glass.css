@@ -124,16 +124,6 @@
   transition: transform .6s ease, opacity .4s ease;
   opacity: 0.0;
 }
-.game-card:hover::after,
-.game-card:focus-visible::after {
-  transform: rotate(-18deg) translateX(10%);
-  opacity: 0.7;
-}
-
-.game-card:hover .game-card__icon,
-.game-card:focus-visible .game-card__icon {
-  filter: drop-shadow(0 6px 10px rgba(52,152,219,0.35));
-}
 
 /* Buttons: keep accent but glassy */
 .btn--accent {
