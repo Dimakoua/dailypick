@@ -87,7 +87,6 @@
 }
 
 .settings-card textarea {
-  width: 100%;
   border-radius: 12px;
   border: 1px solid var(--brand-border);
   padding: 12px;
