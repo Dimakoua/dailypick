@@ -47,8 +47,6 @@ h1 {
   border: 1px solid rgba(255,255,255,.25);
   border-radius: var(--radius-md, 10px);
   background: linear-gradient(to bottom right, rgba(52,152,219,.9), rgba(41,128,185,.9));
-  backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
   box-shadow: 0 10px 24px rgba(0,0,0,.12);
   transition: transform .2s ease, box-shadow .2s ease, background-color .3s ease;
 }
@@ -67,8 +65,7 @@ h1 {
   z-index: 30;
   background: var(--glass-bg-strong, rgba(255,255,255,.18));
   border: 1px solid var(--glass-border, rgba(255,255,255,.38));
-  backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+ 
   border-radius: var(--radius-lg, 15px);
   box-shadow: var(--glass-shadow, 0 8px 30px rgba(0,0,0,.15));
   padding: 22px 26px;
@@ -121,8 +118,7 @@ h1 {
   border: 1px solid var(--glass-border, rgba(255,255,255,.38));
   border-radius: var(--radius-lg, 15px);
   box-shadow: var(--glass-shadow, 0 8px 30px rgba(0,0,0,.15));
-  backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+ 
 }
 
 /* Lanes overlay */
@@ -209,8 +205,7 @@ button#updateNamesBtn {
   cursor: pointer;
   transition: transform .2s ease, box-shadow .2s ease, background-color .3s ease;
   box-shadow: 0 10px 22px rgba(0,0,0,.12);
-  backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+ 
   margin-top: 10px;
 }
 button#startRaceBtn { background: linear-gradient(to bottom right, rgba(52,152,219,.9), rgba(41,128,185,.9)); }

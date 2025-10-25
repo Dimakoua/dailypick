@@ -30,8 +30,6 @@ body {
   border: 1px solid rgba(255,255,255,.25);
   border-radius: var(--radius-md, 10px);
   background: linear-gradient(to bottom right, rgba(52,152,219,.9), rgba(41,128,185,.9));
-  backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
   box-shadow: 0 10px 24px rgba(0,0,0,.18);
   transition: transform .2s ease, box-shadow .2s ease, background-color .3s ease;
   position: fixed;
@@ -54,8 +52,7 @@ body {
   z-index: 35;
   background: var(--glass-bg-strong, rgba(15, 23, 42, 0.48));
   border: 1px solid var(--glass-border, rgba(255,255,255,.20));
-  backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+ 
   border-radius: var(--radius-lg, 15px);
   box-shadow: var(--glass-shadow, 0 10px 40px rgba(0,0,0,.35));
   padding: 20px 22px;
@@ -154,8 +151,7 @@ body {
   border: 1px solid var(--glass-border, rgba(255,255,255,.20));
   border-radius: var(--radius-lg, 15px);
   box-shadow: var(--glass-shadow, 0 10px 40px rgba(0,0,0,.35));
-  backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+ 
   padding: 16px 16px 12px;
   color: var(--brand-text, #e5e7eb);
   z-index: 32;
@@ -213,8 +209,7 @@ body {
   border: 1px solid var(--glass-border, rgba(255,255,255,.20));
   border-radius: var(--radius-lg, 15px);
   box-shadow: var(--glass-shadow, 0 10px 40px rgba(0,0,0,.35));
-  backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+ 
   padding: 24px 28px;
   max-width: 780px;
   width: min(92%, 780px);

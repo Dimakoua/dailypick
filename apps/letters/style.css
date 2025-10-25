@@ -53,8 +53,6 @@ h1 {
     rgba(52, 152, 219, 0.9),
     rgba(41, 128, 185, 0.9)
   );
-  backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
   box-shadow: 0 10px 24px rgba(0,0,0,0.12);
   transition: transform .2s ease, box-shadow .2s ease, background-color .3s ease;
 }
@@ -72,8 +70,7 @@ h1 {
   z-index: 30;
   background: var(--glass-bg-strong, rgba(255,255,255,0.18));
   border: 1px solid var(--glass-border, rgba(255,255,255,0.38));
-  backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+ 
   border-radius: var(--radius-lg, 15px);
   box-shadow: var(--glass-shadow, 0 8px 30px rgba(0,0,0,0.15));
   padding: 22px 26px;
@@ -114,8 +111,7 @@ button#restartButton {
   color: #fff;
   transition: transform .2s ease, box-shadow .2s ease, background-color .3s ease;
   box-shadow: 0 10px 22px rgba(0,0,0,0.12);
-  backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+ 
 }
 button#updateNamesBtn { 
   background: linear-gradient(to bottom right, rgba(230,126,34,0.9), rgba(211,84,0,0.9));
@@ -156,8 +152,7 @@ button#restartButton:disabled {
 
   /* glass body with wood trim to keep "pinball" personality */
   background: var(--glass-bg-strong, rgba(255,255,255,0.18));
-  backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+ 
   border: 12px solid #4a3b31;                  /* wood trim */
   border-radius: 28px;
   box-shadow: 0 14px 36px rgba(0,0,0,0.18);
