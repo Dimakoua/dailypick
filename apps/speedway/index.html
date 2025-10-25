@@ -75,13 +75,12 @@
 
     <h1>🏁 Speedway: Turtle Race Name Picker 🏁</h1>
 
-    <button id="settingsToggleBtn">⚙️ Show Settings</button>
-    <div id="config-area" class="config-hidden">
-        <label for="namesInput">Enter racer names (one per line or comma-separated):</label>
-        <textarea id="namesInput" rows="4"></textarea>
-        <button id="updateNamesBtn">Update Racers</button>
-    </div>
-
+    {% set config_content %}
+    <label for="namesInput">Enter racer names (one per line or comma-separated):</label>
+    <textarea id="namesInput" rows="4"></textarea>
+    <button id="updateNamesBtn">Update Racers</button>
+    {% endset %}
+    {% include "config-panel.html" %}
     <div class="game-layout">
         <div id="track-container" aria-label="Racing track">
             <div id="start-line"></div>
@@ -164,8 +163,6 @@
         const trackContainer = document.getElementById('track-container');
         const startRaceBtn = document.getElementById('startRaceBtn');
         const standupOrderList = document.getElementById('standupOrderList');
-        const settingsToggleBtn = document.getElementById('settingsToggleBtn');
-        const configArea = document.getElementById('config-area');
         const namesInput = document.getElementById('namesInput');
         const updateNamesBtn = document.getElementById('updateNamesBtn');
 
@@ -283,19 +280,6 @@
             }
         }
 
-        function toggleConfigArea(show) {
-            if (show === undefined) {
-                configArea.classList.toggle('config-hidden');
-            } else if (show) {
-                configArea.classList.remove('config-hidden');
-            } else {
-                configArea.classList.add('config-hidden');
-            }
-            settingsToggleBtn.textContent = configArea.classList.contains('config-hidden')
-                ? '⚙️ Show Settings'
-                : '⚙️ Hide Settings';
-        }
-
         /** ====== Event wiring ====== */
         startRaceBtn.addEventListener('click', () => {
             if (raceInProgress) return;
@@ -306,13 +290,11 @@
             animationFrameId = requestAnimationFrame(raceTick);
         });
 
-        settingsToggleBtn.addEventListener('click', () => toggleConfigArea());
         updateNamesBtn.addEventListener('click', updateNamesFromInput);
 
         /** ====== Init ====== */
         loadNamesFromStorage();
         setupRacers();
-        toggleConfigArea(false);
     </script>
 </body>
 

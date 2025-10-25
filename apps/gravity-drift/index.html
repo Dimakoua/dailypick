@@ -41,14 +41,12 @@
   {% include "bg-orbs.html" %}
   {% include "header.html" %}
 
-  <button id="settingsToggleBtn" type="button">⚙️ Show Settings</button>
-
-  <div id="config-area" class="config-hidden" role="region" aria-label="Gravity Drift Settings">
-    <label for="namesInput">Edit Rocket Names (one name per line):</label>
-    <textarea id="namesInput" rows="4"></textarea>
-    <button id="updateNamesBtn" type="button">Update Names & Restart Game</button>
-  </div>
-
+  {% set config_content %}
+  <label for="namesInput">Edit Rocket Names (one name per line):</label>
+  <textarea id="namesInput" rows="4"></textarea>
+  <button id="updateNamesBtn" type="button">Update Names & Restart Game</button>
+  {% endset %}
+  {% include "config-panel.html" %}
   <div class="game-container" aria-label="Gravity Drift playfield">
     <canvas id="gameCanvas"></canvas>
     <div id="controls">

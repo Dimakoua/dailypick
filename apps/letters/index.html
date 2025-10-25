@@ -71,13 +71,13 @@
     {% include "header.html" %}
 
     <h1>🕹️ Falling Letters Pinball 🕹️</h1>
-    <button id="settingsToggleBtn">⚙️ Show Settings</button>
-
-    <div id="config-area" class="config-hidden">
-        <label for="namesInput">Edit Names List (one name per line):</label>
-        <textarea id="namesInput" rows="4"></textarea>
-        <button id="updateNamesBtn">Update Names & Restart Game</button>
-    </div>
+    {% set config_content %}
+    <label for="namesInput">Edit Names List (one name per line):</label>
+    <textarea id="namesInput" rows="4"></textarea>
+    <button id="updateNamesBtn">Update Names & Restart Game</button>
+    {% endset %}
+    {% include "config-panel.html" %}
+    
     <div id="appContainer" style="display: flex; flex-direction: column; align-items: center;">
         <div id="gameContainer">
             <canvas id="gameCanvas"></canvas>

@@ -5,8 +5,6 @@ const restartButton = document.getElementById('restartButton');
 const appContainer = document.getElementById('appContainer');
 const namesInputElement = document.getElementById('namesInput'); // For user input of names
 const updateNamesButton = document.getElementById('updateNamesBtn'); // Button to update names
-const settingsToggleBtn = document.getElementById('settingsToggleBtn'); // Button to show/hide settings
-const configArea = document.getElementById('config-area'); // The div containing settings
 
 const CANVAS_WIDTH = 450;
 const CANVAS_HEIGHT = 675;
@@ -405,8 +403,6 @@ function updateNamesFromInput() {
     }
     saveNamesToStorage();
     resetAndStartGame(); // This will re-initialize availableNames from the new originalNames
-    // Optionally hide config area after update
-    // toggleConfigArea(false); 
 }
 function gameLoop(timestamp) {
     // Clear canvas with a dark pinball-themed background
@@ -615,18 +611,6 @@ function resetAndStartGame() {
     gameLoopId = requestAnimationFrame(gameLoop);
 }
 
-function toggleConfigArea(show) {
-    if (!configArea || !settingsToggleBtn) return;
-    if (show === undefined) {
-        configArea.classList.toggle("config-hidden");
-    } else if (show) {
-        configArea.classList.remove("config-hidden");
-    } else {
-        configArea.classList.add("config-hidden");
-    }
-    settingsToggleBtn.textContent = configArea.classList.contains("config-hidden") ? "⚙️ Show Settings" : "⚙️ Hide Settings";
-}
-
 function initGame() {
     loadNamesFromStorage(); // Load names from localStorage or use defaults
     setupObstacles(); // Define obstacles
@@ -637,9 +621,6 @@ function initGame() {
     if (updateNamesButton) {
         updateNamesButton.addEventListener('click', updateNamesFromInput);
     }
-    if (settingsToggleBtn) {
-        settingsToggleBtn.addEventListener('click', () => toggleConfigArea());
-    }
     resetAndStartGame(); // Initial start of the game
 
     // Add screen fitting logic
@@ -647,5 +628,4 @@ function initGame() {
     window.addEventListener('resize', fitAppToScreen); // Fit on resize
 }
 
-toggleConfigArea(false); // Hide settings by default on load, called after initGame ensures elements exist
 initGame();

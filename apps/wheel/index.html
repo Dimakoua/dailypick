@@ -39,13 +39,12 @@
 
     <h1>🎯 Wheel</h1>
 
-    <button id="settingsToggleBtn">⚙️ Show Settings</button>
-    <div id="config-area" class="config-hidden">
-        <label for="namesInput">Enter names (one per line or comma-separated):</label>
-        <textarea id="namesInput" rows="4"></textarea>
-        <button id="updateNamesBtn">Update List</button>
-    </div>
-
+    {% set config_content %}
+    <label for="namesInput">Enter names (one per line or comma-separated):</label>
+    <textarea id="namesInput" rows="4"></textarea>
+    <button id="updateNamesBtn">Update List</button>
+    {% endset %}
+    {% include "config-panel.html" %}
     <div id="wheel-container">
         <div id="indicator"></div>
         <canvas id="wheel" width="425" height="425"></canvas> <!-- Match CSS size -->
@@ -112,8 +111,6 @@
         const radius = canvas.width / 2;
         const namesInput = document.getElementById("namesInput");
         const updateNamesBtn = document.getElementById("updateNamesBtn");
-        const settingsToggleBtn = document.getElementById("settingsToggleBtn");
-        const configArea = document.getElementById("config-area");
 
         const LOCAL_STORAGE_KEY = 'namesList';
 
@@ -256,26 +253,12 @@
             animate();
         }
 
-        function toggleConfigArea(show) {
-            if (show === undefined) { // Toggle if no specific state is passed
-                configArea.classList.toggle("config-hidden");
-            } else if (show) {
-                configArea.classList.remove("config-hidden");
-            } else {
-                configArea.classList.add("config-hidden");
-            }
-            settingsToggleBtn.textContent = configArea.classList.contains("config-hidden") ? "⚙️ Show Settings" : "⚙️ Hide Settings";
-        }
-
         spinBtn.addEventListener("click", spinWheel);
         updateNamesBtn.addEventListener("click", updateNamesFromInput);
-        settingsToggleBtn.addEventListener("click", () => toggleConfigArea());
 
         // Initial setup
         loadNamesFromStorage(); // Load names first
         drawWheel(remaining, 0);
-        // Ensure config is hidden by default (CSS class handles this, but explicit call is fine)
-        toggleConfigArea(false);
 
     </script>
 

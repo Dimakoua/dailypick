@@ -4,8 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const startButton = document.getElementById('startButton');
     const gameContainer = document.querySelector('.game-container'); // Get the game container
     const leaderboardDiv = document.getElementById('leaderboard');
-    const settingsToggleBtn = document.getElementById('settingsToggleBtn');
-    const configArea = document.getElementById('config-area');
     const namesInputElement = document.getElementById('namesInput');
     const updateNamesButton = document.getElementById('updateNamesBtn');
     const leaderboardList = document.getElementById('leaderboardList');
@@ -753,18 +751,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // toggleConfigArea(false); 
     }
 
-    function toggleConfigArea(show) {
-        if (!configArea || !settingsToggleBtn) return;
-        if (show === undefined) {
-            configArea.classList.toggle("config-hidden");
-        } else if (show) {
-            configArea.classList.remove("config-hidden");
-        } else {
-            configArea.classList.add("config-hidden");
-        }
-        settingsToggleBtn.textContent = configArea.classList.contains("config-hidden") ? "⚙️ Show Settings" : "⚙️ Hide Settings";
-    }
-
     function fitGameToScreen() {
         if (!gameContainer) return;
 
@@ -790,7 +776,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial setup
     startButton.addEventListener('click', startGame);
     if (updateNamesButton) updateNamesButton.addEventListener('click', updateNamesFromInput);
-    if (settingsToggleBtn) settingsToggleBtn.addEventListener('click', () => toggleConfigArea());
     loadConfigurableRocketNames(); // Load names before any game logic that might use them
     
     function initialDraw() {
@@ -812,7 +797,6 @@ document.addEventListener('DOMContentLoaded', () => {
         drawHeavyStarSkies();
     }
 
-    toggleConfigArea(false); // Hide settings by default on load
     fitGameToScreen(); // Initial fit
     initialDraw(); // Perform an initial draw of the static scene
 
