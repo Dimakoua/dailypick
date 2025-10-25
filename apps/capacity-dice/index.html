@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Capacity Planner Dice - Sprint Capacity Game | Daily Pick</title>
+  <meta name="description"
+    content="Roll the Capacity Planner Dice to simulate PTO, meetings, and curveballs. Adjust sprint capacity on the fly and share a ready-made summary with your team." />
+  <meta name="keywords"
+    content="capacity planning, scrum capacity, sprint planning game, agile estimation, daily pick, planning dice, team capacity">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dailypick.dev/apps/capacity-dice/">
+  <meta property="og:title" content="Capacity Planner Dice - Agile Capacity Game | Daily Pick">
+  <meta property="og:description"
+    content="Make sprint planning playful. Roll dice for PTO, meetings, and surprises to get a realistic capacity adjustment you can paste into Jira.">
+  <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
+
+  <link rel="canonical" href="https://dailypick.dev/apps/capacity-dice/">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/assets/favicon/site.webmanifest">
+  <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/css/theme.css">
+  <link rel="stylesheet" href="/assets/css/glass.css">
+  <link rel="stylesheet" href="./style.css">
+  <script src="/assets/js/brand-config.js" defer></script>
+  <script src="./script.js" defer></script>
+</head>
+
+<body>
+  {% include "bg-orbs.html" %}
+  {% include "header.html" %}
+
+  <main class="capacity-page" aria-labelledby="capacityHeading">
+    <header class="hero-card glass-card">
+      <div>
+        <p class="eyebrow">Planning Toolkit</p>
+        <h1 id="capacityHeading">Capacity Planner Dice</h1>
+        <p>Roll playful dice for PTO, meetings, and curveballs to stress-test your sprint capacity. Share the summary as
+          a Jira comment or planning note.</p>
+      </div>
+      <div class="hero-actions">
+        <button id="rollDiceBtn" type="button">🎲 Roll the dice</button>
+        <p id="status" aria-live="polite" aria-atomic="true"></p>
+      </div>
+    </header>
+
+    <section class="capacity-grid">
+      <article class="controls-card glass-card" aria-label="Capacity inputs">
+        <div class="field-group">
+          <label for="teamNameInput">Team / Sprint label</label>
+          <input id="teamNameInput" type="text" maxlength="80" placeholder="e.g. Core Services · Sprint 48">
+        </div>
+
+        <div class="field-group">
+          <label for="baseCapacityInput">
+            Planned capacity (story points or ideal hours)
+          </label>
+          <div class="capacity-input">
+            <input id="baseCapacityInput" type="number" min="5" max="200" step="1" value="40">
+            <span>units</span>
+          </div>
+          <p class="field-hint">Use whatever measurement your team prefers. We’ll apply dice modifiers as a percent.</p>
+        </div>
+
+        <div class="field-group toggles">
+          <label>Focus this sprint</label>
+          <div class="toggle-row">
+            <label>
+              <input type="checkbox" id="includePositive">
+              <span>Allow energy boosts (hackathons, cleanup days)</span>
+            </label>
+            <label>
+              <input type="checkbox" id="includeWildcards" checked>
+              <span>Allow wild curveballs</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="totals">
+          <div>
+            <span>Current adjustment</span>
+            <strong id="adjustmentLabel">0%</strong>
+          </div>
+          <div>
+            <span>Adjusted capacity</span>
+            <strong id="adjustedCapacityLabel">40</strong>
+          </div>
+        </div>
+      </article>
+
+      <article class="dice-zone glass-card" aria-live="polite">
+        <div class="dice-grid" id="diceGrid">
+          <!-- Populated by JS -->
+        </div>
+        <p class="dice-hint">Each die represents a capacity factor. Roll until the combination feels realistic for your
+          sprint.</p>
+      </article>
+
+      <article class="summary-card glass-card">
+        <header>
+          <h2>Planning summary</h2>
+          <button id="copySummaryBtn" type="button">Copy summary</button>
+        </header>
+        <pre id="summaryOutput">Roll the dice to generate a capacity summary.</pre>
+        <div class="history">
+          <div class="history-header">
+            <h3>Recent rolls</h3>
+            <button id="clearHistoryBtn" type="button" class="ghost-btn">Clear</button>
+          </div>
+          <ul id="historyList" aria-live="polite"></ul>
+        </div>
+      </article>
+    </section>
+
+    <section class="seo-copy glass-card">
+      <h2>Why Capacity Planner Dice?</h2>
+      <p>Teams rarely enjoy discussing “surprise PTO” or “meeting storms.” Capacity Planner Dice makes it easy: roll a
+        few dice, talk about each card, then log the adjusted plan so everyone has the same expectation. It works for
+        scrum, kanban, or any hybrid planning ritual.</p>
+      <ul>
+        <li><strong>Faster alignment:</strong> Have the tough capacity conversation in under a minute.</li>
+        <li><strong>Shareable:</strong> Copy the summary into Jira, Confluence, or Slack.</li>
+        <li><strong>Customizable:</strong> Toggle positive boosts or wildcards depending on your sprint focus.</li>
+        <li><strong>Repeatable:</strong> Keep the history visible so your team can compare rolls across ceremonies.</li>
+      </ul>
+    </section>
+  </main>
+
+  {% include "footer.html" %}
+</body>
+
+</html>

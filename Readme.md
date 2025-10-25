@@ -50,6 +50,11 @@ wrangler.toml         # Cloudflare deployment configuration
 - Features: Fibonacci deck, hidden picks until reveal, room story label, automatic vote summaries (counts + averages) that can be copied into Jira or any backlog tool.
 - Rounds: reveal locks in results; “New round” clears selections and increments the internal round counter.
 
+## Capacity Planner Dice
+- Static game served from `apps/capacity-dice/` (no backend).
+- Lets teams enter a planned capacity, roll thematic dice (availability, boosts, wildcards), and see the resulting percent adjustment.
+- Generates a ready-to-copy summary plus keeps a short history of recent rolls for meeting notes.
+
 ## Conventions
 - Treat `dist/` as disposable build output and avoid committing manual edits.
 - Shared front-end assets should live under `assets/` (e.g., `assets/css`, `assets/js`).
