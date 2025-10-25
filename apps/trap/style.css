@@ -1,219 +1,205 @@
+/* =========================================================
+   Trap! — glass-styled page
+   - Matches Wheel/Letters glass vibe
+   - Sticky header offset, a11y focus, dark-mode, responsive
+   ========================================================= */
+
+/* Tokens */
+:root {
+  --trap-max: 580px;
+}
+
+/* Header-safe anchor offset */
+html { scroll-padding-top: calc(var(--header-h, 64px) + 12px); }
+
+/* Base */
 body {
-    font-family: var(--brand-font-family, 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif);
-    background-color: var(--brand-background, #f4f7f6);
-    /* Soft off-white from index.html */
-    color: var(--brand-text, #5d5d5d);
-    /* Dark grey text from index.html */
-    text-align: center;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: calc(100vh - 40px);
-    /* Account for padding */
+  font-family: var(--brand-font-family, 'Nunito', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif);
+  background: var(--brand-background, #f4f7f6);
+  color: var(--brand-text, #34495e);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100dvh;
+  overflow-x: hidden;
 }
 
 h1 {
-    font-size: 2.6em;
-    margin: 0 0 25px 0;
-    color: var(--brand-accent, #3498db);
-    /* Friendly blue from index.html */
-    font-weight: 700;
+  font-size: clamp(2rem, 2.6rem, 3rem);
+  margin: calc(var(--header-h, 64px) + 12px) 0 20px;
+  color: var(--brand-accent, #3498db);
+  font-weight: 800;
+  text-align: center;
+  text-shadow: 0 1px 1px rgba(255,255,255,.35);
+}
+@media (prefers-color-scheme: dark) {
+  h1 { text-shadow: 0 1px 1px rgba(0,0,0,.45); }
 }
 
+/* Settings button (glassy) */
 #settingsToggleBtn {
-    position: absolute;
-    top: var(--app-header-offset, 110px);
-    right: 20px;
-    padding: 10px 18px;
-    font-size: 1em;
-    background-color: var(--brand-accent, #3498db);
-    /* Friendly blue */
-    color: var(--brand-surface, #ffffff);
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-weight: 600;
+  display: inline-block;
+  padding: 10px 18px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: var(--radius-md, 10px);
+  background: linear-gradient(to bottom right, rgba(52,152,219,.9), rgba(41,128,185,.9));
+  backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+  box-shadow: 0 10px 24px rgba(0,0,0,.12);
+  transition: transform .2s ease, box-shadow .2s ease, background-color .3s ease;
+}
+#settingsToggleBtn:hover,
+#settingsToggleBtn:focus-visible {
+  outline: none;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(0,0,0,.16);
 }
 
-#settingsToggleBtn:hover {
-    background-color: var(--brand-accent-strong, #2980b9);
-    /* Darker blue */
-}
-
+/* Config panel (fixed under sticky header; scrolls when tall) */
 #config-area {
-    position: absolute;
-    top: calc(var(--app-header-offset, 110px) + 55px);
-    right: 20px;
-    background-color: var(--brand-surface, #ffffff);
-    padding: 25px 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    border: 1px solid var(--brand-border, #e0e0e0);
-    max-width: 450px;
-    z-index: 20;
-    text-align: left;
+  position: fixed;
+  top: calc(var(--header-h, 64px) + 10px);
+  right: clamp(10px, 4vw, 28px);
+  z-index: 30;
+  background: var(--glass-bg-strong, rgba(255,255,255,.18));
+  border: 1px solid var(--glass-border, rgba(255,255,255,.38));
+  backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+  border-radius: var(--radius-lg, 15px);
+  box-shadow: var(--glass-shadow, 0 8px 30px rgba(0,0,0,.15));
+  padding: 22px 26px;
+  max-width: 460px;
+  max-height: calc(100dvh - (var(--header-h, 64px) + 24px));
+  overflow: auto;
+  text-align: left;
 }
-
 #config-area label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 1em;
-    color: #7f8c8d;
-    font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+  color: var(--brand-subtle-text, #7f8c8d);
+  font-weight: 700;
 }
-
-.config-hidden {
-    display: none;
-}
-
-
-canvas {
-    background-color: #ffffff;
-    /* Clean white */
-    border: 1px solid #e0e0e0;
-    /* Light border from index.html */
-    display: block;
-    margin: 20px auto;
-    border-radius: 15px;
-    /* Softer radius from index.html */
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    /* Softer shadow from index.html */
-}
-
-button#trapBtn,
-button#updateNamesBtn,
-button#trapPipBtn {
-    /* Target specific buttons */
-    font-size: 1.2em;
-    /* Consistent with wheel.html */
-    padding: 12px 28px;
-    /* Consistent with wheel.html */
-    background-color: var(--brand-accent, #3498db);
-    /* Friendly blue */
-    margin-top: 10px;
-    /* Add some margin for updateNamesBtn */
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    color: var(--brand-surface, #ffffff);
-    font-weight: 700;
-    transition: background-color 0.3s ease;
-}
-
-button#updateNamesBtn {
-    background-color: #e67e22;
-    /* Orange like in wheel.html */
-}
-
-button#trapPipBtn {
-    margin-top: 16px;
-    background: linear-gradient(135deg, var(--brand-accent, #3498db), var(--brand-accent-strong, #2980b9));
-    display: inline-flex;
-    gap: 8px;
-    align-items: center;
-    justify-content: center;
-}
-
-button#trapPipBtn::before {
-    content: '🪟';
-    font-size: 1.1em;
-}
-
-button#trapBtn:hover,
-button#updateNamesBtn:hover,
-button#trapPipBtn:hover {
-    background-color: #2980b9;
-    /* Darker blue */
-}
-
-button#updateNamesBtn:hover {
-    background-color: #d35400;
-    /* Darker orange */
-}
-
-button#trapPipBtn:hover {
-    background: linear-gradient(135deg, #2980b9, #2471a3);
-}
-
-#info {
-    margin-top: 15px;
-    font-size: 1.3em;
-    /* Slightly larger for info */
-    min-height: 1.5em;
-    color: var(--brand-accent-strong, #2980b9);
-    /* Darker blue for emphasis */
-    font-weight: 600;
-}
+.config-hidden { display: none; }
 
 #namesInput {
-    /* Style for textarea */
-    width: 95%;
-    min-height: 60px;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid var(--brand-border, #ccc);
-    background-color: rgba(255, 255, 255, 0.92);
-    color: var(--brand-text, #5d5d5d);
-    font-family: var(--brand-font-family, 'Nunito', sans-serif);
-    font-size: 0.95em;
-    margin-bottom: 10px;
-    /* Space before update button */
+  width: 100%;
+  min-height: 72px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md, 10px);
+  border: 1px solid var(--brand-border, #dde4eb);
+  background: rgba(255,255,255,.92);
+  color: var(--brand-text, #34495e);
+  font-size: .95rem;
+  font-family: inherit;
+  margin: 0 0 10px;
 }
 
+/* Primary buttons (Trap! + Update) in glass gradients */
+#trapBtn,
+#updateNamesBtn {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: var(--radius-md, 10px);
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, background-color .3s ease;
+  box-shadow: 0 10px 22px rgba(0,0,0,.12);
+  backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur, 14px)) saturate(160%);
+}
+#trapBtn        { background: linear-gradient(to bottom right, rgba(52,152,219,.9), rgba(41,128,185,.9)); margin-top: 8px; }
+#updateNamesBtn { background: linear-gradient(to bottom right, rgba(230,126,34,.9), rgba(211,84,0,.9)); margin-top: 10px; margin-left: 8px; }
+
+#trapBtn:hover, #trapBtn:focus-visible,
+#updateNamesBtn:hover, #updateNamesBtn:focus-visible {
+  outline: none;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(0,0,0,.16);
+}
+
+/* Canvas — crisp with subtle glass frame */
+#gameCanvas {
+  display: block;
+  margin: 16px auto 8px;
+  width: min(92vw, var(--trap-max));
+  height: auto;               /* preserve intrinsic aspect via attributes */
+  background: #fff;
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: var(--radius-lg, 15px);
+  box-shadow: var(--glass-shadow, 0 8px 30px rgba(0,0,0,.15));
+}
+
+/* Info line (live region) */
+#info {
+  margin-top: 12px;
+  font-size: 1.25rem;
+  min-height: 1.6em;
+  color: var(--brand-accent-strong, #2980b9);
+  font-weight: 700;
+  text-align: center;
+}
+
+/* SEO content — glass card */
 .seo-content-area {
-    background-color: var(--brand-surface, #ffffff);
-    padding: 25px 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    border: 1px solid var(--brand-border, #e0e0e0);
-    max-width: 700px;
-    /* Or adjust to fit your layout */
-    width: 90%;
-    margin: 30px auto;
-    /* Spacing from game elements */
-    text-align: left;
-    line-height: 1.7;
-    width: auto;
+  background: var(--glass-bg, rgba(255,255,255,.12));
+  border: 1px solid var(--glass-border, rgba(255,255,255,.38));
+  border-radius: var(--radius-lg, 15px);
+  box-shadow: var(--glass-shadow, 0 8px 30px rgba(0,0,0,.15));
+  padding: 24px 28px;
+  max-width: 780px;
+  width: min(92%, 780px);
+  margin: 28px auto 0;
+  text-align: left;
+  line-height: 1.7;
 }
-
 .seo-content-area h2 {
-    color: var(--brand-accent, #3498db);
-    /* Friendly blue */
-    margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 1.8em;
+  color: var(--brand-accent, #3498db);
+  margin: 0 0 12px;
+  font-size: 1.6rem;
+  text-align: center;
 }
-
 .seo-content-area h3 {
-    color: var(--brand-accent-strong, #2980b9);
-    /* Darker blue */
-    margin-top: 20px;
-    margin-bottom: 10px;
-    font-size: 1.4em;
+  color: var(--brand-accent-strong, #2980b9);
+  margin: 18px 0 8px;
+  font-size: 1.25rem;
 }
-
-.seo-content-area p,
-.seo-content-area li {
-    color: var(--brand-text, #5d5d5d);
-    /* Standard text color */
-    margin-bottom: 10px;
-}
-
-.seo-content-area ul {
-    padding-left: 20px;
-    margin-bottom: 15px;
-}
-
 .seo-content-area a {
-    color: var(--brand-accent, #3498db);
-    text-decoration: none;
-    font-weight: 600;
+  color: var(--brand-accent-strong, #2980b9);
+  text-decoration: none;
+  font-weight: 700;
+}
+.seo-content-area a:hover { text-decoration: underline; }
+
+/* Responsive */
+@media (max-width: 820px) {
+  #config-area {
+    position: relative;
+    top: auto; right: auto;
+    margin: 10px auto 14px;
+    width: min(95%, 560px);
+    max-height: none;
+  }
+}
+@media (max-width: 520px) {
+  h1 { margin-top: calc(var(--header-h, 64px) + 8px); font-size: 1.9rem; }
+  .seo-content-area { padding: 18px 16px; }
 }
 
-.seo-content-area a:hover {
-    text-decoration: underline;
-    color: var(--brand-accent-strong, #2980b9);
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  body { background: #0b1220; color: var(--gray-900, #e5e7eb); }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  #settingsToggleBtn,
+  #trapBtn,
+  #updateNamesBtn { transition: none !important; transform: none !important; }
 }

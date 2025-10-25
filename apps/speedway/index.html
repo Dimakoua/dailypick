@@ -2,51 +2,55 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <!-- Viewport meta tag is already present and good -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Speedway Racer - Turtle Race Name Picker Game | Daily Pick</title>
-  <meta name="description"
-    content="Fire up Speedway, the ultimate turtle race name picker. Let colorful racers decide stand-up order, pick presenters, and energize your team or classroom.">
-  <meta name="keywords"
-    content="turtle race name picker, speedway racer, random name picker, stand-up order game, turtle racing, agile icebreaker, meeting energizer, classroom participation game, remote team activity, Daily Pick tools, fair speaking order">
+    <meta charset="UTF-8" />
+    <!-- Viewport meta tag is already present and good -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speedway Racer - Turtle Race Name Picker Game | Daily Pick</title>
+    <meta name="description"
+        content="Fire up Speedway, the ultimate turtle race name picker. Let colorful racers decide stand-up order, pick presenters, and energize your team or classroom.">
+    <meta name="keywords"
+        content="turtle race name picker, speedway racer, random name picker, stand-up order game, turtle racing, agile icebreaker, meeting energizer, classroom participation game, remote team activity, Daily Pick tools, fair speaking order">
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://dailypick.dev/apps/speedway/">
-  <meta property="og:title" content="Speedway Racer - Turtle Race Name Picker | Daily Pick">
-  <meta property="og:description"
-    content="Launch a turtle race name picker to set speaking order, choose winners, and keep meetings fun.">
-  <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
-  <meta property="og:image:alt" content="Colorful turtle racers sprinting toward the finish line in Daily Pick's Speedway game">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dailypick.dev/apps/speedway/">
+    <meta property="og:title" content="Speedway Racer - Turtle Race Name Picker | Daily Pick">
+    <meta property="og:description"
+        content="Launch a turtle race name picker to set speaking order, choose winners, and keep meetings fun.">
+    <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
+    <meta property="og:image:alt"
+        content="Colorful turtle racers sprinting toward the finish line in Daily Pick's Speedway game">
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Speedway Racer - Turtle Race Name Picker | Daily Pick">
-  <meta name="twitter:description" content="Spin up a turtle race name picker and let Daily Pick’s Speedway decide who goes next, every time.">
-  <meta name="twitter:image" content="https://dailypick.dev/assets/og-image-main.png">
-  <meta name="twitter:image:alt" content="Colorful turtle racers sprinting toward the finish line in Daily Pick's Speedway game">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Speedway Racer - Turtle Race Name Picker | Daily Pick">
+    <meta name="twitter:description"
+        content="Spin up a turtle race name picker and let Daily Pick’s Speedway decide who goes next, every time.">
+    <meta name="twitter:image" content="https://dailypick.dev/assets/og-image-main.png">
+    <meta name="twitter:image:alt"
+        content="Colorful turtle racers sprinting toward the finish line in Daily Pick's Speedway game">
 
-  <link rel="canonical" href="https://dailypick.dev/apps/speedway/">
-  <!-- Favicon Links -->
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-  <link rel="manifest" href="/assets/favicon/site.webmanifest">
-  <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
-  <meta name="msapplication-TileColor" content="#2d89ef">
-  <meta name="theme-color" content="#ffffff">
+    <link rel="canonical" href="https://dailypick.dev/apps/speedway/">
+    <!-- Favicon Links -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#ffffff">
 
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/theme.css">
-  <link rel="stylesheet" href="style.css">
-  <script src="/assets/js/results-pip.js" defer></script>
-  <!-- Socket.IO client for real-time features -->
-  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script> 
-  <!-- Universal Collaboration Module -->
-  <link rel="stylesheet" href="/assets/css/collaboration.css">
-  <script src="/assets/js/collaboration.js" defer></script>
-  <script type="application/ld+json">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/theme.css">
+    <link rel="stylesheet" href="/assets/css/glass.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="/assets/js/results-pip.js" defer></script>
+    <!-- (Optional) Collaboration includes — keep if used elsewhere -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <link rel="stylesheet" href="/assets/css/collaboration.css">
+    <script src="/assets/js/collaboration.js" defer></script>
+
+    <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -66,564 +70,251 @@
 </head>
 
 <body>
-  {% include "header.html" %}
+    {% include "bg-orbs.html" %}
+    {% include "header.html" %}
 
-  <h1>🏁 Speedway: Turtle Race Name Picker 🏁</h1>
+    <h1>🏁 Speedway: Turtle Race Name Picker 🏁</h1>
 
-  <button id="settingsToggleBtn">⚙️ Show Settings</button>
-  <div id="config-area" class="config-hidden">
-    <label for="namesInput">Enter racer names (one per line or comma-separated):</label>
-    <textarea id="namesInput" rows="4"></textarea>
-    <button id="updateNamesBtn">Update Racers</button>
-
-    <hr>
-    <label for="themeSelect">Choose a theme:</label>
-    <select id="themeSelect">
-      <option value="classic">Classic Speedway</option>
-      <option value="midnight">Midnight Neon</option>
-      <option value="retro">Retro Arcade</option>
-      <option value="ocean">Ocean Breeze</option>
-      <option value="custom">Custom Colors</option>
-    </select>
-    <div id="customThemeFields" class="theme-custom-fields config-hidden">
-      <label for="customTrackColor">Track background</label>
-      <input type="color" id="customTrackColor" value="#ffffff">
-      <label for="customLaneColor">Lane color</label>
-      <input type="color" id="customLaneColor" value="#bdc3c7">
-      <label for="customRacerColor">Racer base color</label>
-      <input type="color" id="customRacerColor" value="#3498db">
-      <label for="customAccentColor">Accent color</label>
-      <input type="color" id="customAccentColor" value="#2980b9">
+    <button id="settingsToggleBtn">⚙️ Show Settings</button>
+    <div id="config-area" class="config-hidden">
+        <label for="namesInput">Enter racer names (one per line or comma-separated):</label>
+        <textarea id="namesInput" rows="4"></textarea>
+        <button id="updateNamesBtn">Update Racers</button>
     </div>
 
-    <hr>
-    <label for="logoUpload">Upload team logo (optional):</label>
-    <input type="file" id="logoUpload" accept="image/*">
-    <button id="removeLogoBtn" type="button" class="secondary-button">Remove Logo</button>
+    <div class="game-layout">
+        <div id="track-container" aria-label="Racing track">
+            <div id="start-line"></div>
+            <div id="finish-line-visual"></div>
+            <!-- Racers injected by JS -->
+        </div>
 
-    <label for="musicSelect">Background music:</label>
-    <select id="musicSelect">
-      <option value="off">Off</option>
-      <option value="arcade">Arcade Sprint</option>
-      <option value="lofi">Lo-fi Cruise</option>
-      <option value="surf">Surf Dash</option>
-      <option value="electro">Electro Burst</option>
-    </select>
-  </div>
-
-  <div class="game-layout">
-    <div id="track-container">
-      <div id="start-line"></div>
-      <div id="finish-line-visual"></div>
-      <!-- Racers will be dynamically added here by JS -->
+        <div id="results-area" aria-live="polite" aria-atomic="true">
+            <h2>Order:</h2>
+            <button id="speedwayPipBtn" class="pip-trigger" type="button" data-pip-target="#results-area"
+                data-pip-title="Speedway Results" data-pip-exclude="#speedwayPipBtn" data-pip-width="320"
+                data-pip-height="420">Open in Picture in Picture</button>
+            <ol id="standupOrderList"></ol>
+        </div>
     </div>
-    <div id="results-area">
-      <h2>Order:</h2>
-      <button id="speedwayPipBtn" class="pip-trigger" type="button"
-        data-pip-target="#results-area"
-        data-pip-title="Speedway Results"
-        data-pip-exclude="#speedwayPipBtn"
-        data-pip-width="320"
-        data-pip-height="420">Open in Picture in Picture</button>
-      <ol id="standupOrderList"></ol>
+
+    <button id="startRaceBtn">🚀 Start Race!</button>
+
+    <div class="seo-content-area">
+        <h2>Speedway Racer: The Turtle Race Name Picker Your Team Will Cheer For</h2>
+        <p><strong>Speedway Racer</strong> by Daily Pick turns a simple stand-up order into a burst of excitement. This
+            turtle race name picker lets you add your roster, press start, and watch colorful racers sprint for the
+            finish line—whoever wins sets the speaking order, assigns the next presenter, or snags the surprise prize.
+            It’s fast, fair, and endlessly replayable.</p>
+
+        <h3>How to Run a Speedway Race</h3>
+        <ul>
+            <li><strong>Load your racers:</strong> Paste names or import your saved list. Each teammate gets a lane and
+                a turtle avatar.</li>
+            <li><strong>Launch the race:</strong> Tap <em>Start Race</em> and watch real-time animation determine the
+                winners.</li>
+            <li><strong>Capture the results:</strong> The leaderboard updates instantly and can pop into
+                Picture-in-Picture so facilitators keep it visible while screensharing.</li>
+            <li><strong>Reset and rerun:</strong> Need another order? Hit restart for a brand-new outcome—no two races
+                are the same.</li>
+        </ul>
+
+        <h3>Why Teams and Classrooms Love Speedway</h3>
+        <ul>
+            <li><strong>Fair randomization:</strong> Removes bias when choosing who goes next, who leads the demo, or
+                who wins a giveaway—every turtle race name picker finish is unique.</li>
+            <li><strong>Instant engagement:</strong> The playful race animation keeps even camera-off participants glued
+                to the screen.</li>
+            <li><strong>Hybrid-friendly:</strong> Works equally well in conference rooms and remote stand-ups thanks to
+                results sharing and PiP mode.</li>
+            <li><strong>Education ready:</strong> Teachers use Speedway to select readers, presenters, and quiz
+                participants without the stress.</li>
+        </ul>
+
+        <h3>Level Up Your Rituals with Daily Pick</h3>
+        <ul>
+            <li><strong>Pair with other games:</strong> After the race, spin the <a href="/apps/wheel/">Daily Pick
+                    Decision Wheel</a> for follow-up tasks or drop into <a href="/apps/trap/">Trap!</a> for a
+                suspenseful tiebreaker.</li>
+            <li><strong>Log the winners:</strong> Export the finishing order or feed it into your retro notes, Jira
+                board, or team wiki.</li>
+        </ul>
+        <p>Whether you’re running a sprint review, guiding a student debate, or just kicking off Friday with a laugh,
+            <strong>Speedway Racer</strong> brings the energy. Fire up the turtles and let Daily Pick decide the order
+            with style.</p>
     </div>
-  </div>
-
-  <button id="startRaceBtn">🚀 Start Race!</button>
-  <div id="logoPreview" class="logo-preview config-hidden">
-    <img id="logoImage" alt="Team logo preview">
-    <span>Custom logo applied</span>
-  </div>
-  <audio id="backgroundMusic" loop></audio>
-
-  <div class="seo-content-area">
-    <h2>Speedway Racer: The Turtle Race Name Picker Your Team Will Cheer For</h2>
-    <p><strong>Speedway Racer</strong> by Daily Pick turns a simple stand-up order into a burst of excitement. This turtle race name picker lets you add your roster, press start, and watch colorful racers sprint for the finish line—whoever wins sets the speaking order, assigns the next presenter, or snags the surprise prize. It’s fast, fair, and endlessly replayable.</p>
-
-    <h3>How to Run a Speedway Race</h3>
-    <ul>
-      <li><strong>Load your racers:</strong> Paste names or import your saved list. Each teammate gets a lane and a turtle avatar.</li>
-      <li><strong>Launch the race:</strong> Tap <em>Start Race</em> and watch real-time animation determine the winners.</li>
-      <li><strong>Capture the results:</strong> The leaderboard updates instantly and can pop into Picture-in-Picture so facilitators keep it visible while screensharing.</li>
-      <li><strong>Reset and rerun:</strong> Need another order? Hit restart for a brand-new outcome—no two races are the same.</li>
-    </ul>
-
-    <h3>Why Teams and Classrooms Love Speedway</h3>
-    <ul>
-      <li><strong>Fair randomization:</strong> Removes bias when choosing who goes next, who leads the demo, or who wins a giveaway—every turtle race name picker finish is unique.</li>
-      <li><strong>Instant engagement:</strong> The playful race animation keeps even camera-off participants glued to the screen.</li>
-      <li><strong>Hybrid-friendly:</strong> Works equally well in conference rooms and remote stand-ups thanks to results sharing and PiP mode.</li>
-      <li><strong>Education ready:</strong> Teachers use Speedway to select readers, presenters, and quiz participants without the stress.</li>
-    </ul>
-
-    <h3>Level Up Your Rituals with Daily Pick</h3>
-    <ul>
-      <li><strong>Pair with other games:</strong> After the race, spin the <a href="/apps/wheel/">Daily Pick Decision Wheel</a> for follow-up tasks or drop into <a href="/apps/trap/">Trap!</a> for a suspenseful tiebreaker.</li>
-      <li><strong>Brand it your way:</strong> Swap track themes, tweak racer colors, upload your logo, and set background music directly from the settings panel.</li>
-      <li><strong>Log the winners:</strong> Export the finishing order or feed it into your retro notes, Jira board, or team wiki.</li>
-      <li><strong>Customize themes:</strong> Change racer names, colors, and track lengths to match your brand or classroom house system.</li>
-      <li><strong>Keep the fun rolling:</strong> Combine Speedway with <a href="/apps/letters/">Falling Letters Pinball</a> for an entire Daily Pick game session.</li>
-    </ul>
-    <p>Whether you’re running a sprint review, guiding a student debate, or just kicking off Friday with a laugh, <strong>Speedway Racer</strong> brings the energy. Fire up the turtles and let Daily Pick decide the order with style.</p>
-  </div>
-
 
     <script>
-    const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
-    const LOCAL_STORAGE_KEY = 'speedway:names';
-    const THEME_STORAGE_KEY = 'speedway:theme';
-    const CUSTOM_THEME_STORAGE_KEY = 'speedway:theme:custom';
-    const MUSIC_STORAGE_KEY = 'speedway:music';
-    const LOGO_STORAGE_KEY = 'speedway:logo';
+        "use strict";
 
-    const THEMES = {
-      classic: {
-        trackColor: '#ffffff',
-        laneColor: '#bdc3c7',
-        racerPalette: ['#e74c3c', '#3498db', '#2ecc71', '#f1c40f', '#9b59b6', '#e67e22'],
-        accentColor: '#3498db',
-        background: 'linear-gradient(180deg, #f4f7f6 0%, #ffffff 100%)'
-      },
-      midnight: {
-        trackColor: '#121f33',
-        laneColor: '#1d3557',
-        racerPalette: ['#e63946', '#118ab2', '#06d6a0', '#ffd166', '#ef476f', '#8338ec'],
-        accentColor: '#06d6a0',
-        background: 'linear-gradient(180deg, #0f172a 0%, #1d3557 100%)'
-      },
-      retro: {
-        trackColor: '#fff5d7',
-        laneColor: '#ffcdab',
-        racerPalette: ['#ef476f', '#ffd166', '#06d6a0', '#118ab2', '#8338ec', '#f78c6b'],
-        accentColor: '#ef476f',
-        background: 'linear-gradient(180deg, #fdf2e9 0%, #ffe8d6 100%)'
-      },
-      ocean: {
-        trackColor: '#e0fbfc',
-        laneColor: '#98c1d9',
-        racerPalette: ['#3d5a80', '#98c1d9', '#ee6c4d', '#293241', '#ffb703', '#219ebc'],
-        accentColor: '#3d5a80',
-        background: 'linear-gradient(180deg, #e0fbfc 0%, #98c1d9 100%)'
-      }
-    };
+        /** ====== Config & State (themes removed) ====== */
+        const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
+        const LOCAL_STORAGE_KEY = 'speedway:names';
 
-    const MUSIC_TRACKS = {
-      arcade: '/assets/audio/speedway-arcade.mp3',
-      lofi: '/assets/audio/speedway-lofi.mp3',
-      surf: '/assets/audio/speedway-surf.mp3',
-      electro: '/assets/audio/speedway-electro.mp3'
-    };
+        /** Single cohesive palette */
+        const RACER_PALETTE = ['#e74c3c', '#3498db', '#2ecc71', '#f1c40f', '#9b59b6', '#e67e22'];
 
-    let originalNames = [...DEFAULT_NAMES];
-    let racerColors = [...THEMES.classic.racerPalette];
-    let currentTheme = THEMES.classic;
+        let originalNames = [...DEFAULT_NAMES];
+        let racersData = [];
+        let raceInProgress = false;
+        let animationFrameId = null;
 
-    let racersData = [];
-    let raceInProgress = false;
-    let animationFrameId = null;
+        /** ====== DOM ====== */
+        const trackContainer = document.getElementById('track-container');
+        const startRaceBtn = document.getElementById('startRaceBtn');
+        const standupOrderList = document.getElementById('standupOrderList');
+        const settingsToggleBtn = document.getElementById('settingsToggleBtn');
+        const configArea = document.getElementById('config-area');
+        const namesInput = document.getElementById('namesInput');
+        const updateNamesBtn = document.getElementById('updateNamesBtn');
 
-    const trackContainer = document.getElementById('track-container');
-    const startRaceBtn = document.getElementById('startRaceBtn');
-    const standupOrderList = document.getElementById('standupOrderList');
-    const settingsToggleBtn = document.getElementById('settingsToggleBtn');
-    const configArea = document.getElementById('config-area');
-    const namesInput = document.getElementById('namesInput');
-    const updateNamesBtn = document.getElementById('updateNamesBtn');
-    const themeSelect = document.getElementById('themeSelect');
-    const customThemeFields = document.getElementById('customThemeFields');
-    const customTrackColor = document.getElementById('customTrackColor');
-    const customLaneColor = document.getElementById('customLaneColor');
-    const customRacerColor = document.getElementById('customRacerColor');
-    const customAccentColor = document.getElementById('customAccentColor');
-    const logoUpload = document.getElementById('logoUpload');
-    const removeLogoBtn = document.getElementById('removeLogoBtn');
-    const logoPreview = document.getElementById('logoPreview');
-    const logoImage = document.getElementById('logoImage');
-    const backgroundMusic = document.getElementById('backgroundMusic');
-    const musicSelect = document.getElementById('musicSelect');
+        const finishLinePercent = 90;
 
-    const finishLinePercent = 90;
-
-    function loadNamesFromStorage() {
-      const storedNamesJson = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (!storedNamesJson) {
-        namesInput.value = originalNames.join('\n');
-        return;
-      }
-      try {
-        const parsed = JSON.parse(storedNamesJson);
-        if (Array.isArray(parsed) && parsed.length) {
-          originalNames = [...parsed];
+        /** ====== Names storage ====== */
+        function loadNamesFromStorage() {
+            const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+            if (!stored) {
+                namesInput.value = originalNames.join('\n');
+                return;
+            }
+            try {
+                const parsed = JSON.parse(stored);
+                if (Array.isArray(parsed) && parsed.length) {
+                    originalNames = [...parsed];
+                }
+            } catch {
+                originalNames = [...DEFAULT_NAMES];
+            }
+            namesInput.value = originalNames.join('\n');
         }
-      } catch (error) {
-        console.warn('Unable to parse stored racer names, using defaults', error);
-        originalNames = [...DEFAULT_NAMES];
-      }
-      namesInput.value = originalNames.join('\n');
-    }
 
-    function saveNamesToStorage() {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(originalNames));
-    }
-
-    function normalizeHex(hex) {
-      if (!hex) return '#3498db';
-      let value = hex.trim();
-      if (!value.startsWith('#')) value = `#${value}`;
-      if (value.length === 4) {
-        value = `#${value[1]}${value[1]}${value[2]}${value[2]}${value[3]}${value[3]}`;
-      }
-      return value.slice(0, 7).toLowerCase();
-    }
-
-    function hexToRgb(hex) {
-      const normalized = normalizeHex(hex).replace('#', '');
-      const intVal = parseInt(normalized, 16);
-      return {
-        r: (intVal >> 16) & 255,
-        g: (intVal >> 8) & 255,
-        b: intVal & 255
-      };
-    }
-
-    function rgbToHex(r, g, b) {
-      const toHex = (value) => value.toString(16).padStart(2, '0');
-      return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
-    }
-
-    function adjustBrightness(hex, factor) {
-      const { r, g, b } = hexToRgb(hex);
-      const clamp = (value) => Math.max(0, Math.min(255, Math.round(value)));
-      return rgbToHex(clamp(r * factor), clamp(g * factor), clamp(b * factor));
-    }
-
-    function generatePalette(baseHex) {
-      const base = normalizeHex(baseHex || '#3498db');
-      return [
-        adjustBrightness(base, 1.0),
-        adjustBrightness(base, 0.85),
-        adjustBrightness(base, 1.2),
-        adjustBrightness(base, 0.7),
-        adjustBrightness(base, 1.35),
-        adjustBrightness(base, 0.95)
-      ];
-    }
-
-    function applyTheme(themeKey, customColors = {}) {
-      const config = themeKey === 'custom'
-        ? {
-            trackColor: normalizeHex(customColors.trackColor || '#ffffff'),
-            laneColor: normalizeHex(customColors.laneColor || '#bdc3c7'),
-            racerPalette: generatePalette(customColors.racerColor || '#3498db'),
-            accentColor: normalizeHex(customColors.accentColor || customColors.racerColor || '#3498db'),
-            background: customColors.background || 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)'
-          }
-        : THEMES[themeKey] || THEMES.classic;
-
-      currentTheme = config;
-
-      document.documentElement.style.setProperty('--speedway-background', config.background || THEMES.classic.background);
-      document.documentElement.style.setProperty('--speedway-track', config.trackColor || THEMES.classic.trackColor);
-      document.documentElement.style.setProperty('--speedway-lane-color', config.laneColor || THEMES.classic.laneColor);
-      document.documentElement.style.setProperty('--speedway-accent', config.accentColor || THEMES.classic.accentColor);
-
-      racerColors = [...(config.racerPalette && config.racerPalette.length ? config.racerPalette : THEMES.classic.racerPalette)];
-      trackContainer.querySelectorAll('.racer').forEach((racerEl, index) => {
-        racerEl.style.backgroundColor = racerColors[index % racerColors.length];
-      });
-
-      localStorage.setItem(THEME_STORAGE_KEY, themeKey);
-      if (themeKey === 'custom') {
-        localStorage.setItem(CUSTOM_THEME_STORAGE_KEY, JSON.stringify({
-          trackColor: config.trackColor,
-          laneColor: config.laneColor,
-          racerColor: customColors.racerColor || '#3498db',
-          accentColor: config.accentColor
-        }));
-      } else {
-        localStorage.removeItem(CUSTOM_THEME_STORAGE_KEY);
-      }
-    }
-
-    function handleThemeChange() {
-      const key = themeSelect.value;
-      if (key === 'custom') {
-        customThemeFields.classList.remove('config-hidden');
-        handleCustomColorChange();
-      } else {
-        customThemeFields.classList.add('config-hidden');
-        applyTheme(key);
-      }
-    }
-
-    function handleCustomColorChange() {
-      if (themeSelect.value !== 'custom') return;
-      applyTheme('custom', {
-        trackColor: customTrackColor.value,
-        laneColor: customLaneColor.value,
-        racerColor: customRacerColor.value,
-        accentColor: customAccentColor.value
-      });
-    }
-
-    function loadTheme() {
-      const storedKey = localStorage.getItem(THEME_STORAGE_KEY) || 'classic';
-      themeSelect.value = storedKey;
-
-      if (storedKey === 'custom') {
-        const storedCustom = localStorage.getItem(CUSTOM_THEME_STORAGE_KEY);
-        if (storedCustom) {
-          try {
-            const parsed = JSON.parse(storedCustom);
-            if (parsed.trackColor) customTrackColor.value = parsed.trackColor;
-            if (parsed.laneColor) customLaneColor.value = parsed.laneColor;
-            if (parsed.racerColor) customRacerColor.value = parsed.racerColor;
-            if (parsed.accentColor) customAccentColor.value = parsed.accentColor;
-            customThemeFields.classList.remove('config-hidden');
-            applyTheme('custom', parsed);
-            return;
-          } catch (error) {
-            console.warn('Unable to restore custom theme, falling back to classic', error);
-          }
+        function saveNamesToStorage() {
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(originalNames));
         }
-      } else {
-        customThemeFields.classList.add('config-hidden');
-      }
 
-      applyTheme(storedKey);
-    }
+        /** ====== Racers + Race ====== */
+        function setupRacers() {
+            // Reset DOM + state
+            trackContainer.querySelectorAll('.racer').forEach(el => el.remove());
+            racersData = [];
+            standupOrderList.innerHTML = '';
+            startRaceBtn.disabled = originalNames.length === 0;
+            startRaceBtn.textContent = '🚀 Start Race!';
 
-    function handleLogoUpload(event) {
-      const file = event.target.files && event.target.files[0];
-      if (!file) return;
+            if (originalNames.length === 0) {
+                trackContainer.style.height = '120px';
+                return;
+            }
 
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const dataUrl = e.target.result;
-        logoImage.src = dataUrl;
-        logoPreview.classList.remove('config-hidden');
-        document.documentElement.style.setProperty('--speedway-logo-url', `url(${dataUrl})`);
-        localStorage.setItem(LOGO_STORAGE_KEY, dataUrl);
-      };
-      reader.readAsDataURL(file);
-    }
+            const racerHeight = 30;
+            const verticalGap = 10;
+            const totalHeight = originalNames.length * (racerHeight + verticalGap) - verticalGap;
+            trackContainer.style.height = `${Math.max(150, totalHeight + 40)}px`;
 
-    function removeLogo() {
-      logoImage.removeAttribute('src');
-      logoPreview.classList.add('config-hidden');
-      logoUpload.value = '';
-      document.documentElement.style.setProperty('--speedway-logo-url', 'none');
-      localStorage.removeItem(LOGO_STORAGE_KEY);
-    }
+            originalNames.forEach((name, index) => {
+                const racer = document.createElement('div');
+                racer.classList.add('racer');
+                racer.innerHTML = `<span class="racer-emoji">🐢</span><span class="racer-name">${name.substring(0, 3)}</span>`;
+                racer.style.backgroundColor = RACER_PALETTE[index % RACER_PALETTE.length];
+                racer.style.left = '5%';
+                racer.style.top = `${20 + index * (racerHeight + verticalGap)}px`;
 
-    function loadLogo() {
-      const storedLogo = localStorage.getItem(LOGO_STORAGE_KEY);
-      if (!storedLogo) {
-        document.documentElement.style.setProperty('--speedway-logo-url', 'none');
-        return;
-      }
-      logoImage.src = storedLogo;
-      logoPreview.classList.remove('config-hidden');
-      document.documentElement.style.setProperty('--speedway-logo-url', `url(${storedLogo})`);
-    }
-
-    function handleMusicChange() {
-      const selected = musicSelect.value;
-      localStorage.setItem(MUSIC_STORAGE_KEY, selected);
-
-      if (selected === 'off') {
-        stopMusic();
-        backgroundMusic.removeAttribute('src');
-        return;
-      }
-
-      const trackUrl = MUSIC_TRACKS[selected];
-      if (!trackUrl) return;
-
-      if (backgroundMusic.src !== trackUrl) {
-        backgroundMusic.src = trackUrl;
-        backgroundMusic.load();
-      }
-
-      if (raceInProgress) {
-        playMusic();
-      }
-    }
-
-    function loadMusic() {
-      const stored = localStorage.getItem(MUSIC_STORAGE_KEY);
-      const value = stored && Object.prototype.hasOwnProperty.call(MUSIC_TRACKS, stored) ? stored : 'off';
-      musicSelect.value = value;
-
-      if (value !== 'off') {
-        const trackUrl = MUSIC_TRACKS[value];
-        if (trackUrl) {
-          backgroundMusic.src = trackUrl;
+                trackContainer.appendChild(racer);
+                racersData.push({
+                    name,
+                    element: racer,
+                    positionPercent: 5,
+                    finished: false,
+                    finishTime: 0
+                });
+            });
         }
-      }
-    }
 
-    function playMusic() {
-      const selected = musicSelect.value;
-      if (selected === 'off') return;
+        function raceTick() {
+            if (!raceInProgress) return;
 
-      const trackUrl = MUSIC_TRACKS[selected];
-      if (!trackUrl) return;
+            let allFinished = true;
 
-      if (backgroundMusic.src !== trackUrl) {
-        backgroundMusic.src = trackUrl;
-        backgroundMusic.load();
-      }
+            racersData.forEach((racer) => {
+                if (racer.finished) return;
 
-      backgroundMusic.currentTime = 0;
-      backgroundMusic.volume = 0.45;
-      const maybePromise = backgroundMusic.play();
-      if (maybePromise && typeof maybePromise.catch === 'function') {
-        maybePromise.catch(() => {});
-      }
-    }
+                allFinished = false;
+                const randomBoost = (Math.random() * 0.4) - 0.1;
+                racer.positionPercent += randomBoost;
+                racer.element.style.left = `${racer.positionPercent}%`;
 
-    function stopMusic() {
-      if (!backgroundMusic.src) return;
-      backgroundMusic.pause();
-      backgroundMusic.currentTime = 0;
-    }
+                if (racer.positionPercent >= finishLinePercent) {
+                    racer.finished = true;
+                    racer.finishTime = performance.now();
+                    racer.element.style.left = `${finishLinePercent}%`;
+                    racer.element.classList.add('finished');
 
-    function setupRacers() {
-      trackContainer.querySelectorAll('.racer').forEach((el) => el.remove());
-      racersData = [];
-      standupOrderList.innerHTML = '';
-      startRaceBtn.disabled = originalNames.length === 0;
-      startRaceBtn.textContent = '🚀 Start Race!';
+                    const li = document.createElement('li');
+                    li.textContent = racer.name;
+                    li.classList.add('finished-entry');
+                    standupOrderList.appendChild(li);
+                }
+            });
 
-      if (originalNames.length === 0) {
-        trackContainer.style.height = '120px';
-        return;
-      }
+            if (allFinished) {
+                raceInProgress = false;
+                startRaceBtn.disabled = false;
+                startRaceBtn.textContent = '🏁 Race Again!';
+                cancelAnimationFrame(animationFrameId);
+            } else {
+                animationFrameId = requestAnimationFrame(raceTick);
+            }
+        }
 
-      const racerHeight = 30;
-      const verticalGap = 10;
-      const totalHeight = originalNames.length * (racerHeight + verticalGap) - verticalGap;
-      trackContainer.style.height = `${Math.max(150, totalHeight + 40)}px`;
+        /** ====== Interactions ====== */
+        function updateNamesFromInput() {
+            const input = namesInput.value.trim();
+            const parsed = input
+                ? input.split(/[\n,]+/).map(n => n.trim()).filter(Boolean)
+                : [];
+            originalNames = parsed.length ? parsed : [...DEFAULT_NAMES];
+            namesInput.value = originalNames.join('\n');
+            saveNamesToStorage();
+            setupRacers();
+            if (raceInProgress) {
+                raceInProgress = false;
+                cancelAnimationFrame(animationFrameId);
+            }
+        }
 
-      originalNames.forEach((name, index) => {
-        const racerElement = document.createElement('div');
-        racerElement.classList.add('racer');
-        racerElement.innerHTML = `<span class="racer-emoji">🐢</span><span class="racer-name">${name.substring(0, 3)}</span>`;
-        racerElement.style.backgroundColor = racerColors[index % racerColors.length];
-        racerElement.style.left = '5%';
-        racerElement.style.top = `${20 + index * (racerHeight + verticalGap)}px`;
+        function toggleConfigArea(show) {
+            if (show === undefined) {
+                configArea.classList.toggle('config-hidden');
+            } else if (show) {
+                configArea.classList.remove('config-hidden');
+            } else {
+                configArea.classList.add('config-hidden');
+            }
+            settingsToggleBtn.textContent = configArea.classList.contains('config-hidden')
+                ? '⚙️ Show Settings'
+                : '⚙️ Hide Settings';
+        }
 
-        trackContainer.appendChild(racerElement);
-        racersData.push({
-          name,
-          element: racerElement,
-          positionPercent: 5,
-          finished: false,
-          finishTime: 0
+        /** ====== Event wiring ====== */
+        startRaceBtn.addEventListener('click', () => {
+            if (raceInProgress) return;
+            raceInProgress = true;
+            startRaceBtn.disabled = true;
+            startRaceBtn.textContent = '🚦 Racing...';
+            setupRacers(); // fresh run each time
+            animationFrameId = requestAnimationFrame(raceTick);
         });
-      });
-    }
 
-    function raceTick() {
-      if (!raceInProgress) return;
+        settingsToggleBtn.addEventListener('click', () => toggleConfigArea());
+        updateNamesBtn.addEventListener('click', updateNamesFromInput);
 
-      let allFinished = true;
+        /** ====== Init ====== */
+        loadNamesFromStorage();
+        setupRacers();
+        toggleConfigArea(false);
+    </script>
 
-      racersData.forEach((racer) => {
-        if (racer.finished) return;
-
-        allFinished = false;
-        const randomBoost = (Math.random() * 0.4) - 0.1;
-        racer.positionPercent += randomBoost;
-        racer.element.style.left = `${racer.positionPercent}%`;
-
-        if (racer.positionPercent >= finishLinePercent) {
-          racer.finished = true;
-          racer.finishTime = performance.now();
-          racer.element.style.left = `${finishLinePercent}%`;
-          racer.element.classList.add('finished');
-
-          const listItem = document.createElement('li');
-          listItem.textContent = racer.name;
-          listItem.classList.add('finished-entry');
-          standupOrderList.appendChild(listItem);
-        }
-      });
-
-      if (allFinished) {
-        raceInProgress = false;
-        startRaceBtn.disabled = false;
-        startRaceBtn.textContent = '🏁 Race Again!';
-        stopMusic();
-        cancelAnimationFrame(animationFrameId);
-      } else {
-        animationFrameId = requestAnimationFrame(raceTick);
-      }
-    }
-
-    function updateNamesFromInput() {
-      const inputText = namesInput.value.trim();
-      const parsed = inputText ? inputText.split(/[\n,]+/).map((name) => name.trim()).filter(Boolean) : [];
-      originalNames = parsed.length ? parsed : [...DEFAULT_NAMES];
-      namesInput.value = originalNames.join('\n');
-      saveNamesToStorage();
-      setupRacers();
-      if (raceInProgress) {
-        raceInProgress = false;
-        cancelAnimationFrame(animationFrameId);
-        stopMusic();
-      }
-    }
-
-    function toggleConfigArea(show) {
-      if (show === undefined) {
-        configArea.classList.toggle('config-hidden');
-      } else if (show) {
-        configArea.classList.remove('config-hidden');
-      } else {
-        configArea.classList.add('config-hidden');
-      }
-      settingsToggleBtn.textContent = configArea.classList.contains('config-hidden') ? '⚙️ Show Settings' : '⚙️ Hide Settings';
-    }
-
-    startRaceBtn.addEventListener('click', () => {
-      if (raceInProgress) return;
-
-      raceInProgress = true;
-      startRaceBtn.disabled = true;
-      startRaceBtn.textContent = '🚦 Racing...';
-
-      setupRacers();
-      playMusic();
-      animationFrameId = requestAnimationFrame(raceTick);
-    });
-
-    settingsToggleBtn.addEventListener('click', () => toggleConfigArea());
-    updateNamesBtn.addEventListener('click', updateNamesFromInput);
-    themeSelect.addEventListener('change', handleThemeChange);
-    customTrackColor.addEventListener('input', handleCustomColorChange);
-    customLaneColor.addEventListener('input', handleCustomColorChange);
-    customRacerColor.addEventListener('input', handleCustomColorChange);
-    customAccentColor.addEventListener('input', handleCustomColorChange);
-    logoUpload.addEventListener('change', handleLogoUpload);
-    removeLogoBtn.addEventListener('click', removeLogo);
-    musicSelect.addEventListener('change', handleMusicChange);
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        stopMusic();
-      }
-    });
-
-    loadNamesFromStorage();
-    loadTheme();
-    loadLogo();
-    loadMusic();
-    setupRacers();
-    toggleConfigArea(false);
-  </script>
-
-  {% include "footer.html" %}
+    {% include "footer.html" %}
 </body>
 
 </html>
