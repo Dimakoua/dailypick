@@ -317,20 +317,3 @@ button#restartButton:disabled {
   .seo-content-area { padding: 18px 16px; }
 }
 
-/* ---- Dark mode tuning ---- */
-@media (prefers-color-scheme: dark) {
-  body { background: #0b1220; color: var(--gray-900, #e5e7eb); }
-  #namesPanel .name-item { color: var(--gray-900, #e5e7eb); }
-}
-
-/* ---- Reduced motion: disable fancy transitions ---- */
-@media (prefers-reduced-motion: reduce) {
-  #settingsToggleBtn,
-  .pip-trigger,
-  button#updateNamesBtn,
-  button#restartButton,
-  .name-item {
-    transition: none !important;
-    transform: none !important;
-  }
-}

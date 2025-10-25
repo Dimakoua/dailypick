@@ -36,9 +36,6 @@ h1 {
   text-align: center;
   text-shadow: 0 1px 1px rgba(255,255,255,.35);
 }
-@media (prefers-color-scheme: dark) {
-  h1 { text-shadow: 0 1px 1px rgba(0,0,0,.45); }
-}
 
 /* Settings button (glassy) */
 #settingsToggleBtn {
@@ -219,14 +216,4 @@ canvas {
   /* tighten indicator and canvas border a touch */
   #indicator { border-left-width: 10px; border-right-width: 10px; border-bottom-width: 18px; top: -10px; }
   canvas { border-width: 4px; }
-}
-
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-  body { background: #0b1220; color: var(--gray-900, #e5e7eb); }
-}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  #settingsToggleBtn, #updateNamesBtn, #spinBtn { transition: none !important; transform: none !important; }
 }

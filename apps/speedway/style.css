@@ -36,9 +36,6 @@ h1 {
   text-align: center;
   text-shadow: 0 1px 1px rgba(255,255,255,.35);
 }
-@media (prefers-color-scheme: dark) {
-  h1 { text-shadow: 0 1px 1px rgba(0,0,0,.45); }
-}
 
 /* Settings button (glassy) */
 #settingsToggleBtn {
@@ -277,18 +274,4 @@ button#startRaceBtn:disabled { background: #95a5a6; cursor: not-allowed; }
 @media (max-width: 390px) {
   .racer { height: 22px; width: 66px; }
   #standupOrderList li { font-size: .95em; }
-}
-
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-  body { background: #0b1220; color: var(--gray-900, #e5e7eb); }
-}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  #settingsToggleBtn,
-  .pip-trigger,
-  button#startRaceBtn,
-  button#updateNamesBtn,
-  .racer { transition: none !important; transform: none !important; }
 }

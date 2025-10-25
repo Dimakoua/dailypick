@@ -25,20 +25,6 @@
   --orb-orange: radial-gradient(circle at 40% 70%, #f39c12 0%, rgba(243,156,18,0.0) 65%);
 }
 
-/* Dark mode tuning */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --glass-bg: rgba(15, 23, 42, 0.35);
-    --glass-bg-strong: rgba(15, 23, 42, 0.48);
-    --glass-border: rgba(255, 255, 255, 0.20);
-    --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
-
-    --orb-blue: radial-gradient(circle at 25% 35%, #3498db 0%, rgba(52,152,219,0) 60%);
-    --orb-indigo: radial-gradient(circle at 75% 45%, #6366f1 0%, rgba(99,102,241,0) 60%);
-    --orb-orange: radial-gradient(circle at 45% 75%, #f59e0b 0%, rgba(245,158,11,0) 65%);
-  }
-}
-
 /* =========================================================
    Liquid “orbs” background
    ========================================================= */
@@ -167,9 +153,6 @@
 
 /* Hero subtitle legibility */
 .hero__subtitle { text-shadow: 0 1px 1px rgba(255,255,255,0.35); }
-@media (prefers-color-scheme: dark) {
-  .hero__subtitle { text-shadow: 0 1px 1px rgba(0,0,0,0.45); }
-}
 
 /* Fallbacks when backdrop-filter is unavailable */
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
@@ -178,14 +161,6 @@
   .btn--accent {
     background: rgba(255, 255, 255, 0.92);
     border-color: rgba(0, 0, 0, 0.06);
-  }
-  @media (prefers-color-scheme: dark) {
-    .game-card,
-    .intro__content,
-    .btn--accent {
-      background: rgba(17, 24, 39, 0.94);
-      border-color: rgba(255, 255, 255, 0.10);
-    }
   }
   .bg-orbs .orb { opacity: 0.25; filter: blur(40px) saturate(110%); }
 }
@@ -306,27 +281,11 @@
   margin: 0;
 }
 
-/* Dark mode tuning */
-@media (prefers-color-scheme: dark) {
-  .footer-note { color: var(--gray-600, #cbd5e1); }
-}
-
-/* Reduced motion: disable sheen animation */
-@media (prefers-reduced-motion: reduce) {
-  .footer-note::after { transition: none; transform: none; opacity: 0 !important; }
-}
-
 /* Backdrop-filter fallback */
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
   .footer-note {
     background: rgba(255,255,255,.92);
     border-color: rgba(0,0,0,.06);
-  }
-  @media (prefers-color-scheme: dark) {
-    .footer-note {
-      background: rgba(17,24,39,.94);
-      border-color: rgba(255,255,255,.10);
-    }
   }
   .site-footer {
     background: rgba(255,255,255,.9);
