@@ -23,6 +23,27 @@ body {
   min-height: 100vh;
 }
 
+.settings-hint {
+  margin: 1rem auto;
+  padding: 0.75rem 1rem;
+  max-width: 720px;
+  background: var(--brand-surface);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--brand-radius);
+  box-shadow: var(--brand-shadow);
+  color: var(--brand-subtle-text);
+  font-size: 0.95rem;
+}
+.settings-hint a {
+  color: var(--brand-accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+.settings-hint a:hover,
+.settings-hint a:focus-visible {
+  text-decoration: underline;
+}
+
 .site-header {
   width: 100%;
   padding: 20px min(5vw, 48px);

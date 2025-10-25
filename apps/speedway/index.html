@@ -44,6 +44,7 @@
     <link rel="stylesheet" href="/assets/css/theme.css">
     <link rel="stylesheet" href="/assets/css/glass.css">
     <link rel="stylesheet" href="style.css">
+    <script src="/assets/js/brand-config.js" defer></script>
     <script src="/assets/js/results-pip.js" defer></script>
     <!-- (Optional) Collaboration includes — keep if used elsewhere -->
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
@@ -74,13 +75,7 @@
     {% include "header.html" %}
 
     <h1>🏁 Speedway: Turtle Race Name Picker 🏁</h1>
-
-    {% set config_content %}
-    <label for="namesInput">Enter racer names (one per line or comma-separated):</label>
-    <textarea id="namesInput" rows="4"></textarea>
-    <button id="updateNamesBtn">Update Racers</button>
-    {% endset %}
-    {% include "config-panel.html" %}
+    <p class="settings-hint">Update racers or your brand once in the <a href="/apps/settings/">Settings page</a>, then come back to race.</p>
     <div class="game-layout">
         <div id="track-container" aria-label="Racing track">
             <div id="start-line"></div>
@@ -149,7 +144,7 @@
 
         /** ====== Config & State (themes removed) ====== */
         const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
-        const LOCAL_STORAGE_KEY = 'speedway:names';
+        const LOCAL_STORAGE_KEY = 'namesList';
 
         /** Single cohesive palette */
         const RACER_PALETTE = ['#e74c3c', '#3498db', '#2ecc71', '#f1c40f', '#9b59b6', '#e67e22'];
@@ -165,6 +160,11 @@
         const standupOrderList = document.getElementById('standupOrderList');
         const namesInput = document.getElementById('namesInput');
         const updateNamesBtn = document.getElementById('updateNamesBtn');
+        const syncNamesInput = () => {
+            if (namesInput) {
+                namesInput.value = originalNames.join('\n');
+            }
+        };
 
         const finishLinePercent = 90;
 
@@ -172,18 +172,20 @@
         function loadNamesFromStorage() {
             const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
             if (!stored) {
-                namesInput.value = originalNames.join('\n');
+                syncNamesInput();
                 return;
             }
             try {
                 const parsed = JSON.parse(stored);
                 if (Array.isArray(parsed) && parsed.length) {
                     originalNames = [...parsed];
+                } else {
+                    originalNames = [...DEFAULT_NAMES];
                 }
             } catch {
                 originalNames = [...DEFAULT_NAMES];
             }
-            namesInput.value = originalNames.join('\n');
+            syncNamesInput();
         }
 
         function saveNamesToStorage() {
@@ -266,12 +268,13 @@
 
         /** ====== Interactions ====== */
         function updateNamesFromInput() {
+            if (!namesInput) return;
             const input = namesInput.value.trim();
             const parsed = input
                 ? input.split(/[\n,]+/).map(n => n.trim()).filter(Boolean)
                 : [];
             originalNames = parsed.length ? parsed : [...DEFAULT_NAMES];
-            namesInput.value = originalNames.join('\n');
+            syncNamesInput();
             saveNamesToStorage();
             setupRacers();
             if (raceInProgress) {
@@ -290,7 +293,9 @@
             animationFrameId = requestAnimationFrame(raceTick);
         });
 
-        updateNamesBtn.addEventListener('click', updateNamesFromInput);
+        if (updateNamesBtn && namesInput) {
+            updateNamesBtn.addEventListener('click', updateNamesFromInput);
+        }
 
         /** ====== Init ====== */
         loadNamesFromStorage();

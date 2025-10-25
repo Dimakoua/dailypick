@@ -57,46 +57,7 @@ h1 {
   box-shadow: 0 14px 28px rgba(0,0,0,.16);
 }
 
-/* Config panel (fixed under sticky header) */
-#config-area {
-  position: fixed;
-  top: calc(var(--header-h, 64px) + 10px);
-  right: clamp(10px, 4vw, 28px);
-  z-index: 30;
-  background: var(--glass-bg-strong, rgba(255,255,255,.18));
-  border: 1px solid var(--glass-border, rgba(255,255,255,.38));
- 
-  border-radius: var(--radius-lg, 15px);
-  box-shadow: var(--glass-shadow, 0 8px 30px rgba(0,0,0,.15));
-  padding: 22px 26px;
-  max-width: 460px;
-  max-height: calc(100dvh - (var(--header-h, 64px) + 24px));
-  overflow: auto;
-  text-align: left;
-}
-#config-area label {
-  display: block;
-  margin-bottom: 8px;
-  color: var(--brand-subtle-text, #7f8c8d);
-  font-weight: 700;
-}
-.config-hidden { display: none; }
-
-#namesInput {
-  width: 100%;
-  min-height: 72px;
-  padding: 10px 12px;
-  border-radius: var(--radius-md, 10px);
-  border: 1px solid var(--brand-border, #dde4eb);
-  background: rgba(255,255,255,.92);
-  color: var(--brand-text, #34495e);
-  font-size: .95rem;
-  font-family: inherit;
-  margin: 0 0 10px;
-}
-
 /* Buttons */
-#updateNamesBtn,
 #spinBtn {
   display: inline-block;
   margin-top: 16px;

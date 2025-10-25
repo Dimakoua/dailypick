@@ -45,6 +45,7 @@
     <link rel="stylesheet" href="/assets/css/theme.css">
     <link rel="stylesheet" href="/assets/css/glass.css">
     <link rel="stylesheet" href="style.css">
+    <script src="/assets/js/brand-config.js" defer></script>
     <script src="/assets/js/results-pip.js" defer></script>
     <script type="application/ld+json">
     {
@@ -71,12 +72,7 @@
     {% include "header.html" %}
 
     <h1>🕹️ Falling Letters Pinball 🕹️</h1>
-    {% set config_content %}
-    <label for="namesInput">Edit Names List (one name per line):</label>
-    <textarea id="namesInput" rows="4"></textarea>
-    <button id="updateNamesBtn">Update Names & Restart Game</button>
-    {% endset %}
-    {% include "config-panel.html" %}
+    <p class="settings-hint">Manage your players and branding once on the <a href="/apps/settings/">Settings page</a>.</p>
     
     <div id="appContainer" style="display: flex; flex-direction: column; align-items: center;">
         <div id="gameContainer">

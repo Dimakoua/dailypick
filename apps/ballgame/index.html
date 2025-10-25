@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="/assets/css/glass.css">
     <link rel="stylesheet" href="/apps/ballgame/style.css">
     <link rel="stylesheet" href="/assets/css/collaboration.css">
+    <script src="/assets/js/brand-config.js" defer></script>
     <script type="module" src="/assets/js/results-pip.js" defer></script>
     <script type="module" src="/assets/js/collaboration.js" defer></script>
     <script type="module" src="/apps/ballgame/ball-game.js" defer></script>
@@ -51,13 +52,7 @@
     
         <button id="startGameBtn">Start New Game</button>
         <button id="howToPlayBtn">How to Play</button>
-    
-        <button id="settingsToggleBtn">⚙️ Show Settings</button>
-        <div id="config-area" class="config-hidden">
-            <label for="namesInput">Enter player names (one per line or comma-separated):</label>
-            <textarea id="namesInput" rows="4"></textarea>
-            <button id="updateNamesBtn">Update & Start New Game</button>
-        </div>
+        <p class="settings-hint">Update player names or branding in the <a href="/apps/settings/">Settings page</a>, then start a new session.</p>
     
         <div id="game-container">
             <canvas id="gameCanvas" width="800" height="600"></canvas>

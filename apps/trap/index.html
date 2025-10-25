@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="/assets/css/theme.css">
     <link rel="stylesheet" href="/assets/css/glass.css">
     <link rel="stylesheet" href="style.css">
+    <script src="/assets/js/brand-config.js" defer></script>
 </head>
 
 <body>
@@ -39,13 +40,7 @@
     {% include "header.html" %}
 
     <h1>🎯 Trap!</h1>
-
-    {% set config_content %}
-    <label for="namesInput">Enter names (one per line or comma-separated):</label>
-    <textarea id="namesInput" rows="4"></textarea>
-    <button id="updateNamesBtn">Update List</button>
-    {% endset %}
-    {% include "config-panel.html" %}
+    <p class="settings-hint">Need to update the player list or brand colors? Visit the <a href="/apps/settings/">Settings page</a>.</p>
     <canvas id="gameCanvas" width="500" height="400"></canvas>
     <button id="trapBtn">🪤 Trap!</button>
     <!-- NEW: announce selection updates to screen readers -->
@@ -92,6 +87,11 @@
         const info = document.getElementById('info');
         const namesInput = document.getElementById("namesInput");
         const updateNamesBtn = document.getElementById("updateNamesBtn");
+        const syncNamesInput = () => {
+            if (namesInput) {
+                namesInput.value = originalNames.join('\n');
+            }
+        };
 
         let originalNames = [...DEFAULT_NAMES];
         let members = [];
@@ -129,7 +129,7 @@
             } else {
                 originalNames = [...DEFAULT_NAMES];
             }
-            namesInput.value = originalNames.join('\n');
+            syncNamesInput();
         }
 
         function saveNamesToStorage() {
@@ -513,10 +513,11 @@
         }
 
         function updateNamesFromInput() {
+            if (!namesInput) return;
             const inputText = namesInput.value.trim();
             const newNames = inputText ? inputText.split(/[\n,]+/).map(name => name.trim()).filter(name => name.length > 0) : [];
             originalNames = newNames.length > 0 ? [...newNames] : [...DEFAULT_NAMES]; // Fallback to default if input is empty
-            namesInput.value = originalNames.join('\n'); // Reflect the actual list used
+            syncNamesInput(); // Reflect the actual list used
             saveNamesToStorage();
             resetAndInitializeGame();
         }
@@ -577,7 +578,9 @@
             }
         });
 
-        updateNamesBtn.addEventListener("click", updateNamesFromInput);
+        if (updateNamesBtn && namesInput) {
+            updateNamesBtn.addEventListener("click", updateNamesFromInput);
+        }
 
         // Initial setup
         loadNamesFromStorage();

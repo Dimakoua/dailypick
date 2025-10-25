@@ -169,6 +169,7 @@ function saveNamesToStorage() {
 }
 
 function updateNamesFromInput() {
+    if (!namesInput) return;
     console.log("[Client Debug] Updating names from input...");
     const inputText = namesInput.value.trim();
     // Split by newline or comma, then trim and filter out empty strings

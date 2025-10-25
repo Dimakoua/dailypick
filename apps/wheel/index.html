@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="/assets/css/theme.css">
     <link rel="stylesheet" href="/assets/css/glass.css">
     <link rel="stylesheet" href="style.css">
+    <script src="/assets/js/brand-config.js" defer></script>
 </head>
 
 <body>
@@ -38,13 +39,7 @@
     {% include "header.html" %}
 
     <h1>🎯 Wheel</h1>
-
-    {% set config_content %}
-    <label for="namesInput">Enter names (one per line or comma-separated):</label>
-    <textarea id="namesInput" rows="4"></textarea>
-    <button id="updateNamesBtn">Update List</button>
-    {% endset %}
-    {% include "config-panel.html" %}
+    <p class="settings-hint">Need to edit the roster or tweak branding? Visit the <a href="/apps/settings/">Settings page</a>.</p>
     <div id="wheel-container">
         <div id="indicator"></div>
         <canvas id="wheel" width="425" height="425"></canvas> <!-- Match CSS size -->
@@ -112,6 +107,12 @@
         const namesInput = document.getElementById("namesInput");
         const updateNamesBtn = document.getElementById("updateNamesBtn");
 
+        const syncNamesForm = () => {
+            if (namesInput) {
+                namesInput.value = originalNames.join('\n');
+            }
+        };
+
         const LOCAL_STORAGE_KEY = 'namesList';
 
         let isSpinning = false;
@@ -124,19 +125,17 @@
                     const storedNames = JSON.parse(storedNamesJson);
                     if (Array.isArray(storedNames) && storedNames.length > 0) {
                         originalNames = [...storedNames];
-                        namesInput.value = storedNames.join('\n');
                     } else {
-                        namesInput.value = DEFAULT_NAMES.join('\n'); // Fallback if stored data is invalid
+                        originalNames = [...DEFAULT_NAMES];
                     }
                 } catch (e) {
                     console.error("Error parsing names from localStorage:", e);
                     originalNames = [...DEFAULT_NAMES]; // Fallback on error
-                    namesInput.value = DEFAULT_NAMES.join('\n');
                 }
             } else {
                 originalNames = [...DEFAULT_NAMES];
-                namesInput.value = DEFAULT_NAMES.join('\n');
             }
+            syncNamesForm();
             remaining = [...originalNames];
         }
 
@@ -144,6 +143,7 @@
             localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(originalNames));
         }
         function updateNamesFromInput() {
+            if (!namesInput) return;
             const inputText = namesInput.value.trim();
             if (!inputText) {
                 alert("Please enter at least one name.");
@@ -163,6 +163,7 @@
             isSpinning = false; // Stop any current spin
             winnerDiv.innerText = "";
             saveNamesToStorage(); // Save the new names
+            syncNamesForm();
             drawWheel(remaining, 0);
             // Optionally hide config after update for cleaner UX
             // toggleConfigArea(false);
@@ -254,7 +255,9 @@
         }
 
         spinBtn.addEventListener("click", spinWheel);
-        updateNamesBtn.addEventListener("click", updateNamesFromInput);
+        if (updateNamesBtn && namesInput) {
+            updateNamesBtn.addEventListener("click", updateNamesFromInput);
+        }
 
         // Initial setup
         loadNamesFromStorage(); // Load names first

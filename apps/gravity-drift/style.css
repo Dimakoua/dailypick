@@ -20,84 +20,6 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* --- Settings button (glassy primary) --- */
-#settingsToggleBtn {
-  display: inline-block;
-  padding: 10px 18px;
-  font-size: 1rem;
-  font-weight: 800;
-  color: #fff;
-  border: 1px solid rgba(255,255,255,.25);
-  border-radius: var(--radius-md, 10px);
-  background: linear-gradient(to bottom right, rgba(52,152,219,.9), rgba(41,128,185,.9));
-  box-shadow: 0 10px 24px rgba(0,0,0,.18);
-  transition: transform .2s ease, box-shadow .2s ease, background-color .3s ease;
-  z-index: 40;
-}
-#settingsToggleBtn:hover,
-#settingsToggleBtn:focus-visible {
-  outline: none;
-  transform: translateY(-2px);
-  box-shadow: 0 14px 28px rgba(0,0,0,.24);
-}
-
-/* --- Config panel (glass card) --- */
-#config-area {
-  position: fixed;
-  top: calc(var(--header-h, 64px) + 56px);
-  right: clamp(10px, 4vw, 28px);
-  z-index: 35;
-  background: var(--glass-bg-strong, rgba(15, 23, 42, 0.48));
-  border: 1px solid var(--glass-border, rgba(255,255,255,.20));
- 
-  border-radius: var(--radius-lg, 15px);
-  box-shadow: var(--glass-shadow, 0 10px 40px rgba(0,0,0,.35));
-  padding: 20px 22px;
-  width: min(500px, 92vw);
-  max-height: calc(100dvh - (var(--header-h, 64px) + 76px));
-  overflow: auto;
-  text-align: left;
-  color: var(--gray-900, #e5e7eb);
-}
-#config-area label {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 1rem;
-  color: var(--gray-600, #cbd5e1);
-  font-weight: 700;
-}
-#config-area textarea {
-  width: 100%;
-  min-height: 80px;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,.15);
-  background: rgba(255,255,255,.06);
-  color: inherit;
-  font-size: .95rem;
-  box-sizing: border-box;
-  margin-bottom: 12px;
-}
-#updateNamesBtn {
-  display: inline-block;
-  padding: 10px 18px;
-  font-size: 1rem;
-  font-weight: 800;
-  color: #fff;
-  border: 1px solid rgba(255,255,255,.25);
-  border-radius: var(--radius-md, 10px);
-  background: linear-gradient(to bottom right, rgba(230,126,34,.9), rgba(211,84,0,.9));
-  box-shadow: 0 10px 22px rgba(0,0,0,.18);
-  transition: transform .2s ease, box-shadow .2s ease, background-color .3s ease;
-}
-#updateNamesBtn:hover,
-#updateNamesBtn:focus-visible {
-  outline: none;
-  transform: translateY(-2px);
-  box-shadow: 0 14px 28px rgba(0,0,0,.24);
-}
-.config-hidden { display: none; }
-
 /* --- Game container (glass frame) --- */
 .game-container {
   width: min(1100px, 94vw);
@@ -241,17 +163,6 @@ body {
     top: auto; left: auto;
     margin: 12px auto 0;
   }
-  #settingsToggleBtn {
-    position: relative;
-    top: auto; right: auto;
-    margin: 12px auto;
-  }
-  #config-area {
-    position: relative;
-    top: auto; right: auto;
-    margin: 10px auto 14px;
-    max-height: none;
-  }
 }
 
 @media (max-width: 520px) {
@@ -262,8 +173,6 @@ body {
 
 /* --- Reduced motion --- */
 @media (prefers-reduced-motion: reduce) {
-  #settingsToggleBtn,
-  #updateNamesBtn,
   #startButton,
   #leaderboard .pip-trigger {
     transition: none !important;
