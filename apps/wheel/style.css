@@ -37,26 +37,6 @@ h1 {
   text-shadow: 0 1px 1px rgba(255,255,255,.35);
 }
 
-/* Settings button (glassy) */
-#settingsToggleBtn {
-  display: inline-block;
-  padding: 10px 18px;
-  font-size: 1rem;
-  font-weight: 700;
-  color: #fff;
-  border: 1px solid rgba(255,255,255,.25);
-  border-radius: var(--radius-md, 10px);
-  background: linear-gradient(to bottom right, rgba(52,152,219,.9), rgba(41,128,185,.9));
-  box-shadow: 0 10px 24px rgba(0,0,0,.12);
-  transition: transform .2s ease, box-shadow .2s ease, background-color .3s ease;
-}
-#settingsToggleBtn:hover,
-#settingsToggleBtn:focus-visible {
-  outline: none;
-  transform: translateY(-2px);
-  box-shadow: 0 14px 28px rgba(0,0,0,.16);
-}
-
 /* Buttons */
 #spinBtn {
   display: inline-block;
@@ -72,10 +52,7 @@ h1 {
   box-shadow: 0 10px 22px rgba(0,0,0,.12);
  
 }
-#updateNamesBtn { background: linear-gradient(to bottom right, rgba(230,126,34,.9), rgba(211,84,0,.9)); margin-left: 8px; }
 #spinBtn        { background: linear-gradient(to bottom right, rgba(52,152,219,.9), rgba(41,128,185,.9)); }
-#updateNamesBtn:hover,
-#updateNamesBtn:focus-visible,
 #spinBtn:hover,
 #spinBtn:focus-visible {
   outline: none;
@@ -158,17 +135,8 @@ canvas {
 .seo-content-area a:hover { text-decoration: underline; }
 
 /* Responsive */
-@media (max-width: 820px) {
-  #config-area {
-    position: relative;
-    top: auto; right: auto;
-    margin: 10px auto 14px;
-    width: min(95%, 560px);
-  }
-}
 @media (max-width: 520px) {
   h1 { margin-top: calc(var(--header-h, 64px) + 8px); font-size: 1.9rem; }
-  #settingsToggleBtn { width: fit-content; }
   .seo-content-area { padding: 18px 16px; }
   /* tighten indicator and canvas border a touch */
   #indicator { border-left-width: 10px; border-right-width: 10px; border-bottom-width: 18px; top: -10px; }

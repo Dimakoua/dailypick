@@ -78,9 +78,6 @@ button:disabled {
 #startGameBtn, #restartGameBtn {
   background: linear-gradient(to bottom right, rgba(46,204,113,0.95), rgba(39,174,96,0.95));
 }
-#updateNamesBtn {
-  background: linear-gradient(to bottom right, rgba(230,126,34,0.95), rgba(211,84,0,0.95));
-}
 #copySessionUrlBtn {
   background: linear-gradient(to bottom right, rgba(155,89,182,0.95), rgba(142,68,173,0.95));
   font-size: .95rem;
@@ -318,6 +315,14 @@ canvas#gameCanvas {
   text-decoration: none;
 }
 .seo-content-area a:hover { text-decoration: underline; }
+
+.button-group {
+    text-align: center;
+    margin: 1rem 0;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
 
 /* ---- Animations + accessibility --------------------------------------- */
 @keyframes mm-pulse {
