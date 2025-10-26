@@ -4,7 +4,7 @@ date: 2025-06-16
 description: "Is your daily stand-up a drag? Learn how to inject fun and fairness into your team's daily huddle with creative activities and simple tools. Boost engagement and team morale with these actionable tips from Daily Pick!"
 layout: "post.njk"
 tags: ["team building", "agile methodology", "productivity hacks", "decision making", "workplace culture", "remote work", "meeting facilitation"]
-canonical: "https://dailypick.dev/blog/2025-06-16-banish-meeting-boredom-fun-ways-to-energize-your-daily-stand-ups/"
+canonical: "https://dailypick.dev/blog/banish-meeting-boredom-fun-ways-to-energize-your-daily-stand-ups/"
 author: "Daily Pick"
 updated: 2025-06-16
 section: "Stand-ups"
@@ -17,7 +17,7 @@ twitterImageAlt: "Remote teammates high-fiving over video while using Daily Pick
 
 # Banish Meeting Boredom: Fun Ways to Energize Your Daily Stand-Ups
 
-Let's face it: the daily stand-up can easily become a monotonous checklist of updates.  But it doesn't have to be!  A sluggish stand-up can drain energy and hinder team productivity.  This post will show you how to transform your daily huddle from a dreaded obligation into an engaging and effective team interaction, boosting morale and fostering collaboration.
+Let's face it: the daily stand-up can easily become a monotonous checklist of updates.  But it doesn't have to be!  A sluggish stand-up can drain energy and hinder team productivity.  This post will show you how to transform your daily huddle from a dreaded obligation into an engaging and effective team interaction, boosting morale and fostering collaboration. For remote-first squads, bundle these tactics with the async tips in [Supercharge Async Stand-ups with Slack + Daily Pick](/blog/supercharge-async-standups-with-slack-and-daily-pick/) so everyone stays looped in.
 
 ## The Stand-Up Struggle: Why Engagement Matters
 
@@ -57,9 +57,9 @@ The key to a successful stand-up lies in injecting fun and ensuring fairness. By
 
 ## Integrating Daily Pick for a Smoother Stand-Up
 
-At Daily Pick/, we believe in the power of fun and fairness to boost team productivity and morale.  Our tools are designed to make team decision-making simple, quick, and unbiased.  Try incorporating a quick round of Speedway Racer! or utilizing the Decision Wheel! to make your stand-ups more engaging and fair.
+At Daily Pick, we believe in the power of fun and fairness to boost team productivity and morale.  Our tools are designed to make team decision-making simple, quick, and unbiased.  Try incorporating a quick round of Speedway Racer! or utilizing the Decision Wheel! to make your stand-ups more engaging and fair, then log outcomes in the [Planning Poker Hub](/blog/planning-poker-hub-guide/) so estimates reflect real blockers.
 
 
 ## Conclusion
 
-Transforming your daily stand-ups doesn't require a complete overhaul.  By incorporating a few simple, fun, and fair changes, you can significantly improve team engagement, collaboration, and overall productivity.  Ready to make your team decisions less of a drag and more of a delight? Explore the fun and fair tools at Daily Pick/ today!  Share your experiences and tips in the comments below!
+Transforming your daily stand-ups doesn't require a complete overhaul.  By incorporating a few simple, fun, and fair changes, you can significantly improve team engagement, collaboration, and overall productivity.  Ready to make your team decisions less of a drag and more of a delight? Explore the fun and fair tools at Daily Pick today, then keep iterating with our [retrospective playbook](/blog/conquer-meeting-monotony-fun-ways-to-spice-up-your-team-retrospectives/). Need a baseline checklist? The [Scrum.org Daily Scrum guide](https://www.scrum.org/resources/what-is-a-daily-scrum) is a perfect companion to these playful upgrades.

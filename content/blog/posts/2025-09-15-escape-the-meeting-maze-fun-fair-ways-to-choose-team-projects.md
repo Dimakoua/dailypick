@@ -4,7 +4,7 @@ date: 2025-09-17
 description: "Tired of endless project debates? Discover fun, fair, and fast methods to choose team projects, boosting morale and productivity.  Learn how to use decision wheels and other simple tools to make the process engaging and unbiased."
 layout: "post.njk"
 tags: ["team building", "project management", "agile", "decision making", "workplace culture", "remote work", "meeting facilitation"]
-canonical: "https://dailypick.dev/blog/2025-09-15-escape-the-meeting-maze-fun-fair-ways-to-choose-team-projects/"
+canonical: "https://dailypick.dev/blog/escape-the-meeting-maze-fun-fair-ways-to-choose-team-projects/"
 author: "Daily Pick"
 updated: 2025-09-17
 section: "Project Planning"
@@ -23,7 +23,7 @@ The problem often lies in the process itself.  Too often, choices are dictated b
 
 But what if we could transform this tedious chore into an exciting team activity?  What if we could leverage the power of fun and fairness to make project selection a breeze?
 
-This week, we're diving into creative and effective strategies to make choosing team projects a positive and productive experience. We'll explore techniques that leverage randomness for fairness, encourage team participation, and minimize the dreaded "meeting maze" associated with these critical decisions.
+This week, we're diving into creative and effective strategies to make choosing team projects a positive and productive experience. We'll explore techniques that leverage randomness for fairness, encourage team participation, and minimize the dreaded "meeting maze" associated with these critical decisions. Want even more context? Pair these tips with our earlier primer on [Conquering Decision Fatigue](/blog/conquer-decision-fatigue-fun-fair-ways-to-choose-team-projects/) to keep stakeholders energized the whole sprint.
 
 
 ##  Beyond the Brainstorm:  Fun & Fair Project Selection Methods
@@ -36,7 +36,7 @@ Forget lengthy debates and power struggles.  Here are some fun and effective way
 
 **3. Project "Speed Dating":**  If you have many project ideas, consider a "speed dating" approach.  Divide the team into smaller groups and give each group a short time (e.g., 5 minutes) to review and discuss a specific project. Then rotate groups. This quick, efficient method gives everyone exposure to various options before employing a voting method.
 
-**4.  Prioritization Matrix with a Collaborative Spin:** A prioritization matrix (like a simple Eisenhower Matrix) helps categorize projects based on urgency and importance. The key is making it collaborative!  Let the team collectively decide the weighting of each criterion (urgency, impact, etc.) and then collectively plot the projects. This shared ownership boosts buy-in and increases commitment to the selected projects.
+**4.  Prioritization Matrix with a Collaborative Spin:** A prioritization matrix (like a simple Eisenhower Matrix) helps categorize projects based on urgency and importance. The key is making it collaborative!  Let the team collectively decide the weighting of each criterion (urgency, impact, etc.) and then collectively plot the projects. This shared ownership boosts buy-in and increases commitment to the selected projects. Capture the final rankings inside the [Planning Poker Hub](/blog/planning-poker-hub-guide/) so delivery teams see the “why” next to each estimate.
 
 **5.  The "Mystery Project" Reveal:**  Generate a small number of project proposals (3-5) keeping the details intentionally vague or "mystery-like."  Then, utilize one of the aforementioned voting methods to allow the team to decide which "mystery" they want to pursue. Unpacking the actual details after the selection adds excitement and a shared exploration element.
 
@@ -53,4 +53,4 @@ These methods accomplish more than just project selection; they foster better te
 
 ## Ready to Transform Your Project Selection Process?
 
-Tired of drawn-out project selection meetings that leave your team feeling drained and disengaged?  Embrace fun and fairness with Daily Pick's decision-making tools.  Our Decision Wheel and other innovative resources are designed to simplify and enhance your team's decision-making processes, making project selection a positive and productive experience for everyone.  Visit DailyPick.dev today and explore our collection of fun and fair tools!
+Tired of drawn-out project selection meetings that leave your team feeling drained and disengaged?  Embrace fun and fairness with Daily Pick's decision-making tools.  Our Decision Wheel and other innovative resources are designed to simplify and enhance your team's decision-making processes, making project selection a positive and productive experience for everyone.  Visit DailyPick.dev today and explore our collection of fun and fair tools, then share the outcomes in your next [hybrid all-hands agenda](/blog/hybrid-all-hands-playbook-fair-fun-agendas-that-keep-teams-engaged/). Need extra validation for the C-suite? PMI’s [Pulse of the Profession research](https://www.pmi.org/learning/thought-leadership/pulse) consistently shows that transparent prioritization increases project success—Daily Pick just makes it feel like a game.

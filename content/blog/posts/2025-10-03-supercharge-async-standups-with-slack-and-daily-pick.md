@@ -4,7 +4,7 @@ date: 2025-10-03
 description: "Running asynchronous stand-ups across time zones? Learn how to pair Slack workflows with Daily Pick's fun fairness tools to keep updates flowing, engagement high, and blockers visible—without sacrificing anyone’s sleep."
 layout: "post.njk"
 tags: ["async stand-up", "remote teams", "slack workflow", "distributed work", "team productivity", "meeting alternatives"]
-canonical: "https://dailypick.dev/blog/2025-10-03-supercharge-async-standups-with-slack-and-daily-pick/"
+canonical: "https://dailypick.dev/blog/supercharge-async-standups-with-slack-and-daily-pick/"
 author: "Daily Pick"
 updated: 2025-10-03
 section: "Async Collaboration"
@@ -17,7 +17,7 @@ twitterImageAlt: "Distributed team sharing async stand-up updates with help from
 
 If your team spans time zones, the classic 15-minute daily stand-up can turn into a 5 a.m. alarm for someone—and resentment for everyone. Asynchronous stand-ups are the natural evolution for globally distributed teams, but they can fail fast if they become a graveyard of stale updates in a channel nobody reads. The trick is to maintain the accountability, energy, and fairness of a live huddle while freeing people to contribute on their schedule.
 
-Here’s how to design an async stand-up system that keeps momentum strong, makes blockers obvious, and still adds a dash of fun—powered by Slack automations and Daily Pick’s fairness-first tools.
+Here’s how to design an async stand-up system that keeps momentum strong, makes blockers obvious, and still adds a dash of fun—powered by Slack automations and Daily Pick’s fairness-first tools. If you still run a weekly live huddle, keep [Spice Up Your Stand-ups](/blog/spice-up-your-standups-5-fun-ways/) in your back pocket to blend async + sync rituals seamlessly.
 
 ## 1. Frame the Why (and the Deadline)
 
@@ -81,4 +81,4 @@ Let the team decide which tweaks to trial next week—it reinforces fairness and
 
 ---
 
-**Bottom line:** Async stand-ups thrive on clarity, automation, and shared ownership. By combining Slack workflows with Daily Pick’s playful fairness, you create a routine that respects everyone’s time zone, keeps blockers visible, and makes updates feel more like collaboration than obligation. Your distributed team gets the benefits of a stand-up—without the calendar chaos.
+**Bottom line:** Async stand-ups thrive on clarity, automation, and shared ownership. By combining Slack workflows with Daily Pick’s playful fairness, you create a routine that respects everyone’s time zone, keeps blockers visible, and makes updates feel more like collaboration than obligation. Your distributed team gets the benefits of a stand-up—without the calendar chaos. Want to go deeper? Pair this playbook with our [Remote Onboarding Icebreakers](/blog/remote-onboarding-icebreakers-your-new-hires-will-love/) so new teammates adopt the habit faster, and revisit Slack’s own [async stand-up best practices](https://slack.com/blog/collaboration/async-standups) for platform-specific tips.

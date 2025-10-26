@@ -4,7 +4,7 @@ date: 2025-10-17
 description: "Design all-hands meetings that energize offices and remote hubs alike. Explore agenda templates, fairness tactics, and Daily Pick-powered moments that keep hybrid teams listening, sharing, and celebrating together."
 layout: "post.njk"
 tags: ["hybrid meetings", "all-hands", "company culture", "leadership communication", "employee engagement", "meeting design"]
-canonical: "https://dailypick.dev/blog/2025-10-17-hybrid-all-hands-playbook-fair-fun-agendas-that-keep-teams-engaged/"
+canonical: "https://dailypick.dev/blog/hybrid-all-hands-playbook-fair-fun-agendas-that-keep-teams-engaged/"
 author: "Daily Pick"
 updated: 2025-10-17
 section: "Company Rituals"
@@ -17,7 +17,7 @@ twitterImageAlt: "Hybrid team cheering during an all-hands meeting with Daily Pi
 
 All-hands meetings are supposed to unite the company. In hybrid reality, they can easily turn into an hour of HQ applause while remote teammates mute their cameras and answer emails. The key to an unforgettable all-hands is intentional design that treats remote and in-office audiences as equal stakeholders—paired with moments of joy that remind everyone why they’re here.
 
-Here’s how to build a hybrid all-hands playbook that balances information, interaction, and fairness, powered by Daily Pick’s favorite tools.
+Here’s how to build a hybrid all-hands playbook that balances information, interaction, and fairness, powered by Daily Pick’s favorite tools. Consider it the big-room companion to our [Remote Onboarding Icebreakers](/blog/remote-onboarding-icebreakers-your-new-hires-will-love/) and [async stand-up framework](/blog/supercharge-async-standups-with-slack-and-daily-pick/); together they cover every major team touchpoint.
 
 ## Step 1: Engineer Equity Before the Meeting Starts
 
@@ -87,4 +87,4 @@ Adjust timing and segments to fit your company size, but keep the heartbeat: equ
 
 ---
 
-**The payoff:** When you treat hybrid all-hands like a designed experience, every teammate feels seen—whether they’re on the couch in Lisbon or at HQ in Chicago. Daily Pick’s fairness tools keep the energy democratic, spotlight new voices, and turn big meetings into moments people actually anticipate. And when your all-hands hum, your culture, trust, and execution do too.
+**The payoff:** When you treat hybrid all-hands like a designed experience, every teammate feels seen—whether they’re on the couch in Lisbon or at HQ in Chicago. Daily Pick’s fairness tools keep the energy democratic, spotlight new voices, and turn big meetings into moments people actually anticipate. And when your all-hands hum, your culture, trust, and execution do too. Want proof? Microsoft’s [Work Trend Index](https://www.microsoft.com/en-us/worklab/work-trend-index/hybrid-work) shows that inclusive facilitation keeps hybrid employees engaged—so mix these rituals with our posts on [fun retrospectives](/blog/level-up-your-team-retrospectives-fun-fair-activities-to-boost-engagement/) for a complete culture loop.

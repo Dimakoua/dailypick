@@ -4,7 +4,7 @@ date: 2025-10-10
 description: "Transform day-one awkwardness into instant connection. Discover creative, low-prep icebreakers and fairness-focused rituals that help remote hires bond with distributed teams using Daily Pick."
 layout: "post.njk"
 tags: ["remote onboarding", "team icebreakers", "employee experience", "people operations", "distributed teams", "culture building"]
-canonical: "https://dailypick.dev/blog/2025-10-10-remote-onboarding-icebreakers-your-new-hires-will-love/"
+canonical: "https://dailypick.dev/blog/remote-onboarding-icebreakers-your-new-hires-will-love/"
 author: "Daily Pick"
 updated: 2025-10-10
 section: "Onboarding"
@@ -17,7 +17,7 @@ twitterImageAlt: "New remote hires smiling during a virtual icebreaker powered b
 
 First impressions set the tone for every remote hire. When onboarding happens through screens, it’s easy for new teammates to feel like floating heads on a gallery view—especially if the intro activities are recycled from 2018. The antidote? Icebreakers that feel personal, purposeful, and fair to every time zone and personality type.
 
-Here’s a playbook packed with creative ideas that combine thoughtful facilitation and Daily Pick’s fairness-first tools, so your new hires feel welcomed, seen, and ready to contribute from day one.
+Here’s a playbook packed with creative ideas that combine thoughtful facilitation and Daily Pick’s fairness-first tools, so your new hires feel welcomed, seen, and ready to contribute from day one. Pair it with our [async stand-up guide](/blog/supercharge-async-standups-with-slack-and-daily-pick/) so newcomers know exactly how updates work before their first Monday.
 
 ## 1. Start with a Welcome That Feels Handcrafted
 
@@ -45,7 +45,7 @@ New hires inevitably need a tour of your collaboration toolkit. Instead of a dry
 - **Assign quest partners randomly** using Speedway Racer so no one gets stuck with the same mentor every time.
 - **Celebrate completions** by spinning the Decision Wheel at the end of the day to pick a teammate who shares a fun fact about how they use that tool in real life.
 
-This approach keeps onboarding interactive and shows exactly how tools support real workflows.
+This approach keeps onboarding interactive and shows exactly how tools support real workflows. Bonus points if you log the quest outcomes in the [Planning Poker Hub](/blog/planning-poker-hub-guide/) so product leads see how fast folks ramp onto estimation practices.
 
 ## 4. Spotlight Team Traditions with Fair Rotation
 
@@ -73,4 +73,4 @@ Don’t assume the onboarding experience is smooth—ask:
 
 ---
 
-**The bottom line:** Remote onboarding doesn’t have to be a faceless slideshow. With intentional design and Daily Pick’s playful fairness, you can craft icebreakers and rituals that invite every new hire into the heartbeat of your culture. They’ll remember the warmth, the laugh from an unexpected spin, and the feeling that they belonged from minute one—and that translates into faster ramp-up, stronger loyalty, and a team that genuinely enjoys growing together.
+**The bottom line:** Remote onboarding doesn’t have to be a faceless slideshow. With intentional design and Daily Pick’s playful fairness, you can craft icebreakers and rituals that invite every new hire into the heartbeat of your culture. They’ll remember the warmth, the laugh from an unexpected spin, and the feeling that they belonged from minute one—and that translates into faster ramp-up, stronger loyalty, and a team that genuinely enjoys growing together. For more inspiration, check Culture Amp’s [remote onboarding research](https://www.cultureamp.com/blog/remote-onboarding-best-practices) and mix in our posts on [stand-up energy](/blog/banish-meeting-boredom-fun-ways-to-energize-your-daily-stand-ups/) when you introduce them to the wider team.
