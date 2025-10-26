@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <!-- Viewport meta tag is already present and good -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speedway Racer - Turtle Race Name Picker Game | Daily Pick</title>
+    <meta name="description"
+        content="Fire up Speedway, the ultimate turtle race name picker. Let colorful racers decide stand-up order, pick presenters, and energize your team or classroom.">
+    <meta name="keywords"
+        content="turtle race name picker, speedway racer, random name picker, stand-up order game, turtle racing, agile icebreaker, meeting energizer, classroom participation game, remote team activity, Daily Pick tools, fair speaking order">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dailypick.dev/apps/speedway/">
+    <meta property="og:title" content="Speedway Racer - Turtle Race Name Picker | Daily Pick">
+    <meta property="og:description"
+        content="Launch a turtle race name picker to set speaking order, choose winners, and keep meetings fun.">
+    <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
+    <meta property="og:image:alt"
+        content="Colorful turtle racers sprinting toward the finish line in Daily Pick's Speedway game">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Speedway Racer - Turtle Race Name Picker | Daily Pick">
+    <meta name="twitter:description"
+        content="Spin up a turtle race name picker and let Daily Pick’s Speedway decide who goes next, every time.">
+    <meta name="twitter:image" content="https://dailypick.dev/assets/og-image-main.png">
+    <meta name="twitter:image:alt"
+        content="Colorful turtle racers sprinting toward the finish line in Daily Pick's Speedway game">
+
+    <link rel="canonical" href="https://dailypick.dev/apps/speedway/">
+    <!-- Favicon Links -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#ffffff">
+
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/theme.css">
+    <link rel="stylesheet" href="/assets/css/glass.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="/assets/js/brand-config.js" defer></script>
+    <script src="/assets/js/results-pip.js" defer></script>
+    <!-- (Optional) Collaboration includes — keep if used elsewhere -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <link rel="stylesheet" href="/assets/css/collaboration.css">
+    <script src="/assets/js/collaboration.js" defer></script>
+
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Speedway Racer",
+    "operatingSystem": "Any",
+    "applicationCategory": "GameApplication",
+    "url": "https://dailypick.dev/apps/speedway/",
+    "image": "https://dailypick.dev/assets/og-image-main.png",
+    "description": "Play Speedway Racer by Daily Pick—a turtle racing game that randomizes speaking order and keeps teams engaged.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Daily Pick",
+      "url": "https://dailypick.dev"
+    }
+  }
+  </script>
+</head>
+
+<body>
+    {% include "bg-orbs.html" %}
+    {% include "header.html" %}
+
+    <h1>🏁 Speedway: Turtle Race Name Picker 🏁</h1>
+    <p class="settings-hint">Update racers or your brand once in the <a href="/apps/settings/">Settings page</a>, then come back to race.</p>
+    <div class="game-layout">
+        <div id="track-container" aria-label="Racing track">
+            <div id="start-line"></div>
+            <div id="finish-line-visual"></div>
+            <!-- Racers injected by JS -->
+        </div>
+
+        <div id="results-area" aria-live="polite" aria-atomic="true">
+            <h2>Order:</h2>
+            <button id="speedwayPipBtn" class="pip-trigger" type="button" data-pip-target="#results-area"
+                data-pip-title="Speedway Results" data-pip-exclude="#speedwayPipBtn" data-pip-width="320"
+                data-pip-height="420">Open in Picture in Picture</button>
+            <ol id="standupOrderList"></ol>
+        </div>
+    </div>
+
+    <button id="startRaceBtn">🚀 Start Race!</button>
+
+    <div class="seo-content-area">
+        <h2>Speedway Racer: The Turtle Race Name Picker Your Team Will Cheer For</h2>
+        <p><strong>Speedway Racer</strong> by Daily Pick turns a simple stand-up order into a burst of excitement. This
+            turtle race name picker lets you add your roster, press start, and watch colorful racers sprint for the
+            finish line—whoever wins sets the speaking order, assigns the next presenter, or snags the surprise prize.
+            It’s fast, fair, and endlessly replayable.</p>
+
+        <h3>How to Run a Speedway Race</h3>
+        <ul>
+            <li><strong>Load your racers:</strong> Paste names or import your saved list. Each teammate gets a lane and
+                a turtle avatar.</li>
+            <li><strong>Launch the race:</strong> Tap <em>Start Race</em> and watch real-time animation determine the
+                winners.</li>
+            <li><strong>Capture the results:</strong> The leaderboard updates instantly and can pop into
+                Picture-in-Picture so facilitators keep it visible while screensharing.</li>
+            <li><strong>Reset and rerun:</strong> Need another order? Hit restart for a brand-new outcome—no two races
+                are the same.</li>
+        </ul>
+
+        <h3>Why Teams and Classrooms Love Speedway</h3>
+        <ul>
+            <li><strong>Fair randomization:</strong> Removes bias when choosing who goes next, who leads the demo, or
+                who wins a giveaway—every turtle race name picker finish is unique.</li>
+            <li><strong>Instant engagement:</strong> The playful race animation keeps even camera-off participants glued
+                to the screen.</li>
+            <li><strong>Hybrid-friendly:</strong> Works equally well in conference rooms and remote stand-ups thanks to
+                results sharing and PiP mode.</li>
+            <li><strong>Education ready:</strong> Teachers use Speedway to select readers, presenters, and quiz
+                participants without the stress.</li>
+        </ul>
+
+        <h3>Level Up Your Rituals with Daily Pick</h3>
+        <ul>
+            <li><strong>Pair with other games:</strong> After the race, spin the <a href="/apps/wheel/">Daily Pick
+                    Decision Wheel</a> for follow-up tasks or drop into <a href="/apps/trap/">Trap!</a> for a
+                suspenseful tiebreaker.</li>
+            <li><strong>Log the winners:</strong> Export the finishing order or feed it into your retro notes, Jira
+                board, or team wiki.</li>
+        </ul>
+        <p>Whether you’re running a sprint review, guiding a student debate, or just kicking off Friday with a laugh,
+            <strong>Speedway Racer</strong> brings the energy. Fire up the turtles and let Daily Pick decide the order
+            with style.</p>
+    </div>
+    {% include "footer.html" %}
+
+    <script>
+        "use strict";
+
+        /** ====== Config & State (themes removed) ====== */
+        const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
+        const LOCAL_STORAGE_KEY = 'namesList';
+
+        /** Single cohesive palette */
+        const RACER_PALETTE = ['#e74c3c', '#3498db', '#2ecc71', '#f1c40f', '#9b59b6', '#e67e22'];
+
+        let originalNames = [...DEFAULT_NAMES];
+        let racersData = [];
+        let raceInProgress = false;
+        let animationFrameId = null;
+
+        /** ====== DOM ====== */
+        const trackContainer = document.getElementById('track-container');
+        const startRaceBtn = document.getElementById('startRaceBtn');
+        const standupOrderList = document.getElementById('standupOrderList');
+        const namesInput = document.getElementById('namesInput');
+        const updateNamesBtn = document.getElementById('updateNamesBtn');
+        const syncNamesInput = () => {
+            if (namesInput) {
+                namesInput.value = originalNames.join('\n');
+            }
+        };
+
+        const finishLinePercent = 90;
+
+        /** ====== Names storage ====== */
+        function loadNamesFromStorage() {
+            const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+            if (!stored) {
+                syncNamesInput();
+                return;
+            }
+            try {
+                const parsed = JSON.parse(stored);
+                if (Array.isArray(parsed) && parsed.length) {
+                    originalNames = [...parsed];
+                } else {
+                    originalNames = [...DEFAULT_NAMES];
+                }
+            } catch {
+                originalNames = [...DEFAULT_NAMES];
+            }
+            syncNamesInput();
+        }
+
+        function saveNamesToStorage() {
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(originalNames));
+        }
+
+        /** ====== Racers + Race ====== */
+        function setupRacers() {
+            // Reset DOM + state
+            trackContainer.querySelectorAll('.racer').forEach(el => el.remove());
+            racersData = [];
+            standupOrderList.innerHTML = '';
+            startRaceBtn.disabled = originalNames.length === 0;
+            startRaceBtn.textContent = '🚀 Start Race!';
+
+            if (originalNames.length === 0) {
+                trackContainer.style.height = '120px';
+                return;
+            }
+
+            const racerHeight = 30;
+            const verticalGap = 10;
+            const totalHeight = originalNames.length * (racerHeight + verticalGap) - verticalGap;
+            trackContainer.style.height = `${Math.max(150, totalHeight + 40)}px`;
+
+            originalNames.forEach((name, index) => {
+                const racer = document.createElement('div');
+                racer.classList.add('racer');
+                racer.innerHTML = `<span class="racer-emoji">🐢</span><span class="racer-name">${name.substring(0, 3)}</span>`;
+                racer.style.backgroundColor = RACER_PALETTE[index % RACER_PALETTE.length];
+                racer.style.left = '5%';
+                racer.style.top = `${20 + index * (racerHeight + verticalGap)}px`;
+
+                trackContainer.appendChild(racer);
+                racersData.push({
+                    name,
+                    element: racer,
+                    positionPercent: 5,
+                    finished: false,
+                    finishTime: 0
+                });
+            });
+        }
+
+        function raceTick() {
+            if (!raceInProgress) return;
+
+            let allFinished = true;
+
+            racersData.forEach((racer) => {
+                if (racer.finished) return;
+
+                allFinished = false;
+                const randomBoost = (Math.random() * 0.4) - 0.1;
+                racer.positionPercent += randomBoost;
+                racer.element.style.left = `${racer.positionPercent}%`;
+
+                if (racer.positionPercent >= finishLinePercent) {
+                    racer.finished = true;
+                    racer.finishTime = performance.now();
+                    racer.element.style.left = `${finishLinePercent}%`;
+                    racer.element.classList.add('finished');
+
+                    const li = document.createElement('li');
+                    li.textContent = racer.name;
+                    li.classList.add('finished-entry');
+                    standupOrderList.appendChild(li);
+                }
+            });
+
+            if (allFinished) {
+                raceInProgress = false;
+                startRaceBtn.disabled = false;
+                startRaceBtn.textContent = '🏁 Race Again!';
+                cancelAnimationFrame(animationFrameId);
+            } else {
+                animationFrameId = requestAnimationFrame(raceTick);
+            }
+        }
+
+        /** ====== Interactions ====== */
+        function updateNamesFromInput() {
+            if (!namesInput) return;
+            const input = namesInput.value.trim();
+            const parsed = input
+                ? input.split(/[\n,]+/).map(n => n.trim()).filter(Boolean)
+                : [];
+            originalNames = parsed.length ? parsed : [...DEFAULT_NAMES];
+            syncNamesInput();
+            saveNamesToStorage();
+            setupRacers();
+            if (raceInProgress) {
+                raceInProgress = false;
+                cancelAnimationFrame(animationFrameId);
+            }
+        }
+
+        /** ====== Event wiring ====== */
+        startRaceBtn.addEventListener('click', () => {
+            if (raceInProgress) return;
+            raceInProgress = true;
+            startRaceBtn.disabled = true;
+            startRaceBtn.textContent = '🚦 Racing...';
+            setupRacers(); // fresh run each time
+            animationFrameId = requestAnimationFrame(raceTick);
+        });
+
+        if (updateNamesBtn && namesInput) {
+            updateNamesBtn.addEventListener('click', updateNamesFromInput);
+        }
+
+        /** ====== Init ====== */
+        loadNamesFromStorage();
+        setupRacers();
+    </script>
+</body>
+
+</html>

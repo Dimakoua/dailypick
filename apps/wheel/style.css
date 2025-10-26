@@ -1,0 +1,144 @@
+/* =========================================================
+   Decision Wheel — glass-styled page
+   - Matches home.css + glass.css
+   - Sticky header offset, focus-visible, dark-mode, motion
+   ========================================================= */
+
+/* Page tokens */
+:root {
+  --wheel-max: 520px;                  /* hard cap to avoid canvas upscaling blur */
+}
+
+/* Header-safe anchor offset */
+html { scroll-padding-top: calc(var(--header-h, 64px) + 12px); }
+
+/* Base */
+body {
+  font-family: var(--brand-font-family, 'Nunito', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif);
+  color: var(--brand-text, #34495e);
+  background: var(--brand-background, #f4f7f6);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Title */
+h1 {
+  font-size: clamp(2rem, 2.6rem, 3rem);
+  margin: calc(var(--header-h, 64px) + 12px) 0 20px;
+  color: var(--blue, #3498db);
+  font-weight: 800;
+  text-align: center;
+  text-shadow: 0 1px 1px rgba(255,255,255,.35);
+}
+
+/* Buttons */
+#spinBtn {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: var(--radius-md, 10px);
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, background-color .3s ease;
+  box-shadow: 0 10px 22px rgba(0,0,0,.12);
+ 
+}
+#spinBtn        { background: linear-gradient(to bottom right, rgba(52,152,219,.9), rgba(41,128,185,.9)); }
+#spinBtn:hover,
+#spinBtn:focus-visible {
+  outline: none;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(0,0,0,.16);
+}
+
+/* Wheel container (glass panel) */
+#wheel-container {
+  position: relative;
+  width: min(92vw, var(--wheel-max));
+  margin: 20px auto 12px;
+  padding: 16px;
+}
+
+/* Canvas (keeps crispness; we only scale down on narrow screens) */
+canvas {
+  display: block;
+  margin: 0 auto;
+  border: 5px solid rgba(255,255,255,.55);
+  border-radius: 50%;
+  background: #fff;
+  width: min(100%, 425px);     /* don’t upscale beyond intrinsic 425px */
+  height: auto;
+}
+
+/* Indicator arrow */
+#indicator {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%) rotate(57deg);
+  width: 0; height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-bottom: 22px solid #e74c3c;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.7));
+  z-index: 2;
+}
+
+/* Winner display */
+#winner {
+  font-size: 1.4rem;
+  margin-top: 10px;
+  color: var(--blue-600, #2980b9);
+  min-height: 1.6em;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* SEO content (glass card) */
+.seo-content-area {
+  background: var(--glass-bg, rgba(255,255,255,.12));
+  border: 1px solid var(--glass-border, rgba(255,255,255,.38));
+  border-radius: var(--radius-lg, 15px);
+  box-shadow: var(--glass-shadow, 0 8px 30px rgba(0,0,0,.15));
+  padding: 24px 28px;
+  max-width: 780px;
+  width: min(92%, 780px);
+  margin: 28px auto 0;
+  text-align: left;
+  line-height: 1.7;
+}
+.seo-content-area h2 {
+  color: var(--blue, #3498db);
+  margin: 0 0 12px;
+  font-size: 1.6rem;
+  text-align: center;
+}
+.seo-content-area h3 {
+  color: var(--blue-600, #2980b9);
+  margin: 18px 0 8px;
+  font-size: 1.25rem;
+}
+.seo-content-area a {
+  color: var(--blue-600, #2980b9);
+  text-decoration: none;
+  font-weight: 700;
+}
+.seo-content-area a:hover { text-decoration: underline; }
+
+/* Responsive */
+@media (max-width: 520px) {
+  h1 { margin-top: calc(var(--header-h, 64px) + 8px); font-size: 1.9rem; }
+  .seo-content-area { padding: 18px 16px; }
+  /* tighten indicator and canvas border a touch */
+  #indicator { border-left-width: 10px; border-right-width: 10px; border-bottom-width: 18px; top: -10px; }
+  canvas { border-width: 4px; }
+}

@@ -1,6 +1,6 @@
 
 name = "dailypick"
-main = "worker.js"
+main = "packages/worker/worker.js"
 compatibility_date = "2025-07-01"
 
 [site]
@@ -10,7 +10,8 @@ bucket = "./dist"
 bindings = [
   { name = "COLLABORATION_SESSION", class_name = "CollaborationSession" },
   { name = "BALL_GAME_SESSION", class_name = "BallGameSession" },
-  { name = "MIMIC_GAME_SESSION", class_name = "MimicGameSession" }
+  { name = "MIMIC_GAME_SESSION", class_name = "MimicGameSession" },
+  { name = "PLANNING_POKER_SESSION", class_name = "PlanningPokerSession" }
 ]
 
 [[migrations]]
@@ -20,6 +21,10 @@ new_sqlite_classes = ["CollaborationSession", "BallGameSession"]
 [[migrations]]
 tag = "v3"
 new_sqlite_classes = ["MimicGameSession"]
+
+[[migrations]]
+tag = "v4"
+new_sqlite_classes = ["PlanningPokerSession"]
 
 [observability.logs]
 enabled = false

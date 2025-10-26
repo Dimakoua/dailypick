@@ -2,24 +2,15 @@ const sitemap = require("@quasibit/eleventy-plugin-sitemap");
 
 module.exports = function(eleventyConfig) {
   // Tell Eleventy to watch your CSS changes for live reload.
-  eleventyConfig.addWatchTarget("./blog/css/");
-
+  eleventyConfig.addWatchTarget("./content/blog/css/");
   // Passthrough copy for static assets. Eleventy will copy these directly.
   // Copy blog's CSS to the root `css` folder in the output.
-  eleventyConfig.addPassthroughCopy({ "blog/css": "css" });
+  eleventyConfig.addPassthroughCopy({ "content/blog/css": "css" });
   eleventyConfig.addPassthroughCopy("assets"); // For root favicons, game assets, OG images
-  
-  // Add passthrough copy for game directories and their assets
-  eleventyConfig.addPassthroughCopy("wheel");
+
+  // Add passthrough copy for public assets and game directories
   eleventyConfig.addPassthroughCopy({ "public": "." });
-  eleventyConfig.addPassthroughCopy("speedway");
-  eleventyConfig.addPassthroughCopy("trap");
-  eleventyConfig.addPassthroughCopy("letters");
-  eleventyConfig.addPassthroughCopy("gravity-drift");
-  eleventyConfig.addPassthroughCopy("ballgame");
-  eleventyConfig.addPassthroughCopy("mimic-master");
-  // If you have other static assets like JS files for your games, add them here too.
-  // eleventyConfig.addPassthroughCopy("js");
+  eleventyConfig.addPassthroughCopy({ "apps": "apps" });
 
   // Sitemap Plugin
   eleventyConfig.addPlugin(sitemap, {
@@ -35,10 +26,12 @@ module.exports = function(eleventyConfig) {
     },
   });
 
+  eleventyConfig.addShortcode("year", () => `${new Date().getFullYear()}`);
+
   // Collections: Create a 'post' collection from all markdown files in 'blog/posts'
   eleventyConfig.addCollection("post", function(collectionApi) {
     // The input directory is already set to "./blog", so "posts/*.md" is relative to that.
-    return collectionApi.getFilteredByGlob("./blog/posts/**/*.md");
+    return collectionApi.getFilteredByGlob("./content/blog/posts/**/*.md");
     // With input dir as root, the glob needs to be relative to root.
     // return collectionApi.getFilteredByGlob("./blog/posts/**/*.md"); // This remains correct
   });
@@ -46,7 +39,7 @@ module.exports = function(eleventyConfig) {
   // Create a custom collection for the sitemap that excludes the README.md file.
   eleventyConfig.addCollection("sitemap", function(collectionApi) {
     // Define a list of file paths to exclude from the sitemap.
-    const excludedPaths = ['./Readme.md', './blog/prompt.md'];
+    const excludedPaths = ['./README.md', './content/blog/prompt.md'];
 
     const items = collectionApi.getAll().filter(item => {
       return !excludedPaths.includes(item.inputPath);
@@ -60,7 +53,7 @@ module.exports = function(eleventyConfig) {
       if (item.url === '/') {
         item.data.sitemap.changefreq = 'daily';
         item.data.sitemap.priority = 1.0;
-      } else if (item.inputPath.startsWith('./blog/posts/')) {
+      } else if (item.inputPath.startsWith('./content/blog/posts/')) {
         item.data.sitemap.changefreq = 'weekly';
         item.data.sitemap.priority = 0.8;
       } else {
@@ -75,8 +68,8 @@ module.exports = function(eleventyConfig) {
   return {
     dir: {
       input: ".", // Process files from the project root
-      includes: "blog/_includes", // Layouts are in blog/_includes
-      data: "blog/_data", // Global data is in blog/_data
+      includes: "_includes", // Layouts are in _includes
+      data: "content/blog/_data", // Global data is in content/blog/_data
       output: "dist" // Default output folder
     },
     // Template engines to process

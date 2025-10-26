@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planning Poker Hub - Multiplayer Estimation Room | Daily Pick</title>
+  <meta name="description"
+    content="Start a multiplayer Planning Poker room in seconds. Invite your team, select Fibonacci cards in real-time, reveal together, and copy Jira-ready summaries." />
+  <meta name="keywords"
+    content="planning poker, scrum estimation, fibonacci cards, agile tools, daily pick, jira planning poker, online planning poker">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dailypick.dev/apps/planning-poker/">
+  <meta property="og:title" content="Planning Poker Hub - Real-time Agile Estimation | Daily Pick">
+  <meta property="og:description"
+    content="Spin up a Planning Poker room, invite teammates, and reveal Fibonacci votes together. Export Jira-friendly summaries in one click.">
+  <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
+
+  <link rel="canonical" href="https://dailypick.dev/apps/planning-poker/">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/assets/favicon/site.webmanifest">
+  <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/theme.css">
+  <link rel="stylesheet" href="/assets/css/glass.css">
+  <link rel="stylesheet" href="./style.css">
+  <script src="/assets/js/brand-config.js" defer></script>
+  <script src="./script.js" defer></script>
+</head>
+
+<body>
+  {% include "bg-orbs.html" %}
+  {% include "header.html" %}
+
+  <main class="poker-page" aria-labelledby="planningPokerHeading">
+    <header class="page-hero glass-card">
+      <div>
+        <p class="hero-eyebrow">Estimation Toolkit</p>
+        <h1 id="planningPokerHeading">Planning Poker Hub</h1>
+        <p>Spin up a planning poker room, let everyone pick Fibonacci cards, reveal together, and copy Jira-ready
+          summaries instantly.</p>
+      </div>
+      <div class="hero-meta">
+        <span id="sessionBadge" class="session-badge" aria-live="polite">Not connected</span>
+        <button id="copyInviteBtn" class="ghost-btn" type="button" disabled>Copy invite link</button>
+      </div>
+    </header>
+
+    <section class="poker-grid">
+      <article class="control-card glass-card" aria-label="Room controls">
+        <div class="field-group">
+          <label for="displayNameInput">Display name</label>
+          <div class="inline-field">
+            <input id="displayNameInput" type="text" maxlength="40" autocomplete="off" placeholder="e.g. Casey">
+            <button id="saveNameBtn" type="button">Save</button>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Room</label>
+          <div class="room-actions">
+            <button id="createRoomBtn" type="button">Start new room</button>
+            <div class="join-row">
+              <input id="roomCodeInput" type="text" inputmode="numeric" autocomplete="off" placeholder="Enter room code">
+              <button id="joinRoomBtn" type="button">Join</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="storyInput">Story / Jira link</label>
+          <input id="storyInput" type="text" maxlength="120" placeholder="e.g. JIRA-123 · Improve onboarding modal">
+          <p class="field-hint">Hosts can edit the story label for the current round.</p>
+        </div>
+
+        <div class="field-group">
+          <label>Status</label>
+          <p id="connectionStatus" class="status-line" aria-live="polite">Not connected</p>
+        </div>
+      </article>
+
+      <article class="board-card glass-card" aria-live="polite">
+        <div class="deck" role="group" aria-label="Fibonacci deck" id="cardDeck"></div>
+        <div class="deck-actions">
+          <button id="clearCardBtn" type="button" class="ghost-btn" disabled>Clear selection</button>
+          <div class="host-actions">
+            <button id="revealBtn" type="button" disabled>Reveal votes</button>
+            <button id="resetBtn" type="button" disabled>New round</button>
+          </div>
+        </div>
+
+        <section class="participants" aria-labelledby="participantsHeading">
+          <div class="participants-header">
+            <h2 id="participantsHeading">Participants</h2>
+            <span id="participantCount" class="pill">0</span>
+          </div>
+          <div id="participantsList" class="participants-list"></div>
+        </section>
+
+        <section class="summary-panel">
+          <div class="summary-header">
+            <h2>Jira summary</h2>
+            <button id="copySummaryBtn" type="button" disabled>Copy summary</button>
+          </div>
+          <pre id="summaryOutput" aria-live="polite">Votes will appear here after you reveal.</pre>
+        </section>
+      </article>
+    </section>
+
+    <section class="seo-content glass-card">
+      <h2>Why Planning Poker?</h2>
+      <p>Story-pointing sessions work best when everyone plays at the same time. The Planning Poker Hub keeps teammates
+        focused with a clean interface, optional story label, and clear call-to-actions for the facilitator.</p>
+      <ul>
+        <li><strong>No downloads:</strong> Share a link and you’re ready to vote.</li>
+        <li><strong>Hidden until reveal:</strong> Cards stay secret until the host reveals them.</li>
+        <li><strong>Smart summaries:</strong> Copy averages, vote counts, and names straight into Jira.</li>
+        <li><strong>Team-friendly:</strong> If the host drops, the room automatically promotes the next participant.</li>
+      </ul>
+    </section>
+  </main>
+
+  {% include "footer.html" %}
+</body>
+
+</html>

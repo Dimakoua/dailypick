@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Pick Settings - Players & Branding</title>
+  <meta name="description" content="Manage your shared player list and customize the Daily Pick brand theme from one central settings page." />
+  <link rel="canonical" href="https://dailypick.dev/apps/settings/" />
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/assets/favicon/site.webmanifest">
+  <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+  <meta name="theme-color" content="#ffffff">
+
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/theme.css">
+  <link rel="stylesheet" href="/assets/css/glass.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="/assets/js/brand-config.js" defer></script>
+</head>
+
+<body>
+  {% include "bg-orbs.html" %}
+  {% include "header.html" %}
+
+  <main class="settings-page" aria-labelledby="settingsHeading">
+    <section class="settings-hero glass-card">
+      <div>
+        <p class="eyebrow">Control center</p>
+        <h1 id="settingsHeading">Settings &amp; Brand Studio</h1>
+        <p>Update the shared player roster used across our games and tailor the Daily Pick look-and-feel to match your
+          team. Changes save to your browser and apply instantly.</p>
+      </div>
+      <div class="hero-actions">
+        <a class="btn-link" href="/apps/wheel/">Jump into a game →</a>
+      </div>
+    </section>
+
+    <section class="settings-grid">
+      <article class="settings-card glass-card" aria-labelledby="playersHeading">
+        <div class="card-header">
+          <h2 id="playersHeading">Player List</h2>
+          <p>One list powers every picker. Add each teammate on its own line.</p>
+        </div>
+        <label for="playerNamesInput" class="sr-only">Player names</label>
+        <textarea id="playerNamesInput" rows="8" spellcheck="false"></textarea>
+        <p class="field-hint">Tip: paste from Slack or CSV, we clean it automatically.</p>
+        <div class="button-row">
+          <button id="savePlayersBtn" type="button">Save Players</button>
+          <button id="resetPlayersBtn" type="button" class="ghost">Reset Names</button>
+        </div>
+        <p id="playersStatus" class="settings-status" aria-live="polite"></p>
+      </article>
+
+      <article class="settings-card glass-card" aria-labelledby="brandHeading">
+        <div class="card-header">
+          <h2 id="brandHeading">Brand Configuration</h2>
+          <p>Use your own colors, emoji, and typography to make Daily Pick feel native to your team.</p>
+        </div>
+
+        <form id="brandForm" class="brand-form" novalidate>
+          <div class="brand-grid">
+            <label>
+              Brand name
+              <input type="text" id="brandNameInput" maxlength="32">
+            </label>
+            <label>
+              Brand emoji / mark
+              <input type="text" id="brandMarkInput" maxlength="4">
+            </label>
+            <label>
+              Accent color
+              <input type="color" id="accentColorInput">
+            </label>
+            <label>
+              Accent (strong)
+              <input type="color" id="accentStrongInput">
+            </label>
+            <label>
+              Background color
+              <input type="color" id="backgroundColorInput">
+            </label>
+            <label>
+              Surface color
+              <input type="color" id="surfaceColorInput">
+            </label>
+            <label>
+              Text color
+              <input type="color" id="textColorInput">
+            </label>
+            <label>
+              Heading color
+              <input type="color" id="headingColorInput">
+            </label>
+            <label>
+              Subtle text color
+              <input type="color" id="subtleTextColorInput">
+            </label>
+            <label>
+              Border color
+              <input type="color" id="borderColorInput">
+            </label>
+            <label>
+              Font stack
+              <input type="text" id="fontFamilyInput" placeholder="'Nunito', system-ui, sans-serif">
+            </label>
+            <label>
+              Logo image URL (optional)
+              <input type="url" id="logoUrlInput" placeholder="https://example.com/logo.png">
+            </label>
+          </div>
+        </form>
+
+        <div class="brand-preview" aria-live="polite">
+          <div class="preview-header">
+            <span class="preview-mark" aria-hidden="true">🎯</span>
+            <span class="preview-name">Daily Pick</span>
+          </div>
+          <p>Buttons, headers, and accents across the site will match these selections.</p>
+          <button type="button" disabled>Sample Button</button>
+        </div>
+
+        <div class="button-row">
+          <button id="saveBrandBtn" type="button">Save Brand</button>
+          <button id="resetBrandBtn" type="button" class="ghost">Reset Brand</button>
+        </div>
+        <p id="brandStatus" class="settings-status" aria-live="polite"></p>
+      </article>
+    </section>
+
+    <section class="settings-card glass-card tips">
+      <h2>How it works</h2>
+      <ul>
+        <li>Settings are stored locally in your browser via <code>localStorage</code>.</li>
+        <li>Every game loads the <strong>Players List</strong> before a match and applies your <strong>Brand
+            Configuration</strong> on page load.</li>
+        <li>Need to sync with teammates? Share your list via chat, then paste it here.</li>
+      </ul>
+    </section>
+  </main>
+
+  {% include "footer.html" %}
+
+  <script>
+    (() => {
+      const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
+      const PLAYERS_KEY = 'namesList';
+      const BRAND_CONFIG_KEY = 'brandConfig';
+      const DEFAULT_BRAND = {
+        brandName: 'Daily Pick',
+        brandMark: '🎯',
+        accentColor: '#3498db',
+        accentStrong: '#2980b9',
+        backgroundColor: '#f4f7f6',
+        surfaceColor: '#ffffff',
+        textColor: '#34495e',
+        headingColor: '#2d3e50',
+        subtleTextColor: '#7f8c8d',
+        borderColor: '#dde4eb',
+        fontFamily: "'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+        logoUrl: '',
+      };
+
+      const playerNamesInput = document.getElementById('playerNamesInput');
+      const savePlayersBtn = document.getElementById('savePlayersBtn');
+      const resetPlayersBtn = document.getElementById('resetPlayersBtn');
+      const playersStatus = document.getElementById('playersStatus');
+
+      const brandInputs = {
+        brandName: document.getElementById('brandNameInput'),
+        brandMark: document.getElementById('brandMarkInput'),
+        accentColor: document.getElementById('accentColorInput'),
+        accentStrong: document.getElementById('accentStrongInput'),
+        backgroundColor: document.getElementById('backgroundColorInput'),
+        surfaceColor: document.getElementById('surfaceColorInput'),
+        textColor: document.getElementById('textColorInput'),
+        headingColor: document.getElementById('headingColorInput'),
+        subtleTextColor: document.getElementById('subtleTextColorInput'),
+        borderColor: document.getElementById('borderColorInput'),
+        fontFamily: document.getElementById('fontFamilyInput'),
+        logoUrl: document.getElementById('logoUrlInput'),
+      };
+      const saveBrandBtn = document.getElementById('saveBrandBtn');
+      const resetBrandBtn = document.getElementById('resetBrandBtn');
+      const brandStatus = document.getElementById('brandStatus');
+      const brandPreview = document.querySelector('.brand-preview');
+      const previewName = brandPreview.querySelector('.preview-name');
+      const previewMark = brandPreview.querySelector('.preview-mark');
+      const previewButton = brandPreview.querySelector('button');
+
+      function showStatus(el, message) {
+        if (!el) return;
+        el.textContent = message;
+        setTimeout(() => { el.textContent = ''; }, 4000);
+      }
+
+      function normalizeNamesInput(raw) {
+        if (!raw) return [];
+        return raw
+          .split(/[\n,]+/)
+          .map(name => name.trim())
+          .filter(Boolean);
+      }
+
+      function loadPlayers() {
+        const stored = localStorage.getItem(PLAYERS_KEY);
+        let names = DEFAULT_NAMES;
+        if (stored) {
+          try {
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.length) {
+              names = parsed;
+            }
+          } catch {
+            names = DEFAULT_NAMES;
+          }
+        }
+        if (playerNamesInput) {
+          playerNamesInput.value = names.join('\n');
+        }
+      }
+
+      function savePlayers() {
+        if (!playerNamesInput) return;
+        const names = normalizeNamesInput(playerNamesInput.value);
+        const toPersist = names.length ? names : DEFAULT_NAMES;
+        playerNamesInput.value = toPersist.join('\n');
+        localStorage.setItem(PLAYERS_KEY, JSON.stringify(toPersist));
+        showStatus(playersStatus, `Saved ${toPersist.length} player${toPersist.length === 1 ? '' : 's'}.`);
+      }
+
+      function resetPlayers() {
+        if (!playerNamesInput) return;
+        localStorage.removeItem(PLAYERS_KEY);
+        playerNamesInput.value = DEFAULT_NAMES.join('\n');
+        showStatus(playersStatus, 'Reverted to default names.');
+      }
+
+      function safeParseBrandConfig(raw) {
+        if (!raw) return null;
+        try {
+          const parsed = JSON.parse(raw);
+          return typeof parsed === 'object' && parsed !== null ? parsed : null;
+        } catch {
+          return null;
+        }
+      }
+
+      function loadBrand() {
+        const stored = safeParseBrandConfig(localStorage.getItem(BRAND_CONFIG_KEY));
+        const data = { ...DEFAULT_BRAND, ...stored };
+        Object.entries(brandInputs).forEach(([key, input]) => {
+          if (input) {
+            input.value = data[key] ?? '';
+          }
+        });
+        updatePreview(data);
+      }
+
+      function collectBrandForm(includeBlanks = false) {
+        const data = {};
+        Object.entries(brandInputs).forEach(([key, input]) => {
+          if (!input) return;
+          const value = input.value.trim();
+          if (value || includeBlanks) {
+            data[key] = value;
+          }
+        });
+        return data;
+      }
+
+      function updatePreview(configOverride) {
+        const merged = { ...DEFAULT_BRAND, ...configOverride };
+        brandPreview.style.setProperty('--preview-accent', merged.accentColor);
+        brandPreview.style.setProperty('--preview-surface', merged.surfaceColor);
+        brandPreview.style.setProperty('--preview-text', merged.textColor);
+        brandPreview.style.setProperty('--preview-heading', merged.headingColor);
+        brandPreview.style.setProperty('--preview-border', merged.borderColor);
+        brandPreview.style.setProperty('--preview-font', merged.fontFamily);
+        previewName.textContent = merged.brandName;
+        previewMark.textContent = merged.brandMark;
+        previewButton.style.background = merged.accentColor;
+        previewButton.style.borderColor = merged.accentStrong;
+      }
+
+      function saveBrand() {
+        const formData = collectBrandForm();
+        const merged = { ...DEFAULT_BRAND, ...formData };
+        localStorage.setItem(BRAND_CONFIG_KEY, JSON.stringify(merged));
+        window.dispatchEvent(new CustomEvent('brandConfigUpdated', { detail: merged }));
+        updatePreview(merged);
+        showStatus(brandStatus, 'Brand updated.');
+      }
+
+      function resetBrand() {
+        Object.entries(brandInputs).forEach(([key, input]) => {
+          if (input) input.value = DEFAULT_BRAND[key] ?? '';
+        });
+        localStorage.removeItem(BRAND_CONFIG_KEY);
+        window.dispatchEvent(new CustomEvent('brandConfigUpdated', { detail: DEFAULT_BRAND }));
+        updatePreview(DEFAULT_BRAND);
+        showStatus(brandStatus, 'Brand reset to defaults.');
+      }
+
+      savePlayersBtn?.addEventListener('click', savePlayers);
+      resetPlayersBtn?.addEventListener('click', resetPlayers);
+
+      Object.values(brandInputs).forEach((input) => {
+        input?.addEventListener('input', () => {
+          const data = collectBrandForm(true);
+          updatePreview({ ...DEFAULT_BRAND, ...data });
+        });
+      });
+
+      saveBrandBtn?.addEventListener('click', saveBrand);
+      resetBrandBtn?.addEventListener('click', resetBrand);
+
+      loadPlayers();
+      loadBrand();
+    })();
+  </script>
+</body>
+
+</html>

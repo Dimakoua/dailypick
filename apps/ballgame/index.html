@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Momentum Mayhem | Daily Pick</title>
+    <meta name="description"
+        content="A real-time collaborative physics game where users work together to push a ball into moving traps, triggering chaotic special effects. Perfect for daily standups, team building, and remote team engagement.">
+    <meta name="keywords"
+        content="daily standup game, team building game, online multiplayer game, collaborative game, physics game, remote team engagement, Scrum game, Agile game, icebreaker, virtual team building, browser game, meeting game, team bonding, sprint planning, project management">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dailypick.dev/apps/ballgame/">
+    <meta property="og:title" content="🔴 Momentum Mayhem: Collaborative Physics Game for Teams | Daily Pick">
+    <meta property="og:description"
+        content="Boost your daily standups and team building! Work together in Momentum Mayhem, a real-time collaborative physics game where you push a ball into moving traps with chaotic special effects. Play free on Daily Pick!">
+    <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#ffffff">
+
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/theme.css">
+    <link rel="stylesheet" href="/assets/css/glass.css">
+    <link rel="stylesheet" href="/apps/ballgame/style.css">
+    <link rel="stylesheet" href="/assets/css/collaboration.css">
+    <script src="/assets/js/brand-config.js" defer></script>
+    <script type="module" src="/assets/js/results-pip.js" defer></script>
+    <script type="module" src="/assets/js/collaboration.js" defer></script>
+    <script type="module" src="/apps/ballgame/ball-game.js" defer></script>
+</head>
+
+<body>
+    {% include "bg-orbs.html" %}
+    {% include "header.html" %}
+
+    <main class="main-container" style="padding-top: 1rem;">
+        <h1>🔴 Momentum Mayhem 🔴</h1>
+        <p>Click to push the ball into the traps! The game ends when all traps are filled.</p>
+    
+        <div id="sessionInfo">
+            Session ID: <span id="currentSessionIdDisplay"></span>
+            <button id="copySessionUrlBtn">Copy Session URL</button>
+        </div>
+    
+        <div class="button-group">
+            <button id="startGameBtn">Start New Game</button>
+            <button id="howToPlayBtn">How to Play</button>
+        </div>
+        <p class="settings-hint">Update player names or branding in the <a href="/apps/settings/">Settings page</a>, then start a new session.</p>
+    
+        <div id="game-container">
+            <canvas id="gameCanvas" width="800" height="600"></canvas>
+            <div id="countdown-overlay">
+                <div id="countdown"></div>
+            </div>
+            <div id="game-over-overlay">
+                <h2>Game Over!</h2>
+                <p>Order of captured players:</p>
+                <ol id="winner-list"></ol>
+                <button id="restartGameBtn">Start New Game</button>
+                <button id="requestResultInPIP" class="pip-trigger" type="button"
+                    data-pip-target="#game-over-overlay"
+                    data-pip-title="Momentum Mayhem Results"
+                    data-pip-exclude="#requestResultInPIP"
+                    data-pip-width="340"
+                    data-pip-height="420">Open in Picture in Picture</button>
+                
+            </div>
+        </div>
+    
+        <div id="captured-list-container">
+            <h2>Captured Players:</h2>
+            <ul id="captured-list">
+            </ul>
+        </div>
+    
+        <div id="how-to-play-modal" class="hidden">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>How to Play Momentum Mayhem</h2>
+                <div class="guide-section">
+                    <h3>Objective</h3>
+                    <p>The goal of the game is to work together with other players to push the red ball into all of the
+                        moving blue traps. The game is over when every trap has captured the ball.</p>
+                </div>
+                <div class="guide-section">
+                    <h3>Controls</h3>
+                    <p>Simply click anywhere on the game canvas. A force will be applied to the ball, pushing it away from
+                        your click. The closer you click to the ball, the stronger the push.</p>
+                </div>
+                <div class="guide-section">
+                    <h3>The Traps</h3>
+                    <p>The blue circles on the screen are the traps. Each trap is assigned to a player name. When the ball
+                        enters a trap, that player's name is added to the "Captured Players" list, and the trap disappears.
+                    </p>
+                </div>
+                <div class="guide-section">
+                    <h3>Special Effects</h3>
+                    <p>Capturing a trap can trigger a random special effect that changes the game dynamics for a short
+                        period. These include:</p>
+                    <ul>
+                        <li><strong>Speed Boost:</strong> The ball's speed is dramatically increased.</li>
+                        <li><strong>Size Change:</strong> The ball becomes either much larger or smaller.</li>
+                        <li><strong>Trap Frenzy:</strong> All remaining traps move at a much faster speed.</li>
+                    </ul>
+                </div>
+                <div class="guide-section">
+                    <h3>Multiplayer</h3>
+                    <p>This game is designed for collaboration! Share the session URL with your friends to have them join
+                        your game. All players control the same ball in real-time. You can customize the names of the
+                        players/traps in the settings menu.</p>
+                </div>
+            </div>
+        </div>
+    
+        <div class="seo-content-area">
+            <h1>Transform Your Team Meetings with Momentum Mayhem!</h1>
+            <p>Looking for an engaging and fresh way to energize your <strong>daily standup meetings</strong>? Or perhaps
+                you need a dynamic <strong>icebreaker</strong> for your <strong>team-building activities</strong>,
+                <strong>Scrum ceremonies</strong>, or <strong>Agile retrospectives</strong>? Look no further than
+                <strong>Momentum Mayhem</strong>, the real-time collaborative physics game designed to inject fun, energy,
+                and teamwork into any group setting!</p>
+    
+            <h2>What is Momentum Mayhem?</h2>
+            <p>Momentum Mayhem is an innovative <strong>online multiplayer game</strong> where players work together to
+                achieve a shared goal. It's the perfect blend of <strong>physics-based gameplay</strong> and
+                <strong>collaborative strategy</strong>, making it ideal for boosting communication and team cohesion. In
+                this <strong>interactive browser game</strong>, you and your teammates collectively control a ball, aiming
+                to guide it into moving traps. Each trap represents a participant, and successfully capturing a trap adds
+                their name to the "captured" list, adding a playful twist to your team interactions.</p>
+    
+            <h2>Key Features for Enhanced Team Interaction:</h2>
+            <ul>
+                <li><strong>Real-time Collaboration:</strong> Experience seamless <strong>synchronous gameplay</strong> as
+                    all players contribute to controlling the same ball. This fosters immediate feedback and encourages
+                    shared decision-making, perfect for <strong>remote teams</strong> and <strong>distributed
+                        workforces</strong>.</li>
+                <li><strong>Engaging Physics Engine:</strong> The intuitive click-to-push mechanic provides a satisfying and
+                    responsive gameplay experience. The closer you click to the ball, the more powerful your push, adding a
+                    layer of strategic depth.</li>
+                <li><strong>Dynamic Traps and Player Assignment:</strong> Assign specific <strong>team members</strong> or
+                    <strong>project roles</strong> to each trap, turning the game into a personalized experience. This can
+                    be a playful way to determine the order of speakers in a standup or assign tasks.</li>
+                <li><strong>Chaotic Special Effects:</strong> Keep things exciting with unpredictable special effects like
+                    <strong>Speed Boosts</strong>, <strong>Size Changes</strong>, and <strong>Trap Frenzy</strong>. These
+                    random modifiers ensure no two games are exactly alike, promoting adaptability and quick thinking –
+                    valuable traits in any <strong>project management</strong> environment.</li>
+                <li><strong>Easy Session Sharing:</strong> With a unique session URL, inviting your colleagues to join is
+                    effortless. Momentum Mayhem is a fantastic <strong>virtual team-building game</strong> that requires no
+                    downloads or complex setups.</li>
+                <li><strong>Customizable Player Names:</strong> Tailor the game to your team by entering individual names
+                    for each trap. This personal touch makes the experience even more relevant for your <strong>sprint
+                        planning</strong> or <strong>team bonding exercises</strong>.</li>
+            </ul>
+    
+            <h2>Beyond Daily Standups: Versatile Applications</h2>
+            <p>While perfectly suited for <strong>daily Scrum meetings</strong>, Momentum Mayhem's versatility extends to
+                various other scenarios:</p>
+            <ul>
+                <li><strong>Team Icebreakers:</strong> Start any meeting, workshop, or training session with a fun and
+                    interactive activity to get everyone energized and engaged.</li>
+                <li><strong>Remote Team Engagement:</strong> Combat Zoom fatigue and foster a sense of connection among
+                    geographically dispersed teams.</li>
+                <li><strong>Educational Tool:</strong> Use the game to demonstrate basic physics principles in an engaging
+                    way for <strong>online learning</strong> environments.</li>
+                <li><strong>Casual Team Bonding:</strong> Simply enjoy a lighthearted gaming session with your colleagues
+                    during a break or as a Friday afternoon activity.</li>
+                <li><strong>Brainstorming Sessions:</strong> The collaborative nature can even spark creative thinking
+                    before a <strong>strategy session</strong> or <strong>problem-solving workshop</strong>.</li>
+            </ul>
+    
+            <h2>Get Started with Momentum Mayhem Today!</h2>
+            <p>Ready to transform your routine meetings into an exciting <strong>team experience</strong>? Momentum Mayhem
+                is more than just a game; it's a tool for <strong>improving team dynamics</strong>, boosting morale, and
+                making collaboration genuinely enjoyable. Try it now and see how this unique <strong>collaborative online
+                    game</strong> can benefit your team!</p>
+        </div>
+    </main>
+    {% include "footer.html" %}
+</body>
+
+</html>
