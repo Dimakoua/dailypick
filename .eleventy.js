@@ -3,7 +3,6 @@ const sitemap = require("@quasibit/eleventy-plugin-sitemap");
 module.exports = function(eleventyConfig) {
   // Tell Eleventy to watch your CSS changes for live reload.
   eleventyConfig.addWatchTarget("./content/blog/css/");
-
   // Passthrough copy for static assets. Eleventy will copy these directly.
   // Copy blog's CSS to the root `css` folder in the output.
   eleventyConfig.addPassthroughCopy({ "content/blog/css": "css" });
@@ -26,6 +25,8 @@ module.exports = function(eleventyConfig) {
       },
     },
   });
+
+  eleventyConfig.addShortcode("year", () => `${new Date().getFullYear()}`);
 
   // Collections: Create a 'post' collection from all markdown files in 'blog/posts'
   eleventyConfig.addCollection("post", function(collectionApi) {
