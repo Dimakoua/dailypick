@@ -233,7 +233,6 @@ canvas#gameCanvas {
   position: fixed;
   inset: 0;
   z-index: 100;
-  background: rgba(0,0,0,0.6);
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -251,6 +250,8 @@ canvas#gameCanvas {
   padding: 26px 28px;
   color: var(--brand-text, #34495e);
   animation: mm-slideIn .4s ease-out both;
+  max-height: 75vh;
+  overflow-y: auto;
 }
 .close-btn {
   color: #6b7280;
