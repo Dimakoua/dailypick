@@ -156,6 +156,113 @@ body {
 }
 .seo-content a:hover { text-decoration: underline; }
 
+/* ============ Leaderboard — max-width + mobile polish ============ */
+
+/* Docked + readable (залишається як у попередньому патчі) */
+#leaderboard {
+  position: static !important;
+  left: auto; top: auto;
+  width: 100%;
+  max-width: 600px;                 /* <-- requested */
+  margin: 16px auto 0;              /* центр у потоці */
+  background: var(--lb-solid, #0e1421) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  box-shadow: 0 18px 40px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.10);
+  border-radius: 16px;
+  color: #eef2ff;
+  padding: 18px 18px 14px;
+}
+
+/* Заголовок */
+#leaderboard h2 {
+  color: #fff;
+  margin: 0 0 10px;
+  font-weight: 800;
+  letter-spacing: .01em;
+}
+
+/* PiP-кнопка: великий тап-таргет */
+#leaderboard .pip-trigger {
+  display: inline-flex;
+  align-items: center; justify-content: center; gap: 8px;
+  width: 100%;
+  min-height: 44px;                 /* мобільний тап-таргет */
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.22);
+  background: linear-gradient(135deg, #3a8fd8, #2b6ea6);
+  color: #fff;
+  font-weight: 800;
+}
+
+/* Список */
+#leaderboard ul {
+  max-height: min(68vh, 560px);
+  overflow-y: auto;
+  padding-right: 6px;
+  margin: 10px 0 0;
+  scroll-behavior: smooth;
+}
+#leaderboard li {
+  color: rgba(255,255,255,.95);
+  line-height: 1.5;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,.14);
+  word-wrap: break-word;            /* запобігає горизонтальному скролу */
+}
+#leaderboard li:last-child { border-bottom: none; }
+#leaderboard li b { color: #fff; font-weight: 800; }
+
+
+/* Планшет і мобільні: стек, більші внутрішні поля, без «скляного» шуму */
+@media (max-width: 900px) {
+  #leaderboard {
+    margin: 14px auto 0;
+    padding: 16px 16px 12px;
+    box-shadow: 0 12px 26px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.08);
+  }
+}
+
+/* Вузькі мобільні */
+@media (max-width: 520px) {
+  #leaderboard {
+    border-radius: 14px;
+    padding: 14px 14px 10px;
+  }
+  #leaderboard h2 { font-size: 1.1rem; }
+  #leaderboard .pip-trigger { font-size: .95rem; }
+  #leaderboard ul { max-height: 56vh; }
+}
+
+/* Дуже вузькі (iPhone SE / safe areas) */
+@media (max-width: 380px) {
+  #leaderboard { margin-inline: max(8px, env(safe-area-inset-left)); }
+  .game-container { padding: 12px 8px 18px; }
+}
+
+/* Кастомний скролбар (делікатний і видимий) */
+#leaderboard ul::-webkit-scrollbar { width: 10px; }
+#leaderboard ul::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.28);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+#leaderboard ul::-webkit-scrollbar-track { background: transparent; }
+
+/* Світла тема (за наявності) */
+:root.light #leaderboard {
+  --lb-solid: #ffffff;
+  color: #0b1220;
+  border-color: rgba(0,0,0,.10) !important;
+  box-shadow: 0 14px 32px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.6);
+}
+:root.light #leaderboard h2,
+:root.light #leaderboard li b { color: #0b1220; }
+:root.light #leaderboard li { color: rgba(11,18,32,.95); border-bottom-color: rgba(0,0,0,.10); }
+
 /* --- Responsive --- */
 @media (max-width: 900px) {
   #leaderboard {
