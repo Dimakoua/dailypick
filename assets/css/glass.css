@@ -174,7 +174,6 @@
 .footer-note {
   position: relative;
   display: inline-block;
-  max-width: min(900px, 90vw);
   margin: 48px auto 0;
   padding: 14px 18px;
   border-radius: var(--radius-lg, 15px);
