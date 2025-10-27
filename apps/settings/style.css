@@ -59,10 +59,27 @@
   filter: brightness(1.05);
 }
 
-.settings-grid {
+.settings-columns {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 24px;
+  align-items: start;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.settings-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.settings-column.secondary {
+  position: relative;
+}
+
+@media (min-width: 960px) {
+  .settings-columns {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  }
 }
 
 .settings-card {

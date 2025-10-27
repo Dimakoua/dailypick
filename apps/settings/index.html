@@ -41,148 +41,152 @@
       </div>
     </section>
 
-    <section class="settings-grid">
-      <article class="settings-card glass-card" aria-labelledby="playersHeading">
-        <div class="card-header">
-          <h2 id="playersHeading">Player List</h2>
-          <p>One list powers every picker. Add each teammate on its own line.</p>
-        </div>
-        <label for="playerNamesInput" class="sr-only">Player names</label>
-        <textarea id="playerNamesInput" rows="8" spellcheck="false"></textarea>
-        <p class="field-hint">Tip: paste from Slack or CSV, we clean it automatically.</p>
-        <div class="button-row">
-          <button id="savePlayersBtn" type="button">Save Players</button>
-          <button id="resetPlayersBtn" type="button" class="ghost">Reset Names</button>
-        </div>
-        <p id="playersStatus" class="settings-status" aria-live="polite"></p>
-      </article>
-
-      <article class="settings-card glass-card" aria-labelledby="brandHeading">
-        <div class="card-header">
-          <h2 id="brandHeading">Brand Configuration</h2>
-          <p>Use your own colors, emoji, and typography to make Daily Pick feel native to your team.</p>
-        </div>
-
-        <form id="brandForm" class="brand-form" novalidate>
-          <div class="brand-grid">
-            <label>
-              Brand name
-              <input type="text" id="brandNameInput" maxlength="32">
-            </label>
-            <label>
-              Brand emoji / mark
-              <input type="text" id="brandMarkInput" maxlength="4">
-            </label>
-            <label>
-              Accent color
-              <input type="color" id="accentColorInput">
-            </label>
-            <label>
-              Accent (strong)
-              <input type="color" id="accentStrongInput">
-            </label>
-            <label>
-              Background color
-              <input type="color" id="backgroundColorInput">
-            </label>
-            <label>
-              Surface color
-              <input type="color" id="surfaceColorInput">
-            </label>
-            <label>
-              Text color
-              <input type="color" id="textColorInput">
-            </label>
-            <label>
-              Heading color
-              <input type="color" id="headingColorInput">
-            </label>
-            <label>
-              Subtle text color
-              <input type="color" id="subtleTextColorInput">
-            </label>
-            <label>
-              Border color
-              <input type="color" id="borderColorInput">
-            </label>
-            <label>
-              Font stack
-              <input type="text" id="fontFamilyInput" placeholder="'Nunito', system-ui, sans-serif">
-            </label>
-            <label>
-              Logo image URL (optional)
-              <input type="url" id="logoUrlInput" placeholder="https://example.com/logo.png">
-            </label>
+    <section class="settings-columns">
+      <div class="settings-column primary">
+        <article class="settings-card glass-card" aria-labelledby="playersHeading">
+          <div class="card-header">
+            <h2 id="playersHeading">Player List</h2>
+            <p>One list powers every picker. Add each teammate on its own line.</p>
           </div>
-        </form>
-
-        <div class="brand-preview" aria-live="polite">
-          <div class="preview-header">
-            <span class="preview-mark" aria-hidden="true">🎯</span>
-            <span class="preview-name">Daily Pick</span>
-          </div>
-          <p>Buttons, headers, and accents across the site will match these selections.</p>
-          <button type="button" disabled>Sample Button</button>
-        </div>
-
-        <div class="button-row">
-          <button id="saveBrandBtn" type="button">Save Brand</button>
-          <button id="resetBrandBtn" type="button" class="ghost">Reset Brand</button>
-        </div>
-        <p id="brandStatus" class="settings-status" aria-live="polite"></p>
-      </article>
-
-      <article class="settings-card glass-card" aria-labelledby="licenseHeading">
-        <div class="card-header">
-          <h2 id="licenseHeading">License &amp; Premium Access</h2>
-          <p>Activate a premium code to unlock cadence timers, icon packs, and future add-ons. Codes are stored in this
-            browser only.</p>
-        </div>
-
-        <div class="license-form">
-          <label for="licenseInput">License code</label>
-          <textarea id="licenseInput" rows="3" spellcheck="false" placeholder="Paste your Daily Pick license token"></textarea>
+          <label for="playerNamesInput" class="sr-only">Player names</label>
+          <textarea id="playerNamesInput" rows="8" spellcheck="false"></textarea>
+          <p class="field-hint">Tip: paste from Slack or CSV, we clean it automatically.</p>
           <div class="button-row">
-            <button id="activateLicenseBtn" type="button">Activate license</button>
-            <button id="clearLicenseBtn" type="button" class="ghost">Remove license</button>
+            <button id="savePlayersBtn" type="button">Save Players</button>
+            <button id="resetPlayersBtn" type="button" class="ghost">Reset Names</button>
           </div>
-          <p id="licenseStatus" class="settings-status" aria-live="polite"></p>
-        </div>
+          <p id="playersStatus" class="settings-status" aria-live="polite"></p>
+        </article>
 
-        <div class="license-summary" data-state="empty" aria-live="polite">
-          <div class="license-meta">
-            <h3>Current license</h3>
-            <dl>
-              <div>
-                <dt>Owner</dt>
-                <dd id="licenseOwner">—</dd>
-              </div>
-              <div>
-                <dt>Tier</dt>
-                <dd id="licenseTier">—</dd>
-              </div>
-              <div>
-                <dt>Expires</dt>
-                <dd id="licenseExpiry">—</dd>
-              </div>
-            </dl>
+        <article class="settings-card glass-card" aria-labelledby="brandHeading">
+          <div class="card-header">
+            <h2 id="brandHeading">Brand Configuration</h2>
+            <p>Use your own colors, emoji, and typography to make Daily Pick feel native to your team.</p>
           </div>
-          <div class="license-features">
-            <h3>Unlocked features</h3>
-            <ul id="licenseFeaturesList" class="feature-list"></ul>
-          </div>
-        </div>
-      </article>
-    </section>
 
-    <section class="settings-card glass-card tips">
-      <h2>How it works</h2>
-      <ul>
-        <li>Settings are stored locally in your browser via <code>localStorage</code>.</li>
-        <li>Every game loads the <strong>Players List</strong> before a match and applies your <strong>Brand
-            Configuration</strong> on page load.</li>
-        <li>Need to sync with teammates? Share your list via chat, then paste it here.</li>
-      </ul>
+          <form id="brandForm" class="brand-form" novalidate>
+            <div class="brand-grid">
+              <label>
+                Brand name
+                <input type="text" id="brandNameInput" maxlength="32">
+              </label>
+              <label>
+                Brand emoji / mark
+                <input type="text" id="brandMarkInput" maxlength="4">
+              </label>
+              <label>
+                Accent color
+                <input type="color" id="accentColorInput">
+              </label>
+              <label>
+                Accent (strong)
+                <input type="color" id="accentStrongInput">
+              </label>
+              <label>
+                Background color
+                <input type="color" id="backgroundColorInput">
+              </label>
+              <label>
+                Surface color
+                <input type="color" id="surfaceColorInput">
+              </label>
+              <label>
+                Text color
+                <input type="color" id="textColorInput">
+              </label>
+              <label>
+                Heading color
+                <input type="color" id="headingColorInput">
+              </label>
+              <label>
+                Subtle text color
+                <input type="color" id="subtleTextColorInput">
+              </label>
+              <label>
+                Border color
+                <input type="color" id="borderColorInput">
+              </label>
+              <label>
+                Font stack
+                <input type="text" id="fontFamilyInput" placeholder="'Nunito', system-ui, sans-serif">
+              </label>
+              <label>
+                Logo image URL (optional)
+                <input type="url" id="logoUrlInput" placeholder="https://example.com/logo.png">
+              </label>
+            </div>
+          </form>
+
+          <div class="brand-preview" aria-live="polite">
+            <div class="preview-header">
+              <span class="preview-mark" aria-hidden="true">🎯</span>
+              <span class="preview-name">Daily Pick</span>
+            </div>
+            <p>Buttons, headers, and accents across the site will match these selections.</p>
+            <button type="button" disabled>Sample Button</button>
+          </div>
+
+          <div class="button-row">
+            <button id="saveBrandBtn" type="button">Save Brand</button>
+            <button id="resetBrandBtn" type="button" class="ghost">Reset Brand</button>
+          </div>
+          <p id="brandStatus" class="settings-status" aria-live="polite"></p>
+        </article>
+      </div>
+
+      <div class="settings-column secondary">
+        <article class="settings-card glass-card" aria-labelledby="licenseHeading">
+          <div class="card-header">
+            <h2 id="licenseHeading">License &amp; Premium Access</h2>
+            <p>Activate a premium code to unlock cadence timers, icon packs, and future add-ons. Codes are stored in this
+              browser only.</p>
+          </div>
+
+          <div class="license-form">
+            <label for="licenseInput">License code</label>
+            <textarea id="licenseInput" rows="3" spellcheck="false" placeholder="Paste your Daily Pick license token"></textarea>
+            <div class="button-row">
+              <button id="activateLicenseBtn" type="button">Activate license</button>
+              <button id="clearLicenseBtn" type="button" class="ghost">Remove license</button>
+            </div>
+            <p id="licenseStatus" class="settings-status" aria-live="polite"></p>
+          </div>
+
+          <div class="license-summary" data-state="empty" aria-live="polite">
+            <div class="license-meta">
+              <h3>Current license</h3>
+              <dl>
+                <div>
+                  <dt>Owner</dt>
+                  <dd id="licenseOwner">—</dd>
+                </div>
+                <div>
+                  <dt>Tier</dt>
+                  <dd id="licenseTier">—</dd>
+                </div>
+                <div>
+                  <dt>Expires</dt>
+                  <dd id="licenseExpiry">—</dd>
+                </div>
+              </dl>
+            </div>
+            <div class="license-features">
+              <h3>Unlocked features</h3>
+              <ul id="licenseFeaturesList" class="feature-list"></ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="settings-card glass-card tips">
+          <h2>How it works</h2>
+          <ul>
+            <li>Settings are stored locally in your browser via <code>localStorage</code>.</li>
+            <li>Every game loads the <strong>Players List</strong> before a match and applies your <strong>Brand
+                Configuration</strong> on page load.</li>
+            <li>Need to sync with teammates? Share your list via chat, then paste it here.</li>
+          </ul>
+        </article>
+      </div>
     </section>
   </main>
 
