@@ -37,6 +37,13 @@
     <meta name="msapplication-TileColor" content="#2d89ef">
     <meta name="theme-color" content="#ffffff">
 
+    <!-- Google tag (gtag.js) -->
+    <script data-gtag data-gtag-src="https://www.googletagmanager.com/gtag/js?id=G-N83YF635W2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+    </script>
+
     <!-- Fonts (performance) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -217,7 +224,10 @@
     </main>
     {% include "footer.html" %}
 
+    {% include "cookie-consent.html" %}
+
     <!-- JS -->
+    <script src="/assets/js/cookie-consent.js" defer></script>
     <script src="/assets/js/home.js" type="module" defer></script>
 </body>
 
