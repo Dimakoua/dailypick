@@ -119,6 +119,19 @@ body {
   transform: translateY(-2px);
 }
 
+.btn--secondary {
+  background-color: var(--gray-100);
+  color: var(--gray-700);
+  font-weight: 600;
+  border: 1px solid var(--gray-200);
+}
+
+.btn--secondary:hover,
+.btn--secondary:focus-visible {
+  background-color: #fff;
+  transform: translateY(-2px);
+}
+
 /* Hero */
 .hero {
   text-align: center;
