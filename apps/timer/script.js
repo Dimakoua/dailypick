@@ -251,6 +251,19 @@
     row.className = 'stage-row';
     row.dataset.id = stage.id;
 
+    function createField(labelText, control, options = {}) {
+      const field = document.createElement('label');
+      field.className = 'stage-field';
+      if (options.className) {
+        field.classList.add(options.className);
+      }
+      const label = document.createElement('span');
+      label.className = 'field-label';
+      label.textContent = labelText;
+      field.append(label, control);
+      return field;
+    }
+
     const labelInput = document.createElement('input');
     labelInput.type = 'text';
     labelInput.value = stage.label;
@@ -260,6 +273,7 @@
       renderTimeline();
       updateRunnerDisplay();
     });
+    const labelField = createField('Stage name', labelInput, { className: 'stage-field--title' });
 
     const minutesInput = document.createElement('input');
     minutesInput.type = 'number';
@@ -287,13 +301,32 @@
       updateRunnerDisplay();
     });
 
+    const durationGroup = document.createElement('div');
+    durationGroup.className = 'duration-group';
+    const minLabel = document.createElement('span');
+    minLabel.className = 'duration-unit';
+    minLabel.textContent = 'm';
+    const secLabel = document.createElement('span');
+    secLabel.className = 'duration-unit';
+    secLabel.textContent = 's';
+    durationGroup.append(minutesInput, minLabel, secondsInput, secLabel);
+
+    const durationField = document.createElement('div');
+    durationField.className = 'stage-field stage-field--duration';
+    const durationLabel = document.createElement('span');
+    durationLabel.className = 'field-label';
+    durationLabel.textContent = 'Duration';
+    durationField.append(durationLabel, durationGroup);
+
     const colorInput = document.createElement('input');
     colorInput.type = 'color';
     colorInput.value = stage.color || '#3498db';
+    colorInput.title = 'Accent color';
     colorInput.addEventListener('input', () => {
       stage.color = colorInput.value;
       renderTimeline();
     });
+    const colorField = createField('Accent color', colorInput, { className: 'stage-field--color' });
 
     const toneSelect = document.createElement('select');
     toneSelect.innerHTML = `
@@ -306,39 +339,41 @@
     toneSelect.addEventListener('change', () => {
       stage.tone = toneSelect.value;
     });
+    const toneField = createField('Audio cue', toneSelect);
 
+    const controlsField = document.createElement('div');
+    controlsField.className = 'stage-field stage-field--controls';
+    const controlsLabel = document.createElement('span');
+    controlsLabel.className = 'field-label';
+    controlsLabel.textContent = 'Arrange';
     const controls = document.createElement('div');
     controls.className = 'row-controls';
 
     const upBtn = document.createElement('button');
     upBtn.type = 'button';
     upBtn.title = 'Move up';
+    upBtn.setAttribute('aria-label', 'Move stage up');
     upBtn.textContent = '↑';
     upBtn.addEventListener('click', () => moveStage(stage.id, -1));
 
     const downBtn = document.createElement('button');
     downBtn.type = 'button';
     downBtn.title = 'Move down';
+    downBtn.setAttribute('aria-label', 'Move stage down');
     downBtn.textContent = '↓';
     downBtn.addEventListener('click', () => moveStage(stage.id, 1));
 
     const deleteBtn = document.createElement('button');
     deleteBtn.type = 'button';
     deleteBtn.title = 'Remove stage';
+    deleteBtn.setAttribute('aria-label', 'Remove stage');
     deleteBtn.textContent = '✕';
     deleteBtn.addEventListener('click', () => removeStage(stage.id));
 
     controls.append(upBtn, downBtn, deleteBtn);
+    controlsField.append(controlsLabel, controls);
 
-    const durationGroup = document.createElement('div');
-    durationGroup.className = 'duration-group';
-    const minLabel = document.createElement('span');
-    minLabel.textContent = 'm';
-    const secLabel = document.createElement('span');
-    secLabel.textContent = 's';
-    durationGroup.append(minutesInput, minLabel, secondsInput, secLabel);
-
-    row.append(labelInput, durationGroup, colorInput, toneSelect, controls);
+    row.append(labelField, durationField, colorField, toneField, controlsField);
     return row;
   }
 
