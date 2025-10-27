@@ -208,8 +208,12 @@
 
 .cadence-layout {
   display: grid;
-  grid-template-columns: minmax(220px, 260px) minmax(0, 1fr) minmax(260px, 320px);
+  grid-template-columns: minmax(230px, 280px) minmax(0, 1fr);
+  grid-template-areas:
+    "presets editor"
+    "presets runner";
   gap: 20px;
+  align-items: start;
 }
 
 .premium-card[data-state="locked"] .cadence-layout {
@@ -224,6 +228,7 @@
 }
 
 .preset-panel {
+  grid-area: presets;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -336,6 +341,7 @@
 }
 
 .editor-panel {
+  grid-area: editor;
   border-radius: 18px;
   border: 1px solid var(--brand-border);
   background: rgba(255, 255, 255, 0.95);
@@ -529,6 +535,7 @@
 }
 
 .runner-panel {
+  grid-area: runner;
   border-radius: 18px;
   border: 1px solid var(--brand-border);
   background: rgba(255, 255, 255, 0.92);
@@ -669,6 +676,10 @@
 
   .cadence-layout {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "presets"
+      "editor"
+      "runner";
   }
 
   .preset-panel,
