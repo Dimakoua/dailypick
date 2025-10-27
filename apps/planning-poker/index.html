@@ -32,6 +32,7 @@
   <link rel="stylesheet" href="/assets/css/theme.css">
   <link rel="stylesheet" href="/assets/css/glass.css">
   <link rel="stylesheet" href="./style.css">
+  <script src="/assets/js/license-manager.js" defer></script>
   <script src="/assets/js/brand-config.js" defer></script>
   <script src="./script.js" defer></script>
 </head>
@@ -88,6 +89,17 @@
       </article>
 
       <article class="board-card glass-card" aria-live="polite">
+        <section class="deck-toolbar" aria-label="Deck style picker">
+          <div class="deck-selector">
+            <label for="deckSelect">Deck style</label>
+            <div class="deck-select-row">
+              <select id="deckSelect" aria-describedby="deckDescription"></select>
+              <span id="deckPremiumBadge" class="deck-pill" hidden>Premium</span>
+            </div>
+            <p id="deckDescription" class="deck-description">Classic Fibonacci cards everyone expects.</p>
+          </div>
+          <button id="previewPremiumBtn" type="button" class="ghost-btn" data-role="premium-cta">Unlock icon packs</button>
+        </section>
         <div class="deck" role="group" aria-label="Fibonacci deck" id="cardDeck"></div>
         <div class="deck-actions">
           <button id="clearCardBtn" type="button" class="ghost-btn" disabled>Clear selection</button>

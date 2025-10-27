@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadence Timer Studio - Multi-stage Ritual Timers | Daily Pick</title>
+  <meta name="description" content="Build multi-stage meeting timers with color-coded stages, audio cues, and shareable presets. Unlock cadence bundles with your Daily Pick premium license.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dailypick.dev/apps/timer/">
+  <meta property="og:title" content="Cadence Timer Studio - Multi-stage Ritual Timers | Daily Pick">
+  <meta property="og:description" content="Chain meeting timers together, add audio cues, and keep rituals on schedule. Save presets locally or share with the team.">
+  <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
+  <link rel="canonical" href="https://dailypick.dev/apps/timer/">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/assets/favicon/site.webmanifest">
+  <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/theme.css">
+  <link rel="stylesheet" href="/assets/css/glass.css">
+  <link rel="stylesheet" href="./style.css">
+  <script src="/assets/js/license-manager.js" defer></script>
+  <script src="/assets/js/brand-config.js" defer></script>
+  <script src="./script.js" defer></script>
+</head>
+
+<body>
+  {% include "bg-orbs.html" %}
+  {% include "header.html" %}
+
+  <main class="timer-page" aria-labelledby="timerHeading">
+    <section class="timer-hero glass-card">
+      <div>
+        <p class="hero-eyebrow">Premium Ritual Toolkit</p>
+        <h1 id="timerHeading">Cadence Timer Studio</h1>
+        <p>Design multi-stage meeting timers with color-coded cues, then run them live without leaving the browser. Quick single timers stay free—unlock cadence bundles with a license.</p>
+      </div>
+      <div class="hero-actions">
+        <a class="btn-link" href="/apps/settings/">Manage players &amp; license →</a>
+      </div>
+    </section>
+
+    <section class="timer-grid">
+      <article class="quick-card glass-card" aria-labelledby="quickTimerHeading">
+        <div class="card-header">
+          <h2 id="quickTimerHeading">Quick timer</h2>
+          <p>Set a one-off countdown for spotlight turns or lightning talks.</p>
+        </div>
+        <div class="quick-timer-body">
+          <div class="quick-display" id="quickDisplay" aria-live="polite">05:00</div>
+          <div class="quick-inputs">
+            <label>
+              Minutes
+              <input id="quickMinutes" type="number" min="0" max="999" value="5" inputmode="numeric">
+            </label>
+            <label>
+              Seconds
+              <input id="quickSeconds" type="number" min="0" max="59" value="0" inputmode="numeric">
+            </label>
+          </div>
+          <div class="quick-controls">
+            <button id="quickStartBtn" type="button">Start</button>
+            <button id="quickPauseBtn" type="button" class="ghost" disabled>Pause</button>
+            <button id="quickResetBtn" type="button" class="ghost" disabled>Reset</button>
+          </div>
+          <p id="quickStatus" class="quick-status" aria-live="polite"></p>
+        </div>
+      </article>
+
+      <article class="premium-card glass-card" aria-labelledby="cadenceHeading" data-license-region="premium-timer" data-state="locked">
+        <div class="premium-card__header">
+          <div>
+            <h2 id="cadenceHeading">Cadence presets</h2>
+            <p>Chain multiple stages with custom labels, durations, brand colors, and optional audio cues.</p>
+          </div>
+          <span class="license-pill" aria-live="polite">Premium</span>
+        </div>
+
+        <div class="premium-lock" data-role="lock-message">
+          <p>Multi-stage cadences are a premium feature. Paste your license code on the <a href="/apps/settings/">Settings page</a> to unlock and sync presets on this device.</p>
+          <a class="btn-link" href="/apps/settings/">Activate license →</a>
+        </div>
+
+        <div class="cadence-layout">
+          <aside class="preset-panel" aria-label="Cadence presets">
+            <div class="panel-header">
+              <h3>Presets</h3>
+              <div class="panel-actions">
+                <button id="createPresetBtn" type="button">New</button>
+                <button id="importPresetBtn" type="button" class="ghost">Import</button>
+                <input id="importPresetInput" type="file" accept=".dailypick-timer,application/json" hidden>
+              </div>
+            </div>
+            <ul id="presetList" class="preset-list" aria-live="polite"></ul>
+          </aside>
+
+          <section class="editor-panel" aria-label="Cadence editor">
+            <div class="editor-header">
+              <label class="name-field">
+                Preset name
+                <input id="presetNameInput" type="text" maxlength="60" placeholder="e.g. Stand-up rhythm">
+              </label>
+              <label class="description-field">
+                Description
+                <input id="presetDescriptionInput" type="text" maxlength="120" placeholder="Short context for facilitators">
+              </label>
+            </div>
+            <div class="editor-toolbar">
+              <button id="addStageBtn" type="button">Add stage</button>
+              <div class="editor-actions">
+                <button id="duplicatePresetBtn" type="button" class="ghost">Duplicate</button>
+                <button id="deletePresetBtn" type="button" class="ghost">Delete</button>
+              </div>
+            </div>
+            <div id="stageList" class="stage-list" aria-live="polite"></div>
+            <div class="editor-footer">
+              <button id="savePresetBtn" type="button">Save preset</button>
+              <button id="sharePresetBtn" type="button" class="ghost" title="Copy share link">Share link</button>
+              <button id="downloadPresetBtn" type="button" class="ghost" title="Download preset">Download</button>
+            </div>
+          </section>
+
+          <section class="runner-panel" aria-label="Run cadence">
+            <h3 id="runnerTitle">Select a preset</h3>
+            <div class="runner-display">
+              <span id="runnerCountdown">00:00</span>
+            </div>
+            <p id="runnerStatus" class="runner-status" aria-live="polite">Stages will appear here.</p>
+            <div class="runner-controls">
+              <button id="startCadenceBtn" type="button">Start</button>
+              <button id="pauseCadenceBtn" type="button" class="ghost" disabled>Pause</button>
+              <button id="nextStageBtn" type="button" class="ghost" disabled>Next</button>
+              <button id="resetCadenceBtn" type="button" class="ghost">Reset</button>
+            </div>
+            <ol id="stageTimeline" class="stage-timeline"></ol>
+          </section>
+        </div>
+      </article>
+    </section>
+
+    <section class="seo-card glass-card">
+      <h2>Why multi-stage timers matter</h2>
+      <p>Teams lose momentum when facilitators juggle multiple countdowns manually. The Cadence Timer Studio keeps rituals predictable with clear transitions, branded cues, and optional audio prompts that everyone can hear. Export presets as files or share a link encoded in the URL—no back-end required.</p>
+      <ul>
+        <li><strong>Stand-ups stay crisp:</strong> Keep updates, blockers, and parking lot discussions on tempo.</li>
+        <li><strong>Planning sessions stay honest:</strong> Bound estimation rounds and recap time without killing the vibe.</li>
+        <li><strong>Retros run themselves:</strong> Color-code columns, add chimes, and encourage balanced airtime.</li>
+      </ul>
+    </section>
+  </main>
+
+  {% include "footer.html" %}
+</body>
+
+</html>
