@@ -1,5 +1,63 @@
 (() => {
-  const CARDS = ['0', '0.5', '1', '2', '3', '5', '8', '13', '20', '40', '100', '?', '☕'];
+  const DECK_STORAGE_KEY = 'planningPokerDeckSelection';
+  const BASE_CARD_VALUES = [
+    { value: '0', label: '0 points' },
+    { value: '0.5', label: '0.5 points' },
+    { value: '1', label: '1 point' },
+    { value: '2', label: '2 points' },
+    { value: '3', label: '3 points' },
+    { value: '5', label: '5 points' },
+    { value: '8', label: '8 points' },
+    { value: '13', label: '13 points' },
+    { value: '20', label: '20 points' },
+    { value: '40', label: '40 points' },
+    { value: '100', label: '100 points' },
+    { value: '?', label: 'Needs discussion' },
+    { value: '☕', label: 'Coffee break' },
+  ];
+
+  const NEBULA_SYMBOLS = ['🪐', '🌠', '☄️', '🛰️', '🚀', '🌌', '🛸', '💫', '🔭', '🌙', '⭐', '✨', '☕'];
+  const ARCADE_SYMBOLS = ['🎮', '🕹️', '💾', '🎯', '📟', '💥', '⚡', '🏎️', '🏁', '🚨', '💣', '❓', '🍕'];
+
+  const DECKS = [
+    {
+      id: 'classic',
+      name: 'Classic Fibonacci',
+      description: 'Standard Fibonacci cards with a coffee break.',
+      theme: null,
+      cards: BASE_CARD_VALUES.map((card) => ({ ...card, display: card.value })),
+    },
+    {
+      id: 'nebula',
+      name: 'Nebula Glyphs',
+      description: 'Cosmic emoji overlays with gradient card faces.',
+      theme: 'nebula',
+      cards: BASE_CARD_VALUES.map((card, index) => {
+        const symbol = NEBULA_SYMBOLS[index] || '✨';
+        const display = card.value === '?' ? `${symbol} ?` : card.value === '☕' ? `${symbol} Break` : `${symbol} ${card.value}`;
+        return {
+          ...card,
+          display,
+          aria: card.value === '?' ? 'Needs discussion' : card.value === '☕' ? 'Coffee break' : `${card.value} points`,
+        };
+      }),
+    },
+    {
+      id: 'arcade',
+      name: 'Arcade Neon',
+      description: 'Retro arcade icons with punchy neon gradients.',
+      theme: 'arcade',
+      cards: BASE_CARD_VALUES.map((card, index) => {
+        const symbol = ARCADE_SYMBOLS[index] || '🎮';
+        const display = card.value === '?' ? `${symbol} ?` : card.value === '☕' ? `${symbol} Break` : `${symbol} ${card.value}`;
+        return {
+          ...card,
+          display,
+          aria: card.value === '?' ? 'Needs discussion' : card.value === '☕' ? 'Coffee break' : `${card.value} points`,
+        };
+      }),
+    },
+  ];
   const LOCAL_NAME_KEY = 'planningPokerDisplayName';
   const LOCAL_ROOM_KEY = 'planningPokerLastRoom';
 
@@ -20,6 +78,8 @@
   const connectionStatus = document.getElementById('connectionStatus');
   const storyInput = document.getElementById('storyInput');
   const sessionBadge = document.getElementById('sessionBadge');
+  const deckSelect = document.getElementById('deckSelect');
+  const deckDescriptionEl = document.getElementById('deckDescription');
 
   let ws = null;
   let sessionId = null;
@@ -27,6 +87,8 @@
   let isHost = false;
   let currentState = { participants: [] };
   let storyDebounce = null;
+  let currentDeck = DECKS[0];
+  const savedDeckId = localStorage.getItem(DECK_STORAGE_KEY);
 
   const savedName = localStorage.getItem(LOCAL_NAME_KEY) || '';
   displayNameInput.value = savedName;
@@ -143,16 +205,59 @@
     }
   }
 
+  function populateDeckSelect() {
+    if (!deckSelect) return;
+    deckSelect.innerHTML = '';
+    DECKS.forEach((deck) => {
+      const option = document.createElement('option');
+      option.value = deck.id;
+      option.textContent = deck.name;
+      deckSelect.appendChild(option);
+    });
+  }
+
+  function updateDeckUI() {
+    if (deckSelect) {
+      deckSelect.value = currentDeck.id;
+    }
+    if (deckDescriptionEl) {
+      if (deckDescriptionEl.dataset.notice) delete deckDescriptionEl.dataset.notice;
+      deckDescriptionEl.textContent = currentDeck.description;
+    }
+  }
+
+  function setDeckById(deckId, { fromSelect = false } = {}) {
+    const deck = DECKS.find((d) => d.id === deckId) || DECKS[0];
+    currentDeck = deck;
+    localStorage.setItem(DECK_STORAGE_KEY, currentDeck.id);
+    renderDeck();
+    updateDeckUI();
+  }
+
   function renderDeck() {
+    if (!cardDeck) return;
     cardDeck.innerHTML = '';
-    CARDS.forEach((value) => {
+    const deck = currentDeck || DECKS[0];
+    cardDeck.setAttribute('aria-label', `${deck.name} cards`);
+    if (deck.theme) {
+      cardDeck.dataset.theme = deck.theme;
+    } else {
+      delete cardDeck.dataset.theme;
+    }
+    deck.cards.forEach((card) => {
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.dataset.value = value;
-      btn.textContent = value;
-      btn.addEventListener('click', () => handleCardSelection(value));
+      btn.dataset.value = card.value;
+      btn.textContent = card.display || card.value;
+      if (card.aria) {
+        btn.setAttribute('aria-label', card.aria);
+      } else {
+        btn.setAttribute('aria-label', `Vote ${card.label || card.value}`);
+      }
+      btn.addEventListener('click', () => handleCardSelection(card.value));
       cardDeck.appendChild(btn);
     });
+    updateDeckSelection();
   }
 
   function handleCardSelection(value) {
@@ -279,6 +384,11 @@
         sendMessage({ type: 'set-story', story: storyInput.value.trim() });
       }, 300);
     });
+
+    deckSelect?.addEventListener('change', (event) => {
+      setDeckById(event.target.value, { fromSelect: true });
+    });
+
   }
 
   function autoJoinFromQuery() {
@@ -290,6 +400,13 @@
   }
 
   renderDeck();
+  populateDeckSelect();
+  if (savedDeckId) {
+    setDeckById(savedDeckId);
+  } else {
+    updateDeckUI();
+  }
+
   initEvents();
   autoJoinFromQuery();
   updateSessionBadge();

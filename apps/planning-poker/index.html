@@ -88,6 +88,15 @@
       </article>
 
       <article class="board-card glass-card" aria-live="polite">
+        <section class="deck-toolbar" aria-label="Deck style picker">
+          <div class="deck-selector">
+            <label for="deckSelect">Deck style</label>
+            <div class="deck-select-row">
+              <select id="deckSelect" aria-describedby="deckDescription"></select>
+            </div>
+            <p id="deckDescription" class="deck-description">Classic Fibonacci cards everyone expects.</p>
+          </div>
+        </section>
         <div class="deck" role="group" aria-label="Fibonacci deck" id="cardDeck"></div>
         <div class="deck-actions">
           <button id="clearCardBtn" type="button" class="ghost-btn" disabled>Clear selection</button>
