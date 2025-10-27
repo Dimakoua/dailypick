@@ -37,26 +37,28 @@
 
   const DEFAULT_PRESETS = [
     {
-      id: 'standup-rhythm',
+      slug: 'standup-rhythm',
       name: 'Daily Stand-up Rhythm',
       description: 'Check-in, blockers, and parking lot in under 25 minutes.',
       stages: [
-        { id: 'stage-1', label: 'Warm-up', seconds: 180, color: '#2ecc71', tone: 'soft' },
-        { id: 'stage-2', label: 'Updates', seconds: 900, color: '#3498db', tone: 'medium' },
-        { id: 'stage-3', label: 'Parking Lot', seconds: 240, color: '#9b59b6', tone: 'bold' },
+        { label: 'Warm-up', seconds: 180, color: '#2ecc71', tone: 'soft' },
+        { label: 'Updates', seconds: 900, color: '#3498db', tone: 'medium' },
+        { label: 'Parking Lot', seconds: 240, color: '#9b59b6', tone: 'bold' },
       ],
     },
     {
-      id: 'planning-push',
+      slug: 'planning-push',
       name: 'Sprint Planning Burst',
       description: 'Prime the backlog, estimate, then lock commitments.',
       stages: [
-        { id: 'stage-4', label: 'Backlog prep', seconds: 420, color: '#f39c12', tone: 'soft' },
-        { id: 'stage-5', label: 'Estimation loop', seconds: 1500, color: '#e67e22', tone: 'medium' },
-        { id: 'stage-6', label: 'Commitment review', seconds: 600, color: '#16a085', tone: 'bold' },
+        { label: 'Backlog prep', seconds: 420, color: '#f39c12', tone: 'soft' },
+        { label: 'Estimation loop', seconds: 1500, color: '#e67e22', tone: 'medium' },
+        { label: 'Commitment review', seconds: 600, color: '#16a085', tone: 'bold' },
       ],
     },
   ];
+
+  const VALID_TONES = new Set(['none', 'soft', 'medium', 'bold']);
 
   let quickTimerInterval = null;
   let quickRemainingSeconds = 0;
@@ -195,25 +197,121 @@
   }
 
   function persistPresets() {
-    localStorage.setItem(PRESET_STORAGE_KEY, JSON.stringify(presets));
+    const payload = presets.map((preset) => ({
+      id: preset.id,
+      name: preset.name,
+      description: preset.description,
+      builtIn: Boolean(preset.builtIn),
+      slug: preset.slug || null,
+      stages: preset.stages.map((stage) => ({
+        id: stage.id,
+        label: stage.label,
+        seconds: stage.seconds,
+        color: stage.color,
+        tone: stage.tone,
+      })),
+    }));
+    localStorage.setItem(PRESET_STORAGE_KEY, JSON.stringify(payload));
+  }
+
+  function createStageFromData(stage, index, fallback = {}) {
+    const base = stage && typeof stage === 'object' ? stage : {};
+    const defaultLabel = fallback.label || `Stage ${index + 1}`;
+    const parsedSeconds = Number(base.seconds);
+    const seconds = Number.isFinite(parsedSeconds)
+      ? clamp(Math.floor(parsedSeconds), 0, 86400)
+      : clamp(Number(fallback.seconds) || 300, 0, 86400);
+    const tone = typeof base.tone === 'string' && VALID_TONES.has(base.tone) ? base.tone : fallback.tone || 'none';
+    return {
+      id: typeof base.id === 'string' ? base.id : uuid(),
+      label: typeof base.label === 'string' && base.label.trim() ? base.label.trim() : defaultLabel,
+      seconds,
+      color: typeof base.color === 'string' && base.color ? base.color : fallback.color || '#3498db',
+      tone,
+    };
+  }
+
+  function createBuiltInPreset(definition) {
+    return {
+      id: uuid(),
+      name: definition.name,
+      description: definition.description,
+      builtIn: true,
+      slug: definition.slug,
+      stages: definition.stages.map((stage, index) => createStageFromData(stage, index, stage)),
+    };
   }
 
   function loadPresets() {
-    let stored = null;
+    let stored = [];
     try {
-      stored = JSON.parse(localStorage.getItem(PRESET_STORAGE_KEY) || 'null');
+      const parsed = JSON.parse(localStorage.getItem(PRESET_STORAGE_KEY) || 'null');
+      if (Array.isArray(parsed)) {
+        stored = parsed;
+      }
     } catch (err) {
-      stored = null;
+      stored = [];
     }
-    if (Array.isArray(stored) && stored.length) {
-      presets = stored;
-    } else {
-      presets = DEFAULT_PRESETS.map((preset) => ({
+
+    const builtInBySlug = new Map();
+    const customPresets = [];
+
+    stored.forEach((raw) => {
+      if (!raw || typeof raw !== 'object') return;
+      const match = DEFAULT_PRESETS.find(
+        (preset) => preset.slug === raw.slug || (!raw.slug && preset.name === raw.name),
+      );
+      const preset = {
+        id: typeof raw.id === 'string' ? raw.id : uuid(),
+        name:
+          typeof raw.name === 'string' && raw.name.trim()
+            ? raw.name.trim()
+            : match?.name || 'Untitled cadence',
+        description: typeof raw.description === 'string' ? raw.description.trim() : '',
+        builtIn: Boolean(raw.builtIn),
+        slug: typeof raw.slug === 'string' ? raw.slug : match?.slug || null,
+        stages: Array.isArray(raw.stages) && raw.stages.length
+          ? raw.stages.map((stage, index) => createStageFromData(stage, index, match?.stages?.[index] || {}))
+          : (match?.stages || []).map((stage, index) => createStageFromData(stage, index, stage)),
+      };
+
+      if (!preset.builtIn && match && !builtInBySlug.has(match.slug)) {
+        preset.builtIn = true;
+        preset.slug = match.slug;
+      }
+
+      if (preset.builtIn && preset.slug) {
+        builtInBySlug.set(preset.slug, preset);
+      } else {
+        preset.builtIn = false;
+        preset.slug = null;
+        customPresets.push(preset);
+      }
+    });
+
+    const builtIns = DEFAULT_PRESETS.map((definition) => {
+      const existing = builtInBySlug.get(definition.slug);
+      if (existing) {
+        existing.builtIn = true;
+        existing.slug = definition.slug;
+        existing.stages = existing.stages.map((stage, index) =>
+          createStageFromData(stage, index, definition.stages[index] || stage),
+        );
+        return existing;
+      }
+      return createBuiltInPreset(definition);
+    });
+
+    presets = [
+      ...builtIns,
+      ...customPresets.map((preset) => ({
         ...preset,
-        id: uuid(),
-        stages: preset.stages.map((stage) => ({ ...stage, id: uuid() })),
-      }));
-    }
+        builtIn: false,
+        slug: null,
+        stages: preset.stages.map((stage, index) => createStageFromData(stage, index, stage)),
+      })),
+    ];
+
     if (!selectedPresetId && presets.length) {
       selectedPresetId = presets[0].id;
     }
@@ -232,18 +330,47 @@
       li.dataset.id = preset.id;
       li.dataset.selected = preset.id === selectedPresetId ? 'true' : 'false';
 
+      const header = document.createElement('div');
+      header.className = 'preset-item__header';
+
       const title = document.createElement('button');
       title.type = 'button';
+      title.className = 'preset-select';
       title.textContent = preset.name;
       title.addEventListener('click', () => selectPreset(preset.id));
 
       const meta = document.createElement('p');
       meta.textContent = preset.description || '—';
 
-      li.appendChild(title);
+      header.appendChild(title);
+
+      if (!preset.builtIn) {
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'preset-remove';
+        removeBtn.textContent = 'Remove';
+        removeBtn.setAttribute('aria-label', `Remove ${preset.name}`);
+        removeBtn.addEventListener('click', (event) => {
+          event.stopPropagation();
+          deletePreset(preset.id);
+        });
+        header.appendChild(removeBtn);
+      }
+
+      li.appendChild(header);
       li.appendChild(meta);
       presetListEl.appendChild(li);
     });
+  }
+
+  function updateEditorState() {
+    if (!deletePresetBtn) return;
+    const preset = findPreset(selectedPresetId);
+    if (!preset || preset.builtIn) {
+      deletePresetBtn.setAttribute('disabled', 'disabled');
+    } else {
+      deletePresetBtn.removeAttribute('disabled');
+    }
   }
 
   function renderStageRow(stage, index) {
@@ -426,6 +553,7 @@
     renderStages();
     renderTimeline();
     updateRunnerDisplay();
+    updateEditorState();
     persistPresets();
   }
 
@@ -479,28 +607,39 @@
     renderTimeline();
     runnerTitle.textContent = preset.name;
     updateRunnerDisplay();
+    updateEditorState();
     persistPresets();
   }
 
-  function deletePreset() {
-    if (!selectedPresetId) return;
+  function deletePreset(presetId = selectedPresetId) {
+    const preset = findPreset(presetId);
+    if (!preset || preset.builtIn) return;
     if (!window.confirm('Delete this preset? This cannot be undone.')) return;
-    presets = presets.filter((preset) => preset.id !== selectedPresetId);
+    presets = presets.filter((item) => item.id !== presetId);
     if (!presets.length) {
-      presets.push({
+      const placeholder = {
         id: uuid(),
         name: 'New cadence',
         description: '',
         stages: [],
-      });
+        builtIn: false,
+        slug: null,
+      };
+      presets.push(placeholder);
+      selectedPresetId = placeholder.id;
+    } else if (presetId === selectedPresetId) {
+      selectedPresetId = presets[0].id;
     }
-    selectedPresetId = presets[0].id;
-    updatePresetList();
-    renderStages();
-    renderTimeline();
-    updateRunnerDisplay();
-    selectPreset(selectedPresetId);
-    persistPresets();
+    if (presets.length) {
+      selectPreset(selectedPresetId || presets[0].id);
+    } else {
+      persistPresets();
+      updatePresetList();
+      renderStages();
+      renderTimeline();
+      updateRunnerDisplay();
+      updateEditorState();
+    }
   }
 
   function duplicatePreset() {
@@ -510,13 +649,12 @@
       ...JSON.parse(JSON.stringify(preset)),
       id: uuid(),
       name: `${preset.name} (copy)`,
+      builtIn: false,
+      slug: null,
       stages: preset.stages.map((stage) => ({ ...stage, id: uuid() })),
     };
     presets.push(clone);
     selectPreset(clone.id);
-    updatePresetList();
-    updateRunnerDisplay();
-    persistPresets();
   }
 
   function createPreset() {
@@ -525,14 +663,11 @@
       name: 'New cadence',
       description: '',
       stages: [],
+      builtIn: false,
+      slug: null,
     };
     presets.unshift(preset);
     selectPreset(preset.id);
-    updatePresetList();
-    renderStages();
-    renderTimeline();
-    updateRunnerDisplay();
-    persistPresets();
   }
 
   function totalDuration(preset) {
@@ -735,20 +870,12 @@
       id: uuid(),
       name: data.name || 'Imported cadence',
       description: data.description || '',
-      stages: data.stages.map((stage) => ({
-        id: uuid(),
-        label: stage.label || 'Stage',
-        seconds: clamp(parseInt(stage.seconds, 10) || 60, 1, 36000),
-        color: stage.color || '#3498db',
-        tone: stage.tone || 'none',
-      })),
+      stages: data.stages.map((stage, index) => createStageFromData(stage, index, {})),
+      builtIn: false,
+      slug: null,
     };
     presets.push(preset);
     selectPreset(preset.id);
-    updatePresetList();
-    renderStages();
-    renderTimeline();
-    persistPresets();
   }
 
   function parsePresetParam() {
@@ -823,6 +950,8 @@
   function resumeQuickTimer() {
     startQuickTimer();
   }
+
+  updateEditorState();
 
   if (createPresetBtn) createPresetBtn.addEventListener('click', createPreset);
   if (importPresetBtn) importPresetBtn.addEventListener('click', () => importPresetInput?.click());
