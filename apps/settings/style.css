@@ -157,100 +157,6 @@
   color: var(--brand-subtle-text);
 }
 
-.license-form label {
-  font-weight: 600;
-  color: var(--brand-heading);
-}
-
-.license-form textarea {
-  min-height: 110px;
-}
-
-.license-summary {
-  border-radius: 16px;
-  border: 1px dashed var(--brand-border);
-  padding: 18px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 18px;
-  background: rgba(255, 255, 255, 0.65);
-}
-
-.license-summary h3 {
-  margin: 0 0 8px;
-  font-size: 1rem;
-  color: var(--brand-heading);
-}
-
-.license-summary dl {
-  margin: 0;
-  display: grid;
-  gap: 8px;
-}
-
-.license-summary dt {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--brand-subtle-text);
-}
-
-.license-summary dd {
-  margin: 2px 0 0;
-  font-weight: 700;
-  font-size: 1.05rem;
-  color: var(--brand-heading);
-}
-
-.license-summary[data-state="empty"] {
-  opacity: 0.6;
-}
-
-.license-summary[data-state="empty"] .license-features::after {
-  content: 'Activate a license to unlock premium features.';
-  display: block;
-  color: var(--brand-subtle-text);
-  font-size: 0.9rem;
-}
-
-.license-summary[data-state="active"] {
-  border-color: rgba(46, 204, 113, 0.6);
-  background: rgba(46, 204, 113, 0.1);
-}
-
-.license-summary[data-state="invalid"] {
-  border-color: rgba(231, 76, 60, 0.6);
-  background: rgba(231, 76, 60, 0.08);
-}
-
-.license-summary[data-state="checking"] {
-  border-style: dotted;
-}
-
-.feature-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 6px;
-}
-
-.feature-list li {
-  padding: 8px 10px;
-  border-radius: 12px;
-  background: rgba(52, 152, 219, 0.12);
-  color: var(--brand-heading);
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.feature-list li::before {
-  content: '⭐';
-  font-size: 0.9rem;
-}
-
 .brand-form label {
   display: flex;
   flex-direction: column;
@@ -258,6 +164,18 @@
   font-weight: 600;
   color: var(--brand-heading);
   font-size: 0.95rem;
+}
+
+.feature-tips {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 8px;
+  color: var(--brand-subtle-text);
+}
+
+.feature-tips li {
+  color: var(--brand-heading);
 }
 
 .brand-form input[type=\"text\"],

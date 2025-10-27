@@ -24,7 +24,6 @@
       id: 'classic',
       name: 'Classic Fibonacci',
       description: 'Standard Fibonacci cards with a coffee break.',
-      premium: false,
       theme: null,
       cards: BASE_CARD_VALUES.map((card) => ({ ...card, display: card.value })),
     },
@@ -32,8 +31,6 @@
       id: 'nebula',
       name: 'Nebula Glyphs',
       description: 'Cosmic emoji overlays with gradient card faces.',
-      premium: true,
-      feature: 'planning-poker-icons',
       theme: 'nebula',
       cards: BASE_CARD_VALUES.map((card, index) => {
         const symbol = NEBULA_SYMBOLS[index] || '✨';
@@ -49,8 +46,6 @@
       id: 'arcade',
       name: 'Arcade Neon',
       description: 'Retro arcade icons with punchy neon gradients.',
-      premium: true,
-      feature: 'planning-poker-icons',
       theme: 'arcade',
       cards: BASE_CARD_VALUES.map((card, index) => {
         const symbol = ARCADE_SYMBOLS[index] || '🎮';
@@ -85,8 +80,6 @@
   const sessionBadge = document.getElementById('sessionBadge');
   const deckSelect = document.getElementById('deckSelect');
   const deckDescriptionEl = document.getElementById('deckDescription');
-  const deckPremiumBadge = document.getElementById('deckPremiumBadge');
-  const previewPremiumBtn = document.getElementById('previewPremiumBtn');
 
   let ws = null;
   let sessionId = null;
@@ -95,9 +88,7 @@
   let currentState = { participants: [] };
   let storyDebounce = null;
   let currentDeck = DECKS[0];
-  let hasIconPacks = false;
   const savedDeckId = localStorage.getItem(DECK_STORAGE_KEY);
-  let lockedDeckPreference = savedDeckId;
 
   const savedName = localStorage.getItem(LOCAL_NAME_KEY) || '';
   displayNameInput.value = savedName;
@@ -214,18 +205,13 @@
     }
   }
 
-  function hasDeckAccess(deck) {
-    return deck && (!deck.premium || hasIconPacks);
-  }
-
   function populateDeckSelect() {
     if (!deckSelect) return;
     deckSelect.innerHTML = '';
     DECKS.forEach((deck) => {
       const option = document.createElement('option');
       option.value = deck.id;
-      option.textContent = deck.premium && !hasIconPacks ? `${deck.name} (Premium)` : deck.name;
-      option.disabled = !hasDeckAccess(deck);
+      option.textContent = deck.name;
       deckSelect.appendChild(option);
     });
   }
@@ -238,60 +224,12 @@
       if (deckDescriptionEl.dataset.notice) delete deckDescriptionEl.dataset.notice;
       deckDescriptionEl.textContent = currentDeck.description;
     }
-    if (deckPremiumBadge) {
-      deckPremiumBadge.hidden = !currentDeck.premium;
-    }
-    if (previewPremiumBtn) {
-      previewPremiumBtn.hidden = hasIconPacks;
-    }
-    if (deckSelect) {
-      Array.from(deckSelect.options).forEach((option) => {
-        const deck = DECKS.find((d) => d.id === option.value);
-        if (!deck) return;
-        option.disabled = !hasDeckAccess(deck);
-        option.textContent = deck.premium && !hasIconPacks ? `${deck.name} (Premium)` : deck.name;
-      });
-    }
-  }
-
-  function showDeckWarning() {
-    if (!deckDescriptionEl) return;
-    deckDescriptionEl.dataset.notice = 'warning';
-    deckDescriptionEl.textContent = 'Premium icon packs unlock with a Daily Pick license in Settings.';
-    setTimeout(() => {
-      if (deckDescriptionEl.dataset.notice === 'warning') {
-        delete deckDescriptionEl.dataset.notice;
-        deckDescriptionEl.textContent = currentDeck.description;
-      }
-    }, 4000);
   }
 
   function setDeckById(deckId, { fromSelect = false } = {}) {
     const deck = DECKS.find((d) => d.id === deckId) || DECKS[0];
-    if (!hasDeckAccess(deck)) {
-      if (fromSelect && deckSelect) {
-        deckSelect.value = currentDeck.id;
-      }
-      if (deck.premium) {
-        lockedDeckPreference = deck.id;
-      }
-      showDeckWarning();
-      return;
-    }
-    lockedDeckPreference = null;
     currentDeck = deck;
     localStorage.setItem(DECK_STORAGE_KEY, currentDeck.id);
-    renderDeck();
-    updateDeckUI();
-  }
-
-  function ensureDeckAccess() {
-    if (hasDeckAccess(currentDeck)) return;
-    if (!lockedDeckPreference) {
-      lockedDeckPreference = currentDeck.id;
-    }
-    const fallback = DECKS.find((deck) => hasDeckAccess(deck)) || DECKS[0];
-    currentDeck = fallback;
     renderDeck();
     updateDeckUI();
   }
@@ -451,9 +389,6 @@
       setDeckById(event.target.value, { fromSelect: true });
     });
 
-    previewPremiumBtn?.addEventListener('click', () => {
-      window.location.href = '/apps/settings/#licenseHeading';
-    });
   }
 
   function autoJoinFromQuery() {
@@ -470,22 +405,6 @@
     setDeckById(savedDeckId);
   } else {
     updateDeckUI();
-  }
-
-  if (window.DailyPickLicense) {
-    hasIconPacks = window.DailyPickLicense.isFeatureEnabled('planning-poker-icons');
-    window.DailyPickLicense.subscribe(() => {
-      hasIconPacks = window.DailyPickLicense.isFeatureEnabled('planning-poker-icons');
-      populateDeckSelect();
-      const candidate = lockedDeckPreference ? DECKS.find((deck) => deck.id === lockedDeckPreference) : null;
-      if (candidate && hasDeckAccess(candidate)) {
-        setDeckById(candidate.id);
-        lockedDeckPreference = null;
-      } else {
-        ensureDeckAccess();
-        updateDeckUI();
-      }
-    });
   }
 
   initEvents();

@@ -54,7 +54,7 @@
 }
 
 .quick-card,
-.premium-card,
+.cadence-card,
 .seo-card {
   border-radius: var(--brand-radius);
   border: 1px solid var(--brand-border);
@@ -166,44 +166,17 @@
   min-height: 1.2em;
 }
 
-.premium-card {
+.cadence-card {
   position: relative;
   overflow: hidden;
   gap: 24px;
 }
 
-.premium-card__header {
+.cadence-card__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-}
-
-.license-pill {
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 6px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 215, 0, 0.6);
-  background: rgba(255, 215, 0, 0.16);
-  color: #9b7c00;
-  font-weight: 700;
-}
-
-.premium-lock {
-  border-radius: 16px;
-  border: 1px dashed var(--brand-border);
-  background: rgba(255, 255, 255, 0.72);
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  color: var(--brand-subtle-text);
-}
-
-.premium-lock .btn-link {
-  align-self: flex-start;
 }
 
 .cadence-layout {
@@ -214,17 +187,6 @@
     "presets runner";
   gap: 20px;
   align-items: start;
-}
-
-.premium-card[data-state="locked"] .cadence-layout {
-  filter: blur(3px);
-  pointer-events: none;
-  user-select: none;
-  opacity: 0.4;
-}
-
-.premium-card[data-state="unlocked"] .premium-lock {
-  display: none;
 }
 
 .preset-panel {
@@ -695,7 +657,7 @@
 }
 
 @media (max-width: 900px) {
-  .premium-card {
+  .cadence-card {
     padding: 20px;
   }
 

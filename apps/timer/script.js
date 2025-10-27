@@ -12,7 +12,6 @@
   const quickDisplay = document.getElementById('quickDisplay');
   const quickStatus = document.getElementById('quickStatus');
 
-  const premiumCard = document.querySelector('[data-license-region="premium-timer"]');
   const presetListEl = document.getElementById('presetList');
   const createPresetBtn = document.getElementById('createPresetBtn');
   const importPresetBtn = document.getElementById('importPresetBtn');
@@ -64,10 +63,8 @@
   let quickRemainingSeconds = 0;
   let quickRunning = false;
 
-  let premiumEnabled = false;
   let presets = [];
   let selectedPresetId = null;
-  let pendingImportPreset = null;
 
   let cadenceTimer = null;
   let cadenceStartedAt = null;
@@ -890,11 +887,7 @@
       const decoder = new TextDecoder();
       const json = decoder.decode(bytes);
       const payload = JSON.parse(json);
-      if (premiumEnabled) {
-        importPresetFromData(payload);
-      } else {
-        pendingImportPreset = payload;
-      }
+      importPresetFromData(payload);
     } catch (err) {
       console.warn('Failed to import preset from URL', err);
     }
@@ -914,25 +907,6 @@
     };
     reader.readAsText(file);
     event.target.value = '';
-  }
-
-  function updatePremiumState(enabled) {
-    premiumEnabled = enabled;
-    if (!premiumCard) return;
-    premiumCard.dataset.state = enabled ? 'unlocked' : 'locked';
-    if (enabled) {
-      if (!presets.length) {
-        loadPresets();
-      }
-      updatePresetList();
-      renderStages();
-      renderTimeline();
-      selectPreset(selectedPresetId || presets[0]?.id);
-      if (pendingImportPreset) {
-        importPresetFromData(pendingImportPreset);
-        pendingImportPreset = null;
-      }
-    }
   }
 
   quickMinutesInput?.addEventListener('change', syncQuickInputs);
@@ -976,12 +950,13 @@
   loadQuickPreset();
   showQuickStatus('Ready.');
 
-  if (window.DailyPickLicense) {
-    window.DailyPickLicense.subscribe(() => {
-      updatePremiumState(window.DailyPickLicense.isFeatureEnabled('timer'));
-    });
+  loadPresets();
+  if (presets.length) {
+    selectPreset(selectedPresetId || presets[0].id);
   } else {
-    updatePremiumState(false);
+    updatePresetList();
+    renderStages();
+    renderTimeline();
   }
 
   parsePresetParam();

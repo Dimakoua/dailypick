@@ -224,18 +224,6 @@ button:not(:disabled):focus-visible {
   font-weight: 700;
 }
 
-.deck-pill {
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: rgba(241, 196, 15, 0.2);
-  border: 1px solid rgba(241, 196, 15, 0.6);
-  color: #9c7a00;
-  font-weight: 700;
-}
-
 .deck button {
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.4);

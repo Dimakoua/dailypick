@@ -20,7 +20,6 @@
   <link rel="stylesheet" href="/assets/css/theme.css">
   <link rel="stylesheet" href="/assets/css/glass.css">
   <link rel="stylesheet" href="style.css">
-  <script src="/assets/js/license-manager.js" defer></script>
   <script src="/assets/js/brand-config.js" defer></script>
 </head>
 
@@ -135,46 +134,16 @@
       </div>
 
       <div class="settings-column secondary">
-        <article class="settings-card glass-card" aria-labelledby="licenseHeading">
+        <article class="settings-card glass-card" aria-labelledby="unlockHeading">
           <div class="card-header">
-            <h2 id="licenseHeading">License &amp; Premium Access</h2>
-            <p>Activate a premium code to unlock cadence timers, icon packs, and future add-ons. Codes are stored in this
-              browser only.</p>
+            <h2 id="unlockHeading">Everything is unlocked</h2>
+            <p>Cadence presets and Planning Poker icon packs now work out of the box. Keep your settings handy to enjoy them anywhere.</p>
           </div>
-
-          <div class="license-form">
-            <label for="licenseInput">License code</label>
-            <textarea id="licenseInput" rows="3" spellcheck="false" placeholder="Paste your Daily Pick license token"></textarea>
-            <div class="button-row">
-              <button id="activateLicenseBtn" type="button">Activate license</button>
-              <button id="clearLicenseBtn" type="button" class="ghost">Remove license</button>
-            </div>
-            <p id="licenseStatus" class="settings-status" aria-live="polite"></p>
-          </div>
-
-          <div class="license-summary" data-state="empty" aria-live="polite">
-            <div class="license-meta">
-              <h3>Current license</h3>
-              <dl>
-                <div>
-                  <dt>Owner</dt>
-                  <dd id="licenseOwner">—</dd>
-                </div>
-                <div>
-                  <dt>Tier</dt>
-                  <dd id="licenseTier">—</dd>
-                </div>
-                <div>
-                  <dt>Expires</dt>
-                  <dd id="licenseExpiry">—</dd>
-                </div>
-              </dl>
-            </div>
-            <div class="license-features">
-              <h3>Unlocked features</h3>
-              <ul id="licenseFeaturesList" class="feature-list"></ul>
-            </div>
-          </div>
+          <ul class="feature-tips">
+            <li>Presets, players, and brand styles stay on this device via <code>localStorage</code>.</li>
+            <li>Use the export buttons inside each app to share presets or rosters with your team.</li>
+            <li>Reapply your saved settings after clearing browser data or switching devices.</li>
+          </ul>
         </article>
 
         <article class="settings-card glass-card tips">
@@ -238,16 +207,6 @@
       const previewName = brandPreview.querySelector('.preview-name');
       const previewMark = brandPreview.querySelector('.preview-mark');
       const previewButton = brandPreview.querySelector('button');
-
-      const licenseInput = document.getElementById('licenseInput');
-      const activateLicenseBtn = document.getElementById('activateLicenseBtn');
-      const clearLicenseBtn = document.getElementById('clearLicenseBtn');
-      const licenseStatus = document.getElementById('licenseStatus');
-      const licenseSummary = document.querySelector('.license-summary');
-      const licenseOwner = document.getElementById('licenseOwner');
-      const licenseTier = document.getElementById('licenseTier');
-      const licenseExpiry = document.getElementById('licenseExpiry');
-      const licenseFeaturesList = document.getElementById('licenseFeaturesList');
 
       function showStatus(el, message) {
         if (!el) return;
@@ -363,72 +322,6 @@
         showStatus(brandStatus, 'Brand reset to defaults.');
       }
 
-      function formatExpiry(exp) {
-        if (!exp) return '—';
-        const parsed = Date.parse(exp);
-        if (Number.isNaN(parsed)) return exp;
-        return new Date(parsed).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
-      }
-
-      function renderLicense(state) {
-        if (!licenseSummary) return;
-        const { status, payload, token, features, error } = state;
-        if (status === 'valid') {
-          licenseSummary.dataset.state = 'active';
-        } else if (status === 'checking') {
-          licenseSummary.dataset.state = 'checking';
-        } else if (status === 'invalid') {
-          licenseSummary.dataset.state = 'invalid';
-        } else {
-          licenseSummary.dataset.state = 'empty';
-        }
-
-        licenseOwner.textContent = payload?.name || '—';
-        licenseTier.textContent = payload?.tier || '—';
-        licenseExpiry.textContent = formatExpiry(payload?.exp);
-
-        if (licenseFeaturesList) {
-          licenseFeaturesList.innerHTML = '';
-          if (features?.length) {
-            features.forEach((feature) => {
-              const li = document.createElement('li');
-              li.textContent = feature
-                .replace(/-/g, ' ')
-                .replace(/\b\w/g, (letter) => letter.toUpperCase());
-              licenseFeaturesList.appendChild(li);
-            });
-          }
-        }
-
-        if (licenseInput && token && document.activeElement !== licenseInput) {
-          licenseInput.value = token;
-        }
-
-        if (licenseStatus) {
-          if (status === 'valid') {
-            licenseStatus.textContent = payload?.name
-              ? `License active for ${payload.name}.`
-              : 'License active.';
-          } else if (status === 'invalid') {
-            licenseStatus.textContent = error || 'License invalid.';
-          } else if (status === 'checking') {
-            licenseStatus.textContent = 'Verifying license…';
-          } else {
-            licenseStatus.textContent = '';
-          }
-        }
-      }
-
-      function handleActivate() {
-        const token = licenseInput?.value.trim();
-        window.DailyPickLicense?.activate(token);
-      }
-
-      function handleClear() {
-        window.DailyPickLicense?.clear();
-        if (licenseInput) licenseInput.value = '';
-      }
-
       savePlayersBtn?.addEventListener('click', savePlayers);
       resetPlayersBtn?.addEventListener('click', resetPlayers);
 
@@ -441,13 +334,6 @@
 
       saveBrandBtn?.addEventListener('click', saveBrand);
       resetBrandBtn?.addEventListener('click', resetBrand);
-
-      activateLicenseBtn?.addEventListener('click', handleActivate);
-      clearLicenseBtn?.addEventListener('click', handleClear);
-
-      if (window.DailyPickLicense) {
-        window.DailyPickLicense.subscribe(renderLicense);
-      }
 
       loadPlayers();
       loadBrand();
