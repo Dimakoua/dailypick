@@ -178,6 +178,52 @@ button:not(:disabled):focus-visible {
   margin-bottom: 16px;
 }
 
+.deck-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.deck-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 420px;
+}
+
+.deck-selector label {
+  font-weight: 700;
+  color: var(--brand-heading, #2d3e50);
+}
+
+.deck-select-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.deck-select-row select {
+  border-radius: 12px;
+  border: 1px solid var(--brand-border, #dde4eb);
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.92);
+  font-weight: 600;
+}
+
+.deck-description {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--brand-subtle-text, #7f8c8d);
+}
+
+.deck-description[data-notice="warning"] {
+  color: #c0392b;
+  font-weight: 700;
+}
+
 .deck button {
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.4);
@@ -193,6 +239,32 @@ button:not(:disabled):focus-visible {
   background: var(--brand-accent, #3498db);
   color: #fff;
   border-color: transparent;
+}
+
+.deck[data-theme="nebula"] button {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: #fff;
+  border-color: transparent;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.deck[data-theme="nebula"] button[data-selected="true"] {
+  background: linear-gradient(135deg, #ff6fd8, #3813c2);
+  box-shadow: 0 14px 30px rgba(88, 71, 227, 0.3);
+}
+
+.deck[data-theme="arcade"] button {
+  background: linear-gradient(135deg, #141e30, #243b55);
+  color: #f9e784;
+  border-color: rgba(249, 231, 132, 0.4);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.deck[data-theme="arcade"] button[data-selected="true"] {
+  background: linear-gradient(135deg, #f83600, #f9d423);
+  color: #1d1f2f;
+  border-color: transparent;
+  box-shadow: 0 12px 28px rgba(248, 54, 0, 0.35);
 }
 
 .deck-actions {
