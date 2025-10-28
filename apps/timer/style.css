@@ -184,10 +184,41 @@
   display: grid;
   grid-template-columns: minmax(230px, 280px) minmax(0, 1fr);
   grid-template-areas:
-    "presets editor"
     "presets runner";
   gap: 20px;
   align-items: start;
+}
+
+#editorDialog {
+  border: none;
+  border-radius: var(--brand-radius);
+  box-shadow: var(--brand-shadow);
+  padding: 0;
+  background: transparent;
+  max-width: 90vw;
+  width: 1000px;
+}
+
+#editorDialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.editor-close-btn {
+  position: absolute;
+  top: 0px;
+  right: 5px;
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  font-size: 1.8rem;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  background: none;
+  border: none;
+  color: var(--brand-subtle-text);
+  cursor: pointer;
 }
 
 .preset-panel {
@@ -232,6 +263,7 @@
   padding: 14px 16px;
   background: rgba(255, 255, 255, 0.92);
   transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  cursor: pointer;
 }
 
 .preset-item__header {
@@ -242,29 +274,19 @@
   margin-bottom: 6px;
 }
 
-.preset-select {
-  text-align: left;
+.preset-title {
   font-weight: 700;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
   color: var(--brand-heading);
   font-size: 1.05rem;
+}
+
+.preset-actions {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  min-width: 0;
+  gap: 8px;
+  margin-top: 12px;
 }
 
-.preset-select:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.35);
-  border-radius: 12px;
-}
-
+.preset-edit,
 .preset-remove {
   border: 1px dashed var(--brand-border);
   border-radius: 12px;
@@ -275,6 +297,15 @@
   font-size: 0.85rem;
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.preset-edit:hover,
+.preset-edit:focus-visible {
+  outline: none;
+  color: var(--brand-accent);
+  border-color: rgba(52, 152, 219, 0.5);
+  background: rgba(52, 152, 219, 0.12);
+  box-shadow: 0 8px 18px rgba(52, 152, 219, 0.14);
 }
 
 .preset-remove:hover,
@@ -507,6 +538,71 @@
   flex-direction: column;
   gap: 16px;
 }
+
+#newPresetDialog {
+  border: none;
+  border-radius: var(--brand-radius);
+  box-shadow: var(--brand-shadow);
+  padding: 28px;
+  background: var(--brand-surface);
+  max-width: 90vw;
+  width: 480px;
+}
+
+#newPresetDialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.new-preset-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.new-preset-form h2 {
+  margin: 0 0 8px;
+  color: var(--brand-heading);
+}
+
+.new-preset-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  color: var(--brand-heading);
+  gap: 8px;
+}
+
+.new-preset-form input {
+  border: 1px solid var(--brand-border);
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 1rem;
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.dialog-actions button {
+  padding: 12px 20px;
+  border-radius: 14px;
+  border: 1px solid var(--brand-border);
+  background: var(--brand-accent);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.dialog-actions button.ghost {
+  background: transparent;
+  color: var(--brand-accent);
+  border-style: dashed;
+}
+
 
 .runner-panel h3 {
   margin: 0;

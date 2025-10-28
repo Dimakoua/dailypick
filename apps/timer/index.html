@@ -89,32 +89,6 @@
             <ul id="presetList" class="preset-list" aria-live="polite"></ul>
           </aside>
 
-          <section class="editor-panel" aria-label="Cadence editor">
-            <div class="editor-header">
-              <label class="name-field">
-                Preset name
-                <input id="presetNameInput" type="text" maxlength="60" placeholder="e.g. Stand-up rhythm">
-              </label>
-              <label class="description-field">
-                Description
-                <input id="presetDescriptionInput" type="text" maxlength="120" placeholder="Short context for facilitators">
-              </label>
-            </div>
-            <div class="editor-toolbar">
-              <button id="addStageBtn" type="button">Add stage</button>
-              <div class="editor-actions">
-                <button id="duplicatePresetBtn" type="button" class="ghost">Duplicate</button>
-                <button id="deletePresetBtn" type="button" class="ghost">Delete</button>
-              </div>
-            </div>
-            <div id="stageList" class="stage-list" aria-live="polite"></div>
-            <div class="editor-footer">
-              <button id="savePresetBtn" type="button">Save preset</button>
-              <button id="sharePresetBtn" type="button" class="ghost" title="Copy share link">Share link</button>
-              <button id="downloadPresetBtn" type="button" class="ghost" title="Download preset">Download</button>
-            </div>
-          </section>
-
           <section class="runner-panel" aria-label="Run cadence">
             <h3 id="runnerTitle">Select a preset</h3>
             <div class="runner-display">
@@ -143,6 +117,53 @@
       </ul>
     </section>
   </main>
+
+  <dialog id="newPresetDialog">
+    <form id="newPresetForm" class="new-preset-form">
+        <h2>New cadence preset</h2>
+        <label>
+            Preset name
+            <input id="newPresetName" type="text" required maxlength="60" placeholder="e.g. Stand-up rhythm">
+        </label>
+        <label>
+            Description
+            <input id="newPresetDescription" type="text" maxlength="120" placeholder="Short context for facilitators">
+        </label>
+        <div class="dialog-actions">
+            <button type="submit" id="saveNewPresetBtn">Create and open</button>
+            <button type="button" id="cancelNewPresetBtn" class="ghost">Cancel</button>
+        </div>
+    </form>
+  </dialog>
+
+  <dialog id="editorDialog">
+    <button id="closeEditorBtn" type="button" class="ghost editor-close-btn">✕</button>
+    <div class="editor-panel">
+        <div class="editor-header">
+            <label class="name-field">
+                Preset name
+                <input id="presetNameInput" type="text" maxlength="60" placeholder="e.g. Stand-up rhythm">
+            </label>
+            <label class="description-field">
+                Description
+                <input id="presetDescriptionInput" type="text" maxlength="120" placeholder="Short context for facilitators">
+            </label>
+        </div>
+        <div class="editor-toolbar">
+            <button id="addStageBtn" type="button">Add stage</button>
+            <div class="editor-actions">
+                <button id="duplicatePresetBtn" type="button" class="ghost">Duplicate</button>
+                <button id="deletePresetBtn" type="button" class="ghost">Delete</button>
+            </div>
+        </div>
+        <div id="stageList" class="stage-list" aria-live="polite"></div>
+        <div class="editor-footer">
+            <button id="savePresetBtn" type="button">Save and Close</button>
+            <button id="sharePresetBtn" type="button" class="ghost" title="Copy share link">Share link</button>
+            <button id="downloadPresetBtn" type="button" class="ghost" title="Download preset">Download</button>
+        </div>
+    </div>
+  </dialog>
 
   {% include "footer.html" %}
 </body>

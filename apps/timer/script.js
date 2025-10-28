@@ -33,6 +33,13 @@
   const pauseCadenceBtn = document.getElementById('pauseCadenceBtn');
   const nextStageBtn = document.getElementById('nextStageBtn');
   const resetCadenceBtn = document.getElementById('resetCadenceBtn');
+  const newPresetDialog = document.getElementById('newPresetDialog');
+  const newPresetForm = document.getElementById('newPresetForm');
+  const newPresetNameInput = document.getElementById('newPresetName');
+  const newPresetDescriptionInput = document.getElementById('newPresetDescription');
+  const cancelNewPresetBtn = document.getElementById('cancelNewPresetBtn');
+  const editorDialog = document.getElementById('editorDialog');
+  const closeEditorBtn = document.getElementById('closeEditorBtn');
 
   const DEFAULT_PRESETS = [
     {
@@ -326,22 +333,34 @@
       li.className = 'preset-item';
       li.dataset.id = preset.id;
       li.dataset.selected = preset.id === selectedPresetId ? 'true' : 'false';
+      li.addEventListener('click', () => selectPreset(preset.id));
 
       const header = document.createElement('div');
       header.className = 'preset-item__header';
 
-      const title = document.createElement('button');
-      title.type = 'button';
-      title.className = 'preset-select';
+      const title = document.createElement('span');
+      title.className = 'preset-title';
       title.textContent = preset.name;
-      title.addEventListener('click', () => selectPreset(preset.id));
 
       const meta = document.createElement('p');
       meta.textContent = preset.description || '—';
 
+      const actions = document.createElement('div');
+      actions.className = 'preset-actions';
+
       header.appendChild(title);
 
       if (!preset.builtIn) {
+        const editBtn = document.createElement('button');
+        editBtn.type = 'button';
+        editBtn.className = 'preset-edit';
+        editBtn.textContent = 'Edit';
+        editBtn.setAttribute('aria-label', `Edit ${preset.name}`);
+        editBtn.addEventListener('click', (event) => {
+          event.stopPropagation();
+          selectPreset(preset.id, true);
+        });
+
         const removeBtn = document.createElement('button');
         removeBtn.type = 'button';
         removeBtn.className = 'preset-remove';
@@ -351,11 +370,10 @@
           event.stopPropagation();
           deletePreset(preset.id);
         });
-        header.appendChild(removeBtn);
+        actions.append(editBtn, removeBtn);
       }
 
-      li.appendChild(header);
-      li.appendChild(meta);
+      li.append(header, meta, actions);
       presetListEl.appendChild(li);
     });
   }
@@ -536,7 +554,7 @@
     updateRunnerHighlight();
   }
 
-  function selectPreset(id) {
+  function selectPreset(id, openEditor = false) {
     const preset = findPreset(id);
     if (!preset) return;
     selectedPresetId = id;
@@ -552,6 +570,10 @@
     updateRunnerDisplay();
     updateEditorState();
     persistPresets();
+
+    if (openEditor) {
+      editorDialog?.showModal();
+    }
   }
 
   function addStage() {
@@ -567,7 +589,6 @@
     renderStages();
     renderTimeline();
     updateRunnerDisplay();
-    persistPresets();
   }
 
   function moveStage(stageId, delta) {
@@ -582,7 +603,6 @@
     renderStages();
     renderTimeline();
     updateRunnerDisplay();
-    persistPresets();
   }
 
   function removeStage(stageId) {
@@ -592,7 +612,6 @@
     renderStages();
     renderTimeline();
     updateRunnerDisplay();
-    persistPresets();
   }
 
   function savePreset() {
@@ -606,6 +625,7 @@
     updateRunnerDisplay();
     updateEditorState();
     persistPresets();
+    editorDialog?.close();
   }
 
   function deletePreset(presetId = selectedPresetId) {
@@ -637,6 +657,7 @@
       updateRunnerDisplay();
       updateEditorState();
     }
+    editorDialog?.close();
   }
 
   function duplicatePreset() {
@@ -651,20 +672,22 @@
       stages: preset.stages.map((stage) => ({ ...stage, id: uuid() })),
     };
     presets.push(clone);
-    selectPreset(clone.id);
+    persistPresets();
+    selectPreset(clone.id, true);
   }
 
-  function createPreset() {
+  function createPreset(name, description) {
     const preset = {
       id: uuid(),
-      name: 'New cadence',
-      description: '',
+      name: name || 'New cadence',
+      description: description || '',
       stages: [],
       builtIn: false,
       slug: null,
     };
     presets.unshift(preset);
-    selectPreset(preset.id);
+    persistPresets();
+    selectPreset(preset.id, true);
   }
 
   function totalDuration(preset) {
@@ -927,12 +950,33 @@
 
   updateEditorState();
 
-  if (createPresetBtn) createPresetBtn.addEventListener('click', createPreset);
+  createPresetBtn?.addEventListener('click', () => {
+    newPresetDialog?.showModal();
+  });
+
+  newPresetForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const name = newPresetNameInput.value.trim();
+    const description = newPresetDescriptionInput.value.trim();
+    createPreset(name, description);
+    newPresetNameInput.value = '';
+    newPresetDescriptionInput.value = '';
+    newPresetDialog?.close();
+  });
+
+  cancelNewPresetBtn?.addEventListener('click', () => {
+    newPresetDialog?.close();
+  });
+
+  closeEditorBtn?.addEventListener('click', () => {
+    editorDialog?.close();
+  });
+
   if (importPresetBtn) importPresetBtn.addEventListener('click', () => importPresetInput?.click());
   if (importPresetInput) importPresetInput.addEventListener('change', handleFileImport);
   addStageBtn?.addEventListener('click', addStage);
   savePresetBtn?.addEventListener('click', savePreset);
-  deletePresetBtn?.addEventListener('click', deletePreset);
+  deletePresetBtn?.addEventListener('click', () => deletePreset());
   duplicatePresetBtn?.addEventListener('click', duplicatePreset);
   sharePresetBtn?.addEventListener('click', sharePreset);
   downloadPresetBtn?.addEventListener('click', downloadPreset);

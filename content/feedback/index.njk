@@ -1,0 +1,120 @@
+---
+layout: base.njk
+title: Share Feedback | Daily Pick
+description: Tell the Daily Pick team what you love, what needs work, and what tools you want us to build next.
+keywords: feedback, feature request, support, daily pick
+permalink: /feedback/index.html
+headExtra: |
+  <link rel="stylesheet" href="/assets/css/feedback.css">
+---
+
+<div class="feedback-page">
+  <section class="feedback-hero">
+    <div class="feedback-hero__heading">
+      <p class="section-eyebrow">Feedback</p>
+      <h1>
+        <span>Help us level up</span>
+        <span>Daily Pick</span>
+      </h1>
+    </div>
+    <p>
+      Share your ideas, requests, and success stories so we can keep improving the games and tools your team loves.
+      Every note helps us prioritize the next round of updates.
+    </p>
+  </section>
+
+  <section class="feedback-layout">
+    <div class="feedback-form-card">
+      <h2>Share your thoughts</h2>
+      <p class="feedback-note">
+        Tell us what&apos;s working well, what feels clunky, or what you wish existed. We read every response.
+      </p>
+
+      <form
+        class="feedback-form"
+        action="https://api.web3forms.com/submit" 
+        method="POST"
+      >
+        <input type="hidden" name="access_key" value="48c0d957-b209-4654-8efd-8adfa87e3651">
+        <input type="hidden" name="subject" value="New Daily Pick feedback">
+        <input type="hidden" name="redirect" value="{{ metadata.url }}/feedback/thank-you/">
+
+        <div class="feedback-field">
+          <label for="feedback-name">Name <span>(optional)</span></label>
+          <input id="feedback-name" name="name" type="text" autocomplete="name" placeholder="Pat from Team Rocket">
+        </div>
+
+        <div class="feedback-field">
+          <label for="feedback-email">Email <span>(optional, only if you want a reply)</span></label>
+          <input
+            id="feedback-email"
+            name="email"
+            type="email"
+            inputmode="email"
+            autocomplete="email"
+            placeholder="you@email.com"
+          >
+        </div>
+
+        <div class="feedback-field">
+          <label for="feedback-role">How do you use Daily Pick?</label>
+          <select id="feedback-role" name="usage" required>
+            <option value="" disabled selected>Select the best match</option>
+            <option value="standup-facilitator">Running daily stand-ups</option>
+            <option value="agile-coach">Agile coach or scrum master</option>
+            <option value="team-member">Team member / participant</option>
+            <option value="educator">Educator or trainer</option>
+            <option value="event-host">Event host or facilitator</option>
+            <option value="just-curious">Just exploring for fun</option>
+          </select>
+        </div>
+
+        <div class="feedback-field">
+          <label for="feedback-message">What should we know?</label>
+          <textarea
+            id="feedback-message"
+            name="message"
+            required
+            placeholder="Share your ideas, bugs, or feature requests..."
+          ></textarea>
+        </div>
+
+        <div class="feedback-actions">
+          <button class="btn btn--accent" type="submit">Send feedback</button>
+          <p
+            class="form-alert form-alert--success"
+            data-feedback-success
+            aria-hidden="true"
+            role="status"
+          ></p>
+          <p
+            class="form-alert form-alert--error"
+            data-feedback-error
+            aria-hidden="true"
+            role="alert"
+          ></p>
+          <p class="feedback-note">
+            We use your email only to follow up on your submission. No spam, promise.
+          </p>
+        </div>
+      </form>
+
+      <p class="feedback-powered">
+        Securely powered by <a href="https://web3forms.com/" rel="noopener" target="_blank">web3forms</a> – no
+        account required.
+      </p>
+    </div>
+
+    <aside class="feedback-aside" aria-label="Ways you can help">
+      <h2>Wondering what to share?</h2>
+      <ul>
+        <li>Tell us which games your team uses most and why.</li>
+        <li>Suggest new rituals, icebreakers, or productivity boosts.</li>
+        <li>Report bugs or rough edges so we can smooth them out quickly.</li>
+        <li>Let us know if you want integrations or export options.</li>
+      </ul>
+    </aside>
+  </section>
+</div>
+
+<script src="/assets/js/feedback.js" defer></script>

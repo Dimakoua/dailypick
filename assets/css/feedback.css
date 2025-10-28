@@ -1,0 +1,219 @@
+/* ==========================================================================
+   Daily Pick — Feedback Page Styles
+   -------------------------------------------------------------------------- */
+
+.feedback-page {
+  padding: clamp(3rem, 6vw, 5rem) var(--gutter) clamp(4rem, 8vw, 6rem);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+
+.feedback-hero {
+  text-align: center;
+  margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+  max-width: 760px;
+  display: grid;
+  gap: 1rem;
+  justify-items: center;
+}
+
+.feedback-hero__heading {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.feedback-hero .section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  margin: 0;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--blue-600);
+  background: rgba(52, 152, 219, 0.12);
+}
+
+.feedback-hero h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  line-height: 1.1;
+  color: var(--blue);
+}
+
+.feedback-hero h1 span {
+  display: block;
+}
+
+.feedback-hero p {
+  margin: 0;
+  color: var(--gray-600);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.feedback-layout {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3rem);
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+}
+
+.feedback-form-card,
+.feedback-aside {
+  background:#fff;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 40px rgba(52, 152, 219, 0.08);
+  padding: clamp(1.8rem, 4vw, 2.4rem);
+}
+
+.feedback-form-card h2,
+.feedback-aside h2 {
+  margin-top: 0;
+  color: var(--blue);
+  font-size: 1.6rem;
+}
+
+.feedback-form {
+  display: grid;
+  gap: 1.2rem;
+  margin-top: 1.5rem;
+}
+
+.feedback-field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.feedback-field label {
+  font-weight: 700;
+  color: var(--gray-700);
+}
+
+.feedback-field label span {
+  font-weight: 600;
+  color: var(--gray-500);
+  font-size: 0.85rem;
+  margin-left: 0.35rem;
+}
+
+.feedback-field input,
+.feedback-field textarea,
+.feedback-field select {
+  font: inherit;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--gray-200);
+  background: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  color: var(--gray-700);
+}
+
+.feedback-field textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+.feedback-field input:focus-visible,
+.feedback-field textarea:focus-visible,
+.feedback-field select:focus-visible {
+  border-color: var(--blue);
+  box-shadow: var(--shadow-focus);
+  outline: none;
+}
+
+.feedback-note {
+  margin: 0;
+  color: var(--gray-500);
+  font-size: 0.9rem;
+}
+
+.feedback-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.feedback-actions .btn {
+  align-self: flex-start;
+}
+
+.form-alert {
+  display: none;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+}
+
+.form-alert[aria-hidden="false"] {
+  display: block;
+}
+
+.form-alert--success {
+  background: rgba(46, 204, 113, 0.15);
+  color: #1e7e34;
+  border: 1px solid rgba(46, 204, 113, 0.35);
+}
+
+.form-alert--error {
+  background: rgba(231, 76, 60, 0.12);
+  color: #c0392b;
+  border: 1px solid rgba(231, 76, 60, 0.32);
+}
+
+.feedback-aside ul {
+  padding-left: 1.1rem;
+  margin: 1.2rem 0 0;
+  display: grid;
+  gap: 0.75rem;
+  color: var(--gray-600);
+}
+
+.feedback-aside li::marker {
+  color: var(--blue);
+}
+
+.feedback-powered {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--gray-500);
+}
+
+.feedback-powered a {
+  color: var(--blue-600);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.feedback-powered a:hover,
+.feedback-powered a:focus-visible {
+  text-decoration: underline;
+}
+
+@media (max-width: 960px) {
+  .feedback-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .feedback-actions .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .feedback-page {
+    padding-inline: clamp(1.5rem, 5vw, var(--gutter));
+  }
+
+  .feedback-form-card,
+  .feedback-aside {
+    padding: clamp(1.4rem, 5vw, 1.8rem);
+  }
+}
