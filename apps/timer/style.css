@@ -206,14 +206,20 @@
 
 .editor-close-btn {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 0px;
+  right: 5px;
   z-index: 1;
-  width: 44px;
-  height: 44px;
-  font-size: 1.2rem;
+  width: 40px;
+  height: 40px;
+  font-size: 1.8rem;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  background: none;
+  border: none;
+  color: var(--brand-subtle-text);
+  cursor: pointer;
 }
-
 
 .preset-panel {
   grid-area: presets;
