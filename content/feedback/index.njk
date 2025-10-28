@@ -32,15 +32,12 @@ headExtra: |
 
       <form
         class="feedback-form"
-        action="https://formsubmit.co/hello@dailypick.dev"
+        action="https://api.web3forms.com/submit" 
         method="POST"
-        data-feedback-form
-        data-endpoint="https://formsubmit.co/ajax/hello@dailypick.dev"
       >
-        <input type="hidden" name="_subject" value="New Daily Pick feedback">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_next" value="{{ metadata.url }}/feedback/thank-you/">
-        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="access_key" value="48c0d957-b209-4654-8efd-8adfa87e3651">
+        <input type="hidden" name="subject" value="New Daily Pick feedback">
+        <input type="hidden" name="redirect" value="{{ metadata.url }}/feedback/thank-you/">
 
         <div class="feedback-field">
           <label for="feedback-name">Name <span>(optional)</span></label>
@@ -103,7 +100,7 @@ headExtra: |
       </form>
 
       <p class="feedback-powered">
-        Securely powered by <a href="https://formsubmit.co/" rel="noopener" target="_blank">FormSubmit</a> – no
+        Securely powered by <a href="https://web3forms.com/" rel="noopener" target="_blank">web3forms</a> – no
         account required.
       </p>
     </div>

@@ -4,10 +4,6 @@
     return;
   }
 
-  const endpoint = form.dataset.endpoint;
-  if (!endpoint) {
-    return;
-  }
 
   const successEl = form.querySelector('[data-feedback-success]');
   const errorEl = form.querySelector('[data-feedback-error]');
@@ -42,16 +38,10 @@
     }
 
     const formData = new FormData(form);
-    if (!formData.has('_captcha')) {
-      formData.append('_captcha', 'false');
-    }
 
     try {
-      const response = await fetch(endpoint, {
+      const response = await fetch(form.action, {
         method: 'POST',
-        headers: {
-          Accept: 'application/json'
-        },
         body: formData
       });
 
@@ -62,7 +52,7 @@
       try {
         await response.json();
       } catch (err) {
-        // Ignore JSON parsing issues; FormSubmit sometimes returns empty bodies.
+        // Ignore JSON parsing issues;
       }
 
       form.reset();
