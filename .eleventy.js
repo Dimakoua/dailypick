@@ -39,11 +39,11 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "apps": "apps" });
 
   eleventyConfig.addFilter("seoTitle", function(value) {
-    return trimToLimit(value, 60);
+    return trimToLimit(value, 65);
   });
 
   eleventyConfig.addFilter("seoDescription", function(value) {
-    return trimToLimit(value, 155);
+    return trimToLimit(value, 160);
   });
 
   // Sitemap Plugin
