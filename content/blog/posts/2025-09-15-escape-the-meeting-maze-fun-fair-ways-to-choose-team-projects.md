@@ -30,26 +30,26 @@ This week, we're diving into creative and effective strategies to make choosing 
 
 Forget lengthy debates and power struggles.  Here are some fun and effective ways to select team projects:
 
-**1. The Decision Wheel (DailyPick Style!):**  This classic method gets a modern upgrade with our interactive Decision Wheel!  Simply list your potential projects, assign them to the wheel's segments, and let fate (or a bit of random chance) do the choosing. This approach ensures fairness and adds an element of playful surprise. The quick process minimizes meeting time and keeps everyone engaged.
+*1. The Decision Wheel (DailyPick Style!):*  This classic method gets a modern upgrade with our interactive Decision Wheel!  Simply list your potential projects, assign them to the wheel's segments, and let fate (or a bit of random chance) do the choosing. This approach ensures fairness and adds an element of playful surprise. The quick process minimizes meeting time and keeps everyone engaged.
 
-**2. Weighted Voting with a Twist:** To ensure everyone’s voice is heard without descending into a lengthy debate, utilize a weighted voting system.  Each team member gets a set number of "votes" (maybe 3 or 5) they can distribute across different projects based on their preference.   This allows for nuanced preferences and avoids the simple "one project, one vote" limitation.
+*2. Weighted Voting with a Twist:* To ensure everyone’s voice is heard without descending into a lengthy debate, utilize a weighted voting system.  Each team member gets a set number of "votes" (maybe 3 or 5) they can distribute across different projects based on their preference.   This allows for nuanced preferences and avoids the simple "one project, one vote" limitation.
 
-**3. Project "Speed Dating":**  If you have many project ideas, consider a "speed dating" approach.  Divide the team into smaller groups and give each group a short time (e.g., 5 minutes) to review and discuss a specific project. Then rotate groups. This quick, efficient method gives everyone exposure to various options before employing a voting method.
+*3. Project "Speed Dating":*  If you have many project ideas, consider a "speed dating" approach.  Divide the team into smaller groups and give each group a short time (e.g., 5 minutes) to review and discuss a specific project. Then rotate groups. This quick, efficient method gives everyone exposure to various options before employing a voting method.
 
-**4.  Prioritization Matrix with a Collaborative Spin:** A prioritization matrix (like a simple Eisenhower Matrix) helps categorize projects based on urgency and importance. The key is making it collaborative!  Let the team collectively decide the weighting of each criterion (urgency, impact, etc.) and then collectively plot the projects. This shared ownership boosts buy-in and increases commitment to the selected projects. Capture the final rankings inside the [Planning Poker Hub](/blog/planning-poker-hub-guide/) so delivery teams see the “why” next to each estimate.
+*4.  Prioritization Matrix with a Collaborative Spin:* A prioritization matrix (like a simple Eisenhower Matrix) helps categorize projects based on urgency and importance. The key is making it collaborative!  Let the team collectively decide the weighting of each criterion (urgency, impact, etc.) and then collectively plot the projects. This shared ownership boosts buy-in and increases commitment to the selected projects. Capture the final rankings inside the [Planning Poker Hub](/blog/planning-poker-hub-guide/) so delivery teams see the “why” next to each estimate.
 
-**5.  The "Mystery Project" Reveal:**  Generate a small number of project proposals (3-5) keeping the details intentionally vague or "mystery-like."  Then, utilize one of the aforementioned voting methods to allow the team to decide which "mystery" they want to pursue. Unpacking the actual details after the selection adds excitement and a shared exploration element.
+*5.  The "Mystery Project" Reveal:*  Generate a small number of project proposals (3-5) keeping the details intentionally vague or "mystery-like."  Then, utilize one of the aforementioned voting methods to allow the team to decide which "mystery" they want to pursue. Unpacking the actual details after the selection adds excitement and a shared exploration element.
 
 
 ##  Boosting Engagement & Buy-In
 
 These methods accomplish more than just project selection; they foster better team dynamics.  
 
-*   **Increased Engagement:**  Fun and fair processes inherently boost participation.  People are more likely to be invested in a decision where they feel their input is valued and the outcome isn't predetermined.
+*   *Increased Engagement:*  Fun and fair processes inherently boost participation.  People are more likely to be invested in a decision where they feel their input is valued and the outcome isn't predetermined.
 
-*   **Improved Morale:**  By removing the tedious elements of negotiation and potential conflict, you create a more positive and collaborative atmosphere.
+*   *Improved Morale:*  By removing the tedious elements of negotiation and potential conflict, you create a more positive and collaborative atmosphere.
 
-*   **Greater Ownership:**  When team members feel they've had a voice in project selection, they're more likely to feel ownership and responsibility for the outcome, leading to improved productivity and project success.
+*   *Greater Ownership:*  When team members feel they've had a voice in project selection, they're more likely to feel ownership and responsibility for the outcome, leading to improved productivity and project success.
 
 ## Ready to Transform Your Project Selection Process?
 

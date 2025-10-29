@@ -31,25 +31,25 @@ Here are some concrete ways to make your stand-ups more dynamic and engaging:
 
 Forget the rigid, sequential order.  Introduce some randomness!
 
-*   **Random Name Picker:**  Use a simple random name generator (or even a physical hat with names!) to determine who speaks next. This eliminates the predictability and keeps everyone on their toes.
+*   *Random Name Picker:*  Use a simple random name generator (or even a physical hat with names!) to determine who speaks next. This eliminates the predictability and keeps everyone on their toes.
 
-*   **Speedway Racer!:** For a more engaging approach, try using our Speedway Racer! game to decide speaking order. The element of playful competition naturally keeps everyone focused and excited to see who's up next.
+*   *Speedway Racer!:* For a more engaging approach, try using our Speedway Racer! game to decide speaking order. The element of playful competition naturally keeps everyone focused and excited to see who's up next.
 
 ### 2. Gamify the Process:
 
 A little friendly competition can go a long way in boosting participation and morale.
 
-*   **Points System:** Award points for participation, insightful contributions, or helping others overcome impediments.  At the end of the week, the "winner" (perhaps with a small, fun prize) is announced.
+*   *Points System:* Award points for participation, insightful contributions, or helping others overcome impediments.  At the end of the week, the "winner" (perhaps with a small, fun prize) is announced.
 
-*   **Team Challenges:** Incorporate weekly team challenges into the stand-ups. This could be anything from a coding challenge to a creative problem-solving task. The stand-up becomes a forum for discussing progress and brainstorming solutions.
+*   *Team Challenges:* Incorporate weekly team challenges into the stand-ups. This could be anything from a coding challenge to a creative problem-solving task. The stand-up becomes a forum for discussing progress and brainstorming solutions.
 
 ### 3. Visual Aids and Interactive Elements:
 
 Break up the monotony of talking heads with visual elements.
 
-*   **Stand-up Board:** A physical or digital board where team members can post their updates with visuals (pictures, emojis, progress bars) can enhance engagement and communication.
+*   *Stand-up Board:* A physical or digital board where team members can post their updates with visuals (pictures, emojis, progress bars) can enhance engagement and communication.
 
-*   **Quick Polls:**  Use a quick poll (digital or even a quick show of hands) to gauge team sentiment on specific issues or decisions.  This adds interactivity and allows for quick feedback. For larger decision points, borrow the tie-breaker ideas from [Stop the Meeting Meltdown: Fun, Fair Ways to Manage Team Decision Fatigue](/blog/stop-the-meeting-meltdown-fun-fair-ways-to-manage-team-decision-fatigue/).
+*   *Quick Polls:*  Use a quick poll (digital or even a quick show of hands) to gauge team sentiment on specific issues or decisions.  This adds interactivity and allows for quick feedback. For larger decision points, borrow the tie-breaker ideas from [Stop the Meeting Meltdown: Fun, Fair Ways to Manage Team Decision Fatigue](/blog/stop-the-meeting-meltdown-fun-fair-ways-to-manage-team-decision-fatigue/).
 
 ### 4.  Focus on the "Why":
 

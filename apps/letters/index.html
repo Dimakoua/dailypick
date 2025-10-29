@@ -3,31 +3,36 @@
 
 <head>
     <meta charset="UTF-8" />
-    <!-- Viewport meta tag is already present and good -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Falling Letters Pinball - Engaging Name Picker | Daily Pick</title>
+    {% set pageTitle = "Falling Letters Pinball – Fast Name Picker | Daily Pick" %}
+    {% set pageDescription = "Match falling letters to reveal names, spark competition, and pick the next speaker with Daily Pick's arcade pinball name picker." %}
+    {% set ogImage = "https://dailypick.dev/assets/og-image-main.png" %}
+    {% set ogImageAlt = "Player typing letters in the Falling Letters Pinball name picker" %}
+    <title>{{ pageTitle | seoTitle }}</title>
     <meta name="description"
-        content="Play Falling Letters Pinball, a fun and interactive game to match names as they fall. A unique way to pick names for your team from Daily Pick.">
+        content="{{ pageDescription | seoDescription }}">
     <meta name="keywords"
         content="falling letters pinball, random name picker, interactive team game, classroom attendance game, agile icebreaker, meeting energizer, Daily Pick tools, letter matching challenge, remote team activity, fun name selection">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://dailypick.dev/apps/letters/">
-    <meta property="og:title" content="Falling Letters Pinball - Engaging Name Picker | Daily Pick">
-    <meta property="og:description" content="A fun pinball-style letter matching game to pick names.">
-    <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
+    <meta property="og:title" content="{{ pageTitle | seoTitle }}">
+    <meta property="og:description" content="{{ pageDescription | seoDescription }}">
+    <meta property="og:image" content="{{ ogImage }}">
     <meta property="og:image:alt"
-        content="Screenshot of Daily Pick's Falling Letters Pinball name picker game with bouncing letters">
+        content="{{ ogImageAlt }}">
+    <meta property="og:site_name" content="Daily Pick">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Falling Letters Pinball - Engaging Name Picker | Daily Pick">
+    <meta name="twitter:url" content="https://dailypick.dev/apps/letters/">
+    <meta name="twitter:title" content="{{ pageTitle | seoTitle }}">
     <meta name="twitter:description"
-        content="Drop letters, type names, and pick teammates the playful way with Daily Pick's Falling Letters Pinball.">
-    <meta name="twitter:image" content="https://dailypick.dev/assets/og-image-main.png">
+        content="{{ pageDescription | seoDescription }}">
+    <meta name="twitter:image" content="{{ ogImage }}">
     <meta name="twitter:image:alt"
-        content="Screenshot of Daily Pick's Falling Letters Pinball name picker game with bouncing letters">
+        content="{{ ogImageAlt }}">
 
     <link rel="canonical" href="https://dailypick.dev/apps/letters/">
     <!-- Favicon Links -->
@@ -89,51 +94,24 @@
     </div>
 
     <div class="seo-content-area">
-        <h2>Falling Letters Pinball: The Daily Pick Name Picker Experience</h2>
-        <p>Welcome to <strong>Falling Letters Pinball</strong>, an exciting and visually engaging game from Daily Pick
-            that turns name picking into a pinball showdown. Watch letters tumble down the playfield and see who can
-            match their roster first—it’s perfect for classrooms, agile teams, and anyone who wants a fresh alternative
-            to boring randomizers.</p>
+        <h2>Why Falling Letters Pinball Stands Out</h2>
+        <p><strong>Falling Letters Pinball</strong> keeps teams typing, cheering, and racing to clear their rosters. Letters
+            cascade only for active names, so every player feels the tension as the pinball board fills.</p>
 
-        <h3>How to Play Falling Letters Pinball</h3>
+        <h3>Fast Setup</h3>
+        <p>Add your participants in the settings panel, start the arcade board, and watch the buffer highlight progress as each
+            name locks in.</p>
+
+        <h3>Highlights</h3>
         <ul>
-            <li><strong>Set your list:</strong> Drop in your roster—students, teammates, or participants—one per line in
-                the settings panel.</li>
-            <li><strong>Watch the letters fall:</strong> The game pulls only the letters it needs for the remaining
-                names, keeping the action fast and fair.</li>
-            <li><strong>Type to match:</strong> As letters enter the <em>Target Zone</em>, type the matching name. The
-                buffer highlights your progress so you never lose track.</li>
-            <li><strong>Celebrate the win:</strong> Complete a name and it disappears from the board. Clear the list to
-                finish the challenge or keep playing for friendly competition.</li>
+            <li><strong>Active engagement:</strong> Matching letters beats passive randomizers and keeps everyone focused.</li>
+            <li><strong>Balanced difficulty:</strong> Chance determines the letters while quick typing secures the win.</li>
+            <li><strong>Hybrid friendly:</strong> PiP controls and shareable results work in classrooms or distributed teams.</li>
+            <li><strong>Replayable challenge:</strong> Save multiple lists and switch modes whenever you want a new contest.</li>
         </ul>
 
-        <h3>Why Teams Love Falling Letters Pinball</h3>
-        <ul>
-            <li><strong>Interactive name picker:</strong> Keeps everyone engaged compared to simple random name wheels.
-            </li>
-            <li><strong>Skill plus chance:</strong> Randomized letters add suspense while typing skills keep things
-                competitive.</li>
-            <li><strong>Meeting energizer:</strong> Great for deciding who presents next, assigning tasks, or kicking
-                off retros.</li>
-            <li><strong>Classroom friendly:</strong> Teachers use it for attendance games, spelling reinforcement, and
-                participation boosts.</li>
-        </ul>
-
-        <h3>Tips for Getting the Most from Daily Pick’s Falling Letters Game</h3>
-        <ul>
-            <li><strong>Customize the roster:</strong> Save different name lists for squads, cohorts, or recurring
-                workshops.</li>
-            <li><strong>Use Picture-in-Picture:</strong> Pop the names list into PiP mode so facilitators can monitor
-                progress while screensharing.</li>
-            <li><strong>Combine with other Daily Pick tools:</strong> After a pinball round, jump to the <a
-                    href="/apps/wheel/">Decision Wheel</a> or <a href="/apps/speedway/">Speedway Racer</a> to keep
-                momentum going.</li>
-            <li><strong>Track results:</strong> Export winners or matched names as a playful record of participation.
-            </li>
-        </ul>
-        <p>Challenge your crew and see who can clear their name list the fastest with <strong>Falling Letters
-                Pinball</strong>. It’s a playful, fairness-first name picker designed by Daily Pick to make every
-            meeting or class feel like game time.</p>
+        <p>Pair the arcade rush with the <a href="/apps/wheel/">Decision Wheel</a> or <a href="/apps/trap/">Trap!</a> to extend your ritual, and celebrate each clear as this
+            <strong>pinball name picker</strong> keeps morale high.</p>
     </div>
     <script src="game.js"></script>
     {% include "footer.html" %}

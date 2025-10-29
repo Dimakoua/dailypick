@@ -23,37 +23,37 @@ Let's face it: the daily stand-up can easily become a monotonous checklist of up
 
 The primary purpose of the daily stand-up – to provide a quick, efficient overview of progress and identify roadblocks – is crucial. However, a poorly run stand-up can quickly become a time-waster, stifling creativity and causing team members to dread the meeting.  Low engagement leads to:
 
-* **Decreased productivity:**  Unfocused meetings waste valuable time that could be spent on actual work.
-* **Reduced collaboration:** A dull stand-up hinders open communication and the free flow of ideas.
-* **Lower team morale:**  Feeling like your voice isn't heard or your time is disrespected can lead to decreased morale and burnout.
+* *Decreased productivity:*  Unfocused meetings waste valuable time that could be spent on actual work.
+* *Reduced collaboration:* A dull stand-up hinders open communication and the free flow of ideas.
+* *Lower team morale:*  Feeling like your voice isn't heard or your time is disrespected can lead to decreased morale and burnout.
 
 ## Injecting Fun & Fairness: Simple Solutions for a More Engaging Stand-Up
 
 The key to a successful stand-up lies in injecting fun and ensuring fairness. By incorporating simple changes, you can transform the experience:
 
-**1.  Shake Up the Order:**  Instead of the same, predictable order, why not spice things up?
+*1.  Shake Up the Order:*  Instead of the same, predictable order, why not spice things up?
 
-* **Random Selection:** Use a tool like the Decision Wheel! to randomly select who speaks next. This creates a sense of anticipation and ensures everyone gets a fair chance to share.  It also levels the playing field, preventing dominant team members from hogging the conversation.
+* *Random Selection:* Use a tool like the Decision Wheel! to randomly select who speaks next. This creates a sense of anticipation and ensures everyone gets a fair chance to share.  It also levels the playing field, preventing dominant team members from hogging the conversation.
 
-* **Rotating Roles:**  Assign different roles each day, such as "facilitator" (guides the discussion), "time keeper" (keeps the meeting on track), and "scribe" (takes notes). This adds variety and empowers team members.
+* *Rotating Roles:*  Assign different roles each day, such as "facilitator" (guides the discussion), "time keeper" (keeps the meeting on track), and "scribe" (takes notes). This adds variety and empowers team members.
 
-**2.  Embrace Gamification:**  A little playful competition can work wonders!
+*2.  Embrace Gamification:*  A little playful competition can work wonders!
 
-* **Points System:** Award points for positive contributions, insightful questions, or helpful solutions.  At the end of the week, the "winner" could receive a small prize or recognition.
+* *Points System:* Award points for positive contributions, insightful questions, or helpful solutions.  At the end of the week, the "winner" could receive a small prize or recognition.
 
-* **Speedway Racer!:** If you need to make quick, simple decisions within the stand-up, utilize Speedway Racer! for a fun, fast way to choose between options.
+* *Speedway Racer!:* If you need to make quick, simple decisions within the stand-up, utilize Speedway Racer! for a fun, fast way to choose between options.
 
-**3.  Creative Check-Ins:**  Move beyond the standard "What did you do yesterday? What will you do today? What are your roadblocks?"
+*3.  Creative Check-Ins:*  Move beyond the standard "What did you do yesterday? What will you do today? What are your roadblocks?"
 
-* **One-Word Summaries:**  Start by having each team member summarise their progress with just one word.  This forces concise communication and highlights key achievements.
+* *One-Word Summaries:*  Start by having each team member summarise their progress with just one word.  This forces concise communication and highlights key achievements.
 
-* **Visual Aids:** Encourage the use of visuals like quick sketches, diagrams, or even emojis to illustrate progress or roadblocks. This can add a playful element and makes the information more accessible.
-
-
-**4.  Focus on the Positive:**  Make it a point to celebrate successes and acknowledge individual contributions.  Highlighting positive aspects boosts morale and encourages team spirit.
+* *Visual Aids:* Encourage the use of visuals like quick sketches, diagrams, or even emojis to illustrate progress or roadblocks. This can add a playful element and makes the information more accessible.
 
 
-**5.  Keep it Concise and Focused:**  Respect everyone's time by staying on track and sticking to the allotted timeframe.
+*4.  Focus on the Positive:*  Make it a point to celebrate successes and acknowledge individual contributions.  Highlighting positive aspects boosts morale and encourages team spirit.
+
+
+*5.  Keep it Concise and Focused:*  Respect everyone's time by staying on track and sticking to the allotted timeframe.
 
 ## Integrating Daily Pick for a Smoother Stand-Up
 

@@ -4,18 +4,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Planning Poker Hub - Multiplayer Estimation Room | Daily Pick</title>
+  {% set pageTitle = "Planning Poker Hub – Multiplayer Estimation | Daily Pick" %}
+  {% set pageDescription = "Host a Planning Poker session, invite teammates, reveal Fibonacci votes together, and export Jira-ready summaries in one click." %}
+  {% set ogImage = "https://dailypick.dev/assets/og-image-main.png" %}
+  {% set ogImageAlt = "Team revealing Planning Poker cards inside Daily Pick" %}
+  <title>{{ pageTitle | seoTitle }}</title>
   <meta name="description"
-    content="Start a multiplayer Planning Poker room in seconds. Invite your team, select Fibonacci cards in real-time, reveal together, and copy Jira-ready summaries." />
+    content="{{ pageDescription | seoDescription }}" />
   <meta name="keywords"
     content="planning poker, scrum estimation, fibonacci cards, agile tools, daily pick, jira planning poker, online planning poker">
 
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://dailypick.dev/apps/planning-poker/">
-  <meta property="og:title" content="Planning Poker Hub - Real-time Agile Estimation | Daily Pick">
+  <meta property="og:title" content="{{ pageTitle | seoTitle }}">
   <meta property="og:description"
-    content="Spin up a Planning Poker room, invite teammates, and reveal Fibonacci votes together. Export Jira-friendly summaries in one click.">
-  <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
+    content="{{ pageDescription | seoDescription }}">
+  <meta property="og:image" content="{{ ogImage }}">
+  <meta property="og:image:alt" content="{{ ogImageAlt }}">
+  <meta property="og:site_name" content="Daily Pick">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://dailypick.dev/apps/planning-poker/">
+  <meta name="twitter:title" content="{{ pageTitle | seoTitle }}">
+  <meta name="twitter:description"
+    content="{{ pageDescription | seoDescription }}">
+  <meta name="twitter:image" content="{{ ogImage }}">
+  <meta name="twitter:image:alt" content="{{ ogImageAlt }}">
 
   <link rel="canonical" href="https://dailypick.dev/apps/planning-poker/">
 

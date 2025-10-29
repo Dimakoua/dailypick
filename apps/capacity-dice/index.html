@@ -4,18 +4,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Capacity Planner Dice - Sprint Capacity Game | Daily Pick</title>
+  {% set pageTitle = "Capacity Planner Dice – Sprint Load Simulator | Daily Pick" %}
+  {% set pageDescription = "Roll PTO, meeting, and wildcard dice to stress-test sprint capacity, surface risks, and export a summary your team can trust." %}
+  {% set ogImage = "https://dailypick.dev/assets/og-image-main.png" %}
+  {% set ogImageAlt = "Hands rolling colorful capacity planner dice beside a sprint board" %}
+  <title>{{ pageTitle | seoTitle }}</title>
   <meta name="description"
-    content="Roll the Capacity Planner Dice to simulate PTO, meetings, and curveballs. Adjust sprint capacity on the fly and share a ready-made summary with your team." />
+    content="{{ pageDescription | seoDescription }}" />
   <meta name="keywords"
     content="capacity planning, scrum capacity, sprint planning game, agile estimation, daily pick, planning dice, team capacity">
 
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://dailypick.dev/apps/capacity-dice/">
-  <meta property="og:title" content="Capacity Planner Dice - Agile Capacity Game | Daily Pick">
+  <meta property="og:title" content="{{ pageTitle | seoTitle }}">
   <meta property="og:description"
-    content="Make sprint planning playful. Roll dice for PTO, meetings, and surprises to get a realistic capacity adjustment you can paste into Jira.">
-  <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
+    content="{{ pageDescription | seoDescription }}">
+  <meta property="og:image" content="{{ ogImage }}">
+  <meta property="og:image:alt" content="{{ ogImageAlt }}">
+  <meta property="og:site_name" content="Daily Pick">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://dailypick.dev/apps/capacity-dice/">
+  <meta name="twitter:title" content="{{ pageTitle | seoTitle }}">
+  <meta name="twitter:description"
+    content="{{ pageDescription | seoDescription }}">
+  <meta name="twitter:image" content="{{ ogImage }}">
+  <meta name="twitter:image:alt" content="{{ ogImageAlt }}">
 
   <link rel="canonical" href="https://dailypick.dev/apps/capacity-dice/">
 

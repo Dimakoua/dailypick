@@ -4,19 +4,33 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trap! The Game - Strategic Fun Picker | Daily Pick</title>
+    {% set pageTitle = "Trap! – Strategic Name Picker Game | Daily Pick" %}
+    {% set pageDescription = "Place surprise traps, capture teammates, and make quick decisions with Daily Pick's strategic Trap! name picker." %}
+    {% set ogImage = "https://dailypick.dev/assets/og-image-main.png" %}
+    {% set ogImageAlt = "Animated trap catching a player token in Daily Pick's Trap game" %}
+    <title>{{ pageTitle | seoTitle }}</title>
     <meta name="description"
-        content="Play Trap! - a fun and engaging game to pick names or make choices. Strategically place your trap and see who gets caught! Perfect for quick team decisions. From Daily Pick.">
+        content="{{ pageDescription | seoDescription }}">
     <meta name="keywords"
         content="trap game, name picker game, strategy game, team game, fun decision maker, interactive game, daily pick">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://dailypick.dev/apps/trap/">
-    <meta property="og:title" content="Trap! The Game - Strategic Fun Picker | Daily Pick">
+    <meta property="og:title" content="{{ pageTitle | seoTitle }}">
     <meta property="og:description"
-        content="Strategically place your trap and see who gets caught! Perfect for quick team decisions.">
-    <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
+        content="{{ pageDescription | seoDescription }}">
+    <meta property="og:image" content="{{ ogImage }}">
+    <meta property="og:image:alt" content="{{ ogImageAlt }}">
+    <meta property="og:site_name" content="Daily Pick">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://dailypick.dev/apps/trap/">
+    <meta name="twitter:title" content="{{ pageTitle | seoTitle }}">
+    <meta name="twitter:description"
+        content="{{ pageDescription | seoDescription }}">
+    <meta name="twitter:image" content="{{ ogImage }}">
+    <meta name="twitter:image:alt" content="{{ ogImageAlt }}">
 
     <link rel="canonical" href="https://dailypick.dev/apps/trap/">
     <!-- Favicons -->

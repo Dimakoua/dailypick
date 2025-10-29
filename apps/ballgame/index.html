@@ -4,19 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Momentum Mayhem | Daily Pick</title>
+    {% set pageTitle = "Momentum Mayhem – Collaborative Physics Game | Daily Pick" %}
+    {% set pageDescription = "Team up in Momentum Mayhem to corral the rogue orb, trigger wild effects, and boost collaboration during retros, stand-ups, or team socials." %}
+    {% set ogImage = "https://dailypick.dev/assets/og-image-main.png" %}
+    {% set ogImageAlt = "Teammates guiding a glowing ball into traps in Daily Pick's Momentum Mayhem game" %}
+    <title>{{ pageTitle | seoTitle }}</title>
     <meta name="description"
-        content="A real-time collaborative physics game where users work together to push a ball into moving traps, triggering chaotic special effects. Perfect for daily standups, team building, and remote team engagement.">
+        content="{{ pageDescription | seoDescription }}">
     <meta name="keywords"
-        content="daily standup game, team building game, online multiplayer game, collaborative game, physics game, remote team engagement, Scrum game, Agile game, icebreaker, virtual team building, browser game, meeting game, team bonding, sprint planning, project management">
+        content="daily standup game, team building game, online multiplayer game, collaborative game, physics game, remote team engagement, scrum game, agile game, icebreaker, virtual team building, browser game, meeting game, team bonding">
 
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://dailypick.dev/apps/ballgame/">
-    <meta property="og:title" content="🔴 Momentum Mayhem: Collaborative Physics Game for Teams | Daily Pick">
+    <meta property="og:title" content="{{ pageTitle | seoTitle }}">
     <meta property="og:description"
-        content="Boost your daily standups and team building! Work together in Momentum Mayhem, a real-time collaborative physics game where you push a ball into moving traps with chaotic special effects. Play free on Daily Pick!">
-    <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
+        content="{{ pageDescription | seoDescription }}">
+    <meta property="og:image" content="{{ ogImage }}">
+    <meta property="og:image:alt" content="{{ ogImageAlt }}">
+    <meta property="og:site_name" content="Daily Pick">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://dailypick.dev/apps/ballgame/">
+    <meta name="twitter:title" content="{{ pageTitle | seoTitle }}">
+    <meta name="twitter:description"
+        content="{{ pageDescription | seoDescription }}">
+    <meta name="twitter:image" content="{{ ogImage }}">
+    <meta name="twitter:image:alt" content="{{ ogImageAlt }}">
+
+    <link rel="canonical" href="https://dailypick.dev/apps/ballgame/">
 
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
@@ -107,9 +124,9 @@
                     <p>Capturing a trap can trigger a random special effect that changes the game dynamics for a short
                         period. These include:</p>
                     <ul>
-                        <li><strong>Speed Boost:</strong> The ball's speed is dramatically increased.</li>
-                        <li><strong>Size Change:</strong> The ball becomes either much larger or smaller.</li>
-                        <li><strong>Trap Frenzy:</strong> All remaining traps move at a much faster speed.</li>
+                        <li>Speed Boost: The ball's speed is dramatically increased.</li>
+                        <li>Size Change: The ball becomes either much larger or smaller.</li>
+                        <li>Trap Frenzy: All remaining traps move at a much faster speed.</li>
                     </ul>
                 </div>
                 <div class="guide-section">
@@ -122,66 +139,29 @@
         </div>
     
         <div class="seo-content-area">
-            <h1>Transform Your Team Meetings with Momentum Mayhem!</h1>
-            <p>Looking for an engaging and fresh way to energize your <strong>daily standup meetings</strong>? Or perhaps
-                you need a dynamic <strong>icebreaker</strong> for your <strong>team-building activities</strong>,
-                <strong>Scrum ceremonies</strong>, or <strong>Agile retrospectives</strong>? Look no further than
-                <strong>Momentum Mayhem</strong>, the real-time collaborative physics game designed to inject fun, energy,
-                and teamwork into any group setting!</p>
-    
-            <h2>What is Momentum Mayhem?</h2>
-            <p>Momentum Mayhem is an innovative <strong>online multiplayer game</strong> where players work together to
-                achieve a shared goal. It's the perfect blend of <strong>physics-based gameplay</strong> and
-                <strong>collaborative strategy</strong>, making it ideal for boosting communication and team cohesion. In
-                this <strong>interactive browser game</strong>, you and your teammates collectively control a ball, aiming
-                to guide it into moving traps. Each trap represents a participant, and successfully capturing a trap adds
-                their name to the "captured" list, adding a playful twist to your team interactions.</p>
-    
-            <h2>Key Features for Enhanced Team Interaction:</h2>
+            <h2>Why Momentum Mayhem Works for Hybrid Teams</h2>
+            <p><strong>Momentum Mayhem</strong> gives every stand-up or retro a playful focal point. Guiding the glowing
+                orb into traps keeps everyone talking, laughing, and collaborating without derailing the agenda.</p>
+
+            <h3>Key Benefits</h3>
             <ul>
-                <li><strong>Real-time Collaboration:</strong> Experience seamless <strong>synchronous gameplay</strong> as
-                    all players contribute to controlling the same ball. This fosters immediate feedback and encourages
-                    shared decision-making, perfect for <strong>remote teams</strong> and <strong>distributed
-                        workforces</strong>.</li>
-                <li><strong>Engaging Physics Engine:</strong> The intuitive click-to-push mechanic provides a satisfying and
-                    responsive gameplay experience. The closer you click to the ball, the more powerful your push, adding a
-                    layer of strategic depth.</li>
-                <li><strong>Dynamic Traps and Player Assignment:</strong> Assign specific <strong>team members</strong> or
-                    <strong>project roles</strong> to each trap, turning the game into a personalized experience. This can
-                    be a playful way to determine the order of speakers in a standup or assign tasks.</li>
-                <li><strong>Chaotic Special Effects:</strong> Keep things exciting with unpredictable special effects like
-                    <strong>Speed Boosts</strong>, <strong>Size Changes</strong>, and <strong>Trap Frenzy</strong>. These
-                    random modifiers ensure no two games are exactly alike, promoting adaptability and quick thinking –
-                    valuable traits in any <strong>project management</strong> environment.</li>
-                <li><strong>Easy Session Sharing:</strong> With a unique session URL, inviting your colleagues to join is
-                    effortless. Momentum Mayhem is a fantastic <strong>virtual team-building game</strong> that requires no
-                    downloads or complex setups.</li>
-                <li><strong>Customizable Player Names:</strong> Tailor the game to your team by entering individual names
-                    for each trap. This personal touch makes the experience even more relevant for your <strong>sprint
-                        planning</strong> or <strong>team bonding exercises</strong>.</li>
+                <li><strong>Collaborative gameplay:</strong> Everyone shares control of the ball, so participation stays
+                    balanced across the whole roster.</li>
+                <li><strong>Custom rosters:</strong> Assign trap labels to speakers, teams, or tasks to randomize updates
+                    during planning rituals.</li>
+                <li><strong>Adaptive effects:</strong> Speed bursts, trap frenzy, and size swaps keep focus levels high
+                    even late in the week.</li>
+                <li><strong>Simple sharing:</strong> Generate a link and your remote teammates join instantly—no installs
+                    or accounts required.</li>
             </ul>
-    
-            <h2>Beyond Daily Standups: Versatile Applications</h2>
-            <p>While perfectly suited for <strong>daily Scrum meetings</strong>, Momentum Mayhem's versatility extends to
-                various other scenarios:</p>
-            <ul>
-                <li><strong>Team Icebreakers:</strong> Start any meeting, workshop, or training session with a fun and
-                    interactive activity to get everyone energized and engaged.</li>
-                <li><strong>Remote Team Engagement:</strong> Combat Zoom fatigue and foster a sense of connection among
-                    geographically dispersed teams.</li>
-                <li><strong>Educational Tool:</strong> Use the game to demonstrate basic physics principles in an engaging
-                    way for <strong>online learning</strong> environments.</li>
-                <li><strong>Casual Team Bonding:</strong> Simply enjoy a lighthearted gaming session with your colleagues
-                    during a break or as a Friday afternoon activity.</li>
-                <li><strong>Brainstorming Sessions:</strong> The collaborative nature can even spark creative thinking
-                    before a <strong>strategy session</strong> or <strong>problem-solving workshop</strong>.</li>
-            </ul>
-    
-            <h2>Get Started with Momentum Mayhem Today!</h2>
-            <p>Ready to transform your routine meetings into an exciting <strong>team experience</strong>? Momentum Mayhem
-                is more than just a game; it's a tool for <strong>improving team dynamics</strong>, boosting morale, and
-                making collaboration genuinely enjoyable. Try it now and see how this unique <strong>collaborative online
-                    game</strong> can benefit your team!</p>
+
+            <h3>Best Use Cases</h3>
+            <p>Bring Momentum Mayhem to sprint kick-offs, icebreakers, or Friday social calls when you want accountability
+                without boredom. The format also translates into classroom demos or coaching sessions where physics meets
+                teamwork.</p>
+
+            <p>Ready to experiment? Launch a session, invite the crew, and let this <strong>collaborative team game</strong>
+                set a more energetic tone for your next meeting.</p>
         </div>
     </main>
     {% include "footer.html" %}

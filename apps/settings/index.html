@@ -4,8 +4,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Daily Pick Settings - Players & Branding</title>
-  <meta name="description" content="Manage your shared player list and customize the Daily Pick brand theme from one central settings page." />
+  {% set pageTitle = "Daily Pick Settings – Players & Branding" %}
+  {% set pageDescription = "Manage shared player lists, colors, and emojis to keep every Daily Pick game on-brand across your team." %}
+  {% set ogImage = "https://dailypick.dev/assets/og-image-main.png" %}
+  {% set ogImageAlt = "Settings panel for customizing Daily Pick players and branding" %}
+  <title>{{ pageTitle | seoTitle }}</title>
+  <meta name="description" content="{{ pageDescription | seoDescription }}" />
+  <meta name="keywords" content="daily pick settings, team roster, brand customization, stand-up tools" />
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dailypick.dev/apps/settings/">
+  <meta property="og:title" content="{{ pageTitle | seoTitle }}">
+  <meta property="og:description" content="{{ pageDescription | seoDescription }}">
+  <meta property="og:image" content="{{ ogImage }}">
+  <meta property="og:image:alt" content="{{ ogImageAlt }}">
+  <meta property="og:site_name" content="Daily Pick">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://dailypick.dev/apps/settings/">
+  <meta name="twitter:title" content="{{ pageTitle | seoTitle }}">
+  <meta name="twitter:description" content="{{ pageDescription | seoDescription }}">
+  <meta name="twitter:image" content="{{ ogImage }}">
+  <meta name="twitter:image:alt" content="{{ ogImageAlt }}">
+
   <link rel="canonical" href="https://dailypick.dev/apps/settings/" />
 
   <!-- Favicons -->

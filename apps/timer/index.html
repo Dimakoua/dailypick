@@ -4,13 +4,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadence Timer Studio - Multi-stage Ritual Timers | Daily Pick</title>
-  <meta name="description" content="Build multi-stage meeting timers with color-coded stages, audio cues, and shareable presets. Unlock cadence bundles without leaving the browser.">
+  {% set pageTitle = "Cadence Timer Studio – Multi-stage Ritual Timers | Daily Pick" %}
+  {% set pageDescription = "Build multi-stage meeting timers with color-coded stages, audio cues, and shareable presets to keep every ritual on schedule." %}
+  {% set ogImage = "https://dailypick.dev/assets/og-image-main.png" %}
+  {% set ogImageAlt = "Color-coded multi-stage timer running inside Daily Pick" %}
+  <title>{{ pageTitle | seoTitle }}</title>
+  <meta name="description" content="{{ pageDescription | seoDescription }}">
+  <meta name="keywords" content="meeting timer, cadence timer, agile rituals, stand-up timer, daily pick">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://dailypick.dev/apps/timer/">
-  <meta property="og:title" content="Cadence Timer Studio - Multi-stage Ritual Timers | Daily Pick">
-  <meta property="og:description" content="Chain meeting timers together, add audio cues, and keep rituals on schedule. Save presets locally or share with the team.">
-  <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
+  <meta property="og:title" content="{{ pageTitle | seoTitle }}">
+  <meta property="og:description" content="{{ pageDescription | seoDescription }}">
+  <meta property="og:image" content="{{ ogImage }}">
+  <meta property="og:image:alt" content="{{ ogImageAlt }}">
+  <meta property="og:site_name" content="Daily Pick">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://dailypick.dev/apps/timer/">
+  <meta name="twitter:title" content="{{ pageTitle | seoTitle }}">
+  <meta name="twitter:description" content="{{ pageDescription | seoDescription }}">
+  <meta name="twitter:image" content="{{ ogImage }}">
+  <meta name="twitter:image:alt" content="{{ ogImageAlt }}">
   <link rel="canonical" href="https://dailypick.dev/apps/timer/">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">

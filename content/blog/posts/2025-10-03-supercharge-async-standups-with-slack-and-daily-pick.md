@@ -23,9 +23,9 @@ Here’s how to design an async stand-up system that keeps momentum strong, make
 
 Before you swap Zoom for Slack, clarify the intent:
 
-- **What problem are we solving?** Call out the pain of calendar overload, time-zone strain, or inconsistent attendance.
-- **What does success look like?** Define crisp goals—e.g., “Everyone posts once per day before their local lunch break” or “We surface blockers within four hours.”
-- **When are updates due?** Pick a single global cutoff (like 16:00 UTC). It’s easier to remember and prevents end-of-day pileups.
+- *What problem are we solving?* Call out the pain of calendar overload, time-zone strain, or inconsistent attendance.
+- *What does success look like?* Define crisp goals—e.g., “Everyone posts once per day before their local lunch break” or “We surface blockers within four hours.”
+- *When are updates due?* Pick a single global cutoff (like 16:00 UTC). It’s easier to remember and prevents end-of-day pileups.
 
 Document these expectations in your team handbook or Slack channel topic so new teammates understand the rhythm from day one.
 
@@ -33,9 +33,9 @@ Document these expectations in your team handbook or Slack channel topic so new 
 
 Slack’s Workflow Builder or tools like Geekbot and Standuply can queue reminders automatically. If you want to stay native, a simple workflow works:
 
-1. **Schedule a daily DM** that fires before the cutoff, prompting each teammate for three prompts (yesterday / today / blockers). Include a fast link to the decision tool they might need.
-2. **Post responses to a shared channel** like `#daily-async`. Format them consistently—emojis or headings (🌞 Yesterday, 🚀 Today, 🧱 Blockers) make scanning easier.
-3. **Pin the day’s summary** after the deadline so everyone can skim the highlights.
+1. *Schedule a daily DM* that fires before the cutoff, prompting each teammate for three prompts (yesterday / today / blockers). Include a fast link to the decision tool they might need.
+2. *Post responses to a shared channel* like `#daily-async`. Format them consistently—emojis or headings (🌞 Yesterday, 🚀 Today, 🧱 Blockers) make scanning easier.
+3. *Pin the day’s summary* after the deadline so everyone can skim the highlights.
 
 To keep it fair, add a Daily Pick twist. Configure a `Run Daily Pick` button in the workflow that opens the Decision Wheel or Speedway Racer with that day’s team roster. Whoever the tool selects becomes the “spotlight” responder who adds a short Loom or attaches a screenshot for extra context. It nudges richer storytelling without forcing it on the same people.
 
@@ -43,9 +43,9 @@ To keep it fair, add a Daily Pick twist. Configure a `Run Daily Pick` button in 
 
 Async routines can quietly erode. Counter that with lightweight recognition:
 
-- **Streak shoutouts:** Use a simple Zapier or Make automation to award a 🎯 streak emoji in Slack when someone posts five days in a row.
-- **Blocker buddy:** When someone flags a blocker, spin Daily Pick’s Decision Wheel to assign a quick DM buddy who helps them unblock or escalate.
-- **Weekly recap owner:** Each Friday, run Speedway Racer to choose who will compile a short wins + lessons thread. Incentivize with a virtual coffee gift card or a public kudos.
+- *Streak shoutouts:* Use a simple Zapier or Make automation to award a 🎯 streak emoji in Slack when someone posts five days in a row.
+- *Blocker buddy:* When someone flags a blocker, spin Daily Pick’s Decision Wheel to assign a quick DM buddy who helps them unblock or escalate.
+- *Weekly recap owner:* Each Friday, run Speedway Racer to choose who will compile a short wins + lessons thread. Incentivize with a virtual coffee gift card or a public kudos.
 
 Fair, randomized micro-roles spread the cognitive load and keep the process feeling alive.
 
@@ -53,9 +53,9 @@ Fair, randomized micro-roles spread the cognitive load and keep the process feel
 
 The biggest risk with async stand-ups is that blockers get buried. Tackle that head-on:
 
-- **Create a `Blocker Board`:** Set up a Notion or Jira board linked in the channel description. When someone posts a blocker, they drop a card there with a due date.
-- **Automate escalations:** Use Daily Pick’s Trap! game once a week to “spring” hidden blockers. List outstanding blockers as trap tiles; when a tile is “triggered,” that item becomes top priority for the next pairing session.
-- **Celebrate fast fixes:** When a blocker clears within 24 hours, post a 🎉 reaction and shout out the helper. Positive reinforcement keeps the loop tight.
+- *Create a `Blocker Board`:* Set up a Notion or Jira board linked in the channel description. When someone posts a blocker, they drop a card there with a due date.
+- *Automate escalations:* Use Daily Pick’s Trap! game once a week to “spring” hidden blockers. List outstanding blockers as trap tiles; when a tile is “triggered,” that item becomes top priority for the next pairing session.
+- *Celebrate fast fixes:* When a blocker clears within 24 hours, post a 🎉 reaction and shout out the helper. Positive reinforcement keeps the loop tight.
 
 ## 5. Mix in Time-Zone Friendly Touchpoints
 
@@ -81,4 +81,4 @@ Let the team decide which tweaks to trial next week—it reinforces fairness and
 
 ---
 
-**Bottom line:** Async stand-ups thrive on clarity, automation, and shared ownership. By combining Slack workflows with Daily Pick’s playful fairness, you create a routine that respects everyone’s time zone, keeps blockers visible, and makes updates feel more like collaboration than obligation. Your distributed team gets the benefits of a stand-up—without the calendar chaos. Want to go deeper? Pair this playbook with our [Remote Onboarding Icebreakers](/blog/remote-onboarding-icebreakers-your-new-hires-will-love/) so new teammates adopt the habit faster, and revisit Slack’s own [async stand-up best practices](https://slack.com/blog/collaboration/async-standups) for platform-specific tips.
+*Bottom line:* Async stand-ups thrive on clarity, automation, and shared ownership. By combining Slack workflows with Daily Pick’s playful fairness, you create a routine that respects everyone’s time zone, keeps blockers visible, and makes updates feel more like collaboration than obligation. Your distributed team gets the benefits of a stand-up—without the calendar chaos. Want to go deeper? Pair this playbook with our [Remote Onboarding Icebreakers](/blog/remote-onboarding-icebreakers-your-new-hires-will-love/) so new teammates adopt the habit faster, and revisit Slack’s own [async stand-up best practices](https://slack.com/blog/collaboration/async-standups) for platform-specific tips.

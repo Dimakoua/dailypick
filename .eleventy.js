@@ -1,5 +1,31 @@
 const sitemap = require("@quasibit/eleventy-plugin-sitemap");
 
+function normalizeWhitespace(value = "") {
+  if (!value) {
+    return "";
+  }
+
+  return String(value).replace(/\s+/g, " ").trim();
+}
+
+function trimToLimit(value, limit) {
+  const normalized = normalizeWhitespace(value);
+
+  if (!normalized) {
+    return "";
+  }
+
+  if (normalized.length <= limit) {
+    return normalized;
+  }
+
+  const truncated = normalized.slice(0, limit - 1);
+  const lastSpace = truncated.lastIndexOf(" ");
+  const safeSlice = lastSpace > 40 ? truncated.slice(0, lastSpace) : truncated;
+
+  return `${safeSlice}…`;
+}
+
 module.exports = function(eleventyConfig) {
   // Tell Eleventy to watch your CSS changes for live reload.
   eleventyConfig.addWatchTarget("./content/blog/css/");
@@ -11,6 +37,14 @@ module.exports = function(eleventyConfig) {
   // Add passthrough copy for public assets and game directories
   eleventyConfig.addPassthroughCopy({ "public": "." });
   eleventyConfig.addPassthroughCopy({ "apps": "apps" });
+
+  eleventyConfig.addFilter("seoTitle", function(value) {
+    return trimToLimit(value, 60);
+  });
+
+  eleventyConfig.addFilter("seoDescription", function(value) {
+    return trimToLimit(value, 155);
+  });
 
   // Sitemap Plugin
   eleventyConfig.addPlugin(sitemap, {

@@ -4,9 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mimic Master - Lightning Reaction Game | Daily Pick</title>
+    {% set pageTitle = "Mimic Master – Lightning Reaction Game | Daily Pick" %}
+    {% set pageDescription = "Launch a Mimic Master room, match prompts with your hands, and rally remote teams with real-time leaderboards and screen-share friendly controls." %}
+    {% set ogImage = "https://dailypick.dev/assets/og-image-main.png" %}
+    {% set ogImageAlt = "Teammate mirroring hand prompts inside Daily Pick's Mimic Master game" %}
+    <title>{{ pageTitle | seoTitle }}</title>
     <meta name="description"
-        content="Start a Mimic Master room, enable your camera, and see who can match the on-screen prompt fastest. Real-time leaderboards keep every round competitive.">
+        content="{{ pageDescription | seoDescription }}">
+    <meta name="keywords"
+        content="mimic master, reaction game, team energizer, camera game, daily pick, remote team activity, lightning round, stand-up energizer">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dailypick.dev/apps/mimic-master/">
+    <meta property="og:title" content="{{ pageTitle | seoTitle }}">
+    <meta property="og:description"
+        content="{{ pageDescription | seoDescription }}">
+    <meta property="og:image" content="{{ ogImage }}">
+    <meta property="og:image:alt" content="{{ ogImageAlt }}">
+    <meta property="og:site_name" content="Daily Pick">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://dailypick.dev/apps/mimic-master/">
+    <meta name="twitter:title" content="{{ pageTitle | seoTitle }}">
+    <meta name="twitter:description"
+        content="{{ pageDescription | seoDescription }}">
+    <meta name="twitter:image" content="{{ ogImage }}">
+    <meta name="twitter:image:alt" content="{{ ogImageAlt }}">
+
+    <link rel="canonical" href="https://dailypick.dev/apps/mimic-master/">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/theme.css">
     <link rel="stylesheet" href="/assets/css/glass.css">

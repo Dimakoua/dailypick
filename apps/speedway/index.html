@@ -3,32 +3,37 @@
 
 <head>
     <meta charset="UTF-8" />
-    <!-- Viewport meta tag is already present and good -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Speedway Racer - Turtle Race Name Picker Game | Daily Pick</title>
+    {% set pageTitle = "Speedway Racer – Turtle Stand-up Order Game | Daily Pick" %}
+    {% set pageDescription = "Launch a turtle race name picker that randomizes speaking order, rewards winners, and energizes hybrid stand-ups with playful suspense." %}
+    {% set ogImage = "https://dailypick.dev/assets/og-image-main.png" %}
+    {% set ogImageAlt = "Colorful turtle racers sprinting on the Daily Pick Speedway track" %}
+    <title>{{ pageTitle | seoTitle }}</title>
     <meta name="description"
-        content="Fire up Speedway, the ultimate turtle race name picker. Let colorful racers decide stand-up order, pick presenters, and energize your team or classroom.">
+        content="{{ pageDescription | seoDescription }}">
     <meta name="keywords"
         content="turtle race name picker, speedway racer, random name picker, stand-up order game, turtle racing, agile icebreaker, meeting energizer, classroom participation game, remote team activity, Daily Pick tools, fair speaking order">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://dailypick.dev/apps/speedway/">
-    <meta property="og:title" content="Speedway Racer - Turtle Race Name Picker | Daily Pick">
+    <meta property="og:title" content="{{ pageTitle | seoTitle }}">
     <meta property="og:description"
-        content="Launch a turtle race name picker to set speaking order, choose winners, and keep meetings fun.">
-    <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
+        content="{{ pageDescription | seoDescription }}">
+    <meta property="og:image" content="{{ ogImage }}">
     <meta property="og:image:alt"
-        content="Colorful turtle racers sprinting toward the finish line in Daily Pick's Speedway game">
+        content="{{ ogImageAlt }}">
+    <meta property="og:site_name" content="Daily Pick">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Speedway Racer - Turtle Race Name Picker | Daily Pick">
+    <meta name="twitter:url" content="https://dailypick.dev/apps/speedway/">
+    <meta name="twitter:title" content="{{ pageTitle | seoTitle }}">
     <meta name="twitter:description"
-        content="Spin up a turtle race name picker and let Daily Pick’s Speedway decide who goes next, every time.">
-    <meta name="twitter:image" content="https://dailypick.dev/assets/og-image-main.png">
+        content="{{ pageDescription | seoDescription }}">
+    <meta name="twitter:image" content="{{ ogImage }}">
     <meta name="twitter:image:alt"
-        content="Colorful turtle racers sprinting toward the finish line in Daily Pick's Speedway game">
+        content="{{ ogImageAlt }}">
 
     <link rel="canonical" href="https://dailypick.dev/apps/speedway/">
     <!-- Favicon Links -->
@@ -95,47 +100,26 @@
     <button id="startRaceBtn">🚀 Start Race!</button>
 
     <div class="seo-content-area">
-        <h2>Speedway Racer: The Turtle Race Name Picker Your Team Will Cheer For</h2>
-        <p><strong>Speedway Racer</strong> by Daily Pick turns a simple stand-up order into a burst of excitement. This
-            turtle race name picker lets you add your roster, press start, and watch colorful racers sprint for the
-            finish line—whoever wins sets the speaking order, assigns the next presenter, or snags the surprise prize.
-            It’s fast, fair, and endlessly replayable.</p>
+        <h2>Speedway Racer Keeps Stand-ups Moving</h2>
+        <p><strong>Speedway Racer</strong> turns the speaking order into a playful turtle sprint so every teammate gets
+            airtime without awkward pauses.</p>
 
-        <h3>How to Run a Speedway Race</h3>
+        <h3>Quick Setup</h3>
+        <p>Load your roster, hit Start Race, and screen-share the animated finish line. Picture-in-Picture keeps the
+            results visible while you move on to updates or demos.</p>
+
+        <h3>What Teams Love</h3>
         <ul>
-            <li><strong>Load your racers:</strong> Paste names or import your saved list. Each teammate gets a lane and
-                a turtle avatar.</li>
-            <li><strong>Launch the race:</strong> Tap <em>Start Race</em> and watch real-time animation determine the
-                winners.</li>
-            <li><strong>Capture the results:</strong> The leaderboard updates instantly and can pop into
-                Picture-in-Picture so facilitators keep it visible while screensharing.</li>
-            <li><strong>Reset and rerun:</strong> Need another order? Hit restart for a brand-new outcome—no two races
-                are the same.</li>
+            <li><strong>Fair finishes:</strong> Randomized results keep retros, classes, and giveaways equitable.</li>
+            <li><strong>Instant energy:</strong> Turtle racers and emoji reactions lift the mood before status reports.</li>
+            <li><strong>Hybrid ready:</strong> Works in person or remote thanks to easy links and replayable rounds.</li>
+            <li><strong>Effortless resets:</strong> Start another sprint in seconds when you need a fresh speaking order.</li>
         </ul>
 
-        <h3>Why Teams and Classrooms Love Speedway</h3>
-        <ul>
-            <li><strong>Fair randomization:</strong> Removes bias when choosing who goes next, who leads the demo, or
-                who wins a giveaway—every turtle race name picker finish is unique.</li>
-            <li><strong>Instant engagement:</strong> The playful race animation keeps even camera-off participants glued
-                to the screen.</li>
-            <li><strong>Hybrid-friendly:</strong> Works equally well in conference rooms and remote stand-ups thanks to
-                results sharing and PiP mode.</li>
-            <li><strong>Education ready:</strong> Teachers use Speedway to select readers, presenters, and quiz
-                participants without the stress.</li>
-        </ul>
+        <p>Pair the Speedway sprint with the <a href="/apps/wheel/">Decision Wheel</a> or a quick round of <a href="/apps/trap/">Trap!</a>
+            to keep rituals feeling fresh.</p>
 
-        <h3>Level Up Your Rituals with Daily Pick</h3>
-        <ul>
-            <li><strong>Pair with other games:</strong> After the race, spin the <a href="/apps/wheel/">Daily Pick
-                    Decision Wheel</a> for follow-up tasks or drop into <a href="/apps/trap/">Trap!</a> for a
-                suspenseful tiebreaker.</li>
-            <li><strong>Log the winners:</strong> Export the finishing order or feed it into your retro notes, Jira
-                board, or team wiki.</li>
-        </ul>
-        <p>Whether you’re running a sprint review, guiding a student debate, or just kicking off Friday with a laugh,
-            <strong>Speedway Racer</strong> brings the energy. Fire up the turtles and let Daily Pick decide the order
-            with style.</p>
+        <p>Fire up the track and let this <strong>turtle stand-up game</strong> decide who shares next with a smile.</p>
     </div>
     {% include "footer.html" %}
 

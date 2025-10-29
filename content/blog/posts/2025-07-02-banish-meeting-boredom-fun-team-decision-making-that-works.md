@@ -33,16 +33,16 @@ Instead of dreading the next decision-making session, imagine it as an opportuni
 
 ### 1. Embrace the Power of Randomness (Responsibly)
 
-Sometimes, the fairest way to make a decision isn't through debate or negotiation, but through pure, unbiased randomness.  This doesn't mean relying on flipping a coin for every critical choice. But for smaller decisions, or when everyone has a relatively equal stake, embracing chance can prevent bias and ensure fairness.  For example, using the **Decision Wheel!** to randomly assign tasks can remove any potential for conflict or perceived unfairness.
+Sometimes, the fairest way to make a decision isn't through debate or negotiation, but through pure, unbiased randomness.  This doesn't mean relying on flipping a coin for every critical choice. But for smaller decisions, or when everyone has a relatively equal stake, embracing chance can prevent bias and ensure fairness.  For example, using the *Decision Wheel!* to randomly assign tasks can remove any potential for conflict or perceived unfairness.
 
 
 ### 2. Gamify the Process
 
-Turning choices into games can transform a tedious chore into an engaging activity.  Imagine using **Speedway Racer!** to decide who gets to work on the most exciting project, or **Trap!** to add a playful element of chance to task allocation.  These games introduce healthy competition and create a sense of shared experience, reinforcing team bonds.
+Turning choices into games can transform a tedious chore into an engaging activity.  Imagine using *Speedway Racer!* to decide who gets to work on the most exciting project, or *Trap!* to add a playful element of chance to task allocation.  These games introduce healthy competition and create a sense of shared experience, reinforcing team bonds.
 
 ### 3. Make it Visual and Engaging
 
-Avoid endless email chains and complicated spreadsheets. Visual aids and interactive tools can make the decision-making process more transparent and appealing.  The **Decision Wheel!**’s simple, visual interface is a great example of how to present choices in a clear, easy-to-understand way.
+Avoid endless email chains and complicated spreadsheets. Visual aids and interactive tools can make the decision-making process more transparent and appealing.  The *Decision Wheel!*’s simple, visual interface is a great example of how to present choices in a clear, easy-to-understand way.
 
 ### 4. Prioritize Transparency and Inclusivity
 
@@ -50,9 +50,9 @@ No matter the method you choose, ensure everyone feels heard and understood.  Cr
 
 ## Daily Pick: Your Partner in Fun and Fair Decision-Making
 
-At **Daily Pick**, we understand the importance of fun and fairness in team dynamics.  Our collection of tools and games is designed to make decision-making a positive and engaging experience, improving team productivity and morale in the process.  We believe that even the smallest improvements can make a big impact on workplace culture, whether you're prepping a retro with the tips from [Conquer Meeting Monotony](/blog/conquer-meeting-monotony-fun-ways-to-spice-up-your-team-retrospectives/) or planning a hybrid all-hands.
+At *Daily Pick*, we understand the importance of fun and fairness in team dynamics.  Our collection of tools and games is designed to make decision-making a positive and engaging experience, improving team productivity and morale in the process.  We believe that even the smallest improvements can make a big impact on workplace culture, whether you're prepping a retro with the tips from [Conquer Meeting Monotony](/blog/conquer-meeting-monotony-fun-ways-to-spice-up-your-team-retrospectives/) or planning a hybrid all-hands.
 
 
 ## Conclusion:  It's Time for a Change
 
-Decision-making doesn't have to be a struggle. By integrating elements of fun and fairness, you can transform tedious processes into opportunities for team bonding and increased efficiency.   Ready to make your team decisions less of a drag and more of a delight?  Explore the fun and fair tools at **Daily Pick** today, then check out our [Trap! mini-games](/apps/trap/) or the [Planning Poker Hub guide](/blog/planning-poker-hub-guide/) for longer-form workshops. For more evidence that balanced participation matters, dive into [Harvard Business Review’s research on collaborative decision-making](https://hbr.org/2016/03/why-do-we-undervalue-competent-management) and see why playful structure keeps teams aligned.
+Decision-making doesn't have to be a struggle. By integrating elements of fun and fairness, you can transform tedious processes into opportunities for team bonding and increased efficiency.   Ready to make your team decisions less of a drag and more of a delight?  Explore the fun and fair tools at *Daily Pick* today, then check out our [Trap! mini-games](/apps/trap/) or the [Planning Poker Hub guide](/blog/planning-poker-hub-guide/) for longer-form workshops. For more evidence that balanced participation matters, dive into [Harvard Business Review’s research on collaborative decision-making](https://hbr.org/2016/03/why-do-we-undervalue-competent-management) and see why playful structure keeps teams aligned.

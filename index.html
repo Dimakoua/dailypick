@@ -4,9 +4,11 @@
 <head>
     <!-- SEO -->
     <meta charset="UTF-8" />
-    <title>Daily Pick - Fun & Fair Team Decision Tools | Wheel, Speedway, Trap!</title>
+    {% set homepageTitle = "Daily Pick – Fair Team Decision Games for Stand-ups" %}
+    {% set homepageDescription = "Spark agile stand-ups with Daily Pick's wheel, racing, and strategy games that randomize speakers, lift energy, and support sprint planning rituals." %}
+    <title>{{ homepageTitle | seoTitle }}</title>
     <meta name="description"
-        content="Make your daily stand-ups and team decisions more engaging with Daily Pick! Choose from fun games like the Decision Wheel, Speedway Racer, and Trap! to fairly pick names or set order.">
+        content="{{ homepageDescription | seoDescription }}">
     <meta name="keywords"
         content="daily pick, team tools, decision maker, name picker, stand-up games, wheel spinner, racing game, trap game, office games, team engagement, agile tools, scrum tools">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -15,18 +17,21 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://dailypick.dev/">
-    <meta property="og:title" content="Daily Pick - Fun & Fair Team Decision Tools">
+    <meta property="og:title" content="{{ homepageTitle | seoTitle }}">
     <meta property="og:description"
-        content="Engaging games like the Decision Wheel, Speedway Racer, and Trap! to make team decisions fun.">
+        content="{{ homepageDescription | seoDescription }}">
     <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
+    <meta property="og:image:alt" content="Hybrid agile team cheering around the Daily Pick stand-up games dashboard">
+    <meta property="og:site_name" content="Daily Pick">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://dailypick.dev/">
-    <meta name="twitter:title" content="Daily Pick - Fun & Fair Team Decision Tools">
+    <meta name="twitter:title" content="{{ homepageTitle | seoTitle }}">
     <meta name="twitter:description"
-        content="Engaging games like the Decision Wheel, Speedway Racer, and Trap! to make team decisions fun.">
+        content="{{ homepageDescription | seoDescription }}">
     <meta name="twitter:image" content="https://dailypick.dev/assets/twitter-image-main.png">
+    <meta name="twitter:image:alt" content="Hybrid agile team cheering around the Daily Pick stand-up games dashboard">
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
@@ -79,10 +84,11 @@
 
     <main id="main" class="main-container">
         <header class="hero">
-            <h1 class="hero__title">Playful Rituals for Stand-ups & Planning</h1>
+            <h1 class="hero__title">Playful Rituals for Stand-ups &amp; Sprint Planning</h1>
             <p class="hero__subtitle">
                 Keep the energy high during daily stand-ups and sprint planning with quick, fair, and collaborative
-                experiences from <strong>Daily Pick</strong>.
+                experiences from <strong>Daily Pick team games</strong>. These playful rituals keep hybrid squads aligned
+                without adding meeting fatigue.
             </p>
             <button id="randomGameBtn" class="btn btn--accent" type="button" aria-describedby="randomGameHelp">
                 🎲 Pick a Random Game!
