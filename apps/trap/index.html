@@ -4,19 +4,28 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trap! The Game - Strategic Fun Picker | Daily Pick</title>
+    <title>Trap! – Strategic Name Picker Game | Daily Pick</title>
     <meta name="description"
-        content="Play Trap! - a fun and engaging game to pick names or make choices. Strategically place your trap and see who gets caught! Perfect for quick team decisions. From Daily Pick.">
+        content="Place surprise traps, capture teammates, and make quick decisions with Daily Pick's strategic Trap! name picker.">
     <meta name="keywords"
         content="trap game, name picker game, strategy game, team game, fun decision maker, interactive game, daily pick">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://dailypick.dev/apps/trap/">
-    <meta property="og:title" content="Trap! The Game - Strategic Fun Picker | Daily Pick">
+    <meta property="og:title" content="Trap! – Strategic Name Picker Game | Daily Pick">
     <meta property="og:description"
-        content="Strategically place your trap and see who gets caught! Perfect for quick team decisions.">
+        content="Place surprise traps, capture teammates, and make quick decisions with Daily Pick's strategic Trap! name picker.">
     <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
+    <meta property="og:image:alt" content="Animated trap catching a player token in Daily Pick's Trap game">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://dailypick.dev/apps/trap/">
+    <meta name="twitter:title" content="Trap! – Strategic Name Picker Game | Daily Pick">
+    <meta name="twitter:description"
+        content="Place surprise traps, capture teammates, and make quick decisions with Daily Pick's strategic Trap! name picker.">
+    <meta name="twitter:image" content="https://dailypick.dev/assets/og-image-main.png">
+    <meta name="twitter:image:alt" content="Animated trap catching a player token in Daily Pick's Trap game">
 
     <link rel="canonical" href="https://dailypick.dev/apps/trap/">
     <!-- Favicons -->
@@ -48,10 +57,10 @@
 
     <div class="seo-content-area">
         <h2>Welcome to Trap! - The Strategic Name Picker Game</h2>
-        <p>Trap! is an <strong>interactive game</strong> that adds a dash of strategy and excitement to the process of
+        <p>Trap! is an interactive game that adds a dash of strategy and excitement to the process of
             picking a name or making a choice. Instead of a simple random selection, participants (represented by
             colorful shapes) move around the canvas while you strategically place a "trap" (the microphone icon 🎤). The
-            first one to enter the trap is selected! It's a perfect <strong>team game</strong> for quick, fun decisions.
+            first one to enter the trap is selected! It's a perfect team game for quick, fun decisions.
         </p>
 
         <h3>How to Play & Win</h3>
@@ -65,7 +74,7 @@
         </ul>
 
         <h3>Why Trap! is Great for Teams</h3>
-        <p>This <strong>fun decision maker</strong> is ideal for:</p>
+        <p>This fun decision maker is ideal for:</p>
         <ul>
             <li>Breaking the ice in meetings.</li>
             <li>Deciding who leads the next stand-up or presents a demo.</li>
@@ -550,11 +559,11 @@
                     members.forEach(m => m.trapped = false); // Clear trapped status for any remaining
 
                     if (members.length === 0) {
-                        info.innerHTML = `🎉 <strong>${caughtMember.name}</strong> was the last one!`;
+                        info.innerHTML = `🎉 ${caughtMember.name} was the last one!`;
                         celebrateFinalUser(caughtMember);
                         trapBtn.disabled = true; // Game over, disable button
                     } else {
-                        info.innerHTML = `<strong>${caughtMember.name}</strong> trapped! ${members.length} remaining. Place next trap.`;
+                        info.innerHTML = `${caughtMember.name} trapped! ${members.length} remaining. Place next trap.`;
                     }
                 } else {
                     // Trap was set, but no one was in it when clicked (or they moved out)

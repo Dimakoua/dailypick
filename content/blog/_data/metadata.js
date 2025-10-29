@@ -1,6 +1,6 @@
 module.exports = {
-  siteTitle: "Daily Pick - Fun & Fair Team Decision Tools",
-  siteDescription: "Make your daily stand-ups and team decisions more engaging with Daily Pick! Choose from fun games like the Decision Wheel, Speedway Racer, and Trap! to fairly pick names or set order.",
+  siteTitle: "Daily Pick – Fair Team Decision Games for Stand-ups",
+  siteDescription: "Spark agile stand-ups with Daily Pick's wheel, racing, and strategy games that randomize speakers, lift energy, and support sprint planning rituals.",
   url: "https://dailypick.dev",
   authorName: "Daily Pick",
   defaultOgImage: "/assets/og-image-main.png",

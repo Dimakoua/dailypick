@@ -4,20 +4,29 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spin the Wheel - Fair Decision Maker | Daily Pick</title>
+    <title>Decision Wheel – Fair Random Picker | Daily Pick</title>
     <meta name="description"
-        content="Spin our interactive decision wheel to fairly choose names, tasks, or anything! A fun and easy way to make random selections for your team or group. Part of Daily Pick.">
+        content="Spin a fair decision wheel to randomize speakers, pick tasks, or choose winners in seconds for remote and in-person teams.">
     <meta name="keywords"
         content="decision wheel, random name picker, spinner wheel, wheel of names, team tool, daily standup, randomizer, interactive wheel, daily pick">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://dailypick.dev/apps/wheel/">
-    <meta property="og:title" content="Spin the Wheel - Fair Decision Maker | Daily Pick">
-    <meta property="og:description" content="A fun and easy way to make random selections for your team or group.">
+    <meta property="og:title" content="Decision Wheel – Fair Random Picker | Daily Pick">
+    <meta property="og:description" content="Spin a fair decision wheel to randomize speakers, pick tasks, or choose winners in seconds for remote and in-person teams.">
     <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
+    <meta property="og:image:alt" content="Colorful slices on the Daily Pick decision wheel ready to select the next speaker">
 
     <link rel="canonical" href="https://dailypick.dev/apps/wheel/">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://dailypick.dev/apps/wheel/">
+    <meta name="twitter:title" content="Decision Wheel – Fair Random Picker | Daily Pick">
+    <meta name="twitter:description"
+        content="Spin a fair decision wheel to randomize speakers, pick tasks, or choose winners in seconds for remote and in-person teams.">
+    <meta name="twitter:image" content="https://dailypick.dev/assets/og-image-main.png">
+    <meta name="twitter:image:alt" content="Colorful slices on the Daily Pick decision wheel ready to select the next speaker">
     <!-- Favicon Links -->
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
@@ -50,7 +59,7 @@
 
     <div class="seo-content-area">
         <h2>About the Decision Wheel & Making Fair Choices</h2>
-        <p>Our interactive <strong>Decision Wheel</strong> is more than just a game; it's a versatile tool designed to
+        <p>Our interactive Decision Wheel is more than just a game; it's a versatile tool designed to
             bring
             fairness and fun to any selection process. Whether you're trying to pick a name for a daily stand-up, assign
             tasks, or even choose where to go for lunch, the wheel provides an unbiased and engaging way to make a
@@ -59,21 +68,21 @@
 
         <h3>Why Use a Random Name Picker?</h3>
         <ul>
-            <li><strong>Ensures Fairness:</strong> Eliminates bias in selection, making everyone feel the process is
-                equitable. This is especially useful in team environments like <strong>daily standups</strong> or when
+            <li>Ensures Fairness: Eliminates bias in selection, making everyone feel the process is
+                equitable. This is especially useful in team environments like daily standups or when
                 distributing opportunities.</li>
-            <li><strong>Boosts Engagement:</strong> Turns a mundane selection task into an exciting moment. The
+            <li>Boosts Engagement: Turns a mundane selection task into an exciting moment. The
                 anticipation
                 of the spin can liven up meetings and group activities.</li>
-            <li><strong>Saves Time:</strong> Quickly make decisions without lengthy debates, especially for low-stakes
+            <li>Saves Time: Quickly make decisions without lengthy debates, especially for low-stakes
                 choices.</li>
-            <li><strong>Versatile:</strong> Use it for educational purposes, as an icebreaker, for giveaways, or any
+            <li>Versatile: Use it for educational purposes, as an icebreaker, for giveaways, or any
                 scenario
                 requiring random selection.</li>
         </ul>
 
         <h3>Tips for Effective Daily Stand-ups</h3>
-        <p>Using a <strong>spinner wheel</strong> can make your daily stand-ups more dynamic. To make them even more
+        <p>Using a spinner wheel can make your daily stand-ups more dynamic. To make them even more
             effective:</p>
         <ul>
             <li>Keep them short and focused (typically 15 minutes).</li>
@@ -246,7 +255,7 @@
                     requestAnimationFrame(animate);
                 } else {
                     lastWinnerIndex = selectedIndex;
-                    winnerDiv.innerHTML = `🎉 <strong>${selectedName}</strong> is next to speak!`;
+                    winnerDiv.innerHTML = `🎉 ${selectedName} is next to speak!`;
                     isSpinning = false;
                 }
             }

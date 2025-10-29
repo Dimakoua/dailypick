@@ -1,7 +1,7 @@
 ---
-title: "AI Agents Meet Daily Pick: Let Your Copilot Run the Stand-up (Without Losing the Human Touch)"
+title: "AI Agents + Daily Pick: Let Copilots Run Your Stand-up"
 date: 2025-10-24
-description: "Everyone’s talking about autonomous AI agents—but can they actually run your stand-up? Learn how to pair AI copilots with Daily Pick to automate prep, keep updates fair, and leave room for real team chemistry."
+description: "Pair AI copilots with Daily Pick to automate prep, rotate speakers fairly, and keep human banter alive in your daily stand-up."
 layout: "post.njk"
 tags: ["ai agents", "copilot", "stand-up automation", "team productivity", "remote work", "meeting facilitation"]
 canonical: "https://dailypick.dev/blog/ai-agents-meet-daily-pick-how-to-let-your-copilot-run-the-standup/"
@@ -35,9 +35,9 @@ Then set expectations. The agent’s job is to gather context and draft the agen
 
 Each morning, have the agent:
 
-1. **Collect updates** from your ticketing system and DM summaries to contributors for review.
-2. **Scan for red flags** (stalled tickets, repeated blockers) and tag them for discussion.
-3. **Queue up Daily Pick** with the day’s active roster so the speaking order is randomized on the spot.
+1. *Collect updates* from your ticketing system and DM summaries to contributors for review.
+2. *Scan for red flags* (stalled tickets, repeated blockers) and tag them for discussion.
+3. *Queue up Daily Pick* with the day’s active roster so the speaking order is randomized on the spot.
 
 When the meeting starts, the agent posts a single card: the Daily Pick spin results, the quick agenda, and any focus questions. Humans still deliver the updates—but nobody wasted time gathering prep manually. If you run distributed stand-ups, let the copilot drop a link to [Daily Pick’s Decision Wheel](/apps/wheel/) or even a fast [Trap! round](/apps/trap/) so late joiners can instantly see who’s up next.
 
@@ -73,4 +73,4 @@ Iterate from there. Maybe you add a Trap! mini-game to the agenda once a week, o
 
 ---
 
-**The big idea:** AI agents aren’t here to replace your stand-up. They’re here to clear the runway so the live conversation is sharper, faster, and friendlier. When you pair an agent’s automation with Daily Pick’s fairness and play, you get the hype of an AI-powered workflow—and the heart of a team that still shows up for each other. Want more rituals? Explore [five fun stand-up formats](/blog/spice-up-your-standups-5-fun-ways/) next.***
+*The big idea:* AI agents aren’t here to replace your stand-up. They’re here to clear the runway so the live conversation is sharper, faster, and friendlier. When you pair an agent’s automation with Daily Pick’s fairness and play, you get the hype of an AI-powered workflow—and the heart of a team that still shows up for each other. Want more rituals? Explore [five fun stand-up formats](/blog/spice-up-your-standups-5-fun-ways/) next.
