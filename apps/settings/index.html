@@ -146,6 +146,135 @@
         </div>
         <p id="brandStatus" class="settings-status" aria-live="polite"></p>
       </article>
+
+      <article class="settings-card glass-card" aria-labelledby="integrationsHeading">
+        <div class="card-header">
+          <h2 id="integrationsHeading">Third-Party Integrations</h2>
+          <p>Connect Daily Pick to your delivery tools to sync boards and participants automatically.</p>
+        </div>
+
+        <p class="integration-intro">Connections save to the Daily Pick Worker so you can safely reuse them from any device.<br>
+          Tokens are masked after you save them.</p>
+
+        <div class="integration-grid">
+          <section class="integration-card" data-service="jira" aria-labelledby="integration-jira-heading">
+            <header class="integration-card-header">
+              <div class="integration-icon" aria-hidden="true">🗂️</div>
+              <div>
+                <h3 id="integration-jira-heading">Jira</h3>
+                <p>Create issues and sync assignees in a Jira project.</p>
+              </div>
+            </header>
+            <label class="integration-toggle">
+              <input type="checkbox" class="integration-enabled">
+              <span>Enable connection</span>
+            </label>
+            <label>
+              Project key or board ID
+              <input type="text" class="integration-resource" placeholder="e.g. DP or DP-Board">
+            </label>
+            <label>
+              API token
+              <input type="password" class="integration-token" placeholder="Paste a Jira API token">
+            </label>
+            <fieldset>
+              <legend>Sync options</legend>
+              <label class="checkbox">
+                <input type="checkbox" class="integration-sync-boards">
+                <span>Send Daily Pick cards to Jira issues</span>
+              </label>
+              <label class="checkbox">
+                <input type="checkbox" class="integration-sync-players">
+                <span>Map saved players to Jira assignees</span>
+              </label>
+            </fieldset>
+            <p class="integration-token-preview" aria-live="polite"></p>
+            <p class="integration-status" aria-live="polite"></p>
+            <div class="button-row">
+              <button type="button" class="integration-save">Save Connection</button>
+              <button type="button" class="ghost integration-disconnect">Disconnect</button>
+            </div>
+          </section>
+
+          <section class="integration-card" data-service="trello" aria-labelledby="integration-trello-heading">
+            <header class="integration-card-header">
+              <div class="integration-icon" aria-hidden="true">🗒️</div>
+              <div>
+                <h3 id="integration-trello-heading">Trello</h3>
+                <p>Keep cards in sync with a Trello board list.</p>
+              </div>
+            </header>
+            <label class="integration-toggle">
+              <input type="checkbox" class="integration-enabled">
+              <span>Enable connection</span>
+            </label>
+            <label>
+              List or board URL
+              <input type="text" class="integration-resource" placeholder="https://trello.com/b/...">
+            </label>
+            <label>
+              API token
+              <input type="password" class="integration-token" placeholder="Paste a Trello API token">
+            </label>
+            <fieldset>
+              <legend>Sync options</legend>
+              <label class="checkbox">
+                <input type="checkbox" class="integration-sync-boards">
+                <span>Append Daily Pick action items to the board</span>
+              </label>
+              <label class="checkbox">
+                <input type="checkbox" class="integration-sync-players">
+                <span>Invite saved players as members</span>
+              </label>
+            </fieldset>
+            <p class="integration-token-preview" aria-live="polite"></p>
+            <p class="integration-status" aria-live="polite"></p>
+            <div class="button-row">
+              <button type="button" class="integration-save">Save Connection</button>
+              <button type="button" class="ghost integration-disconnect">Disconnect</button>
+            </div>
+          </section>
+
+          <section class="integration-card" data-service="github" aria-labelledby="integration-github-heading">
+            <header class="integration-card-header">
+              <div class="integration-icon" aria-hidden="true">🐙</div>
+              <div>
+                <h3 id="integration-github-heading">GitHub</h3>
+                <p>Open issues or discussions directly from Daily Pick.</p>
+              </div>
+            </header>
+            <label class="integration-toggle">
+              <input type="checkbox" class="integration-enabled">
+              <span>Enable connection</span>
+            </label>
+            <label>
+              Repository full name
+              <input type="text" class="integration-resource" placeholder="owner/repository">
+            </label>
+            <label>
+              Personal access token
+              <input type="password" class="integration-token" placeholder="Paste a GitHub token">
+            </label>
+            <fieldset>
+              <legend>Sync options</legend>
+              <label class="checkbox">
+                <input type="checkbox" class="integration-sync-boards">
+                <span>Create issues from Daily Pick cards</span>
+              </label>
+              <label class="checkbox">
+                <input type="checkbox" class="integration-sync-players">
+                <span>Add players as collaborators when possible</span>
+              </label>
+            </fieldset>
+            <p class="integration-token-preview" aria-live="polite"></p>
+            <p class="integration-status" aria-live="polite"></p>
+            <div class="button-row">
+              <button type="button" class="integration-save">Save Connection</button>
+              <button type="button" class="ghost integration-disconnect">Disconnect</button>
+            </div>
+          </section>
+        </div>
+      </article>
     </section>
 
     <section class="settings-card glass-card tips">
@@ -207,6 +336,8 @@
       const previewName = brandPreview.querySelector('.preview-name');
       const previewMark = brandPreview.querySelector('.preview-mark');
       const previewButton = brandPreview.querySelector('button');
+      const integrationEndpoint = '/api/integrations/config';
+      const integrationCards = Array.from(document.querySelectorAll('.integration-card'));
 
       function showStatus(el, message) {
         if (!el) return;
@@ -322,6 +453,154 @@
         showStatus(brandStatus, 'Brand reset to defaults.');
       }
 
+      function setIntegrationStatus(card, message, tone = 'info') {
+        const statusEl = card.querySelector('.integration-status');
+        if (!statusEl) return;
+        if (!message) {
+          statusEl.textContent = '';
+          delete statusEl.dataset.tone;
+          return;
+        }
+        statusEl.textContent = message;
+        statusEl.dataset.tone = tone;
+        setTimeout(() => {
+          if (statusEl.textContent === message) {
+            statusEl.textContent = '';
+            delete statusEl.dataset.tone;
+          }
+        }, 4000);
+      }
+
+      function setIntegrationBusy(card, busy) {
+        card.classList.toggle('is-busy', busy);
+        const buttons = card.querySelectorAll('.integration-save, .integration-disconnect');
+        buttons.forEach(btn => {
+          btn.disabled = busy;
+        });
+      }
+
+      function formatTimestamp(timestamp) {
+        if (!timestamp) return '';
+        const date = new Date(timestamp);
+        if (Number.isNaN(date.getTime())) {
+          return '';
+        }
+        return date.toLocaleString();
+      }
+
+      async function refreshIntegrationCards() {
+        if (!integrationCards.length) return;
+        try {
+          const response = await fetch(integrationEndpoint, { method: 'GET' });
+          if (!response.ok) {
+            throw new Error('Failed to load integration settings');
+          }
+          const data = await response.json();
+          integrationCards.forEach((card) => {
+            const service = card.dataset.service;
+            const info = data?.services?.[service];
+            const enabledInput = card.querySelector('.integration-enabled');
+            const resourceInput = card.querySelector('.integration-resource');
+            const tokenInput = card.querySelector('.integration-token');
+            const syncBoardsInput = card.querySelector('.integration-sync-boards');
+            const syncPlayersInput = card.querySelector('.integration-sync-players');
+            const tokenPreview = card.querySelector('.integration-token-preview');
+            const disconnectBtn = card.querySelector('.integration-disconnect');
+
+            if (enabledInput) enabledInput.checked = Boolean(info?.enabled);
+            if (resourceInput) resourceInput.value = info?.resource ?? '';
+            if (tokenInput) tokenInput.value = '';
+            if (syncBoardsInput) syncBoardsInput.checked = Boolean(info?.syncBoards);
+            if (syncPlayersInput) syncPlayersInput.checked = Boolean(info?.syncPlayers);
+            if (tokenPreview) {
+              if (info?.hasToken) {
+                const preview = info.tokenPreview || '••••';
+                const updated = formatTimestamp(info.lastUpdated);
+                tokenPreview.textContent = `Token saved (${preview})${updated ? ` – updated ${updated}` : ''}.`;
+              } else {
+                tokenPreview.textContent = 'No token stored yet.';
+              }
+            }
+            if (disconnectBtn) {
+              disconnectBtn.disabled = !(info?.hasToken || info?.enabled);
+            }
+            setIntegrationStatus(card, '');
+          });
+        } catch (error) {
+          console.error('Integration load error', error);
+          integrationCards.forEach((card) => {
+            setIntegrationStatus(card, 'Unable to load integration settings.', 'error');
+          });
+        }
+      }
+
+      async function handleSaveIntegration(card, service) {
+        const enabledInput = card.querySelector('.integration-enabled');
+        const resourceInput = card.querySelector('.integration-resource');
+        const tokenInput = card.querySelector('.integration-token');
+        const syncBoardsInput = card.querySelector('.integration-sync-boards');
+        const syncPlayersInput = card.querySelector('.integration-sync-players');
+
+        const payload = {
+          enabled: enabledInput?.checked ?? false,
+          resource: resourceInput?.value ?? '',
+          syncBoards: syncBoardsInput?.checked ?? false,
+          syncPlayers: syncPlayersInput?.checked ?? false,
+        };
+
+        const tokenValue = tokenInput?.value?.trim();
+        if (tokenValue) {
+          payload.token = tokenValue;
+        }
+
+        try {
+          setIntegrationBusy(card, true);
+          setIntegrationStatus(card, 'Saving connection…');
+          const response = await fetch(`${integrationEndpoint}/${service}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          if (!response.ok) {
+            const errorBody = await response.json().catch(() => ({}));
+            const message = errorBody?.error || 'Unable to save connection.';
+            throw new Error(message);
+          }
+          setIntegrationStatus(card, 'Connection saved.', 'success');
+          if (tokenInput) {
+            tokenInput.value = '';
+          }
+          await refreshIntegrationCards();
+        } catch (error) {
+          console.error(`Integration save error for ${service}`, error);
+          setIntegrationStatus(card, error.message || 'Failed to save connection.', 'error');
+        } finally {
+          setIntegrationBusy(card, false);
+        }
+      }
+
+      async function handleDisconnectIntegration(card, service) {
+        try {
+          setIntegrationBusy(card, true);
+          setIntegrationStatus(card, 'Disconnecting…');
+          const response = await fetch(`${integrationEndpoint}/${service}`, {
+            method: 'DELETE',
+          });
+          if (!response.ok) {
+            const errorBody = await response.json().catch(() => ({}));
+            const message = errorBody?.error || 'Unable to disconnect.';
+            throw new Error(message);
+          }
+          setIntegrationStatus(card, 'Connection removed.', 'success');
+          await refreshIntegrationCards();
+        } catch (error) {
+          console.error(`Integration disconnect error for ${service}`, error);
+          setIntegrationStatus(card, error.message || 'Failed to disconnect.', 'error');
+        } finally {
+          setIntegrationBusy(card, false);
+        }
+      }
+
       savePlayersBtn?.addEventListener('click', savePlayers);
       resetPlayersBtn?.addEventListener('click', resetPlayers);
 
@@ -335,8 +614,18 @@
       saveBrandBtn?.addEventListener('click', saveBrand);
       resetBrandBtn?.addEventListener('click', resetBrand);
 
+      integrationCards.forEach((card) => {
+        const service = card.dataset.service;
+        const saveBtn = card.querySelector('.integration-save');
+        const disconnectBtn = card.querySelector('.integration-disconnect');
+
+        saveBtn?.addEventListener('click', () => handleSaveIntegration(card, service));
+        disconnectBtn?.addEventListener('click', () => handleDisconnectIntegration(card, service));
+      });
+
       loadPlayers();
       loadBrand();
+      refreshIntegrationCards();
     })();
   </script>
 </body>

@@ -1,6 +1,7 @@
 import { Router } from 'itty-router';
 import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
 import { CollaborationSession } from '../shared/collaboration.js';
+import { IntegrationConfig } from '../shared/integration-config.js';
 import { BallGameSession } from '../../apps/ballgame/ball-game-session.js';
 import { MimicGameSession } from '../../apps/mimic-master/mimic-game-session.js';
 import { PlanningPokerSession } from '../../apps/planning-poker/planning-poker-session.js';
@@ -80,6 +81,18 @@ router.get('/api/planning-poker/websocket', (request, env) => {
     const durableObject = env.PLANNING_POKER_SESSION.get(durableObjectId);
     return durableObject.fetch(request);
 });
+
+const forwardIntegrationRequest = (request, env) => {
+  const id = env.INTEGRATION_CONFIG.idFromName('global');
+  const stub = env.INTEGRATION_CONFIG.get(id);
+  return stub.fetch(request);
+};
+
+router.get('/api/integrations/config', forwardIntegrationRequest);
+router.put('/api/integrations/config/:service', forwardIntegrationRequest);
+router.delete('/api/integrations/config/:service', forwardIntegrationRequest);
+router.options('/api/integrations/config', forwardIntegrationRequest);
+router.options('/api/integrations/config/:service', forwardIntegrationRequest);
 
 // A catch-all for any other API requests that don't match
 router.all('/api/*', (request) => {
@@ -188,4 +201,4 @@ export default {
     },
 };
 
-export { CollaborationSession, BallGameSession, MimicGameSession, PlanningPokerSession };
+export { CollaborationSession, BallGameSession, MimicGameSession, PlanningPokerSession, IntegrationConfig };
