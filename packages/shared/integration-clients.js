@@ -57,6 +57,7 @@ async function fetchJira(config, payload = {}) {
   const siteUrl = (fields.siteUrl || '').trim().replace(/\/$/, '');
   const email = (fields.email || '').trim();
   const projectKey = (config.resource || '').trim();
+  const includeAssignments = payload.includeAssignments === true;
 
   if (!siteUrl) {
     throw new IntegrationError('Jira site URL is required.', 422);
@@ -68,54 +69,61 @@ async function fetchJira(config, payload = {}) {
     throw new IntegrationError('Jira project key is required.', 422);
   }
 
-  const query = payload.query || `project=${projectKey} ORDER BY updated DESC`;
-  const url = new URL(`${siteUrl}/rest/api/3/search`);
-  url.searchParams.set('jql', query);
-  url.searchParams.set('maxResults', payload.maxResults ? String(payload.maxResults) : '20');
-
   const auth = btoa(`${email}:${config.token}`);
-  const response = await fetchWithTimeout(url.toString(), {
-    method: 'GET',
-    headers: {
-      'Authorization': `Basic ${auth}`,
-      'Accept': 'application/json',
-    },
-  });
-
-  if (!response.ok) {
-    const text = await response.text();
-    throw new IntegrationError(`Jira request failed: ${response.status} ${text}`.trim(), response.status);
-  }
-
-  const data = await response.json();
-  const issues = Array.isArray(data.issues)
-    ? data.issues.map((issue) => {
-        const assignee = issue.fields?.assignee?.displayName ?? null;
-        const key = issue.key;
-        const url = key ? `${siteUrl}/browse/${key}` : null;
-        return {
-          id: issue.id,
-          key,
-          summary: issue.fields?.summary ?? '',
-          status: issue.fields?.status?.name ?? '',
-          assignee,
-          updated: issue.fields?.updated ?? null,
-          url,
-        };
-      })
-    : [];
-
   const assignmentMap = new Map();
-  for (const issue of issues) {
-    if (!issue.assignee) continue;
-    const existing = assignmentMap.get(issue.assignee) || [];
-    existing.push({
-      key: issue.key,
-      summary: issue.summary,
-      status: issue.status,
-      url: issue.url,
+  let issues = [];
+  let totalIssues = 0;
+  const query = payload.query || `project=${projectKey} ORDER BY updated DESC`;
+
+  if (includeAssignments) {
+    const url = new URL(`${siteUrl}/rest/api/3/search`);
+    url.searchParams.set('jql', query);
+    url.searchParams.set('maxResults', payload.maxResults ? String(payload.maxResults) : '20');
+
+    const response = await fetchWithTimeout(url.toString(), {
+      method: 'GET',
+      headers: {
+        'Authorization': `Basic ${auth}`,
+        'Accept': 'application/json',
+      },
     });
-    assignmentMap.set(issue.assignee, existing);
+
+    if (!response.ok) {
+      const text = await response.text();
+      throw new IntegrationError(`Jira request failed: ${response.status} ${text}`.trim(), response.status);
+    }
+
+    const data = await response.json();
+    issues = Array.isArray(data.issues)
+      ? data.issues.map((issue) => {
+          const assignee = issue.fields?.assignee?.displayName ?? null;
+          const key = issue.key;
+          const issueUrl = key ? `${siteUrl}/browse/${key}` : null;
+          return {
+            id: issue.id,
+            key,
+            summary: issue.fields?.summary ?? '',
+            status: issue.fields?.status?.name ?? '',
+            assignee,
+            updated: issue.fields?.updated ?? null,
+            url: issueUrl,
+          };
+        })
+      : [];
+
+    totalIssues = data.total ?? issues.length;
+
+    for (const issue of issues) {
+      if (!issue.assignee) continue;
+      const existing = assignmentMap.get(issue.assignee) || [];
+      existing.push({
+        key: issue.key,
+        summary: issue.summary,
+        status: issue.status,
+        url: issue.url,
+      });
+      assignmentMap.set(issue.assignee, existing);
+    }
   }
 
   let assignableUsers = [];
@@ -142,19 +150,29 @@ async function fetchJira(config, payload = {}) {
     console.warn('Jira user fetch failed', error);
   }
 
-  const players = uniqueStrings([...assignableUsers, ...assignmentMap.keys()]);
+  const players = uniqueStrings([
+    ...assignableUsers,
+    ...assignmentMap.keys(),
+  ]);
+
   const assignments = Array.from(assignmentMap.entries()).map(([player, items]) => ({
     player,
     items,
   }));
 
-  return {
+  const result = {
     query,
-    issues,
-    total: data.total ?? issues.length,
     players,
-    assignments,
+    assignments: includeAssignments ? assignments : [],
+    assignmentCount: includeAssignments ? assignments.reduce((sum, entry) => sum + entry.items.length, 0) : 0,
   };
+
+  if (includeAssignments) {
+    result.issues = issues;
+    result.total = totalIssues;
+  }
+
+  return result;
 }
 
 function extractTrelloBoardId(resource) {
@@ -172,11 +190,12 @@ function extractTrelloBoardId(resource) {
   }
 }
 
-async function fetchTrello(config) {
+async function fetchTrello(config, payload = {}) {
   assertConfig('trello', config);
   const fields = ensureFields(config);
   const boardId = extractTrelloBoardId(config.resource || '');
   const apiKey = (fields.apiKey || '').trim();
+  const includeAssignments = payload.includeAssignments === true;
 
   if (!boardId) {
     throw new IntegrationError('Trello board URL or ID is required.', 422);
@@ -184,30 +203,6 @@ async function fetchTrello(config) {
   if (!apiKey) {
     throw new IntegrationError('Trello API key is required.', 422);
   }
-
-  const url = new URL(`https://api.trello.com/1/boards/${boardId}/cards`);
-  url.searchParams.set('key', apiKey);
-  url.searchParams.set('token', config.token.trim());
-  url.searchParams.set('fields', 'id,name,url,idList,pos');
-  url.searchParams.set('limit', '50');
-
-  const response = await fetchWithTimeout(url.toString(), { method: 'GET' });
-  if (!response.ok) {
-    const text = await response.text();
-    throw new IntegrationError(`Trello request failed: ${response.status} ${text}`.trim(), response.status);
-  }
-
-  const cards = await response.json();
-  const normalized = Array.isArray(cards)
-    ? cards.map((card) => ({
-        id: card.id,
-        name: card.name,
-        url: card.url,
-        listId: card.idList,
-        position: card.pos,
-        memberIds: Array.isArray(card.idMembers) ? card.idMembers : [],
-      }))
-    : [];
 
   let members = [];
   try {
@@ -236,20 +231,48 @@ async function fetchTrello(config) {
   });
 
   const assignmentsMap = new Map();
-  normalized.forEach((card) => {
-    card.memberIds.forEach((memberId) => {
-      const name = memberLookup.get(memberId);
-      if (!name) return;
-      const list = assignmentsMap.get(name) || [];
-      list.push({
-        id: card.id,
-        name: card.name,
-        url: card.url,
-        listId: card.listId,
+  let cards = [];
+
+  if (includeAssignments) {
+    const url = new URL(`https://api.trello.com/1/boards/${boardId}/cards`);
+    url.searchParams.set('key', apiKey);
+    url.searchParams.set('token', config.token.trim());
+    url.searchParams.set('fields', 'id,name,url,idList,pos,idMembers');
+    url.searchParams.set('limit', '50');
+
+    const response = await fetchWithTimeout(url.toString(), { method: 'GET' });
+    if (!response.ok) {
+      const text = await response.text();
+      throw new IntegrationError(`Trello request failed: ${response.status} ${text}`.trim(), response.status);
+    }
+
+    const payloadCards = await response.json();
+    cards = Array.isArray(payloadCards)
+      ? payloadCards.map((card) => ({
+          id: card.id,
+          name: card.name,
+          url: card.url,
+          listId: card.idList,
+          position: card.pos,
+          memberIds: Array.isArray(card.idMembers) ? card.idMembers : [],
+        }))
+      : [];
+
+    cards.forEach((card) => {
+      card.memberIds.forEach((memberId) => {
+        const name = memberLookup.get(memberId);
+        if (!name) return;
+        const list = assignmentsMap.get(name) || [];
+        list.push({
+          id: card.id,
+          name: card.name,
+          url: card.url,
+          listId: card.listId,
+        });
+        assignmentsMap.set(name, list);
       });
-      assignmentsMap.set(name, list);
     });
-  });
+  }
 
   const players = uniqueStrings([
     ...members.map((member) => member.name),
@@ -261,13 +284,19 @@ async function fetchTrello(config) {
     items,
   }));
 
-  return {
+  const result = {
     boardId,
-    cards: normalized,
-    count: normalized.length,
     players,
-    assignments,
+    assignments: includeAssignments ? assignments : [],
+    assignmentCount: includeAssignments ? assignments.reduce((sum, entry) => sum + entry.items.length, 0) : 0,
   };
+
+  if (includeAssignments) {
+    result.cards = cards;
+    result.count = cards.length;
+  }
+
+  return result;
 }
 
 async function fetchGitHub(config, payload = {}) {
@@ -278,42 +307,8 @@ async function fetchGitHub(config, payload = {}) {
   }
 
   const perPage = payload.perPage ? Math.min(Math.max(parseInt(payload.perPage, 10), 1), 100) : 20;
-  const url = new URL(`https://api.github.com/repos/${repo}/issues`);
-  url.searchParams.set('per_page', String(perPage));
-  if (payload.state) {
-    url.searchParams.set('state', payload.state);
-  } else {
-    url.searchParams.set('state', 'open');
-  }
-
-  const response = await fetchWithTimeout(url.toString(), {
-    method: 'GET',
-    headers: {
-      'Authorization': `Bearer ${config.token.trim()}`,
-      'Accept': 'application/vnd.github+json',
-      'User-Agent': 'DailyPick-Worker',
-    },
-  });
-
-  if (!response.ok) {
-    const text = await response.text();
-    throw new IntegrationError(`GitHub request failed: ${response.status} ${text}`.trim(), response.status);
-  }
-
-  const issues = await response.json();
-  const normalized = Array.isArray(issues)
-    ? issues
-        .filter((issue) => !issue.pull_request)
-        .map((issue) => ({
-          id: issue.id,
-          number: issue.number,
-          title: issue.title,
-          url: issue.html_url,
-          state: issue.state,
-          assignee: issue.assignee?.login ?? null,
-          updated: issue.updated_at,
-        }))
-    : [];
+  const includeAssignments = payload.includeAssignments === true;
+  let normalized = [];
 
   let collaborators = [];
   try {
@@ -339,22 +334,63 @@ async function fetchGitHub(config, payload = {}) {
   }
 
   const assignmentsMap = new Map();
-  normalized.forEach((issue) => {
-    if (!issue.assignee) return;
-    const list = assignmentsMap.get(issue.assignee) || [];
-    list.push({
-      id: issue.id,
-      number: issue.number,
-      title: issue.title,
-      url: issue.url,
-      state: issue.state,
+  let issues = [];
+
+  if (includeAssignments) {
+    const url = new URL(`https://api.github.com/repos/${repo}/issues`);
+    url.searchParams.set('per_page', String(perPage));
+    if (payload.state) {
+      url.searchParams.set('state', payload.state);
+    } else {
+      url.searchParams.set('state', 'open');
+    }
+
+    const response = await fetchWithTimeout(url.toString(), {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${config.token.trim()}`,
+        'Accept': 'application/vnd.github+json',
+        'User-Agent': 'DailyPick-Worker',
+      },
     });
-    assignmentsMap.set(issue.assignee, list);
-  });
+
+    if (!response.ok) {
+      const text = await response.text();
+      throw new IntegrationError(`GitHub request failed: ${response.status} ${text}`.trim(), response.status);
+    }
+
+    issues = await response.json();
+    normalized = Array.isArray(issues)
+      ? issues
+          .filter((issue) => !issue.pull_request)
+          .map((issue) => ({
+            id: issue.id,
+            number: issue.number,
+            title: issue.title,
+            url: issue.html_url,
+            state: issue.state,
+            assignee: issue.assignee?.login ?? null,
+            updated: issue.updated_at,
+          }))
+      : [];
+
+    normalized.forEach((issue) => {
+      if (!issue.assignee) return;
+      const list = assignmentsMap.get(issue.assignee) || [];
+      list.push({
+        id: issue.id,
+        number: issue.number,
+        title: issue.title,
+        url: issue.url,
+        state: issue.state,
+      });
+      assignmentsMap.set(issue.assignee, list);
+    });
+  }
 
   const players = uniqueStrings([
     ...collaborators,
-    ...normalized.map((issue) => issue.assignee).filter(Boolean),
+    ...Array.from(assignmentsMap.keys()),
   ]);
 
   const assignments = Array.from(assignmentsMap.entries()).map(([player, items]) => ({
@@ -362,13 +398,19 @@ async function fetchGitHub(config, payload = {}) {
     items,
   }));
 
-  return {
+  const result = {
     repository: repo,
-    issues: normalized,
-    count: normalized.length,
     players,
-    assignments,
+    assignments: includeAssignments ? assignments : [],
+    assignmentCount: includeAssignments ? assignments.reduce((sum, entry) => sum + entry.items.length, 0) : 0,
   };
+
+  if (includeAssignments) {
+    result.issues = normalized;
+    result.count = normalized.length;
+  }
+
+  return result;
 }
 
 export async function fetchIntegrationData(service, config, payload = {}) {

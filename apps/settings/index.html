@@ -189,6 +189,10 @@
               <input type="checkbox" class="integration-sync-players">
               <span>Sync Jira users into the Player List</span>
             </label>
+            <label class="checkbox">
+              <input type="checkbox" class="integration-store-assignments">
+              <span>Store assigned Jira issues for later</span>
+            </label>
             <p class="integration-token-preview" aria-live="polite"></p>
             <p class="integration-status" aria-live="polite"></p>
             <div class="button-row">
@@ -226,6 +230,10 @@
               <input type="checkbox" class="integration-sync-players">
               <span>Sync Trello members into the Player List</span>
             </label>
+            <label class="checkbox">
+              <input type="checkbox" class="integration-store-assignments">
+              <span>Store assigned Trello cards for later</span>
+            </label>
             <p class="integration-token-preview" aria-live="polite"></p>
             <p class="integration-status" aria-live="polite"></p>
             <div class="button-row">
@@ -258,6 +266,10 @@
             <label class="checkbox">
               <input type="checkbox" class="integration-sync-players">
               <span>Sync GitHub collaborators into the Player List</span>
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" class="integration-store-assignments">
+              <span>Store assigned GitHub issues for later</span>
             </label>
             <p class="integration-token-preview" aria-live="polite"></p>
             <p class="integration-status" aria-live="polite"></p>
@@ -332,6 +344,8 @@
       const previewButton = brandPreview.querySelector('button');
       const integrationEndpoint = '/api/integrations/config';
       const integrationCards = Array.from(document.querySelectorAll('.integration-card'));
+      const ASSIGNMENTS_STORAGE_KEY = 'integrationAssignments';
+      const ASSIGNMENT_ITEM_FIELDS = ['id', 'key', 'name', 'summary', 'status', 'url', 'number', 'title', 'state', 'listId'];
 
       function showStatus(el, message) {
         if (!el) return;
@@ -360,6 +374,92 @@
           result.push(trimmed);
         });
         return result;
+      }
+
+      function safeParseJson(raw, fallback) {
+        if (!raw) return fallback;
+        try {
+          const parsed = JSON.parse(raw);
+          return typeof parsed === 'object' && parsed !== null ? parsed : fallback;
+        } catch {
+          return fallback;
+        }
+      }
+
+      function sanitizeAssignmentItem(item) {
+        if (!item || typeof item !== 'object') return null;
+        const sanitized = {};
+        ASSIGNMENT_ITEM_FIELDS.forEach((field) => {
+          if (item[field] == null) return;
+          const value = String(item[field]).slice(0, 200);
+          if (value) {
+            sanitized[field] = value;
+          }
+        });
+        return Object.keys(sanitized).length ? sanitized : null;
+      }
+
+      function sanitizeAssignmentsPayload(assignments = []) {
+        return assignments
+          .filter((entry) => entry && typeof entry === 'object' && typeof entry.player === 'string')
+          .map((entry) => {
+            const player = entry.player.trim();
+            if (!player) return null;
+            const items = Array.isArray(entry.items) ? entry.items.slice(0, 25) : [];
+            const sanitizedItems = items
+              .map((item) => sanitizeAssignmentItem(item))
+              .filter(Boolean);
+            return {
+              player,
+              items: sanitizedItems,
+            };
+          })
+          .filter(Boolean);
+      }
+
+      function loadAssignmentSnapshots() {
+        return safeParseJson(localStorage.getItem(ASSIGNMENTS_STORAGE_KEY), {});
+      }
+
+      function persistAssignmentsSnapshot(service, data) {
+        if (!service || !data) return false;
+        const sanitizedAssignments = sanitizeAssignmentsPayload(data.assignments);
+        const players = Array.isArray(data.players) ? dedupeNames(data.players) : [];
+
+        if (!sanitizedAssignments.length) {
+          return false;
+        }
+
+        const store = loadAssignmentSnapshots();
+        store[service] = {
+          service,
+          fetchedAt: new Date().toISOString(),
+          players,
+          assignments: sanitizedAssignments,
+        };
+        try {
+          localStorage.setItem(ASSIGNMENTS_STORAGE_KEY, JSON.stringify(store));
+          return true;
+        } catch (error) {
+          console.warn('Unable to persist assignment snapshot', error);
+          return false;
+        }
+      }
+
+      function clearAssignmentSnapshot(service) {
+        if (!service) return;
+        const store = loadAssignmentSnapshots();
+        if (!(service in store)) return;
+        delete store[service];
+        try {
+          if (Object.keys(store).length) {
+            localStorage.setItem(ASSIGNMENTS_STORAGE_KEY, JSON.stringify(store));
+          } else {
+            localStorage.removeItem(ASSIGNMENTS_STORAGE_KEY);
+          }
+        } catch (error) {
+          console.warn('Unable to clear assignment snapshot', error);
+        }
       }
 
       function formatServiceName(service) {
@@ -542,6 +642,7 @@
             const resourceInput = card.querySelector('.integration-resource');
             const tokenInput = card.querySelector('.integration-token');
             const syncPlayersInput = card.querySelector('.integration-sync-players');
+            const storeAssignmentsInput = card.querySelector('.integration-store-assignments');
             const tokenPreview = card.querySelector('.integration-token-preview');
             const disconnectBtn = card.querySelector('.integration-disconnect');
             const fieldInputs = card.querySelectorAll('[data-field]');
@@ -550,6 +651,7 @@
             if (resourceInput) resourceInput.value = info?.resource ?? '';
             if (tokenInput) tokenInput.value = '';
             if (syncPlayersInput) syncPlayersInput.checked = Boolean(info?.syncPlayers);
+            if (storeAssignmentsInput) storeAssignmentsInput.checked = Boolean(info?.storeAssignments);
             fieldInputs.forEach((input) => {
               const key = input.dataset.field;
               if (!key) return;
@@ -582,12 +684,14 @@
         const resourceInput = card.querySelector('.integration-resource');
         const tokenInput = card.querySelector('.integration-token');
         const syncPlayersInput = card.querySelector('.integration-sync-players');
+        const storeAssignmentsInput = card.querySelector('.integration-store-assignments');
         const fieldInputs = card.querySelectorAll('[data-field]');
 
         const payload = {
           enabled: enabledInput?.checked ?? false,
           resource: resourceInput?.value?.trim() ?? '',
           syncPlayers: syncPlayersInput?.checked ?? false,
+          storeAssignments: storeAssignmentsInput?.checked ?? false,
         };
 
         if (fieldInputs.length) {
@@ -622,6 +726,9 @@
             tokenInput.value = '';
           }
           await refreshIntegrationCards();
+          if (!payload.enabled || !payload.storeAssignments) {
+            clearAssignmentSnapshot(service);
+          }
         } catch (error) {
           console.error(`Integration save error for ${service}`, error);
           setIntegrationStatus(card, error.message || 'Failed to save connection.', 'error');
@@ -644,6 +751,7 @@
           }
           setIntegrationStatus(card, 'Connection removed.', 'success');
           await refreshIntegrationCards();
+          clearAssignmentSnapshot(service);
         } catch (error) {
           console.error(`Integration disconnect error for ${service}`, error);
           setIntegrationStatus(card, error.message || 'Failed to disconnect.', 'error');
@@ -652,7 +760,7 @@
         }
       }
 
-      function summarizeIntegrationResult(service, data) {
+      function summarizeIntegrationResult(service, data, includeAssignments = false) {
         if (!data || typeof data !== 'object') {
           return 'Connection test succeeded.';
         }
@@ -673,14 +781,20 @@
           assignmentCount = data.cards.length;
         } else if (typeof data.count === 'number') {
           assignmentCount = data.count;
+        } else if (typeof data.assignmentCount === 'number') {
+          assignmentCount = data.assignmentCount;
         }
 
         const parts = [`${serviceName} connection OK.`];
         if (playerCount) {
           parts.push(`Found ${playerCount} participant${playerCount === 1 ? '' : 's'}.`);
         }
-        if (assignmentCount) {
-          parts.push(`Loaded ${assignmentCount} assignment${assignmentCount === 1 ? '' : 's'}.`);
+        if (includeAssignments) {
+          if (assignmentCount) {
+            parts.push(`Loaded ${assignmentCount} assignment${assignmentCount === 1 ? '' : 's'}.`);
+          } else {
+            parts.push('No assigned work found to store.');
+          }
         }
 
         return parts.join(' ');
@@ -691,10 +805,12 @@
           setIntegrationBusy(card, true);
           setIntegrationStatus(card, 'Checking connection…');
           const syncPlayersInput = card.querySelector('.integration-sync-players');
+          const storeAssignmentsInput = card.querySelector('.integration-store-assignments');
+          const includeAssignments = storeAssignmentsInput?.checked ?? false;
           const response = await fetch(`/api/integrations/${service}/pull`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({}),
+            body: JSON.stringify({ includeAssignments }),
           });
 
           const body = await response.json().catch(() => ({}));
@@ -704,7 +820,14 @@
           }
 
           const data = body?.data;
-          const message = summarizeIntegrationResult(service, data);
+          let message = summarizeIntegrationResult(service, data, includeAssignments);
+          if (includeAssignments) {
+            if (persistAssignmentsSnapshot(service, data)) {
+              message = `${message} Assigned work saved for future games.`;
+            } else {
+              clearAssignmentSnapshot(service);
+            }
+          }
           setIntegrationStatus(card, message, 'success');
           if (syncPlayersInput?.checked && Array.isArray(data?.players) && data.players.length) {
             applyPlayersFromIntegration(service, data.players);
