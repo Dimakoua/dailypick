@@ -146,15 +146,16 @@
         </div>
         <p id="brandStatus" class="settings-status" aria-live="polite"></p>
       </article>
+    </section>
 
-      <article class="settings-card glass-card" aria-labelledby="integrationsHeading">
+    <section class="settings-card glass-card integrations-panel" aria-labelledby="integrationsHeading">
         <div class="card-header">
           <h2 id="integrationsHeading">Third-Party Integrations</h2>
           <p>Connect Daily Pick to your delivery tools to sync boards and participants automatically.</p>
         </div>
 
         <p class="integration-intro">Connections save to the Daily Pick Worker so you can safely reuse them from any device.<br>
-          Tokens are masked after you save them. Use Test Connection to preview teammates and decide whether to import them or capture their current work.</p>
+          Tokens are masked after you save them. Test a connection to preview teammates, then decide if you want to import players or keep a snapshot of their current work.</p>
 
         <div class="integration-grid">
           <section class="integration-card" data-service="jira" aria-labelledby="integration-jira-heading">
@@ -185,14 +186,12 @@
               API token
               <input type="password" class="integration-token" placeholder="Paste a Jira API token">
             </label>
-            <label class="checkbox">
-              <input type="checkbox" class="integration-sync-players">
-              <span>Sync Jira users into the Player List</span>
-            </label>
-            <label class="checkbox">
-              <input type="checkbox" class="integration-store-assignments">
-              <span>Store assigned Jira issues for later</span>
-            </label>
+            <div class="integration-options">
+              <label class="integration-option">
+                <input type="checkbox" class="integration-include-assignments">
+                <span>Include assigned work when testing</span>
+              </label>
+            </div>
             <p class="integration-token-preview" aria-live="polite"></p>
             <p class="integration-status" aria-live="polite"></p>
             <div class="integration-results" hidden>
@@ -242,14 +241,12 @@
               API token
               <input type="password" class="integration-token" placeholder="Paste a Trello API token">
             </label>
-            <label class="checkbox">
-              <input type="checkbox" class="integration-sync-players">
-              <span>Sync Trello members into the Player List</span>
-            </label>
-            <label class="checkbox">
-              <input type="checkbox" class="integration-store-assignments">
-              <span>Store assigned Trello cards for later</span>
-            </label>
+            <div class="integration-options">
+              <label class="integration-option">
+                <input type="checkbox" class="integration-include-assignments">
+                <span>Include assigned work when testing</span>
+              </label>
+            </div>
             <p class="integration-token-preview" aria-live="polite"></p>
             <p class="integration-status" aria-live="polite"></p>
             <div class="integration-results" hidden>
@@ -295,14 +292,12 @@
               Personal access token
               <input type="password" class="integration-token" placeholder="Paste a GitHub token">
             </label>
-            <label class="checkbox">
-              <input type="checkbox" class="integration-sync-players">
-              <span>Sync GitHub collaborators into the Player List</span>
-            </label>
-            <label class="checkbox">
-              <input type="checkbox" class="integration-store-assignments">
-              <span>Store assigned GitHub issues for later</span>
-            </label>
+            <div class="integration-options">
+              <label class="integration-option">
+                <input type="checkbox" class="integration-include-assignments">
+                <span>Include assigned work when testing</span>
+              </label>
+            </div>
             <p class="integration-token-preview" aria-live="polite"></p>
             <p class="integration-status" aria-live="polite"></p>
             <div class="integration-results" hidden>
@@ -328,7 +323,7 @@
             </div>
           </section>
         </div>
-      </article>
+      </section>
     </section>
 
     <section class="settings-card glass-card tips">
@@ -814,7 +809,7 @@
             renderAssignmentDetails(assignments, assignmentData);
           } else {
             const note = document.createElement('p');
-            note.textContent = 'Assignments were not requested. Enable “Store assigned work” and test again to preview cards or issues.';
+            note.textContent = 'Assignments were not requested. Turn on “Include assigned work when testing” and try again to preview cards or issues.';
             assignments.appendChild(note);
           }
         }
@@ -859,8 +854,7 @@
             const enabledInput = card.querySelector('.integration-enabled');
             const resourceInput = card.querySelector('.integration-resource');
             const tokenInput = card.querySelector('.integration-token');
-            const syncPlayersInput = card.querySelector('.integration-sync-players');
-            const storeAssignmentsInput = card.querySelector('.integration-store-assignments');
+            const includeAssignmentsInput = card.querySelector('.integration-include-assignments');
             const tokenPreview = card.querySelector('.integration-token-preview');
             const disconnectBtn = card.querySelector('.integration-disconnect');
             const fieldInputs = card.querySelectorAll('[data-field]');
@@ -868,8 +862,7 @@
             if (enabledInput) enabledInput.checked = Boolean(info?.enabled);
             if (resourceInput) resourceInput.value = info?.resource ?? '';
             if (tokenInput) tokenInput.value = '';
-            if (syncPlayersInput) syncPlayersInput.checked = Boolean(info?.syncPlayers);
-            if (storeAssignmentsInput) storeAssignmentsInput.checked = Boolean(info?.storeAssignments);
+            if (includeAssignmentsInput) includeAssignmentsInput.checked = Boolean(info?.includeAssignments);
             fieldInputs.forEach((input) => {
               const key = input.dataset.field;
               if (!key) return;
@@ -903,15 +896,13 @@
         const enabledInput = card.querySelector('.integration-enabled');
         const resourceInput = card.querySelector('.integration-resource');
         const tokenInput = card.querySelector('.integration-token');
-        const syncPlayersInput = card.querySelector('.integration-sync-players');
-        const storeAssignmentsInput = card.querySelector('.integration-store-assignments');
+        const includeAssignmentsInput = card.querySelector('.integration-include-assignments');
         const fieldInputs = card.querySelectorAll('[data-field]');
 
         const payload = {
           enabled: enabledInput?.checked ?? false,
           resource: resourceInput?.value?.trim() ?? '',
-          syncPlayers: syncPlayersInput?.checked ?? false,
-          storeAssignments: storeAssignmentsInput?.checked ?? false,
+          includeAssignments: includeAssignmentsInput?.checked ?? false,
         };
 
         if (fieldInputs.length) {
@@ -951,7 +942,7 @@
           integrationResults.delete(service);
           resetIntegrationResult(card);
           await refreshIntegrationCards();
-          if (!payload.enabled || !payload.storeAssignments) {
+          if (!payload.enabled) {
             clearAssignmentSnapshot(service);
           }
         } catch (error) {
@@ -1030,9 +1021,8 @@
           setIntegrationStatus(card, 'Checking connection…');
           integrationResults.delete(service);
           resetIntegrationResult(card);
-          const syncPlayersInput = card.querySelector('.integration-sync-players');
-          const storeAssignmentsInput = card.querySelector('.integration-store-assignments');
-          const includeAssignments = storeAssignmentsInput?.checked ?? false;
+          const includeAssignmentsInput = card.querySelector('.integration-include-assignments');
+          const includeAssignments = includeAssignmentsInput?.checked ?? false;
           const response = await fetch(`/api/integrations/${service}/pull`, {
             method: 'POST',
             headers: {
@@ -1064,11 +1054,6 @@
       }
 
       function handleIntegrationPlayersAction(card, service) {
-        const syncPlayersInput = card.querySelector('.integration-sync-players');
-        if (!syncPlayersInput?.checked) {
-          setIntegrationStatus(card, 'Enable “Sync users into the Player List” before updating.', 'error');
-          return;
-        }
         const record = integrationResults.get(service);
         const players = record?.data?.players;
         if (!Array.isArray(players) || !players.length) {
@@ -1083,14 +1068,9 @@
       }
 
       function handleIntegrationAssignmentsAction(card, service) {
-        const storeAssignmentsInput = card.querySelector('.integration-store-assignments');
-        if (!storeAssignmentsInput?.checked) {
-          setIntegrationStatus(card, 'Enable “Store assigned work” before saving a snapshot.', 'error');
-          return;
-        }
         const record = integrationResults.get(service);
         if (!record || !record.includeAssignments) {
-          setIntegrationStatus(card, 'Run Test Connection with assignment storage enabled first.', 'error');
+          setIntegrationStatus(card, 'Run Test Connection with “Include assigned work” enabled first.', 'error');
           return;
         }
         const assignments = Array.isArray(record.data?.assignments) ? record.data.assignments : [];
@@ -1122,7 +1102,7 @@
         const testBtn = card.querySelector('.integration-test');
         const updateAction = card.querySelector('.integration-action-update');
         const saveAction = card.querySelector('.integration-action-save');
-        const changeInputs = card.querySelectorAll('.integration-enabled, .integration-sync-players, .integration-store-assignments');
+        const changeInputs = card.querySelectorAll('.integration-enabled, .integration-include-assignments');
 
         saveBtn?.addEventListener('click', () => handleSaveIntegration(card, service));
         disconnectBtn?.addEventListener('click', () => handleDisconnectIntegration(card, service));

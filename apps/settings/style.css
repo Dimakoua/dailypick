@@ -149,14 +149,22 @@
   font-size: 0.95rem;
 }
 
-.integration-card label.checkbox {
-  flex-direction: row;
+.integration-options {
+  display: flex;
   align-items: center;
+  gap: 12px;
+  padding: 4px 0;
+}
+
+.integration-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-weight: 500;
   color: var(--brand-text);
 }
 
-.integration-card label.checkbox input {
+.integration-option input {
   width: auto;
   margin: 0;
 }

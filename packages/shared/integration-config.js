@@ -57,11 +57,14 @@ export class IntegrationConfig {
     const safe = { services: {} };
     for (const [service, details] of Object.entries(config.services || {})) {
       const entry = details || {};
+      const includeAssignments = entry.includeAssignments === undefined
+        ? Boolean(entry.storeAssignments)
+        : Boolean(entry.includeAssignments);
+
       safe.services[service] = {
         enabled: Boolean(entry.enabled),
         resource: sanitizeString(entry.resource, 160),
-        syncPlayers: Boolean(entry.syncPlayers),
-        storeAssignments: Boolean(entry.storeAssignments),
+        includeAssignments,
         tokenPreview: maskToken(entry.token),
         hasToken: Boolean(entry.token && entry.token.trim()),
         lastUpdated: entry.lastUpdated || null,
@@ -142,11 +145,13 @@ export class IntegrationConfig {
     const config = await this.#loadConfig();
     const existing = config.services?.[service] || {};
 
+    const includeAssignments = payload.includeAssignments;
     const next = {
       enabled: payload.enabled === true,
       resource: sanitizeString(payload.resource, 160),
-      syncPlayers: payload.syncPlayers === true,
-      storeAssignments: payload.storeAssignments === true,
+      includeAssignments: includeAssignments === undefined
+        ? Boolean(existing.includeAssignments || existing.storeAssignments)
+        : includeAssignments === true,
       token: existing.token,
       lastUpdated: new Date().toISOString(),
       fields: this.#sanitizeFields(payload.fields || existing.fields),
