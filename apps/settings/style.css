@@ -162,7 +162,9 @@
 }
 
 .integration-card input[type="text"],
-.integration-card input[type="password"] {
+.integration-card input[type="password"],
+.integration-card input[type="email"],
+.integration-card input[type="url"] {
   border-radius: 10px;
   border: 1px solid var(--brand-border);
   padding: 10px;

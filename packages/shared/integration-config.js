@@ -6,6 +6,7 @@ const CORS_HEADERS = {
 
 const ALLOWED_SERVICES = new Set(['jira', 'trello', 'github']);
 const STORAGE_KEY = 'config';
+const INTERNAL_HOSTNAME = 'integrations.internal';
 
 function sanitizeString(value, max = 160) {
   if (typeof value !== 'string') {
@@ -64,9 +65,21 @@ export class IntegrationConfig {
         tokenPreview: maskToken(entry.token),
         hasToken: Boolean(entry.token && entry.token.trim()),
         lastUpdated: entry.lastUpdated || null,
+        fields: this.#sanitizeFields(entry.fields),
       };
     }
     return safe;
+  }
+
+  #sanitizeFields(fields) {
+    if (!fields || typeof fields !== 'object') {
+      return {};
+    }
+    const cleaned = {};
+    for (const [key, value] of Object.entries(fields)) {
+      cleaned[key] = sanitizeString(value, 160);
+    }
+    return cleaned;
   }
 
   async fetch(request) {
@@ -79,6 +92,7 @@ export class IntegrationConfig {
     const configIndex = segments.indexOf('config');
     const rest = configIndex >= 0 ? segments.slice(configIndex + 1) : [];
     const service = rest[0];
+    const isInternal = url.hostname === INTERNAL_HOSTNAME;
 
     if (service && !ALLOWED_SERVICES.has(service)) {
       return this.#jsonResponse({ error: 'Service not supported.' }, 404);
@@ -86,7 +100,7 @@ export class IntegrationConfig {
 
     switch (request.method.toUpperCase()) {
       case 'GET':
-        return this.#handleGet(service);
+        return this.#handleGet(service, isInternal && url.searchParams.get('includeSecrets') === '1');
       case 'PUT':
         return this.#handlePut(service, request);
       case 'DELETE':
@@ -96,10 +110,16 @@ export class IntegrationConfig {
     }
   }
 
-  async #handleGet(service) {
+  async #handleGet(service, includeSecrets = false) {
     const config = await this.#loadConfig();
-    const safe = this.#sanitizeConfigForClient(config);
+    if (includeSecrets) {
+      if (service) {
+        return this.#jsonResponse({ service, config: config.services?.[service] || null });
+      }
+      return this.#jsonResponse(config);
+    }
 
+    const safe = this.#sanitizeConfigForClient(config);
     if (service) {
       return this.#jsonResponse({ service, config: safe.services[service] || null });
     }
@@ -129,6 +149,7 @@ export class IntegrationConfig {
       syncPlayers: payload.syncPlayers === true,
       token: existing.token,
       lastUpdated: new Date().toISOString(),
+      fields: this.#sanitizeFields(payload.fields || existing.fields),
     };
 
     if (typeof payload.token === 'string' && payload.token.trim().length) {

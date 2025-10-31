@@ -154,7 +154,7 @@
         </div>
 
         <p class="integration-intro">Connections save to the Daily Pick Worker so you can safely reuse them from any device.<br>
-          Tokens are masked after you save them.</p>
+          Tokens are masked after you save them. Use the Test Connection button to be sure Daily Pick can pull data.</p>
 
         <div class="integration-grid">
           <section class="integration-card" data-service="jira" aria-labelledby="integration-jira-heading">
@@ -170,8 +170,16 @@
               <span>Enable connection</span>
             </label>
             <label>
-              Project key or board ID
-              <input type="text" class="integration-resource" placeholder="e.g. DP or DP-Board">
+              Jira site URL
+              <input type="url" class="integration-field" data-field="siteUrl" placeholder="https://yourteam.atlassian.net">
+            </label>
+            <label>
+              Project key
+              <input type="text" class="integration-resource" placeholder="e.g. DP">
+            </label>
+            <label>
+              Account email
+              <input type="email" class="integration-field" data-field="email" placeholder="you@company.com">
             </label>
             <label>
               API token
@@ -192,6 +200,7 @@
             <p class="integration-status" aria-live="polite"></p>
             <div class="button-row">
               <button type="button" class="integration-save">Save Connection</button>
+              <button type="button" class="ghost integration-test">Test Connection</button>
               <button type="button" class="ghost integration-disconnect">Disconnect</button>
             </div>
           </section>
@@ -209,8 +218,12 @@
               <span>Enable connection</span>
             </label>
             <label>
-              List or board URL
-              <input type="text" class="integration-resource" placeholder="https://trello.com/b/...">
+              Board or list URL
+              <input type="url" class="integration-resource" placeholder="https://trello.com/b/...">
+            </label>
+            <label>
+              API key
+              <input type="text" class="integration-field" data-field="apiKey" placeholder="Trello API key">
             </label>
             <label>
               API token
@@ -231,6 +244,7 @@
             <p class="integration-status" aria-live="polite"></p>
             <div class="button-row">
               <button type="button" class="integration-save">Save Connection</button>
+              <button type="button" class="ghost integration-test">Test Connection</button>
               <button type="button" class="ghost integration-disconnect">Disconnect</button>
             </div>
           </section>
@@ -270,6 +284,7 @@
             <p class="integration-status" aria-live="polite"></p>
             <div class="button-row">
               <button type="button" class="integration-save">Save Connection</button>
+              <button type="button" class="ghost integration-test">Test Connection</button>
               <button type="button" class="ghost integration-disconnect">Disconnect</button>
             </div>
           </section>
@@ -473,7 +488,7 @@
 
       function setIntegrationBusy(card, busy) {
         card.classList.toggle('is-busy', busy);
-        const buttons = card.querySelectorAll('.integration-save, .integration-disconnect');
+        const buttons = card.querySelectorAll('.integration-save, .integration-disconnect, .integration-test');
         buttons.forEach(btn => {
           btn.disabled = busy;
         });
@@ -506,12 +521,18 @@
             const syncPlayersInput = card.querySelector('.integration-sync-players');
             const tokenPreview = card.querySelector('.integration-token-preview');
             const disconnectBtn = card.querySelector('.integration-disconnect');
+            const fieldInputs = card.querySelectorAll('[data-field]');
 
             if (enabledInput) enabledInput.checked = Boolean(info?.enabled);
             if (resourceInput) resourceInput.value = info?.resource ?? '';
             if (tokenInput) tokenInput.value = '';
             if (syncBoardsInput) syncBoardsInput.checked = Boolean(info?.syncBoards);
             if (syncPlayersInput) syncPlayersInput.checked = Boolean(info?.syncPlayers);
+            fieldInputs.forEach((input) => {
+              const key = input.dataset.field;
+              if (!key) return;
+              input.value = info?.fields?.[key] ?? '';
+            });
             if (tokenPreview) {
               if (info?.hasToken) {
                 const preview = info.tokenPreview || '••••';
@@ -540,13 +561,23 @@
         const tokenInput = card.querySelector('.integration-token');
         const syncBoardsInput = card.querySelector('.integration-sync-boards');
         const syncPlayersInput = card.querySelector('.integration-sync-players');
+        const fieldInputs = card.querySelectorAll('[data-field]');
 
         const payload = {
           enabled: enabledInput?.checked ?? false,
-          resource: resourceInput?.value ?? '',
+          resource: resourceInput?.value?.trim() ?? '',
           syncBoards: syncBoardsInput?.checked ?? false,
           syncPlayers: syncPlayersInput?.checked ?? false,
         };
+
+        if (fieldInputs.length) {
+          payload.fields = {};
+          fieldInputs.forEach((input) => {
+            const key = input.dataset.field;
+            if (!key) return;
+            payload.fields[key] = input.value?.trim() ?? '';
+          });
+        }
 
         const tokenValue = tokenInput?.value?.trim();
         if (tokenValue) {
@@ -601,6 +632,54 @@
         }
       }
 
+      function summarizeIntegrationResult(service, data) {
+        if (!data || typeof data !== 'object') {
+          return 'Connection test succeeded.';
+        }
+        switch (service) {
+          case 'jira': {
+            const total = data.total ?? data.issues?.length ?? 0;
+            return `Connection OK – fetched ${total} Jira issue${total === 1 ? '' : 's'}.`;
+          }
+          case 'trello': {
+            const count = data.count ?? data.cards?.length ?? 0;
+            return `Connection OK – retrieved ${count} Trello card${count === 1 ? '' : 's'}.`;
+          }
+          case 'github': {
+            const count = data.count ?? data.issues?.length ?? 0;
+            return `Connection OK – loaded ${count} GitHub issue${count === 1 ? '' : 's'}.`;
+          }
+          default:
+            return 'Connection test succeeded.';
+        }
+      }
+
+      async function handleTestIntegration(card, service) {
+        try {
+          setIntegrationBusy(card, true);
+          setIntegrationStatus(card, 'Checking connection…');
+          const response = await fetch(`/api/integrations/${service}/pull`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({}),
+          });
+
+          const body = await response.json().catch(() => ({}));
+          if (!response.ok) {
+            const message = body?.error || 'Unable to reach integration service.';
+            throw new Error(message);
+          }
+
+          const message = summarizeIntegrationResult(service, body?.data);
+          setIntegrationStatus(card, message, 'success');
+        } catch (error) {
+          console.error(`Integration test error for ${service}`, error);
+          setIntegrationStatus(card, error.message || 'Connection test failed.', 'error');
+        } finally {
+          setIntegrationBusy(card, false);
+        }
+      }
+
       savePlayersBtn?.addEventListener('click', savePlayers);
       resetPlayersBtn?.addEventListener('click', resetPlayers);
 
@@ -618,9 +697,11 @@
         const service = card.dataset.service;
         const saveBtn = card.querySelector('.integration-save');
         const disconnectBtn = card.querySelector('.integration-disconnect');
+        const testBtn = card.querySelector('.integration-test');
 
         saveBtn?.addEventListener('click', () => handleSaveIntegration(card, service));
         disconnectBtn?.addEventListener('click', () => handleDisconnectIntegration(card, service));
+        testBtn?.addEventListener('click', () => handleTestIntegration(card, service));
       });
 
       loadPlayers();

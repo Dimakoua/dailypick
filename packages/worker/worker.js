@@ -2,6 +2,7 @@ import { Router } from 'itty-router';
 import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
 import { CollaborationSession } from '../shared/collaboration.js';
 import { IntegrationConfig } from '../shared/integration-config.js';
+import { fetchIntegrationData, IntegrationError } from '../shared/integration-clients.js';
 import { BallGameSession } from '../../apps/ballgame/ball-game-session.js';
 import { MimicGameSession } from '../../apps/mimic-master/mimic-game-session.js';
 import { PlanningPokerSession } from '../../apps/planning-poker/planning-poker-session.js';
@@ -82,10 +83,26 @@ router.get('/api/planning-poker/websocket', (request, env) => {
     return durableObject.fetch(request);
 });
 
+const INTERNAL_CONFIG_ORIGIN = 'https://integrations.internal';
+
 const forwardIntegrationRequest = (request, env) => {
   const id = env.INTEGRATION_CONFIG.idFromName('global');
   const stub = env.INTEGRATION_CONFIG.get(id);
   return stub.fetch(request);
+};
+
+const loadIntegrationConfig = async (env, service) => {
+  const id = env.INTEGRATION_CONFIG.idFromName('global');
+  const stub = env.INTEGRATION_CONFIG.get(id);
+  const internalUrl = new URL(`/config/${service}`, INTERNAL_CONFIG_ORIGIN);
+  internalUrl.searchParams.set('includeSecrets', '1');
+  const response = await stub.fetch(internalUrl.toString(), { method: 'GET' });
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to read integration config: ${response.status} ${errorText}`);
+  }
+  const body = await response.json();
+  return body?.config || null;
 };
 
 router.get('/api/integrations/config', forwardIntegrationRequest);
@@ -93,6 +110,45 @@ router.put('/api/integrations/config/:service', forwardIntegrationRequest);
 router.delete('/api/integrations/config/:service', forwardIntegrationRequest);
 router.options('/api/integrations/config', forwardIntegrationRequest);
 router.options('/api/integrations/config/:service', forwardIntegrationRequest);
+
+router.post('/api/integrations/:service/pull', async (request, env) => {
+  const { service } = request.params;
+  if (!service) {
+    return new Response(JSON.stringify({ error: 'Service name is required.' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  let payload = {};
+  try {
+    payload = await request.json();
+  } catch {
+    payload = {};
+  }
+
+  try {
+    const config = await loadIntegrationConfig(env, service);
+    const data = await fetchIntegrationData(service, config, payload);
+    return new Response(JSON.stringify({ service, data }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    if (error instanceof IntegrationError) {
+      return new Response(JSON.stringify({ error: error.message, status: error.status }), {
+        status: error.status,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    console.error(`Integration pull failed for ${service}`, error);
+    return new Response(JSON.stringify({ error: 'Failed to contact integration service.' }), {
+      status: 502,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+});
 
 // A catch-all for any other API requests that don't match
 router.all('/api/*', (request) => {
