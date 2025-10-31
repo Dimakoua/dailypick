@@ -36,6 +36,21 @@ function ensureFields(config) {
   return config.fields && typeof config.fields === 'object' ? config.fields : {};
 }
 
+function uniqueStrings(values = []) {
+  const seen = new Set();
+  const result = [];
+  for (const value of values) {
+    if (typeof value !== 'string') continue;
+    const trimmed = value.trim();
+    if (!trimmed) continue;
+    const key = trimmed.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    result.push(trimmed);
+  }
+  return result;
+}
+
 async function fetchJira(config, payload = {}) {
   assertConfig('jira', config);
   const fields = ensureFields(config);
@@ -74,20 +89,71 @@ async function fetchJira(config, payload = {}) {
 
   const data = await response.json();
   const issues = Array.isArray(data.issues)
-    ? data.issues.map((issue) => ({
-        id: issue.id,
-        key: issue.key,
-        summary: issue.fields?.summary ?? '',
-        status: issue.fields?.status?.name ?? '',
-        assignee: issue.fields?.assignee?.displayName ?? null,
-        updated: issue.fields?.updated ?? null,
-      }))
+    ? data.issues.map((issue) => {
+        const assignee = issue.fields?.assignee?.displayName ?? null;
+        const key = issue.key;
+        const url = key ? `${siteUrl}/browse/${key}` : null;
+        return {
+          id: issue.id,
+          key,
+          summary: issue.fields?.summary ?? '',
+          status: issue.fields?.status?.name ?? '',
+          assignee,
+          updated: issue.fields?.updated ?? null,
+          url,
+        };
+      })
     : [];
+
+  const assignmentMap = new Map();
+  for (const issue of issues) {
+    if (!issue.assignee) continue;
+    const existing = assignmentMap.get(issue.assignee) || [];
+    existing.push({
+      key: issue.key,
+      summary: issue.summary,
+      status: issue.status,
+      url: issue.url,
+    });
+    assignmentMap.set(issue.assignee, existing);
+  }
+
+  let assignableUsers = [];
+  try {
+    const usersUrl = new URL(`${siteUrl}/rest/api/3/user/assignable/search`);
+    usersUrl.searchParams.set('project', projectKey);
+    usersUrl.searchParams.set('maxResults', payload.maxUsers ? String(payload.maxUsers) : '100');
+    const usersResponse = await fetchWithTimeout(usersUrl.toString(), {
+      method: 'GET',
+      headers: {
+        'Authorization': `Basic ${auth}`,
+        'Accept': 'application/json',
+      },
+    });
+    if (usersResponse.ok) {
+      const users = await usersResponse.json();
+      if (Array.isArray(users)) {
+        assignableUsers = users
+          .map((user) => user.displayName || user.name || '')
+          .filter(Boolean);
+      }
+    }
+  } catch (error) {
+    console.warn('Jira user fetch failed', error);
+  }
+
+  const players = uniqueStrings([...assignableUsers, ...assignmentMap.keys()]);
+  const assignments = Array.from(assignmentMap.entries()).map(([player, items]) => ({
+    player,
+    items,
+  }));
 
   return {
     query,
     issues,
     total: data.total ?? issues.length,
+    players,
+    assignments,
   };
 }
 
@@ -139,13 +205,68 @@ async function fetchTrello(config) {
         url: card.url,
         listId: card.idList,
         position: card.pos,
+        memberIds: Array.isArray(card.idMembers) ? card.idMembers : [],
       }))
     : [];
+
+  let members = [];
+  try {
+    const membersUrl = new URL(`https://api.trello.com/1/boards/${boardId}/members`);
+    membersUrl.searchParams.set('key', apiKey);
+    membersUrl.searchParams.set('token', config.token.trim());
+    membersUrl.searchParams.set('fields', 'fullName,username');
+    const membersResponse = await fetchWithTimeout(membersUrl.toString(), { method: 'GET' });
+    if (membersResponse.ok) {
+      const data = await membersResponse.json();
+      if (Array.isArray(data)) {
+        members = data.map((member) => ({
+          id: member.id,
+          name: member.fullName || member.username || '',
+        }));
+      }
+    }
+  } catch (error) {
+    console.warn('Trello member fetch failed', error);
+  }
+
+  const memberLookup = new Map();
+  members.forEach((member) => {
+    if (!member.name) return;
+    memberLookup.set(member.id, member.name);
+  });
+
+  const assignmentsMap = new Map();
+  normalized.forEach((card) => {
+    card.memberIds.forEach((memberId) => {
+      const name = memberLookup.get(memberId);
+      if (!name) return;
+      const list = assignmentsMap.get(name) || [];
+      list.push({
+        id: card.id,
+        name: card.name,
+        url: card.url,
+        listId: card.listId,
+      });
+      assignmentsMap.set(name, list);
+    });
+  });
+
+  const players = uniqueStrings([
+    ...members.map((member) => member.name),
+    ...assignmentsMap.keys(),
+  ]);
+
+  const assignments = Array.from(assignmentsMap.entries()).map(([player, items]) => ({
+    player,
+    items,
+  }));
 
   return {
     boardId,
     cards: normalized,
     count: normalized.length,
+    players,
+    assignments,
   };
 }
 
@@ -194,10 +315,59 @@ async function fetchGitHub(config, payload = {}) {
         }))
     : [];
 
+  let collaborators = [];
+  try {
+    const collabUrl = new URL(`https://api.github.com/repos/${repo}/collaborators`);
+    const collabResponse = await fetchWithTimeout(collabUrl.toString(), {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${config.token.trim()}`,
+        'Accept': 'application/vnd.github+json',
+        'User-Agent': 'DailyPick-Worker',
+      },
+    });
+    if (collabResponse.ok) {
+      const data = await collabResponse.json();
+      if (Array.isArray(data)) {
+        collaborators = data
+          .map((collaborator) => collaborator.name || collaborator.login || '')
+          .filter(Boolean);
+      }
+    }
+  } catch (error) {
+    console.warn('GitHub collaborator fetch failed', error);
+  }
+
+  const assignmentsMap = new Map();
+  normalized.forEach((issue) => {
+    if (!issue.assignee) return;
+    const list = assignmentsMap.get(issue.assignee) || [];
+    list.push({
+      id: issue.id,
+      number: issue.number,
+      title: issue.title,
+      url: issue.url,
+      state: issue.state,
+    });
+    assignmentsMap.set(issue.assignee, list);
+  });
+
+  const players = uniqueStrings([
+    ...collaborators,
+    ...normalized.map((issue) => issue.assignee).filter(Boolean),
+  ]);
+
+  const assignments = Array.from(assignmentsMap.entries()).map(([player, items]) => ({
+    player,
+    items,
+  }));
+
   return {
     repository: repo,
     issues: normalized,
     count: normalized.length,
+    players,
+    assignments,
   };
 }
 

@@ -60,7 +60,6 @@ export class IntegrationConfig {
       safe.services[service] = {
         enabled: Boolean(entry.enabled),
         resource: sanitizeString(entry.resource, 160),
-        syncBoards: Boolean(entry.syncBoards),
         syncPlayers: Boolean(entry.syncPlayers),
         tokenPreview: maskToken(entry.token),
         hasToken: Boolean(entry.token && entry.token.trim()),
@@ -145,7 +144,6 @@ export class IntegrationConfig {
     const next = {
       enabled: payload.enabled === true,
       resource: sanitizeString(payload.resource, 160),
-      syncBoards: payload.syncBoards === true,
       syncPlayers: payload.syncPlayers === true,
       token: existing.token,
       lastUpdated: new Date().toISOString(),

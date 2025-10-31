@@ -173,22 +173,6 @@
   background: rgba(255, 255, 255, 0.95);
 }
 
-.integration-card fieldset {
-  border-radius: 14px;
-  border: 1px solid var(--brand-border);
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.integration-card fieldset legend {
-  padding: 0 6px;
-  font-weight: 700;
-  color: var(--brand-heading);
-  font-size: 0.85rem;
-}
-
 .integration-token-preview {
   font-size: 0.85rem;
   color: var(--brand-subtle-text);

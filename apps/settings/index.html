@@ -154,7 +154,7 @@
         </div>
 
         <p class="integration-intro">Connections save to the Daily Pick Worker so you can safely reuse them from any device.<br>
-          Tokens are masked after you save them. Use the Test Connection button to be sure Daily Pick can pull data.</p>
+          Tokens are masked after you save them. Use Test Connection to import teammates into the Player List and preview their current work.</p>
 
         <div class="integration-grid">
           <section class="integration-card" data-service="jira" aria-labelledby="integration-jira-heading">
@@ -162,7 +162,7 @@
               <div class="integration-icon" aria-hidden="true">🗂️</div>
               <div>
                 <h3 id="integration-jira-heading">Jira</h3>
-                <p>Create issues and sync assignees in a Jira project.</p>
+                <p>Import Jira teammates and their active work.</p>
               </div>
             </header>
             <label class="integration-toggle">
@@ -185,17 +185,10 @@
               API token
               <input type="password" class="integration-token" placeholder="Paste a Jira API token">
             </label>
-            <fieldset>
-              <legend>Sync options</legend>
-              <label class="checkbox">
-                <input type="checkbox" class="integration-sync-boards">
-                <span>Send Daily Pick cards to Jira issues</span>
-              </label>
-              <label class="checkbox">
-                <input type="checkbox" class="integration-sync-players">
-                <span>Map saved players to Jira assignees</span>
-              </label>
-            </fieldset>
+            <label class="checkbox">
+              <input type="checkbox" class="integration-sync-players">
+              <span>Sync Jira users into the Player List</span>
+            </label>
             <p class="integration-token-preview" aria-live="polite"></p>
             <p class="integration-status" aria-live="polite"></p>
             <div class="button-row">
@@ -210,7 +203,7 @@
               <div class="integration-icon" aria-hidden="true">🗒️</div>
               <div>
                 <h3 id="integration-trello-heading">Trello</h3>
-                <p>Keep cards in sync with a Trello board list.</p>
+                <p>Pull Trello board members and their cards.</p>
               </div>
             </header>
             <label class="integration-toggle">
@@ -229,17 +222,10 @@
               API token
               <input type="password" class="integration-token" placeholder="Paste a Trello API token">
             </label>
-            <fieldset>
-              <legend>Sync options</legend>
-              <label class="checkbox">
-                <input type="checkbox" class="integration-sync-boards">
-                <span>Append Daily Pick action items to the board</span>
-              </label>
-              <label class="checkbox">
-                <input type="checkbox" class="integration-sync-players">
-                <span>Invite saved players as members</span>
-              </label>
-            </fieldset>
+            <label class="checkbox">
+              <input type="checkbox" class="integration-sync-players">
+              <span>Sync Trello members into the Player List</span>
+            </label>
             <p class="integration-token-preview" aria-live="polite"></p>
             <p class="integration-status" aria-live="polite"></p>
             <div class="button-row">
@@ -254,7 +240,7 @@
               <div class="integration-icon" aria-hidden="true">🐙</div>
               <div>
                 <h3 id="integration-github-heading">GitHub</h3>
-                <p>Open issues or discussions directly from Daily Pick.</p>
+                <p>Bring in GitHub collaborators and their open issues.</p>
               </div>
             </header>
             <label class="integration-toggle">
@@ -269,17 +255,10 @@
               Personal access token
               <input type="password" class="integration-token" placeholder="Paste a GitHub token">
             </label>
-            <fieldset>
-              <legend>Sync options</legend>
-              <label class="checkbox">
-                <input type="checkbox" class="integration-sync-boards">
-                <span>Create issues from Daily Pick cards</span>
-              </label>
-              <label class="checkbox">
-                <input type="checkbox" class="integration-sync-players">
-                <span>Add players as collaborators when possible</span>
-              </label>
-            </fieldset>
+            <label class="checkbox">
+              <input type="checkbox" class="integration-sync-players">
+              <span>Sync GitHub collaborators into the Player List</span>
+            </label>
             <p class="integration-token-preview" aria-live="polite"></p>
             <p class="integration-status" aria-live="polite"></p>
             <div class="button-row">
@@ -366,6 +345,51 @@
           .split(/[\n,]+/)
           .map(name => name.trim())
           .filter(Boolean);
+      }
+
+      function dedupeNames(names = []) {
+        const seen = new Set();
+        const result = [];
+        names.forEach((name) => {
+          if (typeof name !== 'string') return;
+          const trimmed = name.trim();
+          if (!trimmed) return;
+          const key = trimmed.toLowerCase();
+          if (seen.has(key)) return;
+          seen.add(key);
+          result.push(trimmed);
+        });
+        return result;
+      }
+
+      function formatServiceName(service) {
+        switch (service) {
+          case 'jira':
+            return 'Jira';
+          case 'trello':
+            return 'Trello';
+          case 'github':
+            return 'GitHub';
+          default:
+            return 'Integration';
+        }
+      }
+
+      function applyPlayersFromIntegration(service, players) {
+        if (!Array.isArray(players) || !players.length || !playerNamesInput) {
+          return false;
+        }
+
+        const existing = dedupeNames(normalizeNamesInput(playerNamesInput.value));
+        const merged = dedupeNames([...players, ...existing]);
+        if (!merged.length) {
+          return false;
+        }
+
+        playerNamesInput.value = merged.join('\n');
+        localStorage.setItem(PLAYERS_KEY, JSON.stringify(merged));
+        showStatus(playersStatus, `Synced ${players.length} player${players.length === 1 ? '' : 's'} from ${formatServiceName(service)}.`);
+        return true;
       }
 
       function loadPlayers() {
@@ -517,7 +541,6 @@
             const enabledInput = card.querySelector('.integration-enabled');
             const resourceInput = card.querySelector('.integration-resource');
             const tokenInput = card.querySelector('.integration-token');
-            const syncBoardsInput = card.querySelector('.integration-sync-boards');
             const syncPlayersInput = card.querySelector('.integration-sync-players');
             const tokenPreview = card.querySelector('.integration-token-preview');
             const disconnectBtn = card.querySelector('.integration-disconnect');
@@ -526,7 +549,6 @@
             if (enabledInput) enabledInput.checked = Boolean(info?.enabled);
             if (resourceInput) resourceInput.value = info?.resource ?? '';
             if (tokenInput) tokenInput.value = '';
-            if (syncBoardsInput) syncBoardsInput.checked = Boolean(info?.syncBoards);
             if (syncPlayersInput) syncPlayersInput.checked = Boolean(info?.syncPlayers);
             fieldInputs.forEach((input) => {
               const key = input.dataset.field;
@@ -559,14 +581,12 @@
         const enabledInput = card.querySelector('.integration-enabled');
         const resourceInput = card.querySelector('.integration-resource');
         const tokenInput = card.querySelector('.integration-token');
-        const syncBoardsInput = card.querySelector('.integration-sync-boards');
         const syncPlayersInput = card.querySelector('.integration-sync-players');
         const fieldInputs = card.querySelectorAll('[data-field]');
 
         const payload = {
           enabled: enabledInput?.checked ?? false,
           resource: resourceInput?.value?.trim() ?? '',
-          syncBoards: syncBoardsInput?.checked ?? false,
           syncPlayers: syncPlayersInput?.checked ?? false,
         };
 
@@ -636,28 +656,41 @@
         if (!data || typeof data !== 'object') {
           return 'Connection test succeeded.';
         }
-        switch (service) {
-          case 'jira': {
-            const total = data.total ?? data.issues?.length ?? 0;
-            return `Connection OK – fetched ${total} Jira issue${total === 1 ? '' : 's'}.`;
-          }
-          case 'trello': {
-            const count = data.count ?? data.cards?.length ?? 0;
-            return `Connection OK – retrieved ${count} Trello card${count === 1 ? '' : 's'}.`;
-          }
-          case 'github': {
-            const count = data.count ?? data.issues?.length ?? 0;
-            return `Connection OK – loaded ${count} GitHub issue${count === 1 ? '' : 's'}.`;
-          }
-          default:
-            return 'Connection test succeeded.';
+
+        const serviceName = formatServiceName(service);
+        const playerCount = Array.isArray(data.players) ? data.players.length : 0;
+        let assignmentCount = 0;
+
+        if (Array.isArray(data.assignments) && data.assignments.length) {
+          assignmentCount = data.assignments.reduce((total, entry) => {
+            if (!entry || typeof entry !== 'object') return total;
+            const items = Array.isArray(entry.items) ? entry.items.length : 0;
+            return total + items;
+          }, 0);
+        } else if (Array.isArray(data.issues)) {
+          assignmentCount = data.issues.length;
+        } else if (Array.isArray(data.cards)) {
+          assignmentCount = data.cards.length;
+        } else if (typeof data.count === 'number') {
+          assignmentCount = data.count;
         }
+
+        const parts = [`${serviceName} connection OK.`];
+        if (playerCount) {
+          parts.push(`Found ${playerCount} participant${playerCount === 1 ? '' : 's'}.`);
+        }
+        if (assignmentCount) {
+          parts.push(`Loaded ${assignmentCount} assignment${assignmentCount === 1 ? '' : 's'}.`);
+        }
+
+        return parts.join(' ');
       }
 
       async function handleTestIntegration(card, service) {
         try {
           setIntegrationBusy(card, true);
           setIntegrationStatus(card, 'Checking connection…');
+          const syncPlayersInput = card.querySelector('.integration-sync-players');
           const response = await fetch(`/api/integrations/${service}/pull`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -670,8 +703,12 @@
             throw new Error(message);
           }
 
-          const message = summarizeIntegrationResult(service, body?.data);
+          const data = body?.data;
+          const message = summarizeIntegrationResult(service, data);
           setIntegrationStatus(card, message, 'success');
+          if (syncPlayersInput?.checked && Array.isArray(data?.players) && data.players.length) {
+            applyPlayersFromIntegration(service, data.players);
+          }
         } catch (error) {
           console.error(`Integration test error for ${service}`, error);
           setIntegrationStatus(card, error.message || 'Connection test failed.', 'error');
