@@ -85,14 +85,45 @@ router.get('/api/planning-poker/websocket', (request, env) => {
 
 const INTERNAL_CONFIG_ORIGIN = 'https://integrations.internal';
 
+const getIntegrationClientId = (request) => {
+  const header = request.headers.get('x-integration-client');
+  if (!header) {
+    return '';
+  }
+  return header.trim();
+};
+
 const forwardIntegrationRequest = (request, env) => {
-  const id = env.INTEGRATION_CONFIG.idFromName('global');
+  if (request.method === 'OPTIONS') {
+    return new Response(null, {
+      status: 204,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET,PUT,DELETE,OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, X-Integration-Client',
+      },
+    });
+  }
+  const clientId = getIntegrationClientId(request);
+  if (!clientId) {
+    return new Response(JSON.stringify({ error: 'Missing integration client identifier.' }), {
+      status: 400,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+    });
+  }
+  const id = env.INTEGRATION_CONFIG.idFromName(clientId);
   const stub = env.INTEGRATION_CONFIG.get(id);
   return stub.fetch(request);
 };
 
-const loadIntegrationConfig = async (env, service) => {
-  const id = env.INTEGRATION_CONFIG.idFromName('global');
+const loadIntegrationConfig = async (env, service, clientId) => {
+  if (!clientId) {
+    throw new IntegrationError('Missing integration client identifier.', 400);
+  }
+  const id = env.INTEGRATION_CONFIG.idFromName(clientId);
   const stub = env.INTEGRATION_CONFIG.get(id);
   const internalUrl = new URL(`/config/${service}`, INTERNAL_CONFIG_ORIGIN);
   internalUrl.searchParams.set('includeSecrets', '1');
@@ -120,6 +151,17 @@ router.post('/api/integrations/:service/pull', async (request, env) => {
     });
   }
 
+  const clientId = getIntegrationClientId(request);
+  if (!clientId) {
+    return new Response(JSON.stringify({ error: 'Missing integration client identifier.' }), {
+      status: 400,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+    });
+  }
+
   let payload = {};
   try {
     payload = await request.json();
@@ -128,7 +170,7 @@ router.post('/api/integrations/:service/pull', async (request, env) => {
   }
 
   try {
-    const config = await loadIntegrationConfig(env, service);
+    const config = await loadIntegrationConfig(env, service, clientId);
     const data = await fetchIntegrationData(service, config, payload);
     return new Response(JSON.stringify({ service, data }), {
       status: 200,

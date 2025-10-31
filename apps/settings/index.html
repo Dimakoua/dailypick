@@ -154,7 +154,7 @@
         </div>
 
         <p class="integration-intro">Connections save to the Daily Pick Worker so you can safely reuse them from any device.<br>
-          Tokens are masked after you save them. Use Test Connection to import teammates into the Player List and preview their current work.</p>
+          Tokens are masked after you save them. Use Test Connection to preview teammates and decide whether to import them or capture their current work.</p>
 
         <div class="integration-grid">
           <section class="integration-card" data-service="jira" aria-labelledby="integration-jira-heading">
@@ -195,6 +195,22 @@
             </label>
             <p class="integration-token-preview" aria-live="polite"></p>
             <p class="integration-status" aria-live="polite"></p>
+            <div class="integration-results" hidden>
+              <div class="integration-preview" aria-live="polite">
+                <div class="integration-preview-section">
+                  <h4>Players detected</h4>
+                  <p class="integration-preview-players"></p>
+                </div>
+                <div class="integration-preview-section">
+                  <h4>Assigned work</h4>
+                  <div class="integration-preview-assignments"></div>
+                </div>
+              </div>
+              <div class="integration-actions">
+                <button type="button" class="integration-action integration-action-update">Update Player List</button>
+                <button type="button" class="integration-action integration-action-save ghost">Save assigned work snapshot</button>
+              </div>
+            </div>
             <div class="button-row">
               <button type="button" class="integration-save">Save Connection</button>
               <button type="button" class="ghost integration-test">Test Connection</button>
@@ -236,6 +252,22 @@
             </label>
             <p class="integration-token-preview" aria-live="polite"></p>
             <p class="integration-status" aria-live="polite"></p>
+            <div class="integration-results" hidden>
+              <div class="integration-preview" aria-live="polite">
+                <div class="integration-preview-section">
+                  <h4>Players detected</h4>
+                  <p class="integration-preview-players"></p>
+                </div>
+                <div class="integration-preview-section">
+                  <h4>Assigned work</h4>
+                  <div class="integration-preview-assignments"></div>
+                </div>
+              </div>
+              <div class="integration-actions">
+                <button type="button" class="integration-action integration-action-update">Update Player List</button>
+                <button type="button" class="integration-action integration-action-save ghost">Save assigned work snapshot</button>
+              </div>
+            </div>
             <div class="button-row">
               <button type="button" class="integration-save">Save Connection</button>
               <button type="button" class="ghost integration-test">Test Connection</button>
@@ -273,6 +305,22 @@
             </label>
             <p class="integration-token-preview" aria-live="polite"></p>
             <p class="integration-status" aria-live="polite"></p>
+            <div class="integration-results" hidden>
+              <div class="integration-preview" aria-live="polite">
+                <div class="integration-preview-section">
+                  <h4>Players detected</h4>
+                  <p class="integration-preview-players"></p>
+                </div>
+                <div class="integration-preview-section">
+                  <h4>Assigned work</h4>
+                  <div class="integration-preview-assignments"></div>
+                </div>
+              </div>
+              <div class="integration-actions">
+                <button type="button" class="integration-action integration-action-update">Update Player List</button>
+                <button type="button" class="integration-action integration-action-save ghost">Save assigned work snapshot</button>
+              </div>
+            </div>
             <div class="button-row">
               <button type="button" class="integration-save">Save Connection</button>
               <button type="button" class="ghost integration-test">Test Connection</button>
@@ -346,6 +394,9 @@
       const integrationCards = Array.from(document.querySelectorAll('.integration-card'));
       const ASSIGNMENTS_STORAGE_KEY = 'integrationAssignments';
       const ASSIGNMENT_ITEM_FIELDS = ['id', 'key', 'name', 'summary', 'status', 'url', 'number', 'title', 'state', 'listId'];
+      const INTEGRATION_CLIENT_KEY = 'integrationClientId';
+      const integrationResults = new Map();
+      const integrationClientId = loadIntegrationClientId();
 
       function showStatus(el, message) {
         if (!el) return;
@@ -397,6 +448,33 @@
           }
         });
         return Object.keys(sanitized).length ? sanitized : null;
+      }
+
+      function createIntegrationClientId() {
+        if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+          return crypto.randomUUID();
+        }
+        const random = Math.random().toString(36).slice(2, 10);
+        const timestamp = Date.now().toString(36);
+        return `dp-${random}${timestamp}`;
+      }
+
+      function loadIntegrationClientId() {
+        try {
+          const existing = localStorage.getItem(INTEGRATION_CLIENT_KEY);
+          if (existing && existing.trim().length >= 8) {
+            return existing.trim();
+          }
+        } catch (error) {
+          console.warn('Unable to read integration client id from storage', error);
+        }
+        const fresh = createIntegrationClientId();
+        try {
+          localStorage.setItem(INTEGRATION_CLIENT_KEY, fresh);
+        } catch (error) {
+          console.warn('Unable to persist integration client id', error);
+        }
+        return fresh;
       }
 
       function sanitizeAssignmentsPayload(assignments = []) {
@@ -481,14 +559,21 @@
         }
 
         const existing = dedupeNames(normalizeNamesInput(playerNamesInput.value));
-        const merged = dedupeNames([...players, ...existing]);
-        if (!merged.length) {
+        const incoming = dedupeNames(players);
+        if (!incoming.length) {
           return false;
         }
 
+        const existingSet = new Set(existing.map((name) => name.toLowerCase()));
+        const newNames = incoming.filter((name) => !existingSet.has(name.toLowerCase()));
+        if (!newNames.length) {
+          return false;
+        }
+
+        const merged = dedupeNames([...existing, ...newNames]);
         playerNamesInput.value = merged.join('\n');
         localStorage.setItem(PLAYERS_KEY, JSON.stringify(merged));
-        showStatus(playersStatus, `Synced ${players.length} player${players.length === 1 ? '' : 's'} from ${formatServiceName(service)}.`);
+        showStatus(playersStatus, `Added ${newNames.length} player${newNames.length === 1 ? '' : 's'} from ${formatServiceName(service)}.`);
         return true;
       }
 
@@ -607,17 +692,147 @@
             statusEl.textContent = '';
             delete statusEl.dataset.tone;
           }
-        }, 4000);
+        }, 7000);
       }
 
       function setIntegrationBusy(card, busy) {
         card.classList.toggle('is-busy', busy);
-        const buttons = card.querySelectorAll('.integration-save, .integration-disconnect, .integration-test');
+        const buttons = card.querySelectorAll('.integration-save, .integration-disconnect, .integration-test, .integration-action');
         buttons.forEach(btn => {
           btn.disabled = busy;
         });
       }
 
+      function getIntegrationResultElements(card) {
+        if (!card) return {};
+        return {
+          container: card.querySelector('.integration-results'),
+          players: card.querySelector('.integration-preview-players'),
+          assignments: card.querySelector('.integration-preview-assignments'),
+          updateBtn: card.querySelector('.integration-action-update'),
+          saveBtn: card.querySelector('.integration-action-save'),
+        };
+      }
+
+      function resetIntegrationResult(card) {
+        const { container, players, assignments, updateBtn, saveBtn } = getIntegrationResultElements(card);
+        if (!container) return;
+        container.hidden = true;
+        if (players) {
+          players.textContent = '';
+        }
+        if (assignments) {
+          assignments.innerHTML = '';
+        }
+        if (updateBtn) {
+          updateBtn.disabled = true;
+        }
+        if (saveBtn) {
+          saveBtn.disabled = true;
+        }
+      }
+
+      function formatListPreview(values = [], max = 6) {
+        const unique = dedupeNames(values);
+        if (!unique.length) {
+          return '';
+        }
+        const shown = unique.slice(0, max);
+        let preview = shown.join(', ');
+        if (unique.length > shown.length) {
+          preview += ` … (+${unique.length - shown.length} more)`;
+        }
+        return preview;
+      }
+
+      function countAssignments(assignments = []) {
+        return assignments.reduce((total, entry) => {
+          if (!entry || typeof entry !== 'object') return total;
+          const items = Array.isArray(entry.items) ? entry.items.length : 0;
+          return total + items;
+        }, 0);
+      }
+
+      function renderAssignmentDetails(container, assignments = []) {
+        if (!container) return;
+        container.innerHTML = '';
+        const meaningful = assignments.filter((entry) => entry && Array.isArray(entry.items) && entry.items.length);
+        const total = countAssignments(assignments);
+        const teammateCount = meaningful.length;
+        const summary = document.createElement('p');
+        if (!total) {
+          summary.textContent = 'No assigned work found for this selection.';
+          container.appendChild(summary);
+          return;
+        }
+        summary.textContent = `Loaded ${total} assignment${total === 1 ? '' : 's'} for ${teammateCount} teammate${teammateCount === 1 ? '' : 's'}.`;
+        container.appendChild(summary);
+        const list = document.createElement('ul');
+        meaningful.slice(0, 5).forEach((entry) => {
+          const li = document.createElement('li');
+          const playerName = entry.player || 'Unnamed teammate';
+          const examples = Array.isArray(entry.items)
+            ? entry.items
+                .map((item) => item.summary || item.title || item.name || item.key || item.number || item.id)
+                .filter(Boolean)
+            : [];
+          if (examples.length) {
+            const sample = examples.slice(0, 2).join('; ');
+            li.textContent = `${playerName} – ${sample}${examples.length > 2 ? '…' : ''}`;
+          } else {
+            const count = Array.isArray(entry.items) ? entry.items.length : 0;
+            li.textContent = `${playerName} – ${count} item${count === 1 ? '' : 's'}`;
+          }
+          list.appendChild(li);
+        });
+        if (meaningful.length > 5) {
+          const remaining = meaningful.length - 5;
+          const li = document.createElement('li');
+          li.textContent = `…and ${remaining} more teammate${remaining === 1 ? '' : 's'}`;
+          list.appendChild(li);
+        }
+        container.appendChild(list);
+      }
+
+      function updateIntegrationResult(card, service, data, includeAssignments) {
+        const { container, players, assignments, updateBtn, saveBtn } = getIntegrationResultElements(card);
+        if (!container) return;
+        const playersList = Array.isArray(data?.players) ? dedupeNames(data.players) : [];
+        if (players) {
+          if (playersList.length) {
+            const preview = formatListPreview(playersList, 6);
+            players.textContent = `${playersList.length} teammate${playersList.length === 1 ? '' : 's'} ready to import${preview ? `: ${preview}` : ''}.`;
+          } else {
+            players.textContent = 'No players detected from the latest test.';
+          }
+        }
+
+        if (assignments) {
+          assignments.innerHTML = '';
+          if (includeAssignments) {
+            const assignmentData = Array.isArray(data?.assignments) ? data.assignments : [];
+            renderAssignmentDetails(assignments, assignmentData);
+          } else {
+            const note = document.createElement('p');
+            note.textContent = 'Assignments were not requested. Enable “Store assigned work” and test again to preview cards or issues.';
+            assignments.appendChild(note);
+          }
+        }
+
+        if (updateBtn) {
+          updateBtn.disabled = !playersList.length;
+        }
+        if (saveBtn) {
+          if (!includeAssignments) {
+            saveBtn.disabled = true;
+          } else {
+            const totalAssignments = countAssignments(Array.isArray(data?.assignments) ? data.assignments : []);
+            saveBtn.disabled = totalAssignments === 0;
+          }
+        }
+
+        container.hidden = false;
+      }
       function formatTimestamp(timestamp) {
         if (!timestamp) return '';
         const date = new Date(timestamp);
@@ -630,7 +845,10 @@
       async function refreshIntegrationCards() {
         if (!integrationCards.length) return;
         try {
-          const response = await fetch(integrationEndpoint, { method: 'GET' });
+          const response = await fetch(integrationEndpoint, {
+            method: 'GET',
+            headers: { 'X-Integration-Client': integrationClientId },
+          });
           if (!response.ok) {
             throw new Error('Failed to load integration settings');
           }
@@ -669,6 +887,8 @@
             if (disconnectBtn) {
               disconnectBtn.disabled = !(info?.hasToken || info?.enabled);
             }
+            integrationResults.delete(service);
+            resetIntegrationResult(card);
             setIntegrationStatus(card, '');
           });
         } catch (error) {
@@ -713,7 +933,10 @@
           setIntegrationStatus(card, 'Saving connection…');
           const response = await fetch(`${integrationEndpoint}/${service}`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Integration-Client': integrationClientId,
+            },
             body: JSON.stringify(payload),
           });
           if (!response.ok) {
@@ -725,6 +948,8 @@
           if (tokenInput) {
             tokenInput.value = '';
           }
+          integrationResults.delete(service);
+          resetIntegrationResult(card);
           await refreshIntegrationCards();
           if (!payload.enabled || !payload.storeAssignments) {
             clearAssignmentSnapshot(service);
@@ -743,6 +968,7 @@
           setIntegrationStatus(card, 'Disconnecting…');
           const response = await fetch(`${integrationEndpoint}/${service}`, {
             method: 'DELETE',
+            headers: { 'X-Integration-Client': integrationClientId },
           });
           if (!response.ok) {
             const errorBody = await response.json().catch(() => ({}));
@@ -750,6 +976,8 @@
             throw new Error(message);
           }
           setIntegrationStatus(card, 'Connection removed.', 'success');
+          integrationResults.delete(service);
+          resetIntegrationResult(card);
           await refreshIntegrationCards();
           clearAssignmentSnapshot(service);
         } catch (error) {
@@ -769,12 +997,8 @@
         const playerCount = Array.isArray(data.players) ? data.players.length : 0;
         let assignmentCount = 0;
 
-        if (Array.isArray(data.assignments) && data.assignments.length) {
-          assignmentCount = data.assignments.reduce((total, entry) => {
-            if (!entry || typeof entry !== 'object') return total;
-            const items = Array.isArray(entry.items) ? entry.items.length : 0;
-            return total + items;
-          }, 0);
+        if (Array.isArray(data.assignments)) {
+          assignmentCount = countAssignments(data.assignments);
         } else if (Array.isArray(data.issues)) {
           assignmentCount = data.issues.length;
         } else if (Array.isArray(data.cards)) {
@@ -804,12 +1028,17 @@
         try {
           setIntegrationBusy(card, true);
           setIntegrationStatus(card, 'Checking connection…');
+          integrationResults.delete(service);
+          resetIntegrationResult(card);
           const syncPlayersInput = card.querySelector('.integration-sync-players');
           const storeAssignmentsInput = card.querySelector('.integration-store-assignments');
           const includeAssignments = storeAssignmentsInput?.checked ?? false;
           const response = await fetch(`/api/integrations/${service}/pull`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Integration-Client': integrationClientId,
+            },
             body: JSON.stringify({ includeAssignments }),
           });
 
@@ -819,25 +1048,58 @@
             throw new Error(message);
           }
 
-          const data = body?.data;
-          let message = summarizeIntegrationResult(service, data, includeAssignments);
-          if (includeAssignments) {
-            if (persistAssignmentsSnapshot(service, data)) {
-              message = `${message} Assigned work saved for future games.`;
-            } else {
-              clearAssignmentSnapshot(service);
-            }
-          }
-          setIntegrationStatus(card, message, 'success');
-          if (syncPlayersInput?.checked && Array.isArray(data?.players) && data.players.length) {
-            applyPlayersFromIntegration(service, data.players);
-          }
+          const data = body?.data || {};
+          integrationResults.set(service, { data, includeAssignments });
+          updateIntegrationResult(card, service, data, includeAssignments);
+          const summary = summarizeIntegrationResult(service, data, includeAssignments);
+          setIntegrationStatus(card, `${summary} Review the fetched data below and choose what to do.`, 'success');
         } catch (error) {
           console.error(`Integration test error for ${service}`, error);
+          integrationResults.delete(service);
+          resetIntegrationResult(card);
           setIntegrationStatus(card, error.message || 'Connection test failed.', 'error');
         } finally {
           setIntegrationBusy(card, false);
         }
+      }
+
+      function handleIntegrationPlayersAction(card, service) {
+        const syncPlayersInput = card.querySelector('.integration-sync-players');
+        if (!syncPlayersInput?.checked) {
+          setIntegrationStatus(card, 'Enable “Sync users into the Player List” before updating.', 'error');
+          return;
+        }
+        const record = integrationResults.get(service);
+        const players = record?.data?.players;
+        if (!Array.isArray(players) || !players.length) {
+          setIntegrationStatus(card, 'Run Test Connection to load players first.', 'error');
+          return;
+        }
+        if (applyPlayersFromIntegration(service, players)) {
+          setIntegrationStatus(card, `Player List updated with ${players.length} teammate${players.length === 1 ? '' : 's'}.`, 'success');
+        } else {
+          setIntegrationStatus(card, 'No new teammates were added this time.', 'info');
+        }
+      }
+
+      function handleIntegrationAssignmentsAction(card, service) {
+        const storeAssignmentsInput = card.querySelector('.integration-store-assignments');
+        if (!storeAssignmentsInput?.checked) {
+          setIntegrationStatus(card, 'Enable “Store assigned work” before saving a snapshot.', 'error');
+          return;
+        }
+        const record = integrationResults.get(service);
+        if (!record || !record.includeAssignments) {
+          setIntegrationStatus(card, 'Run Test Connection with assignment storage enabled first.', 'error');
+          return;
+        }
+        const assignments = Array.isArray(record.data?.assignments) ? record.data.assignments : [];
+        if (!persistAssignmentsSnapshot(service, record.data)) {
+          setIntegrationStatus(card, 'No assigned work available to save yet.', 'error');
+          return;
+        }
+        const totalAssignments = countAssignments(assignments);
+        setIntegrationStatus(card, `Saved ${totalAssignments} assignment${totalAssignments === 1 ? '' : 's'} for later use.`, 'success');
       }
 
       savePlayersBtn?.addEventListener('click', savePlayers);
@@ -858,10 +1120,22 @@
         const saveBtn = card.querySelector('.integration-save');
         const disconnectBtn = card.querySelector('.integration-disconnect');
         const testBtn = card.querySelector('.integration-test');
+        const updateAction = card.querySelector('.integration-action-update');
+        const saveAction = card.querySelector('.integration-action-save');
+        const changeInputs = card.querySelectorAll('.integration-enabled, .integration-sync-players, .integration-store-assignments');
 
         saveBtn?.addEventListener('click', () => handleSaveIntegration(card, service));
         disconnectBtn?.addEventListener('click', () => handleDisconnectIntegration(card, service));
         testBtn?.addEventListener('click', () => handleTestIntegration(card, service));
+        updateAction?.addEventListener('click', () => handleIntegrationPlayersAction(card, service));
+        saveAction?.addEventListener('click', () => handleIntegrationAssignmentsAction(card, service));
+        changeInputs.forEach((input) => {
+          input?.addEventListener('change', () => {
+            integrationResults.delete(service);
+            resetIntegrationResult(card);
+            setIntegrationStatus(card, '');
+          });
+        });
       });
 
       loadPlayers();
