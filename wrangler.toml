@@ -11,7 +11,8 @@ bindings = [
   { name = "COLLABORATION_SESSION", class_name = "CollaborationSession" },
   { name = "BALL_GAME_SESSION", class_name = "BallGameSession" },
   { name = "MIMIC_GAME_SESSION", class_name = "MimicGameSession" },
-  { name = "PLANNING_POKER_SESSION", class_name = "PlanningPokerSession" }
+  { name = "PLANNING_POKER_SESSION", class_name = "PlanningPokerSession" },
+  { name = "INTEGRATION_CONFIG", class_name = "IntegrationConfig" }
 ]
 
 [[migrations]]
@@ -25,6 +26,10 @@ new_sqlite_classes = ["MimicGameSession"]
 [[migrations]]
 tag = "v4"
 new_sqlite_classes = ["PlanningPokerSession"]
+
+[[migrations]]
+tag = "v5"
+new_sqlite_classes = ["IntegrationConfig"]
 
 [observability.logs]
 enabled = false
