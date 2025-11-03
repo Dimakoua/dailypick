@@ -80,14 +80,10 @@ async function fetchJira(config, payload = {}) {
     const legacySearchUrl = `${siteUrl}/rest/api/3/search`;
     const maxResults = payload.maxResults ? Number(payload.maxResults) : 20;
     const searchPayload = {
-      queries: [
-        {
-          query,
-          maxResults,
-          startAt: 0,
-          fields: ['summary', 'status', 'assignee', 'updated'],
-        },
-      ],
+      jql: query,
+      maxResults,
+      startAt: 0,
+      fields: ['summary', 'status', 'assignee', 'updated'],
     };
 
     let response = await fetchWithTimeout(searchUrl, {
