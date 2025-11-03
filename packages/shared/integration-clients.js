@@ -76,16 +76,27 @@ async function fetchJira(config, payload = {}) {
   const query = payload.query || `project=${projectKey} ORDER BY updated DESC`;
 
   if (includeAssignments) {
-    const url = new URL(`${siteUrl}/rest/api/3/search`);
-    url.searchParams.set('jql', query);
-    url.searchParams.set('maxResults', payload.maxResults ? String(payload.maxResults) : '20');
+    const searchUrl = `${siteUrl}/rest/api/3/search/jql`;
+    const maxResults = payload.maxResults ? Number(payload.maxResults) : 20;
+    const body = {
+      queries: [
+        {
+          jql: query,
+          maxResults,
+          startAt: 0,
+          fields: ['summary', 'status', 'assignee', 'updated'],
+        },
+      ],
+    };
 
-    const response = await fetchWithTimeout(url.toString(), {
-      method: 'GET',
+    const response = await fetchWithTimeout(searchUrl, {
+      method: 'POST',
       headers: {
         'Authorization': `Basic ${auth}`,
         'Accept': 'application/json',
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify(body),
     });
 
     if (!response.ok) {
@@ -94,8 +105,13 @@ async function fetchJira(config, payload = {}) {
     }
 
     const data = await response.json();
-    issues = Array.isArray(data.issues)
-      ? data.issues.map((issue) => {
+    const issuesPayload = Array.isArray(data.issues)
+      ? data.issues
+      : Array.isArray(data.results) && data.results.length > 0 && Array.isArray(data.results[0].issues)
+      ? data.results[0].issues
+      : [];
+
+    issues = issuesPayload.map((issue) => {
           const assignee = issue.fields?.assignee?.displayName ?? null;
           const key = issue.key;
           const issueUrl = key ? `${siteUrl}/browse/${key}` : null;
@@ -108,10 +124,11 @@ async function fetchJira(config, payload = {}) {
             updated: issue.fields?.updated ?? null,
             url: issueUrl,
           };
-        })
-      : [];
+        });
 
-    totalIssues = data.total ?? issues.length;
+    totalIssues =
+      data.total ??
+      (Array.isArray(data.results) && data.results.length > 0 ? data.results[0].total ?? issues.length : issues.length);
 
     for (const issue of issues) {
       if (!issue.assignee) continue;
