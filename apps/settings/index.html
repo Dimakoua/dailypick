@@ -241,6 +241,12 @@
               API token
               <input type="password" class="integration-token" placeholder="Paste a Trello API token">
             </label>
+            <p class="integration-hint">
+              Need credentials? Copy the 32-character API key from
+              <a href="https://trello.com/app-key" target="_blank" rel="noopener">trello.com/app-key</a>,
+              then generate a read token for your account and paste it here. This is different from the API secret.
+              <button type="button" class="integration-hint-link trello-token-helper">Open token generator</button>
+            </p>
             <div class="integration-options">
               <label class="integration-option">
                 <input type="checkbox" class="integration-include-assignments">
@@ -698,6 +704,24 @@
         });
       }
 
+      function openTrelloTokenGenerator(card) {
+        if (!card) return;
+        const apiKeyInput = card.querySelector('[data-field="apiKey"]');
+        const apiKey = apiKeyInput?.value?.trim();
+        if (!apiKey) {
+          setIntegrationStatus(card, 'Enter your Trello API key before opening the token generator.', 'error');
+          apiKeyInput?.focus();
+          return;
+        }
+        const url = new URL('https://trello.com/1/authorize');
+        url.searchParams.set('expiration', 'never');
+        url.searchParams.set('scope', 'read');
+        url.searchParams.set('response_type', 'token');
+        url.searchParams.set('name', 'Daily Pick');
+        url.searchParams.set('key', apiKey);
+        window.open(url.toString(), '_blank', 'noopener');
+      }
+
       function getIntegrationResultElements(card) {
         if (!card) return {};
         return {
@@ -1103,12 +1127,16 @@
         const updateAction = card.querySelector('.integration-action-update');
         const saveAction = card.querySelector('.integration-action-save');
         const changeInputs = card.querySelectorAll('.integration-enabled, .integration-include-assignments');
+        const tokenHelper = card.querySelector('.trello-token-helper');
 
         saveBtn?.addEventListener('click', () => handleSaveIntegration(card, service));
         disconnectBtn?.addEventListener('click', () => handleDisconnectIntegration(card, service));
         testBtn?.addEventListener('click', () => handleTestIntegration(card, service));
         updateAction?.addEventListener('click', () => handleIntegrationPlayersAction(card, service));
         saveAction?.addEventListener('click', () => handleIntegrationAssignmentsAction(card, service));
+        if (service === 'trello') {
+          tokenHelper?.addEventListener('click', () => openTrelloTokenGenerator(card));
+        }
         changeInputs.forEach((input) => {
           input?.addEventListener('change', () => {
             integrationResults.delete(service);

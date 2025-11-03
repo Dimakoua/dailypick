@@ -190,12 +190,55 @@ function extractTrelloBoardId(resource) {
   }
 }
 
+function describeTrelloError(status, rawText = '') {
+  const text = rawText.trim();
+  const lower = text.toLowerCase();
+  if (status === 401) {
+    if (lower.includes('invalid key')) {
+      return 'Trello rejected your API key. Make sure you pasted the 32-character key from https://trello.com/app-key (not the API secret).';
+    }
+    if (lower.includes('invalid token')) {
+      return 'Trello rejected your API token. Generate a read token for your user at https://trello.com/app-key and paste it into the token field.';
+    }
+  }
+  if (!text) {
+    return `Trello request failed with status ${status}.`;
+  }
+  return `Trello request failed: ${status} ${text}`.trim();
+}
+
+async function trelloRequest(path, apiKey, apiToken, searchParams = {}) {
+  const url = new URL(`https://api.trello.com/1/${path}`);
+  url.searchParams.set('key', apiKey);
+  url.searchParams.set('token', apiToken);
+  for (const [key, value] of Object.entries(searchParams)) {
+    if (value == null) continue;
+    url.searchParams.set(key, value);
+  }
+
+  let response;
+  try {
+    response = await fetchWithTimeout(url.toString(), { method: 'GET' });
+  } catch (error) {
+    console.warn('Trello request failed', error);
+    throw new IntegrationError('Unable to reach Trello right now. Please try again in a moment.', 502);
+  }
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new IntegrationError(describeTrelloError(response.status, text), response.status);
+  }
+
+  return response.json();
+}
+
 async function fetchTrello(config, payload = {}) {
   assertConfig('trello', config);
   const fields = ensureFields(config);
   const boardId = extractTrelloBoardId(config.resource || '');
   const apiKey = (fields.apiKey || '').trim();
   const includeAssignments = payload.includeAssignments === true;
+  const apiToken = (config.token || '').trim();
 
   if (!boardId) {
     throw new IntegrationError('Trello board URL or ID is required.', 422);
@@ -203,26 +246,23 @@ async function fetchTrello(config, payload = {}) {
   if (!apiKey) {
     throw new IntegrationError('Trello API key is required.', 422);
   }
-
-  let members = [];
-  try {
-    const membersUrl = new URL(`https://api.trello.com/1/boards/${boardId}/members`);
-    membersUrl.searchParams.set('key', apiKey);
-    membersUrl.searchParams.set('token', config.token.trim());
-    membersUrl.searchParams.set('fields', 'fullName,username');
-    const membersResponse = await fetchWithTimeout(membersUrl.toString(), { method: 'GET' });
-    if (membersResponse.ok) {
-      const data = await membersResponse.json();
-      if (Array.isArray(data)) {
-        members = data.map((member) => ({
-          id: member.id,
-          name: member.fullName || member.username || '',
-        }));
-      }
-    }
-  } catch (error) {
-    console.warn('Trello member fetch failed', error);
+  if (!/^[0-9a-f]{32}$/i.test(apiKey)) {
+    throw new IntegrationError('Trello API key should be the 32-character value shown under “Key” on https://trello.com/app-key (not the API secret).', 422);
   }
+  if (apiToken.length < 40) {
+    throw new IntegrationError('Trello API token looks too short. Generate a read token for your account on https://trello.com/app-key and paste it into the token field.', 422);
+  }
+
+  const rawMembers = await trelloRequest(`boards/${boardId}/members`, apiKey, apiToken, {
+    fields: 'fullName,username',
+  });
+
+  const members = Array.isArray(rawMembers)
+    ? rawMembers.map((member) => ({
+        id: member.id,
+        name: member.fullName || member.username || '',
+      }))
+    : [];
 
   const memberLookup = new Map();
   members.forEach((member) => {
@@ -234,19 +274,11 @@ async function fetchTrello(config, payload = {}) {
   let cards = [];
 
   if (includeAssignments) {
-    const url = new URL(`https://api.trello.com/1/boards/${boardId}/cards`);
-    url.searchParams.set('key', apiKey);
-    url.searchParams.set('token', config.token.trim());
-    url.searchParams.set('fields', 'id,name,url,idList,pos,idMembers');
-    url.searchParams.set('limit', '50');
+    const payloadCards = await trelloRequest(`boards/${boardId}/cards`, apiKey, apiToken, {
+      fields: 'id,name,url,idList,pos,idMembers',
+      limit: '50',
+    });
 
-    const response = await fetchWithTimeout(url.toString(), { method: 'GET' });
-    if (!response.ok) {
-      const text = await response.text();
-      throw new IntegrationError(`Trello request failed: ${response.status} ${text}`.trim(), response.status);
-    }
-
-    const payloadCards = await response.json();
     cards = Array.isArray(payloadCards)
       ? payloadCards.map((card) => ({
           id: card.id,

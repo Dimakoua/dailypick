@@ -149,6 +149,37 @@
   font-size: 0.95rem;
 }
 
+.integration-hint {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--brand-subtle-text);
+}
+
+.integration-hint a {
+  color: var(--brand-accent);
+  font-weight: 600;
+}
+
+.integration-hint-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 6px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--brand-accent);
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.integration-hint-link:hover,
+.integration-hint-link:focus-visible {
+  text-decoration: none;
+}
+
 .integration-options {
   display: flex;
   align-items: center;
