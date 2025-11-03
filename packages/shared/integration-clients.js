@@ -82,15 +82,10 @@ async function fetchJira(config, payload = {}) {
     const searchPayload = {
       queries: [
         {
-          query: {
-            type: 'JqlQueryV1',
-            query,
-          },
+          query,
           maxResults,
           startAt: 0,
-          fields: {
-            include: ['summary', 'status', 'assignee', 'updated'],
-          },
+          fields: ['summary', 'status', 'assignee', 'updated'],
         },
       ],
     };
@@ -106,9 +101,9 @@ async function fetchJira(config, payload = {}) {
     });
 
     if (!response.ok) {
-      // The JQL search endpoint is still rolling out. If it rejects the payload, fall back to the
-      // legacy search API so the integration continues to work for existing customers.
-      if (response.status === 400 || response.status === 404 || response.status === 410) {
+      // The JQL search endpoint is still rolling out. If it isn't available yet (404),
+      // fall back to the legacy search API so the integration continues to work.
+      if (response.status === 404) {
         const legacyPayload = {
           jql: query,
           maxResults,
