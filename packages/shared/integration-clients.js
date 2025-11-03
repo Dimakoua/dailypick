@@ -82,7 +82,6 @@ async function fetchJira(config, payload = {}) {
     const searchPayload = {
       jql: query,
       maxResults,
-      startAt: 0,
       fields: ['summary', 'status', 'assignee', 'updated'],
     };
 
