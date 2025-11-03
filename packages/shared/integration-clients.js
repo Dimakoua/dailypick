@@ -81,7 +81,10 @@ async function fetchJira(config, payload = {}) {
     const body = {
       queries: [
         {
-          query,
+          query: {
+            type: 'JqlQueryV1',
+            query,
+          },
           maxResults,
           startAt: 0,
           fields: ['summary', 'status', 'assignee', 'updated'],
