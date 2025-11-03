@@ -77,8 +77,9 @@ async function fetchJira(config, payload = {}) {
 
   if (includeAssignments) {
     const searchUrl = `${siteUrl}/rest/api/3/search/jql`;
+    const legacySearchUrl = `${siteUrl}/rest/api/3/search`;
     const maxResults = payload.maxResults ? Number(payload.maxResults) : 20;
-    const body = {
+    const searchPayload = {
       queries: [
         {
           query: {
@@ -87,20 +88,44 @@ async function fetchJira(config, payload = {}) {
           },
           maxResults,
           startAt: 0,
-          fields: ['summary', 'status', 'assignee', 'updated'],
+          fields: {
+            include: ['summary', 'status', 'assignee', 'updated'],
+          },
         },
       ],
     };
 
-    const response = await fetchWithTimeout(searchUrl, {
+    let response = await fetchWithTimeout(searchUrl, {
       method: 'POST',
       headers: {
         'Authorization': `Basic ${auth}`,
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(searchPayload),
     });
+
+    if (!response.ok) {
+      // The JQL search endpoint is still rolling out. If it rejects the payload, fall back to the
+      // legacy search API so the integration continues to work for existing customers.
+      if (response.status === 400 || response.status === 404 || response.status === 410) {
+        const legacyPayload = {
+          jql: query,
+          maxResults,
+          startAt: 0,
+          fields: ['summary', 'status', 'assignee', 'updated'],
+        };
+        response = await fetchWithTimeout(legacySearchUrl, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Basic ${auth}`,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(legacyPayload),
+        });
+      }
+    }
 
     if (!response.ok) {
       const text = await response.text();
@@ -115,19 +140,19 @@ async function fetchJira(config, payload = {}) {
       : [];
 
     issues = issuesPayload.map((issue) => {
-          const assignee = issue.fields?.assignee?.displayName ?? null;
-          const key = issue.key;
-          const issueUrl = key ? `${siteUrl}/browse/${key}` : null;
-          return {
-            id: issue.id,
-            key,
-            summary: issue.fields?.summary ?? '',
-            status: issue.fields?.status?.name ?? '',
-            assignee,
-            updated: issue.fields?.updated ?? null,
-            url: issueUrl,
-          };
-        });
+      const assignee = issue.fields?.assignee?.displayName ?? null;
+      const key = issue.key;
+      const issueUrl = key ? `${siteUrl}/browse/${key}` : null;
+      return {
+        id: issue.id,
+        key,
+        summary: issue.fields?.summary ?? '',
+        status: issue.fields?.status?.name ?? '',
+        assignee,
+        updated: issue.fields?.updated ?? null,
+        url: issueUrl,
+      };
+    });
 
     totalIssues =
       data.total ??
