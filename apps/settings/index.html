@@ -148,6 +148,190 @@
       </article>
     </section>
 
+    <section class="settings-card glass-card integrations-panel" aria-labelledby="integrationsHeading">
+        <div class="card-header">
+          <h2 id="integrationsHeading">Third-Party Integrations</h2>
+          <p>Connect Daily Pick to your delivery tools to sync boards and participants automatically.</p>
+        </div>
+
+        <p class="integration-intro">Connections save to the Daily Pick Worker so you can safely reuse them from any device.<br>
+          Tokens are masked after you save them. Test a connection to preview teammates, then decide if you want to import players or keep a snapshot of their current work.</p>
+
+        <div class="integration-grid">
+          <section class="integration-card" data-service="jira" aria-labelledby="integration-jira-heading">
+            <header class="integration-card-header">
+              <div class="integration-icon" aria-hidden="true">🗂️</div>
+              <div>
+                <h3 id="integration-jira-heading">Jira</h3>
+                <p>Import Jira teammates and their active work.</p>
+              </div>
+            </header>
+            <label class="integration-toggle">
+              <input type="checkbox" class="integration-enabled">
+              <span>Enable connection</span>
+            </label>
+            <label>
+              Jira site URL
+              <input type="url" class="integration-field" data-field="siteUrl" placeholder="https://yourteam.atlassian.net">
+            </label>
+            <label>
+              Project key
+              <input type="text" class="integration-resource" placeholder="e.g. DP">
+            </label>
+            <label>
+              Account email
+              <input type="email" class="integration-field" data-field="email" placeholder="you@company.com">
+            </label>
+            <label>
+              API token
+              <input type="password" class="integration-token" placeholder="Paste a Jira API token">
+            </label>
+            <div class="integration-options">
+              <label class="integration-option">
+                <input type="checkbox" class="integration-include-assignments">
+                <span>Include assigned work when testing</span>
+              </label>
+            </div>
+            <p class="integration-token-preview" aria-live="polite"></p>
+            <p class="integration-status" aria-live="polite"></p>
+            <div class="integration-results" hidden>
+              <div class="integration-preview" aria-live="polite">
+                <div class="integration-preview-section">
+                  <h4>Players detected</h4>
+                  <p class="integration-preview-players"></p>
+                </div>
+                <div class="integration-preview-section">
+                  <h4>Assigned work</h4>
+                  <div class="integration-preview-assignments"></div>
+                </div>
+              </div>
+              <div class="integration-actions">
+                <button type="button" class="integration-action integration-action-update">Update Player List</button>
+                <button type="button" class="integration-action integration-action-save ghost">Save assigned work snapshot</button>
+              </div>
+            </div>
+            <div class="button-row">
+              <button type="button" class="integration-save">Save Connection</button>
+              <button type="button" class="ghost integration-test">Test Connection</button>
+              <button type="button" class="ghost integration-disconnect">Disconnect</button>
+            </div>
+          </section>
+
+          <section class="integration-card" data-service="trello" aria-labelledby="integration-trello-heading">
+            <header class="integration-card-header">
+              <div class="integration-icon" aria-hidden="true">🗒️</div>
+              <div>
+                <h3 id="integration-trello-heading">Trello</h3>
+                <p>Pull Trello board members and their cards.</p>
+              </div>
+            </header>
+            <label class="integration-toggle">
+              <input type="checkbox" class="integration-enabled">
+              <span>Enable connection</span>
+            </label>
+            <label>
+              Board or list URL
+              <input type="url" class="integration-resource" placeholder="https://trello.com/b/...">
+            </label>
+            <label>
+              API key
+              <input type="text" class="integration-field" data-field="apiKey" placeholder="Trello API key">
+            </label>
+            <label>
+              API token
+              <input type="password" class="integration-token" placeholder="Paste a Trello API token">
+            </label>
+            <p class="integration-hint">
+              Need credentials? Copy the 32-character API key from
+              <a href="https://trello.com/app-key" target="_blank" rel="noopener">trello.com/app-key</a>,
+              then generate a read token for your account and paste it here. This is different from the API secret.
+              <button type="button" class="integration-hint-link trello-token-helper">Open token generator</button>
+            </p>
+            <div class="integration-options">
+              <label class="integration-option">
+                <input type="checkbox" class="integration-include-assignments">
+                <span>Include assigned work when testing</span>
+              </label>
+            </div>
+            <p class="integration-token-preview" aria-live="polite"></p>
+            <p class="integration-status" aria-live="polite"></p>
+            <div class="integration-results" hidden>
+              <div class="integration-preview" aria-live="polite">
+                <div class="integration-preview-section">
+                  <h4>Players detected</h4>
+                  <p class="integration-preview-players"></p>
+                </div>
+                <div class="integration-preview-section">
+                  <h4>Assigned work</h4>
+                  <div class="integration-preview-assignments"></div>
+                </div>
+              </div>
+              <div class="integration-actions">
+                <button type="button" class="integration-action integration-action-update">Update Player List</button>
+                <button type="button" class="integration-action integration-action-save ghost">Save assigned work snapshot</button>
+              </div>
+            </div>
+            <div class="button-row">
+              <button type="button" class="integration-save">Save Connection</button>
+              <button type="button" class="ghost integration-test">Test Connection</button>
+              <button type="button" class="ghost integration-disconnect">Disconnect</button>
+            </div>
+          </section>
+
+          <section class="integration-card" data-service="github" aria-labelledby="integration-github-heading">
+            <header class="integration-card-header">
+              <div class="integration-icon" aria-hidden="true">🐙</div>
+              <div>
+                <h3 id="integration-github-heading">GitHub</h3>
+                <p>Bring in GitHub collaborators and their open issues.</p>
+              </div>
+            </header>
+            <label class="integration-toggle">
+              <input type="checkbox" class="integration-enabled">
+              <span>Enable connection</span>
+            </label>
+            <label>
+              Repository full name
+              <input type="text" class="integration-resource" placeholder="owner/repository">
+            </label>
+            <label>
+              Personal access token
+              <input type="password" class="integration-token" placeholder="Paste a GitHub token">
+            </label>
+            <div class="integration-options">
+              <label class="integration-option">
+                <input type="checkbox" class="integration-include-assignments">
+                <span>Include assigned work when testing</span>
+              </label>
+            </div>
+            <p class="integration-token-preview" aria-live="polite"></p>
+            <p class="integration-status" aria-live="polite"></p>
+            <div class="integration-results" hidden>
+              <div class="integration-preview" aria-live="polite">
+                <div class="integration-preview-section">
+                  <h4>Players detected</h4>
+                  <p class="integration-preview-players"></p>
+                </div>
+                <div class="integration-preview-section">
+                  <h4>Assigned work</h4>
+                  <div class="integration-preview-assignments"></div>
+                </div>
+              </div>
+              <div class="integration-actions">
+                <button type="button" class="integration-action integration-action-update">Update Player List</button>
+                <button type="button" class="integration-action integration-action-save ghost">Save assigned work snapshot</button>
+              </div>
+            </div>
+            <div class="button-row">
+              <button type="button" class="integration-save">Save Connection</button>
+              <button type="button" class="ghost integration-test">Test Connection</button>
+              <button type="button" class="ghost integration-disconnect">Disconnect</button>
+            </div>
+          </section>
+        </div>
+      </section>
+    </section>
+
     <section class="settings-card glass-card tips">
       <h2>How it works</h2>
       <ul>
@@ -207,6 +391,13 @@
       const previewName = brandPreview.querySelector('.preview-name');
       const previewMark = brandPreview.querySelector('.preview-mark');
       const previewButton = brandPreview.querySelector('button');
+      const integrationEndpoint = '/api/integrations/config';
+      const integrationCards = Array.from(document.querySelectorAll('.integration-card'));
+      const ASSIGNMENTS_STORAGE_KEY = 'integrationAssignments';
+      const ASSIGNMENT_ITEM_FIELDS = ['id', 'key', 'name', 'summary', 'status', 'url', 'number', 'title', 'state', 'listId'];
+      const INTEGRATION_CLIENT_KEY = 'integrationClientId';
+      const integrationResults = new Map();
+      const integrationClientId = loadIntegrationClientId();
 
       function showStatus(el, message) {
         if (!el) return;
@@ -220,6 +411,171 @@
           .split(/[\n,]+/)
           .map(name => name.trim())
           .filter(Boolean);
+      }
+
+      function dedupeNames(names = []) {
+        const seen = new Set();
+        const result = [];
+        names.forEach((name) => {
+          if (typeof name !== 'string') return;
+          const trimmed = name.trim();
+          if (!trimmed) return;
+          const key = trimmed.toLowerCase();
+          if (seen.has(key)) return;
+          seen.add(key);
+          result.push(trimmed);
+        });
+        return result;
+      }
+
+      function safeParseJson(raw, fallback) {
+        if (!raw) return fallback;
+        try {
+          const parsed = JSON.parse(raw);
+          return typeof parsed === 'object' && parsed !== null ? parsed : fallback;
+        } catch {
+          return fallback;
+        }
+      }
+
+      function sanitizeAssignmentItem(item) {
+        if (!item || typeof item !== 'object') return null;
+        const sanitized = {};
+        ASSIGNMENT_ITEM_FIELDS.forEach((field) => {
+          if (item[field] == null) return;
+          const value = String(item[field]).slice(0, 200);
+          if (value) {
+            sanitized[field] = value;
+          }
+        });
+        return Object.keys(sanitized).length ? sanitized : null;
+      }
+
+      function createIntegrationClientId() {
+        if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+          return crypto.randomUUID();
+        }
+        const random = Math.random().toString(36).slice(2, 10);
+        const timestamp = Date.now().toString(36);
+        return `dp-${random}${timestamp}`;
+      }
+
+      function loadIntegrationClientId() {
+        try {
+          const existing = localStorage.getItem(INTEGRATION_CLIENT_KEY);
+          if (existing && existing.trim().length >= 8) {
+            return existing.trim();
+          }
+        } catch (error) {
+          console.warn('Unable to read integration client id from storage', error);
+        }
+        const fresh = createIntegrationClientId();
+        try {
+          localStorage.setItem(INTEGRATION_CLIENT_KEY, fresh);
+        } catch (error) {
+          console.warn('Unable to persist integration client id', error);
+        }
+        return fresh;
+      }
+
+      function sanitizeAssignmentsPayload(assignments = []) {
+        return assignments
+          .filter((entry) => entry && typeof entry === 'object' && typeof entry.player === 'string')
+          .map((entry) => {
+            const player = entry.player.trim();
+            if (!player) return null;
+            const items = Array.isArray(entry.items) ? entry.items.slice(0, 25) : [];
+            const sanitizedItems = items
+              .map((item) => sanitizeAssignmentItem(item))
+              .filter(Boolean);
+            return {
+              player,
+              items: sanitizedItems,
+            };
+          })
+          .filter(Boolean);
+      }
+
+      function loadAssignmentSnapshots() {
+        return safeParseJson(localStorage.getItem(ASSIGNMENTS_STORAGE_KEY), {});
+      }
+
+      function persistAssignmentsSnapshot(service, data) {
+        if (!service || !data) return false;
+        const sanitizedAssignments = sanitizeAssignmentsPayload(data.assignments);
+        const players = Array.isArray(data.players) ? dedupeNames(data.players) : [];
+
+        if (!sanitizedAssignments.length) {
+          return false;
+        }
+
+        const store = loadAssignmentSnapshots();
+        store[service] = {
+          service,
+          fetchedAt: new Date().toISOString(),
+          players,
+          assignments: sanitizedAssignments,
+        };
+        try {
+          localStorage.setItem(ASSIGNMENTS_STORAGE_KEY, JSON.stringify(store));
+          return true;
+        } catch (error) {
+          console.warn('Unable to persist assignment snapshot', error);
+          return false;
+        }
+      }
+
+      function clearAssignmentSnapshot(service) {
+        if (!service) return;
+        const store = loadAssignmentSnapshots();
+        if (!(service in store)) return;
+        delete store[service];
+        try {
+          if (Object.keys(store).length) {
+            localStorage.setItem(ASSIGNMENTS_STORAGE_KEY, JSON.stringify(store));
+          } else {
+            localStorage.removeItem(ASSIGNMENTS_STORAGE_KEY);
+          }
+        } catch (error) {
+          console.warn('Unable to clear assignment snapshot', error);
+        }
+      }
+
+      function formatServiceName(service) {
+        switch (service) {
+          case 'jira':
+            return 'Jira';
+          case 'trello':
+            return 'Trello';
+          case 'github':
+            return 'GitHub';
+          default:
+            return 'Integration';
+        }
+      }
+
+      function applyPlayersFromIntegration(service, players) {
+        if (!Array.isArray(players) || !players.length || !playerNamesInput) {
+          return false;
+        }
+
+        const existing = dedupeNames(normalizeNamesInput(playerNamesInput.value));
+        const incoming = dedupeNames(players);
+        if (!incoming.length) {
+          return false;
+        }
+
+        const existingSet = new Set(existing.map((name) => name.toLowerCase()));
+        const newNames = incoming.filter((name) => !existingSet.has(name.toLowerCase()));
+        if (!newNames.length) {
+          return false;
+        }
+
+        const merged = dedupeNames([...existing, ...newNames]);
+        playerNamesInput.value = merged.join('\n');
+        localStorage.setItem(PLAYERS_KEY, JSON.stringify(merged));
+        showStatus(playersStatus, `Added ${newNames.length} player${newNames.length === 1 ? '' : 's'} from ${formatServiceName(service)}.`);
+        return true;
       }
 
       function loadPlayers() {
@@ -322,6 +678,434 @@
         showStatus(brandStatus, 'Brand reset to defaults.');
       }
 
+      function setIntegrationStatus(card, message, tone = 'info') {
+        const statusEl = card.querySelector('.integration-status');
+        if (!statusEl) return;
+        if (!message) {
+          statusEl.textContent = '';
+          delete statusEl.dataset.tone;
+          return;
+        }
+        statusEl.textContent = message;
+        statusEl.dataset.tone = tone;
+        setTimeout(() => {
+          if (statusEl.textContent === message) {
+            statusEl.textContent = '';
+            delete statusEl.dataset.tone;
+          }
+        }, 7000);
+      }
+
+      function setIntegrationBusy(card, busy) {
+        card.classList.toggle('is-busy', busy);
+        const buttons = card.querySelectorAll('.integration-save, .integration-disconnect, .integration-test, .integration-action');
+        buttons.forEach(btn => {
+          btn.disabled = busy;
+        });
+      }
+
+      function openTrelloTokenGenerator(card) {
+        if (!card) return;
+        const apiKeyInput = card.querySelector('[data-field="apiKey"]');
+        const apiKey = apiKeyInput?.value?.trim();
+        if (!apiKey) {
+          setIntegrationStatus(card, 'Enter your Trello API key before opening the token generator.', 'error');
+          apiKeyInput?.focus();
+          return;
+        }
+        const url = new URL('https://trello.com/1/authorize');
+        url.searchParams.set('expiration', 'never');
+        url.searchParams.set('scope', 'read');
+        url.searchParams.set('response_type', 'token');
+        url.searchParams.set('name', 'Daily Pick');
+        url.searchParams.set('key', apiKey);
+        window.open(url.toString(), '_blank', 'noopener');
+      }
+
+      function getIntegrationResultElements(card) {
+        if (!card) return {};
+        return {
+          container: card.querySelector('.integration-results'),
+          players: card.querySelector('.integration-preview-players'),
+          assignments: card.querySelector('.integration-preview-assignments'),
+          updateBtn: card.querySelector('.integration-action-update'),
+          saveBtn: card.querySelector('.integration-action-save'),
+        };
+      }
+
+      function resetIntegrationResult(card) {
+        const { container, players, assignments, updateBtn, saveBtn } = getIntegrationResultElements(card);
+        if (!container) return;
+        container.hidden = true;
+        if (players) {
+          players.textContent = '';
+        }
+        if (assignments) {
+          assignments.innerHTML = '';
+        }
+        if (updateBtn) {
+          updateBtn.disabled = true;
+        }
+        if (saveBtn) {
+          saveBtn.disabled = true;
+        }
+      }
+
+      function formatListPreview(values = [], max = 6) {
+        const unique = dedupeNames(values);
+        if (!unique.length) {
+          return '';
+        }
+        const shown = unique.slice(0, max);
+        let preview = shown.join(', ');
+        if (unique.length > shown.length) {
+          preview += ` … (+${unique.length - shown.length} more)`;
+        }
+        return preview;
+      }
+
+      function countAssignments(assignments = []) {
+        return assignments.reduce((total, entry) => {
+          if (!entry || typeof entry !== 'object') return total;
+          const items = Array.isArray(entry.items) ? entry.items.length : 0;
+          return total + items;
+        }, 0);
+      }
+
+      function renderAssignmentDetails(container, assignments = []) {
+        if (!container) return;
+        container.innerHTML = '';
+        const meaningful = assignments.filter((entry) => entry && Array.isArray(entry.items) && entry.items.length);
+        const total = countAssignments(assignments);
+        const teammateCount = meaningful.length;
+        const summary = document.createElement('p');
+        if (!total) {
+          summary.textContent = 'No assigned work found for this selection.';
+          container.appendChild(summary);
+          return;
+        }
+        summary.textContent = `Loaded ${total} assignment${total === 1 ? '' : 's'} for ${teammateCount} teammate${teammateCount === 1 ? '' : 's'}.`;
+        container.appendChild(summary);
+        const list = document.createElement('ul');
+        meaningful.slice(0, 5).forEach((entry) => {
+          const li = document.createElement('li');
+          const playerName = entry.player || 'Unnamed teammate';
+          const examples = Array.isArray(entry.items)
+            ? entry.items
+                .map((item) => item.summary || item.title || item.name || item.key || item.number || item.id)
+                .filter(Boolean)
+            : [];
+          if (examples.length) {
+            const sample = examples.slice(0, 2).join('; ');
+            li.textContent = `${playerName} – ${sample}${examples.length > 2 ? '…' : ''}`;
+          } else {
+            const count = Array.isArray(entry.items) ? entry.items.length : 0;
+            li.textContent = `${playerName} – ${count} item${count === 1 ? '' : 's'}`;
+          }
+          list.appendChild(li);
+        });
+        if (meaningful.length > 5) {
+          const remaining = meaningful.length - 5;
+          const li = document.createElement('li');
+          li.textContent = `…and ${remaining} more teammate${remaining === 1 ? '' : 's'}`;
+          list.appendChild(li);
+        }
+        container.appendChild(list);
+      }
+
+      function updateIntegrationResult(card, service, data, includeAssignments) {
+        const { container, players, assignments, updateBtn, saveBtn } = getIntegrationResultElements(card);
+        if (!container) return;
+        const playersList = Array.isArray(data?.players) ? dedupeNames(data.players) : [];
+        if (players) {
+          if (playersList.length) {
+            const preview = formatListPreview(playersList, 6);
+            players.textContent = `${playersList.length} teammate${playersList.length === 1 ? '' : 's'} ready to import${preview ? `: ${preview}` : ''}.`;
+          } else {
+            players.textContent = 'No players detected from the latest test.';
+          }
+        }
+
+        if (assignments) {
+          assignments.innerHTML = '';
+          if (includeAssignments) {
+            const assignmentData = Array.isArray(data?.assignments) ? data.assignments : [];
+            renderAssignmentDetails(assignments, assignmentData);
+          } else {
+            const note = document.createElement('p');
+            note.textContent = 'Assignments were not requested. Turn on “Include assigned work when testing” and try again to preview cards or issues.';
+            assignments.appendChild(note);
+          }
+        }
+
+        if (updateBtn) {
+          updateBtn.disabled = !playersList.length;
+        }
+        if (saveBtn) {
+          if (!includeAssignments) {
+            saveBtn.disabled = true;
+          } else {
+            const totalAssignments = countAssignments(Array.isArray(data?.assignments) ? data.assignments : []);
+            saveBtn.disabled = totalAssignments === 0;
+          }
+        }
+
+        container.hidden = false;
+      }
+      function formatTimestamp(timestamp) {
+        if (!timestamp) return '';
+        const date = new Date(timestamp);
+        if (Number.isNaN(date.getTime())) {
+          return '';
+        }
+        return date.toLocaleString();
+      }
+
+      async function refreshIntegrationCards() {
+        if (!integrationCards.length) return;
+        try {
+          const response = await fetch(integrationEndpoint, {
+            method: 'GET',
+            headers: { 'X-Integration-Client': integrationClientId },
+          });
+          if (!response.ok) {
+            throw new Error('Failed to load integration settings');
+          }
+          const data = await response.json();
+          integrationCards.forEach((card) => {
+            const service = card.dataset.service;
+            const info = data?.services?.[service];
+            const enabledInput = card.querySelector('.integration-enabled');
+            const resourceInput = card.querySelector('.integration-resource');
+            const tokenInput = card.querySelector('.integration-token');
+            const includeAssignmentsInput = card.querySelector('.integration-include-assignments');
+            const tokenPreview = card.querySelector('.integration-token-preview');
+            const disconnectBtn = card.querySelector('.integration-disconnect');
+            const fieldInputs = card.querySelectorAll('[data-field]');
+
+            if (enabledInput) enabledInput.checked = Boolean(info?.enabled);
+            if (resourceInput) resourceInput.value = info?.resource ?? '';
+            if (tokenInput) tokenInput.value = '';
+            if (includeAssignmentsInput) includeAssignmentsInput.checked = Boolean(info?.includeAssignments);
+            fieldInputs.forEach((input) => {
+              const key = input.dataset.field;
+              if (!key) return;
+              input.value = info?.fields?.[key] ?? '';
+            });
+            if (tokenPreview) {
+              if (info?.hasToken) {
+                const preview = info.tokenPreview || '••••';
+                const updated = formatTimestamp(info.lastUpdated);
+                tokenPreview.textContent = `Token saved (${preview})${updated ? ` – updated ${updated}` : ''}.`;
+              } else {
+                tokenPreview.textContent = 'No token stored yet.';
+              }
+            }
+            if (disconnectBtn) {
+              disconnectBtn.disabled = !(info?.hasToken || info?.enabled);
+            }
+            integrationResults.delete(service);
+            resetIntegrationResult(card);
+            setIntegrationStatus(card, '');
+          });
+        } catch (error) {
+          console.error('Integration load error', error);
+          integrationCards.forEach((card) => {
+            setIntegrationStatus(card, 'Unable to load integration settings.', 'error');
+          });
+        }
+      }
+
+      async function handleSaveIntegration(card, service) {
+        const enabledInput = card.querySelector('.integration-enabled');
+        const resourceInput = card.querySelector('.integration-resource');
+        const tokenInput = card.querySelector('.integration-token');
+        const includeAssignmentsInput = card.querySelector('.integration-include-assignments');
+        const fieldInputs = card.querySelectorAll('[data-field]');
+
+        const payload = {
+          enabled: enabledInput?.checked ?? false,
+          resource: resourceInput?.value?.trim() ?? '',
+          includeAssignments: includeAssignmentsInput?.checked ?? false,
+        };
+
+        if (fieldInputs.length) {
+          payload.fields = {};
+          fieldInputs.forEach((input) => {
+            const key = input.dataset.field;
+            if (!key) return;
+            payload.fields[key] = input.value?.trim() ?? '';
+          });
+        }
+
+        const tokenValue = tokenInput?.value?.trim();
+        if (tokenValue) {
+          payload.token = tokenValue;
+        }
+
+        try {
+          setIntegrationBusy(card, true);
+          setIntegrationStatus(card, 'Saving connection…');
+          const response = await fetch(`${integrationEndpoint}/${service}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Integration-Client': integrationClientId,
+            },
+            body: JSON.stringify(payload),
+          });
+          if (!response.ok) {
+            const errorBody = await response.json().catch(() => ({}));
+            const message = errorBody?.error || 'Unable to save connection.';
+            throw new Error(message);
+          }
+          setIntegrationStatus(card, 'Connection saved.', 'success');
+          if (tokenInput) {
+            tokenInput.value = '';
+          }
+          integrationResults.delete(service);
+          resetIntegrationResult(card);
+          await refreshIntegrationCards();
+          if (!payload.enabled) {
+            clearAssignmentSnapshot(service);
+          }
+        } catch (error) {
+          console.error(`Integration save error for ${service}`, error);
+          setIntegrationStatus(card, error.message || 'Failed to save connection.', 'error');
+        } finally {
+          setIntegrationBusy(card, false);
+        }
+      }
+
+      async function handleDisconnectIntegration(card, service) {
+        try {
+          setIntegrationBusy(card, true);
+          setIntegrationStatus(card, 'Disconnecting…');
+          const response = await fetch(`${integrationEndpoint}/${service}`, {
+            method: 'DELETE',
+            headers: { 'X-Integration-Client': integrationClientId },
+          });
+          if (!response.ok) {
+            const errorBody = await response.json().catch(() => ({}));
+            const message = errorBody?.error || 'Unable to disconnect.';
+            throw new Error(message);
+          }
+          setIntegrationStatus(card, 'Connection removed.', 'success');
+          integrationResults.delete(service);
+          resetIntegrationResult(card);
+          await refreshIntegrationCards();
+          clearAssignmentSnapshot(service);
+        } catch (error) {
+          console.error(`Integration disconnect error for ${service}`, error);
+          setIntegrationStatus(card, error.message || 'Failed to disconnect.', 'error');
+        } finally {
+          setIntegrationBusy(card, false);
+        }
+      }
+
+      function summarizeIntegrationResult(service, data, includeAssignments = false) {
+        if (!data || typeof data !== 'object') {
+          return 'Connection test succeeded.';
+        }
+
+        const serviceName = formatServiceName(service);
+        const playerCount = Array.isArray(data.players) ? data.players.length : 0;
+        let assignmentCount = 0;
+
+        if (Array.isArray(data.assignments)) {
+          assignmentCount = countAssignments(data.assignments);
+        } else if (Array.isArray(data.issues)) {
+          assignmentCount = data.issues.length;
+        } else if (Array.isArray(data.cards)) {
+          assignmentCount = data.cards.length;
+        } else if (typeof data.count === 'number') {
+          assignmentCount = data.count;
+        } else if (typeof data.assignmentCount === 'number') {
+          assignmentCount = data.assignmentCount;
+        }
+
+        const parts = [`${serviceName} connection OK.`];
+        if (playerCount) {
+          parts.push(`Found ${playerCount} participant${playerCount === 1 ? '' : 's'}.`);
+        }
+        if (includeAssignments) {
+          if (assignmentCount) {
+            parts.push(`Loaded ${assignmentCount} assignment${assignmentCount === 1 ? '' : 's'}.`);
+          } else {
+            parts.push('No assigned work found to store.');
+          }
+        }
+
+        return parts.join(' ');
+      }
+
+      async function handleTestIntegration(card, service) {
+        try {
+          setIntegrationBusy(card, true);
+          setIntegrationStatus(card, 'Checking connection…');
+          integrationResults.delete(service);
+          resetIntegrationResult(card);
+          const includeAssignmentsInput = card.querySelector('.integration-include-assignments');
+          const includeAssignments = includeAssignmentsInput?.checked ?? false;
+          const response = await fetch(`/api/integrations/${service}/pull`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Integration-Client': integrationClientId,
+            },
+            body: JSON.stringify({ includeAssignments }),
+          });
+
+          const body = await response.json().catch(() => ({}));
+          if (!response.ok) {
+            const message = body?.error || 'Unable to reach integration service.';
+            throw new Error(message);
+          }
+
+          const data = body?.data || {};
+          integrationResults.set(service, { data, includeAssignments });
+          updateIntegrationResult(card, service, data, includeAssignments);
+          const summary = summarizeIntegrationResult(service, data, includeAssignments);
+          setIntegrationStatus(card, `${summary} Review the fetched data below and choose what to do.`, 'success');
+        } catch (error) {
+          console.error(`Integration test error for ${service}`, error);
+          integrationResults.delete(service);
+          resetIntegrationResult(card);
+          setIntegrationStatus(card, error.message || 'Connection test failed.', 'error');
+        } finally {
+          setIntegrationBusy(card, false);
+        }
+      }
+
+      function handleIntegrationPlayersAction(card, service) {
+        const record = integrationResults.get(service);
+        const players = record?.data?.players;
+        if (!Array.isArray(players) || !players.length) {
+          setIntegrationStatus(card, 'Run Test Connection to load players first.', 'error');
+          return;
+        }
+        if (applyPlayersFromIntegration(service, players)) {
+          setIntegrationStatus(card, `Player List updated with ${players.length} teammate${players.length === 1 ? '' : 's'}.`, 'success');
+        } else {
+          setIntegrationStatus(card, 'No new teammates were added this time.', 'info');
+        }
+      }
+
+      function handleIntegrationAssignmentsAction(card, service) {
+        const record = integrationResults.get(service);
+        if (!record || !record.includeAssignments) {
+          setIntegrationStatus(card, 'Run Test Connection with “Include assigned work” enabled first.', 'error');
+          return;
+        }
+        const assignments = Array.isArray(record.data?.assignments) ? record.data.assignments : [];
+        if (!persistAssignmentsSnapshot(service, record.data)) {
+          setIntegrationStatus(card, 'No assigned work available to save yet.', 'error');
+          return;
+        }
+        const totalAssignments = countAssignments(assignments);
+        setIntegrationStatus(card, `Saved ${totalAssignments} assignment${totalAssignments === 1 ? '' : 's'} for later use.`, 'success');
+      }
+
       savePlayersBtn?.addEventListener('click', savePlayers);
       resetPlayersBtn?.addEventListener('click', resetPlayers);
 
@@ -335,8 +1119,36 @@
       saveBrandBtn?.addEventListener('click', saveBrand);
       resetBrandBtn?.addEventListener('click', resetBrand);
 
+      integrationCards.forEach((card) => {
+        const service = card.dataset.service;
+        const saveBtn = card.querySelector('.integration-save');
+        const disconnectBtn = card.querySelector('.integration-disconnect');
+        const testBtn = card.querySelector('.integration-test');
+        const updateAction = card.querySelector('.integration-action-update');
+        const saveAction = card.querySelector('.integration-action-save');
+        const changeInputs = card.querySelectorAll('.integration-enabled, .integration-include-assignments');
+        const tokenHelper = card.querySelector('.trello-token-helper');
+
+        saveBtn?.addEventListener('click', () => handleSaveIntegration(card, service));
+        disconnectBtn?.addEventListener('click', () => handleDisconnectIntegration(card, service));
+        testBtn?.addEventListener('click', () => handleTestIntegration(card, service));
+        updateAction?.addEventListener('click', () => handleIntegrationPlayersAction(card, service));
+        saveAction?.addEventListener('click', () => handleIntegrationAssignmentsAction(card, service));
+        if (service === 'trello') {
+          tokenHelper?.addEventListener('click', () => openTrelloTokenGenerator(card));
+        }
+        changeInputs.forEach((input) => {
+          input?.addEventListener('change', () => {
+            integrationResults.delete(service);
+            resetIntegrationResult(card);
+            setIntegrationStatus(card, '');
+          });
+        });
+      });
+
       loadPlayers();
       loadBrand();
+      refreshIntegrationCards();
     })();
   </script>
 </body>
