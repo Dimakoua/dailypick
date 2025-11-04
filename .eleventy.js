@@ -1,5 +1,3 @@
-const fs = require("fs");
-const path = require("path");
 const sitemap = require("@quasibit/eleventy-plugin-sitemap");
 
 module.exports = function(eleventyConfig) {
@@ -58,13 +56,6 @@ module.exports = function(eleventyConfig) {
       } else if (item.inputPath.startsWith('./content/blog/posts/')) {
         item.data.sitemap.changefreq = 'weekly';
         item.data.sitemap.priority = 0.8;
-
-        const absolutePath = path.resolve(
-          process.cwd(),
-          item.inputPath.replace(/^\.\//, '')
-        );
-        const stats = fs.statSync(absolutePath);
-        item.data.sitemap.lastmod = stats.mtime;
       } else {
         item.data.sitemap.changefreq = 'monthly';
         item.data.sitemap.priority = 0.5;
