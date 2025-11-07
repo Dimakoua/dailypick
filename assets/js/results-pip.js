@@ -155,7 +155,7 @@
                 margin: 0;
                 padding: 0;
                 list-style: none;
-                max-height: min(60vh, 360px);
+                max-height: 75vh;
                 overflow-y: auto;
                 display: flex;
                 flex-direction: column;
@@ -221,7 +221,7 @@
             @media (max-height: 420px) {
                 .pip-results-wrapper #leaderboard ol,
                 .pip-results-wrapper #leaderboard ul {
-                    max-height: min(50vh, 220px);
+                    max-height: 75vh;
                 }
             }
         `;
