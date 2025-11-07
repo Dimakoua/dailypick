@@ -60,6 +60,77 @@ document.addEventListener('DOMContentLoaded', () => {
         "Zachary", "Lindsay"
     ];
     let configurableRocketNames = [...DEFAULT_ROCKET_NAMES]; // This will hold the names to be used
+    const STANDUP_SOURCE = 'gravity-drift';
+    let finishHistory = [];
+
+    function normalizeStandupKey(name) {
+        return typeof name === 'string' ? name.trim().toLowerCase() : '';
+    }
+
+    function standupParticipants() {
+        const seen = new Set();
+        return configurableRocketNames
+            .map((name) => (typeof name === 'string' ? name.trim() : ''))
+            .filter((name) => {
+                const key = normalizeStandupKey(name);
+                if (!key || seen.has(key)) {
+                    return false;
+                }
+                seen.add(key);
+                return true;
+            });
+    }
+
+    function emitStandupReset() {
+        const participants = standupParticipants();
+        window.dispatchEvent(new CustomEvent('standup:queue-reset', {
+            detail: {
+                source: STANDUP_SOURCE,
+                participants,
+            },
+        }));
+        emitStandupUpdate();
+    }
+
+    function emitStandupUpdate(currentName) {
+        const participants = standupParticipants();
+        const completed = [];
+        const seen = new Set();
+        finishHistory.forEach((name) => {
+            const key = normalizeStandupKey(name);
+            if (!key || seen.has(key)) {
+                return;
+            }
+            seen.add(key);
+            completed.push(name);
+        });
+        const remaining = participants.filter((name) => !seen.has(normalizeStandupKey(name)));
+        const detail = {
+            source: STANDUP_SOURCE,
+            mode: 'auto',
+            participants,
+            completed,
+            remaining,
+        };
+        if (typeof currentName === 'string') {
+            const trimmed = currentName.trim();
+            if (normalizeStandupKey(trimmed)) {
+                detail.current = trimmed;
+            }
+        }
+        window.dispatchEvent(new CustomEvent('standup:queue', { detail }));
+    }
+
+    function registerRocketFinish(name) {
+        if (typeof name !== 'string') return;
+        const trimmed = name.trim();
+        const key = normalizeStandupKey(trimmed);
+        if (!key) return;
+        if (!finishHistory.some((entry) => normalizeStandupKey(entry) === key)) {
+            finishHistory.push(trimmed);
+        }
+        emitStandupUpdate(trimmed);
+    }
 
     let stars = [];
     let planets = [];
@@ -395,6 +466,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (this.finishOrder === null) {
                         this.finishOrder = nextFinishOrder++;
+                        registerRocketFinish(this.name);
                     }
                     this.finishReason = `Landed on ${this.landedOnPlanetName}`;
                     return; // End update for this frame, will be handled by the landed logic next frame.
@@ -417,6 +489,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     this.velocity.set(asteroid.velocity.x, asteroid.velocity.y); // Match asteroid's velocity
                     if (this.finishOrder === null) {
                         this.finishOrder = nextFinishOrder++;
+                        registerRocketFinish(this.name);
                     }
                     this.finishReason = `Trapped by Asteroid`; // More specific reason
                     return; // End update for this frame
@@ -429,6 +502,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.isLost = true;
                 if (this.finishOrder === null) {
                     this.finishOrder = nextFinishOrder++;
+                    registerRocketFinish(this.name);
                 }
                 this.finishReason = "Lost (Boundary)";
                 return; // End update for this frame
@@ -439,6 +513,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // If fuel becomes <= 0, and finishOrder is null, it will be set.
             if (this.fuel <= 0 && this.finishOrder === null) {
                  this.finishOrder = nextFinishOrder++;
+                 registerRocketFinish(this.name);
                  this.finishReason = "Drifting (Out of Fuel)";
                  // Rocket continues to drift, so no return here. Its active journey for scoring is over.
             }
@@ -503,6 +578,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (namesInputElement) {
             namesInputElement.value = configurableRocketNames.join('\n');
         }
+        finishHistory = [];
+        emitStandupReset();
     }
 
      function initAsteroids() {
@@ -616,7 +693,9 @@ document.addEventListener('DOMContentLoaded', () => {
         leaderboardDiv.classList.add('hidden');
         leaderboardList.innerHTML = '';
         nextFinishOrder = 1; // Reset finish order counter for the new game
-        
+        finishHistory = [];
+        emitStandupReset();
+
         initStars(); // Keep stars consistent or re-randomize
         initPlanets(); // This will re-randomize planet starting positions
         launchRockets();
@@ -734,6 +813,12 @@ document.addEventListener('DOMContentLoaded', () => {
             leaderboardList.appendChild(li);
         });
         leaderboardDiv.classList.remove('hidden');
+        finishHistory = [...rockets]
+            .filter((rocket) => rocket.finishOrder !== null)
+            .sort((a, b) => (a.finishOrder ?? 0) - (b.finishOrder ?? 0))
+            .map((rocket) => (typeof rocket.name === 'string' ? rocket.name.trim() : ''))
+            .filter((name) => normalizeStandupKey(name));
+        emitStandupUpdate();
     }
 
     function updateNamesFromInput() {
@@ -746,9 +831,11 @@ document.addEventListener('DOMContentLoaded', () => {
             namesInputElement.value = configurableRocketNames.join('\n');
         }
         localStorage.setItem(GRAVITY_DRIFT_NAMES_KEY, JSON.stringify(configurableRocketNames)); // Save to local storage
+        finishHistory = [];
+        emitStandupReset();
         startGame(); // Restart game with new names
         // Optionally hide config area after update
-        // toggleConfigArea(false); 
+        // toggleConfigArea(false);
     }
 
     function fitGameToScreen() {

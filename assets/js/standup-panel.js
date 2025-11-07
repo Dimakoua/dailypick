@@ -380,34 +380,36 @@
           <button type="button" class="standup-panel__refresh">Refresh</button>
         </div>
       </header>
-      <p class="standup-panel__status-text"></p>
-      <div class="standup-panel__services"></div>
-      <section class="standup-section standup-section--queue">
-        <h3>Speaker Queue</h3>
-        <div class="standup-current" data-empty="true">Choose the next speaker.</div>
-        <div class="standup-next">
-          <span class="standup-next-label">Next up</span>
-          <ul class="standup-next-list"></ul>
-        </div>
-        <details class="standup-completed">
-          <summary>Completed</summary>
-          <ul class="standup-completed-list"></ul>
-        </details>
-      </section>
-      <section class="standup-section standup-section--assignments">
-        <h3>Assigned work</h3>
-        <div class="standup-assignments-empty">Spin or race to pick who is up next.</div>
-        <ul class="standup-assignments-list"></ul>
-        <label class="standup-notes">
-          <span>Quick note</span>
-          <textarea placeholder="Capture blockers or follow-ups…" disabled></textarea>
-        </label>
-      </section>
-      <section class="standup-section standup-section--unassigned">
-        <h3>Unassigned backlog</h3>
-        <div class="standup-unassigned-empty">All caught up! No unassigned items right now.</div>
-        <ul class="standup-unassigned-list"></ul>
-      </section>
+      <div class="standup-panel__scroll" role="presentation">
+        <p class="standup-panel__status-text"></p>
+        <div class="standup-panel__services"></div>
+        <section class="standup-section standup-section--queue">
+          <h3>Speaker Queue</h3>
+          <div class="standup-current" data-empty="true">Choose the next speaker.</div>
+          <div class="standup-next">
+            <span class="standup-next-label">Next up</span>
+            <ul class="standup-next-list"></ul>
+          </div>
+          <details class="standup-completed">
+            <summary>Completed</summary>
+            <ul class="standup-completed-list"></ul>
+          </details>
+        </section>
+        <section class="standup-section standup-section--assignments">
+          <h3>Assigned work</h3>
+          <div class="standup-assignments-empty">Spin or race to pick who is up next.</div>
+          <ul class="standup-assignments-list"></ul>
+          <label class="standup-notes">
+            <span>Quick note</span>
+            <textarea placeholder="Capture blockers or follow-ups…" disabled></textarea>
+          </label>
+        </section>
+        <section class="standup-section standup-section--unassigned">
+          <h3>Unassigned backlog</h3>
+          <div class="standup-unassigned-empty">All caught up! No unassigned items right now.</div>
+          <ul class="standup-unassigned-list"></ul>
+        </section>
+      </div>
     `;
 
     const refreshButton = panel.querySelector('.standup-panel__refresh');

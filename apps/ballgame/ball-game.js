@@ -37,6 +37,77 @@ let popAnimations = [];
 const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
 const LOCAL_STORAGE_KEY = 'namesList';
 let playerNames = [...DEFAULT_NAMES]; // Initialized here, will be loaded from storage
+const STANDUP_SOURCE = 'ballgame';
+let capturedHistory = [];
+
+function normalizeStandupKey(name) {
+    return typeof name === 'string' ? name.trim().toLowerCase() : '';
+}
+
+function sanitizedParticipants() {
+    const seen = new Set();
+    return playerNames
+        .map((name) => (typeof name === 'string' ? name.trim() : ''))
+        .filter((name) => {
+            const key = normalizeStandupKey(name);
+            if (!key || seen.has(key)) {
+                return false;
+            }
+            seen.add(key);
+            return true;
+        });
+}
+
+function emitStandupReset() {
+    const participants = sanitizedParticipants();
+    window.dispatchEvent(new CustomEvent('standup:queue-reset', {
+        detail: {
+            source: STANDUP_SOURCE,
+            participants,
+        },
+    }));
+    emitStandupUpdate();
+}
+
+function emitStandupUpdate(currentName) {
+    const participants = sanitizedParticipants();
+    const completed = [];
+    const seen = new Set();
+    capturedHistory.forEach((name) => {
+        const key = normalizeStandupKey(name);
+        if (!key || seen.has(key)) {
+            return;
+        }
+        seen.add(key);
+        completed.push(name);
+    });
+    const remaining = participants.filter((name) => !seen.has(normalizeStandupKey(name)));
+    const detail = {
+        source: STANDUP_SOURCE,
+        mode: 'auto',
+        participants,
+        completed,
+        remaining,
+    };
+    if (typeof currentName === 'string') {
+        const trimmed = currentName.trim();
+        if (normalizeStandupKey(trimmed)) {
+            detail.current = trimmed;
+        }
+    }
+    window.dispatchEvent(new CustomEvent('standup:queue', { detail }));
+}
+
+function recordCaptureForStandup(name) {
+    if (typeof name !== 'string') return;
+    const trimmed = name.trim();
+    const key = normalizeStandupKey(trimmed);
+    if (!key) return;
+    if (!capturedHistory.some((entry) => normalizeStandupKey(entry) === key)) {
+        capturedHistory.push(trimmed);
+    }
+    emitStandupUpdate(trimmed);
+}
 
 // Session Management Variable
 let currentSessionId = null;
@@ -161,6 +232,8 @@ function loadNamesFromStorage() {
         namesInput.value = playerNames.join('\n');
     }
     console.log("[Client Debug] Names loaded:", playerNames);
+    capturedHistory = [];
+    emitStandupReset();
 }
 
 function saveNamesToStorage() {
@@ -198,6 +271,8 @@ function updateNamesFromInput() {
         // This behavior depends on your desired UX flow. For now, it will just update localStorage.
     }
     toggleConfigArea(false); // Hide config after updating
+    capturedHistory = [];
+    emitStandupReset();
 }
 
 function toggleConfigArea(show) {
@@ -220,12 +295,16 @@ function toggleConfigArea(show) {
 function requestNewSession() {
     console.log('[Client Debug] Requesting new session...');
     // When requesting a new session, we initiate a connection and pass the current playerNames
+    capturedHistory = [];
+    emitStandupReset();
     connectWebSocket(null, playerNames);
 }
 
 function restartCurrentGame() {
     if (gameOverOverlay) gameOverOverlay.style.display = 'none';
     if (capturedList) capturedList.innerHTML = '';
+    capturedHistory = [];
+    emitStandupReset();
 
     if (currentSessionId) {
         connectWebSocket(currentSessionId, playerNames);
@@ -305,6 +384,8 @@ function handleServerMessage(data) {
             if (capturedList) capturedList.innerHTML = '';
             if (gameOverOverlay) gameOverOverlay.style.display = 'none';
             if (countdownOverlay) countdownOverlay.style.display = 'none';
+            capturedHistory = [];
+            emitStandupReset();
             break;
         case 'join-session-success':
             console.log(`[Client Debug] Successfully joined session:`, data);
@@ -383,11 +464,15 @@ function draw() {
 }
 
 function updateCapturedList(userName) {
+    if (typeof userName !== 'string' || !userName.trim()) {
+        return;
+    }
     if (capturedList) {
         const listItem = document.createElement('li');
         listItem.textContent = userName;
         capturedList.appendChild(listItem);
     }
+    recordCaptureForStandup(userName);
 }
 
 function showGameOver(winners) {
@@ -399,6 +484,12 @@ function showGameOver(winners) {
             listItem.textContent = winner;
             winnerList.appendChild(listItem);
         });
+    }
+    if (Array.isArray(winners)) {
+        capturedHistory = winners
+            .map((winner) => (typeof winner === 'string' ? winner.trim() : ''))
+            .filter((winner) => normalizeStandupKey(winner));
+        emitStandupUpdate();
     }
 }
 

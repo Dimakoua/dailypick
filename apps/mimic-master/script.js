@@ -15,6 +15,46 @@
   const waitingMessage = document.getElementById("waitingMessage");
   const sessionStatus = document.getElementById("sessionStatus");
   const leaderboardList = document.getElementById("leaderboardList");
+  const STANDUP_SOURCE = 'mimic-master';
+
+  function emitStandupRoster(entries) {
+    const participants = [];
+    const seen = new Set();
+    if (Array.isArray(entries)) {
+      entries.forEach((entry, index) => {
+        let candidate = '';
+        if (entry && typeof entry.name === "string") {
+          candidate = entry.name.trim();
+        }
+        if (!candidate) {
+          candidate = `Player ${index + 1}`;
+        }
+        const key = candidate.toLowerCase();
+        if (!key || seen.has(key)) {
+          return;
+        }
+        seen.add(key);
+        participants.push(candidate);
+      });
+    }
+    window.dispatchEvent(
+      new CustomEvent('standup:queue-reset', {
+        detail: {
+          source: STANDUP_SOURCE,
+          participants,
+        },
+      })
+    );
+    window.dispatchEvent(
+      new CustomEvent('standup:queue', {
+        detail: {
+          source: STANDUP_SOURCE,
+          mode: 'manual',
+          participants,
+        },
+      })
+    );
+  }
 
   // enable via ?debug=true in URL
   const debug =
@@ -122,6 +162,7 @@
       const placeholder = document.createElement("li");
       placeholder.textContent = "No players in the room yet.";
       leaderboardList.appendChild(placeholder);
+      emitStandupRoster([]);
       return;
     }
     entries.forEach((entry, index) => {
@@ -137,6 +178,7 @@
       li.innerHTML = `<strong>${displayName}</strong> · ${best}`;
       leaderboardList.appendChild(li);
     });
+    emitStandupRoster(entries);
   }
 
   async function ensureDetector() {
