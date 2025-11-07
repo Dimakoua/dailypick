@@ -20,48 +20,209 @@
         }
     }
 
+    function withAlpha(color, alpha) {
+        if (!color) return '';
+        const trimmed = String(color).trim();
+        const normalizedAlpha = Math.min(Math.max(Number(alpha) || 0, 0), 1);
+
+        if (!trimmed) return '';
+
+        const hexMatch = trimmed.match(/^#([0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})$/i);
+        if (hexMatch) {
+            let hex = hexMatch[1];
+            if (hex.length === 3) {
+                hex = hex.split('').map(char => char + char).join('');
+            }
+            if (hex.length === 6 || hex.length === 8) {
+                const r = parseInt(hex.slice(0, 2), 16);
+                const g = parseInt(hex.slice(2, 4), 16);
+                const b = parseInt(hex.slice(4, 6), 16);
+                return `rgba(${r}, ${g}, ${b}, ${normalizedAlpha})`;
+            }
+        }
+
+        if (trimmed.startsWith('rgba')) {
+            const parts = trimmed
+                .replace(/rgba\(([^)]+)\)/, '$1')
+                .split(',')
+                .map(part => part.trim())
+                .slice(0, 3);
+            if (parts.length === 3) {
+                return `rgba(${parts.join(', ')}, ${normalizedAlpha})`;
+            }
+        }
+
+        if (trimmed.startsWith('rgb')) {
+            const parts = trimmed
+                .replace(/rgb\(([^)]+)\)/, '$1')
+                .split(',')
+                .map(part => part.trim())
+                .slice(0, 3);
+            if (parts.length === 3) {
+                return `rgba(${parts.join(', ')}, ${normalizedAlpha})`;
+            }
+        }
+
+        return trimmed;
+    }
+
     function copyStylesToPiP(pipDoc, sourceDoc) {
         const style = pipDoc.createElement('style');
         const computed = getComputedStyle(sourceDoc.body);
+        const rootComputed = getComputedStyle(sourceDoc.documentElement);
+        const getVar = (name, fallback) => {
+            const value = rootComputed.getPropertyValue(name);
+            return value && value.trim() ? value.trim() : fallback;
+        };
+
+        const fontFamily = computed.fontFamily || getVar('--brand-font-family', 'system-ui, sans-serif');
+        const background = getVar('--brand-background', 'linear-gradient(180deg, #0d162c 0%, #070d1b 100%)');
+        const surface = getVar('--brand-surface', 'rgba(11, 17, 34, 0.92)');
+        const textColor = computed.color || getVar('--brand-text', '#e7ecf8');
+        const headingColor = getVar('--brand-heading', '#ffffff');
+        const subtleColor = getVar('--brand-subtle-text', withAlpha(headingColor, 0.65));
+        const borderColor = getVar('--brand-border', 'rgba(255, 255, 255, 0.18)');
+        const accent = getVar('--brand-accent', '#3a8fd8');
+        const accentStrong = getVar('--brand-accent-strong', accent);
+        const accentMuted = getVar('--brand-accent-muted', withAlpha(accent, 0.18));
+        const radius = getVar('--brand-radius', '18px');
+        const shadow = getVar('--brand-shadow', '0 18px 42px rgba(8, 12, 24, 0.42)');
+        const rowBorder = withAlpha(accent, 0.26);
+        const rowBorderStrong = withAlpha(accentStrong, 0.38);
+        const rowBackground = accentMuted || withAlpha(accent, 0.16);
+        const rowBackgroundTop = withAlpha(accentStrong, 0.22);
+        const scrollbarThumb = withAlpha(accentStrong, 0.42);
+        const subtleDivider = withAlpha(borderColor, 0.55);
+
         style.textContent = `
             :root {
                 color-scheme: light dark;
             }
+            *, *::before, *::after {
+                box-sizing: border-box;
+            }
             body {
                 margin: 0;
-                font-family: ${computed.fontFamily || 'system-ui, sans-serif'};
-                background: rgba(20, 33, 61, 0.92);
-                color: ${computed.color || '#f7f9fc'};
+                font-family: ${fontFamily};
+                background: ${background};
+                color: ${textColor};
                 display: flex;
                 align-items: stretch;
-                justify-content: stretch;
+                justify-content: center;
                 min-height: 100vh;
+                padding: clamp(12px, 4vh, 28px);
             }
             .pip-results-wrapper {
                 box-sizing: border-box;
-                width: 100%;
-                padding: 18px 22px;
+                width: min(100%, 420px);
+                margin: auto;
+                padding: 0;
                 display: flex;
                 flex-direction: column;
-                gap: 12px;
-                overflow: auto;
+                gap: clamp(12px, 2.4vh, 18px);
+                overflow: visible;
             }
-            .pip-results-wrapper h1,
-            .pip-results-wrapper h2,
-            .pip-results-wrapper h3 {
-                margin: 0 0 8px 0;
+            .pip-results-wrapper #leaderboard {
+                background: ${surface};
+                color: ${textColor};
+                border-radius: calc(${radius} - 4px);
+                border: 1px solid ${borderColor};
+                box-shadow: ${shadow};
+                padding: clamp(18px, 4vh, 24px);
+                display: flex;
+                flex-direction: column;
+                gap: clamp(12px, 2.2vh, 18px);
             }
-            .pip-results-wrapper ol,
-            .pip-results-wrapper ul {
+            .pip-results-wrapper #leaderboard h1,
+            .pip-results-wrapper #leaderboard h2,
+            .pip-results-wrapper #leaderboard h3 {
                 margin: 0;
-                padding-left: 20px;
+                font-size: clamp(1.1rem, 2.6vw, 1.35rem);
+                letter-spacing: 0.01em;
+                color: ${headingColor};
             }
-            .pip-results-wrapper li {
-                margin-bottom: 4px;
-                line-height: 1.4;
+            .pip-results-wrapper #leaderboard p {
+                margin: 0;
+                color: ${subtleColor};
+                font-size: clamp(0.8rem, 2.2vw, 0.92rem);
+                line-height: 1.45;
             }
-            .pip-results-wrapper button {
+            .pip-results-wrapper #leaderboard .pip-trigger {
                 display: none !important;
+            }
+            .pip-results-wrapper #leaderboard ol,
+            .pip-results-wrapper #leaderboard ul {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                max-height: min(60vh, 360px);
+                overflow-y: auto;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                padding-right: 4px;
+            }
+            .pip-results-wrapper #leaderboard li {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                padding: 10px 12px;
+                border-radius: calc(${radius} - 10px);
+                background: ${rowBackground};
+                border: 1px solid ${rowBorder};
+                color: ${textColor};
+                font-size: clamp(0.85rem, 2.2vw, 0.98rem);
+                line-height: 1.45;
+                box-shadow: inset 0 1px 0 ${withAlpha('#ffffff', 0.06)};
+            }
+            .pip-results-wrapper #leaderboard li:nth-child(1) {
+                background: ${rowBackgroundTop};
+                border-color: ${rowBorderStrong};
+                box-shadow: inset 0 1px 0 ${withAlpha('#ffffff', 0.12)};
+            }
+            .pip-results-wrapper #leaderboard li + li {
+                border-top: 1px solid ${subtleDivider};
+            }
+            .pip-results-wrapper #leaderboard li b,
+            .pip-results-wrapper #leaderboard li strong {
+                color: ${headingColor};
+                font-weight: 700;
+                flex: 1;
+                min-width: 0;
+            }
+            .pip-results-wrapper #leaderboard li span,
+            .pip-results-wrapper #leaderboard li small,
+            .pip-results-wrapper #leaderboard li em {
+                color: ${subtleColor};
+                font-weight: 600;
+                font-style: normal;
+            }
+            .pip-results-wrapper #leaderboard ul::-webkit-scrollbar,
+            .pip-results-wrapper #leaderboard ol::-webkit-scrollbar {
+                width: 8px;
+            }
+            .pip-results-wrapper #leaderboard ul::-webkit-scrollbar-thumb,
+            .pip-results-wrapper #leaderboard ol::-webkit-scrollbar-thumb {
+                background: ${scrollbarThumb};
+                border-radius: 999px;
+            }
+            @media (max-width: 420px) {
+                body {
+                    padding: clamp(12px, 4vw, 18px);
+                }
+                .pip-results-wrapper #leaderboard {
+                    padding: clamp(16px, 5vw, 20px);
+                }
+                .pip-results-wrapper #leaderboard li {
+                    padding: 8px 10px;
+                }
+            }
+            @media (max-height: 420px) {
+                .pip-results-wrapper #leaderboard ol,
+                .pip-results-wrapper #leaderboard ul {
+                    max-height: min(50vh, 220px);
+                }
             }
         `;
         pipDoc.head.appendChild(style);
