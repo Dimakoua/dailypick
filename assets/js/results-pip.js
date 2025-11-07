@@ -110,13 +110,13 @@
                 align-items: stretch;
                 justify-content: center;
                 min-height: 100vh;
-                padding: clamp(12px, 4vh, 28px);
+                padding: clamp(8px, 3vh, 18px);
             }
             .pip-results-wrapper {
                 box-sizing: border-box;
-                width: min(100%, 420px);
-                margin: auto;
-                padding: 0;
+                width: min(100%, 432px);
+                margin: 0 auto;
+                padding: clamp(4px, 1.6vh, 8px);
                 display: flex;
                 flex-direction: column;
                 gap: clamp(12px, 2.4vh, 18px);
@@ -128,7 +128,7 @@
                 border-radius: calc(${radius} - 4px);
                 border: 1px solid ${borderColor};
                 box-shadow: ${shadow};
-                padding: clamp(18px, 4vh, 24px);
+                padding: clamp(16px, 3vh, 20px);
                 display: flex;
                 flex-direction: column;
                 gap: clamp(12px, 2.2vh, 18px);
@@ -167,7 +167,7 @@
                 align-items: center;
                 justify-content: space-between;
                 gap: 12px;
-                padding: 10px 12px;
+                padding: 10px 14px;
                 border-radius: calc(${radius} - 10px);
                 background: ${rowBackground};
                 border: 1px solid ${rowBorder};
@@ -209,13 +209,13 @@
             }
             @media (max-width: 420px) {
                 body {
-                    padding: clamp(12px, 4vw, 18px);
+                    padding: clamp(8px, 3vw, 16px);
                 }
                 .pip-results-wrapper #leaderboard {
-                    padding: clamp(16px, 5vw, 20px);
+                    padding: clamp(14px, 4.6vw, 18px);
                 }
                 .pip-results-wrapper #leaderboard li {
-                    padding: 8px 10px;
+                    padding: 8px 12px;
                 }
             }
             @media (max-height: 420px) {
