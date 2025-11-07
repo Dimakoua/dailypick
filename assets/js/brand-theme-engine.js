@@ -495,19 +495,19 @@
         return { start, end };
       },
       palette: {
-        accentColor: '#d7373f',
-        accentStrong: '#8f1f24',
-        backgroundColor: '#f2f7f1',
+        accentColor: '#1f7a3b',
+        accentStrong: '#145233',
+        backgroundColor: '#f0f7f0',
         surfaceColor: '#ffffff',
-        textColor: '#164534',
-        headingColor: '#0d2f23',
-        subtleTextColor: '#456b55',
-        borderColor: 'rgba(22, 69, 53, 0.18)',
+        textColor: '#123a27',
+        headingColor: '#0b2619',
+        subtleTextColor: '#3f6a50',
+        borderColor: 'rgba(31, 122, 59, 0.18)',
       },
       assets: {
         icon: '🎄',
-        background: 'linear-gradient(150deg, rgba(255, 255, 255, 0.94) 0%, rgba(196, 235, 212, 0.9) 100%)',
-        accentGlow: '0 0 32px rgba(215, 55, 63, 0.32)',
+        background: 'linear-gradient(150deg, rgba(255, 255, 255, 0.94) 0%, rgba(180, 224, 194, 0.92) 100%)',
+        accentGlow: '0 0 32px rgba(31, 122, 59, 0.32)',
       },
       metadata: {
         description: 'Evergreen gradients, twinkle lights, and a festive mark for year-end celebrations.',
