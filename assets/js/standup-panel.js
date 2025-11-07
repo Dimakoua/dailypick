@@ -5,7 +5,18 @@
     current: null,
     upcoming: [],
     completed: [],
+    order: [],
+    orderMode: false,
+    detailCompleted: [],
+    detailCurrent: null,
   };
+
+  const orderedManualState = {
+    completed: [],
+    current: null,
+  };
+
+  const ORDERED_LIST_SOURCES = new Set(['speedway', 'letters', 'gravity-drift']);
 
   let latestSnapshot = standup && typeof standup.getSnapshot === 'function' ? standup.getSnapshot() : null;
   let noteDebounce = null;
@@ -19,6 +30,10 @@
     current: null,
     nextList: null,
     completedList: null,
+    queueControls: null,
+    queueNextButton: null,
+    queueRandomButton: null,
+    queueHint: null,
     assignmentsList: null,
     assignmentsEmpty: null,
     unassignedList: null,
@@ -29,6 +44,145 @@
   function normalizeName(value) {
     if (typeof value !== 'string') return '';
     return value.trim().toLowerCase();
+  }
+
+  function namesMatch(a, b) {
+    return normalizeName(a) === normalizeName(b);
+  }
+
+  function resetManualOrderState() {
+    orderedManualState.completed = [];
+    orderedManualState.current = null;
+  }
+
+  function syncManualStateWithOrder(order) {
+    if (!Array.isArray(order) || !order.length) {
+      resetManualOrderState();
+      return;
+    }
+    const allowedKeys = new Set(order.map((name) => normalizeName(name)).filter(Boolean));
+    orderedManualState.completed = orderedManualState.completed.filter((name) => allowedKeys.has(normalizeName(name)));
+    if (orderedManualState.current && !allowedKeys.has(normalizeName(orderedManualState.current))) {
+      orderedManualState.current = null;
+    }
+  }
+
+  function addManualCompletion(name) {
+    const key = normalizeName(name);
+    if (!key) return;
+    const detailCompletedKeys = new Set(queueState.detailCompleted.map((entry) => normalizeName(entry)));
+    if (detailCompletedKeys.has(key)) return;
+    if (orderedManualState.completed.some((entry) => namesMatch(entry, name))) return;
+    orderedManualState.completed.push(name);
+  }
+
+  function buildCompletedList() {
+    const seen = new Set();
+    const combined = [];
+    queueState.detailCompleted.forEach((name) => {
+      const key = normalizeName(name);
+      if (!key || seen.has(key)) return;
+      seen.add(key);
+      combined.push(name);
+    });
+    orderedManualState.completed.forEach((name) => {
+      const key = normalizeName(name);
+      if (!key || seen.has(key)) return;
+      seen.add(key);
+      combined.push(name);
+    });
+    return { list: combined, seen };
+  }
+
+  function applyOrderedQueueState() {
+    const order = Array.isArray(queueState.order) ? queueState.order : [];
+    if (!order.length) {
+      queueState.current = null;
+      queueState.upcoming = [];
+      queueState.completed = [];
+      queueState.orderMode = false;
+      return;
+    }
+
+    queueState.orderMode = true;
+    syncManualStateWithOrder(order);
+
+    const { list: completedList, seen } = buildCompletedList();
+    queueState.completed = completedList;
+
+    let current = null;
+    if (queueState.detailCurrent && !seen.has(normalizeName(queueState.detailCurrent))) {
+      current = queueState.detailCurrent;
+      orderedManualState.current = null;
+    } else if (orderedManualState.current && !seen.has(normalizeName(orderedManualState.current))) {
+      current = orderedManualState.current;
+    } else {
+      current = order.find((name) => {
+        const key = normalizeName(name);
+        return key && !seen.has(key);
+      }) || null;
+      orderedManualState.current = current || null;
+    }
+
+    queueState.current = current;
+    const currentKey = normalizeName(current);
+    queueState.upcoming = order.filter((name) => {
+      const key = normalizeName(name);
+      if (!key) return false;
+      if (seen.has(key)) return false;
+      if (key === currentKey) return false;
+      return true;
+    });
+  }
+
+  function advanceOrderedQueue(forcedNextName = null) {
+    if (!queueState.orderMode) return;
+    if (queueState.current) {
+      addManualCompletion(queueState.current);
+    }
+    queueState.detailCurrent = null;
+
+    let manualTarget = null;
+    const forcedKey = normalizeName(forcedNextName);
+    if (forcedKey) {
+      const { seen } = buildCompletedList();
+      if (!seen.has(forcedKey)) {
+        manualTarget = queueState.order.find((name) => normalizeName(name) === forcedKey) || null;
+      }
+    }
+    orderedManualState.current = manualTarget;
+
+    applyOrderedQueueState();
+    renderQueue();
+  }
+
+  function selectRandomOrderedSpeaker() {
+    if (!queueState.orderMode) return;
+    const pool = [];
+    if (queueState.current) {
+      pool.push(queueState.current);
+    }
+    queueState.upcoming.forEach((name) => pool.push(name));
+    const eligible = pool.filter((name) => name && !queueState.completed.some((entry) => namesMatch(entry, name)));
+    if (!eligible.length) return;
+    const choice = eligible[Math.floor(Math.random() * eligible.length)];
+    if (queueState.current && namesMatch(queueState.current, choice)) {
+      return;
+    }
+    advanceOrderedQueue(choice);
+  }
+
+  function updateQueueControls() {
+    if (!elements.queueControls || !elements.queueNextButton || !elements.queueRandomButton) return;
+    const active = queueState.orderMode && queueState.order.length > 0;
+    elements.queueControls.hidden = !active;
+    if (!active) return;
+    const hasNext = Boolean(queueState.current) || queueState.upcoming.length > 0;
+    elements.queueNextButton.disabled = !hasNext;
+    const randomPool = [];
+    if (queueState.current) randomPool.push(queueState.current);
+    queueState.upcoming.forEach((name) => randomPool.push(name));
+    elements.queueRandomButton.disabled = randomPool.length === 0;
   }
 
   function sanitizeList(list) {
@@ -47,6 +201,22 @@
     return result;
   }
 
+  function buildOrderedListFromCompleted(detail = {}) {
+    const combined = [];
+    const seen = new Set();
+    const append = (list) => {
+      sanitizeList(list).forEach((name) => {
+        const key = normalizeName(name);
+        if (!key || seen.has(key)) return;
+        seen.add(key);
+        combined.push(name);
+      });
+    };
+    append(detail.completed || []);
+    append(detail.remaining || []);
+    return combined;
+  }
+
   function getDisplayName(name) {
     if (!name) return '';
     const key = normalizeName(name);
@@ -58,6 +228,7 @@
 
   function ensureUpcomingFallback() {
     if (queueState.upcoming.length) return;
+    if (queueState.orderMode) return;
     const known = queueState.participants.length
       ? queueState.participants
       : Array.isArray(latestSnapshot?.players)
@@ -287,6 +458,12 @@
     upcoming.slice(0, 8).forEach((name) => {
       const li = document.createElement('li');
       li.textContent = getDisplayName(name);
+      if (queueState.orderMode) {
+        li.dataset.player = name;
+        li.tabIndex = 0;
+        li.setAttribute('role', 'button');
+        li.classList.add('standup-next-item--selectable');
+      }
       elements.nextList.appendChild(li);
     });
 
@@ -299,9 +476,53 @@
 
     renderAssignments();
     renderNotes();
+    updateQueueControls();
   }
 
   function handleQueueUpdate(detail = {}) {
+    const source = typeof detail.source === 'string' ? detail.source : '';
+    const providedOrder = Array.isArray(detail.order) ? sanitizeList(detail.order) : [];
+    let derivedOrder = providedOrder;
+    if (!derivedOrder.length && ORDERED_LIST_SOURCES.has(source)) {
+      const orderedList = buildOrderedListFromCompleted(detail);
+      if (orderedList.length) {
+        derivedOrder = orderedList;
+      }
+    }
+
+    if (derivedOrder.length) {
+      const previousOrder = queueState.order || [];
+      queueState.order = derivedOrder;
+      if (Array.isArray(detail.participants) && detail.participants.length) {
+        queueState.participants = sanitizeList(detail.participants);
+      } else {
+        queueState.participants = derivedOrder.slice();
+      }
+      queueState.detailCompleted = [];
+      queueState.detailCurrent = null;
+
+      const hasPreviousOrder = Array.isArray(previousOrder) && previousOrder.length > 0;
+      const orderChanged =
+        !hasPreviousOrder ||
+        previousOrder.length > derivedOrder.length ||
+        previousOrder.some((name, index) => !namesMatch(name, derivedOrder[index]));
+      if (orderChanged) {
+        resetManualOrderState();
+      } else {
+        syncManualStateWithOrder(derivedOrder);
+      }
+
+      applyOrderedQueueState();
+      renderQueue();
+      return;
+    }
+
+    queueState.orderMode = false;
+    queueState.order = [];
+    queueState.detailCompleted = [];
+    queueState.detailCurrent = null;
+    resetManualOrderState();
+
     if (Array.isArray(detail.participants)) {
       queueState.participants = sanitizeList(detail.participants);
     }
@@ -331,6 +552,11 @@
     queueState.current = null;
     queueState.completed = sanitizeList(detail.completed || []);
     queueState.upcoming = queueState.participants.slice();
+    queueState.order = [];
+    queueState.orderMode = false;
+    queueState.detailCurrent = null;
+    queueState.detailCompleted = [];
+    resetManualOrderState();
     renderQueue();
   }
 
@@ -386,6 +612,13 @@
         <section class="standup-section standup-section--queue">
           <h3>Speaker Queue</h3>
           <div class="standup-current" data-empty="true">Choose the next speaker.</div>
+          <div class="standup-queue-controls" hidden>
+            <div class="standup-queue-controls__actions">
+              <button type="button" class="standup-queue-control standup-queue-control--next">Next speaker</button>
+              <button type="button" class="standup-queue-control standup-queue-control--random">Pick random</button>
+            </div>
+            <p class="standup-queue-controls__hint">Click any name to jump ahead.</p>
+          </div>
           <div class="standup-next">
             <span class="standup-next-label">Next up</span>
             <ul class="standup-next-list"></ul>
@@ -455,11 +688,42 @@
     elements.current = panel.querySelector('.standup-current');
     elements.nextList = panel.querySelector('.standup-next-list');
     elements.completedList = panel.querySelector('.standup-completed-list');
+    elements.queueControls = panel.querySelector('.standup-queue-controls');
+    elements.queueNextButton = panel.querySelector('.standup-queue-control--next');
+    elements.queueRandomButton = panel.querySelector('.standup-queue-control--random');
+    elements.queueHint = panel.querySelector('.standup-queue-controls__hint');
     elements.assignmentsList = panel.querySelector('.standup-assignments-list');
     elements.assignmentsEmpty = panel.querySelector('.standup-assignments-empty');
     elements.unassignedList = panel.querySelector('.standup-unassigned-list');
     elements.unassignedEmpty = panel.querySelector('.standup-unassigned-empty');
     elements.notes = notesArea;
+
+    if (elements.queueNextButton) {
+      elements.queueNextButton.addEventListener('click', () => {
+        advanceOrderedQueue();
+      });
+    }
+    if (elements.queueRandomButton) {
+      elements.queueRandomButton.addEventListener('click', () => {
+        selectRandomOrderedSpeaker();
+      });
+    }
+    if (elements.nextList) {
+      elements.nextList.addEventListener('click', (event) => {
+        const target = event.target.closest('li[data-player]');
+        if (!target) return;
+        const name = target.dataset.player || target.textContent;
+        advanceOrderedQueue(name);
+      });
+      elements.nextList.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        const target = event.target.closest('li[data-player]');
+        if (!target) return;
+        event.preventDefault();
+        const name = target.dataset.player || target.textContent;
+        advanceOrderedQueue(name);
+      });
+    }
   }
 
   function handleDataUpdate(snapshot) {
