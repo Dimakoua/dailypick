@@ -1,6 +1,7 @@
 (() => {
   const BRAND_CONFIG_KEY = 'brandConfig';
-  const DEFAULT_BRAND = {
+  const themeEngine = window.BrandThemeEngine;
+  const FALLBACK_DEFAULT = {
     brandName: 'Daily Pick',
     brandMark: '🎯',
     accentColor: '#3498db',
@@ -14,8 +15,18 @@
     radius: '18px',
     shadow: '0 10px 30px rgba(0, 0, 0, 0.08)',
     fontFamily: "'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-    logoUrl: ''
+    logoUrl: '',
+    themeIcon: '',
+    themeBackground: 'none',
+    themeAccentGlow: 'none',
+    themeMode: 'auto',
+    activeThemeId: null,
+    holidayThemes: {},
+    themeSchemaVersion: 1,
   };
+  const DEFAULT_BRAND = themeEngine
+    ? themeEngine.createDefaultBrandConfig()
+    : { ...FALLBACK_DEFAULT };
 
   const cssVarMap = {
     accentColor: '--brand-accent',
@@ -29,8 +40,26 @@
     radius: '--brand-radius',
     shadow: '--brand-shadow',
     fontFamily: '--brand-font-family',
-    logoUrl: '--brand-logo'
+    logoUrl: '--brand-logo',
+    themeBackground: '--brand-theme-background',
+    themeAccentGlow: '--brand-theme-accent-glow',
+    themeIcon: '--brand-theme-icon',
   };
+
+  const cssTransformers = {
+    logoUrl: (value) => (value ? `url("${value}")` : 'none'),
+    themeIcon: (value) => (value ? `'${value}'` : "''"),
+  };
+
+  let lastAppliedTheme = null;
+
+  function composeBrandStyles(config) {
+    if (!themeEngine) {
+      const fallbackConfig = { ...DEFAULT_BRAND, ...config };
+      return { config: fallbackConfig, styles: fallbackConfig, activeTheme: null };
+    }
+    return themeEngine.composeBrandStyles(config);
+  }
 
   function safeParseBrandConfig(raw) {
     if (!raw) return null;
@@ -44,29 +73,47 @@
   }
 
   function applyBrandConfig(config) {
-    if (!config) return;
-
-    const merged = { ...DEFAULT_BRAND, ...config };
+    const { config: hydratedConfig, styles, activeTheme } = composeBrandStyles(
+      config || DEFAULT_BRAND,
+    );
     const root = document.documentElement;
 
     Object.entries(cssVarMap).forEach(([key, cssVar]) => {
-      if (merged[key] !== undefined && merged[key] !== null) {
-        const value =
-          key === 'logoUrl' && merged[key]
-            ? `url("${merged[key]}")`
-            : merged[key];
+      if (styles[key] !== undefined && styles[key] !== null) {
+        const transformer = cssTransformers[key];
+        const value = transformer ? transformer(styles[key]) : styles[key];
         root.style.setProperty(cssVar, value);
       }
     });
 
     const brandNameEl = document.querySelector('.brand-name');
-    if (brandNameEl && merged.brandName) {
-      brandNameEl.textContent = merged.brandName;
+    if (brandNameEl && styles.brandName) {
+      brandNameEl.textContent = styles.brandName;
     }
 
     const brandMarkEl = document.querySelector('.brand-mark');
-    if (brandMarkEl && merged.brandMark) {
-      brandMarkEl.textContent = merged.brandMark;
+    if (brandMarkEl && styles.brandMark) {
+      brandMarkEl.textContent = styles.brandMark;
+    }
+
+    const themeId = activeTheme?.id || 'default';
+    root.dataset.brandTheme = themeId;
+    root.dataset.brandThemeName = activeTheme?.name || '';
+    root.dataset.brandThemeRange = activeTheme?.metadata?.rangeLabel || '';
+
+    window.currentBrandConfig = hydratedConfig;
+    window.currentBrandTheme = activeTheme;
+
+    if (themeId !== lastAppliedTheme) {
+      window.dispatchEvent(
+        new CustomEvent('brandThemeChanged', {
+          detail: {
+            theme: activeTheme,
+            config: hydratedConfig,
+          },
+        }),
+      );
+      lastAppliedTheme = themeId;
     }
   }
 
@@ -84,9 +131,7 @@
   }
 
   const storedConfig = getStoredConfig();
-  if (storedConfig) {
-    applyBrandConfig(storedConfig);
-  }
+  applyBrandConfig(storedConfig || DEFAULT_BRAND);
 
   window.addEventListener('brandConfigUpdated', (event) => {
     applyBrandConfig(event.detail);

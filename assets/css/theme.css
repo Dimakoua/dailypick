@@ -12,6 +12,9 @@
   --brand-radius: 18px;
   --brand-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   --brand-logo: none;
+  --brand-theme-background: none;
+  --brand-theme-accent-glow: none;
+  --brand-theme-icon: '';
   --app-header-offset: 120px;
 }
 
