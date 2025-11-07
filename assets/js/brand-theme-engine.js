@@ -525,9 +525,21 @@
   }
 
   function upgradeBrandConfig(rawConfig = {}, now = new Date()) {
-    const defaults = { ...BASE_BRAND, themeMode: 'auto', activeThemeId: null, holidayThemes: buildHolidayThemes(now), themeSchemaVersion: THEME_SCHEMA_VERSION };
+    const defaults = {
+      ...BASE_BRAND,
+      themeMode: 'auto',
+      activeThemeId: null,
+      holidayThemes: buildHolidayThemes(now),
+      themeSchemaVersion: THEME_SCHEMA_VERSION,
+      seasonalThemesEnabled: true,
+    };
     const merged = { ...defaults, ...rawConfig };
     merged.themeMode = rawConfig?.themeMode === 'manual' ? 'manual' : 'auto';
+    const seasonalToggle = rawConfig?.seasonalThemesEnabled;
+    merged.seasonalThemesEnabled =
+      seasonalToggle === false || seasonalToggle === 'false' || seasonalToggle === 0
+        ? false
+        : true;
     merged.activeThemeId = rawConfig?.activeThemeId || null;
     merged.holidayThemes = defaults.holidayThemes;
     merged.themeSchemaVersion = THEME_SCHEMA_VERSION;
@@ -561,6 +573,10 @@
   }
 
   function resolveActiveTheme(config = {}, now = new Date()) {
+    if (config?.seasonalThemesEnabled === false) {
+      return null;
+    }
+
     const themes = config.holidayThemes || {};
     if (!themes || typeof themes !== 'object') {
       return null;

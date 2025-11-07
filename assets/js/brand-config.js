@@ -27,6 +27,7 @@
     activeThemeId: null,
     holidayThemes: {},
     themeSchemaVersion: 1,
+    seasonalThemesEnabled: true,
   };
   const DEFAULT_BRAND = themeEngine
     ? themeEngine.createDefaultBrandConfig()
@@ -86,6 +87,8 @@
     );
     const root = document.documentElement;
 
+    const seasonalEnabled = hydratedConfig?.seasonalThemesEnabled !== false;
+
     Object.entries(cssVarMap).forEach(([key, cssVar]) => {
       if (styles[key] !== undefined && styles[key] !== null) {
         const transformer = cssTransformers[key];
@@ -104,10 +107,18 @@
       brandMarkEl.textContent = styles.brandMark;
     }
 
-    const themeId = activeTheme?.id || 'default';
+    const themeEmojiEl = document.querySelector('.brand-theme-emoji');
+    if (themeEmojiEl) {
+      const emoji = seasonalEnabled ? activeTheme?.assets?.icon || styles.themeIcon || '' : '';
+      themeEmojiEl.textContent = emoji;
+      themeEmojiEl.hidden = !emoji;
+    }
+
+    const themeId = seasonalEnabled ? activeTheme?.id || 'default' : 'disabled';
     root.dataset.brandTheme = themeId;
-    root.dataset.brandThemeName = activeTheme?.name || '';
-    root.dataset.brandThemeRange = activeTheme?.metadata?.rangeLabel || '';
+    root.dataset.brandThemeName = seasonalEnabled ? activeTheme?.name || '' : '';
+    root.dataset.brandThemeRange = seasonalEnabled ? activeTheme?.metadata?.rangeLabel || '' : '';
+    root.dataset.brandSeasonalEnabled = seasonalEnabled ? 'true' : 'false';
 
     window.currentBrandConfig = hydratedConfig;
     window.currentBrandTheme = activeTheme;

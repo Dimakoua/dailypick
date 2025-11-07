@@ -134,6 +134,15 @@
             <legend id="themeControlsHeading">Seasonal themes</legend>
             <p class="field-hint">Holiday looks update automatically based on the Canadian calendar and include icons,
               gradients, and palettes for major celebrations in Canada and the United States.</p>
+            <label class="theme-toggle">
+              <input type="checkbox" id="seasonalThemesToggle" checked>
+              <span class="toggle-copy">
+                <span class="toggle-title">Enable seasonal themes</span>
+                <span class="toggle-description">Show holiday colors and emojis across the site when available.</span>
+              </span>
+            </label>
+            <p class="field-hint" id="seasonalThemesDisabledHint" hidden>Seasonal looks are paused. Turn them back on to access
+              holiday palettes and icons.</p>
             <label>
               Theme mode
               <select id="themeModeInput">
@@ -402,10 +411,14 @@
         activeThemeId: null,
         holidayThemes: {},
         themeSchemaVersion: 1,
+        seasonalThemesEnabled: true,
       };
       const DEFAULT_BRAND = themeEngine
         ? themeEngine.createDefaultBrandConfig()
         : { ...FALLBACK_BRAND };
+      if (typeof DEFAULT_BRAND.seasonalThemesEnabled === 'undefined') {
+        DEFAULT_BRAND.seasonalThemesEnabled = true;
+      }
 
       const playerNamesInput = document.getElementById('playerNamesInput');
       const savePlayersBtn = document.getElementById('savePlayersBtn');
@@ -441,6 +454,8 @@
       const previewThemeIcon = brandPreview.querySelector('.preview-theme-icon');
       const previewThemeName = brandPreview.querySelector('.preview-theme-name');
       const previewThemeDates = brandPreview.querySelector('.preview-theme-dates');
+      const seasonalThemesToggle = document.getElementById('seasonalThemesToggle');
+      const seasonalThemesDisabledHint = document.getElementById('seasonalThemesDisabledHint');
 
       let holidayThemes = generateHolidayThemes();
       if (!holidayThemes || !Object.keys(holidayThemes).length) {
@@ -448,7 +463,10 @@
       }
       DEFAULT_BRAND.holidayThemes = holidayThemes;
       populateThemeOptions(holidayThemes);
-      setManualThemeVisibility(DEFAULT_BRAND.themeMode);
+      setManualThemeVisibility(
+        DEFAULT_BRAND.themeMode,
+        DEFAULT_BRAND.seasonalThemesEnabled !== false,
+      );
       const integrationEndpoint = '/api/integrations/config';
       const integrationCards = Array.from(document.querySelectorAll('.integration-card'));
       const ASSIGNMENTS_STORAGE_KEY = 'integrationAssignments';
@@ -480,11 +498,23 @@
         });
       }
 
-      function setManualThemeVisibility(mode) {
+      function setManualThemeVisibility(mode, seasonalEnabled = true) {
         if (!manualThemeControl || !themeSelectInput) return;
-        const manual = mode === 'manual';
+        const allowSeasonal = Boolean(seasonalEnabled);
+        const manual = allowSeasonal && mode === 'manual';
         manualThemeControl.classList.toggle('is-active', manual);
+        manualThemeControl.classList.toggle('is-disabled', !allowSeasonal);
         themeSelectInput.disabled = !manual;
+        if (themeModeInput) {
+          themeModeInput.disabled = !allowSeasonal;
+          const modeLabel = themeModeInput.closest('label');
+          if (modeLabel) {
+            modeLabel.classList.toggle('is-disabled', !allowSeasonal);
+          }
+        }
+        if (seasonalThemesDisabledHint) {
+          seasonalThemesDisabledHint.hidden = allowSeasonal;
+        }
       }
 
       function showStatus(el, message) {
@@ -725,12 +755,19 @@
         if (themeModeInput) {
           themeModeInput.value = data.themeMode || 'auto';
         }
+        if (seasonalThemesToggle) {
+          const enabled = data.seasonalThemesEnabled !== false;
+          seasonalThemesToggle.checked = enabled;
+        }
         if (themeSelectInput) {
           const manualValue = data.activeThemeId || 'default';
           const option = Array.from(themeSelectInput.options).find((opt) => opt.value === manualValue);
           themeSelectInput.value = option ? manualValue : 'default';
         }
-        setManualThemeVisibility(data.themeMode);
+        setManualThemeVisibility(
+          data.themeMode,
+          data.seasonalThemesEnabled !== false,
+        );
         updatePreview(data);
       }
 
@@ -758,6 +795,11 @@
             data.activeThemeId = null;
           }
         }
+        if (seasonalThemesToggle) {
+          data.seasonalThemesEnabled = seasonalThemesToggle.checked;
+        } else if (includeBlanks) {
+          data.seasonalThemesEnabled = true;
+        }
         return data;
       }
 
@@ -771,6 +813,10 @@
 
       function updateThemeSummary(config, activeTheme) {
         if (!themeSummary) return;
+        if (config?.seasonalThemesEnabled === false) {
+          themeSummary.textContent = 'Seasonal themes disabled — Custom brand colors';
+          return;
+        }
         const modeLabel = config?.themeMode === 'manual' ? 'Manual mode' : 'Automatic mode';
         const name = activeTheme?.name || 'Default Daily Pick';
         const range = activeTheme?.metadata?.rangeLabel;
@@ -810,9 +856,15 @@
         previewButton.style.background = styles.accentColor;
         previewButton.style.borderColor = styles.accentStrong;
 
-        const themeActive = Boolean(activeTheme);
+        const seasonalEnabled = config?.seasonalThemesEnabled !== false;
+        const themeActive = seasonalEnabled && Boolean(activeTheme);
         previewTheme.dataset.themeActive = themeActive ? 'true' : 'false';
-        if (themeActive) {
+        previewTheme.dataset.seasonalEnabled = seasonalEnabled ? 'true' : 'false';
+        if (!seasonalEnabled) {
+          previewThemeIcon.textContent = styles.brandMark || '🎯';
+          previewThemeName.textContent = 'Seasonal themes disabled';
+          previewThemeDates.textContent = 'Using custom brand colors';
+        } else if (themeActive) {
           previewThemeIcon.textContent = activeTheme.assets?.icon || styles.themeIcon || '🎉';
           previewThemeName.textContent = activeTheme.name;
           previewThemeDates.textContent = activeTheme.metadata?.rangeLabel || '';
@@ -848,10 +900,16 @@
         if (themeModeInput) {
           themeModeInput.value = DEFAULT_BRAND.themeMode || 'auto';
         }
+        if (seasonalThemesToggle) {
+          seasonalThemesToggle.checked = DEFAULT_BRAND.seasonalThemesEnabled !== false;
+        }
         if (themeSelectInput) {
           themeSelectInput.value = 'default';
         }
-        setManualThemeVisibility(DEFAULT_BRAND.themeMode);
+        setManualThemeVisibility(
+          DEFAULT_BRAND.themeMode,
+          DEFAULT_BRAND.seasonalThemesEnabled !== false,
+        );
         holidayThemes = generateHolidayThemes();
         DEFAULT_BRAND.holidayThemes = holidayThemes;
         const normalized = themeEngine && typeof themeEngine.upgradeBrandConfig === 'function'
@@ -1304,7 +1362,18 @@
         if (themeModeInput.value !== 'manual' && themeSelectInput) {
           themeSelectInput.value = 'default';
         }
-        setManualThemeVisibility(themeModeInput.value);
+        setManualThemeVisibility(
+          themeModeInput.value,
+          seasonalThemesToggle ? seasonalThemesToggle.checked : true,
+        );
+        updatePreview(collectBrandForm(true));
+      });
+
+      seasonalThemesToggle?.addEventListener('change', () => {
+        setManualThemeVisibility(
+          themeModeInput ? themeModeInput.value : DEFAULT_BRAND.themeMode,
+          seasonalThemesToggle.checked,
+        );
         updatePreview(collectBrandForm(true));
       });
 

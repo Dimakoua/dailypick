@@ -114,6 +114,27 @@ body {
   font-size: 1.3rem;
 }
 
+.site-title .brand-theme-emoji {
+  font-size: 1.35rem;
+  filter: drop-shadow(0 4px 8px rgba(15, 23, 42, 0.18));
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.site-title .brand-theme-emoji[hidden] {
+  display: none;
+}
+
+:root[data-brand-seasonal-enabled="true"] .site-title .brand-theme-emoji:not([hidden]) {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+:root[data-brand-seasonal-enabled="false"] .site-title .brand-theme-emoji {
+  display: none;
+}
+
 .site-header nav {
   display: inline-flex;
   gap: 16px;
