@@ -6,6 +6,8 @@
     brandMark: '🎯',
     accentColor: '#3498db',
     accentStrong: '#2980b9',
+    accentMuted: 'rgba(52, 152, 219, 0.16)',
+    accentContrastText: '#ffffff',
     backgroundColor: '#f4f7f6',
     surfaceColor: '#ffffff',
     textColor: '#34495e',
@@ -14,6 +16,8 @@
     borderColor: '#dde4eb',
     radius: '18px',
     shadow: '0 10px 30px rgba(0, 0, 0, 0.08)',
+    focusRing: '0 0 0 3px rgba(52, 152, 219, 0.35)',
+    hoverShadow: '0 12px 30px rgba(52, 152, 219, 0.22)',
     fontFamily: "'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     logoUrl: '',
     themeIcon: '',
@@ -39,11 +43,15 @@
     borderColor: '--brand-border',
     radius: '--brand-radius',
     shadow: '--brand-shadow',
+    focusRing: '--brand-focus-ring',
+    hoverShadow: '--brand-hover-shadow',
     fontFamily: '--brand-font-family',
     logoUrl: '--brand-logo',
     themeBackground: '--brand-theme-background',
     themeAccentGlow: '--brand-theme-accent-glow',
     themeIcon: '--brand-theme-icon',
+    accentMuted: '--brand-accent-muted',
+    accentContrastText: '--brand-accent-contrast-text',
   };
 
   const cssTransformers = {

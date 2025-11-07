@@ -6,6 +6,8 @@
     brandMark: '🎯',
     accentColor: '#3498db',
     accentStrong: '#2980b9',
+    accentMuted: 'rgba(52, 152, 219, 0.16)',
+    accentContrastText: '#ffffff',
     backgroundColor: '#f4f7f6',
     surfaceColor: '#ffffff',
     textColor: '#34495e',
@@ -14,6 +16,8 @@
     borderColor: '#dde4eb',
     radius: '18px',
     shadow: '0 10px 30px rgba(0, 0, 0, 0.08)',
+    focusRing: '0 0 0 3px rgba(52, 152, 219, 0.35)',
+    hoverShadow: '0 12px 30px rgba(52, 152, 219, 0.22)',
     fontFamily: "'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     logoUrl: '',
     themeIcon: '',
@@ -53,6 +57,98 @@
       return startLabel;
     }
     return `${startLabel} – ${endLabel}`;
+  }
+
+  function normalizeHex(hex) {
+    if (typeof hex !== 'string') return null;
+    const cleaned = hex.trim().replace(/^#/, '');
+    if (cleaned.length === 3) {
+      return cleaned
+        .split('')
+        .map((char) => `${char}${char}`)
+        .join('');
+    }
+    if (cleaned.length === 6) {
+      return cleaned;
+    }
+    return null;
+  }
+
+  function hexToRgb(hex) {
+    const normalized = normalizeHex(hex);
+    if (!normalized) return null;
+    const bigint = Number.parseInt(normalized, 16);
+    if (Number.isNaN(bigint)) return null;
+    return {
+      r: (bigint >> 16) & 255,
+      g: (bigint >> 8) & 255,
+      b: bigint & 255,
+    };
+  }
+
+  function rgbStringToRgb(color) {
+    if (typeof color !== 'string') return null;
+    const match = color
+      .trim()
+      .match(/^rgba?\(([^)]+)\)$/i);
+    if (!match) return null;
+    const parts = match[1]
+      .split(',')
+      .map((value) => Number.parseFloat(value.trim()))
+      .filter((value, index) => index < 3 && Number.isFinite(value));
+    if (parts.length !== 3) return null;
+    return { r: parts[0], g: parts[1], b: parts[2] };
+  }
+
+  function parseColorToRgb(color) {
+    return hexToRgb(color) || rgbStringToRgb(color) || null;
+  }
+
+  function toRgbaString(rgb, alpha) {
+    if (!rgb) return null;
+    return `rgba(${Math.round(rgb.r)}, ${Math.round(rgb.g)}, ${Math.round(rgb.b)}, ${alpha})`;
+  }
+
+  function relativeLuminance(rgb) {
+    if (!rgb) return 0;
+    const transform = (value) => {
+      const channel = value / 255;
+      if (channel <= 0.03928) {
+        return channel / 12.92;
+      }
+      return Math.pow((channel + 0.055) / 1.055, 2.4);
+    };
+    const r = transform(rgb.r);
+    const g = transform(rgb.g);
+    const b = transform(rgb.b);
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  }
+
+  function getAccentContrast(rgb) {
+    if (!rgb) return BASE_BRAND.accentContrastText;
+    const luminance = relativeLuminance(rgb);
+    const contrastWhite = (1.05) / (luminance + 0.05);
+    const contrastDark = (luminance + 0.05) / 0.05;
+    return contrastWhite >= contrastDark ? '#ffffff' : '#0f172a';
+  }
+
+  function computeAccentTokens(accentColor, overrides = {}) {
+    const parsed = parseColorToRgb(accentColor);
+    const accentMuted =
+      overrides.accentMuted || toRgbaString(parsed, 0.16) || BASE_BRAND.accentMuted;
+    const accentContrastText =
+      overrides.accentContrastText || getAccentContrast(parsed);
+    const focusRing =
+      overrides.focusRing || `0 0 0 3px ${toRgbaString(parsed, 0.35) || 'rgba(52, 152, 219, 0.35)'}`;
+    const hoverShadow =
+      overrides.hoverShadow || `0 12px 30px ${toRgbaString(parsed, 0.22) || 'rgba(52, 152, 219, 0.22)'}`;
+
+    return {
+      accentMuted,
+      accentContrastText,
+      focusRing,
+      hoverShadow,
+    };
   }
 
   function nthWeekdayOfMonth(year, monthIndex, weekday, occurrence) {
@@ -506,9 +602,21 @@
       themeAccentGlow: assets.accentGlow || 'none',
     };
 
+    const accentTokens = computeAccentTokens(themedStyles.accentColor || BASE_BRAND.accentColor, {
+      accentMuted: themedStyles.accentMuted,
+      accentContrastText: themedStyles.accentContrastText,
+      focusRing: themedStyles.focusRing,
+      hoverShadow: themedStyles.hoverShadow,
+    });
+
+    const stylesWithDerived = {
+      ...themedStyles,
+      ...accentTokens,
+    };
+
     return {
       config: upgraded,
-      styles: themedStyles,
+      styles: stylesWithDerived,
       activeTheme,
     };
   }
