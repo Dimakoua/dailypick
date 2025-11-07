@@ -1,10 +1,13 @@
 (() => {
   const BRAND_CONFIG_KEY = 'brandConfig';
-  const DEFAULT_BRAND = {
+  const themeEngine = window.BrandThemeEngine;
+  const FALLBACK_DEFAULT = {
     brandName: 'Daily Pick',
     brandMark: '🎯',
     accentColor: '#3498db',
     accentStrong: '#2980b9',
+    accentMuted: 'rgba(52, 152, 219, 0.16)',
+    accentContrastText: '#ffffff',
     backgroundColor: '#f4f7f6',
     surfaceColor: '#ffffff',
     textColor: '#34495e',
@@ -13,9 +16,22 @@
     borderColor: '#dde4eb',
     radius: '18px',
     shadow: '0 10px 30px rgba(0, 0, 0, 0.08)',
+    focusRing: '0 0 0 3px rgba(52, 152, 219, 0.35)',
+    hoverShadow: '0 12px 30px rgba(52, 152, 219, 0.22)',
     fontFamily: "'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-    logoUrl: ''
+    logoUrl: '',
+    themeIcon: '',
+    themeBackground: 'none',
+    themeAccentGlow: 'none',
+    themeMode: 'auto',
+    activeThemeId: null,
+    holidayThemes: {},
+    themeSchemaVersion: 1,
+    seasonalThemesEnabled: true,
   };
+  const DEFAULT_BRAND = themeEngine
+    ? themeEngine.createDefaultBrandConfig()
+    : { ...FALLBACK_DEFAULT };
 
   const cssVarMap = {
     accentColor: '--brand-accent',
@@ -28,9 +44,31 @@
     borderColor: '--brand-border',
     radius: '--brand-radius',
     shadow: '--brand-shadow',
+    focusRing: '--brand-focus-ring',
+    hoverShadow: '--brand-hover-shadow',
     fontFamily: '--brand-font-family',
-    logoUrl: '--brand-logo'
+    logoUrl: '--brand-logo',
+    themeBackground: '--brand-theme-background',
+    themeAccentGlow: '--brand-theme-accent-glow',
+    themeIcon: '--brand-theme-icon',
+    accentMuted: '--brand-accent-muted',
+    accentContrastText: '--brand-accent-contrast-text',
   };
+
+  const cssTransformers = {
+    logoUrl: (value) => (value ? `url("${value}")` : 'none'),
+    themeIcon: (value) => (value ? `'${value}'` : "''"),
+  };
+
+  let lastAppliedTheme = null;
+
+  function composeBrandStyles(config) {
+    if (!themeEngine) {
+      const fallbackConfig = { ...DEFAULT_BRAND, ...config };
+      return { config: fallbackConfig, styles: fallbackConfig, activeTheme: null };
+    }
+    return themeEngine.composeBrandStyles(config);
+  }
 
   function safeParseBrandConfig(raw) {
     if (!raw) return null;
@@ -44,29 +82,57 @@
   }
 
   function applyBrandConfig(config) {
-    if (!config) return;
-
-    const merged = { ...DEFAULT_BRAND, ...config };
+    const { config: hydratedConfig, styles, activeTheme } = composeBrandStyles(
+      config || DEFAULT_BRAND,
+    );
     const root = document.documentElement;
 
+    const seasonalEnabled = hydratedConfig?.seasonalThemesEnabled !== false;
+
     Object.entries(cssVarMap).forEach(([key, cssVar]) => {
-      if (merged[key] !== undefined && merged[key] !== null) {
-        const value =
-          key === 'logoUrl' && merged[key]
-            ? `url("${merged[key]}")`
-            : merged[key];
+      if (styles[key] !== undefined && styles[key] !== null) {
+        const transformer = cssTransformers[key];
+        const value = transformer ? transformer(styles[key]) : styles[key];
         root.style.setProperty(cssVar, value);
       }
     });
 
     const brandNameEl = document.querySelector('.brand-name');
-    if (brandNameEl && merged.brandName) {
-      brandNameEl.textContent = merged.brandName;
+    if (brandNameEl && styles.brandName) {
+      brandNameEl.textContent = styles.brandName;
     }
 
     const brandMarkEl = document.querySelector('.brand-mark');
-    if (brandMarkEl && merged.brandMark) {
-      brandMarkEl.textContent = merged.brandMark;
+    if (brandMarkEl && styles.brandMark) {
+      brandMarkEl.textContent = styles.brandMark;
+    }
+
+    const themeEmojiEl = document.querySelector('.brand-theme-emoji');
+    if (themeEmojiEl) {
+      const emoji = seasonalEnabled ? activeTheme?.assets?.icon || styles.themeIcon || '' : '';
+      themeEmojiEl.textContent = emoji;
+      themeEmojiEl.hidden = !emoji;
+    }
+
+    const themeId = seasonalEnabled ? activeTheme?.id || 'default' : 'disabled';
+    root.dataset.brandTheme = themeId;
+    root.dataset.brandThemeName = seasonalEnabled ? activeTheme?.name || '' : '';
+    root.dataset.brandThemeRange = seasonalEnabled ? activeTheme?.metadata?.rangeLabel || '' : '';
+    root.dataset.brandSeasonalEnabled = seasonalEnabled ? 'true' : 'false';
+
+    window.currentBrandConfig = hydratedConfig;
+    window.currentBrandTheme = activeTheme;
+
+    if (themeId !== lastAppliedTheme) {
+      window.dispatchEvent(
+        new CustomEvent('brandThemeChanged', {
+          detail: {
+            theme: activeTheme,
+            config: hydratedConfig,
+          },
+        }),
+      );
+      lastAppliedTheme = themeId;
     }
   }
 
@@ -84,9 +150,7 @@
   }
 
   const storedConfig = getStoredConfig();
-  if (storedConfig) {
-    applyBrandConfig(storedConfig);
-  }
+  applyBrandConfig(storedConfig || DEFAULT_BRAND);
 
   window.addEventListener('brandConfigUpdated', (event) => {
     applyBrandConfig(event.detail);

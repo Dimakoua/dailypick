@@ -3,7 +3,7 @@
    -------------------------------------------------------------------------- */
 
 .feedback-page {
-  padding: clamp(3rem, 6vw, 5rem) var(--gutter) clamp(4rem, 8vw, 6rem);
+  padding: clamp(3rem, 6vw, 5rem) var(--layout-gutter, 24px) clamp(4rem, 8vw, 6rem);
   max-width: 1100px;
   margin: 0 auto;
 }
@@ -36,15 +36,15 @@
   text-transform: uppercase;
   font-size: 0.75rem;
   font-weight: 800;
-  color: var(--blue-600);
-  background: rgba(52, 152, 219, 0.12);
+  color: var(--brand-accent-strong);
+  background: var(--brand-accent-muted);
 }
 
 .feedback-hero h1 {
   margin: 0;
   font-size: clamp(2.2rem, 4vw, 3rem);
   line-height: 1.1;
-  color: var(--blue);
+  color: var(--brand-heading);
 }
 
 .feedback-hero h1 span {
@@ -53,7 +53,7 @@
 
 .feedback-hero p {
   margin: 0;
-  color: var(--gray-600);
+  color: var(--brand-subtle-text);
   font-size: 1.05rem;
   line-height: 1.7;
 }
@@ -66,17 +66,18 @@
 
 .feedback-form-card,
 .feedback-aside {
-  background:#fff;
-  border: 1px solid var(--card-border);
+  background: var(--brand-surface);
+  border: 1px solid var(--brand-border);
   border-radius: var(--radius-lg);
-  box-shadow: 0 20px 40px rgba(52, 152, 219, 0.08);
+  box-shadow: var(--brand-shadow);
   padding: clamp(1.8rem, 4vw, 2.4rem);
+  color: var(--brand-text);
 }
 
 .feedback-form-card h2,
 .feedback-aside h2 {
   margin-top: 0;
-  color: var(--blue);
+  color: var(--brand-heading);
   font-size: 1.6rem;
 }
 
@@ -93,12 +94,12 @@
 
 .feedback-field label {
   font-weight: 700;
-  color: var(--gray-700);
+  color: var(--brand-heading);
 }
 
 .feedback-field label span {
   font-weight: 600;
-  color: var(--gray-500);
+  color: var(--brand-subtle-text);
   font-size: 0.85rem;
   margin-left: 0.35rem;
 }
@@ -109,10 +110,10 @@
   font: inherit;
   padding: 0.85rem 1rem;
   border-radius: var(--radius-md);
-  border: 1px solid var(--gray-200);
-  background: #fff;
+  border: 1px solid var(--brand-border);
+  background: var(--brand-surface);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  color: var(--gray-700);
+  color: var(--brand-text);
 }
 
 .feedback-field textarea {
@@ -123,14 +124,14 @@
 .feedback-field input:focus-visible,
 .feedback-field textarea:focus-visible,
 .feedback-field select:focus-visible {
-  border-color: var(--blue);
-  box-shadow: var(--shadow-focus);
+  border-color: var(--brand-accent);
+  box-shadow: var(--brand-focus-ring);
   outline: none;
 }
 
 .feedback-note {
   margin: 0;
-  color: var(--gray-500);
+  color: var(--brand-subtle-text);
   font-size: 0.9rem;
 }
 
@@ -157,9 +158,11 @@
 }
 
 .form-alert--success {
-  background: rgba(46, 204, 113, 0.15);
-  color: #1e7e34;
-  border: 1px solid rgba(46, 204, 113, 0.35);
+  background: rgba(52, 152, 219, 0.16);
+  background: color-mix(in srgb, var(--brand-accent, #3498db) 18%, transparent);
+  color: var(--brand-heading);
+  border: 1px solid rgba(52, 152, 219, 0.32);
+  border: 1px solid color-mix(in srgb, var(--brand-accent, #3498db) 40%, transparent);
 }
 
 .form-alert--error {
@@ -173,21 +176,21 @@
   margin: 1.2rem 0 0;
   display: grid;
   gap: 0.75rem;
-  color: var(--gray-600);
+  color: var(--brand-text);
 }
 
 .feedback-aside li::marker {
-  color: var(--blue);
+  color: var(--brand-accent);
 }
 
 .feedback-powered {
   margin-top: 1.5rem;
   font-size: 0.85rem;
-  color: var(--gray-500);
+  color: var(--brand-subtle-text);
 }
 
 .feedback-powered a {
-  color: var(--blue-600);
+  color: var(--brand-accent-strong);
   text-decoration: none;
   font-weight: 600;
 }
@@ -209,7 +212,7 @@
 
 @media (max-width: 640px) {
   .feedback-page {
-    padding-inline: clamp(1.5rem, 5vw, var(--gutter));
+    padding-inline: clamp(1.5rem, 5vw, var(--layout-gutter, 24px));
   }
 
   .feedback-form-card,
