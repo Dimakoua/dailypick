@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const LAUNCH_SPREAD_ANGLE = Math.PI / 1.5; // Approx 120 degrees total spread ( +/- 60 deg from target)
     const SUN_MASS = 15000; // Significantly more massive than planets
     const EARTH_NAME = "Earth";
-    const NUM_ASTEROIDS = 25;
+    const NUM_ASTEROIDS = 18;
     const ASTEROID_MIN_RADIUS = 5;
     const ASTEROID_MAX_RADIUS = 15;
     const ASTEROID_BASE_MASS = 50; // Base mass, can be varied
@@ -62,6 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const STATION_REFUEL_RADIUS = 40; // The zone where refueling happens
     const STATION_REFUEL_RATE = 15; // Fuel units per second
     const STATION_ROTATION_SPEED = 0.5; // Radians per second
+    const STATION_BOOST_DURATION = 3; // seconds
+    const STATION_BOOST_MULTIPLIER = 1.4; // 40% speed increase
+    const STATION_BOOST_COOLDOWN = 5; // seconds before a station can boost the same rocket again
 
     // Name configuration similar to letters/game.js
     const GRAVITY_DRIFT_NAMES_KEY = 'namesList';
@@ -457,6 +460,8 @@ document.addEventListener('DOMContentLoaded', () => {
             this.relativeLandingPosition = null; // Store position relative to the landed planet's center
             this.landedAsteroid = null; // Store the asteroid object it's trapped on
             this.isSpeaking = false; // New property to indicate if this rocket is the current speaker
+            this.boostTimer = 0; // Timer for the speed boost from stations
+            this.lastBoostTime = 0; // Cooldown for receiving a boost
         }
 
         applyForce(force) { // Assuming rocket mass is 1 for F=a
@@ -497,6 +502,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (this.fuel > 0) {
                 this.fuel -= FUEL_CONSUMPTION_RATE * dt;
                 if (this.fuel < 0) this.fuel = 0;            }
+            
+            // Update boost timer
+            if (this.boostTimer > 0) {
+                this.boostTimer -= dt;
+            }
 
             // Apply Sun's gravity
             const directionToSun = Vector2D.sub(SUN_POSITION, this.position);
@@ -545,9 +555,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             // Check for refueling stations
+            const now = performance.now();
             refuelingStations.forEach(station => {
                 const distToStation = Vector2D.sub(this.position, station.position).mag();
                 if (distToStation < station.refuelRadius && this.fuel < this.initialFuel) {
+                    // Refuel the rocket
                     this.fuel += STATION_REFUEL_RATE * dt;
                     if (this.fuel > this.initialFuel) {
                         this.fuel = this.initialFuel;
@@ -555,6 +567,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Create a visual effect for refueling
                     if (Math.random() < 0.3) { // Don't create particles every frame
                         createRefuelEffect(this.position.x, this.position.y, station.position);
+                    }
+                    // Apply speed boost if not on cooldown
+                    if (now - this.lastBoostTime > STATION_BOOST_COOLDOWN * 1000) {
+                        this.boostTimer = STATION_BOOST_DURATION;
+                        this.velocity.mult(STATION_BOOST_MULTIPLIER);
+                        this.lastBoostTime = now;
                     }
                 }
             });
@@ -713,20 +731,28 @@ document.addEventListener('DOMContentLoaded', () => {
             // --- End Rocket Emoji ---
 
             // Draw flame if rocket is active and has fuel
-            if (!this.isLanded && !this.isLost && this.fuel > 0) {
+            if (!this.isLanded && !this.isLost && (this.fuel > 0 || this.boostTimer > 0)) {
                 const flameLength = this.radius * 1.5 + Math.random() * this.radius * 0.5; // Flickering effect
                 const flameWidth = this.radius * 0.8;
+                let gradient;
 
                 ctx.beginPath();
                 ctx.moveTo(-flameLength, 0); // Tip of the flame
                 ctx.lineTo(-this.radius * 0.8, -flameWidth / 2); // Base of the flame, left
                 ctx.lineTo(-this.radius * 0.8, flameWidth / 2); // Base of the flame, right
                 ctx.closePath();
-
-                const gradient = ctx.createLinearGradient(-flameLength, 0, -this.radius * 0.8, 0);
-                gradient.addColorStop(0, 'rgba(255, 200, 0, 0.8)'); // Yellow
-                gradient.addColorStop(0.5, 'rgba(255, 100, 0, 0.7)'); // Orange
-                gradient.addColorStop(1, 'rgba(255, 0, 0, 0.6)'); // Red
+                
+                if (this.boostTimer > 0) {
+                    // Boosted flame
+                    gradient = ctx.createLinearGradient(-flameLength * 1.5, 0, -this.radius * 0.8, 0);
+                    gradient.addColorStop(0, 'rgba(180, 255, 255, 0.9)'); // Light Cyan
+                    gradient.addColorStop(0.7, 'rgba(0, 200, 255, 0.8)'); // Bright Cyan
+                } else {
+                    // Normal flame
+                    gradient = ctx.createLinearGradient(-flameLength, 0, -this.radius * 0.8, 0);
+                    gradient.addColorStop(0, 'rgba(255, 200, 0, 0.8)'); // Yellow
+                    gradient.addColorStop(1, 'rgba(255, 100, 0, 0.6)'); // Orange-Red
+                }
                 ctx.fillStyle = gradient;
                 ctx.fill();
             }
