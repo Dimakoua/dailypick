@@ -52,10 +52,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const ASTEROID_BASE_MASS = 50; // Base mass, can be varied
     const ASTEROID_SUN_RESTITUTION = 0.3; // Bounciness factor for asteroid-sun collision
     const ASTEROID_FIXED_SUN_BOUNCE_SPEED = 30; // Increased from 5 for a more noticeable bounce
+    const ROCKET_ASTEROID_RESTITUTION = 0.4; // Bounciness for rocket-asteroid collision
     const NUM_BLACK_HOLES = 2;
     const BLACK_HOLE_RADIUS = 15;
     const BLACK_HOLE_MASS = 25000;
     const BLACK_HOLE_EVENT_HORIZON_RADIUS = BLACK_HOLE_RADIUS + 5;
+    const NUM_STATIONS = 2;
+    const STATION_RADIUS = 10;
+    const STATION_REFUEL_RADIUS = 40; // The zone where refueling happens
+    const STATION_REFUEL_RATE = 15; // Fuel units per second
+    const STATION_ROTATION_SPEED = 0.5; // Radians per second
 
     // Name configuration similar to letters/game.js
     const GRAVITY_DRIFT_NAMES_KEY = 'namesList';
@@ -146,6 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let rockets = [];
     let asteroids = [];
     let blackHoles = [];
+    let refuelingStations = [];
     let particles = [];
     let gameRunning = false;
     let nextFinishOrder = 1; // Counter for assigning finish order
@@ -153,6 +160,39 @@ document.addEventListener('DOMContentLoaded', () => {
     let earthPlanet = null;
 
 
+    class RefuelingStation {
+        constructor(position) {
+            this.position = position;
+            this.radius = STATION_RADIUS;
+            this.refuelRadius = STATION_REFUEL_RADIUS;
+            this.angle = Math.random() * Math.PI * 2;
+        }
+
+        update(dt) {
+            this.angle += STATION_ROTATION_SPEED * dt;
+        }
+
+        draw(ctx) {
+            ctx.save();
+            ctx.translate(this.position.x, this.position.y);
+            ctx.rotate(this.angle);
+
+            // Draw the station structure
+            ctx.strokeStyle = '#cccccc';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(-this.radius, 0);
+            ctx.lineTo(this.radius, 0);
+            ctx.moveTo(0, -this.radius);
+            ctx.lineTo(0, this.radius);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(0, 0, this.radius * 0.7, 0, Math.PI * 2);
+            ctx.stroke();
+
+            ctx.restore();
+        }
+    }
     class Planet {
         constructor(name, orbitalRadius, radius, mass, color, orbitalAngularSpeed, isLaunchPlanet = false) {
             this.name = name;
@@ -504,6 +544,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.applyForce(forceVectorBh);
             });
 
+            // Check for refueling stations
+            refuelingStations.forEach(station => {
+                const distToStation = Vector2D.sub(this.position, station.position).mag();
+                if (distToStation < station.refuelRadius && this.fuel < this.initialFuel) {
+                    this.fuel += STATION_REFUEL_RATE * dt;
+                    if (this.fuel > this.initialFuel) {
+                        this.fuel = this.initialFuel;
+                    }
+                    // Create a visual effect for refueling
+                    if (Math.random() < 0.3) { // Don't create particles every frame
+                        createRefuelEffect(this.position.x, this.position.y, station.position);
+                    }
+                }
+            });
 
             this.velocity.add(this.acceleration.clone().mult(dt));
             const displacement = this.velocity.clone().mult(dt);
@@ -548,25 +602,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 2. Check Asteroid Collision (if not landed or lost)
             for (const asteroid of asteroids) {
-                const distToAsteroidCenter = Vector2D.sub(asteroid.position, this.position).mag();
-                if (distToAsteroidCenter < asteroid.radius + this.radius) {
-                    this.isLost = true; 
-                    this.landedAsteroid = asteroid; // Store the asteroid
+                const distVec = Vector2D.sub(this.position, asteroid.position);
+                const distance = distVec.mag();
+                const combinedRadii = this.radius + asteroid.radius;
 
-                    // Snap position to the asteroid's surface (or center for simplicity)
-                    // For a surface snap like planets:
-                    // const directionFromAsteroidCenterToRocket = Vector2D.sub(this.position, asteroid.position).normalize();
-                    // this.position = Vector2D.add(asteroid.position, directionFromAsteroidCenterToRocket.mult(asteroid.radius + ROCKET_RADIUS * 0.5));
-                    this.position.set(asteroid.position.x, asteroid.position.y); // Simpler: stick to center
+                if (distance < combinedRadii) {
+                    // Collision detected: Bounce instead of getting trapped
+                    createImpactEffect(this.position.x, this.position.y);
 
-                    this.velocity.set(asteroid.velocity.x, asteroid.velocity.y); // Match asteroid's velocity
-                    if (this.finishOrder === null) {
-                        this.finishOrder = nextFinishOrder++;
-                        registerRocketFinish(this.name);
-                        createExplosion(this.position.x, this.position.y, 'red', 30);
+                    const overlap = combinedRadii - distance;
+                    const normal = distVec.normalize();
+
+                    // Separate the rocket from the asteroid
+                    this.position.add(normal.clone().mult(overlap));
+
+                    // Relative velocity
+                    const relativeVelocity = Vector2D.sub(this.velocity, asteroid.velocity);
+                    const dotProduct = relativeVelocity.x * normal.x + relativeVelocity.y * normal.y;
+
+                    // If moving towards each other, apply bounce
+                    if (dotProduct < 0) {
+                        // Since rocket mass is 1 and asteroid mass is much larger, we simplify the bounce.
+                        // The rocket's velocity changes, but the asteroid's is unaffected in this interaction.
+                        const impulseMagnitude = -(1 + ROCKET_ASTEROID_RESTITUTION) * dotProduct;
+                        this.velocity.x += impulseMagnitude * normal.x;
+                        this.velocity.y += impulseMagnitude * normal.y;
                     }
-                    this.finishReason = `Trapped by Asteroid`; // More specific reason
-                    return; // End update for this frame
+                    // The rocket is knocked off course but continues its journey.
+                    // No return, no finish order.
                 }
             }
 
@@ -718,17 +781,21 @@ document.addEventListener('DOMContentLoaded', () => {
      function initAsteroids() {
         asteroids = [];
         const safeZoneFromSun = SUN_RADIUS + 50; // Don't spawn asteroids too close to the sun initially
+        const launchPlanetSafeZone = 40; // Extra radius around Earth where no asteroids will spawn
         const maxAsteroidSpeed = 20; // Max initial speed for asteroids
 
         for (let i = 0; i < NUM_ASTEROIDS; i++) {
-            let x, y, distFromSun;
+            let x, y, distFromSun, distFromEarth;
             let newAsteroid;
             let attempts = 0; // To prevent infinite loop if space is too crowded
             do {
                 x = Math.random() * canvas.width;
                 y = Math.random() * canvas.height;
-                distFromSun = Vector2D.sub(new Vector2D(x,y), SUN_POSITION).mag();
-                
+                const potentialPos = new Vector2D(x, y);
+
+                distFromSun = Vector2D.sub(potentialPos, SUN_POSITION).mag();
+                distFromEarth = earthPlanet ? Vector2D.sub(potentialPos, earthPlanet.position).mag() : Infinity;
+
                 const radius = Math.random() * (ASTEROID_MAX_RADIUS - ASTEROID_MIN_RADIUS) + ASTEROID_MIN_RADIUS;
                 const mass = ASTEROID_BASE_MASS * (radius / ASTEROID_MIN_RADIUS) * Math.random() + ASTEROID_BASE_MASS/2; // Mass somewhat proportional to size
                 const angle = Math.random() * Math.PI * 2;
@@ -736,10 +803,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 const velocity = Vector2D.fromAngle(angle, speed);
                 newAsteroid = new Asteroid(new Vector2D(x, y), radius, velocity, mass);
                 attempts++;
-            // Keep trying if too close to sun or (optional) if colliding with an existing asteroid
-            // For simplicity, the check against other asteroids during spawn is not included here.
-            } while (distFromSun < safeZoneFromSun && attempts < 100); 
+            // Keep trying if too close to the sun or the launch planet.
+            } while (
+                (distFromSun < safeZoneFromSun || (earthPlanet && distFromEarth < earthPlanet.radius + launchPlanetSafeZone)) &&
+                attempts < 100
+            );
             asteroids.push(newAsteroid);
+        }
+    }
+
+    function initRefuelingStations() {
+        refuelingStations = [];
+        const safeZoneFromSun = SUN_RADIUS + 120;
+        const safeZoneFromEdge = 150;
+
+        for (let i = 0; i < NUM_STATIONS; i++) {
+            let x, y, distFromSun;
+            let attempts = 0;
+            do {
+                x = Math.random() * (canvas.width - 2 * safeZoneFromEdge) + safeZoneFromEdge;
+                y = Math.random() * (canvas.height - 2 * safeZoneFromEdge) + safeZoneFromEdge;
+                distFromSun = Vector2D.sub(new Vector2D(x, y), SUN_POSITION).mag();
+                attempts++;
+            } while (distFromSun < safeZoneFromSun && attempts < 100);
+
+            if (attempts < 100) {
+                refuelingStations.push(new RefuelingStation(new Vector2D(x, y)));
+            }
         }
     }
 
@@ -794,6 +884,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         initAsteroids(); // Initialize asteroids after planets, so they don't overlap too much initially (though still possible)
         initBlackHoles();
+        initRefuelingStations();
     }
 
     function launchRockets() {
@@ -850,6 +941,7 @@ document.addEventListener('DOMContentLoaded', () => {
         nextFinishOrder = 1; // Reset finish order counter for the new game
         finishHistory = [];
         particles = [];
+        refuelingStations = [];
         emitStandupReset();
 
         initStars(); // Keep stars consistent or re-randomize
@@ -870,6 +962,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // --- Update ---
         planets.forEach(planet => planet.updatePosition(dt, SUN_POSITION));
         asteroids.forEach(asteroid => asteroid.update(dt, SUN_POSITION, SUN_MASS, planets, canvas.width, canvas.height));
+        refuelingStations.forEach(station => station.update(dt));
         particles.forEach((p, index) => {
             p.update(dt);
             if (p.life <= 0) particles.splice(index, 1);
@@ -899,6 +992,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         planets.forEach(planet => planet.drawOrbit(ctx)); // Draw orbits first
         blackHoles.forEach(bh => bh.draw(ctx));
+        refuelingStations.forEach(station => station.draw(ctx));
         particles.forEach(p => p.draw(ctx));
         planets.forEach(planet => planet.draw(ctx));
         asteroids.forEach(asteroid => asteroid.draw(ctx));
@@ -918,6 +1012,29 @@ document.addEventListener('DOMContentLoaded', () => {
             const angle = Math.random() * Math.PI * 2;
             const speed = Math.random() * 50 + 20;
             const life = Math.random() * 1.5 + 0.5;
+            particles.push(new Particle(x, y, Math.cos(angle) * speed, Math.sin(angle) * speed, life, color));
+        }
+    }
+
+    function createRefuelEffect(rocketX, rocketY, stationPosition) {
+        const count = 1; // One particle at a time for a "beam" effect
+        const color = 'rgba(0, 255, 150, 0.7)'; // Greenish fuel color
+        for (let i = 0; i < count; i++) {
+            const direction = Vector2D.sub(new Vector2D(rocketX, rocketY), stationPosition);
+            const speed = 80; // Particles move from station to rocket
+            const life = direction.mag() / speed; // Life is time to travel the distance
+            const velocity = direction.normalize().mult(speed);
+            particles.push(new Particle(stationPosition.x, stationPosition.y, velocity.x, velocity.y, life, color));
+        }
+    }
+
+    function createImpactEffect(x, y) {
+        const count = 5;
+        const color = 'rgba(200, 200, 200, 0.8)'; // Greyish-white spark
+        for (let i = 0; i < count; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const speed = Math.random() * 25 + 10;
+            const life = Math.random() * 0.4 + 0.2; // Short life for a quick spark
             particles.push(new Particle(x, y, Math.cos(angle) * speed, Math.sin(angle) * speed, life, color));
         }
     }
@@ -1004,10 +1121,6 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const orderDisplay = rocket.finishOrder !== null ? `Order: ${rocket.finishOrder} | ` : '';
             li.innerHTML = `${orderDisplay}<b>${rocket.name}</b>: ${statusIcon} ${statusText}`;
-            
-            if (rocket.isSpeaking) {
-                li.classList.add('current-speaker');
-            }
 
             leaderboardList.appendChild(li);
         });
@@ -1081,6 +1194,7 @@ document.addEventListener('DOMContentLoaded', () => {
         planets.forEach(p => p.draw(ctx)); // Draw initial planet positions
         asteroids.forEach(asteroid => asteroid.draw(ctx)); // Draw initial asteroids
         blackHoles.forEach(bh => bh.draw(ctx)); // Draw initial black holes
+        refuelingStations.forEach(station => station.draw(ctx)); // Draw initial stations
         drawHeavyStarSkies();
     }
 
