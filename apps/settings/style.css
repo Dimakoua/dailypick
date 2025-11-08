@@ -176,6 +176,23 @@
   min-width: 0;
 }
 
+.integration-guide-links {
+  margin-top: 32px;
+  border-radius: 16px;
+  border: 1px dashed var(--brand-border);
+  background: rgba(255, 255, 255, 0.6);
+  padding: 16px 18px;
+}
+
+.integration-guide-links ul {
+  margin: 8px 0 0;
+  padding-left: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.92rem;
+}
+
 .integration-card {
   border: 1px dashed var(--brand-border);
   border-radius: 18px;
