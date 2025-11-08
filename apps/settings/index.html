@@ -192,11 +192,42 @@
           <p>Connect Daily Pick to your delivery tools to sync boards and participants automatically.</p>
         </div>
 
-        <p class="integration-intro">Connections save to the Daily Pick Worker so you can safely reuse them from any device.<br>
-          Tokens are masked after you save them. Test a connection to preview teammates, then decide if you want to import players or keep a snapshot of their current work.</p>
+        <div class="integration-overview">
+          <p class="integration-intro">Connections save to the Daily Pick Worker so you can safely reuse them from any device. Tokens are masked after you save them.</p>
+          <ul class="integration-highlights">
+            <li><span>🔒</span> Secure tokens live on the Worker, never in the browser.</li>
+            <li><span>👥</span> Import players or keep their current work as a snapshot.</li>
+            <li><span>⚡</span> Test a connection to preview teammates before saving.</li>
+          </ul>
+        </div>
 
-        <div class="integration-grid">
-          <section class="integration-card" data-service="jira" aria-labelledby="integration-jira-heading">
+        <div class="integration-layout">
+          <aside class="integration-list" role="tablist" aria-label="Choose an integration">
+            <button type="button" class="integration-list__button is-active" role="tab" aria-selected="true" aria-controls="integration-panel-jira" data-integration-target="jira">
+              <span class="integration-list__icon">🗂️</span>
+              <span class="integration-list__copy">
+                <strong>Jira</strong>
+                <small>Boards & assignments</small>
+              </span>
+            </button>
+            <button type="button" class="integration-list__button" role="tab" aria-selected="false" aria-controls="integration-panel-trello" data-integration-target="trello">
+              <span class="integration-list__icon">🗒️</span>
+              <span class="integration-list__copy">
+                <strong>Trello</strong>
+                <small>Boards & cards</small>
+              </span>
+            </button>
+            <button type="button" class="integration-list__button" role="tab" aria-selected="false" aria-controls="integration-panel-github" data-integration-target="github">
+              <span class="integration-list__icon">🐙</span>
+              <span class="integration-list__copy">
+                <strong>GitHub</strong>
+                <small>Repos & issues</small>
+              </span>
+            </button>
+          </aside>
+
+          <div class="integration-panels">
+          <section class="integration-card is-active" data-service="jira" aria-labelledby="integration-jira-heading" id="integration-panel-jira">
             <header class="integration-card-header">
               <div class="integration-icon" aria-hidden="true">🗂️</div>
               <div>
@@ -255,7 +286,7 @@
             </div>
           </section>
 
-          <section class="integration-card" data-service="trello" aria-labelledby="integration-trello-heading">
+          <section class="integration-card" data-service="trello" aria-labelledby="integration-trello-heading" id="integration-panel-trello">
             <header class="integration-card-header">
               <div class="integration-icon" aria-hidden="true">🗒️</div>
               <div>
@@ -316,7 +347,7 @@
             </div>
           </section>
 
-          <section class="integration-card" data-service="github" aria-labelledby="integration-github-heading">
+          <section class="integration-card" data-service="github" aria-labelledby="integration-github-heading" id="integration-panel-github">
             <header class="integration-card-header">
               <div class="integration-icon" aria-hidden="true">🐙</div>
               <div>
@@ -366,6 +397,7 @@
               <button type="button" class="ghost integration-disconnect">Disconnect</button>
             </div>
           </section>
+          </div>
         </div>
       </section>
     </section>
@@ -469,6 +501,7 @@
       );
       const integrationEndpoint = '/api/integrations/config';
       const integrationCards = Array.from(document.querySelectorAll('.integration-card'));
+      const integrationNavButtons = Array.from(document.querySelectorAll('[data-integration-target]'));
       const ASSIGNMENTS_STORAGE_KEY = 'integrationAssignments';
       const ASSIGNMENT_ITEM_FIELDS = ['id', 'key', 'name', 'summary', 'status', 'url', 'number', 'title', 'state', 'listId'];
       const INTEGRATION_CLIENT_KEY = 'integrationClientId';
@@ -946,6 +979,21 @@
         });
       }
 
+      function setActiveIntegration(service) {
+        if (!service || !integrationCards.length) return;
+        integrationNavButtons.forEach((button) => {
+          const targetMatch = button.dataset.integrationTarget === service;
+          button.classList.toggle('is-active', targetMatch);
+          button.setAttribute('aria-selected', targetMatch ? 'true' : 'false');
+        });
+        integrationCards.forEach((card) => {
+          const isMatch = card.dataset.service === service;
+          card.classList.toggle('is-active', isMatch);
+          card.hidden = !isMatch;
+          card.setAttribute('aria-hidden', isMatch ? 'false' : 'true');
+        });
+      }
+
       function openTrelloTokenGenerator(card) {
         if (!card) return;
         const apiKeyInput = card.querySelector('[data-field="apiKey"]');
@@ -1383,6 +1431,18 @@
 
       saveBrandBtn?.addEventListener('click', saveBrand);
       resetBrandBtn?.addEventListener('click', resetBrand);
+
+      if (integrationNavButtons.length && integrationCards.length) {
+        const initialService =
+          integrationNavButtons.find((button) => button.classList.contains('is-active'))?.dataset.integrationTarget ||
+          integrationCards[0]?.dataset.service;
+        setActiveIntegration(initialService);
+        integrationNavButtons.forEach((button) => {
+          button.addEventListener('click', () => {
+            setActiveIntegration(button.dataset.integrationTarget);
+          });
+        });
+      }
 
       integrationCards.forEach((card) => {
         const service = card.dataset.service;
