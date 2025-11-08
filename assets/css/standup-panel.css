@@ -1,17 +1,14 @@
 .standup-dock {
-  position: fixed;
-  right: 1.5rem;
-  bottom: 1.5rem;
-  z-index: 3050;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.75rem;
-  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
   font-family: var(--brand-font, 'Nunito', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
 }
 
 .standup-dock-toggle {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 3050;
   pointer-events: auto;
   border: none;
   border-radius: 999px;
@@ -44,8 +41,12 @@
 }
 
 .standup-panel {
+  position: fixed;
+  bottom: 4.5rem;
+  right: 1.5rem;
+  z-index: 3060;
   pointer-events: auto;
-  width: min(380px, 92vw);
+  width: min(390px, 92vw);
   max-height: min(78vh, 640px);
   overflow: hidden;
   border-radius: 1.1rem;
@@ -58,7 +59,7 @@
   gap: 1rem;
   padding: 1.1rem 1.35rem 1.35rem;
   color: var(--brand-text, #0f172a);
-  transform-origin: bottom right;
+  transform-origin: bottom center;
   transition: opacity 180ms ease, transform 220ms ease;
 }
 
@@ -93,6 +94,8 @@
 .standup-dock[data-open="true"] .standup-panel {
   opacity: 1;
   transform: translateY(0) scale(1);
+  width: min(640px, 97vw);
+  max-height: min(94vh, 960px);
 }
 
 .standup-panel__header {
@@ -278,8 +281,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  max-height: 180px;
-  overflow-y: auto;
+  max-height: none;
+  overflow-y: visible;
 }
 
 .standup-completed {
@@ -368,12 +371,43 @@
 
 @media (max-width: 640px) {
   .standup-dock {
-    right: 1rem;
+    left: 50%;
     bottom: 1rem;
   }
 
   .standup-panel {
     width: min(95vw, 360px);
+    max-height: min(85vh, 620px);
     padding: 1rem 1.1rem;
+  }
+
+  .standup-dock[data-open="true"] .standup-panel {
+    width: min(95vw, 440px);
+    max-height: min(95vh, 860px);
+  }
+}
+
+@media (min-width: 900px) {
+  .standup-panel__scroll {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .standup-panel__status-text,
+  .standup-panel__services {
+    grid-column: 1 / -1;
+  }
+
+  .standup-section--queue {
+    grid-column: 1;
+    grid-row: span 2;
+  }
+
+  .standup-section--assignments {
+    grid-column: 2;
+  }
+
+  .standup-section--unassigned {
+    grid-column: 2;
   }
 }
