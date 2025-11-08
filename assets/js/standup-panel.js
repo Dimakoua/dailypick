@@ -9,6 +9,8 @@
     orderMode: false,
     detailCompleted: [],
     detailCurrent: null,
+    hasQueueSession: false,
+    lastSource: null,
   };
 
   const orderedManualState = {
@@ -174,9 +176,30 @@
 
   function updateQueueControls() {
     if (!elements.queueControls || !elements.queueNextButton || !elements.queueRandomButton) return;
+    const hasQueueSession = queueState.hasQueueSession;
     const active = queueState.orderMode && queueState.order.length > 0;
+
+    if (!hasQueueSession) {
+      elements.queueControls.hidden = false;
+      elements.queueNextButton.disabled = true;
+      elements.queueRandomButton.disabled = true;
+      if (elements.queueHint) {
+        elements.queueHint.textContent = 'Run a game to send the speaker order here first.';
+      }
+      return;
+    }
+
     elements.queueControls.hidden = !active;
-    if (!active) return;
+    if (!active) {
+      if (elements.queueHint) {
+        elements.queueHint.textContent = 'Click any name to jump ahead.';
+      }
+      return;
+    }
+
+    if (elements.queueHint) {
+      elements.queueHint.textContent = 'Click any name to jump ahead.';
+    }
     const hasNext = Boolean(queueState.current) || queueState.upcoming.length > 0;
     elements.queueNextButton.disabled = !hasNext;
     const randomPool = [];
@@ -481,6 +504,8 @@
 
   function handleQueueUpdate(detail = {}) {
     const source = typeof detail.source === 'string' ? detail.source : '';
+    queueState.hasQueueSession = true;
+    queueState.lastSource = source || null;
     const providedOrder = Array.isArray(detail.order) ? sanitizeList(detail.order) : [];
     let derivedOrder = providedOrder;
     if (!derivedOrder.length && ORDERED_LIST_SOURCES.has(source)) {
@@ -548,6 +573,8 @@
   }
 
   function handleQueueReset(detail = {}) {
+    queueState.hasQueueSession = true;
+    queueState.lastSource = typeof detail.source === 'string' ? detail.source : queueState.lastSource;
     queueState.participants = sanitizeList(detail.participants || []);
     queueState.current = null;
     queueState.completed = sanitizeList(detail.completed || []);
