@@ -212,6 +212,17 @@ body {
   border-bottom: 1px solid rgba(255,255,255,.14);
   word-wrap: break-word;            /* запобігає горизонтальному скролу */
 }
+#leaderboard li.current-speaker {
+  background: rgba(0, 255, 255, 0.15); /* Light cyan background */
+  color: #00FFFF; /* Cyan text */
+  border-radius: 8px;
+  padding: 10px;
+  margin: 4px 0;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+}
+#leaderboard li.current-speaker b {
+  color: #00FFFF; /* Ensure name is also cyan */
+}
 #leaderboard li:last-child { border-bottom: none; }
 #leaderboard li b { color: #fff; font-weight: 800; }
 
@@ -262,6 +273,14 @@ body {
 :root.light #leaderboard h2,
 :root.light #leaderboard li b { color: #0b1220; }
 :root.light #leaderboard li { color: rgba(11,18,32,.95); border-bottom-color: rgba(0,0,0,.10); }
+:root.light #leaderboard li.current-speaker {
+  background: rgba(0, 150, 150, 0.1); /* Lighter cyan background for light theme */
+  color: #008080; /* Darker cyan text for light theme */
+  box-shadow: 0 0 8px rgba(0, 150, 150, 0.2);
+}
+:root.light #leaderboard li.current-speaker b {
+  color: #008080; /* Ensure name is also darker cyan in light theme */
+}
 
 /* --- Responsive --- */
 @media (max-width: 900px) {

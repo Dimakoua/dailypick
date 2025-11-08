@@ -52,6 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const ASTEROID_BASE_MASS = 50; // Base mass, can be varied
     const ASTEROID_SUN_RESTITUTION = 0.3; // Bounciness factor for asteroid-sun collision
     const ASTEROID_FIXED_SUN_BOUNCE_SPEED = 30; // Increased from 5 for a more noticeable bounce
+    const NUM_BLACK_HOLES = 2;
+    const BLACK_HOLE_RADIUS = 15;
+    const BLACK_HOLE_MASS = 25000;
+    const BLACK_HOLE_EVENT_HORIZON_RADIUS = BLACK_HOLE_RADIUS + 5;
 
     // Name configuration similar to letters/game.js
     const GRAVITY_DRIFT_NAMES_KEY = 'namesList';
@@ -119,6 +123,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         window.dispatchEvent(new CustomEvent('standup:queue', { detail }));
+
+        // Update isSpeaking status for all rockets
+        rockets.forEach(rocket => {
+            rocket.isSpeaking = (typeof currentName === 'string' && normalizeStandupKey(rocket.name) === normalizeStandupKey(currentName));
+        });
     }
 
     function registerRocketFinish(name) {
@@ -136,6 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let planets = [];
     let rockets = [];
     let asteroids = [];
+    let blackHoles = [];
+    let particles = [];
     let gameRunning = false;
     let nextFinishOrder = 1; // Counter for assigning finish order
     let lastTime = 0;
@@ -208,6 +219,55 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.lineTo(this.orbitalPathPoints[i].x, this.orbitalPathPoints[i].y);
             }
             ctx.stroke();
+        }
+    }
+
+    class BlackHole {
+        constructor(position, radius, mass) {
+            this.position = position;
+            this.radius = radius;
+            this.mass = mass;
+        }
+
+        draw(ctx) {
+            // Main black body
+            ctx.fillStyle = 'black';
+            ctx.beginPath();
+            ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Accretion disk / glow
+            const glow = ctx.createRadialGradient(this.position.x, this.position.y, this.radius, this.position.x, this.position.y, this.radius + 15);
+            glow.addColorStop(0, 'rgba(0, 0, 0, 1)');
+            glow.addColorStop(0.5, 'rgba(150, 80, 255, 0.5)');
+            glow.addColorStop(0.8, 'rgba(80, 150, 255, 0.3)');
+            glow.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            ctx.fillStyle = glow;
+            ctx.beginPath();
+            ctx.arc(this.position.x, this.position.y, this.radius + 15, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    class Particle {
+        constructor(x, y, vx, vy, life, color) {
+            this.position = new Vector2D(x, y);
+            this.velocity = new Vector2D(vx, vy);
+            this.life = life;
+            this.initialLife = life;
+            this.color = color;
+        }
+
+        update(dt) {
+            this.position.add(this.velocity.clone().mult(dt));
+            this.life -= dt;
+        }
+
+        draw(ctx) {
+            ctx.fillStyle = this.color;
+            ctx.globalAlpha = Math.max(0, this.life / this.initialLife);
+            ctx.fillRect(this.position.x, this.position.y, 2, 2);
+            ctx.globalAlpha = 1.0;
         }
     }
 
@@ -356,9 +416,10 @@ document.addEventListener('DOMContentLoaded', () => {
             this.landedPlanet = null; // Store the planet object it landed on
             this.relativeLandingPosition = null; // Store position relative to the landed planet's center
             this.landedAsteroid = null; // Store the asteroid object it's trapped on
+            this.isSpeaking = false; // New property to indicate if this rocket is the current speaker
         }
 
-        applyForce(force) {
+        applyForce(force) { // Assuming rocket mass is 1 for F=a
             this.acceleration.add(force); // Assuming rocket mass is 1 for F=a
         }
 
@@ -431,6 +492,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.applyForce(forceVectorAsteroid);
             });
 
+            // Apply Black Holes' gravity to rocket
+            blackHoles.forEach(bh => {
+                const directionToBh = Vector2D.sub(bh.position, this.position);
+                let distSqToBh = directionToBh.magSq();
+                if (distSqToBh < (bh.radius * bh.radius)) distSqToBh = bh.radius * bh.radius;
+                if (distSqToBh === 0) return;
+
+                const forceMagnitudeBh = (G * bh.mass) / distSqToBh; // Rocket mass is 1
+                const forceVectorBh = directionToBh.normalize().mult(forceMagnitudeBh);
+                this.applyForce(forceVectorBh);
+            });
+
 
             this.velocity.add(this.acceleration.clone().mult(dt));
             const displacement = this.velocity.clone().mult(dt);
@@ -490,6 +563,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (this.finishOrder === null) {
                         this.finishOrder = nextFinishOrder++;
                         registerRocketFinish(this.name);
+                        createExplosion(this.position.x, this.position.y, 'red', 30);
                     }
                     this.finishReason = `Trapped by Asteroid`; // More specific reason
                     return; // End update for this frame
@@ -502,16 +576,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.isLost = true;
                 if (this.finishOrder === null) {
                     this.finishOrder = nextFinishOrder++;
+                    createExplosion(this.position.x, this.position.y, this.color, 50);
                     registerRocketFinish(this.name);
                 }
                 this.finishReason = "Lost (Boundary)";
                 return; // End update for this frame
             }
 
-            // 3. Check Out of Fuel (if not landed or lost, and fuel just ran out this frame)
+            // 4. Check Sun Collision
+            if (Vector2D.sub(this.position, SUN_POSITION).mag() < SUN_RADIUS + this.radius) {
+                this.isLost = true;
+                if (this.finishOrder === null) {
+                    this.finishOrder = nextFinishOrder++;
+                    createExplosion(this.position.x, this.position.y, 'orange', 80);
+                    registerRocketFinish(this.name);
+                }
+                this.finishReason = "Burned by Sun";
+                return;
+            }
+
+            // 5. Check Black Hole Collision
+            for (const bh of blackHoles) {
+                if (Vector2D.sub(this.position, bh.position).mag() < BLACK_HOLE_EVENT_HORIZON_RADIUS) {
+                    this.isLost = true;
+                    if (this.finishOrder === null) {
+                        this.finishOrder = nextFinishOrder++;
+                        registerRocketFinish(this.name);
+                    }
+                    this.finishReason = "Consumed by Black Hole";
+                    return;
+                }
+            }
+
+            // 6. Check Out of Fuel (if not landed or lost, and fuel just ran out this frame)
             // This check is implicitly handled by the fuel update logic at the beginning of the active rocket section.
-            // If fuel becomes <= 0, and finishOrder is null, it will be set.
-            if (this.fuel <= 0 && this.finishOrder === null) {
+            if (this.fuel <= 0 && this.finishOrder === null) { // If fuel becomes <= 0, and finishOrder is null, it will be set.
                  this.finishOrder = nextFinishOrder++;
                  registerRocketFinish(this.name);
                  this.finishReason = "Drifting (Out of Fuel)";
@@ -520,6 +619,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         draw(ctx) {
+            if (this.isLost) return; // Don't draw lost rockets
+
             if (this.trail.length > 1) {
                 ctx.beginPath();
                 ctx.strokeStyle = this.color;
@@ -548,6 +649,25 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.fillText("🚀", 0, 0); // Draw emoji at the transformed origin (0,0)
             // --- End Rocket Emoji ---
 
+            // Draw flame if rocket is active and has fuel
+            if (!this.isLanded && !this.isLost && this.fuel > 0) {
+                const flameLength = this.radius * 1.5 + Math.random() * this.radius * 0.5; // Flickering effect
+                const flameWidth = this.radius * 0.8;
+
+                ctx.beginPath();
+                ctx.moveTo(-flameLength, 0); // Tip of the flame
+                ctx.lineTo(-this.radius * 0.8, -flameWidth / 2); // Base of the flame, left
+                ctx.lineTo(-this.radius * 0.8, flameWidth / 2); // Base of the flame, right
+                ctx.closePath();
+
+                const gradient = ctx.createLinearGradient(-flameLength, 0, -this.radius * 0.8, 0);
+                gradient.addColorStop(0, 'rgba(255, 200, 0, 0.8)'); // Yellow
+                gradient.addColorStop(0.5, 'rgba(255, 100, 0, 0.7)'); // Orange
+                gradient.addColorStop(1, 'rgba(255, 0, 0, 0.6)'); // Red
+                ctx.fillStyle = gradient;
+                ctx.fill();
+            }
+
             ctx.restore();
 
             // Draw the rocket's name - uses the updated this.radius
@@ -555,6 +675,19 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.font = "11px Arial";
             ctx.textAlign = "center";
             ctx.fillText(this.name, this.position.x, this.position.y - this.radius - 7); // Position above the rocket
+
+            // Draw a glowing circle around the name if this rocket is the current speaker
+            if (this.isSpeaking) {
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(this.position.x, this.position.y - this.radius - 7, ctx.measureText(this.name).width / 2 + 8, 0, Math.PI * 2);
+                ctx.strokeStyle = 'rgba(0, 255, 255, 0.8)'; // Cyan glow
+                ctx.lineWidth = 3;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = 'cyan';
+                ctx.stroke();
+                ctx.restore();
+            }
         }
     }
 
@@ -610,6 +743,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function initBlackHoles() {
+        blackHoles = [];
+        const safeZoneFromSun = SUN_RADIUS + 100;
+        const safeZoneFromEdge = 100;
+
+        for (let i = 0; i < NUM_BLACK_HOLES; i++) {
+            let x, y, distFromSun;
+            let attempts = 0;
+            do {
+                x = Math.random() * (canvas.width - 2 * safeZoneFromEdge) + safeZoneFromEdge;
+                y = Math.random() * (canvas.height - 2 * safeZoneFromEdge) + safeZoneFromEdge;
+                distFromSun = Vector2D.sub(new Vector2D(x, y), SUN_POSITION).mag();
+                attempts++;
+            } while (distFromSun < safeZoneFromSun && attempts < 100);
+
+            if (attempts < 100) {
+                blackHoles.push(new BlackHole(new Vector2D(x, y), BLACK_HOLE_RADIUS, BLACK_HOLE_MASS));
+            }
+        }
+    }
+
     function initStars() {
         stars = [];
         for (let i = 0; i < STAR_COUNT; i++) {
@@ -639,6 +793,7 @@ document.addEventListener('DOMContentLoaded', () => {
             p.calculateOrbitalPath(SUN_POSITION); // Calculate path points once
         });
         initAsteroids(); // Initialize asteroids after planets, so they don't overlap too much initially (though still possible)
+        initBlackHoles();
     }
 
     function launchRockets() {
@@ -694,6 +849,7 @@ document.addEventListener('DOMContentLoaded', () => {
         leaderboardList.innerHTML = '';
         nextFinishOrder = 1; // Reset finish order counter for the new game
         finishHistory = [];
+        particles = [];
         emitStandupReset();
 
         initStars(); // Keep stars consistent or re-randomize
@@ -714,6 +870,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // --- Update ---
         planets.forEach(planet => planet.updatePosition(dt, SUN_POSITION));
         asteroids.forEach(asteroid => asteroid.update(dt, SUN_POSITION, SUN_MASS, planets, canvas.width, canvas.height));
+        particles.forEach((p, index) => {
+            p.update(dt);
+            if (p.life <= 0) particles.splice(index, 1);
+        });
+
         rockets.forEach(rocket => rocket.update(dt, planets, canvas.width, canvas.height, EARTH_NAME));
 
         // --- Draw ---
@@ -727,15 +888,18 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.beginPath();
         ctx.arc(SUN_POSITION.x, SUN_POSITION.y, SUN_RADIUS, 0, Math.PI * 2);
         ctx.fill();
-        // Add a glow to the sun
-        const sunGlow = ctx.createRadialGradient(SUN_POSITION.x, SUN_POSITION.y, SUN_RADIUS * 0.5, SUN_POSITION.x, SUN_POSITION.y, SUN_RADIUS * 2);
+        // Add a more intense glow to the sun
+        const sunGlow = ctx.createRadialGradient(SUN_POSITION.x, SUN_POSITION.y, SUN_RADIUS, SUN_POSITION.x, SUN_POSITION.y, SUN_RADIUS * 2.5);
         sunGlow.addColorStop(0, 'rgba(255, 223, 0, 0.8)');
-        sunGlow.addColorStop(1, 'rgba(255, 165, 0, 0)');
+        sunGlow.addColorStop(0.6, 'rgba(255, 165, 0, 0.4)');
+        sunGlow.addColorStop(1, 'rgba(255, 100, 0, 0)');
         ctx.fillStyle = sunGlow;
         ctx.fillRect(0,0, canvas.width, canvas.height);
 
 
         planets.forEach(planet => planet.drawOrbit(ctx)); // Draw orbits first
+        blackHoles.forEach(bh => bh.draw(ctx));
+        particles.forEach(p => p.draw(ctx));
         planets.forEach(planet => planet.draw(ctx));
         asteroids.forEach(asteroid => asteroid.draw(ctx));
         rockets.forEach(rocket => rocket.draw(ctx));
@@ -748,6 +912,16 @@ document.addEventListener('DOMContentLoaded', () => {
             requestAnimationFrame(gameLoop);
         }
     }
+
+    function createExplosion(x, y, color, count) {
+        for (let i = 0; i < count; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const speed = Math.random() * 50 + 20;
+            const life = Math.random() * 1.5 + 0.5;
+            particles.push(new Particle(x, y, Math.cos(angle) * speed, Math.sin(angle) * speed, life, color));
+        }
+    }
+
 
     function drawStars() {
         stars.forEach(star => {
@@ -793,23 +967,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function displayLeaderboard() {
         leaderboardList.innerHTML = '';
+        // Sort by finish order first, then by distance traveled for those not finished yet
         const sortedRockets = [...rockets].sort((a, b) => {
-            return a.distanceTraveled - b.distanceTraveled; // Sort by distance in descending order
+            if (a.finishOrder !== null && b.finishOrder !== null) {
+                return a.finishOrder - b.finishOrder;
+            }
+            if (a.finishOrder !== null) return -1; // Finished rockets come first
+            if (b.finishOrder !== null) return 1;
+            return b.distanceTraveled - a.distanceTraveled; // Active rockets sorted by distance (desc)
         });
 
         sortedRockets.forEach(rocket => {
             const li = document.createElement('li');
-            let statusText = rocket.finishReason;
+            let statusText = '';
+            let statusIcon = '';
 
-            if (!statusText) { // Fallback, though finishReason should always be set if finishOrder is
-                if (rocket.isLanded) statusText = `Landed on ${rocket.landedOnPlanetName}`;
-                else if (rocket.isLost) statusText = "Lost (Boundary)";
-                else if (rocket.fuel <= 0) statusText = "Drifting (Out of Fuel)";
-                else statusText = "Still Active"; // Should not appear if game ended
+            if (rocket.isLanded) {
+                statusIcon = '🏆';
+                statusText = `Landed on ${rocket.landedOnPlanetName}`;
+            } else if (rocket.isLost && rocket.landedAsteroid) {
+                statusIcon = '💥';
+                statusText = `Trapped by Asteroid`;
+            } else if (rocket.finishReason === "Burned by Sun") {
+                statusIcon = '☀️';
+                statusText = "Burned by Sun";
+            } else if (rocket.isLost) {
+                statusIcon = '❓';
+                statusText = "Lost (Boundary)";
+            } else if (rocket.fuel <= 0) {
+                statusIcon = '⛽';
+                statusText = "Out of Fuel";
+            } else {
+                statusIcon = '🚀';
+                statusText = "In Flight";
             }
             
             const orderDisplay = rocket.finishOrder !== null ? `Order: ${rocket.finishOrder} | ` : '';
-            li.innerHTML = `<b>${rocket.name}</b>: ${statusText} <br> ${orderDisplay}Fuel Left: ${rocket.fuel.toFixed(0)} | Dist: ${rocket.distanceTraveled.toFixed(0)}`;
+            li.innerHTML = `${orderDisplay}<b>${rocket.name}</b>: ${statusIcon} ${statusText}`;
+            
+            if (rocket.isSpeaking) {
+                li.classList.add('current-speaker');
+            }
+
             leaderboardList.appendChild(li);
         });
         leaderboardDiv.classList.remove('hidden');
@@ -881,6 +1080,7 @@ document.addEventListener('DOMContentLoaded', () => {
         planets.forEach(p => p.drawOrbit(ctx)); // Draw initial orbits
         planets.forEach(p => p.draw(ctx)); // Draw initial planet positions
         asteroids.forEach(asteroid => asteroid.draw(ctx)); // Draw initial asteroids
+        blackHoles.forEach(bh => bh.draw(ctx)); // Draw initial black holes
         drawHeavyStarSkies();
     }
 
