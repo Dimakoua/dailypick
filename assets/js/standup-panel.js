@@ -19,6 +19,7 @@
   };
 
   const ORDERED_LIST_SOURCES = new Set(['speedway', 'letters', 'gravity-drift']);
+  const UPCOMING_DISPLAY_LIMIT = 8;
 
   let latestSnapshot = standup && typeof standup.getSnapshot === 'function' ? standup.getSnapshot() : null;
   let noteDebounce = null;
@@ -172,6 +173,27 @@
       return;
     }
     advanceOrderedQueue(choice);
+  }
+
+  function selectManualSpeaker(name) {
+    const normalizedName = normalizeName(name);
+    if (!normalizedName) return;
+
+    if (queueState.current && !namesMatch(queueState.current, name)) {
+      const alreadyLogged = queueState.completed.some((entry) => namesMatch(entry, queueState.current));
+      if (!alreadyLogged) {
+        queueState.completed.push(queueState.current);
+      }
+    }
+
+    queueState.current = name;
+    queueState.completed = queueState.completed.filter((entry) => !namesMatch(entry, name));
+    queueState.upcoming = queueState.upcoming.filter((entry) => !namesMatch(entry, name));
+    if (!queueState.participants.some((entry) => namesMatch(entry, name))) {
+      queueState.participants.push(name);
+    }
+
+    renderQueue();
   }
 
   function updateQueueControls() {
@@ -470,23 +492,24 @@
 
     elements.nextList.innerHTML = '';
     const upcoming = sanitizeList(queueState.upcoming);
+    const shouldLimitUpcoming = queueState.hasQueueSession;
     if (!upcoming.length && !queueState.current) {
       const fallback = queueState.participants.length
         ? queueState.participants
         : Array.isArray(latestSnapshot?.players)
           ? latestSnapshot.players
           : [];
-      fallback.slice(0, 8).forEach((name) => upcoming.push(name));
+      const fallbackLimit = shouldLimitUpcoming ? UPCOMING_DISPLAY_LIMIT : fallback.length;
+      fallback.slice(0, fallbackLimit).forEach((name) => upcoming.push(name));
     }
-    upcoming.slice(0, 8).forEach((name) => {
+    const upcomingToRender = shouldLimitUpcoming ? upcoming.slice(0, UPCOMING_DISPLAY_LIMIT) : upcoming;
+    upcomingToRender.forEach((name) => {
       const li = document.createElement('li');
       li.textContent = getDisplayName(name);
-      if (queueState.orderMode) {
-        li.dataset.player = name;
-        li.tabIndex = 0;
-        li.setAttribute('role', 'button');
-        li.classList.add('standup-next-item--selectable');
-      }
+      li.dataset.player = name;
+      li.tabIndex = 0;
+      li.setAttribute('role', 'button');
+      li.classList.add('standup-next-item--selectable');
       elements.nextList.appendChild(li);
     });
 
@@ -740,7 +763,11 @@
         const target = event.target.closest('li[data-player]');
         if (!target) return;
         const name = target.dataset.player || target.textContent;
-        advanceOrderedQueue(name);
+        if (queueState.orderMode) {
+          advanceOrderedQueue(name);
+        } else {
+          selectManualSpeaker(name);
+        }
       });
       elements.nextList.addEventListener('keydown', (event) => {
         if (event.key !== 'Enter' && event.key !== ' ') return;
@@ -748,7 +775,11 @@
         if (!target) return;
         event.preventDefault();
         const name = target.dataset.player || target.textContent;
-        advanceOrderedQueue(name);
+        if (queueState.orderMode) {
+          advanceOrderedQueue(name);
+        } else {
+          selectManualSpeaker(name);
+        }
       });
     }
   }
