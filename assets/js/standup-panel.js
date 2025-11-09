@@ -41,7 +41,6 @@
     completedList: null,
     queueControls: null,
     queueNextButton: null,
-    queueRandomButton: null,
     queueHint: null,
     assignmentsList: null,
     assignmentsEmpty: null,
@@ -182,22 +181,6 @@
     renderQueue();
   }
 
-  function selectRandomOrderedSpeaker() {
-    if (!queueState.orderMode) return;
-    const pool = [];
-    if (queueState.current) {
-      pool.push(queueState.current);
-    }
-    queueState.upcoming.forEach((name) => pool.push(name));
-    const eligible = pool.filter((name) => name && !queueState.completed.some((entry) => namesMatch(entry, name)));
-    if (!eligible.length) return;
-    const choice = eligible[Math.floor(Math.random() * eligible.length)];
-    if (queueState.current && namesMatch(queueState.current, choice)) {
-      return;
-    }
-    advanceOrderedQueue(choice);
-  }
-
   function selectManualSpeaker(name) {
     const normalizedName = normalizeName(name);
     if (!normalizedName) return;
@@ -220,14 +203,13 @@
   }
 
   function updateQueueControls() {
-    if (!elements.queueControls || !elements.queueNextButton || !elements.queueRandomButton) return;
+    if (!elements.queueControls || !elements.queueNextButton) return;
     const hasQueueSession = queueState.hasQueueSession;
     const active = queueState.orderMode && queueState.order.length > 0;
 
     if (!hasQueueSession) {
       elements.queueControls.hidden = false;
       elements.queueNextButton.disabled = true;
-      elements.queueRandomButton.disabled = true;
       if (elements.queueHint) {
         elements.queueHint.textContent = 'Run a game to send the speaker order here first.';
       }
@@ -247,10 +229,6 @@
     }
     const hasNext = Boolean(queueState.current) || queueState.upcoming.length > 0;
     elements.queueNextButton.disabled = !hasNext;
-    const randomPool = [];
-    if (queueState.current) randomPool.push(queueState.current);
-    queueState.upcoming.forEach((name) => randomPool.push(name));
-    elements.queueRandomButton.disabled = randomPool.length === 0;
   }
 
   function sanitizeList(list) {
@@ -929,7 +907,6 @@
           <div class="standup-queue-controls" hidden>
             <div class="standup-queue-controls__actions">
               <button type="button" class="standup-queue-control standup-queue-control--next">Next speaker</button>
-              <button type="button" class="standup-queue-control standup-queue-control--random">Pick random</button>
             </div>
             <p class="standup-queue-controls__hint">Click any name to jump ahead.</p>
           </div>
@@ -1004,7 +981,6 @@
     elements.completedList = panel.querySelector('.standup-completed-list');
     elements.queueControls = panel.querySelector('.standup-queue-controls');
     elements.queueNextButton = panel.querySelector('.standup-queue-control--next');
-    elements.queueRandomButton = panel.querySelector('.standup-queue-control--random');
     elements.queueHint = panel.querySelector('.standup-queue-controls__hint');
     elements.assignmentsList = panel.querySelector('.standup-assignments-list');
     elements.assignmentsEmpty = panel.querySelector('.standup-assignments-empty');
@@ -1018,11 +994,6 @@
     if (elements.queueNextButton) {
       elements.queueNextButton.addEventListener('click', () => {
         advanceOrderedQueue();
-      });
-    }
-    if (elements.queueRandomButton) {
-      elements.queueRandomButton.addEventListener('click', () => {
-        selectRandomOrderedSpeaker();
       });
     }
     if (elements.nextList) {
