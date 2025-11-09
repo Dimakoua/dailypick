@@ -20,6 +20,12 @@
 
   const ORDERED_LIST_SOURCES = new Set(['speedway', 'letters', 'gravity-drift']);
   const UPCOMING_DISPLAY_LIMIT = 8;
+  const PANEL_STORAGE_KEY = 'standupPanelLayout';
+  const PANEL_MIN_WIDTH = 300;
+  const PANEL_MIN_HEIGHT = 280;
+  const PANEL_MAX_WIDTH = 1140;
+  const PANEL_MAX_HEIGHT = 800;
+  const PANEL_EDGE_PADDING = 12;
 
   let latestSnapshot = standup && typeof standup.getSnapshot === 'function' ? standup.getSnapshot() : null;
   let noteDebounce = null;
@@ -42,6 +48,23 @@
     unassignedList: null,
     unassignedEmpty: null,
     notes: null,
+    resizeHandle: null,
+    resetButton: null,
+    collapseButton: null,
+  };
+
+  const panelLayout = {
+    position: null,
+    size: null,
+  };
+
+  const panelInteraction = {
+    dragging: false,
+    resizing: false,
+    pointerId: null,
+    dragOffset: { x: 0, y: 0 },
+    startSize: { width: 0, height: 0 },
+    startPointer: { x: 0, y: 0 },
   };
 
   function normalizeName(value) {
@@ -525,6 +548,246 @@
     updateQueueControls();
   }
 
+  function loadPanelLayoutFromStorage() {
+    if (typeof window === 'undefined' || !window.localStorage) return;
+    try {
+      const stored = window.localStorage.getItem(PANEL_STORAGE_KEY);
+      if (!stored) return;
+      const parsed = JSON.parse(stored);
+      if (parsed && typeof parsed === 'object') {
+        const { position, size } = parsed;
+        if (position && Number.isFinite(position.x) && Number.isFinite(position.y)) {
+          panelLayout.position = { x: position.x, y: position.y };
+        }
+        if (size && Number.isFinite(size.width) && Number.isFinite(size.height)) {
+          panelLayout.size = { width: size.width, height: size.height };
+        }
+      }
+    } catch (error) {
+      // ignore storage issues
+    }
+  }
+
+  function savePanelLayout() {
+    if (typeof window === 'undefined' || !window.localStorage) return;
+    try {
+      if (!panelLayout.position && !panelLayout.size) {
+        window.localStorage.removeItem(PANEL_STORAGE_KEY);
+      } else {
+        window.localStorage.setItem(
+          PANEL_STORAGE_KEY,
+          JSON.stringify({
+            position: panelLayout.position,
+            size: panelLayout.size,
+          })
+        );
+      }
+    } catch (error) {
+      // ignore storage issues
+    }
+  }
+
+  function clearPanelLayoutStorage() {
+    if (typeof window === 'undefined' || !window.localStorage) return;
+    try {
+      window.localStorage.removeItem(PANEL_STORAGE_KEY);
+    } catch (error) {
+      // no-op
+    }
+  }
+
+  function clampPanelSize(width, height, position = panelLayout.position) {
+    const padding = PANEL_EDGE_PADDING;
+    const left = position ? position.x : padding;
+    const top = position ? position.y : padding;
+    const maxWidthAvailable = window.innerWidth - left - padding;
+    const maxHeightAvailable = window.innerHeight - top - padding;
+    const maxWidth = Math.max(PANEL_MIN_WIDTH, Math.min(PANEL_MAX_WIDTH, maxWidthAvailable));
+    const maxHeight = Math.max(PANEL_MIN_HEIGHT, Math.min(PANEL_MAX_HEIGHT, maxHeightAvailable));
+    return {
+      width: Math.min(Math.max(width, PANEL_MIN_WIDTH), maxWidth),
+      height: Math.min(Math.max(height, PANEL_MIN_HEIGHT), maxHeight),
+    };
+  }
+
+  function clampPanelPosition(position, size = panelLayout.size) {
+    if (!position) return null;
+    const padding = PANEL_EDGE_PADDING;
+    const width = size?.width || elements.panel?.offsetWidth || PANEL_MIN_WIDTH;
+    const height = size?.height || elements.panel?.offsetHeight || PANEL_MIN_HEIGHT;
+    const maxX = Math.max(padding, window.innerWidth - width - padding);
+    const maxY = Math.max(padding, window.innerHeight - height - padding);
+    return {
+      x: Math.min(Math.max(position.x, padding), maxX),
+      y: Math.min(Math.max(position.y, padding), maxY),
+    };
+  }
+
+  function applyPanelLayout({ skipSave = false } = {}) {
+    if (!elements.panel) return;
+    const style = elements.panel.style;
+
+    if (panelLayout.size) {
+      panelLayout.size = clampPanelSize(panelLayout.size.width, panelLayout.size.height);
+      style.width = `${panelLayout.size.width}px`;
+      style.height = `${panelLayout.size.height}px`;
+    } else {
+      style.width = '';
+      style.height = '';
+    }
+
+    if (panelLayout.position) {
+      panelLayout.position = clampPanelPosition(panelLayout.position);
+      elements.panel.classList.add('standup-panel--floating');
+      style.left = `${panelLayout.position.x}px`;
+      style.top = `${panelLayout.position.y}px`;
+      style.right = 'auto';
+      style.bottom = 'auto';
+    } else {
+      elements.panel.classList.remove('standup-panel--floating');
+      style.left = '';
+      style.top = '';
+      style.right = '';
+      style.bottom = '';
+    }
+
+    if (!skipSave) {
+      savePanelLayout();
+    }
+  }
+
+  function resetPanelLayout() {
+    if (panelInteraction.dragging || panelInteraction.resizing) {
+      endPanelInteraction();
+    }
+    panelLayout.position = null;
+    panelLayout.size = null;
+    clearPanelLayoutStorage();
+    applyPanelLayout({ skipSave: true });
+  }
+
+  function handlePanelWindowResize() {
+    if (!panelLayout.position && !panelLayout.size) return;
+    panelLayout.size = panelLayout.size ? clampPanelSize(panelLayout.size.width, panelLayout.size.height) : null;
+    if (panelLayout.position) {
+      panelLayout.position = clampPanelPosition(panelLayout.position);
+    }
+    applyPanelLayout({ skipSave: true });
+  }
+
+  function isPrimaryPointer(event) {
+    if (typeof event.button === 'number') {
+      return event.button === 0;
+    }
+    return true;
+  }
+
+  function startPanelDrag(event) {
+    if (!elements.panel || !isPrimaryPointer(event)) return;
+    if (event.target.closest('button, a, input, textarea, select')) return;
+    event.preventDefault();
+    const rect = elements.panel.getBoundingClientRect();
+    panelLayout.position = { x: rect.left, y: rect.top };
+    panelInteraction.dragging = true;
+    panelInteraction.pointerId = event.pointerId ?? null;
+    panelInteraction.dragOffset = { x: event.clientX - rect.left, y: event.clientY - rect.top };
+    elements.panel.classList.add('standup-panel--dragging');
+    elements.panel.style.transition = 'none';
+    window.addEventListener('pointermove', handlePanelPointerMove);
+    window.addEventListener('pointerup', endPanelInteraction);
+    window.addEventListener('pointercancel', endPanelInteraction);
+  }
+
+  function startPanelResize(event) {
+    if (!elements.panel || !isPrimaryPointer(event)) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const rect = elements.panel.getBoundingClientRect();
+    if (!panelLayout.position) {
+      panelLayout.position = { x: rect.left, y: rect.top };
+    }
+    panelInteraction.resizing = true;
+    panelInteraction.pointerId = event.pointerId ?? null;
+    panelInteraction.startSize = { width: rect.width, height: rect.height };
+    panelInteraction.startPointer = { x: event.clientX, y: event.clientY };
+    elements.panel.classList.add('standup-panel--dragging', 'standup-panel--resizing');
+    elements.panel.style.transition = 'none';
+    window.addEventListener('pointermove', handlePanelPointerMove);
+    window.addEventListener('pointerup', endPanelInteraction);
+    window.addEventListener('pointercancel', endPanelInteraction);
+  }
+
+  function handlePanelPointerMove(event) {
+    if (!elements.panel) return;
+    if (panelInteraction.dragging) {
+      event.preventDefault();
+      const nextPosition = {
+        x: event.clientX - panelInteraction.dragOffset.x,
+        y: event.clientY - panelInteraction.dragOffset.y,
+      };
+      panelLayout.position = clampPanelPosition(nextPosition) || nextPosition;
+      applyPanelLayout({ skipSave: true });
+    } else if (panelInteraction.resizing) {
+      event.preventDefault();
+      const deltaX = event.clientX - panelInteraction.startPointer.x;
+      const deltaY = event.clientY - panelInteraction.startPointer.y;
+      const size = clampPanelSize(panelInteraction.startSize.width + deltaX, panelInteraction.startSize.height + deltaY);
+      panelLayout.size = size;
+      applyPanelLayout({ skipSave: true });
+    }
+  }
+
+  function endPanelInteraction(event) {
+    if (event && panelInteraction.pointerId !== null && event.pointerId !== panelInteraction.pointerId) {
+      return;
+    }
+    if (!panelInteraction.dragging && !panelInteraction.resizing) return;
+    panelInteraction.dragging = false;
+    panelInteraction.resizing = false;
+    panelInteraction.pointerId = null;
+    if (elements.panel) {
+      elements.panel.classList.remove('standup-panel--dragging', 'standup-panel--resizing');
+      elements.panel.style.transition = '';
+    }
+    window.removeEventListener('pointermove', handlePanelPointerMove);
+    window.removeEventListener('pointerup', endPanelInteraction);
+    window.removeEventListener('pointercancel', endPanelInteraction);
+    applyPanelLayout();
+  }
+
+  function setupPanelInteractions(panel) {
+    const dragHandle = panel.querySelector('.standup-panel__header');
+    if (dragHandle) {
+      dragHandle.addEventListener('pointerdown', startPanelDrag);
+    }
+    if (elements.resizeHandle) {
+      elements.resizeHandle.addEventListener('pointerdown', startPanelResize);
+    }
+  }
+
+  let layoutInitialized = false;
+
+  function initializePanelLayout() {
+    if (layoutInitialized || !elements.panel) return;
+    loadPanelLayoutFromStorage();
+    applyPanelLayout({ skipSave: true });
+    window.addEventListener('resize', handlePanelWindowResize);
+    layoutInitialized = true;
+  }
+
+  function setDockOpenState(isOpen) {
+    if (!elements.dock || !elements.toggle) return;
+    elements.dock.dataset.open = isOpen ? 'true' : 'false';
+    elements.toggle.setAttribute('aria-expanded', String(Boolean(isOpen)));
+  }
+
+  function collapsePanelToDock() {
+    setDockOpenState(false);
+    if (elements.toggle) {
+      elements.toggle.focus({ preventScroll: true });
+    }
+  }
+
   function handleQueueUpdate(detail = {}) {
     const source = typeof detail.source === 'string' ? detail.source : '';
     queueState.hasQueueSession = true;
@@ -636,8 +899,7 @@
     toggle.setAttribute('aria-controls', panelId);
     toggle.addEventListener('click', () => {
       const isOpen = dock.dataset.open === 'true';
-      dock.dataset.open = isOpen ? 'false' : 'true';
-      toggle.setAttribute('aria-expanded', String(!isOpen));
+      setDockOpenState(!isOpen);
       if (!isOpen && standup && typeof standup.refresh === 'function') {
         standup.refresh();
       }
@@ -653,6 +915,8 @@
           <p class="standup-panel__subtitle">Keep the queue, notes, and assignments together.</p>
         </div>
         <div class="standup-panel__header-actions">
+          <button type="button" class="standup-panel__action standup-panel__action--reset" title="Reset panel layout">Reset</button>
+          <button type="button" class="standup-panel__action standup-panel__action--collapse" title="Hide panel">Hide</button>
           <button type="button" class="standup-panel__refresh">Refresh</button>
         </div>
       </header>
@@ -693,6 +957,7 @@
           <ul class="standup-unassigned-list"></ul>
         </section>
       </div>
+      <div class="standup-panel__resize-handle" aria-hidden="true"></div>
     `;
 
     const refreshButton = panel.querySelector('.standup-panel__refresh');
@@ -721,8 +986,7 @@
 
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape' && dock.dataset.open === 'true') {
-        dock.dataset.open = 'false';
-        toggle.setAttribute('aria-expanded', 'false');
+        setDockOpenState(false);
       }
     });
 
@@ -747,6 +1011,9 @@
     elements.unassignedList = panel.querySelector('.standup-unassigned-list');
     elements.unassignedEmpty = panel.querySelector('.standup-unassigned-empty');
     elements.notes = notesArea;
+    elements.resizeHandle = panel.querySelector('.standup-panel__resize-handle');
+    elements.resetButton = panel.querySelector('.standup-panel__action--reset');
+    elements.collapseButton = panel.querySelector('.standup-panel__action--collapse');
 
     if (elements.queueNextButton) {
       elements.queueNextButton.addEventListener('click', () => {
@@ -782,6 +1049,20 @@
         }
       });
     }
+
+    if (elements.resetButton) {
+      elements.resetButton.addEventListener('click', () => {
+        resetPanelLayout();
+      });
+    }
+
+    if (elements.collapseButton) {
+      elements.collapseButton.addEventListener('click', () => {
+        collapsePanelToDock();
+      });
+    }
+
+    setupPanelInteractions(panel);
   }
 
   function handleDataUpdate(snapshot) {
@@ -801,6 +1082,7 @@
 
     createDock();
     attachEvents();
+    initializePanelLayout();
 
     if (standup && typeof standup.subscribe === 'function') {
       standup.subscribe(handleDataUpdate);
