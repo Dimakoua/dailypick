@@ -632,6 +632,14 @@
     if (!skipSave) {
       savePanelLayout();
     }
+    applyPanelSizeStyles();
+  }
+
+  function applyPanelSizeStyles() {
+    if (!elements.panel || elements.dock?.dataset.open !== 'true') return;
+    const width = panelLayout.size?.width || elements.panel.offsetWidth;
+    elements.panel.classList.toggle('standup-panel--layout-medium', width < 720);
+    elements.panel.classList.toggle('standup-panel--layout-small', width < 500);
   }
 
   function resetPanelLayout() {

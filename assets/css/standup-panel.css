@@ -544,3 +544,52 @@
     grid-column: 3;
   }
 }
+
+/*
+ Container-based responsive styles for the stand-up panel.
+ These classes are applied via JavaScript based on the panel's width.
+*/
+
+/* Medium layout: single column, used for widths < 720px */
+.standup-panel.standup-panel--layout-medium .standup-panel__scroll {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+  padding-right: 0.35rem;
+  margin-right: -0.35rem;
+}
+
+.standup-panel.standup-panel--layout-medium .standup-panel__status-text,
+.standup-panel.standup-panel--layout-medium .standup-panel__services,
+.standup-panel.standup-panel--layout-medium .standup-section--queue,
+.standup-panel.standup-panel--layout-medium .standup-section--assignments,
+.standup-panel.standup-panel--layout-medium .standup-section--unassigned {
+  grid-column: auto;
+  grid-row: auto;
+}
+
+.standup-panel.standup-panel--layout-medium .standup-section--queue,
+.standup-panel.standup-panel--layout-medium .standup-section--assignments,
+.standup-panel.standup-panel--layout-medium .standup-section--unassigned {
+  min-height: initial;
+}
+
+/* Small layout: more compact UI, used for widths < 500px */
+.standup-panel.standup-panel--layout-small .standup-panel__subtitle,
+.standup-panel.standup-panel--layout-small .standup-queue-controls__hint,
+.standup-panel.standup-panel--layout-small .standup-next-label {
+  display: none;
+}
+
+.standup-panel.standup-panel--layout-small {
+  padding: 0.8rem 1rem 1rem;
+}
+
+.standup-panel.standup-panel--layout-small .standup-panel__titles h2 {
+  font-size: 1.1rem;
+}
+
+.standup-panel.standup-panel--layout-small .standup-section {
+  padding: 0.6rem 0.75rem 0.75rem;
+}
