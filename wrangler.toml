@@ -12,7 +12,8 @@ bindings = [
   { name = "BALL_GAME_SESSION", class_name = "BallGameSession" },
   { name = "MIMIC_GAME_SESSION", class_name = "MimicGameSession" },
   { name = "PLANNING_POKER_SESSION", class_name = "PlanningPokerSession" },
-  { name = "INTEGRATION_CONFIG", class_name = "IntegrationConfig" }
+  { name = "INTEGRATION_CONFIG", class_name = "IntegrationConfig" },
+  { name = "MORALE_THERMOMETER_SESSION", class_name = "MoraleThermometerSession" }
 ]
 
 [[migrations]]
@@ -30,6 +31,10 @@ new_sqlite_classes = ["PlanningPokerSession"]
 [[migrations]]
 tag = "v5"
 new_sqlite_classes = ["IntegrationConfig"]
+
+[[migrations]]
+tag = "v6"
+new_sqlite_classes = ["MoraleThermometerSession"]
 
 [observability.logs]
 enabled = false

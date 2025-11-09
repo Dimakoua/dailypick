@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Morale Thermometer – Sprint Pulse Check | Daily Pick</title>
+  <meta name="description"
+    content="Run a lightweight morale poll during sprint planning. Teammates rate their energy anonymously and you see the aggregated results in real-time." />
+  <meta name="keywords"
+    content="team morale thermometer, sprint health check, agile pulse check, planning tools, morale poll, daily pick">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dailypick.dev/apps/morale-thermometer/">
+  <meta property="og:title" content="Team Morale Thermometer – Sprint Pulse Check | Daily Pick">
+  <meta property="og:description"
+    content="Collect anonymous morale scores, watch the thermometer rise, and share the results during planning or retros.">
+  <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
+  <meta property="og:image:alt" content="Team checking the Daily Pick morale thermometer results during planning">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://dailypick.dev/apps/morale-thermometer/">
+  <meta name="twitter:title" content="Team Morale Thermometer – Sprint Pulse Check | Daily Pick">
+  <meta name="twitter:description"
+    content="Give everyone a safe way to rate their morale, then copy the average into your sprint notes.">
+  <meta name="twitter:image" content="https://dailypick.dev/assets/og-image-main.png">
+  <meta name="twitter:image:alt" content="Team checking the Daily Pick morale thermometer results during planning">
+
+  <link rel="canonical" href="https://dailypick.dev/apps/morale-thermometer/">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/assets/favicon/site.webmanifest">
+  <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/css/theme.css">
+  <link rel="stylesheet" href="/assets/css/glass.css">
+  <link rel="stylesheet" href="./style.css">
+  <script src="/assets/js/brand-theme-engine.js" defer></script>
+  <script src="/assets/js/brand-config.js" defer></script>
+</head>
+
+<body>
+  {% include "bg-orbs.html" %}
+  {% include "header.html" %}
+
+  <main class="morale-page" aria-labelledby="moraleHeading">
+    <header class="morale-hero glass-card">
+      <div>
+        <p class="hero-eyebrow">Sprint Health Insight</p>
+        <h1 id="moraleHeading">Team Morale Thermometer</h1>
+        <p>Share the link in planning or retros, let everyone vote anonymously, and keep the aggregated pulse visible
+          while you discuss next steps.</p>
+      </div>
+      <p class="hero-note">Scores stay in sync for the room you create. Refresh the session before a new meeting to
+        start fresh.</p>
+    </header>
+
+    <section class="morale-grid">
+      <article class="thermometer-card glass-card" aria-labelledby="thermometerHeading">
+        <div>
+          <h2 id="thermometerHeading">Live thermometer</h2>
+          <p class="section-subtitle">Watch the energy level climb as teammates submit their ratings.</p>
+        </div>
+        <div class="thermometer-display" role="img" aria-label="Average morale thermometer">
+          <div class="thermometer-shell">
+            <div class="thermometer-stem">
+              <div class="mercury"></div>
+            </div>
+          </div>
+        </div>
+        <div class="controls" aria-live="polite">
+          <p>Rate your morale (1 = running on fumes, 5 = unstoppable):</p>
+          <div class="rating-buttons" role="group" aria-label="Morale rating buttons">
+            <button data-value="1" type="button">1</button>
+            <button data-value="2" type="button">2</button>
+            <button data-value="3" type="button">3</button>
+            <button data-value="4" type="button">4</button>
+            <button data-value="5" type="button">5</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="results-card glass-card" aria-live="polite" aria-atomic="true">
+        <header>
+          <h2>Live results</h2>
+          <p>Drop these stats into your sprint notes or retro doc.</p>
+        </header>
+        <dl class="results-list">
+          <div>
+            <dt>Average morale</dt>
+            <dd id="average-morale">--</dd>
+          </div>
+          <div>
+            <dt>Participants</dt>
+            <dd id="participants">--</dd>
+          </div>
+        </dl>
+        <p class="results-hint">Need a new check? Append <code>?session_id=your-code</code> to share a specific room.
+        </p>
+      </article>
+    </section>
+
+    <section class="seo-card glass-card">
+      <h2>Why run a morale pulse?</h2>
+      <p>Planning and retros are more productive when everyone feels heard. The Morale Thermometer gives every teammate
+        a safe tap-in so you can surface blockers, burnout, or wins before they surprise you mid-sprint.</p>
+      <ul>
+        <li>Anonymous by default: Nobody sees who voted which number.</li>
+        <li>Shareable sessions: Send the link in Slack or your calendar invite.</li>
+        <li>Actionable context: Use the average to justify scope changes or follow-up chats.</li>
+      </ul>
+    </section>
+  </main>
+
+  {% include "footer.html" %}
+
+  <script src="morale-thermometer-session.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
