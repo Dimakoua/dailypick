@@ -39,9 +39,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/theme.css">
     <link rel="stylesheet" href="/assets/css/glass.css">
+    <link rel="stylesheet" href="/assets/css/standup-panel.css">
     <link rel="stylesheet" href="style.css">
     <script src="/assets/js/brand-theme-engine.js" defer></script>
     <script src="/assets/js/brand-config.js" defer></script>
+    <script src="/assets/js/standup-data.js" defer></script>
+    <script src="/assets/js/standup-panel.js" defer></script>
 </head>
 
 <body>
@@ -108,6 +111,7 @@
         const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
         let originalNames = [...DEFAULT_NAMES];
         let remaining = [...originalNames];
+        let completedNames = [];
 
         const canvas = document.getElementById("wheel");
         const ctx = canvas.getContext("2d");
@@ -124,6 +128,28 @@
         };
 
         const LOCAL_STORAGE_KEY = 'namesList';
+
+        const sanitizedParticipants = () => originalNames.map((name) => name.trim()).filter(Boolean);
+
+        const emitQueueReset = () => {
+            window.dispatchEvent(new CustomEvent('standup:queue-reset', {
+                detail: {
+                    source: 'wheel',
+                    participants: sanitizedParticipants(),
+                },
+            }));
+        };
+
+        const emitQueueUpdate = (detail = {}) => {
+            window.dispatchEvent(new CustomEvent('standup:queue', {
+                detail: {
+                    source: 'wheel',
+                    mode: 'manual',
+                    participants: sanitizedParticipants(),
+                    ...detail,
+                },
+            }));
+        };
 
         let isSpinning = false;
         let lastWinnerIndex = null;
@@ -147,6 +173,8 @@
             }
             syncNamesForm();
             remaining = [...originalNames];
+            completedNames = [];
+            emitQueueReset();
         }
 
         function saveNamesToStorage() {
@@ -169,12 +197,14 @@
 
             originalNames = [...newNames];
             remaining = [...originalNames];
+            completedNames = [];
             lastWinnerIndex = null;
             isSpinning = false; // Stop any current spin
             winnerDiv.innerText = "";
             saveNamesToStorage(); // Save the new names
             syncNamesForm();
             drawWheel(remaining, 0);
+            emitQueueReset();
             // Optionally hide config after update for cleaner UX
             // toggleConfigArea(false);
         }
@@ -215,14 +245,31 @@
 
             // If a winner was just selected, clicking spin again will remove them and spin for the rest
             if (lastWinnerIndex !== null) {
+                const finishedName = remaining[lastWinnerIndex];
+                const trimmed = finishedName ? finishedName.trim() : '';
+                if (trimmed && !completedNames.includes(trimmed)) {
+                    completedNames.push(trimmed);
+                }
                 remaining.splice(lastWinnerIndex, 1);
                 lastWinnerIndex = null;
                 winnerDiv.innerText = "";
                 drawWheel(remaining, 0);
+                emitQueueUpdate({
+                    current: null,
+                    remaining: remaining.slice(),
+                    completed: completedNames.slice(),
+                });
                 if (remaining.length === 0) {
                     // All names from the current list have been picked
                     winnerDiv.innerText = "✅ All done! Everyone has spoken.";
-                    remaining = [...originalNames]
+                    emitQueueUpdate({
+                        current: null,
+                        remaining: [],
+                        completed: completedNames.slice(),
+                    });
+                    remaining = [...originalNames];
+                    completedNames = [];
+                    emitQueueReset();
                     return;
                 }
             }
@@ -230,6 +277,8 @@
             if (remaining.length === 0) {
                 winnerDiv.innerText = "✅ All done! Update the list or spin again to restart.";
                 remaining = [...originalNames]; // Reset for next round if they spin again without updating
+                completedNames = [];
+                emitQueueReset();
                 return;
             }
 
@@ -257,6 +306,11 @@
                 } else {
                     lastWinnerIndex = selectedIndex;
                     winnerDiv.innerHTML = `🎉 ${selectedName} is next to speak!`;
+                    emitQueueUpdate({
+                        current: selectedName,
+                        remaining: remaining.filter((_, idx) => idx !== selectedIndex),
+                        completed: completedNames.slice(),
+                    });
                     isSpinning = false;
                 }
             }

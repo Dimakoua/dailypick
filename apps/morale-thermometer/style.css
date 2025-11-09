@@ -1,0 +1,188 @@
+.morale-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(2rem, 4vw, 4rem) 1.5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.morale-hero {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.hero-eyebrow {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand-accent);
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.hero-note {
+  margin: 0;
+  color: var(--brand-subtle-text);
+  line-height: 1.5;
+}
+
+.morale-grid {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.thermometer-card,
+.results-card,
+.seo-card {
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.thermometer-card h2,
+.results-card h2,
+.seo-card h2 {
+  margin-bottom: 0.35rem;
+}
+
+.section-subtitle {
+  margin: 0 0 1.5rem;
+  color: var(--brand-subtle-text);
+}
+
+.thermometer-display {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem 0 2rem;
+}
+
+.thermometer-shell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.thermometer-stem {
+  width: 60px;
+  height: 240px;
+  border-radius: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.1));
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  position: relative;
+}
+
+.mercury {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0%;
+  background: linear-gradient(180deg, var(--brand-accent), #ff7b7b);
+  transition: height 0.45s ease;
+}
+
+.controls {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 1.25rem;
+  margin-top: 0.25rem;
+}
+
+.controls p {
+  margin: 0 0 0.75rem;
+  color: var(--brand-subtle-text);
+}
+
+.rating-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.rating-buttons button {
+  flex: 1;
+  min-width: 3rem;
+  padding: 0.75rem 0.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  font-weight: 600;
+  transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.rating-buttons button:hover {
+  transform: translateY(-2px);
+  border-color: var(--brand-accent);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.rating-buttons button:disabled {
+  background: var(--brand-accent);
+  border-color: var(--brand-accent);
+  color: #fff;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.results-card header {
+  margin-bottom: 1.5rem;
+}
+
+.results-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin: 0;
+}
+
+.results-list div {
+  padding: 1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.results-list dt {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--brand-subtle-text);
+  margin-bottom: 0.25rem;
+}
+
+.results-list dd {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.results-hint {
+  margin-top: 1.5rem;
+  color: var(--brand-subtle-text);
+}
+
+.results-hint code {
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.35rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.seo-card ul {
+  margin: 1rem 0 0 1.5rem;
+  color: var(--brand-subtle-text);
+}
+
+@media (min-width: 900px) {
+  .morale-grid {
+    grid-template-columns: 2fr 1fr;
+    align-items: stretch;
+  }
+
+  .rating-buttons {
+    flex-wrap: nowrap;
+  }
+}

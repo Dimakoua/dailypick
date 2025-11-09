@@ -40,9 +40,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/theme.css">
     <link rel="stylesheet" href="/assets/css/glass.css">
+    <link rel="stylesheet" href="/assets/css/standup-panel.css">
     <link rel="stylesheet" href="style.css">
     <script src="/assets/js/brand-theme-engine.js" defer></script>
     <script src="/assets/js/brand-config.js" defer></script>
+    <script src="/assets/js/standup-data.js" defer></script>
+    <script src="/assets/js/standup-panel.js" defer></script>
 </head>
 
 <body>
@@ -105,6 +108,99 @@
 
         let originalNames = [...DEFAULT_NAMES];
         let members = [];
+        let eliminatedNames = [];
+        const STANDUP_SOURCE = 'trap';
+
+        function normalizeStandupKey(name) {
+            return typeof name === 'string' ? name.trim().toLowerCase() : '';
+        }
+
+        function uniqueNameList(names) {
+            const seen = new Set();
+            const result = [];
+            names.forEach((name) => {
+                const trimmed = typeof name === 'string' ? name.trim() : '';
+                const key = normalizeStandupKey(trimmed);
+                if (!key || seen.has(key)) {
+                    return;
+                }
+                seen.add(key);
+                result.push(trimmed);
+            });
+            return result;
+        }
+
+        function standupParticipants() {
+            return uniqueNameList(originalNames);
+        }
+
+        function emitStandupReset() {
+            const participants = standupParticipants();
+            window.dispatchEvent(new CustomEvent('standup:queue-reset', {
+                detail: {
+                    source: STANDUP_SOURCE,
+                    participants,
+                },
+            }));
+            emitStandupUpdate();
+        }
+
+        function emitStandupUpdate(currentNameOverride) {
+            const participants = standupParticipants();
+            const completed = uniqueNameList(eliminatedNames);
+            const remainingList = uniqueNameList(members.map(member => member.name));
+
+            let current = null;
+            if (typeof currentNameOverride === 'string') {
+                const trimmed = currentNameOverride.trim();
+                if (normalizeStandupKey(trimmed)) {
+                    current = trimmed;
+                }
+            }
+
+            if (!current) {
+                if (remainingList.length > 0) {
+                    current = remainingList[0];
+                } else if (completed.length > 0) {
+                    current = completed[completed.length - 1];
+                }
+            }
+
+            const currentKey = normalizeStandupKey(current);
+            const upcoming = currentKey
+                ? remainingList.filter((name) => normalizeStandupKey(name) !== currentKey)
+                : remainingList;
+
+            const detail = {
+                source: STANDUP_SOURCE,
+                mode: 'manual',
+                participants,
+                completed,
+                remaining: upcoming,
+            };
+            if (currentKey) {
+                detail.current = current;
+            }
+
+            window.dispatchEvent(new CustomEvent('standup:queue', { detail }));
+        }
+
+        function recordTrapCatch(name) {
+            if (typeof name !== 'string') {
+                emitStandupUpdate();
+                return;
+            }
+            const trimmed = name.trim();
+            const key = normalizeStandupKey(trimmed);
+            if (!key) {
+                emitStandupUpdate();
+                return;
+            }
+            if (!eliminatedNames.some((entry) => normalizeStandupKey(entry) === key)) {
+                eliminatedNames.push(trimmed);
+            }
+            emitStandupUpdate(trimmed);
+        }
         const shapes = ['circle', 'square', 'triangle', 'star', 'hexagon', 'diamond'];
         const colors = [
             '#e74c3c', // Alizarin
@@ -511,6 +607,7 @@
         }
 
         function resetAndInitializeGame() {
+            eliminatedNames = [];
             initializeMembers(originalNames);
             trap = null;
             trapActive = false;
@@ -520,6 +617,7 @@
                 info.textContent = "Please add names to the list.";
             }
             trapBtn.disabled = originalNames.length === 0;
+            emitStandupReset();
         }
 
         function updateNamesFromInput() {
@@ -558,6 +656,7 @@
                     trap = null;
                     trapActive = false;
                     members.forEach(m => m.trapped = false); // Clear trapped status for any remaining
+                    recordTrapCatch(caughtMember.name);
 
                     if (members.length === 0) {
                         info.innerHTML = `🎉 ${caughtMember.name} was the last one!`;
@@ -594,7 +693,7 @@
 
         // Initial setup
         loadNamesFromStorage();
-        initializeMembers(originalNames); // Initialize with loaded or default names
+        resetAndInitializeGame(); // Initialize with loaded or default names and sync stand-up state
 
         gameLoop();
     </script>

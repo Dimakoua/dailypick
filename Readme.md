@@ -67,21 +67,24 @@ wrangler.toml         # Cloudflare deployment configuration
 - `wrangler.toml` points to `dist/` as the static bucket; ensure `npm run build` succeeds before deploying.
 - Secrets for the blog generation workflow (e.g., `GEMINI_API_KEY`) must be managed in the GitHub repository settings.
 
+## Brainstorming & Future Concepts
 
+Here are some potential new games and tools being considered for Daily Pick, aligned with the goal of making team rituals more engaging and fair.
 
-ideas
+*   **Anonymous Feedback Box / "Venting Machine"**:
+    *   **Concept**: A real-time, anonymous message board for retrospectives. Team members submit feedback cards that appear on a shared screen, fostering candid discussion.
+    *   **Tech**: Would use a new `FeedbackSession` Durable Object to manage and broadcast messages.
 
-A few quick additions that would resonate with scrum ceremonies:
+*   **Team Morale Thermometer**:
+    *   **Concept**: A quick polling tool where team members anonymously rate their energy/morale on a visual scale. The results are displayed as an aggregated "thermometer."
+    *   **Tech**: Could extend the `CollaborationSession` DO or use a new, lightweight `PollSession` DO.
 
-Retro Roulette: Wheel of “Mad/Sad/Glad”, “4Ls”, “Sailboat” prompts; spins land on a theme and participant, keeping retros fresh.
+*   **"Two Truths and a Lie" Icebreaker**:
+    *   **Concept**: A multiplayer version of the classic icebreaker. The game manages submissions, voting, and scoring, creating a structured and fun team-building activity.
+    *   **Tech**: Would require a new `IcebreakerSession` Durable Object to handle the game state, turns, and votes.
 
+*   **Collaborative Story Builder**:
+    *   **Concept**: A creative writing game where each person adds one sentence to a story, only seeing the previous line. The full, often humorous, story is revealed at the end.
+    *   **Tech**: A simple DO could manage the story array and turn-based submissions.
 
-Risk Radar: Collaborative board where team drags blockers/risks into quadrants (impact vs likelihood); timer + celebratory reveal for focus.
-
-Sprint Goal Slot Machine: Input backlog items, pull the lever to surface potential sprint objectives along with suggested KPIs to discuss.
-
-Stand-up Variants: e.g., a “Daily Dice” that rolls through categories (“Blockers”, “Wins”, “Shout-outs”) to break monotony.
-
-Swarm Sprint: Mini game where avatars chase backlog bugs; progress bars mapped to real tasks to gamify bug bashes.
-
-Each keeps the playful vibe while aligning with key scrum events—happy to mock up flows for any of them.
+These ideas aim to address specific team needs (psychological safety, morale checks, icebreakers) while fitting into the existing fun, lightweight, and multiplayer-friendly architecture of the project.

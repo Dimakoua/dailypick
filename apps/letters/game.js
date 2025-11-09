@@ -17,6 +17,82 @@ let originalNames = [...DEFAULT_NAMES]; // This will hold the master list of nam
 let availableNames = [...originalNames]; // Names currently available in the game
 let fallingLetters = [];
 let matchedNamesInOrder = []; // To store names in the order they are matched
+const STANDUP_SOURCE = 'letters';
+
+function normalizeStandupKey(name) {
+    return typeof name === 'string' ? name.trim().toLowerCase() : '';
+}
+
+function uniqueNameList(names) {
+    const seen = new Set();
+    const result = [];
+    names.forEach((name) => {
+        const trimmed = typeof name === 'string' ? name.trim() : '';
+        const key = normalizeStandupKey(trimmed);
+        if (!key || seen.has(key)) {
+            return;
+        }
+        seen.add(key);
+        result.push(trimmed);
+    });
+    return result;
+}
+
+function standupParticipants() {
+    return uniqueNameList(originalNames);
+}
+
+function emitStandupReset() {
+    const participants = standupParticipants();
+    window.dispatchEvent(new CustomEvent('standup:queue-reset', {
+        detail: {
+            source: STANDUP_SOURCE,
+            participants,
+        },
+    }));
+    emitStandupUpdate();
+}
+
+function emitStandupUpdate(currentNameOverride) {
+    const participants = standupParticipants();
+    const completed = uniqueNameList(matchedNamesInOrder);
+    const remainingList = uniqueNameList(availableNames);
+
+    let current = null;
+    if (typeof currentNameOverride === 'string') {
+        const trimmed = currentNameOverride.trim();
+        if (normalizeStandupKey(trimmed)) {
+            current = trimmed;
+        }
+    }
+
+    if (!current) {
+        if (remainingList.length > 0) {
+            current = remainingList[0];
+        } else if (completed.length > 0) {
+            current = completed[completed.length - 1];
+        }
+    }
+
+    const currentKey = normalizeStandupKey(current);
+    const upcoming = currentKey
+        ? remainingList.filter((name) => normalizeStandupKey(name) !== currentKey)
+        : remainingList;
+
+    const detail = {
+        source: STANDUP_SOURCE,
+        mode: 'auto',
+        participants,
+        completed,
+        remaining: upcoming,
+    };
+    if (currentKey) {
+        detail.current = current;
+    }
+
+    window.dispatchEvent(new CustomEvent('standup:queue', { detail }));
+}
+
 let obstacles = [];
 let currentWordBuffer = "";
 let gameLoopId = null;
@@ -313,6 +389,7 @@ function completeMatch(matchedName) {
     availableNames = availableNames.filter(n => n !== matchedName);
     updateNamesDisplay();
     currentWordBuffer = ""; // Reset buffer after a successful match
+    emitStandupUpdate();
 }
 
 function processLetterInDrawer(char) {
@@ -600,8 +677,9 @@ function resetAndStartGame() {
     matchedNamesInOrder = []; // Reset the ordered list of matched names
     fallingLetters = [];
     currentWordBuffer = "";
-    lastSpawnTime = performance.now(); 
+    lastSpawnTime = performance.now();
     gameIsOver = false;
+    emitStandupReset();
 
     updateNamesDisplay();
     if(restartButton) restartButton.style.display = 'none';
