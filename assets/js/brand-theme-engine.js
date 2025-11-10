@@ -218,19 +218,22 @@
         return { start, end };
       },
       palette: {
-        accentColor: '#5b8fff',
-        accentStrong: '#2d5bff',
-        backgroundColor: '#0f1633',
-        surfaceColor: '#1a224a',
-        textColor: '#e7ecf8',
-        headingColor: '#ffffff',
-        subtleTextColor: '#a8b4e8',
-        borderColor: 'rgba(119, 140, 255, 0.42)',
+        // Lightened palette for a brighter New Year Glow
+        accentColor: '#6fa1ff',
+        accentStrong: '#4a78ff',
+        backgroundColor: '#f1f5ff',
+        surfaceColor: '#e6edff',
+        textColor: '#0e1b3a',
+        headingColor: '#0a1450',
+        subtleTextColor: '#3a4e8a',
+        borderColor: 'rgba(74, 120, 255, 0.25)',
       },
       assets: {
         icon: '🎆',
-        background: 'linear-gradient(135deg, rgba(33, 71, 155, 0.92) 0%, rgba(8, 14, 42, 0.94) 100%)',
-        accentGlow: '0 0 32px rgba(91, 143, 255, 0.45)',
+        // Softer, lighter background gradient
+        background: 'linear-gradient(135deg, rgba(230, 238, 255, 0.95) 0%, rgba(210, 225, 255, 0.95) 100%)',
+        // Reduce glow intensity and make hue slightly brighter
+        accentGlow: '0 0 22px rgba(111, 161, 255, 0.28)',
       },
       metadata: {
         description: 'City lights, midnight fireworks, and a bold navy palette to ring in the new year.',
@@ -439,19 +442,21 @@
         return { start, end };
       },
       palette: {
-        accentColor: '#ff7a1a',
-        accentStrong: '#c34d05',
-        backgroundColor: '#0b0d16',
-        surfaceColor: '#161824',
-        textColor: '#f7f1e8',
-        headingColor: '#ffe2c4',
-        subtleTextColor: '#d0b89c',
-        borderColor: 'rgba(255, 122, 26, 0.38)',
+        // Lightened Halloween palette
+        accentColor: '#ff8a33',
+        accentStrong: '#d46312',
+        backgroundColor: '#fff7ef',
+        surfaceColor: '#fffaf3',
+        textColor: '#2a1d12',
+        headingColor: '#3b2716',
+        subtleTextColor: '#8a6b4e',
+        borderColor: 'rgba(255, 138, 51, 0.28)',
       },
       assets: {
         icon: '🎃',
-        background: 'linear-gradient(200deg, rgba(13, 15, 28, 0.96) 0%, rgba(28, 18, 32, 0.92) 100%)',
-        accentGlow: '0 0 30px rgba(255, 122, 26, 0.35)',
+        // Softer, lighter background and glow
+        background: 'linear-gradient(180deg, rgba(255, 239, 221, 0.92) 0%, rgba(255, 247, 239, 0.95) 100%)',
+        accentGlow: '0 0 22px rgba(255, 138, 51, 0.22)',
       },
       metadata: {
         description: 'Moody indigos and pumpkin oranges with just enough mischief for spooky stand-ups.',
@@ -490,8 +495,9 @@
       id: 'christmas',
       name: 'Christmas & Festive Break',
       getDateRange: (year) => {
+        // Run Christmas through Dec 31; hand off to New Year on Jan 1.
         const start = toLocalDate(year, 11, 1);
-        const end = toLocalDate(year + 1, 0, 5);
+        const end = toLocalDate(year, 11, 31);
         return { start, end };
       },
       palette: {
