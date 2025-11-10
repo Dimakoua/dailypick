@@ -72,17 +72,24 @@ function initRandomGameButton() {
 
   if (!btn || links.length === 0) return;
 
+  const dieIcon = btn.querySelector('.die-icon');
+
   btn.addEventListener('click', () => {
     try {
+      if (dieIcon) {
+        dieIcon.classList.add('is-spinning');
+      }
+      document.body.classList.add('is-navigating');
+
       const link = pickRandomLink(links);
       const name = link.dataset.game || link.querySelector('.game-card__title')?.textContent || 'game';
       if (announceEl) {
         announceEl.textContent = `Opening ${name}.`;
       }
-      // Defer slightly to let the live region announce
+      // Defer to let the animation play and the live region announce
       setTimeout(() => {
         window.location.href = link.href;
-      }, 50);
+      }, 600); // 600ms matches the CSS animation duration
     } catch (err) {
       if (announceEl) {
         announceEl.textContent = 'Unable to pick a game right now.';
@@ -91,8 +98,49 @@ function initRandomGameButton() {
   });
 }
 
+/**
+ * Adds a fade-out animation to all game cards before navigating.
+ */
+function initPageTransitions() {
+  const gameCards = document.querySelectorAll('.game-card');
+  if (gameCards.length === 0) return;
+
+  gameCards.forEach(card => {
+    card.addEventListener('click', (event) => {
+      // Only run for primary clicks, allowing middle-click/ctrl-click to open in new tabs.
+      if (event.button !== 0 || event.ctrlKey || event.metaKey) {
+        return;
+      }
+      event.preventDefault();
+      const destination = card.href;
+
+      document.body.classList.add('is-navigating');
+
+      setTimeout(() => {
+        window.location.href = destination;
+      }, 600); // Matches the fade-out animation duration
+    });
+  });
+}
+
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
   applyBackdropClass();
   initRandomGameButton();
+  initPageTransitions();
+});
+
+/**
+ * Reset page transition state when navigating back.
+ * This ensures the content is visible if the page is restored from bfcache.
+ */
+window.addEventListener('pageshow', (event) => {
+  // event.persisted is true if the page is from the back/forward cache.
+  document.body.classList.remove('is-navigating');
+
+  // Also reset the die animation so it can spin again.
+  const dieIcon = document.querySelector('#randomGameBtn .die-icon');
+  if (dieIcon) {
+    dieIcon.classList.remove('is-spinning');
+  }
 });

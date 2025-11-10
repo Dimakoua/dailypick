@@ -265,3 +265,38 @@ body {
     transform: none !important;
   }
 }
+
+/* Random Game Button Animation */
+.die-icon {
+    display: inline-block; /* Needed for transforms */
+}
+
+.is-spinning {
+    /* A more professional animation with a custom curve and a "settle" effect. */
+    animation: spin-and-settle 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes spin-and-settle {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Page transition animation */
+body.is-navigating .main-container {
+    animation: fade-out 0.3s ease-in forwards;
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+}
