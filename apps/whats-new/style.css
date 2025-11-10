@@ -1,0 +1,33 @@
+.whats-new-page {
+    padding: 20px;
+}
+
+.feature-section {
+    background: var(--brand-surface);
+    border: 1px solid var(--brand-border);
+    border-radius: var(--radius-lg);
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: var(--brand-shadow);
+}
+
+.feature-section h2 {
+    color: var(--brand-heading);
+    margin-top: 0;
+}
+
+.feature-section ul {
+    list-style: '✅';
+    padding-left: 20px;
+}
+
+.feature-section li {
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+@media (max-width: 720px) {
+    .whats-new-page {
+        padding: 0;
+    }
+}

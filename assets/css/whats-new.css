@@ -1,0 +1,69 @@
+.whats-new-popup {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 200px;
+    border-radius: var(--radius-lg);
+    padding: 10px 15px;
+    z-index: 1000;
+    background: var(--glass-bg-strong);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    cursor: pointer;
+    transition: width 0.3s ease;
+}
+
+.whats-new-popup.expanded {
+    width: 350px;
+    cursor: default;
+}
+
+.whats-new-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.whats-new-header h3 {
+    margin: 0;
+    color: var(--brand-heading);
+    font-size: 1.1rem;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--brand-subtle-text);
+}
+
+.whats-new-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.whats-new-popup.expanded .whats-new-content {
+    max-height: 200px; /* Adjust as needed */
+    opacity: 1;
+}
+
+.whats-new-content p {
+    color: var(--brand-text);
+    margin: 15px 0 0;
+}
+
+.whats-new-content a {
+    color: var(--brand-accent-strong);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.whats-new-content a:hover,
+.whats-new-content a:focus-visible {
+    text-decoration: underline;
+}
