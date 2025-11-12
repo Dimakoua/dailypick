@@ -1,8 +1,8 @@
-// ballGameSession.js
+import { BaseEphemeralDO } from "../../packages/shared/base-ephemeral-do";
 
-export class BallGameSession {
+export class BallGameSession extends BaseEphemeralDO {
   constructor(state, env) {
-    this.state = state;
+    super(state, env);
     this.env = env;
 
     console.log(`[DO Debug] BallGameSession constructor called for Durable Object ID: ${this.state.id}`);
@@ -71,6 +71,7 @@ export class BallGameSession {
 
   // Durable Object's instance fetch method
   async fetch(request) {
+    await this.markActive();
     console.log(`[DO Debug] Durable Object ${this.state.id} received fetch request: ${request.url}`);
     const upgradeHeader = request.headers.get('Upgrade');
 
@@ -138,6 +139,7 @@ export class BallGameSession {
 
     const userId = crypto.randomUUID();
     this.users.set(userId, server);
+    this.markActive().catch((error) => console.error('[DO Debug] Failed to mark active', error));
     console.log(`[DO Debug] Socket ${userId} connected to DO ID ${this.state.id}. Total users in session: ${this.users.size}`);
 
     // Immediately send the current game state to the newly joined client
@@ -184,6 +186,7 @@ export class BallGameSession {
       } else if (data.type === 'apply-force') {
         this.applyForce(data.clickX, data.clickY);
       }
+      await this.markActive();
     });
 
     server.addEventListener('close', async () => {
@@ -194,8 +197,9 @@ export class BallGameSession {
       if (this.users.size === 0) {
         console.log(`[DO Debug] No users left in DO ID ${this.state.id}. Stopping game loop.`);
         this.stopGameLoop();
-        // You could also set a Durable Object Alarm here to delete state after prolonged inactivity
-        // if you want to completely clean up DO instances not just stop the game loop.
+        await this.markInactive();
+      } else {
+        await this.markActive();
       }
     });
   }
@@ -444,5 +448,11 @@ export class BallGameSession {
         console.error(`[DO Debug] Error sending message to user in DO ID ${this.state.id}:`, e);
       }
     }
+  }
+
+  async onBeforeCleanup() {
+    this.stopGameLoop();
+    this.users.clear();
+    this.gameState = null;
   }
 }

@@ -1,7 +1,8 @@
-export class MimicGameSession {
+import { BaseEphemeralDO } from '../../packages/shared/base-ephemeral-do.js';
+
+export class MimicGameSession extends BaseEphemeralDO {
   constructor(state, env) {
-    this.state = state;
-    this.env = env;
+    super(state, env);
     this.clients = new Map();
     this.leaderboard = [];
     this.hostId = null;
@@ -15,6 +16,7 @@ export class MimicGameSession {
   }
 
   async fetch(request) {
+    await this.markActive();
     const upgradeHeader = request.headers.get('Upgrade');
     if (upgradeHeader !== 'websocket') {
       return new Response('Expected WebSocket upgrade.', { status: 400 });
@@ -30,6 +32,7 @@ export class MimicGameSession {
 
     const clientId = crypto.randomUUID();
     this.clients.set(clientId, { ws: server, name: null });
+    this.markActive().catch((error) => console.error('[MimicGameSession] markActive failed', error));
 
     if (this.hostId === null) {
       this.hostId = clientId;
@@ -44,6 +47,7 @@ export class MimicGameSession {
       try {
         const data = JSON.parse(event.data);
         this.handleClientMessage(clientId, data);
+        this.markActive().catch((error) => console.error('[MimicGameSession] markActive failed', error));
       } catch (err) {
         console.error('[MimicGameSession] Failed to parse message', err);
       }
@@ -59,6 +63,11 @@ export class MimicGameSession {
         this.broadcastHostStatus();
       }
       this.broadcastUserList();
+      if (this.clients.size === 0) {
+        this.markInactive().catch((error) => console.error('[MimicGameSession] markInactive failed', error));
+      } else {
+        this.markActive().catch((error) => console.error('[MimicGameSession] markActive failed', error));
+      }
     });
   }
 
@@ -178,5 +187,11 @@ export class MimicGameSession {
       .replace(/\s+/g, ' ')
       .trim()
       .slice(0, 32);
+  }
+
+  async onBeforeCleanup() {
+    this.clients.clear();
+    this.leaderboard = [];
+    this.hostId = null;
   }
 }

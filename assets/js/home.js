@@ -89,7 +89,7 @@ function initRandomGameButton() {
       // Defer to let the animation play and the live region announce
       setTimeout(() => {
         window.location.href = link.href;
-      }, 600); // 600ms matches the CSS animation duration
+      }, 400); // 600ms matches the CSS animation duration
     } catch (err) {
       if (announceEl) {
         announceEl.textContent = 'Unable to pick a game right now.';

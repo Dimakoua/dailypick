@@ -1,11 +1,13 @@
-export class PollSession {
+import { BaseEphemeralDO } from '../../packages/shared/base-ephemeral-do.js';
+
+export class PollSession extends BaseEphemeralDO {
   constructor(state, env) {
-    this.state = state;
-    this.env = env;
+    super(state, env);
     this.sessions = new Map();
   }
 
   async fetch(request) {
+    await this.markActive();
     const url = new URL(request.url);
     const sessionId = url.searchParams.get('session_id');
 
@@ -34,6 +36,7 @@ export class PollSession {
     const session = this.sessions.get(sessionId);
     const userId = crypto.randomUUID();
     session.users.set(userId, { ws: server });
+    this.markActive().catch((error) => console.error('[PollSession] markActive failed', error));
 
     server.send(JSON.stringify(this.calculateState(session)));
 
@@ -43,6 +46,7 @@ export class PollSession {
       if (data.type === 'vote') {
         session.votes.set(userId, data.value);
         this.broadcast(sessionId);
+        await this.markActive();
       }
     });
 
@@ -51,8 +55,10 @@ export class PollSession {
       session.votes.delete(userId);
       if (session.users.size === 0) {
         this.sessions.delete(sessionId);
+        this.markInactive().catch((error) => console.error('[PollSession] markInactive failed', error));
       } else {
         this.broadcast(sessionId);
+        this.markActive().catch((error) => console.error('[PollSession] markActive failed', error));
       }
     });
   }
@@ -74,5 +80,9 @@ export class PollSession {
     for (const user of session.users.values()) {
       user.ws.send(message);
     }
+  }
+
+  async onBeforeCleanup() {
+    this.sessions.clear();
   }
 }

@@ -1,7 +1,8 @@
+import { BaseEphemeralDO } from './base-ephemeral-do.js';
 
-export class CollaborationSession {
+export class CollaborationSession extends BaseEphemeralDO {
   constructor(state, env) {
-    this.state = state;
+    super(state, env);
     this.sessions = new Map();
     this.env = env;
     this.animalNames = [
@@ -13,6 +14,7 @@ export class CollaborationSession {
   }
 
   async fetch(request) {
+    await this.markActive();
     const url = new URL(request.url);
     const sessionId = url.searchParams.get('session_id');
 
@@ -48,7 +50,7 @@ export class CollaborationSession {
     const userList = Array.from(sessionUsers.entries()).map(([id, u]) => ({ id, name: u.name }));
     server.send(JSON.stringify({ type: 'user-list', users: userList }));
 
-    server.addEventListener('message', async (event) => {
+    server.addEventListener('message', (event) => {
       const data = JSON.parse(event.data);
 
       if (data.type === 'mouse-move') {
@@ -60,6 +62,7 @@ export class CollaborationSession {
           y: data.y,
         };
         this.broadcast(sessionId, JSON.stringify(broadcastData));
+        this.markActive().catch((error) => this.log('markActive failed', error));
       }
     });
 
@@ -67,6 +70,9 @@ export class CollaborationSession {
       sessionUsers.delete(userId);
       if (sessionUsers.size === 0) {
         this.sessions.delete(sessionId);
+        this.markInactive().catch((error) => this.log('markInactive failed', error));
+      } else {
+        this.markActive().catch((error) => this.log('markActive failed', error));
       }
       this.broadcast(sessionId, JSON.stringify({ type: 'user-left', id: userId, name: userName }));
     });
@@ -91,5 +97,8 @@ export class CollaborationSession {
       return `User${Math.floor(Math.random() * 100)}`;
     }
   }
-}
 
+  async onBeforeCleanup() {
+    this.sessions.clear();
+  }
+}

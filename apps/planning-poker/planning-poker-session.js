@@ -1,7 +1,8 @@
-export class PlanningPokerSession {
+import { BaseEphemeralDO } from '../../packages/shared/base-ephemeral-do.js';
+
+export class PlanningPokerSession extends BaseEphemeralDO {
   constructor(state, env) {
-    this.state = state;
-    this.env = env;
+    super(state, env);
     this.clients = new Map(); // id -> { ws, name, choice, selectedAt }
     this.hostId = null;
     this.storyLabel = '';
@@ -11,6 +12,7 @@ export class PlanningPokerSession {
   }
 
   async fetch(request) {
+    await this.markActive();
     const upgradeHeader = request.headers.get('Upgrade');
     if (upgradeHeader !== 'websocket') {
       return new Response('Expected WebSocket upgrade.', { status: 400 });
@@ -26,6 +28,7 @@ export class PlanningPokerSession {
 
     const clientId = crypto.randomUUID();
     this.clients.set(clientId, { ws: server, name: null, choice: null, selectedAt: null });
+    this.markActive().catch((error) => console.error('[PlanningPokerSession] markActive failed', error));
 
     if (!this.hostId) {
       this.hostId = clientId;
@@ -38,6 +41,7 @@ export class PlanningPokerSession {
       try {
         const data = JSON.parse(event.data);
         this.handleClientMessage(clientId, data);
+        this.markActive().catch((error) => console.error('[PlanningPokerSession] markActive failed', error));
       } catch (err) {
         console.error('[PlanningPokerSession] Failed to parse message', err);
       }
@@ -52,6 +56,11 @@ export class PlanningPokerSession {
         }
       }
       this.broadcastState();
+      if (this.clients.size === 0) {
+        this.markInactive().catch((error) => console.error('[PlanningPokerSession] markInactive failed', error));
+      } else {
+        this.markActive().catch((error) => console.error('[PlanningPokerSession] markActive failed', error));
+      }
     });
   }
 
@@ -268,5 +277,14 @@ export class PlanningPokerSession {
     const allowed = ['0', '0.5', '1', '2', '3', '5', '8', '13', '20', '40', '100', '?', '☕'];
     const trimmed = String(value).trim();
     return allowed.includes(trimmed) ? trimmed : '';
+  }
+
+  async onBeforeCleanup() {
+    this.clients.clear();
+    this.hostId = null;
+    this.storyLabel = '';
+    this.isRevealed = false;
+    this.roundIndex = 1;
+    this.lastSummaryText = '';
   }
 }
