@@ -40,6 +40,23 @@ let playerNames = [...DEFAULT_NAMES]; // Initialized here, will be loaded from s
 const STANDUP_SOURCE = 'ballgame';
 let capturedHistory = [];
 
+const isDebugLoggingEnabled = (() => {
+    if (typeof window === 'undefined') {
+        return false;
+    }
+    if (window.__ENABLE_DEBUG_LOGS__ === true) {
+        return true;
+    }
+    const host = window.location.hostname;
+    return host === 'localhost' || host === '127.0.0.1';
+})();
+
+const debugLog = (...args) => {
+    if (isDebugLoggingEnabled) {
+        console.log(...args);
+    }
+};
+
 function normalizeStandupKey(name) {
     return typeof name === 'string' ? name.trim().toLowerCase() : '';
 }
@@ -117,7 +134,7 @@ let currentSessionId = null;
 function getSessionIdFromUrl() {
     const params = new URLSearchParams(window.location.search);
     const sessionId = params.get('session_id');
-    console.log('[Client Debug] getSessionIdFromUrl found:', sessionId);
+    debugLog('[Client Debug] getSessionIdFromUrl found:', sessionId);
     return sessionId;
 }
 
@@ -128,12 +145,12 @@ function updateUrlWithSessionId(sessionId) {
     if (sessionInfoDiv) sessionInfoDiv.style.display = 'block';
     if (startGameBtn) startGameBtn.style.display = 'none'; // Hide Start Game button once a session is active
     if (restartGameBtn) restartGameBtn.style.display = 'block'; // Show Restart Game button
-    console.log('[Client Debug] URL updated to:', newUrl);
+    debugLog('[Client Debug] URL updated to:', newUrl);
 }
 
 function generateClientSessionId() {
     const id = Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
-    console.log('[Client Debug] Generated new client-side session ID:', id);
+    debugLog('[Client Debug] Generated new client-side session ID:', id);
     return id;
 }
 
@@ -147,24 +164,24 @@ function connectWebSocket(sessionIdToJoin = null, namesForInitialization = null)
     let idToUse = sessionIdToJoin;
     if (!idToUse) {
         idToUse = generateClientSessionId();
-        console.log('[Client Debug] No session ID provided, generating new one:', idToUse);
+        debugLog('[Client Debug] No session ID provided, generating new one:', idToUse);
     } else {
-        console.log('[Client Debug] Using provided session ID:', idToUse);
+        debugLog('[Client Debug] Using provided session ID:', idToUse);
     }
     currentSessionId = idToUse; // Update the global session ID
 
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     let wsUrl = `${protocol}//${window.location.host}/api/ballgame/websocket?session_id=${currentSessionId}`;
 
-    console.log('[Client Debug] Attempting to connect WebSocket to:', wsUrl);
+    debugLog('[Client Debug] Attempting to connect WebSocket to:', wsUrl);
 
     ws = new WebSocket(wsUrl); // Assign new WebSocket instance
 
     ws.onopen = () => {
-        console.log(`[Client Debug] Connected to ball game server for session: ${currentSessionId}`);
+        debugLog(`[Client Debug] Connected to ball game server for session: ${currentSessionId}`);
         // If names were passed for initialization (i.e., new game or explicit reset)
         if (namesForInitialization && namesForInitialization.length > 0) {
-             console.log(`[Client Debug] Sending reset-game-with-names with:`, namesForInitialization);
+             debugLog(`[Client Debug] Sending reset-game-with-names with:`, namesForInitialization);
              ws.send(JSON.stringify({ type: 'reset-game-with-names', names: namesForInitialization }));
         }
         updateUrlWithSessionId(currentSessionId);
@@ -177,7 +194,7 @@ function connectWebSocket(sessionIdToJoin = null, namesForInitialization = null)
     };
 
     ws.onclose = (event) => {
-        console.log('[Client Debug] WebSocket disconnected:', event.code, event.reason);
+        debugLog('[Client Debug] WebSocket disconnected:', event.code, event.reason);
         // Reset client-side game state on disconnect
         ball = { x: canvas.width / 2, y: canvas.height / 2, radius: BALL_RADIUS, color: '#e74c3c' };
         traps = [];
@@ -226,24 +243,24 @@ function loadNamesFromStorage() {
         }
     } else {
         playerNames = [...DEFAULT_NAMES];
-        console.log("[Client Debug] No names found in localStorage, using defaults.");
+        debugLog("[Client Debug] No names found in localStorage, using defaults.");
     }
     if (namesInput) { // Ensure namesInput exists before setting its value
         namesInput.value = playerNames.join('\n');
     }
-    console.log("[Client Debug] Names loaded:", playerNames);
+    debugLog("[Client Debug] Names loaded:", playerNames);
     capturedHistory = [];
     emitStandupReset();
 }
 
 function saveNamesToStorage() {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(playerNames));
-    console.log("[Client Debug] Names saved to localStorage:", playerNames);
+    debugLog("[Client Debug] Names saved to localStorage:", playerNames);
 }
 
 function updateNamesFromInput() {
     if (!namesInput) return;
-    console.log("[Client Debug] Updating names from input...");
+    debugLog("[Client Debug] Updating names from input...");
     const inputText = namesInput.value.trim();
     // Split by newline or comma, then trim and filter out empty strings
     const newNames = inputText ? inputText.split(/[\n,]+/).map(name => name.trim()).filter(name => name.length > 0) : [];
@@ -255,11 +272,11 @@ function updateNamesFromInput() {
     namesInput.value = playerNames.join('\n');
     saveNamesToStorage();
     
-    console.log("[Client Debug] Player names updated to:", playerNames);
+    debugLog("[Client Debug] Player names updated to:", playerNames);
 
     if (currentSessionId && ws && ws.readyState === WebSocket.OPEN) {
         // Adapt from Socket.IO's 'emit' to raw WebSocket 'send'
-        console.log('[Client Debug] Sending reset-game-with-names to current session:', currentSessionId, 'Names:', playerNames);
+        debugLog('[Client Debug] Sending reset-game-with-names to current session:', currentSessionId, 'Names:', playerNames);
         ws.send(JSON.stringify({ type: 'reset-game-with-names', names: playerNames }));
         // Hide game over overlay if present
         if (gameOverOverlay) gameOverOverlay.style.display = 'none';
@@ -286,14 +303,14 @@ function toggleConfigArea(show) {
         configArea.classList.add("config-hidden");
     }
     settingsToggleBtn.textContent = configArea.classList.contains("config-hidden") ? "⚙️ Show Settings" : "⚙️ Hide Settings";
-    console.log(`[Client Debug] Config area toggled to hidden: ${configArea.classList.contains("config-hidden")}`);
+    debugLog(`[Client Debug] Config area toggled to hidden: ${configArea.classList.contains("config-hidden")}`);
 }
 
 // --- END: Your provided Name Management and UI Functions ---
 
 
 function requestNewSession() {
-    console.log('[Client Debug] Requesting new session...');
+    debugLog('[Client Debug] Requesting new session...');
     // When requesting a new session, we initiate a connection and pass the current playerNames
     capturedHistory = [];
     emitStandupReset();
@@ -352,7 +369,7 @@ function handleServerMessage(data) {
             break;
         case 'game-state-update':
             // CRITICAL LOG: Check the incoming ball data
-            // console.log('[Client Debug] Received game-state-update. Data.ball:', data.ball); // Too verbose for continuous
+            // debugLog('[Client Debug] Received game-state-update. Data.ball:', data.ball); // Too verbose for continuous
             if (data.ball && typeof data.ball.x === 'number' && typeof data.ball.y === 'number') {
                 ball = data.ball; // Update the client's ball object
             } else {
@@ -375,8 +392,8 @@ function handleServerMessage(data) {
             showGameOver(data.capturedUserNames);
             break;
         case 'game-reset':
-            console.log(data)
-            console.log(`[Client Debug] Game reset for session: ${data.sessionId}`);
+            debugLog(data)
+            debugLog(`[Client Debug] Game reset for session: ${data.sessionId}`);
             // Reset client-side state for a fresh start based on server's reset
             ball = { x: canvas.width / 2, y: canvas.height / 2, radius: BALL_RADIUS, color: '#e74c3c' }; // Default client ball for immediate draw
             traps = []; // Will be populated by the next game-state-update from server
@@ -388,7 +405,7 @@ function handleServerMessage(data) {
             emitStandupReset();
             break;
         case 'join-session-success':
-            console.log(`[Client Debug] Successfully joined session:`, data);
+            debugLog(`[Client Debug] Successfully joined session:`, data);
             break;
         default:
             console.warn('[Client Debug] Unknown message type:', data.type);
@@ -403,7 +420,7 @@ function draw() {
         // console.error('[Client Debug] Ball state invalid for drawing. Current Ball:', ball, 'Calculated Radius:', currentBallRadius);
         // Avoid repeated errors if the state is temporarily bad
     } else {
-        // console.log(`[Client Debug] Drawing ball at (${ball.x.toFixed(2)}, ${ball.y.toFixed(2)}) with radius ${currentBallRadius.toFixed(2)}`); // Too verbose
+        // debugLog(`[Client Debug] Drawing ball at (${ball.x.toFixed(2)}, ${ball.y.toFixed(2)}) with radius ${currentBallRadius.toFixed(2)}`); // Too verbose
         ctx.beginPath();
         ctx.arc(ball.x, ball.y, currentBallRadius, 0, Math.PI * 2);
         ctx.fillStyle = ball.color;
@@ -542,7 +559,7 @@ const howToPlayBtn = document.getElementById('howToPlayBtn');
 const closeBtn = document.querySelector('.close-btn');
 
 howToPlayBtn.addEventListener('click', () => {
-    console.log('How to Play button clicked');
+    debugLog('How to Play button clicked');
     howToPlayModal.classList.add('modal');
     howToPlayModal.classList.remove('hidden');
 });
@@ -558,12 +575,12 @@ function initializeSession() {
 
     const urlSessionId = getSessionIdFromUrl();
     if (urlSessionId) {
-        console.log('[Client Debug] Initializing with URL session ID:', urlSessionId);
+        debugLog('[Client Debug] Initializing with URL session ID:', urlSessionId);
         // When reconnecting to an existing session from URL, don't force a reset with names.
         // The server will load its existing state.
         connectWebSocket(urlSessionId, null); // Pass null for namesForInitialization
     } else {
-        console.log('[Client Debug] No session ID in URL, showing start game button.');
+        debugLog('[Client Debug] No session ID in URL, showing start game button.');
         if (startGameBtn) startGameBtn.style.display = 'block';
         if (restartGameBtn) restartGameBtn.style.display = 'none';
         if (sessionInfoDiv) sessionInfoDiv.style.display = 'none';
