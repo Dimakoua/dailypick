@@ -52,11 +52,25 @@
   color: #fff;
   font-weight: 700;
   box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+  border: none;
+  cursor: pointer;
 }
 
 .btn-link:hover,
 .btn-link:focus-visible {
   filter: brightness(1.05);
+}
+
+.btn-link.ghost {
+  background: transparent;
+  color: var(--brand-heading);
+  border: 1px solid var(--brand-border);
+  box-shadow: none;
+}
+
+.btn-link.ghost:hover,
+.btn-link.ghost:focus-visible {
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .settings-grid {
@@ -813,6 +827,114 @@ label.is-disabled select:disabled {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+.setup-tour {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  pointer-events: none;
+}
+
+.setup-tour:not([hidden]) {
+  pointer-events: auto;
+}
+
+.setup-tour__backdrop {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  pointer-events: none;
+}
+
+.setup-tour__focus {
+  position: absolute;
+  border: 2.5px solid var(--brand-accent);
+  border-radius: 18px;
+  background: transparent;
+  box-shadow: 0 0 0 9999px rgba(5, 10, 16, 0.55), 0 0 0 3px rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+  opacity: 0;
+  transition: top 0.2s ease, left 0.2s ease, width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
+}
+
+.setup-tour__target {
+  position: relative;
+  z-index: 2;
+  border-radius: 14px;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.35);
+}
+
+.setup-tour__card {
+  position: absolute;
+  padding: 18px;
+  width: min(360px, 88vw);
+  border-radius: 18px;
+  background: var(--brand-surface);
+  border: 1px solid var(--brand-border);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+  color: var(--brand-text);
+  pointer-events: auto;
+}
+
+.setup-tour__badge {
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--brand-subtle-text);
+  margin: 0 0 6px;
+}
+
+.setup-tour__title {
+  margin: 0 0 4px;
+  color: var(--brand-heading);
+  font-size: 1.2rem;
+}
+
+.setup-tour__description {
+  margin: 0 0 12px;
+  line-height: 1.45;
+  font-size: 0.95rem;
+}
+
+.setup-tour__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.setup-tour__actions button {
+  border-radius: 999px;
+  font-weight: 700;
+  padding: 10px 16px;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.setup-tour__actions button:not(.ghost) {
+  background: var(--brand-accent);
+  color: #fff;
+  border-color: var(--brand-accent);
+}
+
+.setup-tour__actions .ghost {
+  background: transparent;
+  color: var(--brand-heading);
+  border-color: var(--brand-border);
+}
+
+@media (max-width: 640px) {
+  .setup-tour__card {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+  }
+
+  .setup-tour__focus {
+    border-radius: 12px;
+  }
 }
 
 @media (max-width: 720px) {
