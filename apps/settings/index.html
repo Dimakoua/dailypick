@@ -198,6 +198,7 @@
             <li><span>🔒</span> Secure tokens live on the Worker, never in the browser.</li>
             <li><span>👥</span> Import players or keep their current work as a snapshot.</li>
             <li><span>⚡</span> Test a connection to preview teammates before saving.</li>
+            <li><span>💬</span> Slack slash command runs rituals directly inside your workspace.</li>
           </ul>
         </div>
 
@@ -222,6 +223,13 @@
               <span class="integration-list__copy">
                 <strong>GitHub</strong>
                 <small>Repos & issues</small>
+              </span>
+            </button>
+            <button type="button" class="integration-list__button" role="tab" aria-selected="false" aria-controls="integration-panel-slack" data-integration-target="slack">
+              <span class="integration-list__icon">💬</span>
+              <span class="integration-list__copy">
+                <strong>Slack</strong>
+                <small>Slash command</small>
               </span>
             </button>
           </aside>
@@ -406,6 +414,34 @@
               <button type="button" class="ghost integration-disconnect">Disconnect</button>
             </div>
           </section>
+          <section class="integration-card" data-service="slack" aria-labelledby="integration-slack-heading" id="integration-panel-slack">
+            <header class="integration-card-header">
+              <div class="integration-icon" aria-hidden="true">💬</div>
+              <div>
+                <h3 id="integration-slack-heading">Slack slash command</h3>
+                <p>Let teams launch Daily Pick rituals from Slack.</p>
+              </div>
+            </header>
+            <label class="integration-toggle">
+              <input type="checkbox" class="integration-enabled">
+              <span>Enable Slack slash command</span>
+            </label>
+            <label>
+              Slash command
+              <input type="text" class="integration-resource" data-field="command" placeholder="/dailypick">
+            </label>
+            <label>
+              Signing secret
+              <input type="password" class="integration-token" placeholder="Paste the Slack signing secret">
+            </label>
+            <p class="integration-hint">Set Slack’s Request URL to <code id="slackCommandUrl">https://dailypick.dev/api/slack/command?client_id=...</code> and use the same client_id from this page.</p>
+            <p class="integration-token-preview" aria-live="polite"></p>
+            <p class="integration-status" aria-live="polite"></p>
+            <div class="button-row">
+              <button type="button" class="integration-save">Save Connection</button>
+              <button type="button" class="ghost integration-disconnect">Disconnect</button>
+            </div>
+          </section>
           </div>
         </div>
 
@@ -415,10 +451,10 @@
             <li><a href="/blog/connect-jira-to-daily-pick/" target="_blank" rel="noopener">How to connect Jira to Daily Pick</a></li>
             <li><a href="/blog/connect-trello-to-daily-pick/" target="_blank" rel="noopener">How to connect Trello to Daily Pick</a></li>
             <li><a href="/blog/connect-github-to-daily-pick/" target="_blank" rel="noopener">How to connect GitHub to Daily Pick</a></li>
+            <li><a href="/blog/supercharge-async-standups-with-slack-and-daily-pick/" target="_blank" rel="noopener">How to run Daily Pick from Slack</a></li>
           </ul>
         </div>
       </section>
-    </section>
 
     <section class="settings-card glass-card tips">
       <h2>How it works</h2>
@@ -517,6 +553,14 @@
         DEFAULT_BRAND.themeMode,
         DEFAULT_BRAND.seasonalThemesEnabled !== false,
       );
+      function updateSlackCommandUrl(clientId) {
+        const urlEl = document.getElementById('slackCommandUrl');
+        if (!urlEl || !clientId) return;
+        const origin = window.location.origin || 'https://dailypick.dev';
+        const url = `${origin.replace(/\/$/, '')}/api/slack/command?client_id=${clientId}`;
+        urlEl.textContent = url;
+      }
+
       const integrationEndpoint = '/api/integrations/config';
       const integrationCards = Array.from(document.querySelectorAll('.integration-card'));
       const integrationNavButtons = Array.from(document.querySelectorAll('[data-integration-target]'));
@@ -525,6 +569,7 @@
       const INTEGRATION_CLIENT_KEY = 'integrationClientId';
       const integrationResults = new Map();
       const integrationClientId = loadIntegrationClientId();
+      updateSlackCommandUrl(integrationClientId);
 
       function generateHolidayThemes() {
         if (themeEngine && typeof themeEngine.buildHolidayThemes === 'function') {
@@ -1222,7 +1267,7 @@
             setIntegrationStatus(card, 'Unable to load integration settings.', 'error');
           });
         }
-      }
+    }
 
       async function handleSaveIntegration(card, service) {
         const enabledInput = card.querySelector('.integration-enabled');
