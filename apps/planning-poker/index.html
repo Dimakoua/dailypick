@@ -43,6 +43,7 @@
   <link rel="stylesheet" href="./style.css">
   <script src="/assets/js/brand-theme-engine.js" defer></script>
   <script src="/assets/js/brand-config.js" defer></script>
+  <script src="/assets/js/standup-data.js" defer></script>
   <script src="./script.js" defer></script>
 </head>
 
@@ -124,6 +125,46 @@
           <div id="participantsList" class="participants-list"></div>
         </section>
 
+        <section class="integration-panel" aria-labelledby="integrationHeading">
+          <div class="integration-panel__header">
+            <div>
+              <p class="hero-eyebrow integration-panel__eyebrow">Backlog import</p>
+              <h2 id="integrationHeading">Trello, Jira, or GitHub work</h2>
+              <p class="integration-panel__description">Pull saved tasks, set the current story, and keep a handy history of your estimates.</p>
+            </div>
+            <button id="refreshIntegrationBtn" type="button" class="ghost-btn">Refresh tasks</button>
+          </div>
+          <p id="integrationStatus" class="integration-panel__status" aria-live="polite">Connect integrations in <a href="/apps/settings/#integrations">Settings</a> and refresh to load tasks.</p>
+          <div class="integration-panel__controls">
+            <label class="integration-panel__control">
+              <span>Service</span>
+              <select id="integrationServiceFilter">
+                <option value="">All services</option>
+              </select>
+            </label>
+            <label class="integration-panel__control">
+              <span>Sort by</span>
+              <select id="integrationSort">
+                <option value="updated-desc">Updated ↓</option>
+                <option value="updated-asc">Updated ↑</option>
+                <option value="title-asc">Title A→Z</option>
+              </select>
+            </label>
+            <label class="integration-panel__control integration-panel__control--search">
+              <span>Search</span>
+              <input id="integrationSearch" type="search" inputmode="search" placeholder="Title, status, ID..." />
+            </label>
+          </div>
+          <div id="integrationServices" class="integration-panel__services" aria-live="polite"></div>
+          <div id="integrationTasks" class="integration-panel__tasks" aria-live="polite" role="list"></div>
+          <div class="integration-panel__history">
+            <div class="integration-panel__history-header">
+              <h3>Recent estimates</h3>
+              <span id="integrationHistoryCount" class="pill">0</span>
+            </div>
+            <ul id="integrationHistoryList"></ul>
+          </div>
+        </section>
         <section class="summary-panel">
           <div class="summary-header">
             <h2>Jira summary</h2>
