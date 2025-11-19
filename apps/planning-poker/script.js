@@ -87,7 +87,6 @@
   const integrationHistoryCount = document.getElementById('integrationHistoryCount');
   const refreshIntegrationBtn = document.getElementById('refreshIntegrationBtn');
   const integrationServiceFilter = document.getElementById('integrationServiceFilter');
-  const integrationSortSelect = document.getElementById('integrationSort');
   const integrationSearchInput = document.getElementById('integrationSearch');
 
   let ws = null;
@@ -115,7 +114,6 @@
   let integrationStandup = window.dailyPickStandup || null;
   let integrationRefreshPending = false;
   let integrationFilterService = '';
-  let integrationSortMode = 'updated-desc';
   let integrationSearchTerm = '';
   let lastRecordedRound = null;
   let lastRecordedTaskId = '';
@@ -538,22 +536,33 @@
     return date.toLocaleString();
   }
 
+  function normalizeServiceKey(value) {
+    if (!value) return '';
+    return String(value).trim().toLowerCase();
+  }
+
   function updateServiceFilterOptions(services = []) {
     if (!integrationServiceFilter) return;
-    const previous = integrationServiceFilter.value || '';
+    const currentValue = integrationFilterService || integrationServiceFilter.value || '';
+    const previousFilter = normalizeServiceKey(currentValue);
     const unique = Array.from(new Set((services || []).map((entry) => entry.service).filter(Boolean)));
     integrationServiceFilter.innerHTML = '<option value="">All services</option>';
+    let restored = false;
     unique.forEach((service) => {
       const option = document.createElement('option');
       option.value = service;
       option.textContent = SERVICE_LABELS[service] || service;
       integrationServiceFilter.appendChild(option);
+      if (!restored && previousFilter && normalizeServiceKey(service) === previousFilter) {
+        integrationServiceFilter.value = service;
+        restored = true;
+      }
     });
-    if (previous && Array.from(integrationServiceFilter.options).some((opt) => opt.value === previous)) {
-      integrationServiceFilter.value = previous;
-      integrationFilterService = previous;
+    if (restored) {
+      integrationFilterService = previousFilter;
     } else {
       integrationFilterService = '';
+      integrationServiceFilter.value = '';
     }
   }
 
@@ -578,18 +587,39 @@
     return Number.isNaN(parsed) ? 0 : parsed;
   }
 
+  function buildTaskDetailText(task) {
+    if (!task || typeof task !== 'object') return '';
+    const details = [];
+    const description = typeof task.description === 'string' ? task.description.trim() : '';
+    if (description) {
+      details.push(description.length > 200 ? `${description.slice(0, 197)}…` : description);
+    }
+    const metaParts = [];
+    if (task.unassigned) {
+      metaParts.push('Unassigned backlog item');
+    }
+    const updatedLabel = formatTimestamp(task.updated);
+    if (updatedLabel) {
+      metaParts.push(`Updated ${updatedLabel}`);
+    }
+    if (!details.length && !metaParts.length) {
+      return '';
+    }
+    if (metaParts.length) {
+      details.push(metaParts.join(' · '));
+    }
+    return details.join(' ');
+  }
+
   function sortIntegrationTasks(tasks) {
     const sorted = [...tasks];
     sorted.sort((a, b) => {
-      if (integrationSortMode === 'title-asc') {
-        return (a.title || '').localeCompare(b.title || '', undefined, { sensitivity: 'base' });
-      }
       const aTime = getTaskTimestamp(a);
       const bTime = getTaskTimestamp(b);
       if (aTime === bTime) {
         return (a.title || '').localeCompare(b.title || '', undefined, { sensitivity: 'base' });
       }
-      return integrationSortMode === 'updated-asc' ? aTime - bTime : bTime - aTime;
+      return bTime - aTime;
     });
     return sorted;
   }
@@ -670,8 +700,10 @@
       return;
     }
     const filtered = tasks.filter((task) => {
-      if (integrationFilterService && task.service !== integrationFilterService) {
-        return false;
+      if (integrationFilterService) {
+        if (normalizeServiceKey(task.service) !== integrationFilterService) {
+          return false;
+        }
       }
       return matchesIntegrationSearch(task);
     });
@@ -827,11 +859,7 @@
     refreshIntegrationBtn?.addEventListener('click', handleIntegrationRefresh);
     integrationTasksContainer?.addEventListener('click', handleIntegrationTaskClick);
     integrationServiceFilter?.addEventListener('change', (event) => {
-      integrationFilterService = event.target.value;
-      renderIntegrationTasks(integrationSnapshot);
-    });
-    integrationSortSelect?.addEventListener('change', (event) => {
-      integrationSortMode = event.target.value || 'updated-desc';
+      integrationFilterService = normalizeServiceKey(event.target.value);
       renderIntegrationTasks(integrationSnapshot);
     });
     integrationSearchInput?.addEventListener('input', (event) => {
