@@ -80,110 +80,138 @@
           <p>Use your own colors, emoji, and typography to make Daily Pick feel native to your team.</p>
         </div>
 
-        <form id="brandForm" class="brand-form" novalidate>
-          <div class="brand-grid">
-            <label>
-              Brand name
-              <input type="text" id="brandNameInput" maxlength="32">
-            </label>
-            <label>
-              Brand emoji / mark
-              <input type="text" id="brandMarkInput" maxlength="4">
-            </label>
-            <label>
-              Accent color
-              <input type="color" id="accentColorInput">
-            </label>
-            <label>
-              Accent (strong)
-              <input type="color" id="accentStrongInput">
-            </label>
-            <label>
-              Background color
-              <input type="color" id="backgroundColorInput">
-            </label>
-            <label>
-              Surface color
-              <input type="color" id="surfaceColorInput">
-            </label>
-            <label>
-              Text color
-              <input type="color" id="textColorInput">
-            </label>
-            <label>
-              Heading color
-              <input type="color" id="headingColorInput">
-            </label>
-            <label>
-              Subtle text color
-              <input type="color" id="subtleTextColorInput">
-            </label>
-            <label>
-              Border color
-              <input type="color" id="borderColorInput">
-            </label>
-            <label>
-              Font stack
-              <input type="text" id="fontFamilyInput" placeholder="'Nunito', system-ui, sans-serif">
-            </label>
-            <label>
-              Logo image URL (optional)
-              <input type="url" id="logoUrlInput" placeholder="https://example.com/logo.png">
-            </label>
-          </div>
-          <fieldset class="theme-controls" aria-labelledby="themeControlsHeading">
-            <legend id="themeControlsHeading">Seasonal themes</legend>
-            <p class="field-hint">Holiday looks update automatically based on the Canadian calendar and include icons,
-              gradients, and palettes for major celebrations in Canada and the United States.</p>
-            <label class="theme-toggle">
-              <input type="checkbox" id="seasonalThemesToggle" checked>
-              <span class="toggle-copy">
-                <span class="toggle-title">Enable seasonal themes</span>
-                <span class="toggle-description">Show holiday colors and emojis across the site when available.</span>
-              </span>
-            </label>
-            <p class="field-hint" id="seasonalThemesDisabledHint" hidden>Seasonal looks are paused. Turn them back on to access
-              holiday palettes and icons.</p>
-            <label>
-              Theme mode
-              <select id="themeModeInput">
-                <option value="auto">Automatic (follow holiday calendar)</option>
-                <option value="manual">Manual selection</option>
-              </select>
-            </label>
-            <label class="manual-theme" data-theme-manual>
-              Active holiday theme
-              <select id="themeSelectInput" disabled>
-                <option value="default">Default Daily Pick</option>
-              </select>
-            </label>
-            <p class="field-hint" id="themeSelectionHint">Pick Manual to explore specific holidays or return to
-              Automatic for smart activation.</p>
-          </fieldset>
-          <div class="theme-summary" id="themeSummary" aria-live="polite"></div>
-        </form>
+        <div class="brand-layout">
+          <form id="brandForm" class="brand-form" novalidate>
+            <section class="brand-subcard brand-subcard--identity" aria-labelledby="brandIdentityHeading">
+              <div class="brand-subcard-header">
+                <h3 id="brandIdentityHeading">Brand identity</h3>
+                <p class="field-hint">Name, emoji, typography, and mark that appear across the interface.</p>
+              </div>
+              <div class="brand-grid brand-grid--identity">
+                <label>
+                  Brand name
+                  <input type="text" id="brandNameInput" maxlength="32">
+                </label>
+                <label>
+                  Brand emoji / mark
+                  <input type="text" id="brandMarkInput" maxlength="4">
+                </label>
+                <label>
+                  Font stack
+                  <input type="text" id="fontFamilyInput" placeholder="'Nunito', system-ui, sans-serif">
+                </label>
+                <label>
+                  Logo image URL (optional)
+                  <input type="url" id="logoUrlInput" placeholder="https://example.com/logo.png">
+                </label>
+              </div>
+            </section>
 
-        <div class="brand-preview" aria-live="polite">
-          <div class="preview-header">
-            <span class="preview-mark" aria-hidden="true">🎯</span>
-            <span class="preview-name">Daily Pick</span>
-          </div>
-          <div class="preview-theme" data-theme-active="false">
-            <span class="preview-theme-icon" aria-hidden="true">🎄</span>
-            <div class="preview-theme-copy">
-              <span class="preview-theme-name">Seasonal theme</span>
-              <span class="preview-theme-dates">Dec 1 – Jan 5</span>
+            <section class="brand-subcard brand-subcard--palette" aria-labelledby="brandPaletteHeading">
+              <div class="brand-subcard-header">
+                <h3 id="brandPaletteHeading">Color palette</h3>
+                <p class="field-hint">Primary accents, surfaces, and typography colors for Daily Pick.</p>
+              </div>
+              <div class="brand-grid brand-grid--palette">
+                <label>
+                  Accent color
+                  <input type="color" id="accentColorInput">
+                </label>
+                <label>
+                  Accent (strong)
+                  <input type="color" id="accentStrongInput">
+                </label>
+                <label>
+                  Background color
+                  <input type="color" id="backgroundColorInput">
+                </label>
+                <label>
+                  Surface color
+                  <input type="color" id="surfaceColorInput">
+                </label>
+                <label>
+                  Text color
+                  <input type="color" id="textColorInput">
+                </label>
+                <label>
+                  Heading color
+                  <input type="color" id="headingColorInput">
+                </label>
+                <label>
+                  Subtle text color
+                  <input type="color" id="subtleTextColorInput">
+                </label>
+                <label>
+                  Border color
+                  <input type="color" id="borderColorInput">
+                </label>
+              </div>
+            </section>
+
+            <section class="brand-subcard brand-subcard--themes" aria-labelledby="brandThemeHeading">
+              <div class="brand-subcard-header">
+                <h3 id="brandThemeHeading">Seasonal themes</h3>
+                <p class="field-hint">Decide how holiday looks are activated across your brand.</p>
+              </div>
+              <fieldset class="theme-controls" aria-labelledby="themeControlsHeading">
+                <legend id="themeControlsHeading">Seasonal themes</legend>
+                <p class="field-hint">Holiday looks update automatically based on the Canadian calendar and include icons,
+                  gradients, and palettes for major celebrations in Canada and the United States.</p>
+                <label class="theme-toggle">
+                  <input type="checkbox" id="seasonalThemesToggle" checked>
+                  <span class="toggle-copy">
+                    <span class="toggle-title">Enable seasonal themes</span>
+                    <span class="toggle-description">Show holiday colors and emojis across the site when available.</span>
+                  </span>
+                </label>
+                <p class="field-hint" id="seasonalThemesDisabledHint" hidden>Seasonal looks are paused. Turn them back on to access
+                  holiday palettes and icons.</p>
+                <label>
+                  Theme mode
+                  <select id="themeModeInput">
+                    <option value="auto">Automatic (follow holiday calendar)</option>
+                    <option value="manual">Manual selection</option>
+                  </select>
+                </label>
+                <label class="manual-theme" data-theme-manual>
+                  Active holiday theme
+                  <select id="themeSelectInput" disabled>
+                    <option value="default">Default Daily Pick</option>
+                  </select>
+                </label>
+                <p class="field-hint" id="themeSelectionHint">Pick Manual to explore specific holidays or return to
+                  Automatic for smart activation.</p>
+              </fieldset>
+              <div class="theme-summary" id="themeSummary" aria-live="polite"></div>
+            </section>
+
+            <div class="brand-form-actions">
+              <div class="button-row">
+                <button id="saveBrandBtn" type="button">Save Brand</button>
+                <button id="resetBrandBtn" type="button" class="ghost">Reset Brand</button>
+              </div>
+              <p id="brandStatus" class="settings-status" aria-live="polite"></p>
             </div>
-          </div>
-          <p>Buttons, headers, accents, and seasonal artwork update instantly as themes change.</p>
-          <button type="button" disabled>Sample Button</button>
-        </div>
+          </form>
 
-        <div class="button-row">
-          <button id="saveBrandBtn" type="button">Save Brand</button>
-          <button id="resetBrandBtn" type="button" class="ghost">Reset Brand</button>
+          <aside class="brand-preview-column" aria-label="Brand preview">
+            <div class="brand-preview" aria-live="polite">
+              <div class="preview-header">
+                <span class="preview-mark" aria-hidden="true">🎯</span>
+                <span class="preview-name">Daily Pick</span>
+              </div>
+              <div class="preview-theme" data-theme-active="false">
+                <span class="preview-theme-icon" aria-hidden="true">🎄</span>
+                <div class="preview-theme-copy">
+                  <span class="preview-theme-name">Seasonal theme</span>
+                  <span class="preview-theme-dates">Dec 1 – Jan 5</span>
+                </div>
+              </div>
+              <p>Buttons, headers, accents, and seasonal artwork update instantly as themes change.</p>
+              <button type="button" disabled>Sample Button</button>
+            </div>
+          </aside>
         </div>
-        <p id="brandStatus" class="settings-status" aria-live="polite"></p>
       </article>
     </section>
 
