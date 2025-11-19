@@ -80,14 +80,23 @@
   const sessionBadge = document.getElementById('sessionBadge');
   const deckSelect = document.getElementById('deckSelect');
   const deckDescriptionEl = document.getElementById('deckDescription');
+  const tableStoryDisplay = document.getElementById('tableStoryDisplay');
   const integrationStatusLine = document.getElementById('integrationStatus');
   const integrationServices = document.getElementById('integrationServices');
   const integrationTasksContainer = document.getElementById('integrationTasks');
+  const integrationCompletedContainer = document.getElementById('integrationCompletedTasks');
   const integrationHistoryList = document.getElementById('integrationHistoryList');
   const integrationHistoryCount = document.getElementById('integrationHistoryCount');
   const refreshIntegrationBtn = document.getElementById('refreshIntegrationBtn');
   const integrationServiceFilter = document.getElementById('integrationServiceFilter');
   const integrationSearchInput = document.getElementById('integrationSearch');
+  const panelToggleButtons = document.querySelectorAll('[data-panel-toggle]');
+  const panelCloseButtons = document.querySelectorAll('[data-panel-close]');
+  const panelScrim = document.getElementById('panelScrim');
+  const panels = {
+    controls: document.getElementById('controlsPanel'),
+    backlog: document.getElementById('backlogPanel'),
+  };
 
   let ws = null;
   let sessionId = null;
@@ -117,6 +126,8 @@
   let integrationSearchTerm = '';
   let lastRecordedRound = null;
   let lastRecordedTaskId = '';
+  let activePanelId = '';
+  let lastHostStatus = null;
 
   const savedName = localStorage.getItem(LOCAL_NAME_KEY) || '';
   displayNameInput.value = savedName;
@@ -218,6 +229,7 @@
         if (!isHost && storyInput.value !== message.story) {
           storyInput.value = message.story || '';
         }
+        updateTableStoryDisplay(message.story);
         break;
       default:
         break;
@@ -232,6 +244,8 @@
     if (!currentState.isRevealed) {
       summaryOutput.textContent = 'Votes will appear here after you reveal.';
     }
+    toggleHostOnlySections();
+    maybeShowHostNotice();
   }
 
   function populateDeckSelect() {
@@ -305,6 +319,38 @@
     });
   }
 
+  function toggleHostOnlySections() {
+    document.querySelectorAll('[data-host-only]').forEach((section) => {
+      if (!isHost) {
+        section.dataset.disabled = 'true';
+      } else {
+        delete section.dataset.disabled;
+      }
+    });
+    const backlogButton = document.querySelector('[data-panel-toggle="backlog"]');
+    if (backlogButton) {
+      backlogButton.disabled = !isHost;
+      backlogButton.title = isHost ? 'Open backlog panel' : 'Backlog available to hosts only';
+    }
+  }
+
+  function maybeShowHostNotice() {
+    const hostNotice = document.getElementById('hostNotice');
+    if (!hostNotice) return;
+    if (isHost && lastHostStatus === false) {
+      hostNotice.hidden = false;
+      hostNotice.dataset.visible = 'true';
+      setTimeout(() => {
+        hostNotice.hidden = true;
+        delete hostNotice.dataset.visible;
+      }, 3000);
+    } else if (!isHost) {
+      hostNotice.hidden = true;
+      delete hostNotice.dataset.visible;
+    }
+    lastHostStatus = isHost;
+  }
+
   function renderParticipants() {
     participantsList.innerHTML = '';
     const list = currentState.participants || [];
@@ -347,14 +393,68 @@
     }
   }
 
+  function updateTableStoryDisplay(nextValue) {
+    if (!tableStoryDisplay) return;
+    const source = typeof nextValue === 'string' ? nextValue : storyInput.value;
+    const text = (source || '').trim();
+    tableStoryDisplay.textContent = text || 'Waiting for a story card';
+  }
+
   function copyText(value) {
     if (!navigator.clipboard) {
-      return;
+      return Promise.reject(new Error('Clipboard unavailable'));
     }
-    navigator.clipboard.writeText(value).then(() => {
+    return navigator.clipboard.writeText(value).then(() => {
       setStatus('Copied!');
       setTimeout(() => setStatus(`Connected to room ${sessionId}`), 1500);
     });
+  }
+
+  function flashButtonMessage(button, message) {
+    if (!button) return;
+    const originalText = button.dataset.originalLabel || button.textContent;
+    if (!button.dataset.originalLabel) {
+      button.dataset.originalLabel = originalText;
+    }
+    button.classList.add('is-copied');
+    button.textContent = message;
+    setTimeout(() => {
+      button.classList.remove('is-copied');
+      button.textContent = button.dataset.originalLabel || originalText;
+    }, 2000);
+  }
+
+  function closeActivePanel() {
+    Object.values(panels).forEach((panel) => {
+      if (!panel) return;
+      panel.removeAttribute('data-open');
+      panel.setAttribute('aria-hidden', 'true');
+    });
+    if (panelScrim) {
+      delete panelScrim.dataset.active;
+      panelScrim.hidden = true;
+    }
+    activePanelId = '';
+  }
+
+  function openPanel(panelId) {
+    const panel = panels[panelId];
+    if (!panel) return;
+    Object.entries(panels).forEach(([key, entry]) => {
+      if (!entry) return;
+      if (key === panelId) {
+        entry.setAttribute('data-open', 'true');
+        entry.setAttribute('aria-hidden', 'false');
+      } else {
+        entry.removeAttribute('data-open');
+        entry.setAttribute('aria-hidden', 'true');
+      }
+    });
+    if (panelScrim) {
+      panelScrim.hidden = false;
+      panelScrim.dataset.active = 'true';
+    }
+    activePanelId = panelId;
   }
 
   function initEvents() {
@@ -401,9 +501,17 @@
     });
 
     copyInviteBtn.addEventListener('click', () => {
-      if (!sessionId) return;
+      if (!sessionId) {
+        setStatus('Start or join a room to share an invite.');
+        openPanel('controls');
+        return;
+      }
       const inviteUrl = `${window.location.origin}/apps/planning-poker/?session_id=${sessionId}`;
-      copyText(inviteUrl);
+      copyText(inviteUrl)
+        .then(() => flashButtonMessage(copyInviteBtn, 'Link copied!'))
+        .catch(() => {
+          setStatus('Unable to copy automatically. Copy the URL manually.');
+        });
     });
 
     storyInput.addEventListener('input', () => {
@@ -412,12 +520,36 @@
       storyDebounce = setTimeout(() => {
         sendMessage({ type: 'set-story', story: storyInput.value.trim() });
       }, 300);
+      updateTableStoryDisplay();
     });
 
     deckSelect?.addEventListener('change', (event) => {
       setDeckById(event.target.value, { fromSelect: true });
     });
 
+    panelToggleButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const target = button.dataset.panelToggle;
+        if (!target) return;
+        if (activePanelId === target) {
+          closeActivePanel();
+        } else {
+          openPanel(target);
+        }
+      });
+    });
+
+    panelCloseButtons.forEach((button) => {
+      button.addEventListener('click', () => closeActivePanel());
+    });
+
+    panelScrim?.addEventListener('click', () => closeActivePanel());
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && activePanelId) {
+        closeActivePanel();
+      }
+    });
   }
 
   function autoJoinFromQuery() {
@@ -684,9 +816,30 @@
     });
   }
 
+  function markCompletedTasks(tasks) {
+    const completedIds = new Map();
+    integrationHistory.forEach((entry) => {
+      if (!entry?.taskId) return;
+      completedIds.set(entry.taskId, entry.recordedAt || entry.summary || entry.story || '');
+    });
+    return (tasks || []).map((task) => {
+      const completion = completedIds.get(task.id);
+      return completion
+        ? {
+            ...task,
+            completed: true,
+            completedAt: completion,
+          }
+        : { ...task, completed: false };
+    });
+  }
+
   function renderIntegrationTasks(snapshot) {
     if (!integrationTasksContainer) return;
     integrationTasksContainer.innerHTML = '';
+    if (integrationCompletedContainer) {
+      integrationCompletedContainer.innerHTML = '';
+    }
     const tasks = gatherIntegrationTasks(snapshot);
     if (!tasks.length) {
       const placeholder = document.createElement('div');
@@ -699,7 +852,8 @@
       integrationRenderedTasks = [];
       return;
     }
-    const filtered = tasks.filter((task) => {
+    const annotated = markCompletedTasks(tasks);
+    const filtered = annotated.filter((task) => {
       if (integrationFilterService) {
         if (normalizeServiceKey(task.service) !== integrationFilterService) {
           return false;
@@ -716,13 +870,23 @@
       return;
     }
     const sorted = sortIntegrationTasks(filtered);
-    const tasksToShow = sorted.slice(0, 30);
+    const tasksToShow = sorted.slice(0, 40);
     integrationRenderedTasks = tasksToShow;
+    const backlogFragment = document.createDocumentFragment();
+    const completedFragment = document.createDocumentFragment();
+    const completedList = document.createElement('div');
+    completedList.className = 'integration-panel__completed-list';
+    let completedCount = 0;
+
     tasksToShow.forEach((task) => {
       const card = document.createElement('div');
       card.className = 'integration-panel__task';
       if (task.id) {
         card.dataset.taskId = task.id;
+      }
+      if (task.completed) {
+        card.dataset.completed = 'true';
+        completedCount += 1;
       }
       if (selectedIntegrationTaskId && task.id === selectedIntegrationTaskId) {
         card.dataset.selected = 'true';
@@ -763,13 +927,29 @@
       button.className = 'ghost-btn';
       button.dataset.taskId = task.id || '';
       button.setAttribute('aria-label', `Set ${task.title || 'backlog item'} as story label`);
-      button.textContent = 'Use story label';
+      button.textContent = task.completed ? 'Re-evaluate' : 'Use story label';
       actions.appendChild(button);
       card.appendChild(title);
       card.appendChild(meta);
       card.appendChild(actions);
-      integrationTasksContainer.appendChild(card);
+      if (task.completed) {
+        const badge = document.createElement('span');
+        badge.className = 'integration-panel__task-badge';
+        badge.textContent = 'Estimated';
+        card.insertBefore(badge, card.firstChild);
+        completedList.appendChild(card);
+      } else {
+        backlogFragment.appendChild(card);
+      }
     });
+
+    if (integrationCompletedContainer && completedCount) {
+      const heading = document.createElement('h3');
+      heading.textContent = `Estimated (${completedCount})`;
+      integrationCompletedContainer.appendChild(heading);
+      integrationCompletedContainer.appendChild(completedList);
+    }
+    integrationTasksContainer.appendChild(backlogFragment);
   }
 
   function updateIntegrationPanel(snapshot) {
@@ -794,6 +974,7 @@
     } else if (label) {
       setIntegrationStatus(`Only the host can update the story. Copy “${label}” into the story field.`, 'info');
     }
+    updateTableStoryDisplay(label);
     renderIntegrationTasks(integrationSnapshot);
   }
 
@@ -858,6 +1039,7 @@
     }
     refreshIntegrationBtn?.addEventListener('click', handleIntegrationRefresh);
     integrationTasksContainer?.addEventListener('click', handleIntegrationTaskClick);
+    integrationCompletedContainer?.addEventListener('click', handleIntegrationTaskClick);
     integrationServiceFilter?.addEventListener('change', (event) => {
       integrationFilterService = normalizeServiceKey(event.target.value);
       renderIntegrationTasks(integrationSnapshot);
@@ -882,5 +1064,6 @@
   initEvents();
   autoJoinFromQuery();
   updateSessionBadge();
+  updateTableStoryDisplay();
   initIntegrationPanel();
 })();
