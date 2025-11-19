@@ -868,6 +868,7 @@
     });
     const snapshot = integrationStandup?.getSnapshot ? integrationStandup.getSnapshot() : null;
     updateIntegrationPanel(snapshot);
+    handleIntegrationRefresh();
   }
 
   renderDeck();
