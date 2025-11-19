@@ -80,6 +80,23 @@
   const sessionBadge = document.getElementById('sessionBadge');
   const deckSelect = document.getElementById('deckSelect');
   const deckDescriptionEl = document.getElementById('deckDescription');
+  const tableStoryDisplay = document.getElementById('tableStoryDisplay');
+  const integrationStatusLine = document.getElementById('integrationStatus');
+  const integrationServices = document.getElementById('integrationServices');
+  const integrationTasksContainer = document.getElementById('integrationTasks');
+  const integrationCompletedContainer = document.getElementById('integrationCompletedTasks');
+  const integrationHistoryList = document.getElementById('integrationHistoryList');
+  const integrationHistoryCount = document.getElementById('integrationHistoryCount');
+  const refreshIntegrationBtn = document.getElementById('refreshIntegrationBtn');
+  const integrationServiceFilter = document.getElementById('integrationServiceFilter');
+  const integrationSearchInput = document.getElementById('integrationSearch');
+  const panelToggleButtons = document.querySelectorAll('[data-panel-toggle]');
+  const panelCloseButtons = document.querySelectorAll('[data-panel-close]');
+  const panelScrim = document.getElementById('panelScrim');
+  const panels = {
+    controls: document.getElementById('controlsPanel'),
+    backlog: document.getElementById('backlogPanel'),
+  };
 
   let ws = null;
   let sessionId = null;
@@ -89,6 +106,28 @@
   let storyDebounce = null;
   let currentDeck = DECKS[0];
   const savedDeckId = localStorage.getItem(DECK_STORAGE_KEY);
+
+  const SERVICE_LABELS = {
+    jira: 'Jira',
+    trello: 'Trello',
+    github: 'GitHub',
+  };
+  const INTEGRATION_HISTORY_KEY = 'planningPokerTaskHistory';
+  const HISTORY_LIMIT = 6;
+
+  let integrationSnapshot = null;
+  let integrationRenderedTasks = [];
+  let selectedIntegrationTaskId = '';
+  let selectedIntegrationTask = null;
+  let integrationHistory = [];
+  let integrationStandup = window.dailyPickStandup || null;
+  let integrationRefreshPending = false;
+  let integrationFilterService = '';
+  let integrationSearchTerm = '';
+  let lastRecordedRound = null;
+  let lastRecordedTaskId = '';
+  let activePanelId = '';
+  let lastHostStatus = null;
 
   const savedName = localStorage.getItem(LOCAL_NAME_KEY) || '';
   displayNameInput.value = savedName;
@@ -186,9 +225,11 @@
         renderParticipants();
         renderSummary();
         updateDeckSelection();
+        maybeRecordRoundSummary();
         if (!isHost && storyInput.value !== message.story) {
           storyInput.value = message.story || '';
         }
+        updateTableStoryDisplay(message.story);
         break;
       default:
         break;
@@ -203,6 +244,8 @@
     if (!currentState.isRevealed) {
       summaryOutput.textContent = 'Votes will appear here after you reveal.';
     }
+    toggleHostOnlySections();
+    maybeShowHostNotice();
   }
 
   function populateDeckSelect() {
@@ -276,6 +319,38 @@
     });
   }
 
+  function toggleHostOnlySections() {
+    document.querySelectorAll('[data-host-only]').forEach((section) => {
+      if (!isHost) {
+        section.dataset.disabled = 'true';
+      } else {
+        delete section.dataset.disabled;
+      }
+    });
+    const backlogButton = document.querySelector('[data-panel-toggle="backlog"]');
+    if (backlogButton) {
+      backlogButton.disabled = !isHost;
+      backlogButton.title = isHost ? 'Open backlog panel' : 'Backlog available to hosts only';
+    }
+  }
+
+  function maybeShowHostNotice() {
+    const hostNotice = document.getElementById('hostNotice');
+    if (!hostNotice) return;
+    if (isHost && lastHostStatus === false) {
+      hostNotice.hidden = false;
+      hostNotice.dataset.visible = 'true';
+      setTimeout(() => {
+        hostNotice.hidden = true;
+        delete hostNotice.dataset.visible;
+      }, 3000);
+    } else if (!isHost) {
+      hostNotice.hidden = true;
+      delete hostNotice.dataset.visible;
+    }
+    lastHostStatus = isHost;
+  }
+
   function renderParticipants() {
     participantsList.innerHTML = '';
     const list = currentState.participants || [];
@@ -318,14 +393,68 @@
     }
   }
 
+  function updateTableStoryDisplay(nextValue) {
+    if (!tableStoryDisplay) return;
+    const source = typeof nextValue === 'string' ? nextValue : storyInput.value;
+    const text = (source || '').trim();
+    tableStoryDisplay.textContent = text || 'Waiting for a story card';
+  }
+
   function copyText(value) {
     if (!navigator.clipboard) {
-      return;
+      return Promise.reject(new Error('Clipboard unavailable'));
     }
-    navigator.clipboard.writeText(value).then(() => {
+    return navigator.clipboard.writeText(value).then(() => {
       setStatus('Copied!');
       setTimeout(() => setStatus(`Connected to room ${sessionId}`), 1500);
     });
+  }
+
+  function flashButtonMessage(button, message) {
+    if (!button) return;
+    const originalText = button.dataset.originalLabel || button.textContent;
+    if (!button.dataset.originalLabel) {
+      button.dataset.originalLabel = originalText;
+    }
+    button.classList.add('is-copied');
+    button.textContent = message;
+    setTimeout(() => {
+      button.classList.remove('is-copied');
+      button.textContent = button.dataset.originalLabel || originalText;
+    }, 2000);
+  }
+
+  function closeActivePanel() {
+    Object.values(panels).forEach((panel) => {
+      if (!panel) return;
+      panel.removeAttribute('data-open');
+      panel.setAttribute('aria-hidden', 'true');
+    });
+    if (panelScrim) {
+      delete panelScrim.dataset.active;
+      panelScrim.hidden = true;
+    }
+    activePanelId = '';
+  }
+
+  function openPanel(panelId) {
+    const panel = panels[panelId];
+    if (!panel) return;
+    Object.entries(panels).forEach(([key, entry]) => {
+      if (!entry) return;
+      if (key === panelId) {
+        entry.setAttribute('data-open', 'true');
+        entry.setAttribute('aria-hidden', 'false');
+      } else {
+        entry.removeAttribute('data-open');
+        entry.setAttribute('aria-hidden', 'true');
+      }
+    });
+    if (panelScrim) {
+      panelScrim.hidden = false;
+      panelScrim.dataset.active = 'true';
+    }
+    activePanelId = panelId;
   }
 
   function initEvents() {
@@ -372,9 +501,17 @@
     });
 
     copyInviteBtn.addEventListener('click', () => {
-      if (!sessionId) return;
+      if (!sessionId) {
+        setStatus('Start or join a room to share an invite.');
+        openPanel('controls');
+        return;
+      }
       const inviteUrl = `${window.location.origin}/apps/planning-poker/?session_id=${sessionId}`;
-      copyText(inviteUrl);
+      copyText(inviteUrl)
+        .then(() => flashButtonMessage(copyInviteBtn, 'Link copied!'))
+        .catch(() => {
+          setStatus('Unable to copy automatically. Copy the URL manually.');
+        });
     });
 
     storyInput.addEventListener('input', () => {
@@ -383,12 +520,36 @@
       storyDebounce = setTimeout(() => {
         sendMessage({ type: 'set-story', story: storyInput.value.trim() });
       }, 300);
+      updateTableStoryDisplay();
     });
 
     deckSelect?.addEventListener('change', (event) => {
       setDeckById(event.target.value, { fromSelect: true });
     });
 
+    panelToggleButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const target = button.dataset.panelToggle;
+        if (!target) return;
+        if (activePanelId === target) {
+          closeActivePanel();
+        } else {
+          openPanel(target);
+        }
+      });
+    });
+
+    panelCloseButtons.forEach((button) => {
+      button.addEventListener('click', () => closeActivePanel());
+    });
+
+    panelScrim?.addEventListener('click', () => closeActivePanel());
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && activePanelId) {
+        closeActivePanel();
+      }
+    });
   }
 
   function autoJoinFromQuery() {
@@ -397,6 +558,499 @@
     if (existing) {
       connectToRoom(existing);
     }
+  }
+
+  function loadIntegrationHistory() {
+    try {
+      const raw = localStorage.getItem(INTEGRATION_HISTORY_KEY);
+      if (!raw) return [];
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (error) {
+      console.warn('[PlanningPoker] Unable to read task history', error);
+      return [];
+    }
+  }
+
+  function persistIntegrationHistory(entries) {
+    try {
+      localStorage.setItem(INTEGRATION_HISTORY_KEY, JSON.stringify(entries));
+    } catch (error) {
+      console.warn('[PlanningPoker] Unable to persist task history', error);
+    }
+  }
+
+  function recordIntegrationHistory(entry) {
+    if (!entry || !entry.taskId || !entry.summary) return;
+    const normalized = {
+      ...entry,
+      recordedAt: entry.recordedAt || new Date().toISOString(),
+    };
+    integrationHistory = integrationHistory.filter(
+      (existing) => !(existing.taskId === normalized.taskId && existing.round === normalized.round),
+    );
+    integrationHistory.unshift(normalized);
+    if (integrationHistory.length > HISTORY_LIMIT) {
+      integrationHistory = integrationHistory.slice(0, HISTORY_LIMIT);
+    }
+    persistIntegrationHistory(integrationHistory);
+    renderIntegrationHistory();
+  }
+
+  function formatServiceLabel(service) {
+    if (!service) return '';
+    return SERVICE_LABELS[service] || `${service.charAt(0).toUpperCase()}${service.slice(1)}`;
+  }
+
+  function buildIntegrationStoryLabel(task) {
+    if (!task) return '';
+    const title = task.title || 'Backlog item';
+    const idLabel =
+      task.shortId ||
+      (typeof task.id === 'string' ? task.id.split(':').pop() : '') ||
+      '';
+    return idLabel ? `${idLabel} · ${title}` : title;
+  }
+
+  function setIntegrationStatus(message, tone = 'info') {
+    if (!integrationStatusLine) return;
+    integrationStatusLine.textContent = message;
+    integrationStatusLine.dataset.tone = tone;
+  }
+
+  function renderIntegrationHistory() {
+    if (!integrationHistoryList) return;
+    integrationHistoryList.innerHTML = '';
+    if (integrationHistoryCount) {
+      integrationHistoryCount.textContent = String(integrationHistory.length);
+    }
+    if (!integrationHistory.length) {
+      const placeholder = document.createElement('li');
+      placeholder.className = 'integration-panel__empty';
+      placeholder.textContent = 'Reveal a round after choosing a backlog item to keep a quick record here.';
+      integrationHistoryList.appendChild(placeholder);
+      return;
+    }
+    integrationHistory.forEach((entry) => {
+      const listItem = document.createElement('li');
+      listItem.className = 'integration-panel__history-item';
+      const title = document.createElement('strong');
+      title.textContent = entry.story || entry.title || 'Estimate';
+      const meta = document.createElement('small');
+      const metaParts = [];
+      if (entry.service) {
+        metaParts.push(formatServiceLabel(entry.service));
+      }
+      if (entry.round != null) {
+        metaParts.push(`Round ${entry.round}`);
+      }
+      if (entry.recordedAt) {
+        const date = new Date(entry.recordedAt);
+        if (!Number.isNaN(date.getTime())) {
+          metaParts.push(date.toLocaleString());
+        }
+      }
+      meta.textContent = metaParts.join(' · ');
+      const summary = document.createElement('p');
+      summary.className = 'integration-panel__history-summary';
+      summary.textContent = entry.summary;
+      listItem.appendChild(title);
+      listItem.appendChild(meta);
+      listItem.appendChild(summary);
+      integrationHistoryList.appendChild(listItem);
+    });
+  }
+
+  function formatTimestamp(value) {
+    if (!value) return '';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return value;
+    return date.toLocaleString();
+  }
+
+  function normalizeServiceKey(value) {
+    if (!value) return '';
+    return String(value).trim().toLowerCase();
+  }
+
+  function updateServiceFilterOptions(services = []) {
+    if (!integrationServiceFilter) return;
+    const currentValue = integrationFilterService || integrationServiceFilter.value || '';
+    const previousFilter = normalizeServiceKey(currentValue);
+    const unique = Array.from(new Set((services || []).map((entry) => entry.service).filter(Boolean)));
+    integrationServiceFilter.innerHTML = '<option value="">All services</option>';
+    let restored = false;
+    unique.forEach((service) => {
+      const option = document.createElement('option');
+      option.value = service;
+      option.textContent = SERVICE_LABELS[service] || service;
+      integrationServiceFilter.appendChild(option);
+      if (!restored && previousFilter && normalizeServiceKey(service) === previousFilter) {
+        integrationServiceFilter.value = service;
+        restored = true;
+      }
+    });
+    if (restored) {
+      integrationFilterService = previousFilter;
+    } else {
+      integrationFilterService = '';
+      integrationServiceFilter.value = '';
+    }
+  }
+
+  function matchesIntegrationSearch(task) {
+    if (!integrationSearchTerm) return true;
+    const haystack = [
+      task.title,
+      task.shortId,
+      task.status,
+      task.description,
+      task.type,
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase();
+    return haystack.includes(integrationSearchTerm);
+  }
+
+  function getTaskTimestamp(task) {
+    if (!task?.updated) return 0;
+    const parsed = Date.parse(task.updated);
+    return Number.isNaN(parsed) ? 0 : parsed;
+  }
+
+  function buildTaskDetailText(task) {
+    if (!task || typeof task !== 'object') return '';
+    const details = [];
+    const description = typeof task.description === 'string' ? task.description.trim() : '';
+    if (description) {
+      details.push(description.length > 200 ? `${description.slice(0, 197)}…` : description);
+    }
+    const metaParts = [];
+    if (task.unassigned) {
+      metaParts.push('Unassigned backlog item');
+    }
+    const updatedLabel = formatTimestamp(task.updated);
+    if (updatedLabel) {
+      metaParts.push(`Updated ${updatedLabel}`);
+    }
+    if (!details.length && !metaParts.length) {
+      return '';
+    }
+    if (metaParts.length) {
+      details.push(metaParts.join(' · '));
+    }
+    return details.join(' ');
+  }
+
+  function sortIntegrationTasks(tasks) {
+    const sorted = [...tasks];
+    sorted.sort((a, b) => {
+      const aTime = getTaskTimestamp(a);
+      const bTime = getTaskTimestamp(b);
+      if (aTime === bTime) {
+        return (a.title || '').localeCompare(b.title || '', undefined, { sensitivity: 'base' });
+      }
+      return bTime - aTime;
+    });
+    return sorted;
+  }
+
+  function gatherIntegrationTasks(snapshot) {
+    const data = snapshot || {};
+    const seen = new Set();
+    const tasks = [];
+    const addTask = (item) => {
+      if (!item || typeof item !== 'object') return;
+      const fallback = `${item.service || 'integration'}:${item.title || item.shortId || 'item'}:${Math.random()
+        .toString(36)
+        .slice(2, 8)}`;
+      const id = item.id || fallback;
+      if (!id) return;
+      if (seen.has(id)) return;
+      seen.add(id);
+      tasks.push({
+        ...item,
+        id,
+        title: item.title || item.name || 'Backlog item',
+        description: item.description || item.summary || '',
+      });
+    };
+
+    const unassigned = Array.isArray(data.unassigned) ? data.unassigned : [];
+    unassigned.forEach(addTask);
+
+    const assignments = data.assignments && typeof data.assignments === 'object' ? data.assignments : {};
+    Object.values(assignments).forEach((entry) => {
+      const items = Array.isArray(entry?.items) ? entry.items : [];
+      items.forEach(addTask);
+    });
+
+    return tasks;
+  }
+
+  function renderIntegrationServices(snapshot) {
+    if (!integrationServices) return;
+    integrationServices.innerHTML = '';
+    const services = Array.isArray(snapshot?.services) ? snapshot.services : [];
+    if (!services.length) {
+      const placeholder = document.createElement('span');
+      placeholder.className = 'integration-panel__empty';
+      placeholder.textContent = 'No synced services yet.';
+      integrationServices.appendChild(placeholder);
+      return;
+    }
+    services.forEach((entry) => {
+      const chip = document.createElement('span');
+      chip.className = 'integration-panel__service-chip';
+      const label = formatServiceLabel(entry.service);
+      const parts = [];
+      if (typeof entry.assignments === 'number') {
+        parts.push(`${entry.assignments} assigned`);
+      }
+      if (typeof entry.unassigned === 'number') {
+        parts.push(`${entry.unassigned} backlog`);
+      }
+      chip.textContent = `${label}${parts.length ? ` • ${parts.join(' · ')}` : ''}`;
+      integrationServices.appendChild(chip);
+    });
+  }
+
+  function markCompletedTasks(tasks) {
+    const completedIds = new Map();
+    integrationHistory.forEach((entry) => {
+      if (!entry?.taskId) return;
+      completedIds.set(entry.taskId, entry.recordedAt || entry.summary || entry.story || '');
+    });
+    return (tasks || []).map((task) => {
+      const completion = completedIds.get(task.id);
+      return completion
+        ? {
+            ...task,
+            completed: true,
+            completedAt: completion,
+          }
+        : { ...task, completed: false };
+    });
+  }
+
+  function renderIntegrationTasks(snapshot) {
+    if (!integrationTasksContainer) return;
+    integrationTasksContainer.innerHTML = '';
+    if (integrationCompletedContainer) {
+      integrationCompletedContainer.innerHTML = '';
+    }
+    const tasks = gatherIntegrationTasks(snapshot);
+    if (!tasks.length) {
+      const placeholder = document.createElement('div');
+      placeholder.className = 'integration-panel__empty';
+      placeholder.textContent =
+        snapshot && snapshot.services?.length
+          ? 'No tasks were returned from the synced services.'
+          : 'Refresh to load backlog tasks after syncing integrations.';
+      integrationTasksContainer.appendChild(placeholder);
+      integrationRenderedTasks = [];
+      return;
+    }
+    const annotated = markCompletedTasks(tasks);
+    const filtered = annotated.filter((task) => {
+      if (integrationFilterService) {
+        if (normalizeServiceKey(task.service) !== integrationFilterService) {
+          return false;
+        }
+      }
+      return matchesIntegrationSearch(task);
+    });
+    if (!filtered.length) {
+      const placeholder = document.createElement('div');
+      placeholder.className = 'integration-panel__empty';
+      placeholder.textContent = 'No backlog items match the current filters.';
+      integrationTasksContainer.appendChild(placeholder);
+      integrationRenderedTasks = [];
+      return;
+    }
+    const sorted = sortIntegrationTasks(filtered);
+    const tasksToShow = sorted.slice(0, 40);
+    integrationRenderedTasks = tasksToShow;
+    const backlogFragment = document.createDocumentFragment();
+    const completedFragment = document.createDocumentFragment();
+    const completedList = document.createElement('div');
+    completedList.className = 'integration-panel__completed-list';
+    let completedCount = 0;
+
+    tasksToShow.forEach((task) => {
+      const card = document.createElement('div');
+      card.className = 'integration-panel__task';
+      if (task.id) {
+        card.dataset.taskId = task.id;
+      }
+      if (task.completed) {
+        card.dataset.completed = 'true';
+        completedCount += 1;
+      }
+      if (selectedIntegrationTaskId && task.id === selectedIntegrationTaskId) {
+        card.dataset.selected = 'true';
+      }
+      const title = document.createElement('div');
+      title.className = 'integration-panel__task-title';
+      title.textContent = task.title || 'Backlog item';
+      const meta = document.createElement('div');
+      meta.className = 'integration-panel__task-meta';
+      const metaText = document.createElement('span');
+      const metaParts = [];
+      if (task.service) metaParts.push(formatServiceLabel(task.service));
+      if (task.shortId) metaParts.push(task.shortId);
+      if (task.status) metaParts.push(task.status);
+      if (task.type) metaParts.push(task.type);
+      metaText.textContent = metaParts.join(' · ');
+      meta.appendChild(metaText);
+      if (task.url) {
+        const link = document.createElement('a');
+        link.className = 'integration-panel__task-link';
+        link.href = task.url;
+        link.target = '_blank';
+        link.rel = 'noreferrer';
+        link.textContent = 'Open item';
+        meta.appendChild(link);
+      }
+      const detailText = buildTaskDetailText(task);
+      if (detailText) {
+        const detail = document.createElement('p');
+        detail.className = 'integration-panel__task-detail';
+        detail.textContent = detailText;
+        card.appendChild(detail);
+      }
+      const actions = document.createElement('div');
+      actions.className = 'integration-panel__task-actions';
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'ghost-btn';
+      button.dataset.taskId = task.id || '';
+      button.setAttribute('aria-label', `Set ${task.title || 'backlog item'} as story label`);
+      button.textContent = task.completed ? 'Re-evaluate' : 'Use story label';
+      actions.appendChild(button);
+      card.appendChild(title);
+      card.appendChild(meta);
+      card.appendChild(actions);
+      if (task.completed) {
+        const badge = document.createElement('span');
+        badge.className = 'integration-panel__task-badge';
+        badge.textContent = 'Estimated';
+        card.insertBefore(badge, card.firstChild);
+        completedList.appendChild(card);
+      } else {
+        backlogFragment.appendChild(card);
+      }
+    });
+
+    if (integrationCompletedContainer && completedCount) {
+      const heading = document.createElement('h3');
+      heading.textContent = `Estimated (${completedCount})`;
+      integrationCompletedContainer.appendChild(heading);
+      integrationCompletedContainer.appendChild(completedList);
+    }
+    integrationTasksContainer.appendChild(backlogFragment);
+  }
+
+  function updateIntegrationPanel(snapshot) {
+    integrationSnapshot = snapshot || integrationSnapshot;
+    updateServiceFilterOptions(integrationSnapshot?.services);
+    renderIntegrationServices(integrationSnapshot);
+    renderIntegrationTasks(integrationSnapshot);
+    renderIntegrationHistory();
+  }
+
+  function applyIntegrationTaskSelection(task) {
+    if (!task) return;
+    selectedIntegrationTask = task;
+    selectedIntegrationTaskId = task.id || '';
+    const label = buildIntegrationStoryLabel(task);
+    if (storyInput) {
+      storyInput.value = label;
+    }
+    if (label && isHost) {
+      sendMessage({ type: 'set-story', story: label });
+      setIntegrationStatus(`Story label set to ${label}.`, 'success');
+    } else if (label) {
+      setIntegrationStatus(`Only the host can update the story. Copy “${label}” into the story field.`, 'info');
+    }
+    updateTableStoryDisplay(label);
+    renderIntegrationTasks(integrationSnapshot);
+  }
+
+  function handleIntegrationTaskClick(event) {
+    const button = event.target.closest('button[data-task-id]');
+    const card = event.target.closest('[data-task-id]');
+    const taskId = button?.dataset.taskId || card?.dataset.taskId;
+    if (!taskId) return;
+    const task = integrationRenderedTasks.find((entry) => entry.id === taskId);
+    if (task) {
+      applyIntegrationTaskSelection(task);
+    }
+  }
+
+  async function handleIntegrationRefresh() {
+    if (!integrationStandup || integrationRefreshPending) return;
+    integrationRefreshPending = true;
+    refreshIntegrationBtn?.setAttribute('disabled', 'true');
+    setIntegrationStatus('Refreshing backlog tasks…', 'info');
+    try {
+      await integrationStandup.refresh(true);
+      setIntegrationStatus('Backlog refreshed. Choose a task to set the story label.', 'success');
+    } catch (error) {
+      console.error('[PlanningPoker] Integration refresh failed', error);
+      setIntegrationStatus(error?.message || 'Unable to refresh backlog right now.', 'error');
+    } finally {
+      integrationRefreshPending = false;
+      refreshIntegrationBtn?.removeAttribute('disabled');
+    }
+  }
+
+  function maybeRecordRoundSummary() {
+    if (!selectedIntegrationTask || !selectedIntegrationTaskId) return;
+    if (!currentState.isRevealed || !currentState.summaryText) return;
+    const roundNumber = currentState.round;
+    if (roundNumber === lastRecordedRound && selectedIntegrationTaskId === lastRecordedTaskId) {
+      return;
+    }
+    recordIntegrationHistory({
+      taskId: selectedIntegrationTaskId,
+      service: selectedIntegrationTask.service || '',
+      title: selectedIntegrationTask.title || '',
+      summary: currentState.summaryText,
+      round: roundNumber,
+      story: storyInput?.value || '',
+    });
+    setIntegrationStatus(
+      `Saved estimate for ${selectedIntegrationTask.title || 'current story'}.`,
+      'success',
+    );
+    lastRecordedRound = roundNumber;
+    lastRecordedTaskId = selectedIntegrationTaskId;
+  }
+
+  function initIntegrationPanel() {
+    integrationHistory = loadIntegrationHistory();
+    renderIntegrationHistory();
+    if (integrationStandup?.subscribe) {
+      integrationStandup.subscribe((snapshot) => {
+        updateIntegrationPanel(snapshot);
+      });
+    }
+    refreshIntegrationBtn?.addEventListener('click', handleIntegrationRefresh);
+    integrationTasksContainer?.addEventListener('click', handleIntegrationTaskClick);
+    integrationCompletedContainer?.addEventListener('click', handleIntegrationTaskClick);
+    integrationServiceFilter?.addEventListener('change', (event) => {
+      integrationFilterService = normalizeServiceKey(event.target.value);
+      renderIntegrationTasks(integrationSnapshot);
+    });
+    integrationSearchInput?.addEventListener('input', (event) => {
+      integrationSearchTerm = (event.target.value || '').trim().toLowerCase();
+      renderIntegrationTasks(integrationSnapshot);
+    });
+    const snapshot = integrationStandup?.getSnapshot ? integrationStandup.getSnapshot() : null;
+    updateIntegrationPanel(snapshot);
+    handleIntegrationRefresh();
   }
 
   renderDeck();
@@ -410,4 +1064,6 @@
   initEvents();
   autoJoinFromQuery();
   updateSessionBadge();
+  updateTableStoryDisplay();
+  initIntegrationPanel();
 })();

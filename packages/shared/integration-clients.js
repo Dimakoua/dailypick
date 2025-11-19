@@ -123,6 +123,7 @@ async function fetchJira(config, payload = {}) {
     }
 
     const data = await response.json();
+    console.log(data)
     const issuesPayload = Array.isArray(data.issues)
       ? data.issues
       : Array.isArray(data.results) && data.results.length > 0 && Array.isArray(data.results[0].issues)

@@ -43,6 +43,7 @@
   <link rel="stylesheet" href="./style.css">
   <script src="/assets/js/brand-theme-engine.js" defer></script>
   <script src="/assets/js/brand-config.js" defer></script>
+  <script src="/assets/js/standup-data.js" defer></script>
   <script src="./script.js" defer></script>
 </head>
 
@@ -64,64 +65,51 @@
       </div>
     </header>
 
-    <section class="poker-grid">
-      <article class="control-card glass-card" aria-label="Room controls">
-        <div class="field-group">
-          <label for="displayNameInput">Display name</label>
-          <div class="inline-field">
-            <input id="displayNameInput" type="text" maxlength="40" autocomplete="off" placeholder="e.g. Casey">
-            <button id="saveNameBtn" type="button">Save</button>
+    <section class="poker-layout">
+      <article class="poker-table-card glass-card poker-board" aria-live="polite">
+        <header class="poker-table__toolbar">
+          <div>
+            <p class="poker-table__toolbar-label">Quick actions</p>
+            <p class="poker-table__toolbar-sub">Stay in the flow—open panels as needed.</p>
           </div>
-        </div>
-
-        <div class="field-group">
-          <label>Room</label>
-          <div class="room-actions">
-            <button id="createRoomBtn" type="button">Start new room</button>
-            <div class="join-row">
-              <input id="roomCodeInput" type="text" inputmode="numeric" autocomplete="off" placeholder="Enter room code">
-              <button id="joinRoomBtn" type="button">Join</button>
+          <div class="poker-table__toolbar-buttons">
+            <button type="button" class="toolbar-btn" data-panel-toggle="controls">Room controls</button>
+            <button type="button" class="toolbar-btn" data-panel-toggle="backlog">Backlog</button>
+          </div>
+        </header>
+        <section class="poker-table" aria-label="Planning poker table">
+          <div class="poker-table__wrap">
+            <div class="poker-table__surface">
+              <div class="table-pot" aria-live="polite">
+                <p class="table-pot__eyebrow">Current story</p>
+                <p id="tableStoryDisplay">Waiting for a story card</p>
+              </div>
+              <section class="deck-toolbar" aria-label="Deck style picker">
+                <div class="deck-selector">
+                  <label for="deckSelect">Deck style</label>
+                  <div class="deck-select-row">
+                    <select id="deckSelect" aria-describedby="deckDescription"></select>
+                  </div>
+                  <p id="deckDescription" class="deck-description">Classic Fibonacci cards everyone expects.</p>
+                </div>
+              </section>
+              <div class="deck" role="group" aria-label="Fibonacci deck" id="cardDeck"></div>
+              <div class="deck-actions">
+                <button id="clearCardBtn" type="button" class="ghost-btn" disabled>Clear selection</button>
+                <div class="host-actions">
+                  <button id="revealBtn" type="button" disabled>Reveal votes</button>
+                  <button id="resetBtn" type="button" disabled>New round</button>
+                </div>
+              </div>
             </div>
+            <section class="participants poker-table__participants" aria-labelledby="participantsHeading">
+              <div class="participants-header">
+                <h2 id="participantsHeading">Participants</h2>
+                <span id="participantCount" class="pill">0</span>
+              </div>
+              <div id="participantsList" class="participants-list"></div>
+            </section>
           </div>
-        </div>
-
-        <div class="field-group">
-          <label for="storyInput">Story / Jira link</label>
-          <input id="storyInput" type="text" maxlength="120" placeholder="e.g. JIRA-123 · Improve onboarding modal">
-          <p class="field-hint">Hosts can edit the story label for the current round.</p>
-        </div>
-
-        <div class="field-group">
-          <label>Status</label>
-          <p id="connectionStatus" class="status-line" aria-live="polite">Not connected</p>
-        </div>
-      </article>
-
-      <article class="board-card glass-card" aria-live="polite">
-        <section class="deck-toolbar" aria-label="Deck style picker">
-          <div class="deck-selector">
-            <label for="deckSelect">Deck style</label>
-            <div class="deck-select-row">
-              <select id="deckSelect" aria-describedby="deckDescription"></select>
-            </div>
-            <p id="deckDescription" class="deck-description">Classic Fibonacci cards everyone expects.</p>
-          </div>
-        </section>
-        <div class="deck" role="group" aria-label="Fibonacci deck" id="cardDeck"></div>
-        <div class="deck-actions">
-          <button id="clearCardBtn" type="button" class="ghost-btn" disabled>Clear selection</button>
-          <div class="host-actions">
-            <button id="revealBtn" type="button" disabled>Reveal votes</button>
-            <button id="resetBtn" type="button" disabled>New round</button>
-          </div>
-        </div>
-
-        <section class="participants" aria-labelledby="participantsHeading">
-          <div class="participants-header">
-            <h2 id="participantsHeading">Participants</h2>
-            <span id="participantCount" class="pill">0</span>
-          </div>
-          <div id="participantsList" class="participants-list"></div>
         </section>
 
         <section class="summary-panel">
@@ -133,6 +121,92 @@
         </section>
       </article>
     </section>
+
+    <div class="poker-panel__scrim" id="panelScrim" hidden></div>
+
+    <aside class="poker-panel" id="controlsPanel" aria-hidden="true">
+      <div class="poker-panel__header">
+        <h2>Room controls</h2>
+        <button type="button" class="poker-panel__close" data-panel-close>&times;</button>
+      </div>
+      <div class="poker-panel__body">
+        <div class="field-group">
+          <label for="displayNameInput">Display name</label>
+          <div class="inline-field">
+            <input id="displayNameInput" type="text" maxlength="40" autocomplete="off" placeholder="e.g. Casey">
+            <button id="saveNameBtn" type="button">Save</button>
+          </div>
+        </div>
+
+          <div class="host-note" id="hostNotice" aria-live="polite" hidden>
+            <strong>You are now the host.</strong> You can manage the story label, reveal votes, and share invites.
+          </div>
+
+          <div class="field-group" data-host-only>
+            <label>Room</label>
+            <div class="room-actions">
+              <button id="createRoomBtn" type="button">Start new room</button>
+              <div class="join-row">
+                <input id="roomCodeInput" type="text" inputmode="numeric" autocomplete="off" placeholder="Enter room code">
+              <button id="joinRoomBtn" type="button">Join</button>
+            </div>
+          </div>
+        </div>
+
+          <div class="field-group" data-host-only>
+            <label for="storyInput">Story / Jira link</label>
+            <input id="storyInput" type="text" maxlength="120" placeholder="e.g. JIRA-123 · Improve onboarding modal">
+            <p class="field-hint">Hosts can edit the story label for the current round.</p>
+          </div>
+
+        <div class="field-group">
+          <label>Status</label>
+          <p id="connectionStatus" class="status-line" aria-live="polite">Not connected</p>
+        </div>
+      </div>
+    </aside>
+
+    <aside class="poker-panel" id="backlogPanel" aria-hidden="true">
+      <div class="poker-panel__header">
+        <h2>Backlog & history</h2>
+        <button type="button" class="poker-panel__close" data-panel-close>&times;</button>
+      </div>
+      <div class="poker-panel__body">
+        <section class="integration-panel" aria-labelledby="integrationHeading" data-host-only>
+          <div class="integration-panel__header">
+            <div>
+              <p class="hero-eyebrow integration-panel__eyebrow">Backlog import</p>
+              <h2 id="integrationHeading">Trello, Jira, or GitHub work</h2>
+              <p class="integration-panel__description">Pull saved tasks, set the current story, and keep a handy history of your estimates.</p>
+            </div>
+            <button id="refreshIntegrationBtn" type="button" class="ghost-btn">Refresh tasks</button>
+          </div>
+          <p id="integrationStatus" class="integration-panel__status" aria-live="polite">Connect integrations in <a href="/apps/settings/#integrations">Settings</a> and refresh to load tasks.</p>
+          <div class="integration-panel__controls">
+            <label class="integration-panel__control">
+              <span>Service</span>
+              <select id="integrationServiceFilter">
+                <option value="">All services</option>
+              </select>
+            </label>
+            <label class="integration-panel__control integration-panel__control--search">
+              <span>Search</span>
+              <input id="integrationSearch" type="search" inputmode="search" placeholder="Title, status, ID..." />
+            </label>
+          </div>
+          <div id="integrationServices" class="integration-panel__services" aria-live="polite"></div>
+          <div id="integrationTasks" class="integration-panel__tasks" aria-live="polite" role="list"></div>
+          <div class="integration-panel__completed" id="integrationCompletedTasks" aria-live="polite" role="list"></div>
+          <div class="integration-panel__history">
+            <div class="integration-panel__history-header">
+              <h3>Recent estimates</h3>
+              <span id="integrationHistoryCount" class="pill">0</span>
+            </div>
+            <ul id="integrationHistoryList"></ul>
+          </div>
+        </section>
+      </div>
+    </aside>
 
     <section class="seo-content glass-card">
       <h2>Why Planning Poker?</h2>

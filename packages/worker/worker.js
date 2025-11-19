@@ -3,6 +3,7 @@ import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
 import { CollaborationSession } from '../shared/collaboration.js';
 import { IntegrationConfig } from '../shared/integration-config.js';
 import { fetchIntegrationData, IntegrationError } from '../shared/integration-clients.js';
+import { handleSlackSlashCommand } from '../shared/slack-command.js';
 import { BallGameSession } from '../../apps/ballgame/ball-game-session.js';
 import { MimicGameSession } from '../../apps/mimic-master/mimic-game-session.js';
 import { PlanningPokerSession } from '../../apps/planning-poker/planning-poker-session.js';
@@ -133,6 +134,7 @@ const loadIntegrationConfig = async (env, service, clientId) => {
   return body?.config || null;
 };
 
+router.post('/api/slack/command', handleSlackSlashCommand);
 router.get('/api/integrations/config', forwardIntegrationRequest);
 router.put('/api/integrations/config/:service', forwardIntegrationRequest);
 router.delete('/api/integrations/config/:service', forwardIntegrationRequest);

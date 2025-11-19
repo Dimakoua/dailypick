@@ -4,7 +4,7 @@ const CORS_HEADERS = {
   'Access-Control-Allow-Headers': 'Content-Type, X-Integration-Client',
 };
 
-const ALLOWED_SERVICES = new Set(['jira', 'trello', 'github']);
+const ALLOWED_SERVICES = new Set(['jira', 'trello', 'github', 'slack']);
 const STORAGE_KEY = 'config';
 const INTERNAL_HOSTNAME = 'integrations.internal';
 
