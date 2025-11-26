@@ -106,8 +106,8 @@ jobs:
           # These env vars will be used by envsubst for prompt templating
           DP_CURRENT_DATE_FOR_AI_CONTEXT: "${{ steps.prepare_prompt.outputs.current_date_iso }}"
           DP_RECENT_ARTICLE_TITLES_LIST: ${{ steps.prepare_prompt.outputs.recent_titles_list }}
-          GEMINI_MODEL_NAME: gemini-1.5-flash-latest  # Prioritize free-tier friendly model
-          GEMINI_API_VERSION: v1beta              # Use v1beta for access to the latest models
+          GEMINI_MODEL_NAME: gemini-pro  # Use the model from the official REST API quickstart for the free tier
+          GEMINI_API_VERSION: v1beta     # Use v1beta as per the documentation
         run: |
           PROMPT_TEMPLATE_FILE="${{ steps.prepare_prompt.outputs.prompt_file }}"
 
@@ -125,8 +125,8 @@ jobs:
           echo "DP_RECENT_ARTICLE_TITLES_LIST:"
           echo "$DP_RECENT_ARTICLE_TITLES_LIST"
 
-          GEMINI_MODEL="${GEMINI_MODEL_NAME:-gemini-1.5-flash-latest}"
-          echo "Requested Gemini model: $GEMINI_MODEL"
+          GEMINI_MODEL="${GEMINI_MODEL_NAME:-gemini-pro}"
+          echo "Using Gemini model: $GEMINI_MODEL"
           GEMINI_API_VERSION="${GEMINI_API_VERSION:-v1beta}"
           echo "Using Gemini API version: $GEMINI_API_VERSION"
 
@@ -154,65 +154,34 @@ jobs:
 
           TMP_RESPONSE=$(mktemp)
           API_RESPONSE=""
-          SELECTED_MODEL=""
-          SELECTED_API_VERSION=""
           
-          # Define a list of models to try in order of preference.
-          # The default model from GEMINI_MODEL_NAME will be first.
-          # Free-tier friendly models are prioritized.
-          MODEL_ATTEMPTS_LIST=(
-            "$GEMINI_MODEL"
-            "gemini-1.5-flash-latest"
-            "gemini-1.5-flash"
-            "gemini-pro"
-            "gemini-1.5-pro-latest"
-            "gemini-1.5-pro"
-          )
-          # Create a unique list of models to try, preserving order.
-          MODEL_ATTEMPTS=($(printf "%s\n" "${MODEL_ATTEMPTS_LIST[@]}" | awk '!x[$0]++'))
+          API_ENDPOINT="https://generativelanguage.googleapis.com/${GEMINI_API_VERSION}/models/${GEMINI_MODEL}:generateContent"
+          echo "  Calling Gemini API at $API_ENDPOINT"
+          HTTP_STATUS=$(curl -sS -X POST \
+            -H "Content-Type: application/json" \
+            -d "$JSON_PAYLOAD" \
+            -o "$TMP_RESPONSE" \
+            -w '%{http_code}' \
+            "${API_ENDPOINT}?key=$GEMINI_API_KEY")
+          RESPONSE_BODY=$(cat "$TMP_RESPONSE")
 
-          VERSION_ATTEMPTS=("$GEMINI_API_VERSION")
-          if [ "$GEMINI_API_VERSION" != "v1beta" ]; then
-            VERSION_ATTEMPTS+=("v1beta")
+          if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
+            API_RESPONSE="$RESPONSE_BODY"
+          else
+            echo "::error::Model $GEMINI_MODEL returned HTTP $HTTP_STATUS (API version $GEMINI_API_VERSION)"
+            echo "  Response snippet: $(echo "$RESPONSE_BODY" | head -c 1000)"
           fi
-
-          for API_VERSION_CANDIDATE in "${VERSION_ATTEMPTS[@]}"; do
-            for MODEL_NAME in "${MODEL_ATTEMPTS[@]}"; do
-              CURRENT_ENDPOINT="https://generativelanguage.googleapis.com/${API_VERSION_CANDIDATE}/models/${MODEL_NAME}:generateContent"
-              echo "  Trying model $MODEL_NAME at $CURRENT_ENDPOINT"
-              HTTP_STATUS=$(curl -sS -X POST \
-                -H "Content-Type: application/json" \
-                -d "$JSON_PAYLOAD" \
-                -o "$TMP_RESPONSE" \
-                -w '%{http_code}' \
-                "${CURRENT_ENDPOINT}?key=$GEMINI_API_KEY")
-              RESPONSE_BODY=$(cat "$TMP_RESPONSE")
-
-              if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
-                API_RESPONSE="$RESPONSE_BODY"
-                SELECTED_MODEL="$MODEL_NAME"
-                API_ENDPOINT="$CURRENT_ENDPOINT"
-                SELECTED_API_VERSION="$API_VERSION_CANDIDATE"
-                break 2
-              fi
-
-              echo "::warning::Model $MODEL_NAME returned HTTP $HTTP_STATUS (API version $API_VERSION_CANDIDATE)"
-              echo "  Response snippet: $(echo "$RESPONSE_BODY" | head -c 500)"
-              echo "  Retrying with the next configured combination (if any)..."
-            done
-          done
-
+          
           rm -f "$TMP_RESPONSE"
 
           if [ -z "$API_RESPONSE" ]; then
-            echo "::error::Failed to get a successful response from any configured Gemini model."
+            echo "::error::Failed to get a successful response from the Gemini API."
             exit 1
           fi
 
-          echo "Using Gemini model endpoint: $API_ENDPOINT (model: $SELECTED_MODEL, api version: $SELECTED_API_VERSION)"
+          echo "Using Gemini model endpoint: $API_ENDPOINT (model: $GEMINI_MODEL, api version: $GEMINI_API_VERSION)"
 
           # Extract the generated text. 
-          # For gemini-1.5-flash-latest, it's typically candidates[0].content.parts[0].text
           GENERATED_MARKDOWN=$(echo "$API_RESPONSE" | jq -r '.candidates[0].content.parts[0].text')
 
           if [ -z "$GENERATED_MARKDOWN" ] || [ "$GENERATED_MARKDOWN" == "null" ]; then
