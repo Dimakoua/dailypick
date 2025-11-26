@@ -106,7 +106,7 @@ jobs:
           # These env vars will be used by envsubst for prompt templating
           DP_CURRENT_DATE_FOR_AI_CONTEXT: "${{ steps.prepare_prompt.outputs.current_date_iso }}"
           DP_RECENT_ARTICLE_TITLES_LIST: ${{ steps.prepare_prompt.outputs.recent_titles_list }}
-          GEMINI_MODEL_NAME: gemini-1.5-flash  # Default prompt model
+          GEMINI_MODEL_NAME: gemini-1.5-flash-latest  # Default prompt model that stays on Google's recommended alias
           GEMINI_API_VERSION: v1                # Use the v1 API base path so the model endpoint is recognized
         run: |
           PROMPT_TEMPLATE_FILE="${{ steps.prepare_prompt.outputs.prompt_file }}"
@@ -125,7 +125,7 @@ jobs:
           echo "DP_RECENT_ARTICLE_TITLES_LIST:"
           echo "$DP_RECENT_ARTICLE_TITLES_LIST"
 
-          GEMINI_MODEL="${GEMINI_MODEL_NAME:-gemini-1.5-flash}"
+          GEMINI_MODEL="${GEMINI_MODEL_NAME:-gemini-1.5-flash-latest}"
           echo "Requested Gemini model: $GEMINI_MODEL"
           GEMINI_API_VERSION="${GEMINI_API_VERSION:-v1}"
           echo "Using Gemini API version: $GEMINI_API_VERSION"
@@ -155,32 +155,44 @@ jobs:
           TMP_RESPONSE=$(mktemp)
           API_RESPONSE=""
           SELECTED_MODEL=""
+          SELECTED_API_VERSION=""
           MODEL_ATTEMPTS=("$GEMINI_MODEL")
-          if [ "$GEMINI_MODEL" != "text-bison-001" ]; then
-            MODEL_ATTEMPTS+=("text-bison-001")
+          if [ "$GEMINI_MODEL" != "gemini-1.5-flash" ]; then
+            MODEL_ATTEMPTS+=("gemini-1.5-flash")
+          fi
+          if [ "$GEMINI_MODEL" != "gemini-1.5-pro" ]; then
+            MODEL_ATTEMPTS+=("gemini-1.5-pro")
           fi
 
-          for MODEL_NAME in "${MODEL_ATTEMPTS[@]}"; do
-            CURRENT_ENDPOINT="https://generativelanguage.googleapis.com/${GEMINI_API_VERSION}/models/${MODEL_NAME}:generateContent"
-            echo "  Trying model $MODEL_NAME at $CURRENT_ENDPOINT"
-            HTTP_STATUS=$(curl -sS -X POST \
-              -H "Content-Type: application/json" \
-              -d "$JSON_PAYLOAD" \
-              -o "$TMP_RESPONSE" \
-              -w '%{http_code}' \
-              "${CURRENT_ENDPOINT}?key=$GEMINI_API_KEY")
-            RESPONSE_BODY=$(cat "$TMP_RESPONSE")
+          VERSION_ATTEMPTS=("$GEMINI_API_VERSION")
+          if [ "$GEMINI_API_VERSION" != "v1beta" ]; then
+            VERSION_ATTEMPTS+=("v1beta")
+          fi
 
-            if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
-              API_RESPONSE="$RESPONSE_BODY"
-              SELECTED_MODEL="$MODEL_NAME"
-              API_ENDPOINT="$CURRENT_ENDPOINT"
-              break
-            fi
+          for API_VERSION_CANDIDATE in "${VERSION_ATTEMPTS[@]}"; do
+            for MODEL_NAME in "${MODEL_ATTEMPTS[@]}"; do
+              CURRENT_ENDPOINT="https://generativelanguage.googleapis.com/${API_VERSION_CANDIDATE}/models/${MODEL_NAME}:generateContent"
+              echo "  Trying model $MODEL_NAME at $CURRENT_ENDPOINT"
+              HTTP_STATUS=$(curl -sS -X POST \
+                -H "Content-Type: application/json" \
+                -d "$JSON_PAYLOAD" \
+                -o "$TMP_RESPONSE" \
+                -w '%{http_code}' \
+                "${CURRENT_ENDPOINT}?key=$GEMINI_API_KEY")
+              RESPONSE_BODY=$(cat "$TMP_RESPONSE")
 
-            echo "::warning::Model $MODEL_NAME returned HTTP $HTTP_STATUS"
-            echo "  Response snippet: $(echo "$RESPONSE_BODY" | head -c 500)"
-            echo "  Retrying with next configured model (if any)..."
+              if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
+                API_RESPONSE="$RESPONSE_BODY"
+                SELECTED_MODEL="$MODEL_NAME"
+                API_ENDPOINT="$CURRENT_ENDPOINT"
+                SELECTED_API_VERSION="$API_VERSION_CANDIDATE"
+                break 2
+              fi
+
+              echo "::warning::Model $MODEL_NAME returned HTTP $HTTP_STATUS (API version $API_VERSION_CANDIDATE)"
+              echo "  Response snippet: $(echo "$RESPONSE_BODY" | head -c 500)"
+              echo "  Retrying with the next configured combination (if any)..."
+            done
           done
 
           rm -f "$TMP_RESPONSE"
@@ -190,7 +202,7 @@ jobs:
             exit 1
           fi
 
-          echo "Using Gemini model endpoint: $API_ENDPOINT (model: $SELECTED_MODEL)"
+          echo "Using Gemini model endpoint: $API_ENDPOINT (model: $SELECTED_MODEL, api version: $SELECTED_API_VERSION)"
 
           # Extract the generated text. 
           # For gemini-1.5-flash-latest, it's typically candidates[0].content.parts[0].text
