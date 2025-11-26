@@ -106,8 +106,8 @@ jobs:
           # These env vars will be used by envsubst for prompt templating
           DP_CURRENT_DATE_FOR_AI_CONTEXT: "${{ steps.prepare_prompt.outputs.current_date_iso }}"
           DP_RECENT_ARTICLE_TITLES_LIST: ${{ steps.prepare_prompt.outputs.recent_titles_list }}
-          GEMINI_MODEL_NAME: gemini-1.5-flash-latest  # Default prompt model that stays on Google's recommended alias
-          GEMINI_API_VERSION: v1                # Use the v1 API base path so the model endpoint is recognized
+          GEMINI_MODEL_NAME: gemini-1.5-flash-latest  # Prioritize free-tier friendly model
+          GEMINI_API_VERSION: v1beta              # Use v1beta for access to the latest models
         run: |
           PROMPT_TEMPLATE_FILE="${{ steps.prepare_prompt.outputs.prompt_file }}"
 
@@ -127,7 +127,7 @@ jobs:
 
           GEMINI_MODEL="${GEMINI_MODEL_NAME:-gemini-1.5-flash-latest}"
           echo "Requested Gemini model: $GEMINI_MODEL"
-          GEMINI_API_VERSION="${GEMINI_API_VERSION:-v1}"
+          GEMINI_API_VERSION="${GEMINI_API_VERSION:-v1beta}"
           echo "Using Gemini API version: $GEMINI_API_VERSION"
 
           # Use envsubst to prepare the prompt text by substituting environment variables.
@@ -156,13 +156,20 @@ jobs:
           API_RESPONSE=""
           SELECTED_MODEL=""
           SELECTED_API_VERSION=""
-          MODEL_ATTEMPTS=("$GEMINI_MODEL")
-          if [ "$GEMINI_MODEL" != "gemini-1.5-flash" ]; then
-            MODEL_ATTEMPTS+=("gemini-1.5-flash")
-          fi
-          if [ "$GEMINI_MODEL" != "gemini-1.5-pro" ]; then
-            MODEL_ATTEMPTS+=("gemini-1.5-pro")
-          fi
+          
+          # Define a list of models to try in order of preference.
+          # The default model from GEMINI_MODEL_NAME will be first.
+          # Free-tier friendly models are prioritized.
+          MODEL_ATTEMPTS_LIST=(
+            "$GEMINI_MODEL"
+            "gemini-1.5-flash-latest"
+            "gemini-1.5-flash"
+            "gemini-pro"
+            "gemini-1.5-pro-latest"
+            "gemini-1.5-pro"
+          )
+          # Create a unique list of models to try, preserving order.
+          MODEL_ATTEMPTS=($(printf "%s\n" "${MODEL_ATTEMPTS_LIST[@]}" | awk '!x[$0]++'))
 
           VERSION_ATTEMPTS=("$GEMINI_API_VERSION")
           if [ "$GEMINI_API_VERSION" != "v1beta" ]; then
