@@ -106,6 +106,7 @@ jobs:
           # These env vars will be used by envsubst for prompt templating
           DP_CURRENT_DATE_FOR_AI_CONTEXT: "${{ steps.prepare_prompt.outputs.current_date_iso }}"
           DP_RECENT_ARTICLE_TITLES_LIST: ${{ steps.prepare_prompt.outputs.recent_titles_list }}
+          GEMINI_MODEL_NAME: gemini-1.5-flash  # Use the public flash model endpoint (without -latest) to avoid 404s
         run: |
           PROMPT_TEMPLATE_FILE="${{ steps.prepare_prompt.outputs.prompt_file }}"
 
@@ -122,6 +123,10 @@ jobs:
           echo "DP_CURRENT_DATE_FOR_AI_CONTEXT: $DP_CURRENT_DATE_FOR_AI_CONTEXT"
           echo "DP_RECENT_ARTICLE_TITLES_LIST:"
           echo "$DP_RECENT_ARTICLE_TITLES_LIST"
+
+          GEMINI_MODEL="${GEMINI_MODEL_NAME:-gemini-1.5-flash}"
+          API_ENDPOINT="https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent"
+          echo "Using Gemini model endpoint: $API_ENDPOINT"
 
           # Use envsubst to prepare the prompt text by substituting environment variables.
           # This requires your prompt.md to use placeholders like ${DP_VAR_NAME}
@@ -149,7 +154,7 @@ jobs:
           API_RESPONSE=$(curl --fail -sS -X POST \
             -H "Content-Type: application/json" \
             -d "$JSON_PAYLOAD" \
-            "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=$GEMINI_API_KEY")
+            "${API_ENDPOINT}?key=$GEMINI_API_KEY")
 
           if [ $? -ne 0 ]; then
             echo "::error::Gemini API call failed."
