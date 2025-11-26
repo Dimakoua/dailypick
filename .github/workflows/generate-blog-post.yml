@@ -106,8 +106,8 @@ jobs:
           # These env vars will be used by envsubst for prompt templating
           DP_CURRENT_DATE_FOR_AI_CONTEXT: "${{ steps.prepare_prompt.outputs.current_date_iso }}"
           DP_RECENT_ARTICLE_TITLES_LIST: ${{ steps.prepare_prompt.outputs.recent_titles_list }}
-          GEMINI_MODEL_NAME: gemini-pro  # Use the model from the official REST API quickstart for the free tier
-          GEMINI_API_VERSION: v1beta     # Use v1beta as per the documentation
+          GEMINI_MODEL_NAME: gemini-2.5-flash  # Use the model from the user-provided example
+          GEMINI_API_VERSION: v1beta         # Use v1beta as per the documentation
         run: |
           PROMPT_TEMPLATE_FILE="${{ steps.prepare_prompt.outputs.prompt_file }}"
 
@@ -125,7 +125,7 @@ jobs:
           echo "DP_RECENT_ARTICLE_TITLES_LIST:"
           echo "$DP_RECENT_ARTICLE_TITLES_LIST"
 
-          GEMINI_MODEL="${GEMINI_MODEL_NAME:-gemini-pro}"
+          GEMINI_MODEL="${GEMINI_MODEL_NAME:-gemini-2.5-flash}"
           echo "Using Gemini model: $GEMINI_MODEL"
           GEMINI_API_VERSION="${GEMINI_API_VERSION:-v1beta}"
           echo "Using Gemini API version: $GEMINI_API_VERSION"
@@ -158,11 +158,12 @@ jobs:
           API_ENDPOINT="https://generativelanguage.googleapis.com/${GEMINI_API_VERSION}/models/${GEMINI_MODEL}:generateContent"
           echo "  Calling Gemini API at $API_ENDPOINT"
           HTTP_STATUS=$(curl -sS -X POST \
+            -H "x-goog-api-key: $GEMINI_API_KEY" \
             -H "Content-Type: application/json" \
             -d "$JSON_PAYLOAD" \
             -o "$TMP_RESPONSE" \
             -w '%{http_code}' \
-            "${API_ENDPOINT}?key=$GEMINI_API_KEY")
+            "$API_ENDPOINT")
           RESPONSE_BODY=$(cat "$TMP_RESPONSE")
 
           if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
