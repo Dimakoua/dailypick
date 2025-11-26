@@ -125,8 +125,7 @@ jobs:
           echo "$DP_RECENT_ARTICLE_TITLES_LIST"
 
           GEMINI_MODEL="${GEMINI_MODEL_NAME:-gemini-1.5-flash}"
-          API_ENDPOINT="https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent"
-          echo "Using Gemini model endpoint: $API_ENDPOINT"
+          echo "Requested Gemini model: $GEMINI_MODEL"
 
           # Use envsubst to prepare the prompt text by substituting environment variables.
           # This requires your prompt.md to use placeholders like ${DP_VAR_NAME}
@@ -150,18 +149,45 @@ jobs:
           echo "Sending request to Gemini API with prompt:"
           echo # Newline for clarity after potentially truncated prompt
 
-          # Using Gemini 1.5 Flash model.
-          API_RESPONSE=$(curl --fail -sS -X POST \
-            -H "Content-Type: application/json" \
-            -d "$JSON_PAYLOAD" \
-            "${API_ENDPOINT}?key=$GEMINI_API_KEY")
+          TMP_RESPONSE=$(mktemp)
+          API_RESPONSE=""
+          SELECTED_MODEL=""
+          MODEL_ATTEMPTS=("$GEMINI_MODEL")
+          if [ "$GEMINI_MODEL" != "text-bison-001" ]; then
+            MODEL_ATTEMPTS+=("text-bison-001")
+          fi
 
-          if [ $? -ne 0 ]; then
-            echo "::error::Gemini API call failed."
-            # Consider logging parts of API_RESPONSE if it's safe and helps debug, e.g. error message
-            # echo "Debug Response: $API_RESPONSE" # Be cautious with full response logging
+          for MODEL_NAME in "${MODEL_ATTEMPTS[@]}"; do
+            CURRENT_ENDPOINT="https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent"
+            echo "  Trying model $MODEL_NAME at $CURRENT_ENDPOINT"
+            HTTP_STATUS=$(curl -sS -X POST \
+              -H "Content-Type: application/json" \
+              -d "$JSON_PAYLOAD" \
+              -o "$TMP_RESPONSE" \
+              -w '%{http_code}' \
+              "${CURRENT_ENDPOINT}?key=$GEMINI_API_KEY")
+            RESPONSE_BODY=$(cat "$TMP_RESPONSE")
+
+            if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
+              API_RESPONSE="$RESPONSE_BODY"
+              SELECTED_MODEL="$MODEL_NAME"
+              API_ENDPOINT="$CURRENT_ENDPOINT"
+              break
+            fi
+
+            echo "::warning::Model $MODEL_NAME returned HTTP $HTTP_STATUS"
+            echo "  Response snippet: $(echo "$RESPONSE_BODY" | head -c 500)"
+            echo "  Retrying with next configured model (if any)..."
+          done
+
+          rm -f "$TMP_RESPONSE"
+
+          if [ -z "$API_RESPONSE" ]; then
+            echo "::error::Failed to get a successful response from any configured Gemini model."
             exit 1
           fi
+
+          echo "Using Gemini model endpoint: $API_ENDPOINT (model: $SELECTED_MODEL)"
 
           # Extract the generated text. 
           # For gemini-1.5-flash-latest, it's typically candidates[0].content.parts[0].text
