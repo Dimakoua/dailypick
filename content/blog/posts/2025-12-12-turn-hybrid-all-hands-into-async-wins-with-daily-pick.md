@@ -1,12 +1,12 @@
 ---
 title: "Turn Hybrid All-Hands into Async Wins with Daily Pick"
-date: 2025-12-12
+date: 2025-12-07
 description: "Design an async-friendly all-hands agenda that keeps hybrid teams engaged, spotlights every voice, and runs itself with Daily Pick selectors."
 layout: "post.njk"
 tags: ["async collaboration", "all-hands meeting", "hybrid work", "remote teams", "team rituals", "leadership"]
 canonical: "https://dailypick.dev/blog/turn-hybrid-all-hands-into-async-wins-with-daily-pick/"
 author: "Daily Pick"
-updated: 2025-12-12
+updated: 2025-12-07
 section: "Team Decisions"
 keywords: "async all-hands agenda, hybrid all-hands, remote team engagement, Daily Pick"
 ogImage: "/assets/og-image-main.png"
