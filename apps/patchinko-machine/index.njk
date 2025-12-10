@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patchinko Machine - Fair Stand-up Order | Daily Pick</title>
+  <meta name="description" content="An interactive Patchinko Machine game to decide stand-up order. Fair, fast, and fun.">
+  <meta name="keywords" content="standup order, daily standup, agile tool, patchinko, pachinko, daily pick">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dailypick.dev/apps/patchinko-machine/">
+  <meta property="og:title" content="Patchinko Machine - Fair Stand-up Order | Daily Pick">
+  <meta property="og:description" content="An interactive Patchinko Machine game to decide stand-up order. Fair, fast, and fun.">
+  <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://dailypick.dev/apps/patchinko-machine/">
+  <meta name="twitter:title" content="Patchinko Machine - Fair Stand-up Order | Daily Pick">
+  <meta name="twitter:description" content="An interactive Patchinko Machine game to decide stand-up order. Fair, fast, and fun.">
+  <meta name="twitter:image" content="https://dailypick.dev/assets/og-image-main.png">
+
+  <link rel="canonical" href="https://dailypick.dev/apps/patchinko-machine/">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/assets/favicon/site.webmanifest">
+  <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/assets/css/theme.css">
+  <link rel="stylesheet" href="/assets/css/glass.css">
+  <link rel="stylesheet" href="style.css">
+
+  <script src="/assets/js/brand-theme-engine.js" defer></script>
+  <script src="/assets/js/brand-config.js" defer></script>
+  <script src="/assets/js/standup-data.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  {% include "bg-orbs.html" %}
+  {% include "header.html" %}
+
+  <main class="patchinko-page">
+    <div class="glass-card patchinko-container">
+      <header class="page-hero">
+        <div>
+          <p class="hero-eyebrow">Stand-up Toolkit</p>
+          <h1 class="app-section-heading">Patchinko Machine</h1>
+          <p class="app-subheading">Drop the balls to decide the stand-up order. A fair, fast, and fun way to keep your dailies moving.</p>
+        </div>
+      </header>
+      
+      <div class="patchinko-main">
+        <div class="patchinko-board-container">
+          <canvas id="patchinko-canvas" width="700" height="820"></canvas>
+          <div id="buckets-container" class="buckets-container"></div>
+        </div>
+        
+        <aside class="patchinko-controls">
+          <div class="control-group">
+            <h2 class="control-heading">Stand-up Queue</h2>
+            <ul id="standup-queue" class="standup-queue">
+              <li class="queue-placeholder">Drop balls to generate the queue...</li>
+            </ul>
+          </div>
+
+          <div class="control-group">
+            <h2 class="control-heading">Peg Pattern</h2>
+            <div class="pattern-selector">
+              <button class="app-button app-button--secondary pattern-button" data-pattern="grid" aria-pressed="true">Grid</button>
+              <button class="app-button app-button--secondary pattern-button" data-pattern="tree">Tree</button>
+              <button class="app-button app-button--secondary pattern-button" data-pattern="triangles">Triangles</button>
+            </div>
+          </div>
+          
+          <div class="control-group">
+             <h2 class="control-heading">Actions</h2>
+            <button id="drop-balls-btn" class="app-button">Drop Balls</button>
+            <button id="reset-btn" class="app-button app-button--secondary">Reset</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  {% include "footer.html" %}
+</body>
+</html>
