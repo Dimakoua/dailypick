@@ -92,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let teamMembers = loadPersistedNames();
   let scores = {};
   let activePattern = 'grid';
+  let followBrandTheme = true;
   let animationFrameId;
 
   // 3. Team & Bucket Management
@@ -134,6 +135,55 @@ document.addEventListener('DOMContentLoaded', () => {
     halloween: 'pumpkin',
     christmas: 'xmasTree',
   };
+
+  function resolveHolidayPatternFromThemeDetails(theme, config) {
+    const seasonalEnabled = config?.seasonalThemesEnabled !== false;
+    if (!seasonalEnabled) return null;
+    if (config?.themeMode === 'manual') {
+      const manualId = config.activeThemeId || theme?.id;
+      if (manualId && holidayPatterns[manualId]) {
+        return holidayPatterns[manualId];
+      }
+      return null;
+    }
+    if (theme && theme.id && holidayPatterns[theme.id]) {
+      return holidayPatterns[theme.id];
+    }
+    return null;
+  }
+
+  function getBrandThemeContext(priorityDetail = null) {
+    if (priorityDetail && (priorityDetail.config || priorityDetail.theme)) {
+      return { config: priorityDetail.config, theme: priorityDetail.theme };
+    }
+    if (window.currentBrandConfig || window.currentBrandTheme) {
+      return {
+        config: window.currentBrandConfig,
+        theme: window.currentBrandTheme,
+      };
+    }
+    if (window.BrandThemeEngine && typeof window.BrandThemeEngine.composeBrandStyles === 'function') {
+      const { config, activeTheme } = window.BrandThemeEngine.composeBrandStyles();
+      return { config, theme: activeTheme };
+    }
+    return { config: null, theme: null };
+  }
+
+  function applyBrandHolidayPattern(detail = null, fromEvent = false) {
+    const { config, theme } = getBrandThemeContext(detail);
+    const resolved = resolveHolidayPatternFromThemeDetails(theme, config);
+    if (resolved) {
+      activePattern = resolved;
+      setPattern(resolved);
+      if (fromEvent) {
+        followBrandTheme = true;
+      }
+      return;
+    }
+    if (fromEvent) {
+      followBrandTheme = true;
+    }
+  }
 
   const patterns = {
     firework: () => {
@@ -646,21 +696,23 @@ document.addEventListener('DOMContentLoaded', () => {
     button.addEventListener('click', () => {
       if (button.dataset.pattern !== activePattern) {
         setPattern(button.dataset.pattern);
+        followBrandTheme = false;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawPegs();
       }
     });
   });
 
+  if (typeof window !== 'undefined') {
+    window.addEventListener('brandThemeChanged', (event) => {
+      followBrandTheme = true;
+      applyBrandHolidayPattern(event.detail, true);
+    });
+  }
+
   // 10. Initialization
   function init() {
-    // Check for active holiday theme and set pattern accordingly
-    if (window.BrandThemeEngine) {
-      const { activeTheme } = window.BrandThemeEngine.composeBrandStyles();
-      if (activeTheme && holidayPatterns[activeTheme.id]) {
-        activePattern = holidayPatterns[activeTheme.id];
-      }
-    }
+    applyBrandHolidayPattern(null, true);
 
     if (window.dailyPickStandup) {
       window.dailyPickStandup.subscribe((snapshot) => {
