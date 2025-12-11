@@ -75,11 +75,15 @@ document.addEventListener('DOMContentLoaded', () => {
     return Math.hypot(x1 - x2, y1 - y2);
   }
 
-  function tryAddPeg(targetList, x, y) {
+  function tryAddPeg(targetList, x, y, color = null) {
     if (targetList.some((peg) => distance(peg.x, peg.y, x, y) < MIN_PEG_SPACING)) {
       return false;
     }
-    targetList.push({ x, y });
+    const peg = { x, y };
+    if (color) {
+      peg.color = color;
+    }
+    targetList.push(peg);
     return true;
   }
   
@@ -360,7 +364,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     pegs = [...bumperPegs];
-    generatedPegs.forEach(p => tryAddPeg(pegs, p.x, p.y));
+    const palette = holidayPegPalettes[patternName];
+    colorizePegs(generatedPegs, palette).forEach((p) => tryAddPeg(pegs, p.x, p.y, p.color));
 
     patternButtons.forEach(btn => {
       btn.setAttribute('aria-pressed', btn.dataset.pattern === patternName);
@@ -369,10 +374,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 5. Drawing
   function drawPegs() {
-    ctx.fillStyle = PEG_COLOR;
     ctx.shadowColor = PEG_SHADOW;
     ctx.shadowBlur = 8;
     pegs.forEach(peg => {
+      const pegColor = peg.color || PEG_COLOR;
+      ctx.fillStyle = pegColor;
       ctx.beginPath();
       ctx.arc(peg.x, peg.y, PEG_RADIUS, 0, Math.PI * 2);
       ctx.fill();
@@ -388,6 +394,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 6. Simple Physics Engine
+  const holidayPegPalettes = {
+    firework: ['#ffd166', '#ef476f', '#06d6a0', '#118ab2'],
+    heart: ['#ffe066', '#ff5d8f', '#ea5455', '#b5179e'],
+    shamrock: ['#3fbf7f', '#63cdda', '#0d3b66', '#8bd3c7'],
+    mapleLeaf: ['#ff9f1c', '#ffbf69', '#c1121f', '#2b2d42'],
+    star: ['#f4d35e', '#f38b4a', '#f25c54', '#6a2c70'],
+    pumpkin: ['#ffb703', '#fb8500', '#e63946', '#d00000'],
+    xmasTree: ['#2a9d8f', '#219ebc', '#e63946', '#ffba08'],
+  };
+
   const holidayBallPalettes = {
     newYears: ['#f1c40f', '#ecf0f1', '#3498db', '#e74c3c'],
     valentines: ['#e74c3c', '#f8c5c5', '#ecf0f1', '#c0392b'],
@@ -422,6 +438,18 @@ document.addEventListener('DOMContentLoaded', () => {
       color,
       stuckFrames: 0,
     };
+  }
+
+  function colorizePegs(pegsList, palette) {
+    const hasPalette = Array.isArray(palette) && palette.length;
+    return pegsList.map((peg) => {
+      const base = { x: peg.x, y: peg.y };
+      if (!hasPalette) {
+        return base;
+      }
+      const color = palette[Math.floor(Math.random() * palette.length)];
+      return { ...base, color };
+    });
   }
 
   function updatePhysics(ball) {
