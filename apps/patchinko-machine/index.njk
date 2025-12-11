@@ -49,7 +49,6 @@
     <div class="glass-card patchinko-container">
       <header class="page-hero">
         <div>
-          <p class="hero-eyebrow">Stand-up Toolkit</p>
           <h1 class="app-section-heading">Patchinko Machine</h1>
           <p class="app-subheading">Drop the balls to decide the stand-up order. A fair, fast, and fun way to keep your dailies moving.</p>
         </div>
@@ -62,8 +61,17 @@
         </div>
         
         <aside class="patchinko-controls">
-          <div class="control-group">
-            <h2 class="control-heading">Stand-up Queue</h2>
+          <div class="control-group control-group--queue">
+            <div class="queue-header">
+              <div>
+                <h2 class="control-heading">Stand-up Queue</h2>
+                <p class="queue-subheading">Everyone sees where they fall once the balls land.</p>
+              </div>
+              <div class="queue-action-buttons">
+                <button id="drop-balls-btn" class="app-button">Drop Balls</button>
+                <button id="reset-btn" class="app-button app-button--secondary">Reset</button>
+              </div>
+            </div>
             <ul id="standup-queue" class="standup-queue">
               <li class="queue-placeholder">Drop balls to generate the queue...</li>
             </ul>
@@ -76,12 +84,6 @@
               <button class="app-button app-button--secondary pattern-button" data-pattern="tree">Tree</button>
               <button class="app-button app-button--secondary pattern-button" data-pattern="triangles">Triangles</button>
             </div>
-          </div>
-          
-          <div class="control-group">
-             <h2 class="control-heading">Actions</h2>
-            <button id="drop-balls-btn" class="app-button">Drop Balls</button>
-            <button id="reset-btn" class="app-button app-button--secondary">Reset</button>
           </div>
         </aside>
       </div>

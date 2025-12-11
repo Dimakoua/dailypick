@@ -17,6 +17,59 @@ document.addEventListener('DOMContentLoaded', () => {
   const PEG_COLOR = 'rgba(255, 255, 255, 0.7)';
   const PEG_SHADOW = 'rgba(255, 255, 255, 0.5)';
   const MIN_PEG_SPACING = 30;
+  const STORAGE_KEY = 'namesList';
+  const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
+
+  function normalizeName(value) {
+    if (typeof value !== 'string') return '';
+    return value.trim().toLowerCase();
+  }
+
+  function uniqueNameList(list = []) {
+    const seen = new Set();
+    const result = [];
+    list.forEach((entry) => {
+      const trimmed = typeof entry === 'string' ? entry.trim() : '';
+      const key = normalizeName(trimmed);
+      if (!trimmed || seen.has(key)) return;
+      seen.add(key);
+      result.push(trimmed);
+    });
+    return result;
+  }
+
+  function loadPersistedNames() {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length) {
+          return uniqueNameList(parsed);
+        }
+      }
+    } catch (err) {
+      console.warn('[Patchinko] Unable to read saved names', err);
+    }
+    return uniqueNameList(DEFAULT_NAMES);
+  }
+
+  function arraysEqual(a = [], b = []) {
+    if (a.length !== b.length) return false;
+    return a.every((value, index) => value === b[index]);
+  }
+
+  function shuffleArray(values = []) {
+    const result = [...values];
+    for (let i = result.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [result[i], result[j]] = [result[j], result[i]];
+    }
+    return result;
+  }
+
+  function shuffleTeamMembers() {
+    teamMembers = shuffleArray(teamMembers);
+  }
 
   function distance(x1, y1, x2, y2) {
     return Math.hypot(x1 - x2, y1 - y2);
@@ -32,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   let balls = [];
   let pegs = [];
-  let teamMembers = [];
+  let teamMembers = loadPersistedNames();
   let scores = {};
   let activePattern = 'grid';
   let animationFrameId;
@@ -40,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 3. Team & Bucket Management
   function setupBuckets() {
     bucketsContainer.innerHTML = '';
+    scores = {};
     if (teamMembers.length === 0) {
         // No players, show a message
         const placeholder = document.createElement('div');
@@ -181,37 +235,37 @@ document.addEventListener('DOMContentLoaded', () => {
         const pegs = [];
         const centerX = canvas.width / 2;
         const topY = 120;
-        const treeHeight = 500;
-        const maxRows = 15;
+        const treeHeight = 520;
+        const maxRows = 12;
+        const verticalSpacing = treeHeight / Math.max(maxRows - 1, 1);
 
         // Star on top
         tryAddPeg(pegs, centerX, topY - 20);
-        tryAddPeg(pegs, centerX + 15, topY - 15);
-        tryAddPeg(pegs, centerX - 15, topY - 15);
+        tryAddPeg(pegs, centerX + 16, topY - 14);
+        tryAddPeg(pegs, centerX - 16, topY - 14);
 
         // Tree body
         for (let row = 0; row < maxRows; row++) {
-            const y = topY + (row / maxRows) * treeHeight;
-            const rowWidth = 30 + row * 25;
-            const numPegsInRow = 2 + row;
-            
+            const y = topY + row * verticalSpacing;
+            const baseWidth = 40;
+            const widthIncrement = 40;
+            const rowWidth = baseWidth + row * widthIncrement;
+            const numPegsInRow = Math.max(2, 2 + row);
+            const xSpacing = rowWidth / (numPegsInRow - 1);
+
             for (let i = 0; i < numPegsInRow; i++) {
-                const x = centerX - rowWidth / 2 + (i / (numPegsInRow - 1)) * rowWidth;
-                if (numPegsInRow > 1) {
-                   tryAddPeg(pegs, x, y);
-                } else {
-                   tryAddPeg(pegs, centerX, y);
-                }
+                const x = centerX - rowWidth / 2 + i * xSpacing;
+                tryAddPeg(pegs, x, y);
             }
         }
-        
+
         // Trunk
-        const trunkY = topY + treeHeight;
-        for (let i = 0; i < 4; i++) {
-            tryAddPeg(pegs, centerX - 25, trunkY + i * 20);
-            tryAddPeg(pegs, centerX + 25, trunkY + i * 20);
+        const trunkY = topY + treeHeight + verticalSpacing * 0.1;
+        for (let i = 0; i < 3; i++) {
+            tryAddPeg(pegs, centerX - 28, trunkY + i * 26);
+            tryAddPeg(pegs, centerX + 28, trunkY + i * 26);
         }
-        
+
         return pegs;
     },
     grid: () => {
@@ -353,7 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function createBall() {
-    const radius = Math.random() * 4 + 8; // 8-12px
+    const radius = Math.random() * 3 + 6; // 6-9px
     const mass = radius;
     const { activeTheme } = window.BrandThemeEngine ? window.BrandThemeEngine.composeBrandStyles() : { activeTheme: null };
     const color = getBallColor(activeTheme?.id);
@@ -480,47 +534,41 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateQueue() {
-    const sortedTeam = [...teamMembers].sort((a, b) => scores[b] - scores[a]);
-    
     queueList.innerHTML = '';
-    let currentSpeakerFound = false;
 
     if (teamMembers.length === 0) {
-        queueList.innerHTML = '<li class="queue-placeholder">No participants found. Add some in settings!</li>';
-        return;
+      queueList.innerHTML = '<li class="queue-placeholder">No participants found. Add some in settings!</li>';
+      return;
     }
 
-    sortedTeam.forEach((name, index) => {
-        const li = document.createElement('li');
-        const isCompleted = scores[name] > 0;
-        
-        let nameClass = 'queue-name';
-        if (isCompleted && !currentSpeakerFound) {
-            nameClass += ' current';
-            currentSpeakerFound = true;
-        } else if (isCompleted) {
-            nameClass += ' completed';
-        }
+    const sortedTeam = [...teamMembers].sort((a, b) => scores[b] - scores[a]);
 
-        li.innerHTML = `<span class="queue-position">${index + 1}</span> <span class="${nameClass}">${name}</span>`;
-        queueList.appendChild(li);
+    sortedTeam.forEach((name, index) => {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <span class="queue-position">${index + 1}</span>
+        <span class="queue-name">${name}</span>
+      `;
+      queueList.appendChild(li);
     });
 
     if (queueList.children.length === 0) {
-        queueList.innerHTML = '<li class="queue-placeholder">Drop balls to generate the queue...</li>';
+      queueList.innerHTML = '<li class="queue-placeholder">Drop balls to generate the queue...</li>';
     }
-    
-    // Dispatch events
+
+    const completedPlayers = sortedTeam.filter((name) => scores[name] > 0);
+    const remainingPlayers = sortedTeam.filter((name) => scores[name] === 0);
+    const currentSpeaker = completedPlayers.length > 0 ? completedPlayers[0] : null;
+
     const eventData = {
-        queue: sortedTeam,
-        scores: scores,
-        completed: sortedTeam.filter(name => scores[name] > 0),
-        remaining: sortedTeam.filter(name => scores[name] === 0),
-        current: currentSpeakerFound ? sortedTeam.find(name => scores[name] > 0) : null
+      queue: sortedTeam,
+      scores: scores,
+      completed: completedPlayers,
+      remaining: remainingPlayers,
+      current: currentSpeaker,
     };
     canvas.dispatchEvent(new CustomEvent('standup:queue', { detail: eventData, bubbles: true }));
   }
-
 
   // 9. Event Handlers & Game Control
   function startGame() {
@@ -534,7 +582,7 @@ document.addEventListener('DOMContentLoaded', () => {
     balls = []; // Clear any previous balls
     dropBallsBtn.disabled = true;
     
-    const ballCount = teamMembers.length * 8;
+    const ballCount = teamMembers.length * 12;
     for (let i = 0; i < ballCount; i++) {
         setTimeout(() => {
             balls.push(createBall());
@@ -555,6 +603,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function resetGame() {
     stopGame();
     balls = [];
+    shuffleTeamMembers();
     setupBuckets();
     setPattern(activePattern);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -586,21 +635,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (window.dailyPickStandup) {
-        window.dailyPickStandup.subscribe(snapshot => {
-            const newTeam = snapshot.players || [];
-            if (JSON.stringify(newTeam) !== JSON.stringify(teamMembers)) {
-                teamMembers = newTeam;
-                resetGame();
-            }
-        });
+      window.dailyPickStandup.subscribe((snapshot) => {
+        const newTeam = Array.isArray(snapshot.players) ? snapshot.players : [];
+        const sanitized = uniqueNameList(newTeam);
+        if (!arraysEqual(sanitized, teamMembers)) {
+          teamMembers = sanitized;
+          resetGame();
+        }
+      });
     } else {
-        console.warn("dailyPickStandup data store not found. Using default empty list.");
-        teamMembers = [];
-        resetGame();
+      console.warn('dailyPickStandup data store not found. Falling back to stored participants.');
     }
 
-    setPattern(activePattern);
-    drawPegs();
+    resetGame();
   }
 
   init();
