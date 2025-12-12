@@ -634,13 +634,17 @@ document.addEventListener('DOMContentLoaded', () => {
       queueList.innerHTML = '<li class="queue-placeholder">Drop balls to generate the queue...</li>';
     }
 
-    const completedPlayers = sortedTeam.filter((name) => scores[name] > 0);
-    const remainingPlayers = sortedTeam.filter((name) => scores[name] === 0);
+    const completedPlayers = uniqueNameList(sortedTeam.filter((name) => scores[name] > 0));
+    const remainingPlayers = uniqueNameList(sortedTeam.filter((name) => scores[name] === 0));
+    const participantsList = uniqueNameList(teamMembers);
+    const queueSnapshot = uniqueNameList(sortedTeam);
     const currentSpeaker = completedPlayers.length > 0 ? completedPlayers[0] : null;
 
     const eventData = {
-      queue: sortedTeam,
-      scores: scores,
+      source: 'patchinko',
+      mode: 'auto',
+      participants: participantsList,
+      queue: queueSnapshot,
       completed: completedPlayers,
       remaining: remainingPlayers,
       current: currentSpeaker,
@@ -686,7 +690,11 @@ document.addEventListener('DOMContentLoaded', () => {
     setPattern(activePattern);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawPegs();
-    canvas.dispatchEvent(new CustomEvent('standup:queue-reset', { bubbles: true }));
+    const resetDetail = {
+      source: 'patchinko',
+      participants: uniqueNameList(teamMembers),
+    };
+    canvas.dispatchEvent(new CustomEvent('standup:queue-reset', { detail: resetDetail, bubbles: true }));
   }
 
   dropBallsBtn.addEventListener('click', startGame);
