@@ -71,7 +71,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(6px);
   border-bottom: 1px solid rgba(221, 228, 235, 0.6);
   z-index: -1;
@@ -141,7 +141,7 @@ body {
 }
 
 .site-header nav a {
-  color: var(--brand-subtle-text);
+  color: var(--brand-heading);
   font-weight: 600;
   text-decoration: none;
   padding: 10px 16px;
@@ -161,7 +161,7 @@ body {
   align-items: center;
   gap: 12px;
   font-size: 0.9rem;
-  color: var(--brand-subtle-text);
+  color: var(--brand-heading);
 }
 
 .site-header .branding-controls svg {
