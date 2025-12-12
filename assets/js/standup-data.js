@@ -36,6 +36,22 @@
     return value.trim().toLowerCase();
   }
 
+  function parseLegacyNameList(raw) {
+    if (typeof raw !== 'string' || !raw.trim()) return [];
+    const seen = new Set();
+    const result = [];
+    raw
+      .split(/[\n,]+/)
+      .map((name) => (typeof name === 'string' ? name.trim() : ''))
+      .forEach((name) => {
+        const key = normalizeName(name);
+        if (!key || seen.has(key)) return;
+        seen.add(key);
+        result.push(name);
+      });
+    return result;
+  }
+
   function loadNotes() {
     try {
       const raw = localStorage.getItem(STORAGE_KEYS.notes);
@@ -60,8 +76,24 @@
     try {
       const raw = localStorage.getItem(STORAGE_KEYS.names);
       if (!raw) return [];
-      const parsed = JSON.parse(raw);
-      return Array.isArray(parsed) ? parsed.filter((name) => typeof name === 'string' && name.trim()) : [];
+      let parsed = null;
+      try {
+        parsed = JSON.parse(raw);
+      } catch (err) {
+        parsed = null;
+      }
+      if (Array.isArray(parsed) && parsed.length) {
+        return parsed.filter((name) => typeof name === 'string' && name.trim());
+      }
+      const legacy = parseLegacyNameList(raw);
+      if (legacy.length) {
+        try {
+          localStorage.setItem(STORAGE_KEYS.names, JSON.stringify(legacy));
+        } catch (err) {
+          console.warn('[StandupData] Unable to normalize saved player names', err);
+        }
+        return legacy;
+      }
     } catch (err) {
       console.warn('[StandupData] Failed to parse saved names', err);
       return [];
