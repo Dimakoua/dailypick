@@ -201,6 +201,34 @@
     gap: 1rem;
 }
 
+.control-group--queue .pip-trigger {
+    margin-top: 0.6rem;
+    align-self: flex-start;
+    font-size: 0.95rem;
+    padding: 0.55rem 1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--brand-heading);
+    text-transform: none;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.control-group--queue .pip-trigger::before {
+    content: '🪟';
+}
+
+.control-group--queue .pip-trigger:hover,
+.control-group--queue .pip-trigger:focus-visible {
+    background: rgba(255, 255, 255, 0.18);
+    color: #111;
+    transform: translateY(-1px);
+}
+
 .queue-header {
     display: flex;
     gap: 0.75rem;

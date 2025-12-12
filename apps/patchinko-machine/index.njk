@@ -39,6 +39,7 @@
 
   <script src="/assets/js/brand-theme-engine.js" defer></script>
   <script src="/assets/js/brand-config.js" defer></script>
+  <script src="/assets/js/results-pip.js" defer></script>
   <script src="/assets/js/standup-data.js" defer></script>
   <script src="/assets/js/standup-panel.js" defer></script>
   <script src="script.js" defer></script>
@@ -63,21 +64,27 @@
         </div>
         
         <aside class="patchinko-controls">
-          <div class="control-group control-group--queue">
-            <div class="queue-header">
-              <div>
-                <h2 class="control-heading">Stand-up Queue</h2>
-                <p class="queue-subheading">Everyone sees where they fall once the balls land.</p>
-              </div>
-              <div class="queue-action-buttons">
-                <button id="drop-balls-btn" class="app-button">Drop Balls</button>
-                <button id="reset-btn" class="app-button app-button--secondary">Reset</button>
-              </div>
+        <div id="standup-leaderboard" class="control-group control-group--queue">
+          <div class="queue-header">
+            <div>
+              <h2 class="control-heading">Stand-up Queue</h2>
+              <p class="queue-subheading">Everyone sees where they fall once the balls land.</p>
             </div>
-            <ul id="standup-queue" class="standup-queue">
-              <li class="queue-placeholder">Drop balls to generate the queue...</li>
-            </ul>
+            <div class="queue-action-buttons">
+              <button id="drop-balls-btn" class="app-button">Drop Balls</button>
+              <button id="reset-btn" class="app-button app-button--secondary">Reset</button>
+            </div>
           </div>
+          <button id="patchinkoPipBtn" class="pip-trigger" type="button"
+            data-pip-target="#standup-leaderboard"
+            data-pip-title="Patchinko Stand-up Queue"
+            data-pip-exclude="#patchinkoPipBtn, .queue-action-buttons"
+            data-pip-width="360"
+            data-pip-height="420">Open in Picture in Picture</button>
+          <ul id="standup-queue" class="standup-queue">
+            <li class="queue-placeholder">Drop balls to generate the queue...</li>
+          </ul>
+        </div>
 
           <div class="control-group">
             <h2 class="control-heading">Peg Pattern</h2>
