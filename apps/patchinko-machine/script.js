@@ -53,9 +53,27 @@ document.addEventListener('DOMContentLoaded', () => {
     return uniqueNameList(DEFAULT_NAMES);
   }
 
-  function arraysEqual(a = [], b = []) {
-    if (a.length !== b.length) return false;
-    return a.every((value, index) => value === b[index]);
+  function buildNormalizedNameSet(list = []) {
+    const set = new Set();
+    list.forEach((value) => {
+      const key = normalizeName(value);
+      if (key) set.add(key);
+    });
+    return set;
+  }
+
+  function haveSameParticipants(listA = [], listB = []) {
+    const aSet = buildNormalizedNameSet(listA);
+    const bSet = buildNormalizedNameSet(listB);
+    if (aSet.size !== bSet.size) {
+      return false;
+    }
+    for (const value of aSet) {
+      if (!bSet.has(value)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   function shuffleArray(values = []) {
@@ -726,7 +744,7 @@ document.addEventListener('DOMContentLoaded', () => {
       window.dailyPickStandup.subscribe((snapshot) => {
         const newTeam = Array.isArray(snapshot.players) ? snapshot.players : [];
         const sanitized = uniqueNameList(newTeam);
-        if (!arraysEqual(sanitized, teamMembers)) {
+        if (!haveSameParticipants(teamMembers, sanitized)) {
           teamMembers = sanitized;
           resetGame();
         }
