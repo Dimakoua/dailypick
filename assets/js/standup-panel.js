@@ -18,7 +18,7 @@
     current: null,
   };
 
-  const ORDERED_LIST_SOURCES = new Set(['speedway', 'letters', 'gravity-drift']);
+  const ORDERED_LIST_SOURCES = new Set(['speedway', 'letters', 'gravity-drift', 'patchinko']);
   const UPCOMING_DISPLAY_LIMIT = 8;
   const PANEL_STORAGE_KEY = 'standupPanelLayout';
   const PANEL_MIN_WIDTH = 300;
