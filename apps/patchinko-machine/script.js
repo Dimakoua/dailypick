@@ -38,13 +38,36 @@ document.addEventListener('DOMContentLoaded', () => {
     return result;
   }
 
+  function parseLegacyNameList(raw) {
+    if (typeof raw !== 'string' || !raw.trim()) return [];
+    return raw
+      .split(/[\n,]+/)
+      .map((name) => (typeof name === 'string' ? name.trim() : ''))
+      .filter(Boolean);
+  }
+
   function loadPersistedNames() {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
-        const parsed = JSON.parse(stored);
+        let parsed = null;
+        try {
+          parsed = JSON.parse(stored);
+        } catch (err) {
+          parsed = null;
+        }
         if (Array.isArray(parsed) && parsed.length) {
           return uniqueNameList(parsed);
+        }
+        const legacyList = parseLegacyNameList(stored);
+        if (legacyList.length) {
+          const normalized = uniqueNameList(legacyList);
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
+          } catch (err) {
+            console.warn('[Patchinko] Unable to refresh saved names format', err);
+          }
+          return normalized;
         }
       }
     } catch (err) {
