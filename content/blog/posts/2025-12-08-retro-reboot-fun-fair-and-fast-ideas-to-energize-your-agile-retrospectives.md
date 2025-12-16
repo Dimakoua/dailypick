@@ -1,4 +1,3 @@
-
 ---
 title: "Retro Reboot: Fun, Fair, and Fast Ideas to Energize Your Agile Retrospectives"
 date: "2025-12-08"
