@@ -37,7 +37,7 @@ export class RetroBoardSession extends BaseEphemeralDO {
     const session = this.sessions.get(sessionId);
     const userId = crypto.randomUUID();
     session.users.set(userId, { ws: server });
-    this.markActive().catch((error) => console.error('[RetroBoardSession] markActive failed', error));
+    this.markActive().catch((error) => console.error('[RetroBoardSession] Failed to mark session active after user connection:', error));
 
     // Send initial state to new user
     server.send(JSON.stringify(session.state));
@@ -73,9 +73,9 @@ export class RetroBoardSession extends BaseEphemeralDO {
       session.users.delete(userId);
       if (session.users.size === 0) {
         this.sessions.delete(sessionId);
-        this.markInactive().catch((error) => console.error('[RetroBoardSession] markInactive failed', error));
+        this.markInactive().catch((error) => console.error('[RetroBoardSession] Failed to mark session inactive after last user disconnected:', error));
       } else {
-        this.markActive().catch((error) => console.error('[RetroBoardSession] markActive failed', error));
+        this.markActive().catch((error) => console.error('[RetroBoardSession] Failed to mark session active after user disconnection:', error));
       }
     });
   }

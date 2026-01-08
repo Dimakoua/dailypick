@@ -180,7 +180,6 @@ document.addEventListener('DOMContentLoaded', () => {
     content.addEventListener('focus', () => {
       content.classList.add('editing');
       // Store plain text for editing
-      content.dataset.originalContent = card.content;
       content.textContent = card.content;
     });
 
