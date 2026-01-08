@@ -45,7 +45,7 @@ Ready to put this into practice? Here are several ways to leverage unbiased rand
 
 While you might already use randomness for assigning on-call rotations, think broader.
 
-*   **Bug Assignments:** Instead of asking, "Who wants to take the next bug?", which often leads to the same few people volunteering or silence, spin the [Daily Pick Decision Wheel](https://dailypick.dev/tools/decision-wheel) with your team members' names. It's quick, transparent, and removes any perceived favoritism.
+*   **Bug Assignments:** Instead of asking, "Who wants to take the next bug?", which often leads to the same few people volunteering or silence, spin the [Daily Pick Decision Wheel](https://dailypick.dev/apps/wheel) with your team members' names. It's quick, transparent, and removes any perceived favoritism.
 *   **Code Review Allocation:** Ensure an even spread of code reviews among eligible team members.
 *   **Meeting Facilitation:** Rotate who leads the weekly stand-up or retrospective using a random selector.
 *   **"Unsung Hero" Tasks:** Those essential but less glamorous tasks? A random draw ensures everyone takes a turn, promoting shared responsibility.
@@ -54,8 +54,8 @@ While you might already use randomness for assigning on-call rotations, think br
 
 Meetings can become monotonous when the same voices dominate. Randomness can shake things up.
 
-*   **Speaking Order:** For stand-ups, retrospectives, or brainstorming sessions, use [Daily Pick's Speedway Racer](https://dailypick.dev/tools/speedway-racer) to decide the speaking order. This encourages everyone to be prepared and prevents awkward silences.
-*   **Random Feedback:** Need diverse opinions on a new idea? Use [Daily Pick's Trap](https://dailypick.dev/tools/trap) to pick a random team member to share their initial thoughts. This ensures everyone feels their perspective *could* be called upon, leading to more active listening.
+*   **Speaking Order:** For stand-ups, retrospectives, or brainstorming sessions, use [Daily Pick's Speedway Racer](https://dailypick.dev/apps/speedway) to decide the speaking order. This encourages everyone to be prepared and prevents awkward silences.
+*   **Random Feedback:** Need diverse opinions on a new idea? Use [Daily Pick's Trap](https://dailypick.dev/apps/trap) to pick a random team member to share their initial thoughts. This ensures everyone feels their perspective *could* be called upon, leading to more active listening.
 *   **Idea Generation:** In a brainstorming session, randomly assign individuals or pairs to different sub-topics.
 
 ### 3. Fair Opportunities & Rotations
@@ -70,7 +70,7 @@ Beyond tasks, consider how you can fairly distribute opportunities for growth an
 
 Sometimes, teams get stuck between two equally valid options, or a tie-breaker is needed.
 
-*   **Design Options:** If two UI designs are equally strong in user testing, let the [Daily Pick Decision Wheel](https://dailypick.dev/tools/decision-wheel) make the final call to avoid endless debate.
+*   **Design Options:** If two UI designs are equally strong in user testing, let the [Daily Pick Decision Wheel](https://dailypick.dev/apps/wheel) make the final call to avoid endless debate.
 *   **Tie-Breaking Votes:** For minor team preferences (e.g., where to order lunch, which platform for a quick team activity), a quick coin flip or random selection can save precious minutes.
 *   **Team Activity Selection:** Can't agree on a team-building activity? List the options and use a random picker.
 
@@ -88,4 +88,4 @@ While fairness is the primary goal, embracing unbiased randomness delivers a hos
 
 Unbiased randomness isn't about abdicating responsibility; it's about *elevating* fairness and efficiency. By embracing tools that introduce impartial chance, you create a more equitable, less stressful, and surprisingly more fun environment for your team.
 
-Ready to infuse fairness and fun into your team's decision-making? Dive into Daily Pick's suite of tools. From [Decision Wheels](https://dailypick.dev/tools/decision-wheel) to [Speedway Racers](https://dailypick.dev/tools/speedway-racer) and [Trap](https://dailypick.dev/tools/trap) for random selection, we've got everything you need to transform your team's decision-making process from a burden into a lottery of opportunity. Try Daily Pick today and experience the power of truly unbiased decisions!
+Ready to infuse fairness and fun into your team's decision-making? Dive into Daily Pick's suite of tools. From [Decision Wheels](https://dailypick.dev/apps/wheel) to [Speedway Racers](https://dailypick.dev/apps/speedway) and [Trap](https://dailypick.dev/apps/trap) for random selection, we've got everything you need to transform your team's decision-making process from a burden into a lottery of opportunity. Try Daily Pick today and experience the power of truly unbiased decisions!
