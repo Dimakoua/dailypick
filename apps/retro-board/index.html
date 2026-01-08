@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retro Board – Collaborative Sprint Retrospectives | Daily Pick</title>
+  <meta name="description"
+    content="Run interactive agile retrospectives with your team. Add cards, vote on insights, and facilitate meaningful retros with drag-and-drop organization." />
+  <meta name="keywords"
+    content="retro board, retrospective, sprint retro, agile tools, team collaboration, daily pick">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dailypick.dev/apps/retro-board/">
+  <meta property="og:title" content="Retro Board – Collaborative Sprint Retrospectives | Daily Pick">
+  <meta property="og:description"
+    content="Facilitate meaningful sprint retrospectives with drag-and-drop cards, voting, and markdown support.">
+  <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
+  <meta property="og:image:alt" content="Team running a retrospective with Daily Pick Retro Board">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://dailypick.dev/apps/retro-board/">
+  <meta name="twitter:title" content="Retro Board – Collaborative Sprint Retrospectives | Daily Pick">
+  <meta name="twitter:description"
+    content="Create cards, vote on insights, and organize your retro with an intuitive Kanban-style board.">
+  <meta name="twitter:image" content="https://dailypick.dev/assets/og-image-main.png">
+  <meta name="twitter:image:alt" content="Team running a retrospective with Daily Pick Retro Board">
+
+  <link rel="canonical" href="https://dailypick.dev/apps/retro-board/">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/assets/favicon/site.webmanifest">
+  <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/css/theme.css">
+  <link rel="stylesheet" href="/assets/css/glass.css">
+  <link rel="stylesheet" href="./style.css">
+  <script src="/assets/js/brand-theme-engine.js" defer></script>
+  <script src="/assets/js/brand-config.js" defer></script>
+</head>
+
+<body>
+  {% include "bg-orbs.html" %}
+  {% include "header.html" %}
+
+  <main class="retro-page" aria-labelledby="retroHeading">
+    <header class="retro-hero glass-card">
+      <div>
+        <p class="hero-eyebrow">Sprint Retrospectives</p>
+        <h1 id="retroHeading">Collaborative Retro Board</h1>
+        <p>Add cards to reflect on what went well, what to improve, and action items. Vote on insights, drag to organize, and collaborate in real-time.</p>
+      </div>
+      <div class="hero-actions">
+        <button id="shareSessionBtn" class="btn-secondary" aria-label="Copy session link">
+          <span>📋</span> Share Session
+        </button>
+        <span id="sessionBadge" class="session-badge" aria-live="polite"></span>
+      </div>
+    </header>
+
+    <section class="retro-board-container" role="region" aria-label="Retrospective board">
+      <div id="retroBoard" class="retro-board">
+        <!-- Columns will be dynamically generated here -->
+      </div>
+    </section>
+
+    <section class="seo-card glass-card">
+      <h2>Why use a Retro Board?</h2>
+      <p>Retrospectives are a cornerstone of agile development. The Retro Board makes it easy to capture team insights, prioritize improvements, and create actionable plans for the next sprint.</p>
+      <ul>
+        <li><strong>Structured reflection:</strong> Three default columns guide your retro flow.</li>
+        <li><strong>Voting system:</strong> Let the team prioritize what matters most.</li>
+        <li><strong>Markdown support:</strong> Add code snippets and formatted text.</li>
+        <li><strong>Real-time collaboration:</strong> See updates as teammates add cards.</li>
+        <li><strong>Drag & drop:</strong> Organize cards and move between columns seamlessly.</li>
+      </ul>
+      <p>Share the session link with your team and start collaborating on your next retrospective!</p>
+    </section>
+  </main>
+
+  {% include "footer.html" %}
+
+  <script src="retro-board-session.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
