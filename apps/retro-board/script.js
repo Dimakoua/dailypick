@@ -163,6 +163,13 @@ document.addEventListener('DOMContentLoaded', () => {
   function createCardElement(card) {
     const cardEl = document.createElement('div');
     cardEl.className = 'retro-card';
+    const votes = card.votes || 0;
+    if (votes > 0) {
+      cardEl.classList.add('voted');
+    }
+    if (votes >= 3) {
+      cardEl.classList.add('high-votes');
+    }
     cardEl.draggable = true;
     cardEl.dataset.cardId = card.id;
 
