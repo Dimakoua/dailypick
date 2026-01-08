@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentState = null;
   let draggedCard = null;
   let draggedCardId = null;
+  let dropIndicator = null;
 
   // Initialize session
   function initializeSession() {
@@ -104,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const input = document.createElement('input');
     input.type = 'text';
     input.className = 'add-card-input';
-    input.placeholder = 'Add a card...';
+    input.placeholder = 'Enter card text and press + or Enter';
     input.setAttribute('aria-label', `Add card to ${column.title}`);
 
     const addBtn = document.createElement('button');
@@ -112,6 +113,12 @@ document.addEventListener('DOMContentLoaded', () => {
     addBtn.className = 'add-card-btn';
     addBtn.textContent = '+';
     addBtn.setAttribute('aria-label', 'Add card');
+    addBtn.disabled = true; // Initially disabled
+
+    // Enable/disable button based on input content
+    input.addEventListener('input', () => {
+      addBtn.disabled = input.value.trim().length === 0;
+    });
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -119,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (content) {
         session.addCard(column.id, content);
         input.value = '';
+        addBtn.disabled = true; // Disable after adding
       }
     });
 
@@ -261,6 +269,11 @@ document.addEventListener('DOMContentLoaded', () => {
     e.target.classList.add('dragging');
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/html', e.target.innerHTML);
+
+    // Create drop indicator
+    dropIndicator = document.createElement('div');
+    dropIndicator.className = 'drop-indicator';
+    document.body.appendChild(dropIndicator);
   }
 
   function handleDragEnd(e) {
@@ -269,6 +282,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.cards-container').forEach(container => {
       container.classList.remove('drag-over');
     });
+
+    // Remove drop indicator
+    if (dropIndicator && dropIndicator.parentNode) {
+      dropIndicator.parentNode.removeChild(dropIndicator);
+      dropIndicator = null;
+    }
   }
 
   function handleDragOver(e) {
@@ -277,11 +296,58 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     e.dataTransfer.dropEffect = 'move';
     e.currentTarget.classList.add('drag-over');
+
+    // Position drop indicator
+    if (dropIndicator) {
+      const targetContainer = e.currentTarget;
+      const cards = Array.from(targetContainer.querySelectorAll('.retro-card:not(.dragging)'));
+      let insertBefore = null;
+
+      for (let i = 0; i < cards.length; i++) {
+        const card = cards[i];
+        const rect = card.getBoundingClientRect();
+        const midY = rect.top + rect.height / 2;
+
+        if (e.clientY < midY) {
+          insertBefore = card;
+          break;
+        }
+      }
+
+      if (insertBefore) {
+        const rect = insertBefore.getBoundingClientRect();
+        dropIndicator.style.display = 'block';
+        dropIndicator.style.left = rect.left + 'px';
+        dropIndicator.style.top = (rect.top - 2) + 'px';
+        dropIndicator.style.width = rect.width + 'px';
+      } else if (cards.length > 0) {
+        // Insert at the end
+        const lastCard = cards[cards.length - 1];
+        const rect = lastCard.getBoundingClientRect();
+        dropIndicator.style.display = 'block';
+        dropIndicator.style.left = rect.left + 'px';
+        dropIndicator.style.top = (rect.bottom + 2) + 'px';
+        dropIndicator.style.width = rect.width + 'px';
+      } else {
+        // Empty container
+        const containerRect = targetContainer.getBoundingClientRect();
+        dropIndicator.style.display = 'block';
+        dropIndicator.style.left = containerRect.left + 8 + 'px';
+        dropIndicator.style.top = containerRect.top + 8 + 'px';
+        dropIndicator.style.width = (containerRect.width - 16) + 'px';
+      }
+    }
+
     return false;
   }
 
   function handleDragLeave(e) {
     e.currentTarget.classList.remove('drag-over');
+
+    // Hide drop indicator when leaving container
+    if (dropIndicator) {
+      dropIndicator.style.display = 'none';
+    }
   }
 
   function handleDrop(e) {
