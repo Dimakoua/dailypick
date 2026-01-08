@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const url = new URL(window.location);
     let sessionId = url.searchParams.get('session_id');
     if (!sessionId) {
-      sessionId = 'retro-' + Math.random().toString(36).substr(2, 9);
+      sessionId = 'retro-' + Math.random().toString(36).substring(2, 11);
       url.searchParams.set('session_id', sessionId);
       window.history.replaceState({}, '', url);
     }

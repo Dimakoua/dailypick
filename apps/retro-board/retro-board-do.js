@@ -108,11 +108,22 @@ export class RetroBoardSession extends BaseEphemeralDO {
   }
 
   handleAddCard(session, columnId, content) {
+    // Validate content
+    if (!content || typeof content !== 'string') {
+      return;
+    }
+    
+    // Limit card content length to prevent abuse
+    const trimmedContent = content.trim();
+    if (trimmedContent.length === 0 || trimmedContent.length > 5000) {
+      return;
+    }
+
     const cardId = 'card-' + crypto.randomUUID();
     
     session.state.cards[cardId] = {
       id: cardId,
-      content: content,
+      content: trimmedContent,
       votes: 0,
     };
 
@@ -124,8 +135,19 @@ export class RetroBoardSession extends BaseEphemeralDO {
   }
 
   handleUpdateCard(session, cardId, content) {
+    // Validate content
+    if (!content || typeof content !== 'string') {
+      return;
+    }
+    
+    // Limit card content length to prevent abuse
+    const trimmedContent = content.trim();
+    if (trimmedContent.length === 0 || trimmedContent.length > 5000) {
+      return;
+    }
+
     if (session.state.cards[cardId]) {
-      session.state.cards[cardId].content = content;
+      session.state.cards[cardId].content = trimmedContent;
       this.broadcast(session);
     }
   }
@@ -161,21 +183,40 @@ export class RetroBoardSession extends BaseEphemeralDO {
       return;
     }
 
+    // Validate newIndex
+    if (typeof newIndex !== 'number' || newIndex < 0) {
+      return;
+    }
+
     // Remove from source
     const sourceIndex = sourceColumn.cardIds.indexOf(cardId);
     if (sourceIndex > -1) {
       sourceColumn.cardIds.splice(sourceIndex, 1);
     }
 
+    // Ensure newIndex is within bounds
+    const validIndex = Math.min(newIndex, targetColumn.cardIds.length);
+    
     // Add to target at new index
-    targetColumn.cardIds.splice(newIndex, 0, cardId);
+    targetColumn.cardIds.splice(validIndex, 0, cardId);
 
     this.broadcast(session);
   }
 
   handleUpdateColumnTitle(session, columnId, title) {
+    // Validate title
+    if (!title || typeof title !== 'string') {
+      return;
+    }
+    
+    // Limit title length to prevent abuse
+    const trimmedTitle = title.trim();
+    if (trimmedTitle.length === 0 || trimmedTitle.length > 100) {
+      return;
+    }
+
     if (session.state.columns[columnId]) {
-      session.state.columns[columnId].title = title;
+      session.state.columns[columnId].title = trimmedTitle;
       this.broadcast(session);
     }
   }
