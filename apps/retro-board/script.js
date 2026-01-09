@@ -39,6 +39,79 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Copy all session data (for pasting to Confluence)
+  const copyAllBtn = document.getElementById('copyAllBtn');
+  if (copyAllBtn) {
+    copyAllBtn.addEventListener('click', () => {
+      if (!currentState) {
+        return;
+      }
+
+      const text = generateConfluenceText(currentState);
+
+      // Try native clipboard API first
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          const original = copyAllBtn.innerHTML;
+          copyAllBtn.innerHTML = '<span>✓</span> Copied!';
+          setTimeout(() => { copyAllBtn.innerHTML = original; }, 2000);
+        }).catch(() => {
+          fallbackCopy(text, copyAllBtn);
+        });
+      } else {
+        fallbackCopy(text, copyAllBtn);
+      }
+    });
+  }
+
+  function fallbackCopy(text, btn) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      const original = btn.innerHTML;
+      btn.innerHTML = '<span>✓</span> Copied!';
+      setTimeout(() => { btn.innerHTML = original; }, 2000);
+    } catch (e) {
+      alert('Copy failed — please select and copy manually.');
+    }
+    document.body.removeChild(ta);
+  }
+
+  // Generate a simple Markdown-friendly export suitable for pasting into Confluence
+  function generateConfluenceText(state) {
+    const lines = [];
+    try {
+      // Add current date/time and session info
+      lines.push(`Date: ${new Date().toLocaleString()}`);
+      if (session && session.sessionId) {
+        lines.push(`Session: ${session.sessionId}`);
+      }
+      lines.push('');
+
+      state.columnOrder.forEach(colId => {
+        const col = state.columns[colId];
+        if (!col) return;
+        lines.push(`## ${col.title}`);
+        lines.push('');
+        col.cardIds.forEach(cardId => {
+          const card = state.cards[cardId];
+          if (!card) return;
+          const content = (card.content || '').replace(/\n+/g, ' ');
+          lines.push(`- ${content} (votes: ${card.votes || 0})`);
+        });
+        lines.push('');
+      });
+    } catch (e) {
+      console.error('Failed to generate export text', e);
+    }
+    return lines.join('\n');
+  }
+
   // Render the board
   function renderBoard(state) {
     if (!state || !state.columns || !state.columnOrder) {
