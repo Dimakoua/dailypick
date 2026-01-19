@@ -103,8 +103,16 @@
     }
 
     const brandMarkEl = document.querySelector('.brand-mark');
-    if (brandMarkEl && styles.brandMark) {
-      brandMarkEl.textContent = styles.brandMark;
+    if (brandMarkEl) {
+      // If a logo URL has been provided, prefer the image (set via CSS variable)
+      // and hide the textual emoji/mark so it doesn't sit on top of the logo.
+      if (hydratedConfig && hydratedConfig.logoUrl) {
+        brandMarkEl.textContent = '';
+        brandMarkEl.setAttribute('data-has-logo', 'true');
+      } else {
+        brandMarkEl.textContent = styles.brandMark || '';
+        brandMarkEl.removeAttribute('data-has-logo');
+      }
     }
 
     const themeEmojiEl = document.querySelector('.brand-theme-emoji');
