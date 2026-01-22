@@ -82,6 +82,11 @@
                         <button id="enableCameraBtn" type="button">Enable camera</button>
                         <button id="startGameBtn" type="button" disabled style="display:none;">Start reaction round</button>
                     </div>
+                    <div class="host-controls" id="hostControls" style="display:none; margin-top: 8px;">
+                        <button id="startForNewBtn" type="button" class="ghost-btn" style="font-size: 0.9em;">Start for newcomers</button>
+                        <button id="resetSessionBtn" type="button" class="ghost-btn" style="font-size: 0.9em;">Reset session</button>
+                        <button id="clearLeaderboardBtn" type="button" class="ghost-btn" style="font-size: 0.9em;">Clear leaderboard</button>
+                    </div>
                     <p id="waitingMessage" class="hint" style="display:none;">Waiting for host to start the next round…</p>
                     <p id="roundHint" class="hint">Enable your camera to begin.</p>
                 </div>
@@ -103,7 +108,7 @@
                         <button id="startRoomBtnHidden" type="button" class="sr-only" aria-hidden="true"></button>
                     </div>
                     <ol id="leaderboardList"></ol>
-                    <p class="leaderboard-note">We keep your fastest matching time for the active room.</p>
+                    <p class="leaderboard-note">Results persist across rounds. ✓ = played this session, ⏳ = waiting to play.</p>
                 </section>
 
                 <section class="tips-panel">
@@ -112,8 +117,7 @@
                         <li>Set a display name and start a room. Share the invite link with teammates.</li>
                         <li>Enable your camera, then tap “Start reaction round”. A random number or emoji appears after a short delay.</li>
                         <li>Mimic the prompt. As soon as your hands match, your reaction time locks in.</li>
-                        <li>The leaderboard updates live so everyone sees the fastest response.</li>
-                    </ul>
+                        <li>The leaderboard updates live so everyone sees the fastest response.</li>                        <li>Host can start rounds for newcomers only, reset sessions, or clear the leaderboard.</li>                    </ul>
                     <p class="privacy-note">All gesture detection runs in your browser. Only your display name and reaction
                         results are shared with the room.</p>
                 </section>

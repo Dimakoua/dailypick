@@ -15,6 +15,10 @@
   const waitingMessage = document.getElementById("waitingMessage");
   const sessionStatus = document.getElementById("sessionStatus");
   const leaderboardList = document.getElementById("leaderboardList");
+  const hostControls = document.getElementById("hostControls");
+  const startForNewBtn = document.getElementById("startForNewBtn");
+  const resetSessionBtn = document.getElementById("resetSessionBtn");
+  const clearLeaderboardBtn = document.getElementById("clearLeaderboardBtn");
   const STANDUP_SOURCE = 'mimic-master';
 
   function emitStandupRoster(entries) {
@@ -156,7 +160,7 @@
     currentPrompt = null;
   }
 
-  function updatePlayerList(entries) {
+  function updatePlayerList(entries, isUserList = false) {
     leaderboardList.innerHTML = "";
     if (!entries || entries.length === 0) {
       const placeholder = document.createElement("li");
@@ -171,14 +175,24 @@
       if (entry.id === userId) {
         displayName += " (You)";
       }
-      const best =
-        typeof entry.bestTime === "number"
-          ? formatMs(entry.bestTime)
-          : "Waiting…";
-      li.innerHTML = `<strong>${displayName}</strong> · ${best}`;
+      
+      if (isUserList) {
+        // For user-list, show play status
+        const playStatus = entry.hasPlayed ? " ✓" : " ⏳";
+        li.innerHTML = `<strong>${displayName}</strong>${playStatus}`;
+      } else {
+        // For leaderboard, show best time
+        const best =
+          typeof entry.bestTime === "number"
+            ? formatMs(entry.bestTime)
+            : "Waiting…";
+        li.innerHTML = `<strong>${displayName}</strong> · ${best}`;
+      }
       leaderboardList.appendChild(li);
     });
-    emitStandupRoster(entries);
+    if (!isUserList) {
+      emitStandupRoster(entries);
+    }
   }
 
   async function ensureDetector() {
@@ -296,20 +310,27 @@
           isHost.toString()
         );
         startGameBtn.style.display = isHost ? "block" : "none";
+        hostControls.style.display = isHost ? "block" : "none";
         waitingMessage.style.display = isHost ? "none" : "block";
         startGameBtn.disabled = !isHost || !cameraActive;
         if (isHost) {
           setStatus("You are the new host. Start the next round when ready.");
+          hostControls.style.display = "block";
+        } else {
+          hostControls.style.display = "none";
         }
         break;
       case "leaderboard":
-        updatePlayerList(message.entries);
+        updatePlayerList(message.entries, false);
         break;
       case "user-list":
-        updatePlayerList(message.users);
+        updatePlayerList(message.users, true);
         break;
       case "game-start":
-        handleGameStart();
+        handleGameStart(message);
+        break;
+      case "session-reset":
+        setStatus("Session reset! Everyone can play in the next round.");
         break;
     }
   }
@@ -345,7 +366,13 @@
     ws.send(JSON.stringify({ type: "game-start" }));
   }
 
-  function handleGameStart() {
+  function handleGameStart(message = {}) {
+    // Check if this game start is targeted at specific players
+    if (message.targetPlayers && !message.targetPlayers.includes(userId)) {
+      setStatus("This round is for other players. Wait for the next one!");
+      return;
+    }
+    
     startGameBtn.disabled = true;
     consecutiveMatches = 0;
     roundActive = false;
@@ -555,6 +582,31 @@
   });
 
   startGameBtn.addEventListener("click", requestStartReactionRound);
+
+  startForNewBtn.addEventListener("click", () => {
+    if (!isHost) return;
+    if (!cameraActive) return setStatus("Enable your camera first.");
+    if (!sessionId || !ws || ws.readyState !== WebSocket.OPEN)
+      return setStatus("Connect to a room first.");
+    if (!playerName) return setStatus("Set your display name.");
+    // Send game-start without targetPlayers to let server auto-target newcomers
+    ws.send(JSON.stringify({ type: "game-start" }));
+  });
+
+  resetSessionBtn.addEventListener("click", () => {
+    if (!isHost) return;
+    if (!sessionId || !ws || ws.readyState !== WebSocket.OPEN)
+      return setStatus("Connect to a room first.");
+    ws.send(JSON.stringify({ type: "reset-session" }));
+  });
+
+  clearLeaderboardBtn.addEventListener("click", () => {
+    if (!isHost) return;
+    if (!sessionId || !ws || ws.readyState !== WebSocket.OPEN)
+      return setStatus("Connect to a room first.");
+    if (!confirm("This will clear all leaderboard results. Are you sure?")) return;
+    ws.send(JSON.stringify({ type: "clear-leaderboard" }));
+  });
 
   window.addEventListener("beforeunload", () => {
     if (ws) ws.close();
