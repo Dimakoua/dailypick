@@ -9,6 +9,7 @@ import { MimicGameSession } from '../../apps/mimic-master/mimic-game-session.js'
 import { PlanningPokerSession } from '../../apps/planning-poker/planning-poker-session.js';
 import { PollSession as MoraleThermometerSession } from '../../apps/morale-thermometer/morale-thermometer-do.js';
 import { RetroBoardSession } from '../../apps/retro-board/retro-board-do.js';
+import { SnowballFightSession } from '../../apps/snowball-fight/snowball-fight-session.js';
 import manifest from '__STATIC_CONTENT_MANIFEST';
 
 const assetManifest = JSON.parse(manifest);
@@ -92,6 +93,19 @@ router.get('/api/retro-board/websocket', (request, env) => {
 
     const durableObjectId = env.RETRO_BOARD_SESSION.idFromName(id);
     const durableObject = env.RETRO_BOARD_SESSION.get(durableObjectId);
+    return durableObject.fetch(request);
+});
+
+router.get('/api/snowball-fight/websocket', (request, env) => {
+    const url = new URL(request.url);
+    const id = url.searchParams.get('session_id');
+
+    if (!id) {
+        return new Response('Missing session_id query parameter', { status: 400 });
+    }
+
+    const durableObjectId = env.SNOWBALL_FIGHT_SESSION.idFromName(id);
+    const durableObject = env.SNOWBALL_FIGHT_SESSION.get(durableObjectId);
     return durableObject.fetch(request);
 });
 
@@ -298,4 +312,4 @@ export default {
     },
 };
 
-export { CollaborationSession, BallGameSession, MimicGameSession, PlanningPokerSession, MoraleThermometerSession, RetroBoardSession, IntegrationConfig };
+export { CollaborationSession, BallGameSession, MimicGameSession, PlanningPokerSession, MoraleThermometerSession, RetroBoardSession, SnowballFightSession, IntegrationConfig };

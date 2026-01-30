@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snowball Fight Classic – Multiplayer Battle Arena | Daily Pick</title>
+    <meta name="description"
+        content="Launch a Snowball Fight room and battle your team in classic Flash-style action. Real-time multiplayer with death order leaderboard.">
+    <meta name="keywords"
+        content="snowball fight, multiplayer game, team battle, daily pick, stand-up energizer, classic flash game, battle arena">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dailypick.dev/apps/snowball-fight/">
+    <meta property="og:title" content="Snowball Fight Classic – Multiplayer Battle Arena | Daily Pick">
+    <meta property="og:description"
+        content="Launch a Snowball Fight room and battle your team in classic Flash-style action. Real-time multiplayer with death order leaderboard.">
+    <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
+    <meta property="og:image:alt" content="Team members battling in Daily Pick's Snowball Fight game">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://dailypick.dev/apps/snowball-fight/">
+    <meta name="twitter:title" content="Snowball Fight Classic – Multiplayer Battle Arena | Daily Pick">
+    <meta name="twitter:description"
+        content="Launch a Snowball Fight room and battle your team in classic Flash-style action. Real-time multiplayer with death order leaderboard.">
+    <meta name="twitter:image" content="https://dailypick.dev/assets/og-image-main.png">
+    <meta name="twitter:image:alt" content="Team members battling in Daily Pick's Snowball Fight game">
+
+    <link rel="canonical" href="https://dailypick.dev/apps/snowball-fight/">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/theme.css">
+    <link rel="stylesheet" href="/assets/css/glass.css">
+    <link rel="stylesheet" href="/assets/css/standup-panel.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="/assets/js/brand-theme-engine.js" defer></script>
+    <script src="/assets/js/brand-config.js" defer></script>
+    <script src="/assets/js/standup-data.js" defer></script>
+    <script src="/assets/js/standup-panel.js" defer></script>
+    <script src="/assets/js/results-pip.js" defer></script>
+</head>
+
+<body>
+    {% include "bg-orbs.html" %}
+    {% include "header.html" %}
+
+    <main class="snowball-page" aria-labelledby="snowballHeading">
+        <header class="hero-card glass-card">
+            <div>
+                <p class="hero-eyebrow">Battle Arena</p>
+                <h1 id="snowballHeading">⛄ Snowball Fight Classic</h1>
+                <p class="hero-subtitle">
+                    Battle your teammates in a classic Flash-style snowball fight! Last one standing wins.
+                    Watch the death order leaderboard to see who lasted longest.
+                </p>
+            </div>
+        </header>
+
+        <!-- Lobby Section -->
+        <section id="lobbySection" class="lobby-section glass-card" style="display: block;">
+            <div class="lobby-content">
+                <h2>Game Lobby</h2>
+                
+                <div class="name-input-group">
+                    <label for="playerNameInput">Your Name:</label>
+                    <input type="text" id="playerNameInput" maxlength="32" placeholder="Enter your name">
+                    <button id="saveNameBtn" class="btn btn--secondary">Save Name</button>
+                </div>
+
+                <div class="room-controls">
+                    <button id="startRoomBtn" class="btn btn--primary">🏠 Start New Room</button>
+                    <button id="joinRoomBtn" class="btn btn--secondary">🚪 Join Existing Room</button>
+                    <button id="copyLinkBtn" class="btn btn--accent" disabled>📋 Copy Invite Link</button>
+                </div>
+
+                <p id="sessionStatus" class="status-text">Not connected to a room.</p>
+
+                <div id="hostControls" class="host-controls" style="display: none;">
+                    <h3>Host Controls</h3>
+                    <button id="startGameBtn" class="btn btn--primary" disabled>▶️ Start Game</button>
+                    <button id="resetGameBtn" class="btn btn--secondary">🔄 Reset to Lobby</button>
+                    <button id="clearLeaderboardBtn" class="btn btn--danger">🗑️ Clear Leaderboard</button>
+                </div>
+
+                <div id="waitingMessage" class="waiting-message" style="display: none;">
+                    <p>⏳ Waiting for host to start the game...</p>
+                </div>
+            </div>
+
+            <div class="lobby-sidebar">
+                <div class="players-panel">
+                    <h3>Players in Room</h3>
+                    <ul id="playersList" class="players-list">
+                        <li>No players yet.</li>
+                    </ul>
+                </div>
+
+                <div id="leaderboard" class="leaderboard-panel">
+                    <h3>Death Order Leaderboard</h3>
+                    <p class="leaderboard-hint">First to die at top, last at bottom</p>
+                    <button id="pipTriggerBtn" class="btn btn--secondary pip-trigger" 
+                        data-pip-target="#leaderboard" 
+                        data-pip-title="Snowball Fight Leaderboard" 
+                        data-pip-width="360" 
+                        data-pip-height="480"
+                        data-pip-exclude=".pip-trigger">
+                        📺 Pop Out
+                    </button>
+                    <ul id="deathOrderList" class="death-order-list">
+                        <li>No deaths recorded yet.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Game Section -->
+        <section id="gameSection" class="game-section" style="display: none;">
+            <div class="game-container">
+                <canvas id="gameCanvas" width="800" height="600"></canvas>
+                
+                <div class="game-ui">
+                    <div id="gameStatus" class="game-status">
+                        <span id="healthDisplay">❤️ Health: 5</span>
+                        <span id="killsDisplay">⚔️ Kills: 0</span>
+                    </div>
+                    
+                    <div id="gameMessage" class="game-message"></div>
+                </div>
+
+                <div class="game-controls">
+                    <p class="controls-hint">🎮 WASD/Arrows to move • Click/Space to throw snowballs</p>
+                </div>
+            </div>
+
+            <div class="game-sidebar glass-card">
+                <h3>Active Players</h3>
+                <ul id="activePlayersList" class="active-players-list"></ul>
+            </div>
+        </section>
+
+        <!-- Victory Section -->
+        <section id="victorySection" class="victory-section glass-card" style="display: none;">
+            <div class="victory-content">
+                <h2>🎉 Game Over!</h2>
+                <div id="victoryMessage" class="victory-message"></div>
+                
+                <div id="finalLeaderboard" class="final-results">
+                    <h3>Final Results</h3>
+                    <button id="finalPipTriggerBtn" class="btn btn--secondary pip-trigger" 
+                        data-pip-target="#finalLeaderboard" 
+                        data-pip-title="Snowball Fight Final Results" 
+                        data-pip-width="360" 
+                        data-pip-height="480"
+                        data-pip-exclude=".pip-trigger, .btn--primary">
+                        📺 Pop Out
+                    </button>
+                    <ul id="finalResultsList" class="final-results-list"></ul>
+                </div>
+
+                <button id="backToLobbyBtn" class="btn btn--primary">Back to Lobby</button>
+            </div>
+        </section>
+
+        <!-- Instructions -->
+        <section class="instructions glass-card">
+            <h2>How to Play</h2>
+            <ol>
+                <li><strong>Create or Join:</strong> Start a new room or join an existing one with a shared link.</li>
+                <li><strong>Set Your Name:</strong> Enter your name so teammates know who you are.</li>
+                <li><strong>Battle!</strong> Move with WASD/Arrow keys, throw snowballs with mouse clicks or spacebar.</li>
+                <li><strong>Survive:</strong> You have 5 health points. Get hit 5 times and you're out!</li>
+                <li><strong>Leaderboard:</strong> First to die appears at the top, last survivor at the bottom.</li>
+            </ol>
+        </section>
+
+        <!-- Standup Panel Integration -->
+        <aside id="standup-panel" class="standup-panel" style="display: none;" aria-labelledby="standupPanelTitle">
+            <header class="standup-panel__header">
+                <h2 id="standupPanelTitle">Stand-up Queue</h2>
+                <button id="standup-panel-close" class="standup-panel__close" aria-label="Close">×</button>
+            </header>
+            <div class="standup-panel__content">
+                <div id="standup-panel-queue" class="standup-queue"></div>
+            </div>
+        </aside>
+    </main>
+
+    {% include "footer.html" %}
+
+    <script src="script.js" type="module"></script>
+</body>
+
+</html>
