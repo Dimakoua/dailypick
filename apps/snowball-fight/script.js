@@ -74,8 +74,8 @@
   const POSITION_SEND_INTERVAL = 100; // Send position every 100ms max
 
   // Constants
-  const CANVAS_WIDTH = 800;
-  const CANVAS_HEIGHT = 600;
+  const CANVAS_WIDTH = 1200;
+  const CANVAS_HEIGHT = 900;
   const PLAYER_SIZE = 40;
   const SNOWBALL_SIZE = 6;
   const PLAYER_SPEED = 3;
@@ -83,11 +83,11 @@
 
   // Snow forts (obstacles)
   const snowForts = [
-    { x: 400, y: 300, width: 80, height: 40 },
-    { x: 200, y: 200, width: 60, height: 30 },
-    { x: 600, y: 400, width: 60, height: 30 },
-    { x: 150, y: 450, width: 50, height: 25 },
-    { x: 650, y: 150, width: 50, height: 25 },
+    { x: 600, y: 450, width: 120, height: 60 },
+    { x: 300, y: 300, width: 90, height: 45 },
+    { x: 900, y: 600, width: 90, height: 45 },
+    { x: 225, y: 675, width: 75, height: 38 },
+    { x: 975, y: 225, width: 75, height: 38 },
   ];
 
   // Check if position overlaps with any obstacle
