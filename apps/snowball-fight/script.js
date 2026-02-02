@@ -90,6 +90,35 @@
     { x: 650, y: 150, width: 50, height: 25 },
   ];
 
+  // Check if position overlaps with any obstacle
+  function isPositionValid(x, y, playerSize = PLAYER_SIZE) {
+    const padding = playerSize / 2;
+    for (const fort of snowForts) {
+      if (x + padding > fort.x - fort.width / 2 &&
+          x - padding < fort.x + fort.width / 2 &&
+          y + padding > fort.y - fort.height / 2 &&
+          y - padding < fort.y + fort.height / 2) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // Get a valid spawn position
+  function getValidSpawnPosition() {
+    let x, y;
+    let attempts = 0;
+    const maxAttempts = 50;
+    
+    do {
+      x = Math.random() * (CANVAS_WIDTH - 100) + 50;
+      y = Math.random() * (CANVAS_HEIGHT - 100) + 50;
+      attempts++;
+    } while (!isPositionValid(x, y) && attempts < maxAttempts);
+    
+    return { x, y };
+  }
+
   // Team colors for classic look
   const TEAM_COLORS = {
     green: { body: '#2ecc71', dark: '#27ae60', pants: '#3498db' },
@@ -333,8 +362,9 @@
           showSection('game');
           // Initialize player for mid-game join
           if (myPlayer.x === 400 && myPlayer.y === 300) {
-            myPlayer.x = Math.random() * (CANVAS_WIDTH - 100) + 50;
-            myPlayer.y = Math.random() * (CANVAS_HEIGHT - 100) + 50;
+            const spawnPos = getValidSpawnPosition();
+            myPlayer.x = spawnPos.x;
+            myPlayer.y = spawnPos.y;
           }
           updateHealthDisplay();
           updateKillsDisplay();
@@ -540,8 +570,9 @@
     showSection('game');
     
     // Reset player state
-    myPlayer.x = Math.random() * (CANVAS_WIDTH - 100) + 50;
-    myPlayer.y = Math.random() * (CANVAS_HEIGHT - 100) + 50;
+    const spawnPos = getValidSpawnPosition();
+    myPlayer.x = spawnPos.x;
+    myPlayer.y = spawnPos.y;
     myPlayer.health = 5;
     myPlayer.kills = 0;
     myPlayer.isAlive = true;
