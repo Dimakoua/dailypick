@@ -2,10 +2,11 @@ name: Generate Weekly Blog Post
 
 on:
   workflow_dispatch: # Allows manual triggering from the Actions tab
-  schedule:
-    # Runs every Monday at 10:00 AM UTC. Adjust as needed.
-    # Cron syntax: minute hour day(of_month) month day(of_week)
-    - cron: '0 10 * * 1'
+  # schedule disabled — automatic runs paused; use manual trigger only
+  # schedule:
+  #   # Runs every Monday at 10:00 AM UTC. Adjust as needed.
+  #   # Cron syntax: minute hour day(of_month) month day(of_week)
+  #   - cron: '0 10 * * 1'
 
 jobs:
   generate_article:
