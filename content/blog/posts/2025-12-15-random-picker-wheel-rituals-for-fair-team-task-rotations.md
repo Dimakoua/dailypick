@@ -37,4 +37,4 @@ Add stretches, shout-outs, or gratitude prompts to the wheel alongside names. Wh
 *   Mix manual checks with the wheel. A facilitator can still override a spin if someone is deep in a focus block—but always explain why the spin was skipped.
 *   Honor “wheel champions.” When a team member goes a full cycle without needing exceptions, highlight them in your update or retrospective to reinforce that fairness pays off.
 
-Pair these rituals with the rest of your Daily Pick toolkit—our [decision guides and games](/blog/escape-the-meeting-maze-fun-fair-ways-to-choose-team-projects/) are designed to keep both productivity and fun high. When your rotations feel effortless, you’ve reclaimed time, attention, and trust.
+Pair these rituals with the rest of your Daily Pick toolkit—our [decision guides and games](/blog/conquer-decision-fatigue-fun-fair-ways-to-choose-team-projects/) are designed to keep both productivity and fun high. When your rotations feel effortless, you've reclaimed time, attention, and trust.
