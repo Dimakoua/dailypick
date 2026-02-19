@@ -17,7 +17,11 @@ twitterImageAlt: "Scrum team gathered around a vibrant retrospective board enhan
 
 ## Level Up Your Team Retrospectives: Fun & Fair Activities to Boost Engagement
 
-Team retrospectives are crucial for continuous improvement, but let's be honest: they can sometimes feel like a drag.  Hours spent in meetings, the same old formats, and a general lack of engagement can leave everyone feeling drained instead of empowered.  This week, we're diving into how to revitalize your retrospectives with fun and fair activities that actually boost team morale and yield valuable insights. Use it as the sequel to our earlier guide on [Conquering Meeting Monotony](/blog/conquer-meeting-monotony-fun-ways-to-spice-up-your-team-retrospectives/) or stitch it into your [Hybrid All-Hands Playbook](/blog/hybrid-all-hands-playbook-fair-fun-agendas-that-keep-teams-engaged/) for company-wide ceremonies.
+Team retrospectives are crucial for continuous improvement, but let's be honest: they can sometimes feel like a drag.  Hours spent in meetings, the same old formats, and a general lack of engagement can leave everyone feeling drained instead of empowered.  This week, we're diving into how to revitalize your retrospectives with fun and fair activities that actually boost team morale and yield valuable insights. 
+
+**🎯 Looking for a comprehensive guide?** Check out our complete [Agile Retrospective Games: Complete Guide](/blog/agile-retrospective-games-complete-guide/) featuring 8 proven retrospective formats, setup checklists, and facilitation tips for teams of any size.
+
+Use this guide as the sequel to our earlier work on [Conquering Meeting Monotony](/blog/conquer-meeting-monotony-fun-ways-to-spice-up-your-team-retrospectives/) or stitch it into your [Hybrid All-Hands Playbook](/blog/hybrid-all-hands-playbook-fair-fun-agendas-that-keep-teams-engaged/) for company-wide ceremonies.
 
 The key is to create a safe space where everyone feels comfortable contributing, regardless of seniority or personality.  Fairness is paramount—no one should feel unheard or overshadowed. And let's face it, a little fun never hurt anyone!  A more energized team is a more productive team.
 
@@ -55,6 +59,13 @@ No matter the activity, remember that the goal of a retrospective is to identify
 *Embrace Fun and Fairness for a More Engaged Team*
 
 By incorporating these fun and fair activities into your retrospectives, you'll create a more engaging, collaborative, and ultimately more productive team environment.  Remember, a little creativity and a commitment to fairness can go a long way in transforming your team’s retrospective experiences from tedious to transformative. Want a research-backed angle to share with leadership? The book *Agile Retrospectives* by Derby & Larsen (via [O’Reilly overview](https://www.oreilly.com/library/view/agile-retrospectives/9781680500348/)) highlights how varied formats increase learning—Daily Pick simply brings those formats to life.
+---
 
+## Related Reading
 
+- [Agile Retrospective Games: Complete Guide to Energizing Sprint Reviews](/blog/agile-retrospective-games-complete-guide/)
+- [How to Run Effective Daily Standup Meetings](/blog/how-to-run-effective-daily-standup-meetings/)
+- [8 Best Standup Meeting Ideas for Remote & In-Office Teams](/blog/8-best-standup-meeting-ideas/)
+- [Hybrid All-Hands Agendas That Keep Every Voice Engaged](/blog/hybrid-all-hands-playbook-fair-fun-agendas-that-keep-teams-engaged/)
+- [Conquer Meeting Monotony: Fun Ways to Spice Up Your Team Retrospectives](/blog/conquer-meeting-monotony-fun-ways-to-spice-up-your-team-retrospectives/)
 *Ready to revolutionize your team's decision-making and retrospectives? Explore the full range of Daily Pick's fun, fair, and fast tools at [dailypick.dev](https://dailypick.dev).*
