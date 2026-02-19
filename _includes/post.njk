@@ -225,27 +225,32 @@ layout: base.njk
 
         <!-- Share section with markup -->
         <div class="post-share" role="complementary" aria-label="Share this article">
-            <h3>Share This Article</h3>
-            <ul role="list">
-                <li role="listitem">
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ canonical }}" 
-                       target="_blank" 
-                       rel="noopener noreferrer"
-                       aria-label="Share on Facebook">Facebook</a>
-                </li>
-                <li role="listitem">
-                    <a href="https://twitter.com/intent/tweet?text={{ title }}&url={{ canonical }}" 
-                       target="_blank" 
-                       rel="noopener noreferrer"
-                       aria-label="Share on Twitter">Twitter</a>
-                </li>
-                <li role="listitem">
-                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ canonical }}" 
-                       target="_blank" 
-                       rel="noopener noreferrer"
-                       aria-label="Share on LinkedIn">LinkedIn</a>
-                </li>
-            </ul>
+            <div class="share-container">
+                <h3 class="share-title">Share This Article</h3>
+                <ul class="share-list" role="list">
+                    <li role="listitem">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ canonical }}" 
+                           target="_blank" 
+                           rel="noopener noreferrer"
+                           aria-label="Share on Facebook">Facebook</a>
+                    </li>
+                    <li role="listitem">
+                        <a href="https://twitter.com/intent/tweet?text={{ title }}&url={{ canonical }}" 
+                           target="_blank" 
+                           rel="noopener noreferrer"
+                           aria-label="Share on Twitter">Twitter</a>
+                    </li>
+                    <li role="listitem">
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ canonical }}" 
+                           target="_blank" 
+                           rel="noopener noreferrer"
+                           aria-label="Share on LinkedIn">LinkedIn</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Motivational message -->
+            <p class="share-message">Start Monday. You've got this. 🚀</p>
         </div>
 
         <!-- Related Reading -->

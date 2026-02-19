@@ -219,3 +219,119 @@ footer {
     color: #fff;
     font-weight: bold;
 }
+
+/* Post Footer Styling */
+.post-footer {
+    margin-top: 2em;
+    padding-top: 2em;
+    border-top: 2px solid #f0f0f0;
+}
+
+.post-share {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 2em;
+    border-radius: 8px;
+    margin-bottom: 2em;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.share-container {
+    margin-bottom: 1.5em;
+}
+
+.share-title {
+    color: #ffc107;
+    font-size: 1.3rem;
+    margin-bottom: 1em;
+    margin-top: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+    display: block;
+}
+
+.share-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.share-list li {
+    margin: 0;
+}
+
+.share-list a {
+    display: inline-block;
+    color: #ecf0f1;
+    background-color: #34495e;
+    padding: 0.7em 1.5em;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.share-list a:hover {
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.share-message {
+    color: #ffc107;
+    font-size: 1.1rem;
+    text-align: center;
+    margin: 0;
+    font-weight: 600;
+}
+
+.post-navigation {
+    margin-bottom: 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.previous-post,
+.next-post {
+    margin: 0;
+    padding: 1em;
+    background-color: #f9f9f9;
+    border-left: 4px solid #007bff;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.previous-post:hover,
+.next-post:hover {
+    background-color: #f0f0f0;
+    border-left-color: #0056b3;
+}
+
+.previous-post a,
+.next-post a {
+    font-weight: 600;
+    color: #007bff;
+}
+
+.previous-post a:hover,
+.next-post a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.back-to-blog {
+    text-align: center;
+    margin-top: 2em;
+    font-size: 1.1em;
+}
+
+.back-to-blog a {
+    font-weight: 600;
+    color: #007bff;
+}
