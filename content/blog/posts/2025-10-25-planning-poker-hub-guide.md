@@ -1,7 +1,7 @@
 ---
 title: "Planning Poker Hub Guide: Fast, Fair Sprint Estimation"
 date: 2025-10-25
-description: "Discover how Daily Pick's Planning Poker Hub keeps sprint estimation fast, fair, and fun with hidden votes, multiplayer rooms, and Jira-ready summaries."
+description: "Cut planning poker from 45 to 20 minutes. Avoid anchoring bias with hidden votes + real-time reveals. Get Jira summaries auto-generated in seconds."
 layout: "post.njk"
 tags: ["agile estimation", "scrum", "planning poker", "team productivity", "jira", "remote teams", "agile tools"]
 canonical: "https://dailypick.dev/blog/planning-poker-hub-guide/"

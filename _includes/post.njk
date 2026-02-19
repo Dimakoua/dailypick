@@ -34,15 +34,27 @@ layout: base.njk
 {% if not keywords and articleTags.length %}
     {% set keywords = articleTags | join(", ") %}
 {% endif %}
+
+{# Estimate reading time (avg 200 words per minute) #}
+{% set contentLength = (content | length) / 1000 %}
+{% set readingTime = ((contentLength / 1) * 1.3) | round %}
+{% if readingTime < 1 %}
+    {% set readingTime = 1 %}
+{% endif %}
+
+{% set wordCount = ((content | striptags | length) / 4.7) | round %}
 {% set articleStructuredData = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": title,
     "description": description or metadata.siteDescription,
     "image": preferredOgImage,
+    "articleBody": content | striptags | slice(0, 500),
+    "wordCount": wordCount,
     "author": {
         "@type": "Organization",
-        "name": author
+        "name": author,
+        "url": metadata.url
     },
     "publisher": {
         "@type": "Organization",
@@ -54,11 +66,41 @@ layout: base.njk
     },
     "datePublished": publishedDateIso,
     "dateModified": updatedDateIso,
-    "mainEntityOfPage": canonical,
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": canonical
+    },
     "url": canonical,
+    "inLanguage": "en-US",
     "keywords": articleTags | join(", "),
     "articleSection": section or "Blog"
 } %}
+
+{% set breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": metadata.url
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Blog",
+            "item": metadata.url + "/blog/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 3,
+            "name": title,
+            "item": canonical
+        }
+    ]
+} %}
+
 {% set headExtra %}
     <meta property="article:published_time" content="{{ publishedDateIso }}">
     <meta property="article:modified_time" content="{{ updatedDateIso }}">
@@ -68,24 +110,166 @@ layout: base.njk
         <meta property="article:tag" content="{{ tag }}">
     {% endfor %}
     {% if preferredOgImage %}<meta property="og:image" content="{{ preferredOgImage }}">{% endif %}
+    
+    <!-- Reading time estimate -->
+    <meta property="reading-time" content="{{ readingTime }} min read">
+    
+    <!-- BlogPosting Schema -->
     <script type="application/ld+json">
         {{ articleStructuredData | dump | safe }}
     </script>
-{% endset %}
-<article class="main-container blog-post-content">
-    <h1>{{ title }}</h1>
-    <p class="post-meta">
-        Published on: 
-        <time datetime="{{ page.date.toISOString() }}">
-            {{ page.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}
-        </time>
-            by {{ metadata.authorName }}
-    </p>
     
-    {% if tags and tags.length > 0 %}
-        <p class="post-tags">Tags: {% for tag in tags %}<span class="tag">{{ tag }}</span>{% if not loop.last %}, {% endif %}{% endfor %}</p>
-    {% endif %}
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json">
+        {{ breadcrumbSchema | dump | safe }}
+    </script>
+{% endset %}
 
-    {{ content | safe }}
+<article class="main-container blog-post-content" itemscope itemtype="https://schema.org/BlogPosting">
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+        <ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <a itemprop="item" href="/">Home</a>
+                <meta itemprop="position" content="1">
+            </li>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <a itemprop="item" href="/blog/">Blog</a>
+                <meta itemprop="position" content="2">
+            </li>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <span itemprop="name">{{ title }}</span>
+                <meta itemprop="position" content="3">
+                <meta itemprop="item" content="{{ canonical }}">
+            </li>
+        </ol>
+    </nav>
+
+    <!-- Article Header -->
+    <header class="post-header">
+        <h1 itemprop="headline" itemprop="name">{{ title }}</h1>
+        
+        <div class="post-meta" role="doc-subtitle">
+            <!-- Publication Date -->
+            <p class="post-date">
+                <span class="label">Published:</span>
+                <time datetime="{{ publishedDateIso }}" itemprop="datePublished">
+                    {{ page.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}
+                </time>
+            </p>
+
+            <!-- Updated Date (if different) -->
+            {% if updated and updated != page.date %}
+                <p class="post-updated">
+                    <span class="label">Updated:</span>
+                    <time datetime="{{ updatedDateIso }}" itemprop="dateModified">
+                        {{ updatedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}
+                    </time>
+                </p>
+            {% else %}
+                <meta itemprop="dateModified" content="{{ updatedDateIso }}">
+            {% endif %}
+
+            <!-- Author -->
+            <p class="post-author">
+                <span class="label">By:</span>
+                <span itemprop="author" itemscope itemtype="https://schema.org/Organization">
+                    <span itemprop="name">{{ author }}</span>
+                </span>
+            </p>
+
+            <!-- Reading Time -->
+            <p class="reading-time" aria-label="Estimated reading time">
+                <span class="label">Reading Time:</span>
+                <span>{{ readingTime }} min read</span>
+            </p>
+
+            <!-- Article Section/Category -->
+            {% if section %}
+                <p class="post-section">
+                    <span class="label">Section:</span>
+                    <span itemprop="articleSection">{{ section }}</span>
+                </p>
+            {% endif %}
+
+            <!-- Hidden metadata for search engines -->
+            <meta itemprop="image" content="{{ preferredOgImage }}">
+            <meta itemprop="description" content="{{ description or metadata.siteDescription }}">
+            <meta itemprop="url" content="{{ canonical }}">
+            <meta itemprop="inLanguage" content="en-US">
+        </div>
+
+        <!-- Tags/Keywords -->
+        {% if tags and tags.length > 0 %}
+            <div class="post-tags" role="list" aria-label="Post topics">
+                <span class="label">Topics:</span>
+                {% for tag in tags %}
+                    <a href="/blog/?tag={{ tag | slugify }}" class="tag" role="listitem" itemprop="keywords">{{ tag }}</a>
+                    {% if not loop.last %}<span class="comma" aria-hidden="true">,</span>{% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </header>
+
+    <!-- Article Body with Schema -->
+    <div class="post-body" itemprop="articleBody">
+        {{ content | safe }}
+    </div>
+
+    <!-- Article Footer -->
+    <footer class="post-footer">
+        <!-- Keywords -->
+        {% if keywords %}
+            <meta itemprop="keywords" content="{{ keywords }}">
+        {% endif %}
+
+        <!-- Share section with markup -->
+        <div class="post-share" role="complementary" aria-label="Share this article">
+            <h3>Share This Article</h3>
+            <ul role="list">
+                <li role="listitem">
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ canonical }}" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="Share on Facebook">Facebook</a>
+                </li>
+                <li role="listitem">
+                    <a href="https://twitter.com/intent/tweet?text={{ title }}&url={{ canonical }}" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="Share on Twitter">Twitter</a>
+                </li>
+                <li role="listitem">
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ canonical }}" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="Share on LinkedIn">LinkedIn</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Related Reading -->
+        <nav class="post-navigation" role="navigation" aria-label="Post navigation">
+            {% if previousPost %}
+                <p class="previous-post">
+                    <a href="{{ previousPost.url }}" rel="prev">
+                        <span aria-hidden="true">←</span> Previous: {{ previousPost.data.title }}
+                    </a>
+                </p>
+            {% endif %}
+            {% if nextPost %}
+                <p class="next-post">
+                    <a href="{{ nextPost.url }}" rel="next">
+                        Next: {{ nextPost.data.title }} <span aria-hidden="true">→</span>
+                    </a>
+                </p>
+            {% endif %}
+        </nav>
+
+        <!-- Back to Blog -->
+        <p class="back-to-blog">
+            <a href="/blog/" aria-label="Back to all blog posts">← Back to Blog</a>
+        </p>
+    </footer>
 
 </article>

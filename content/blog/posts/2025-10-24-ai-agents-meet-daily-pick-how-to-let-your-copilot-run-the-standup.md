@@ -1,7 +1,7 @@
 ---
 title: "AI Agents + Daily Pick: Let Copilots Run Your Stand-up"
 date: 2025-10-24
-description: "Pair AI copilots with Daily Pick to automate prep, rotate speakers fairly, and keep human banter alive in your daily stand-up."
+description: "Use AI agents to automate standup prep, note-taking, and blocker tracking. Run standups 60% faster while keeping human connection. Full guide included."
 layout: "post.njk"
 tags: ["ai agents", "copilot", "stand-up automation", "team productivity", "remote work", "meeting facilitation"]
 canonical: "https://dailypick.dev/blog/ai-agents-meet-daily-pick-how-to-let-your-copilot-run-the-standup/"
