@@ -81,6 +81,16 @@ Posts are scattered across similar topics:
    - Link to Daily Pick games but position as broader category
    - Include non-Daily Pick alternatives too (shows authority)
 
+5. **"Async Standup Alternatives: Keep Teams Aligned Without a Meeting"** (New)
+   - Target: "async standup", "asynchronous standup", "standup without meeting"
+   - Explain tools and rituals (Daily Pick automations, Slack, email summaries)
+   - Show when live standups are unnecessary and how to transition
+
+6. **"Remote Team Building Activities That Actually Work"** (New)
+   - Target: "remote team building activities", "team bonding games"
+   - Broaden beyond Daily Pick to include proven non-software ideas
+   - Highlight how occasional games boost morale and reduce turnover
+
 **PRIORITY 2 - Decision-Making Keywords:**
 
 5. **"Decision Fatigue: How Teams Make Better Choices Faster"** (New)
