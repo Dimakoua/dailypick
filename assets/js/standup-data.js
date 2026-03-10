@@ -170,6 +170,9 @@
       type: service === 'trello' ? 'Card' : 'Issue',
       listId: item.listId || null,
       updated: item.updated || item.updated_at || null,
+      description: item.description || null,
+      comments: item.comments || [],
+      comments_url: item.comments_url || null,
     };
   }
 

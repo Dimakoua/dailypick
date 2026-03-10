@@ -383,6 +383,12 @@
       items.forEach((item) => {
         const li = document.createElement('li');
         li.className = 'standup-item';
+        li.style.cursor = 'pointer';
+        li.addEventListener('click', (e) => {
+          if (e.target.closest('.standup-item__link')) return;
+          renderItemDetail(item);
+        });
+
         const titleRow = document.createElement('div');
         titleRow.className = 'standup-item__title';
         if (item.shortId) {
@@ -445,6 +451,11 @@
     items.slice(0, 15).forEach((item) => {
       const li = document.createElement('li');
       li.className = 'standup-item';
+      li.style.cursor = 'pointer';
+      li.addEventListener('click', (e) => {
+        if (e.target.closest('.standup-item__link')) return;
+        renderItemDetail(item);
+      });
       const titleRow = document.createElement('div');
       titleRow.className = 'standup-item__title';
       if (item.shortId) {
@@ -1050,6 +1061,63 @@
     }
 
     setupPanelInteractions(panel);
+  }
+
+  function renderItemDetail(item) {
+    if (!elements.panel) return;
+    const viewId = 'standup-detail-' + Math.random().toString(36).slice(2, 8);
+    const detailView = document.createElement('div');
+    detailView.className = 'standup-panel-detail glass-card';
+    detailView.id = viewId;
+
+    let contentHtml = `
+      <header class="standup-panel-detail__header">
+        <button type="button" class="standup-panel-detail__back">← Back</button>
+        <div class="standup-panel-detail__title-group">
+          ${item.shortId ? `<span class="standup-item__badge">${item.shortId}</span>` : ''}
+          <h4>${item.title || 'Untitled'}</h4>
+        </div>
+      </header>
+      <div class="standup-panel-detail__scroll">
+        <section class="standup-panel-detail__section">
+          <h5>Description</h5>
+          <div class="standup-panel-detail__description">
+            ${item.description ? item.description.replace(/\n/g, '<br>') : '<p class="empty">No description provided.</p>'}
+          </div>
+        </section>
+        <section class="standup-panel-detail__section">
+          <h5>Comments</h5>
+          <div class="standup-panel-detail__comments">
+            ${Array.isArray(item.comments) && item.comments.length 
+              ? item.comments.map(c => `
+                <div class="standup-detail-comment">
+                  <div class="standup-detail-comment__meta">
+                    <strong>${c.author?.displayName || 'Unknown'}</strong> • ${new Date(c.created).toLocaleString()}
+                  </div>
+                  <div class="standup-detail-comment__body">${c.body}</div>
+                </div>
+              `).join('')
+              : '<p class="empty">No comments yet.</p>'
+            }
+          </div>
+        </section>
+        <div class="standup-panel-detail__footer">
+          <a href="${item.url}" target="_blank" rel="noopener" class="standup-item__link">Open in ${item.service}</a>
+        </div>
+      </div>
+    `;
+
+    detailView.innerHTML = contentHtml;
+    elements.panel.appendChild(detailView);
+
+    requestAnimationFrame(() => {
+      detailView.classList.add('is-visible');
+    });
+
+    detailView.querySelector('.standup-panel-detail__back').addEventListener('click', () => {
+      detailView.classList.remove('is-visible');
+      setTimeout(() => detailView.remove(), 300);
+    });
   }
 
   function handleDataUpdate(snapshot) {

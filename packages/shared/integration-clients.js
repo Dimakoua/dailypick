@@ -82,7 +82,7 @@ async function fetchJira(config, payload = {}) {
     const searchPayload = {
       jql: query,
       maxResults,
-      fields: ['summary', 'status', 'assignee', 'updated'],
+      fields: ['summary', 'status', 'assignee', 'updated', 'description', 'comment'],
     };
 
     let response = await fetchWithTimeout(searchUrl, {
@@ -103,7 +103,7 @@ async function fetchJira(config, payload = {}) {
           jql: query,
           maxResults,
           startAt: 0,
-          fields: ['summary', 'status', 'assignee', 'updated'],
+          fields: ['summary', 'status', 'assignee', 'updated', 'description', 'comment'],
         };
         response = await fetchWithTimeout(legacySearchUrl, {
           method: 'POST',
@@ -142,6 +142,8 @@ async function fetchJira(config, payload = {}) {
         assignee,
         updated: issue.fields?.updated ?? null,
         url: issueUrl,
+        description: issue.fields?.description ?? null,
+        comments: issue.fields?.comment?.comments ?? [],
       };
     });
 
@@ -311,7 +313,7 @@ async function fetchTrello(config, payload = {}) {
 
   if (includeAssignments) {
     const payloadCards = await trelloRequest(`boards/${boardId}/cards`, apiKey, apiToken, {
-      fields: 'id,name,url,idList,pos,idMembers',
+      fields: 'id,name,url,idList,pos,idMembers,desc',
       limit: '50',
     });
 
@@ -323,6 +325,7 @@ async function fetchTrello(config, payload = {}) {
           listId: card.idList,
           position: card.pos,
           memberIds: Array.isArray(card.idMembers) ? card.idMembers : [],
+          description: card.desc ?? null,
         }))
       : [];
 
@@ -439,6 +442,8 @@ async function fetchGitHub(config, payload = {}) {
             state: issue.state,
             assignee: issue.assignee?.login ?? null,
             updated: issue.updated_at,
+            description: issue.body ?? null,
+            comments_url: issue.comments_url ?? null,
           }))
       : [];
 
