@@ -901,6 +901,7 @@
           <p class="standup-panel__subtitle">Keep the queue, notes, and assignments together.</p>
         </div>
         <div class="standup-panel__header-actions">
+          <button type="button" class="standup-panel__action standup-panel__action--help" title="How it works">Help</button>
           <button type="button" class="standup-panel__action standup-panel__action--reset" title="Reset panel layout">Reset</button>
           <button type="button" class="standup-panel__action standup-panel__action--collapse" title="Hide panel">Hide</button>
           <button type="button" class="standup-panel__refresh">Refresh</button>
@@ -997,7 +998,14 @@
     elements.notes = notesArea;
     elements.resizeHandle = panel.querySelector('.standup-panel__resize-handle');
     elements.resetButton = panel.querySelector('.standup-panel__action--reset');
+    elements.helpButton = panel.querySelector('.standup-panel__action--help');
     elements.collapseButton = panel.querySelector('.standup-panel__action--collapse');
+
+    if (elements.helpButton) {
+      elements.helpButton.addEventListener('click', () => {
+        window.dispatchEvent(new CustomEvent('standup:start-walkthrough'));
+      });
+    }
 
     if (elements.queueNextButton) {
       elements.queueNextButton.addEventListener('click', () => {

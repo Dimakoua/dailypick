@@ -593,3 +593,97 @@
 .standup-panel.standup-panel--layout-small .standup-section {
   padding: 0.6rem 0.75rem 0.75rem;
 }
+/* Stand-up Walkthrough Tooltip */
+.standup-walkthrough-tooltip {
+  position: fixed;
+  z-index: 10001;
+  width: 280px;
+  padding: 18px;
+  background: var(--glass-surface, rgba(255, 255, 255, 0.85));
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.35));
+  border-radius: 12px;
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.28);
+  color: var(--brand-text, #0f172a);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: auto;
+}
+
+.standup-walkthrough-content h4 {
+  margin: 0 0 8px 0;
+  font-size: 1.1rem;
+  color: var(--brand-accent, #2563eb);
+}
+
+.standup-walkthrough-content p {
+  margin: 0 0 16px 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+.standup-walkthrough-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.standup-walkthrough-actions button {
+  background: rgba(15, 23, 42, 0.05);
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  color: var(--brand-text, #0f172a);
+}
+
+.standup-walkthrough-next {
+  background: var(--brand-accent, #2563eb) !important;
+  color: white !important;
+  border-color: var(--brand-accent, #2563eb) !important;
+}
+
+.standup-walkthrough-next:hover {
+  filter: brightness(1.1);
+}
+
+.standup-walkthrough-skip {
+  opacity: 0.7;
+}
+
+.standup-walkthrough-skip:hover {
+  opacity: 1;
+}
+
+.standup-walkthrough-steps {
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+.standup-walkthrough-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.1);
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.standup-walkthrough-highlight {
+  position: relative;
+  z-index: 10002 !important;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25), 0 8px 30px rgba(0,0,0,0.2) !important;
+}
+
+.standup-panel__action--help {
+  color: var(--brand-accent, #2563eb) !important;
+  background: rgba(37, 99, 235, 0.1) !important;
+}
