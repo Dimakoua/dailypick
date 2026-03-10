@@ -19,7 +19,7 @@
   };
 
   const ORDERED_LIST_SOURCES = new Set(['speedway', 'letters', 'gravity-drift', 'patchinko']);
-  const UPCOMING_DISPLAY_LIMIT = 8;
+  const UPCOMING_DISPLAY_LIMIT = 20;
   const PANEL_STORAGE_KEY = 'standupPanelLayout';
   const PANEL_MIN_WIDTH = 300;
   const PANEL_MIN_HEIGHT = 280;
