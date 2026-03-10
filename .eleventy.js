@@ -36,6 +36,27 @@ module.exports = function(eleventyConfig) {
     // return collectionApi.getFilteredByGlob("./blog/posts/**/*.md"); // This remains correct
   });
 
+  // Provide a default layout for any file inside the blog posts folder that
+  // doesn't explicitly specify one. Previously many posts had a `layout:`
+  // frontmatter, but the new entry created on 2026-02-20 lacked it which caused
+  // Eleventy to emit only the raw HTML with an empty <head>. The computed data
+  // below ensures every post is wrapped in `post.njk` automatically.
+  eleventyConfig.addGlobalData("eleventyComputed", {
+    layout: data => {
+      if (data.layout) {
+        return data.layout; // honor explicit choice
+      }
+      if (
+        data.page &&
+        data.page.inputPath &&
+        data.page.inputPath.includes("/content/blog/posts/")
+      ) {
+        return "post.njk";
+      }
+      return data.layout;
+    }
+  });
+
   // Create a custom collection for the sitemap that excludes the README.md file.
   eleventyConfig.addCollection("sitemap", function(collectionApi) {
     // Define a list of file paths to exclude from the sitemap.

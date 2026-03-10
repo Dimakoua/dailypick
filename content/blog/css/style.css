@@ -335,3 +335,93 @@ footer {
     font-weight: 600;
     color: #007bff;
 }
+
+/* ---------------------------------------------------------------------------
+   Additional typography and layout tweaks for individual blog posts
+   ------------------------------------------------------------------------ */
+.blog-post-content {
+    line-height: 1.75;
+}
+/* Breadcrumbs */
+.breadcrumb-nav {
+    font-size: 0.875rem;
+    margin-bottom: 1.5em;
+}
+.breadcrumb {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+.breadcrumb li {
+    display: inline-flex;
+    align-items: center;
+}
+.breadcrumb li + li::before {
+    content: "›";
+    margin: 0 0.5em;
+    color: #7f8c8d;
+}
+.breadcrumb a,
+.breadcrumb span {
+    color: #3498db;
+    text-decoration: none;
+}
+.breadcrumb a:hover,
+.breadcrumb a:focus {
+    text-decoration: underline;
+}
+.blog-post-content h2 {
+    font-size: 2rem;
+    margin-top: 2em;
+}
+
+.blog-post-content h3 {
+    font-size: 1.75rem;
+    margin-top: 1.75em;
+}
+
+.blog-post-content p {
+    margin-bottom: 1.25em;
+    color: #444;
+}
+
+.blog-post-content ul,
+.blog-post-content ol {
+    margin: 1em 0 1em 1.5em;
+}
+
+.blog-post-content blockquote {
+    border-left: 4px solid #e0e0e0;
+    margin: 1.5em 0;
+    padding-left: 1em;
+    color: #555;
+    font-style: italic;
+    background-color: #fafafa;
+}
+
+.blog-post-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5em auto;
+}
+
+.blog-post-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5em 0;
+}
+
+.blog-post-content table th,
+.blog-post-content table td {
+    border: 1px solid #ddd;
+    padding: 0.5em 1em;
+    text-align: left;
+}
+
+/* make sure any code blocks inside posts still stand out */
+.blog-post-content pre {
+    background-color: #2d2d2d;
+}
