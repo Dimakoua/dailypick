@@ -1,6 +1,6 @@
 ---
 title: "Agile Retrospective Games: Complete Guide to Energizing Sprint Reviews"
-description: "Master 8 creative retrospective activities that surface insights, keep every voice heard, and leave teams energized for the next sprint. Proven formats..."
+description: "Eight creative retrospective activities that surface insights, amplify every voice, and leave teams energized and ready for the next sprint."
 date: 2026-02-20
 tags: 
 section: Agile Ceremonies

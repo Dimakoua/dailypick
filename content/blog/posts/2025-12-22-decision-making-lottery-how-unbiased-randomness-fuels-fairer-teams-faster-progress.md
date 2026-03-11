@@ -1,7 +1,7 @@
 ---
 title: "Decision-Making Lottery: How Unbiased Randomness Fuels Fairer Teams & Faster Progress"
 date: 2025-12-22
-description: "Tired of biased team decisions? Discover how leveraging unbiased randomness can foster fairness, boost morale, and accelerate your team's progress. Learn..."
+description: "Use unbiased randomness to make fairer, faster team decisions—practical rituals and examples to accelerate progress."
 layout: post.njk
 tags: ["team building", "agile", "productivity", "decision making", "workplace culture", "fairness", "remote work", "team tools"]
 canonical: "https://dailypick.dev/blog/decision-making-lottery-how-unbiased-randomness-fuels-fairer-teams-faster-progress/"

@@ -1,7 +1,7 @@
 ---
 title: "Beyond the Burden: Fun & Fair Ways to Distribute Mundane Team Tasks"
 date: 2025-11-26
-description: "Tired of the same people getting stuck with boring tasks? Discover fun, fair, and fast ways to distribute mundane team responsibilities using clever..."
+description: "Fair, playful methods to distribute routine tasks so no one gets stuck—boost morale and productivity with simple, repeatable rituals."
 layout: post.njk
 tags: ["team building", "agile", "productivity", "decision making", "workplace culture", "fairness", "task management", "team morale"]
 canonical: "https://dailypick.dev/blog/beyond-the-burden-fun-fair-ways-to-distribute-mundane-team-tasks/"

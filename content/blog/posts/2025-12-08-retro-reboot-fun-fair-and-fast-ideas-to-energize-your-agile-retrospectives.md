@@ -1,7 +1,7 @@
 ---
 title: "Retro Reboot: Fun, Fair, and Fast Ideas to Energize Your Agile Retrospectives"
 date: 2025-12-08
-description: "Tired of boring agile retrospectives? Discover fun, fair, and fast ideas to reboot your team's feedback sessions, boost engagement, and drive actionable..."
+description: "Fast, fair ideas to reboot agile retrospectives—boost engagement, surface insights, and drive actionable change with simple prompts."
 layout: post.njk
 tags: ["agile", "retrospectives", "team building", "meeting management", "feedback", "fairness", "productivity"]
 canonical: "https://dailypick.dev/blog/retro-reboot-fun-fair-and-fast-ideas-to-energize-your-agile-retrospectives/"
