@@ -3,7 +3,7 @@ title: Why Our Silent Stand-up Was Killing Morale (and the Viral Daily Pick Twis
 date: 2025-11-14
 description: A quiet stand-up was slamming morale. Daily Pick’s viral micro-game turned it into a lively, safe space again.
 layout: post.njk
-tags: [\"stand-up\", \"morale\", \"daily pick\", \"team rituals\", \"culture\", \"remote work\"]
+tags: ["stand-up", "morale", "daily pick", "team rituals", "culture", "remote work"]
 canonical: "https://dailypick.dev/blog/why-our-silent-stand-up-was-killing-morale-and-the-viral-daily-pick-twist-that-rescued-it/"
 author: Daily Pick
 updated: 2025-11-14

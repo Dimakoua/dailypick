@@ -3,7 +3,7 @@ title: This Unicorn Stand-up Trick Dropped Our Escalation Rate by 62%
 date: 2025-11-07
 description: A weird-but-toothsome spin of Daily Pick’s Trap! and Decision Wheel cut our escalation chatter by two-thirds—here’s how your team can steal it.
 layout: post.njk
-tags: [\"stand-up\", \"escalation\", \"team rituals\", \"daily pick\", \"problem solving\", \"remote work\"]
+tags: ["stand-up", "escalation", "team rituals", "daily pick", "problem solving", "remote work"]
 canonical: "https://dailypick.dev/blog/this-unicorn-stand-up-trick-dropped-our-escalation-rate-by-62/"
 author: Daily Pick
 updated: 2025-11-07

@@ -1,6 +1,6 @@
 ---
 title: "Virtual Meeting Games for Team Engagement: Quick Activities That Connect"
-description: Energize remote and hybrid team meetings with 10 proven games that spark connection, boost participation, and turn Zoom fatigue into genuine engagement. Works for standups, all-hands, and sprints.
+description: "Energize remote and hybrid team meetings with 10 proven games that spark connection, boost participation, and turn Zoom fatigue into genuine engagement...."
 date: 2026-02-20
 tags: 
 section: Team Engagement
@@ -8,6 +8,9 @@ keywords: virtual team games, zoom games, remote meeting games, team building ga
 canonical: "https://dailypick.dev/blog/virtual-meeting-games-for-team-engagement/"
 robots: index,follow
 
+author: Daily Pick
+ogImage: /assets/og-image-main.png
+twitterImage: /assets/og-image-main.png
 ---
 Virtual meetings are where human connection goes to suffocate. The camera-on stare. The muted backgrounds. The "Can you hear me?" delays. Thirty people, one person talking, everyone else half-listening while Slack burns in the background.
 

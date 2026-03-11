@@ -3,7 +3,7 @@ title: How to Connect GitHub to Daily Pick (PAT + Repository Guide)
 date: 2025-10-26
 description: Learn how to create a GitHub personal access token, scope it correctly, and sync collaborators plus open issues into Daily Pick.
 layout: post.njk
-tags: [\"github\", \"daily pick\", \"integrations\", \"engineering productivity\", \"standups\"]
+tags: ["github", "daily pick", "integrations", "engineering productivity", "standups"]
 canonical: "https://dailypick.dev/blog/connect-github-to-daily-pick/"
 author: Daily Pick
 updated: 2025-10-26

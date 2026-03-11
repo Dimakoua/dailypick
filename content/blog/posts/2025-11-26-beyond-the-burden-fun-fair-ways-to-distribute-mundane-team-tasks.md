@@ -1,12 +1,16 @@
 ---
 title: "Beyond the Burden: Fun & Fair Ways to Distribute Mundane Team Tasks"
 date: 2025-11-26
-description: "Tired of the same people getting stuck with boring tasks? Discover fun, fair, and fast ways to distribute mundane team responsibilities using clever strategies and Daily Pick's unbiased tools."
+description: "Tired of the same people getting stuck with boring tasks? Discover fun, fair, and fast ways to distribute mundane team responsibilities using clever..."
 layout: post.njk
-tags: [\"team building\", \"agile\", \"productivity\", \"decision making\", \"workplace culture\", \"fairness\", \"task management\", \"team morale\"]
+tags: ["team building", "agile", "productivity", "decision making", "workplace culture", "fairness", "task management", "team morale"]
 canonical: "https://dailypick.dev/blog/beyond-the-burden-fun-fair-ways-to-distribute-mundane-team-tasks/"
 robots: index,follow
 
+author: Daily Pick
+ogImage: /assets/og-image-main.png
+twitterImage: /assets/og-image-main.png
+keywords: \team building\, \agile\, \productivity\, \decision making\, \workplace culture\, \fairness\, \task management\, \team morale\
 ---
 Let's face it: every team, no matter how high-performing or innovative, has its share of mundane tasks. From taking meeting notes and organizing shared drives to scheduling follow-ups or tidying up the digital workspace, these aren't the tasks that typically spark joy. Yet, they are crucial for keeping the gears turning smoothly.
 

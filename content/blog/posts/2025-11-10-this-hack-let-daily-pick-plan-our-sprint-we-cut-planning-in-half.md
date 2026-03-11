@@ -3,7 +3,7 @@ title: This Hack Let Daily Pick Plan Our Sprint—We Cut Planning in Half
 date: 2025-11-10
 description: A wild experiment where Daily Pick owned sprint planning, reduced prep, and still kept the team aligned.
 layout: post.njk
-tags: [\"sprint planning\", \"daily pick\", \"meeting automation\", \"productivity\", \"planning poker\"]
+tags: ["sprint planning", "daily pick", "meeting automation", "productivity", "planning poker"]
 canonical: "https://dailypick.dev/blog/this-hack-let-daily-pick-plan-our-sprint-we-cut-planning-in-half/"
 author: Daily Pick
 updated: 2025-11-10

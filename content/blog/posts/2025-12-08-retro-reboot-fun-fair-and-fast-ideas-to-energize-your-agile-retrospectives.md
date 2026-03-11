@@ -1,12 +1,16 @@
 ---
 title: "Retro Reboot: Fun, Fair, and Fast Ideas to Energize Your Agile Retrospectives"
 date: 2025-12-08
-description: "Tired of boring agile retrospectives? Discover fun, fair, and fast ideas to reboot your team's feedback sessions, boost engagement, and drive actionable change with Daily Pick."
+description: "Tired of boring agile retrospectives? Discover fun, fair, and fast ideas to reboot your team's feedback sessions, boost engagement, and drive actionable..."
 layout: post.njk
-tags: [\"agile\", \"retrospectives\", \"team building\", \"meeting management\", \"feedback\", \"fairness\", \"productivity\"]
+tags: ["agile", "retrospectives", "team building", "meeting management", "feedback", "fairness", "productivity"]
 canonical: "https://dailypick.dev/blog/retro-reboot-fun-fair-and-fast-ideas-to-energize-your-agile-retrospectives/"
 robots: index,follow
 
+author: Daily Pick
+ogImage: /assets/og-image-main.png
+twitterImage: /assets/og-image-main.png
+keywords: \agile\, \retrospectives\, \team building\, \meeting management\, \feedback\, \fairness\, \productivity\
 ---
 Agile retrospectives are meant to be the heartbeat of continuous improvement. They're where teams pause, reflect, and strategize how to work better, together. Yet, for many teams, retros can feel more like a monotonous chore than an energizing opportunity. "What went well? What didn't? What could be better?" — this familiar script, repeated sprint after sprint, often leads to disengagement, surface-level discussions, and a critical lack of actionable outcomes.
 

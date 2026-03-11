@@ -3,7 +3,7 @@ title: How to Connect Jira to Daily Pick (API Token Guide)
 date: 2025-10-26
 description: Follow this step-by-step Jira guide to generate an API token, choose the right project, and stream players plus assignments into Daily Pick.
 layout: post.njk
-tags: [\"jira\", \"daily pick\", \"standup automation\", \"team productivity\", \"integrations\"]
+tags: ["jira", "daily pick", "standup automation", "team productivity", "integrations"]
 canonical: "https://dailypick.dev/blog/connect-jira-to-daily-pick/"
 author: Daily Pick
 updated: 2025-10-26

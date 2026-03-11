@@ -3,7 +3,7 @@ title: Remote Onboarding Icebreakers Your New Hires Will Actually Love
 date: 2025-10-10
 description: Help remote hires bond fast with playful icebreakers, fairness rituals, and Daily Pick games that make onboarding day one feel welcoming.
 layout: post.njk
-tags: [\"remote onboarding\", \"team icebreakers\", \"employee experience\", \"people operations\", \"distributed teams\", \"culture building\"]
+tags: ["remote onboarding", "team icebreakers", "employee experience", "people operations", "distributed teams", "culture building"]
 canonical: "https://dailypick.dev/blog/remote-onboarding-icebreakers-your-new-hires-will-love/"
 author: Daily Pick
 updated: 2025-10-10

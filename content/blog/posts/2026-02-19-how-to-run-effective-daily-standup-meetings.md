@@ -1,9 +1,9 @@
 ---
 title: "How to Run Effective Daily Standup Meetings: A Complete Guide"
 date: 2026-02-19
-description: Learn the proven daily standup format that keeps meetings under 15 minutes while ensuring all blockers surface. Templates, remote tips, and common mistakes.
+description: "Learn the proven daily standup format that keeps meetings under 15 minutes while ensuring all blockers surface. Templates, remote tips, and common..."
 layout: post.njk
-tags: [\"standup meetings\", \"agile ceremonies\", \"meeting efficiency\", \"team leadership\", \"remote meetings\", \"productivity\"]
+tags: ["standup meetings", "agile ceremonies", "meeting efficiency", "team leadership", "remote meetings", "productivity"]
 canonical: "https://dailypick.dev/blog/how-to-run-effective-daily-standup-meetings/"
 author: Daily Pick
 updated: 2026-02-19

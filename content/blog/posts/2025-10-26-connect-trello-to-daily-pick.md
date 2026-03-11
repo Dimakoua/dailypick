@@ -3,7 +3,7 @@ title: How to Connect Trello to Daily Pick (API Key + Token Walkthrough)
 date: 2025-10-26
 description: Detailed instructions for generating a Trello API key and token, selecting the right board or list, and syncing cards into Daily Pick.
 layout: post.njk
-tags: [\"trello\", \"daily pick\", \"integrations\", \"team productivity\", \"standup automation\"]
+tags: ["trello", "daily pick", "integrations", "team productivity", "standup automation"]
 canonical: "https://dailypick.dev/blog/connect-trello-to-daily-pick/"
 author: Daily Pick
 updated: 2025-10-26

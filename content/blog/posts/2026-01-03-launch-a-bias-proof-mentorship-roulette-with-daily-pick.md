@@ -3,7 +3,7 @@ title: Launch a Bias-Proof Mentorship Roulette with Daily Pick
 date: 2025-12-07
 description: Pair mentors and mentees across offices, levels, and functions using Daily Pick automations that keep rotations fair and fresh.
 layout: post.njk
-tags: [\"mentorship\", \"people programs\", \"DEI\", \"hybrid work\", \"team rituals\", \"culture\"]
+tags: ["mentorship", "people programs", "DEI", "hybrid work", "team rituals", "culture"]
 canonical: "https://dailypick.dev/blog/launch-a-bias-proof-mentorship-roulette-with-daily-pick/"
 author: Daily Pick
 updated: 2025-12-07

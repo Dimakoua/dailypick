@@ -3,7 +3,7 @@ title: We Turned Backlog Grooming Into a Daily Game (and Daily Pick Kept Score)
 date: 2025-11-12
 description: Backlog grooming turned into a mini-game that keeps every ticket in view, thanks to Daily Pick’s spin-based rituals.
 layout: post.njk
-tags: [\"backlog\", \"grooming\", \"daily pick\", \"team rituals\", \"productivity\", \"remote work\"]
+tags: ["backlog", "grooming", "daily pick", "team rituals", "productivity", "remote work"]
 canonical: "https://dailypick.dev/blog/we-turned-backlog-grooming-into-a-daily-game-and-daily-pick-kept-score/"
 author: Daily Pick
 updated: 2025-11-12

@@ -9,6 +9,9 @@ keywords: remote team building activities, team bonding games, remote culture, v
 canonical: "https://dailypick.dev/blog/remote-team-building-activities/"
 robots: index,follow
 
+author: Daily Pick
+ogImage: /assets/og-image-main.png
+twitterImage: /assets/og-image-main.png
 ---
 Building trust and camaraderie across distance isn’t optional – it’s the secret sauce that keeps churn down and engagement up. But most “remote team building” suggestions you find online are painfully obvious (Guess That Baby Photo, anyone?). This post collects **real, repeatable activities** that have worked for remote teams of 5–500 people without requiring expensive platforms or awkward forced fun.
 

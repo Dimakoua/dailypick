@@ -3,7 +3,7 @@ title: Fair Decision Tools That Transform Team Dynamics
 date: 2025-06-11
 description: See how fair decision tools curb bias, speed choices, and boost team morale with practical rituals and Daily Pick games.
 layout: post.njk
-tags: [\"team decisions\", \"fairness at work\", \"productivity tools\", \"team collaboration\", \"unbiased selection\", \"workplace culture\"]
+tags: ["team decisions", "fairness at work", "productivity tools", "team collaboration", "unbiased selection", "workplace culture"]
 canonical: "https://dailypick.dev/blog/how-fair-decision-tools-revolutionize-team-dynamics/"
 author: Daily Pick
 updated: 2025-06-11

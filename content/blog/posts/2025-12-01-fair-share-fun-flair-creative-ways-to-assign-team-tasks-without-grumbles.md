@@ -1,12 +1,16 @@
 ---
 title: "Fair Share, Fun Flair: Creative Ways to Assign Team Tasks Without Grumbles"
 date: 2025-12-01
-description: Discover fun and fair methods to assign team tasks without grumbles. Boost team morale and productivity with creative strategies, including Daily Pick tools, for equitable chore distribution.
+description: "Discover fun and fair methods to assign team tasks without grumbles. Boost team morale and productivity with creative strategies, including Daily Pick..."
 layout: post.njk
-tags: [\"team productivity\", \"team building\", \"workplace fairness\", \"agile teams\", \"decision making\", \"morale\", \"collaboration\"]
+tags: ["team productivity", "team building", "workplace fairness", "agile teams", "decision making", "morale", "collaboration"]
 canonical: "https://dailypick.dev/blog/fair-share-fun-flair-creative-ways-to-assign-team-tasks-without-grumbles/"
 robots: index,follow
 
+author: Daily Pick
+ogImage: /assets/og-image-main.png
+twitterImage: /assets/og-image-main.png
+keywords: \team productivity\, \team building\, \workplace fairness\, \agile teams\, \decision making\, \morale\, \collaboration\
 ---
 Let’s be honest: every team, no matter how high-performing or harmonious, has "those" tasks. The ones that nobody *really* wants to do. The repetitive admin, the tricky documentation, the weekly data entry, or perhaps the dreaded meeting note-taker duty. When these **mundane team chores** aren't distributed fairly, it's not just an inconvenience – it can be a silent morale killer.
 

@@ -3,7 +3,7 @@ title: Run Lightning Sprint Reviews that Drive Decisions with Daily Pick
 date: 2025-12-07
 description: Transform sprint reviews into 30-minute decision machines by rotating presenters, prioritizing demos, and closing loops with Daily Pick selectors.
 layout: post.njk
-tags: [\"agile\", \"sprint review\", \"product development\", \"engineering rituals\", \"scrum\", \"team alignment\"]
+tags: ["agile", "sprint review", "product development", "engineering rituals", "scrum", "team alignment"]
 canonical: "https://dailypick.dev/blog/run-lightning-sprint-reviews-that-drive-decisions-with-daily-pick/"
 author: Daily Pick
 updated: 2025-12-07

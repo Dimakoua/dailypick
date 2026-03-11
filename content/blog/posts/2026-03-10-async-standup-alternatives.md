@@ -9,6 +9,9 @@ keywords: async standup, asynchronous standup, standup without meeting, remote s
 canonical: "https://dailypick.dev/blog/async-standup-alternatives/"
 robots: index,follow
 
+author: Daily Pick
+ogImage: /assets/og-image-main.png
+twitterImage: /assets/og-image-main.png
 ---
 Remote teams don’t need yet another video call to stay aligned. When schedules don’t overlap, time zones span twelve hours, or people are heads‑down coding, the traditional stand‑up can feel like noise. The good news? you can get 90 % of the value of a live meeting with an asynchronous ritual that takes 5 minutes per person and costs nothing but discipline.
 

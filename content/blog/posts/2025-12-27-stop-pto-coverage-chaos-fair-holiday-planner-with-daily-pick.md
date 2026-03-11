@@ -3,7 +3,7 @@ title: Stop PTO Coverage Chaos with Daily Pick’s Fair Holiday Planner
 date: 2025-12-07
 description: Use Daily Pick rituals to balance PTO coverage, protect rest, and keep incidents staffed without back-channel negotiations.
 layout: post.njk
-tags: [\"PTO planning\", \"team rituals\", \"workplace culture\", \"fairness\", \"operations\", \"people leadership\"]
+tags: ["PTO planning", "team rituals", "workplace culture", "fairness", "operations", "people leadership"]
 canonical: "https://dailypick.dev/blog/stop-pto-coverage-chaos-fair-holiday-planner-with-daily-pick/"
 author: Daily Pick
 updated: 2025-12-07

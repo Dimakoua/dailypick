@@ -3,7 +3,7 @@ title: Random Picker Wheel Rituals for Fair Team Task Rotations
 date: 2025-12-15
 description: Build predictable, fair task rotations with playful Random Picker Wheel rituals that keep teams accountable without micromanaging.
 layout: post.njk
-tags: [\"team rituals\", \"task rotation\", \"fairness\", \"team productivity\", \"daily pick\"]
+tags: ["team rituals", "task rotation", "fairness", "team productivity", "daily pick"]
 canonical: "https://dailypick.dev/blog/random-picker-wheel-rituals-for-fair-team-task-rotations/"
 author: Daily Pick
 updated: 2025-12-15

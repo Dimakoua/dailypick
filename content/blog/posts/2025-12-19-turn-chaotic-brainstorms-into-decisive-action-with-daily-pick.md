@@ -3,7 +3,7 @@ title: Turn Chaotic Brainstorms into Decisive Action with Daily Pick
 date: 2025-12-07
 description: Use a simple idea-to-decision pipeline that captures brainstorm energy, ranks ideas fast, and locks next steps with Daily Pick’s fair selectors.
 layout: post.njk
-tags: [\"brainstorming\", \"product management\", \"decision making\", \"team alignment\", \"retro rituals\", \"innovation\"]
+tags: ["brainstorming", "product management", "decision making", "team alignment", "retro rituals", "innovation"]
 canonical: "https://dailypick.dev/blog/turn-chaotic-brainstorms-into-decisive-action-with-daily-pick/"
 author: Daily Pick
 updated: 2025-12-07

@@ -1,12 +1,16 @@
 ---
 title: "Decision-Making Lottery: How Unbiased Randomness Fuels Fairer Teams & Faster Progress"
 date: 2025-12-22
-description: "Tired of biased team decisions? Discover how leveraging unbiased randomness can foster fairness, boost morale, and accelerate your team's progress. Learn practical applications with Daily Pick."
+description: "Tired of biased team decisions? Discover how leveraging unbiased randomness can foster fairness, boost morale, and accelerate your team's progress. Learn..."
 layout: post.njk
-tags: [\"team building\", \"agile\", \"productivity\", \"decision making\", \"workplace culture\", \"fairness\", \"remote work\", \"team tools\"]
+tags: ["team building", "agile", "productivity", "decision making", "workplace culture", "fairness", "remote work", "team tools"]
 canonical: "https://dailypick.dev/blog/decision-making-lottery-how-unbiased-randomness-fuels-fairer-teams-faster-progress/"
 robots: index,follow
 
+author: Daily Pick
+ogImage: /assets/og-image-main.png
+twitterImage: /assets/og-image-main.png
+keywords: \team building\, \agile\, \productivity\, \decision making\, \workplace culture\, \fairness\, \remote work\, \team tools\
 ---
 Ever sat in a team meeting, silently dreading the inevitable "who wants to do X?" question? Or maybe you've been on the other side, trying to fairly distribute a less-than-glamorous task without anyone feeling targeted or overlooked. Team decision-making, while crucial, can often be a minefield of biases, unspoken resentments, and time-consuming deliberations.
 
