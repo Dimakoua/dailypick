@@ -1,63 +1,52 @@
 <!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <!-- Viewport meta tag is already present and good -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Speedway Racer – Turtle Stand-up Order Game | Daily Pick</title>
-    <meta name="description"
-        content="Launch a turtle race name picker that randomizes speaking order, rewards winners, and energizes hybrid stand-ups with playful suspense.">
-    <meta name="keywords"
-        content="turtle race name picker, speedway racer, random name picker, stand-up order game, turtle racing, agile icebreaker, meeting energizer, classroom participation game, remote team activity, Daily Pick tools, fair speaking order">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://dailypick.dev/apps/speedway/">
-    <meta property="og:title" content="Speedway Racer – Turtle Stand-up Order Game | Daily Pick">
-    <meta property="og:description"
-        content="Launch a turtle race name picker that randomizes speaking order, rewards winners, and energizes hybrid stand-ups with playful suspense.">
-    <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
-    <meta property="og:image:alt"
-        content="Colorful turtle racers sprinting on the Daily Pick Speedway track">
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://dailypick.dev/apps/speedway/">
-    <meta name="twitter:title" content="Speedway Racer – Turtle Stand-up Order Game | Daily Pick">
-    <meta name="twitter:description"
-        content="Launch a turtle race name picker that randomizes speaking order, rewards winners, and energizes hybrid stand-ups with playful suspense.">
-    <meta name="twitter:image" content="https://dailypick.dev/assets/og-image-main.png">
-    <meta name="twitter:image:alt"
-        content="Colorful turtle racers sprinting on the Daily Pick Speedway track">
-
-    <link rel="canonical" href="https://dailypick.dev/apps/speedway/">
-    <!-- Favicon Links -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/assets/favicon/site.webmanifest">
-    <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
-    <meta name="msapplication-TileColor" content="#2d89ef">
-    <meta name="theme-color" content="#ffffff">
-
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/theme.css">
-    <link rel="stylesheet" href="/assets/css/glass.css">
-    <link rel="stylesheet" href="/assets/css/standup-panel.css">
-    <link rel="stylesheet" href="style.css">
-    <script src="/assets/js/brand-theme-engine.js" defer></script>
-    <script src="/assets/js/brand-config.js" defer></script>
-    <script src="/assets/js/results-pip.js" defer></script>
-    <script src="/assets/js/standup-data.js" defer></script>
-    <script src="/assets/js/standup-panel.js" defer></script>
-    <script src="/assets/js/standup-onboarding.js" defer></script>
-    <!-- (Optional) Collaboration includes — keep if used elsewhere -->
-    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-    <link rel="stylesheet" href="/assets/css/collaboration.css">
-    <script src="/assets/js/collaboration.js" defer></script>
-
-    <script type="application/ld+json">
+<meta charset="utf-8"/>
+<!-- Viewport meta tag is already present and good -->
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Speedway Racer – Turtle Stand-up Order Game | Daily Pick</title>
+<meta content="Launch a turtle race name picker that randomizes speaking order, rewards winners, and energizes hybrid stand-ups with playful suspense." name="description"/><meta content="index,follow" name="robots"/>
+<meta content="turtle race name picker, speedway racer, random name picker, stand-up order game, turtle racing, agile icebreaker, meeting energizer, classroom participation game, remote team activity, Daily Pick tools, fair speaking order" name="keywords"/>
+<!-- Open Graph / Facebook -->
+<meta content="website" property="og:type"/>
+<meta content="https://dailypick.dev/apps/speedway/" property="og:url"/>
+<meta content="Speedway Racer – Turtle Stand-up Order Game | Daily Pick" property="og:title"/>
+<meta content="Launch a turtle race name picker that randomizes speaking order, rewards winners, and energizes hybrid stand-ups with playful suspense." property="og:description"/>
+<meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image"/>
+<meta content="Colorful turtle racers sprinting on the Daily Pick Speedway track" property="og:image:alt"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://dailypick.dev/apps/speedway/" name="twitter:url"/>
+<meta content="Speedway Racer – Turtle Stand-up Order Game | Daily Pick" name="twitter:title"/>
+<meta content="Launch a turtle race name picker that randomizes speaking order, rewards winners, and energizes hybrid stand-ups with playful suspense." name="twitter:description"/>
+<meta content="https://dailypick.dev/assets/og-image-main.png" name="twitter:image"/>
+<meta content="Colorful turtle racers sprinting on the Daily Pick Speedway track" name="twitter:image:alt"/>
+<link href="https://dailypick.dev/apps/speedway/" rel="canonical"/>
+<!-- Favicon Links -->
+<link href="/assets/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/assets/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/favicon/site.webmanifest" rel="manifest"/>
+<link href="/assets/favicon/favicon.ico" rel="shortcut icon"/>
+<meta content="#2d89ef" name="msapplication-TileColor"/>
+<meta content="#ffffff" name="theme-color"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="/assets/css/theme.css" rel="stylesheet"/>
+<link href="/assets/css/glass.css" rel="stylesheet"/>
+<link href="/assets/css/standup-panel.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<script defer="" src="/assets/js/brand-theme-engine.js"></script>
+<script defer="" src="/assets/js/brand-config.js"></script>
+<script defer="" src="/assets/js/results-pip.js"></script>
+<script defer="" src="/assets/js/standup-data.js"></script>
+<script defer="" src="/assets/js/standup-panel.js"></script>
+<script defer="" src="/assets/js/standup-onboarding.js"></script>
+<!-- (Optional) Collaboration includes — keep if used elsewhere -->
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<link href="/assets/css/collaboration.css" rel="stylesheet"/>
+<script defer="" src="/assets/js/collaboration.js"></script>
+<script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -75,74 +64,65 @@
   }
   </script>
 </head>
-
 <body>
     {% include "bg-orbs.html" %}
     {% include "header.html" %}
 
     <h1>🏁 Speedway: Turtle Race Name Picker 🏁</h1>
-    <p class="settings-hint">Update racers or your brand once in the <a href="/apps/settings/">Settings page</a>, then come back to race.</p>
-    <div class="game-layout">
-        <div id="track-container" aria-label="Racing track">
-            <div id="start-line"></div>
-            <div id="finish-line-visual"></div>
-            <!-- Racers injected by JS -->
-        </div>
-
-        <div id="results-area" aria-live="polite" aria-atomic="true">
-            <h2>Order:</h2>
-            <button id="speedwayPipBtn" class="pip-trigger" type="button" data-pip-target="#results-area"
-                data-pip-title="Speedway Results" data-pip-exclude="#speedwayPipBtn" data-pip-width="320"
-                data-pip-height="420">Open in Picture in Picture</button>
-            <ol id="standupOrderList"></ol>
-        </div>
-    </div>
-
-    <button id="startRaceBtn">🚀 Start Race!</button>
-
-    <div class="seo-content-area">
-        <h2>Speedway Racer: The Turtle Race Name Picker Your Team Will Cheer For</h2>
-        <p>Speedway Racer by Daily Pick turns a simple stand-up order into a burst of excitement. This
+<p class="settings-hint">Update racers or your brand once in the <a href="/apps/settings/">Settings page</a>, then come back to race.</p>
+<div class="game-layout">
+<div aria-label="Racing track" id="track-container">
+<div id="start-line"></div>
+<div id="finish-line-visual"></div>
+<!-- Racers injected by JS -->
+</div>
+<div aria-atomic="true" aria-live="polite" id="results-area">
+<h2>Order:</h2>
+<button class="pip-trigger" data-pip-exclude="#speedwayPipBtn" data-pip-height="420" data-pip-target="#results-area" data-pip-title="Speedway Results" data-pip-width="320" id="speedwayPipBtn" type="button">Open in Picture in Picture</button>
+<ol id="standupOrderList"></ol>
+</div>
+</div>
+<button id="startRaceBtn">🚀 Start Race!</button>
+<div class="seo-content-area">
+<h2>Speedway Racer: The Turtle Race Name Picker Your Team Will Cheer For</h2>
+<p>Speedway Racer by Daily Pick turns a simple stand-up order into a burst of excitement. This
             turtle race name picker lets you add your roster, press start, and watch colorful racers sprint for the
             finish line—whoever wins sets the speaking order, assigns the next presenter, or snags the surprise prize.
             It’s fast, fair, and endlessly replayable.</p>
-
-        <h3>How to Run a Speedway Race</h3>
-        <ul>
-            <li>Load your racers: Paste names or import your saved list. Each teammate gets a lane and
+<h3>How to Run a Speedway Race</h3>
+<ul>
+<li>Load your racers: Paste names or import your saved list. Each teammate gets a lane and
                 a turtle avatar.</li>
-            <li>Launch the race: Tap <em>Start Race</em> and watch real-time animation determine the
+<li>Launch the race: Tap <em>Start Race</em> and watch real-time animation determine the
                 winners.</li>
-            <li>Capture the results: The leaderboard updates instantly and can pop into
+<li>Capture the results: The leaderboard updates instantly and can pop into
                 Picture-in-Picture so facilitators keep it visible while screensharing.</li>
-            <li>Reset and rerun: Need another order? Hit restart for a brand-new outcome—no two races
+<li>Reset and rerun: Need another order? Hit restart for a brand-new outcome—no two races
                 are the same.</li>
-        </ul>
-
-        <h3>Why Teams and Classrooms Love Speedway</h3>
-        <ul>
-            <li>Fair randomization: Removes bias when choosing who goes next, who leads the demo, or
+</ul>
+<h3>Why Teams and Classrooms Love Speedway</h3>
+<ul>
+<li>Fair randomization: Removes bias when choosing who goes next, who leads the demo, or
                 who wins a giveaway—every turtle race name picker finish is unique.</li>
-            <li>Instant engagement: The playful race animation keeps even camera-off participants glued
+<li>Instant engagement: The playful race animation keeps even camera-off participants glued
                 to the screen.</li>
-            <li>Hybrid-friendly: Works equally well in conference rooms and remote stand-ups thanks to
+<li>Hybrid-friendly: Works equally well in conference rooms and remote stand-ups thanks to
                 results sharing and PiP mode.</li>
-            <li>Education ready: Teachers use Speedway to select readers, presenters, and quiz
+<li>Education ready: Teachers use Speedway to select readers, presenters, and quiz
                 participants without the stress.</li>
-        </ul>
-
-        <h3>Level Up Your Rituals with Daily Pick</h3>
-        <ul>
-            <li>Pair with other games: After the race, spin the <a href="/apps/wheel/">Daily Pick
+</ul>
+<h3>Level Up Your Rituals with Daily Pick</h3>
+<ul>
+<li>Pair with other games: After the race, spin the <a href="/apps/wheel/">Daily Pick
                     Decision Wheel</a> for follow-up tasks or drop into <a href="/apps/trap/">Trap!</a> for a
                 suspenseful tiebreaker.</li>
-            <li>Log the winners: Export the finishing order or feed it into your retro notes, Jira
+<li>Log the winners: Export the finishing order or feed it into your retro notes, Jira
                 board, or team wiki.</li>
-        </ul>
-        <p>Whether you’re running a sprint review, guiding a student debate, or just kicking off Friday with a laugh,
+</ul>
+<p>Whether you’re running a sprint review, guiding a student debate, or just kicking off Friday with a laugh,
             Speedway Racer brings the energy. Fire up the turtles and let Daily Pick decide the order
             with style.</p>
-    </div>
+</div>
     {% include "footer.html" %}
 
     <script>
@@ -338,5 +318,4 @@
         setupRacers();
     </script>
 </body>
-
 </html>

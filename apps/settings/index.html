@@ -1,521 +1,499 @@
 <!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Daily Pick Settings – Players & Branding</title>
-  <meta name="description" content="Manage shared player lists, colors, and emojis to keep every Daily Pick game on-brand across your team." />
-  <meta name="keywords" content="daily pick settings, team roster, brand customization, stand-up tools" />
-
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://dailypick.dev/apps/settings/">
-  <meta property="og:title" content="Daily Pick Settings – Players & Branding">
-  <meta property="og:description" content="Manage shared player lists, colors, and emojis to keep every Daily Pick game on-brand across your team.">
-  <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
-  <meta property="og:image:alt" content="Settings panel for customizing Daily Pick players and branding">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://dailypick.dev/apps/settings/">
-  <meta name="twitter:title" content="Daily Pick Settings – Players & Branding">
-  <meta name="twitter:description" content="Manage shared player lists, colors, and emojis to keep every Daily Pick game on-brand across your team.">
-  <meta name="twitter:image" content="https://dailypick.dev/assets/og-image-main.png">
-  <meta name="twitter:image:alt" content="Settings panel for customizing Daily Pick players and branding">
-
-  <link rel="canonical" href="https://dailypick.dev/apps/settings/" />
-
-  <!-- Favicons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-  <link rel="manifest" href="/assets/favicon/site.webmanifest">
-  <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
-  <meta name="theme-color" content="#ffffff">
-
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/theme.css">
-  <link rel="stylesheet" href="/assets/css/glass.css">
-  <link rel="stylesheet" href="style.css">
-  <script src="/assets/js/brand-theme-engine.js" defer></script>
-  <script src="/assets/js/brand-config.js" defer></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Daily Pick Settings – Players &amp; Branding</title>
+<meta content="Manage shared player lists, colors, and emojis to keep every Daily Pick game on-brand across your team." name="description"/><meta content="index,follow" name="robots"/>
+<meta content="daily pick settings, team roster, brand customization, stand-up tools" name="keywords"/>
+<meta content="website" property="og:type"/>
+<meta content="https://dailypick.dev/apps/settings/" property="og:url"/>
+<meta content="Daily Pick Settings – Players &amp; Branding" property="og:title"/>
+<meta content="Manage shared player lists, colors, and emojis to keep every Daily Pick game on-brand across your team." property="og:description"/>
+<meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image"/>
+<meta content="Settings panel for customizing Daily Pick players and branding" property="og:image:alt"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://dailypick.dev/apps/settings/" name="twitter:url"/>
+<meta content="Daily Pick Settings – Players &amp; Branding" name="twitter:title"/>
+<meta content="Manage shared player lists, colors, and emojis to keep every Daily Pick game on-brand across your team." name="twitter:description"/>
+<meta content="https://dailypick.dev/assets/og-image-main.png" name="twitter:image"/>
+<meta content="Settings panel for customizing Daily Pick players and branding" name="twitter:image:alt"/>
+<link href="https://dailypick.dev/apps/settings/" rel="canonical"/>
+<!-- Favicons -->
+<link href="/assets/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/assets/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/favicon/site.webmanifest" rel="manifest"/>
+<link href="/assets/favicon/favicon.ico" rel="shortcut icon"/>
+<meta content="#ffffff" name="theme-color"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="/assets/css/theme.css" rel="stylesheet"/>
+<link href="/assets/css/glass.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<script defer="" src="/assets/js/brand-theme-engine.js"></script>
+<script defer="" src="/assets/js/brand-config.js"></script>
 </head>
-
 <body>
   {% include "bg-orbs.html" %}
   {% include "header.html" %}
 
-  <main class="settings-page" aria-labelledby="settingsHeading">
-    <section class="settings-hero glass-card">
-      <div>
-        <p class="eyebrow">Control center</p>
-        <h1 id="settingsHeading">Settings &amp; Brand Studio</h1>
-        <p>Update the shared player roster used across our games and tailor the Daily Pick look-and-feel to match your
+  <main aria-labelledby="settingsHeading" class="settings-page">
+<section class="settings-hero glass-card">
+<div>
+<p class="eyebrow">Control center</p>
+<h1 id="settingsHeading">Settings &amp; Brand Studio</h1>
+<p>Update the shared player roster used across our games and tailor the Daily Pick look-and-feel to match your
           team. Changes save to your browser and apply instantly.</p>
-      </div>
-      <div class="hero-actions">
-        <a class="btn-link" href="/apps/wheel/">Jump into a game →</a>
-        <button id="startTourBtn" type="button" class="btn-link ghost">Take the setup tour</button>
-      </div>
-    </section>
-
-    <section class="settings-grid">
-      <article class="settings-card glass-card" aria-labelledby="playersHeading">
-        <div class="card-header">
-          <h2 id="playersHeading">Player List</h2>
-          <p>One list powers every picker. Add each teammate on its own line.</p>
-        </div>
-        <label for="playerNamesInput" class="sr-only">Player names</label>
-        <textarea id="playerNamesInput" rows="8" spellcheck="false"></textarea>
-        <p class="field-hint">Tip: paste from Slack or CSV, we clean it automatically.</p>
-        <div class="button-row">
-          <button id="savePlayersBtn" type="button">Save Players</button>
-          <button id="resetPlayersBtn" type="button" class="ghost">Reset Names</button>
-        </div>
-        <p id="playersStatus" class="settings-status" aria-live="polite"></p>
-      </article>
-
-      <article class="settings-card glass-card" aria-labelledby="brandHeading">
-        <div class="card-header">
-          <h2 id="brandHeading">Brand Configuration</h2>
-          <p>Use your own colors, emoji, and typography to make Daily Pick feel native to your team.</p>
-        </div>
-
-        <div class="brand-layout">
-          <form id="brandForm" class="brand-form" novalidate>
-            <section class="brand-subcard brand-subcard--identity" aria-labelledby="brandIdentityHeading">
-              <div class="brand-subcard-header">
-                <h3 id="brandIdentityHeading">Brand identity</h3>
-                <p class="field-hint">Name, emoji, typography, and mark that appear across the interface.</p>
-              </div>
-              <div class="brand-grid brand-grid--identity">
-                <label>
+</div>
+<div class="hero-actions">
+<a class="btn-link" href="/apps/wheel/">Jump into a game →</a>
+<button class="btn-link ghost" id="startTourBtn" type="button">Take the setup tour</button>
+</div>
+</section>
+<section class="settings-grid">
+<article aria-labelledby="playersHeading" class="settings-card glass-card">
+<div class="card-header">
+<h2 id="playersHeading">Player List</h2>
+<p>One list powers every picker. Add each teammate on its own line.</p>
+</div>
+<label class="sr-only" for="playerNamesInput">Player names</label>
+<textarea id="playerNamesInput" rows="8" spellcheck="false"></textarea>
+<p class="field-hint">Tip: paste from Slack or CSV, we clean it automatically.</p>
+<div class="button-row">
+<button id="savePlayersBtn" type="button">Save Players</button>
+<button class="ghost" id="resetPlayersBtn" type="button">Reset Names</button>
+</div>
+<p aria-live="polite" class="settings-status" id="playersStatus"></p>
+</article>
+<article aria-labelledby="brandHeading" class="settings-card glass-card">
+<div class="card-header">
+<h2 id="brandHeading">Brand Configuration</h2>
+<p>Use your own colors, emoji, and typography to make Daily Pick feel native to your team.</p>
+</div>
+<div class="brand-layout">
+<form class="brand-form" id="brandForm" novalidate="">
+<section aria-labelledby="brandIdentityHeading" class="brand-subcard brand-subcard--identity">
+<div class="brand-subcard-header">
+<h3 id="brandIdentityHeading">Brand identity</h3>
+<p class="field-hint">Name, emoji, typography, and mark that appear across the interface.</p>
+</div>
+<div class="brand-grid brand-grid--identity">
+<label>
                   Brand name
-                  <input type="text" id="brandNameInput" maxlength="32">
-                </label>
-                <label>
+                  <input id="brandNameInput" maxlength="32" type="text"/>
+</label>
+<label>
                   Brand emoji / mark
-                  <input type="text" id="brandMarkInput" maxlength="4">
-                </label>
-                <label>
+                  <input id="brandMarkInput" maxlength="4" type="text"/>
+</label>
+<label>
                   Font stack
-                  <input type="text" id="fontFamilyInput" placeholder="'Nunito', system-ui, sans-serif">
-                </label>
-                <label>
+                  <input id="fontFamilyInput" placeholder="'Nunito', system-ui, sans-serif" type="text"/>
+</label>
+<label>
                   Logo image URL (optional)
-                  <input type="url" id="logoUrlInput" placeholder="https://example.com/logo.png">
-                </label>
-              </div>
-            </section>
-
-            <section class="brand-subcard brand-subcard--palette" aria-labelledby="brandPaletteHeading">
-              <div class="brand-subcard-header">
-                <h3 id="brandPaletteHeading">Color palette</h3>
-                <p class="field-hint">Primary accents, surfaces, and typography colors for Daily Pick.</p>
-              </div>
-              <div class="brand-grid brand-grid--palette">
-                <label>
+                  <input id="logoUrlInput" placeholder="https://example.com/logo.png" type="url"/>
+</label>
+</div>
+</section>
+<section aria-labelledby="brandPaletteHeading" class="brand-subcard brand-subcard--palette">
+<div class="brand-subcard-header">
+<h3 id="brandPaletteHeading">Color palette</h3>
+<p class="field-hint">Primary accents, surfaces, and typography colors for Daily Pick.</p>
+</div>
+<div class="brand-grid brand-grid--palette">
+<label>
                   Accent color
-                  <input type="color" id="accentColorInput">
-                </label>
-                <label>
+                  <input id="accentColorInput" type="color"/>
+</label>
+<label>
                   Accent (strong)
-                  <input type="color" id="accentStrongInput">
-                </label>
-                <label>
+                  <input id="accentStrongInput" type="color"/>
+</label>
+<label>
                   Background color
-                  <input type="color" id="backgroundColorInput">
-                </label>
-                <label>
+                  <input id="backgroundColorInput" type="color"/>
+</label>
+<label>
                   Surface color
-                  <input type="color" id="surfaceColorInput">
-                </label>
-                <label>
+                  <input id="surfaceColorInput" type="color"/>
+</label>
+<label>
                   Text color
-                  <input type="color" id="textColorInput">
-                </label>
-                <label>
+                  <input id="textColorInput" type="color"/>
+</label>
+<label>
                   Heading color
-                  <input type="color" id="headingColorInput">
-                </label>
-                <label>
+                  <input id="headingColorInput" type="color"/>
+</label>
+<label>
                   Subtle text color
-                  <input type="color" id="subtleTextColorInput">
-                </label>
-                <label>
+                  <input id="subtleTextColorInput" type="color"/>
+</label>
+<label>
                   Border color
-                  <input type="color" id="borderColorInput">
-                </label>
-              </div>
-            </section>
-
-            <section class="brand-subcard brand-subcard--themes" aria-labelledby="brandThemeHeading">
-              <div class="brand-subcard-header">
-                <h3 id="brandThemeHeading">Seasonal themes</h3>
-                <p class="field-hint">Decide how holiday looks are activated across your brand.</p>
-              </div>
-              <fieldset class="theme-controls" aria-labelledby="themeControlsHeading">
-                <legend id="themeControlsHeading">Seasonal themes</legend>
-                <p class="field-hint">Holiday looks update automatically based on the Canadian calendar and include icons,
+                  <input id="borderColorInput" type="color"/>
+</label>
+</div>
+</section>
+<section aria-labelledby="brandThemeHeading" class="brand-subcard brand-subcard--themes">
+<div class="brand-subcard-header">
+<h3 id="brandThemeHeading">Seasonal themes</h3>
+<p class="field-hint">Decide how holiday looks are activated across your brand.</p>
+</div>
+<fieldset aria-labelledby="themeControlsHeading" class="theme-controls">
+<legend id="themeControlsHeading">Seasonal themes</legend>
+<p class="field-hint">Holiday looks update automatically based on the Canadian calendar and include icons,
                   gradients, and palettes for major celebrations in Canada and the United States.</p>
-                <label class="theme-toggle">
-                  <input type="checkbox" id="seasonalThemesToggle" checked>
-                  <span class="toggle-copy">
-                    <span class="toggle-title">Enable seasonal themes</span>
-                    <span class="toggle-description">Show holiday colors and emojis across the site when available.</span>
-                  </span>
-                </label>
-                <p class="field-hint" id="seasonalThemesDisabledHint" hidden>Seasonal looks are paused. Turn them back on to access
+<label class="theme-toggle">
+<input checked="" id="seasonalThemesToggle" type="checkbox"/>
+<span class="toggle-copy">
+<span class="toggle-title">Enable seasonal themes</span>
+<span class="toggle-description">Show holiday colors and emojis across the site when available.</span>
+</span>
+</label>
+<p class="field-hint" hidden="" id="seasonalThemesDisabledHint">Seasonal looks are paused. Turn them back on to access
                   holiday palettes and icons.</p>
-                <label>
+<label>
                   Theme mode
                   <select id="themeModeInput">
-                    <option value="auto">Automatic (follow holiday calendar)</option>
-                    <option value="manual">Manual selection</option>
-                  </select>
-                </label>
-                <label class="manual-theme" data-theme-manual>
+<option value="auto">Automatic (follow holiday calendar)</option>
+<option value="manual">Manual selection</option>
+</select>
+</label>
+<label class="manual-theme" data-theme-manual="">
                   Active holiday theme
-                  <select id="themeSelectInput" disabled>
-                    <option value="default">Default Daily Pick</option>
-                  </select>
-                </label>
-                <p class="field-hint" id="themeSelectionHint">Pick Manual to explore specific holidays or return to
+                  <select disabled="" id="themeSelectInput">
+<option value="default">Default Daily Pick</option>
+</select>
+</label>
+<p class="field-hint" id="themeSelectionHint">Pick Manual to explore specific holidays or return to
                   Automatic for smart activation.</p>
-              </fieldset>
-              <div class="theme-summary" id="themeSummary" aria-live="polite"></div>
-            </section>
-
-            <div class="brand-form-actions">
-              <div class="button-row">
-                <button id="saveBrandBtn" type="button">Save Brand</button>
-                <button id="resetBrandBtn" type="button" class="ghost">Reset Brand</button>
-              </div>
-              <p id="brandStatus" class="settings-status" aria-live="polite"></p>
-            </div>
-          </form>
-
-          <aside class="brand-preview-column" aria-label="Brand preview">
-            <div class="brand-preview" aria-live="polite">
-              <div class="preview-header">
-                <span class="preview-mark" aria-hidden="true">🎯</span>
-                <span class="preview-name">Daily Pick</span>
-              </div>
-              <div class="preview-theme" data-theme-active="false">
-                <span class="preview-theme-icon" aria-hidden="true">🎄</span>
-                <div class="preview-theme-copy">
-                  <span class="preview-theme-name">Seasonal theme</span>
-                  <span class="preview-theme-dates">Dec 1 – Jan 5</span>
-                </div>
-              </div>
-              <p>Buttons, headers, accents, and seasonal artwork update instantly as themes change.</p>
-              <button type="button" disabled>Sample Button</button>
-            </div>
-          </aside>
-        </div>
-      </article>
-    </section>
-
-    <section class="settings-card glass-card integrations-panel" aria-labelledby="integrationsHeading">
-        <div class="card-header">
-          <h2 id="integrationsHeading">Third-Party Integrations</h2>
-          <p>Connect Daily Pick to your delivery tools to sync boards and participants automatically.</p>
-        </div>
-
-        <div class="integration-overview">
-          <p class="integration-intro">Connections save to the Daily Pick Worker so you can safely reuse them from any device. Tokens are masked after you save them.</p>
-          <ul class="integration-highlights">
-            <li><span>🔒</span> Secure tokens live on the Worker, never in the browser.</li>
-            <li><span>👥</span> Import players or keep their current work as a snapshot.</li>
-            <li><span>⚡</span> Test a connection to preview teammates before saving.</li>
-            <li><span>💬</span> Slack slash command runs rituals directly inside your workspace.</li>
-          </ul>
-        </div>
-
-        <div class="integration-layout">
-          <aside class="integration-list" role="tablist" aria-label="Choose an integration">
-            <button type="button" class="integration-list__button is-active" role="tab" aria-selected="true" aria-controls="integration-panel-jira" data-integration-target="jira">
-              <span class="integration-list__icon">🗂️</span>
-              <span class="integration-list__copy">
-                <strong>Jira</strong>
-                <small>Boards & assignments</small>
-              </span>
-            </button>
-            <button type="button" class="integration-list__button" role="tab" aria-selected="false" aria-controls="integration-panel-trello" data-integration-target="trello">
-              <span class="integration-list__icon">🗒️</span>
-              <span class="integration-list__copy">
-                <strong>Trello</strong>
-                <small>Boards & cards</small>
-              </span>
-            </button>
-            <button type="button" class="integration-list__button" role="tab" aria-selected="false" aria-controls="integration-panel-github" data-integration-target="github">
-              <span class="integration-list__icon">🐙</span>
-              <span class="integration-list__copy">
-                <strong>GitHub</strong>
-                <small>Repos & issues</small>
-              </span>
-            </button>
-            <button type="button" class="integration-list__button" role="tab" aria-selected="false" aria-controls="integration-panel-slack" data-integration-target="slack">
-              <span class="integration-list__icon">💬</span>
-              <span class="integration-list__copy">
-                <strong>Slack</strong>
-                <small>Slash command</small>
-              </span>
-            </button>
-          </aside>
-
-          <div class="integration-panels">
-          <section class="integration-card is-active" data-service="jira" aria-labelledby="integration-jira-heading" id="integration-panel-jira">
-            <header class="integration-card-header">
-              <div class="integration-icon" aria-hidden="true">🗂️</div>
-              <div>
-                <h3 id="integration-jira-heading">Jira</h3>
-                <p>Import Jira teammates and their active work.</p>
-              </div>
-            </header>
-            <label class="integration-toggle">
-              <input type="checkbox" class="integration-enabled">
-              <span>Enable connection</span>
-            </label>
-            <label>
+</fieldset>
+<div aria-live="polite" class="theme-summary" id="themeSummary"></div>
+</section>
+<div class="brand-form-actions">
+<div class="button-row">
+<button id="saveBrandBtn" type="button">Save Brand</button>
+<button class="ghost" id="resetBrandBtn" type="button">Reset Brand</button>
+</div>
+<p aria-live="polite" class="settings-status" id="brandStatus"></p>
+</div>
+</form>
+<aside aria-label="Brand preview" class="brand-preview-column">
+<div aria-live="polite" class="brand-preview">
+<div class="preview-header">
+<span aria-hidden="true" class="preview-mark">🎯</span>
+<span class="preview-name">Daily Pick</span>
+</div>
+<div class="preview-theme" data-theme-active="false">
+<span aria-hidden="true" class="preview-theme-icon">🎄</span>
+<div class="preview-theme-copy">
+<span class="preview-theme-name">Seasonal theme</span>
+<span class="preview-theme-dates">Dec 1 – Jan 5</span>
+</div>
+</div>
+<p>Buttons, headers, accents, and seasonal artwork update instantly as themes change.</p>
+<button disabled="" type="button">Sample Button</button>
+</div>
+</aside>
+</div>
+</article>
+</section>
+<section aria-labelledby="integrationsHeading" class="settings-card glass-card integrations-panel">
+<div class="card-header">
+<h2 id="integrationsHeading">Third-Party Integrations</h2>
+<p>Connect Daily Pick to your delivery tools to sync boards and participants automatically.</p>
+</div>
+<div class="integration-overview">
+<p class="integration-intro">Connections save to the Daily Pick Worker so you can safely reuse them from any device. Tokens are masked after you save them.</p>
+<ul class="integration-highlights">
+<li><span>🔒</span> Secure tokens live on the Worker, never in the browser.</li>
+<li><span>👥</span> Import players or keep their current work as a snapshot.</li>
+<li><span>⚡</span> Test a connection to preview teammates before saving.</li>
+<li><span>💬</span> Slack slash command runs rituals directly inside your workspace.</li>
+</ul>
+</div>
+<div class="integration-layout">
+<aside aria-label="Choose an integration" class="integration-list" role="tablist">
+<button aria-controls="integration-panel-jira" aria-selected="true" class="integration-list__button is-active" data-integration-target="jira" role="tab" type="button">
+<span class="integration-list__icon">🗂️</span>
+<span class="integration-list__copy">
+<strong>Jira</strong>
+<small>Boards &amp; assignments</small>
+</span>
+</button>
+<button aria-controls="integration-panel-trello" aria-selected="false" class="integration-list__button" data-integration-target="trello" role="tab" type="button">
+<span class="integration-list__icon">🗒️</span>
+<span class="integration-list__copy">
+<strong>Trello</strong>
+<small>Boards &amp; cards</small>
+</span>
+</button>
+<button aria-controls="integration-panel-github" aria-selected="false" class="integration-list__button" data-integration-target="github" role="tab" type="button">
+<span class="integration-list__icon">🐙</span>
+<span class="integration-list__copy">
+<strong>GitHub</strong>
+<small>Repos &amp; issues</small>
+</span>
+</button>
+<button aria-controls="integration-panel-slack" aria-selected="false" class="integration-list__button" data-integration-target="slack" role="tab" type="button">
+<span class="integration-list__icon">💬</span>
+<span class="integration-list__copy">
+<strong>Slack</strong>
+<small>Slash command</small>
+</span>
+</button>
+</aside>
+<div class="integration-panels">
+<section aria-labelledby="integration-jira-heading" class="integration-card is-active" data-service="jira" id="integration-panel-jira">
+<header class="integration-card-header">
+<div aria-hidden="true" class="integration-icon">🗂️</div>
+<div>
+<h3 id="integration-jira-heading">Jira</h3>
+<p>Import Jira teammates and their active work.</p>
+</div>
+</header>
+<label class="integration-toggle">
+<input class="integration-enabled" type="checkbox"/>
+<span>Enable connection</span>
+</label>
+<label>
               Jira site URL
-              <input type="url" class="integration-field" data-field="siteUrl" placeholder="https://yourteam.atlassian.net">
-            </label>
-            <label>
+              <input class="integration-field" data-field="siteUrl" placeholder="https://yourteam.atlassian.net" type="url"/>
+</label>
+<label>
               Project key
-              <input type="text" class="integration-resource" placeholder="e.g. DP">
-            </label>
-            <label>
+              <input class="integration-resource" placeholder="e.g. DP" type="text"/>
+</label>
+<label>
               Account email
-              <input type="email" class="integration-field" data-field="email" placeholder="you@company.com">
-            </label>
-            <label>
+              <input class="integration-field" data-field="email" placeholder="you@company.com" type="email"/>
+</label>
+<label>
               API token
-              <input type="password" class="integration-token" placeholder="Paste a Jira API token">
-            </label>
-            <div class="integration-options">
-              <label class="integration-option">
-                <input type="checkbox" class="integration-include-assignments">
-                <span class="integration-option__content">
-                  <strong>Fetch assigned work preview</strong>
-                  <small>Allow Daily Pick to load the current Jira issues for each teammate when you test the connection.</small>
-                </span>
-              </label>
-            </div>
-            <p class="integration-token-preview" aria-live="polite"></p>
-            <p class="integration-status" aria-live="polite"></p>
-            <div class="integration-results" hidden>
-              <div class="integration-preview" aria-live="polite">
-                <div class="integration-preview-section">
-                  <h4>Players detected</h4>
-                  <p class="integration-preview-players"></p>
-                </div>
-                <div class="integration-preview-section">
-                  <h4>Assigned work</h4>
-                  <div class="integration-preview-assignments"></div>
-                </div>
-              </div>
-              <div class="integration-actions">
-                <button type="button" class="integration-action integration-action-update">Update Player List</button>
-                <button type="button" class="integration-action integration-action-save ghost">Save assigned work snapshot</button>
-              </div>
-            </div>
-            <div class="button-row">
-              <button type="button" class="integration-save">Save Connection</button>
-              <button type="button" class="ghost integration-test">Test Connection</button>
-              <button type="button" class="ghost integration-disconnect">Disconnect</button>
-            </div>
-          </section>
-
-          <section class="integration-card" data-service="trello" aria-labelledby="integration-trello-heading" id="integration-panel-trello">
-            <header class="integration-card-header">
-              <div class="integration-icon" aria-hidden="true">🗒️</div>
-              <div>
-                <h3 id="integration-trello-heading">Trello</h3>
-                <p>Pull Trello board members and their cards.</p>
-              </div>
-            </header>
-            <label class="integration-toggle">
-              <input type="checkbox" class="integration-enabled">
-              <span>Enable connection</span>
-            </label>
-            <label>
+              <input class="integration-token" placeholder="Paste a Jira API token" type="password"/>
+</label>
+<div class="integration-options">
+<label class="integration-option">
+<input class="integration-include-assignments" type="checkbox"/>
+<span class="integration-option__content">
+<strong>Fetch assigned work preview</strong>
+<small>Allow Daily Pick to load the current Jira issues for each teammate when you test the connection.</small>
+</span>
+</label>
+</div>
+<p aria-live="polite" class="integration-token-preview"></p>
+<p aria-live="polite" class="integration-status"></p>
+<div class="integration-results" hidden="">
+<div aria-live="polite" class="integration-preview">
+<div class="integration-preview-section">
+<h4>Players detected</h4>
+<p class="integration-preview-players"></p>
+</div>
+<div class="integration-preview-section">
+<h4>Assigned work</h4>
+<div class="integration-preview-assignments"></div>
+</div>
+</div>
+<div class="integration-actions">
+<button class="integration-action integration-action-update" type="button">Update Player List</button>
+<button class="integration-action integration-action-save ghost" type="button">Save assigned work snapshot</button>
+</div>
+</div>
+<div class="button-row">
+<button class="integration-save" type="button">Save Connection</button>
+<button class="ghost integration-test" type="button">Test Connection</button>
+<button class="ghost integration-disconnect" type="button">Disconnect</button>
+</div>
+</section>
+<section aria-labelledby="integration-trello-heading" class="integration-card" data-service="trello" id="integration-panel-trello">
+<header class="integration-card-header">
+<div aria-hidden="true" class="integration-icon">🗒️</div>
+<div>
+<h3 id="integration-trello-heading">Trello</h3>
+<p>Pull Trello board members and their cards.</p>
+</div>
+</header>
+<label class="integration-toggle">
+<input class="integration-enabled" type="checkbox"/>
+<span>Enable connection</span>
+</label>
+<label>
               Board or list URL
-              <input type="url" class="integration-resource" placeholder="https://trello.com/b/...">
-            </label>
-            <label>
+              <input class="integration-resource" placeholder="https://trello.com/b/..." type="url"/>
+</label>
+<label>
               API key
-              <input type="text" class="integration-field" data-field="apiKey" placeholder="Trello API key">
-            </label>
-            <label>
+              <input class="integration-field" data-field="apiKey" placeholder="Trello API key" type="text"/>
+</label>
+<label>
               API token
-              <input type="password" class="integration-token" placeholder="Paste a Trello API token">
-            </label>
-            <p class="integration-hint">
+              <input class="integration-token" placeholder="Paste a Trello API token" type="password"/>
+</label>
+<p class="integration-hint">
               Need credentials? Copy the 32-character API key from
-              <a href="https://trello.com/app-key" target="_blank" rel="noopener">trello.com/app-key</a>,
+              <a href="https://trello.com/app-key" rel="noopener" target="_blank">trello.com/app-key</a>,
               then generate a read token for your account and paste it here. This is different from the API secret.
-              <button type="button" class="integration-hint-link trello-token-helper">Open token generator</button>
-            </p>
-            <div class="integration-options">
-              <label class="integration-option">
-                <input type="checkbox" class="integration-include-assignments">
-                <span class="integration-option__content">
-                  <strong>Fetch assigned work preview</strong>
-                  <small>Pull card assignees and titles from this Trello board so the stand-up dock can show them.</small>
-                </span>
-              </label>
-            </div>
-            <p class="integration-token-preview" aria-live="polite"></p>
-            <p class="integration-status" aria-live="polite"></p>
-            <div class="integration-results" hidden>
-              <div class="integration-preview" aria-live="polite">
-                <div class="integration-preview-section">
-                  <h4>Players detected</h4>
-                  <p class="integration-preview-players"></p>
-                </div>
-                <div class="integration-preview-section">
-                  <h4>Assigned work</h4>
-                  <div class="integration-preview-assignments"></div>
-                </div>
-              </div>
-              <div class="integration-actions">
-                <button type="button" class="integration-action integration-action-update">Update Player List</button>
-                <button type="button" class="integration-action integration-action-save ghost">Save assigned work snapshot</button>
-              </div>
-            </div>
-            <div class="button-row">
-              <button type="button" class="integration-save">Save Connection</button>
-              <button type="button" class="ghost integration-test">Test Connection</button>
-              <button type="button" class="ghost integration-disconnect">Disconnect</button>
-            </div>
-          </section>
-
-          <section class="integration-card" data-service="github" aria-labelledby="integration-github-heading" id="integration-panel-github">
-            <header class="integration-card-header">
-              <div class="integration-icon" aria-hidden="true">🐙</div>
-              <div>
-                <h3 id="integration-github-heading">GitHub</h3>
-                <p>Bring in GitHub collaborators and their open issues.</p>
-              </div>
-            </header>
-            <label class="integration-toggle">
-              <input type="checkbox" class="integration-enabled">
-              <span>Enable connection</span>
-            </label>
-            <label>
+              <button class="integration-hint-link trello-token-helper" type="button">Open token generator</button>
+</p>
+<div class="integration-options">
+<label class="integration-option">
+<input class="integration-include-assignments" type="checkbox"/>
+<span class="integration-option__content">
+<strong>Fetch assigned work preview</strong>
+<small>Pull card assignees and titles from this Trello board so the stand-up dock can show them.</small>
+</span>
+</label>
+</div>
+<p aria-live="polite" class="integration-token-preview"></p>
+<p aria-live="polite" class="integration-status"></p>
+<div class="integration-results" hidden="">
+<div aria-live="polite" class="integration-preview">
+<div class="integration-preview-section">
+<h4>Players detected</h4>
+<p class="integration-preview-players"></p>
+</div>
+<div class="integration-preview-section">
+<h4>Assigned work</h4>
+<div class="integration-preview-assignments"></div>
+</div>
+</div>
+<div class="integration-actions">
+<button class="integration-action integration-action-update" type="button">Update Player List</button>
+<button class="integration-action integration-action-save ghost" type="button">Save assigned work snapshot</button>
+</div>
+</div>
+<div class="button-row">
+<button class="integration-save" type="button">Save Connection</button>
+<button class="ghost integration-test" type="button">Test Connection</button>
+<button class="ghost integration-disconnect" type="button">Disconnect</button>
+</div>
+</section>
+<section aria-labelledby="integration-github-heading" class="integration-card" data-service="github" id="integration-panel-github">
+<header class="integration-card-header">
+<div aria-hidden="true" class="integration-icon">🐙</div>
+<div>
+<h3 id="integration-github-heading">GitHub</h3>
+<p>Bring in GitHub collaborators and their open issues.</p>
+</div>
+</header>
+<label class="integration-toggle">
+<input class="integration-enabled" type="checkbox"/>
+<span>Enable connection</span>
+</label>
+<label>
               Repository full name
-              <input type="text" class="integration-resource" placeholder="owner/repository">
-            </label>
-            <label>
+              <input class="integration-resource" placeholder="owner/repository" type="text"/>
+</label>
+<label>
               Personal access token
-              <input type="password" class="integration-token" placeholder="Paste a GitHub token">
-            </label>
-            <div class="integration-options">
-              <label class="integration-option">
-                <input type="checkbox" class="integration-include-assignments">
-                <span class="integration-option__content">
-                  <strong>Fetch assigned work preview</strong>
-                  <small>Let Daily Pick read open GitHub issues for collaborators when you run a test.</small>
-                </span>
-              </label>
-            </div>
-            <p class="integration-token-preview" aria-live="polite"></p>
-            <p class="integration-status" aria-live="polite"></p>
-            <div class="integration-results" hidden>
-              <div class="integration-preview" aria-live="polite">
-                <div class="integration-preview-section">
-                  <h4>Players detected</h4>
-                  <p class="integration-preview-players"></p>
-                </div>
-                <div class="integration-preview-section">
-                  <h4>Assigned work</h4>
-                  <div class="integration-preview-assignments"></div>
-                </div>
-              </div>
-              <div class="integration-actions">
-                <button type="button" class="integration-action integration-action-update">Update Player List</button>
-                <button type="button" class="integration-action integration-action-save ghost">Save assigned work snapshot</button>
-              </div>
-            </div>
-            <div class="button-row">
-              <button type="button" class="integration-save">Save Connection</button>
-              <button type="button" class="ghost integration-test">Test Connection</button>
-              <button type="button" class="ghost integration-disconnect">Disconnect</button>
-            </div>
-          </section>
-          <section class="integration-card" data-service="slack" aria-labelledby="integration-slack-heading" id="integration-panel-slack">
-            <header class="integration-card-header">
-              <div class="integration-icon" aria-hidden="true">💬</div>
-              <div>
-                <h3 id="integration-slack-heading">Slack slash command</h3>
-                <p>Let teams launch Daily Pick rituals from Slack.</p>
-              </div>
-            </header>
-            <label class="integration-toggle">
-              <input type="checkbox" class="integration-enabled">
-              <span>Enable Slack slash command</span>
-            </label>
-            <label>
+              <input class="integration-token" placeholder="Paste a GitHub token" type="password"/>
+</label>
+<div class="integration-options">
+<label class="integration-option">
+<input class="integration-include-assignments" type="checkbox"/>
+<span class="integration-option__content">
+<strong>Fetch assigned work preview</strong>
+<small>Let Daily Pick read open GitHub issues for collaborators when you run a test.</small>
+</span>
+</label>
+</div>
+<p aria-live="polite" class="integration-token-preview"></p>
+<p aria-live="polite" class="integration-status"></p>
+<div class="integration-results" hidden="">
+<div aria-live="polite" class="integration-preview">
+<div class="integration-preview-section">
+<h4>Players detected</h4>
+<p class="integration-preview-players"></p>
+</div>
+<div class="integration-preview-section">
+<h4>Assigned work</h4>
+<div class="integration-preview-assignments"></div>
+</div>
+</div>
+<div class="integration-actions">
+<button class="integration-action integration-action-update" type="button">Update Player List</button>
+<button class="integration-action integration-action-save ghost" type="button">Save assigned work snapshot</button>
+</div>
+</div>
+<div class="button-row">
+<button class="integration-save" type="button">Save Connection</button>
+<button class="ghost integration-test" type="button">Test Connection</button>
+<button class="ghost integration-disconnect" type="button">Disconnect</button>
+</div>
+</section>
+<section aria-labelledby="integration-slack-heading" class="integration-card" data-service="slack" id="integration-panel-slack">
+<header class="integration-card-header">
+<div aria-hidden="true" class="integration-icon">💬</div>
+<div>
+<h3 id="integration-slack-heading">Slack slash command</h3>
+<p>Let teams launch Daily Pick rituals from Slack.</p>
+</div>
+</header>
+<label class="integration-toggle">
+<input class="integration-enabled" type="checkbox"/>
+<span>Enable Slack slash command</span>
+</label>
+<label>
               Slash command
-              <input type="text" class="integration-resource" data-field="command" placeholder="/dailypick">
-            </label>
-            <label>
+              <input class="integration-resource" data-field="command" placeholder="/dailypick" type="text"/>
+</label>
+<label>
               Signing secret
-              <input type="password" class="integration-token" placeholder="Paste the Slack signing secret">
-            </label>
-            <p class="integration-hint">Set Slack’s Request URL to <code id="slackCommandUrl">https://dailypick.dev/api/slack/command?client_id=...</code> and use the same client_id from this page.</p>
-            <p class="integration-token-preview" aria-live="polite"></p>
-            <p class="integration-status" aria-live="polite"></p>
-            <div class="button-row">
-              <button type="button" class="integration-save">Save Connection</button>
-              <button type="button" class="ghost integration-disconnect">Disconnect</button>
-            </div>
-          </section>
-          </div>
-        </div>
-
-        <div class="integration-guide-links">
-          <p><strong>Need a full walkthrough?</strong> Read the integration playbooks on our blog:</p>
-          <ul>
-            <li><a href="/blog/connect-jira-to-daily-pick/" target="_blank" rel="noopener">How to connect Jira to Daily Pick</a></li>
-            <li><a href="/blog/connect-trello-to-daily-pick/" target="_blank" rel="noopener">How to connect Trello to Daily Pick</a></li>
-            <li><a href="/blog/connect-github-to-daily-pick/" target="_blank" rel="noopener">How to connect GitHub to Daily Pick</a></li>
-            <li><a href="/blog/supercharge-async-standups-with-slack-and-daily-pick/" target="_blank" rel="noopener">How to run Daily Pick from Slack</a></li>
-          </ul>
-        </div>
-      </section>
-
-    <section class="settings-card glass-card tips">
-      <h2>How it works</h2>
-      <ul>
-        <li>Settings are stored locally in your browser via <code>localStorage</code>.</li>
-        <li>Every game loads the Players List before a match and applies your Brand
+              <input class="integration-token" placeholder="Paste the Slack signing secret" type="password"/>
+</label>
+<p class="integration-hint">Set Slack’s Request URL to <code id="slackCommandUrl">https://dailypick.dev/api/slack/command?client_id=...</code> and use the same client_id from this page.</p>
+<p aria-live="polite" class="integration-token-preview"></p>
+<p aria-live="polite" class="integration-status"></p>
+<div class="button-row">
+<button class="integration-save" type="button">Save Connection</button>
+<button class="ghost integration-disconnect" type="button">Disconnect</button>
+</div>
+</section>
+</div>
+</div>
+<div class="integration-guide-links">
+<p><strong>Need a full walkthrough?</strong> Read the integration playbooks on our blog:</p>
+<ul>
+<li><a href="/blog/connect-jira-to-daily-pick/" rel="noopener" target="_blank">How to connect Jira to Daily Pick</a></li>
+<li><a href="/blog/connect-trello-to-daily-pick/" rel="noopener" target="_blank">How to connect Trello to Daily Pick</a></li>
+<li><a href="/blog/connect-github-to-daily-pick/" rel="noopener" target="_blank">How to connect GitHub to Daily Pick</a></li>
+<li><a href="/blog/supercharge-async-standups-with-slack-and-daily-pick/" rel="noopener" target="_blank">How to run Daily Pick from Slack</a></li>
+</ul>
+</div>
+</section>
+<section class="settings-card glass-card tips">
+<h2>How it works</h2>
+<ul>
+<li>Settings are stored locally in your browser via <code>localStorage</code>.</li>
+<li>Every game loads the Players List before a match and applies your Brand
             Configuration on page load.</li>
-        <li>Need to sync with teammates? Share your list via chat, then paste it here.</li>
-      </ul>
-    </section>
-  </main>
+<li>Need to sync with teammates? Share your list via chat, then paste it here.</li>
+</ul>
+</section>
+</main>
 
   {% include "footer.html" %}
 
-  <div id="setupTour" class="setup-tour" hidden aria-hidden="true">
-    <div class="setup-tour__backdrop" data-tour-backdrop></div>
-    <div class="setup-tour__focus" data-tour-focus></div>
-    <div class="setup-tour__card" data-tour-card role="dialog" aria-modal="true" tabindex="-1">
-      <p class="setup-tour__badge">
-        Step <span data-tour-step-number>1</span> of <span data-tour-step-total>1</span>
-      </p>
-      <h3 class="setup-tour__title" data-tour-title></h3>
-      <p class="setup-tour__description" data-tour-description></p>
-      <div class="setup-tour__actions">
-        <button id="tourPrevBtn" type="button" class="ghost">Back</button>
-        <button id="tourNextBtn" type="button">Next</button>
-        <button id="tourCloseBtn" type="button" class="ghost">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <script>
+  <div aria-hidden="true" class="setup-tour" hidden="" id="setupTour">
+<div class="setup-tour__backdrop" data-tour-backdrop=""></div>
+<div class="setup-tour__focus" data-tour-focus=""></div>
+<div aria-modal="true" class="setup-tour__card" data-tour-card="" role="dialog" tabindex="-1">
+<p class="setup-tour__badge">
+        Step <span data-tour-step-number="">1</span> of <span data-tour-step-total="">1</span>
+</p>
+<h3 class="setup-tour__title" data-tour-title=""></h3>
+<p class="setup-tour__description" data-tour-description=""></p>
+<div class="setup-tour__actions">
+<button class="ghost" id="tourPrevBtn" type="button">Back</button>
+<button id="tourNextBtn" type="button">Next</button>
+<button class="ghost" id="tourCloseBtn" type="button">Close</button>
+</div>
+</div>
+</div>
+<script>
     document.addEventListener('DOMContentLoaded', () => {
       const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
       const PLAYERS_KEY = 'namesList';
@@ -1789,5 +1767,4 @@
     });
   </script>
 </body>
-
 </html>

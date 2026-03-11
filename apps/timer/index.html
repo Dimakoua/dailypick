@@ -1,184 +1,175 @@
 <!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadence Timer Studio – Multi-stage Ritual Timers | Daily Pick</title>
-  <meta name="description" content="Build multi-stage meeting timers with color-coded stages, audio cues, and shareable presets to keep every ritual on schedule.">
-  <meta name="keywords" content="meeting timer, cadence timer, agile rituals, stand-up timer, daily pick">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://dailypick.dev/apps/timer/">
-  <meta property="og:title" content="Cadence Timer Studio – Multi-stage Ritual Timers | Daily Pick">
-  <meta property="og:description" content="Build multi-stage meeting timers with color-coded stages, audio cues, and shareable presets to keep every ritual on schedule.">
-  <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
-  <meta property="og:image:alt" content="Color-coded multi-stage timer running inside Daily Pick">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://dailypick.dev/apps/timer/">
-  <meta name="twitter:title" content="Cadence Timer Studio – Multi-stage Ritual Timers | Daily Pick">
-  <meta name="twitter:description" content="Build multi-stage meeting timers with color-coded stages, audio cues, and shareable presets to keep every ritual on schedule.">
-  <meta name="twitter:image" content="https://dailypick.dev/assets/og-image-main.png">
-  <meta name="twitter:image:alt" content="Color-coded multi-stage timer running inside Daily Pick">
-  <link rel="canonical" href="https://dailypick.dev/apps/timer/">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-  <link rel="manifest" href="/assets/favicon/site.webmanifest">
-  <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
-  <meta name="theme-color" content="#ffffff">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/theme.css">
-  <link rel="stylesheet" href="/assets/css/glass.css">
-  <link rel="stylesheet" href="/assets/css/standup-panel.css">
-  <link rel="stylesheet" href="./style.css">
-  <script src="/assets/js/brand-theme-engine.js" defer></script>
-  <script src="/assets/js/brand-config.js" defer></script>
-  <script src="/assets/js/standup-data.js" defer></script>
-  <script src="/assets/js/standup-panel.js" defer></script>
-    <script src="/assets/js/standup-onboarding.js" defer></script>
-  <script src="./script.js" defer></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cadence Timer Studio – Multi-stage Ritual Timers | Daily Pick</title>
+<meta content="Build multi-stage meeting timers with color-coded stages, audio cues, and shareable presets to keep every ritual on schedule." name="description"/><meta content="index,follow" name="robots"/>
+<meta content="meeting timer, cadence timer, agile rituals, stand-up timer, daily pick" name="keywords"/>
+<meta content="website" property="og:type"/>
+<meta content="https://dailypick.dev/apps/timer/" property="og:url"/>
+<meta content="Cadence Timer Studio – Multi-stage Ritual Timers | Daily Pick" property="og:title"/>
+<meta content="Build multi-stage meeting timers with color-coded stages, audio cues, and shareable presets to keep every ritual on schedule." property="og:description"/>
+<meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image"/>
+<meta content="Color-coded multi-stage timer running inside Daily Pick" property="og:image:alt"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://dailypick.dev/apps/timer/" name="twitter:url"/>
+<meta content="Cadence Timer Studio – Multi-stage Ritual Timers | Daily Pick" name="twitter:title"/>
+<meta content="Build multi-stage meeting timers with color-coded stages, audio cues, and shareable presets to keep every ritual on schedule." name="twitter:description"/>
+<meta content="https://dailypick.dev/assets/og-image-main.png" name="twitter:image"/>
+<meta content="Color-coded multi-stage timer running inside Daily Pick" name="twitter:image:alt"/>
+<link href="https://dailypick.dev/apps/timer/" rel="canonical"/>
+<link href="/assets/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/assets/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/favicon/site.webmanifest" rel="manifest"/>
+<link href="/assets/favicon/favicon.ico" rel="shortcut icon"/>
+<meta content="#ffffff" name="theme-color"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="/assets/css/theme.css" rel="stylesheet"/>
+<link href="/assets/css/glass.css" rel="stylesheet"/>
+<link href="/assets/css/standup-panel.css" rel="stylesheet"/>
+<link href="./style.css" rel="stylesheet"/>
+<script defer="" src="/assets/js/brand-theme-engine.js"></script>
+<script defer="" src="/assets/js/brand-config.js"></script>
+<script defer="" src="/assets/js/standup-data.js"></script>
+<script defer="" src="/assets/js/standup-panel.js"></script>
+<script defer="" src="/assets/js/standup-onboarding.js"></script>
+<script defer="" src="./script.js"></script>
 </head>
-
 <body>
   {% include "bg-orbs.html" %}
   {% include "header.html" %}
 
-  <main class="timer-page" aria-labelledby="timerHeading">
-    <section class="timer-hero glass-card">
-      <div>
-        <p class="hero-eyebrow">Ritual Toolkit</p>
-        <h1 id="timerHeading">Cadence Timer Studio</h1>
-        <p>Design multi-stage meeting timers with color-coded cues, then run them live without leaving the browser. Quick single timers and advanced cadences now live together in one free workspace.</p>
-      </div>
-    </section>
-
-    <section class="timer-grid">
-      <article class="quick-card glass-card" aria-labelledby="quickTimerHeading">
-        <div class="card-header">
-          <h2 id="quickTimerHeading">Quick timer</h2>
-          <p>Set a one-off countdown for spotlight turns or lightning talks.</p>
-        </div>
-        <div class="quick-timer-body">
-          <div class="quick-display" id="quickDisplay" aria-live="polite">05:00</div>
-          <div class="quick-inputs">
-            <label>
+  <main aria-labelledby="timerHeading" class="timer-page">
+<section class="timer-hero glass-card">
+<div>
+<p class="hero-eyebrow">Ritual Toolkit</p>
+<h1 id="timerHeading">Cadence Timer Studio</h1>
+<p>Design multi-stage meeting timers with color-coded cues, then run them live without leaving the browser. Quick single timers and advanced cadences now live together in one free workspace.</p>
+</div>
+</section>
+<section class="timer-grid">
+<article aria-labelledby="quickTimerHeading" class="quick-card glass-card">
+<div class="card-header">
+<h2 id="quickTimerHeading">Quick timer</h2>
+<p>Set a one-off countdown for spotlight turns or lightning talks.</p>
+</div>
+<div class="quick-timer-body">
+<div aria-live="polite" class="quick-display" id="quickDisplay">05:00</div>
+<div class="quick-inputs">
+<label>
               Minutes
-              <input id="quickMinutes" type="number" min="0" max="999" value="5" inputmode="numeric">
-            </label>
-            <label>
+              <input id="quickMinutes" inputmode="numeric" max="999" min="0" type="number" value="5"/>
+</label>
+<label>
               Seconds
-              <input id="quickSeconds" type="number" min="0" max="59" value="0" inputmode="numeric">
-            </label>
-          </div>
-          <div class="quick-controls">
-            <button id="quickStartBtn" type="button">Start</button>
-            <button id="quickPauseBtn" type="button" class="ghost" disabled>Pause</button>
-            <button id="quickResetBtn" type="button" class="ghost" disabled>Reset</button>
-          </div>
-          <p id="quickStatus" class="quick-status" aria-live="polite"></p>
-        </div>
-      </article>
-
-      <article class="cadence-card glass-card" aria-labelledby="cadenceHeading">
-        <div class="cadence-card__header">
-          <div>
-            <h2 id="cadenceHeading">Cadence presets</h2>
-            <p>Chain multiple stages with custom labels, durations, brand colors, and optional audio cues.</p>
-          </div>
-        </div>
-
-        <div class="cadence-layout">
-          <aside class="preset-panel" aria-label="Cadence presets">
-            <div class="panel-header">
-              <h3>Presets</h3>
-              <div class="panel-actions">
-                <button id="createPresetBtn" type="button">New</button>
-                <button id="importPresetBtn" type="button" class="ghost">Import</button>
-                <input id="importPresetInput" type="file" accept=".dailypick-timer,application/json" hidden>
-              </div>
-            </div>
-            <ul id="presetList" class="preset-list" aria-live="polite"></ul>
-          </aside>
-
-          <section class="runner-panel" aria-label="Run cadence">
-            <h3 id="runnerTitle">Select a preset</h3>
-            <div class="runner-display">
-              <span id="runnerCountdown">00:00</span>
-            </div>
-            <p id="runnerStatus" class="runner-status" aria-live="polite">Stages will appear here.</p>
-            <div class="runner-controls">
-              <button id="startCadenceBtn" type="button">Start</button>
-              <button id="pauseCadenceBtn" type="button" class="ghost" disabled>Pause</button>
-              <button id="nextStageBtn" type="button" class="ghost" disabled>Next</button>
-              <button id="resetCadenceBtn" type="button" class="ghost">Reset</button>
-            </div>
-            <ol id="stageTimeline" class="stage-timeline"></ol>
-          </section>
-        </div>
-      </article>
-    </section>
-
-    <section class="seo-card glass-card">
-      <h2>Why multi-stage timers matter</h2>
-      <p>Teams lose momentum when facilitators juggle multiple countdowns manually. The Cadence Timer Studio keeps rituals predictable with clear transitions, branded cues, and optional audio prompts that everyone can hear. Export presets as files or share a link encoded in the URL—no back-end required.</p>
-      <ul>
-        <li>Stand-ups stay crisp: Keep updates, blockers, and parking lot discussions on tempo.</li>
-        <li>Planning sessions stay honest: Bound estimation rounds and recap time without killing the vibe.</li>
-        <li>Retros run themselves: Color-code columns, add chimes, and encourage balanced airtime.</li>
-      </ul>
-    </section>
-  </main>
-
-  <dialog id="newPresetDialog">
-    <form id="newPresetForm" class="new-preset-form">
-        <h2>New cadence preset</h2>
-        <label>
+              <input id="quickSeconds" inputmode="numeric" max="59" min="0" type="number" value="0"/>
+</label>
+</div>
+<div class="quick-controls">
+<button id="quickStartBtn" type="button">Start</button>
+<button class="ghost" disabled="" id="quickPauseBtn" type="button">Pause</button>
+<button class="ghost" disabled="" id="quickResetBtn" type="button">Reset</button>
+</div>
+<p aria-live="polite" class="quick-status" id="quickStatus"></p>
+</div>
+</article>
+<article aria-labelledby="cadenceHeading" class="cadence-card glass-card">
+<div class="cadence-card__header">
+<div>
+<h2 id="cadenceHeading">Cadence presets</h2>
+<p>Chain multiple stages with custom labels, durations, brand colors, and optional audio cues.</p>
+</div>
+</div>
+<div class="cadence-layout">
+<aside aria-label="Cadence presets" class="preset-panel">
+<div class="panel-header">
+<h3>Presets</h3>
+<div class="panel-actions">
+<button id="createPresetBtn" type="button">New</button>
+<button class="ghost" id="importPresetBtn" type="button">Import</button>
+<input accept=".dailypick-timer,application/json" hidden="" id="importPresetInput" type="file"/>
+</div>
+</div>
+<ul aria-live="polite" class="preset-list" id="presetList"></ul>
+</aside>
+<section aria-label="Run cadence" class="runner-panel">
+<h3 id="runnerTitle">Select a preset</h3>
+<div class="runner-display">
+<span id="runnerCountdown">00:00</span>
+</div>
+<p aria-live="polite" class="runner-status" id="runnerStatus">Stages will appear here.</p>
+<div class="runner-controls">
+<button id="startCadenceBtn" type="button">Start</button>
+<button class="ghost" disabled="" id="pauseCadenceBtn" type="button">Pause</button>
+<button class="ghost" disabled="" id="nextStageBtn" type="button">Next</button>
+<button class="ghost" id="resetCadenceBtn" type="button">Reset</button>
+</div>
+<ol class="stage-timeline" id="stageTimeline"></ol>
+</section>
+</div>
+</article>
+</section>
+<section class="seo-card glass-card">
+<h2>Why multi-stage timers matter</h2>
+<p>Teams lose momentum when facilitators juggle multiple countdowns manually. The Cadence Timer Studio keeps rituals predictable with clear transitions, branded cues, and optional audio prompts that everyone can hear. Export presets as files or share a link encoded in the URL—no back-end required.</p>
+<ul>
+<li>Stand-ups stay crisp: Keep updates, blockers, and parking lot discussions on tempo.</li>
+<li>Planning sessions stay honest: Bound estimation rounds and recap time without killing the vibe.</li>
+<li>Retros run themselves: Color-code columns, add chimes, and encourage balanced airtime.</li>
+</ul>
+</section>
+</main>
+<dialog id="newPresetDialog">
+<form class="new-preset-form" id="newPresetForm">
+<h2>New cadence preset</h2>
+<label>
             Preset name
-            <input id="newPresetName" type="text" required maxlength="60" placeholder="e.g. Stand-up rhythm">
-        </label>
-        <label>
+            <input id="newPresetName" maxlength="60" placeholder="e.g. Stand-up rhythm" required="" type="text"/>
+</label>
+<label>
             Description
-            <input id="newPresetDescription" type="text" maxlength="120" placeholder="Short context for facilitators">
-        </label>
-        <div class="dialog-actions">
-            <button type="submit" id="saveNewPresetBtn">Create and open</button>
-            <button type="button" id="cancelNewPresetBtn" class="ghost">Cancel</button>
-        </div>
-    </form>
-  </dialog>
-
-  <dialog id="editorDialog">
-    <button id="closeEditorBtn" type="button" class="ghost editor-close-btn">✕</button>
-    <div class="editor-panel">
-        <div class="editor-header">
-            <label class="name-field">
+            <input id="newPresetDescription" maxlength="120" placeholder="Short context for facilitators" type="text"/>
+</label>
+<div class="dialog-actions">
+<button id="saveNewPresetBtn" type="submit">Create and open</button>
+<button class="ghost" id="cancelNewPresetBtn" type="button">Cancel</button>
+</div>
+</form>
+</dialog>
+<dialog id="editorDialog">
+<button class="ghost editor-close-btn" id="closeEditorBtn" type="button">✕</button>
+<div class="editor-panel">
+<div class="editor-header">
+<label class="name-field">
                 Preset name
-                <input id="presetNameInput" type="text" maxlength="60" placeholder="e.g. Stand-up rhythm">
-            </label>
-            <label class="description-field">
+                <input id="presetNameInput" maxlength="60" placeholder="e.g. Stand-up rhythm" type="text"/>
+</label>
+<label class="description-field">
                 Description
-                <input id="presetDescriptionInput" type="text" maxlength="120" placeholder="Short context for facilitators">
-            </label>
-        </div>
-        <div class="editor-toolbar">
-            <button id="addStageBtn" type="button">Add stage</button>
-            <div class="editor-actions">
-                <button id="duplicatePresetBtn" type="button" class="ghost">Duplicate</button>
-                <button id="deletePresetBtn" type="button" class="ghost">Delete</button>
-            </div>
-        </div>
-        <div id="stageList" class="stage-list" aria-live="polite"></div>
-        <div class="editor-footer">
-            <button id="savePresetBtn" type="button">Save and Close</button>
-            <button id="sharePresetBtn" type="button" class="ghost" title="Copy share link">Share link</button>
-            <button id="downloadPresetBtn" type="button" class="ghost" title="Download preset">Download</button>
-        </div>
-    </div>
-  </dialog>
+                <input id="presetDescriptionInput" maxlength="120" placeholder="Short context for facilitators" type="text"/>
+</label>
+</div>
+<div class="editor-toolbar">
+<button id="addStageBtn" type="button">Add stage</button>
+<div class="editor-actions">
+<button class="ghost" id="duplicatePresetBtn" type="button">Duplicate</button>
+<button class="ghost" id="deletePresetBtn" type="button">Delete</button>
+</div>
+</div>
+<div aria-live="polite" class="stage-list" id="stageList"></div>
+<div class="editor-footer">
+<button id="savePresetBtn" type="button">Save and Close</button>
+<button class="ghost" id="sharePresetBtn" title="Copy share link" type="button">Share link</button>
+<button class="ghost" id="downloadPresetBtn" title="Download preset" type="button">Download</button>
+</div>
+</div>
+</dialog>
 
   {% include "footer.html" %}
 </body>
-
 </html>

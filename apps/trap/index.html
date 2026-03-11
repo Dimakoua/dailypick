@@ -1,97 +1,82 @@
 <!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trap! – Strategic Name Picker Game | Daily Pick</title>
-    <meta name="description"
-        content="Place surprise traps, capture teammates, and make quick decisions with Daily Pick's strategic Trap! name picker.">
-    <meta name="keywords"
-        content="trap game, name picker game, strategy game, team game, fun decision maker, interactive game, daily pick">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://dailypick.dev/apps/trap/">
-    <meta property="og:title" content="Trap! – Strategic Name Picker Game | Daily Pick">
-    <meta property="og:description"
-        content="Place surprise traps, capture teammates, and make quick decisions with Daily Pick's strategic Trap! name picker.">
-    <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
-    <meta property="og:image:alt" content="Animated trap catching a player token in Daily Pick's Trap game">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://dailypick.dev/apps/trap/">
-    <meta name="twitter:title" content="Trap! – Strategic Name Picker Game | Daily Pick">
-    <meta name="twitter:description"
-        content="Place surprise traps, capture teammates, and make quick decisions with Daily Pick's strategic Trap! name picker.">
-    <meta name="twitter:image" content="https://dailypick.dev/assets/og-image-main.png">
-    <meta name="twitter:image:alt" content="Animated trap catching a player token in Daily Pick's Trap game">
-
-    <link rel="canonical" href="https://dailypick.dev/apps/trap/">
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/assets/favicon/site.webmanifest">
-    <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
-    <meta name="msapplication-TileColor" content="#2d89ef">
-    <meta name="theme-color" content="#ffffff">
-
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/theme.css">
-    <link rel="stylesheet" href="/assets/css/glass.css">
-    <link rel="stylesheet" href="/assets/css/standup-panel.css">
-    <link rel="stylesheet" href="style.css">
-    <script src="/assets/js/brand-theme-engine.js" defer></script>
-    <script src="/assets/js/brand-config.js" defer></script>
-    <script src="/assets/js/standup-data.js" defer></script>
-    <script src="/assets/js/standup-panel.js" defer></script>
-    <script src="/assets/js/standup-onboarding.js" defer></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Trap! – Strategic Name Picker Game | Daily Pick</title>
+<meta content="Place surprise traps, capture teammates, and make quick decisions with Daily Pick's strategic Trap! name picker." name="description"/><meta content="index,follow" name="robots"/>
+<meta content="trap game, name picker game, strategy game, team game, fun decision maker, interactive game, daily pick" name="keywords"/>
+<!-- Open Graph / Facebook -->
+<meta content="website" property="og:type"/>
+<meta content="https://dailypick.dev/apps/trap/" property="og:url"/>
+<meta content="Trap! – Strategic Name Picker Game | Daily Pick" property="og:title"/>
+<meta content="Place surprise traps, capture teammates, and make quick decisions with Daily Pick's strategic Trap! name picker." property="og:description"/>
+<meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image"/>
+<meta content="Animated trap catching a player token in Daily Pick's Trap game" property="og:image:alt"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://dailypick.dev/apps/trap/" name="twitter:url"/>
+<meta content="Trap! – Strategic Name Picker Game | Daily Pick" name="twitter:title"/>
+<meta content="Place surprise traps, capture teammates, and make quick decisions with Daily Pick's strategic Trap! name picker." name="twitter:description"/>
+<meta content="https://dailypick.dev/assets/og-image-main.png" name="twitter:image"/>
+<meta content="Animated trap catching a player token in Daily Pick's Trap game" name="twitter:image:alt"/>
+<link href="https://dailypick.dev/apps/trap/" rel="canonical"/>
+<!-- Favicons -->
+<link href="/assets/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/assets/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/favicon/site.webmanifest" rel="manifest"/>
+<link href="/assets/favicon/favicon.ico" rel="shortcut icon"/>
+<meta content="#2d89ef" name="msapplication-TileColor"/>
+<meta content="#ffffff" name="theme-color"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="/assets/css/theme.css" rel="stylesheet"/>
+<link href="/assets/css/glass.css" rel="stylesheet"/>
+<link href="/assets/css/standup-panel.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<script defer="" src="/assets/js/brand-theme-engine.js"></script>
+<script defer="" src="/assets/js/brand-config.js"></script>
+<script defer="" src="/assets/js/standup-data.js"></script>
+<script defer="" src="/assets/js/standup-panel.js"></script>
+<script defer="" src="/assets/js/standup-onboarding.js"></script>
 </head>
-
 <body>
     {% include "bg-orbs.html" %}
     {% include "header.html" %}
 
     <h1>🎯 Trap!</h1>
-    <p class="settings-hint">Need to update the player list or brand colors? Visit the <a href="/apps/settings/">Settings page</a>.</p>
-    <canvas id="gameCanvas" width="500" height="400"></canvas>
-    <button id="trapBtn">🪤 Trap!</button>
-    <!-- NEW: announce selection updates to screen readers -->
-    <div id="info" aria-live="polite" aria-atomic="true"></div>
-
-    <div class="seo-content-area">
-        <h2>Welcome to Trap! - The Strategic Name Picker Game</h2>
-        <p>Trap! is an interactive game that adds a dash of strategy and excitement to the process of
+<p class="settings-hint">Need to update the player list or brand colors? Visit the <a href="/apps/settings/">Settings page</a>.</p>
+<canvas height="400" id="gameCanvas" width="500"></canvas>
+<button id="trapBtn">🪤 Trap!</button>
+<!-- NEW: announce selection updates to screen readers -->
+<div aria-atomic="true" aria-live="polite" id="info"></div>
+<div class="seo-content-area">
+<h2>Welcome to Trap! - The Strategic Name Picker Game</h2>
+<p>Trap! is an interactive game that adds a dash of strategy and excitement to the process of
             picking a name or making a choice. Instead of a simple random selection, participants (represented by
             colorful shapes) move around the canvas while you strategically place a "trap" (the microphone icon 🎤). The
             first one to enter the trap is selected! It's a perfect team game for quick, fun decisions.
         </p>
-
-        <h3>How to Play & Win</h3>
-        <ul>
-            <li>Enter the names of participants in the settings.</li>
-            <li>Click "Trap!" to place a trap randomly on the canvas.</li>
-            <li>Watch as the names (shapes) move around. The first one to move into the trap zone gets highlighted.</li>
-            <li>Click "Trap!" again to confirm your selection and remove them from the game, or to reset the trap if no
+<h3>How to Play &amp; Win</h3>
+<ul>
+<li>Enter the names of participants in the settings.</li>
+<li>Click "Trap!" to place a trap randomly on the canvas.</li>
+<li>Watch as the names (shapes) move around. The first one to move into the trap zone gets highlighted.</li>
+<li>Click "Trap!" again to confirm your selection and remove them from the game, or to reset the trap if no
                 one was caught.</li>
-            <li>The game continues until only one name remains, or you can play for a single selection.</li>
-        </ul>
-
-        <h3>Why Trap! is Great for Teams</h3>
-        <p>This fun decision maker is ideal for:</p>
-        <ul>
-            <li>Breaking the ice in meetings.</li>
-            <li>Deciding who leads the next stand-up or presents a demo.</li>
-            <li>Adding a playful element to task assignments.</li>
-            <li>Any situation where a bit of light-hearted competition can make choices more engaging.</li>
-        </ul>
-        <p>Looking for more ways to build team cohesion? Check out these <a
-                href="https://www.mindtools.com/pages/article/newTMM_52.htm" target="_blank"
-                rel="noopener noreferrer">Team Building Exercises</a> from MindTools.</p>
-    </div>
-
-    <script>
+<li>The game continues until only one name remains, or you can play for a single selection.</li>
+</ul>
+<h3>Why Trap! is Great for Teams</h3>
+<p>This fun decision maker is ideal for:</p>
+<ul>
+<li>Breaking the ice in meetings.</li>
+<li>Deciding who leads the next stand-up or presents a demo.</li>
+<li>Adding a playful element to task assignments.</li>
+<li>Any situation where a bit of light-hearted competition can make choices more engaging.</li>
+</ul>
+<p>Looking for more ways to build team cohesion? Check out these <a href="https://www.mindtools.com/pages/article/newTMM_52.htm" rel="noopener noreferrer" target="_blank">Team Building Exercises</a> from MindTools.</p>
+</div>
+<script>
         const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
         const LOCAL_STORAGE_KEY = 'namesList';
 
@@ -701,5 +686,4 @@
 
     {% include "footer.html" %}
 </body>
-
 </html>

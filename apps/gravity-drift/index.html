@@ -1,111 +1,94 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <!-- Viewport -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- SEO Meta Tags -->
-  <title>Gravity Drift – Space Trajectory Challenge | Daily Pick</title>
-  <meta name="description" content="Pilot rockets through asteroid fields, master orbital physics, and keep teams engaged with Gravity Drift's collaborative space challenge.">
-  <meta name="keywords" content="gravity drift, space game, rocket launch, asteroid game, physics game, trajectory game, orbital mechanics, fuel management, space simulation, strategy game, daily pick, browser game">
-
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://dailypick.dev/apps/gravity-drift/">
-  <meta property="og:title" content="Gravity Drift – Space Trajectory Challenge | Daily Pick">
-  <meta property="og:description" content="Pilot rockets through asteroid fields, master orbital physics, and keep teams engaged with Gravity Drift's collaborative space challenge.">
-  <meta property="og:image" content="https://dailypick.dev/assets/og-image-main.png">
-  <meta property="og:image:alt" content="Rocket dodging asteroids in Daily Pick's Gravity Drift space game">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://dailypick.dev/apps/gravity-drift/">
-  <meta name="twitter:title" content="Gravity Drift – Space Trajectory Challenge | Daily Pick">
-  <meta name="twitter:description" content="Pilot rockets through asteroid fields, master orbital physics, and keep teams engaged with Gravity Drift's collaborative space challenge.">
-  <meta name="twitter:image" content="https://dailypick.dev/assets/og-image-main.png">
-  <meta name="twitter:image:alt" content="Rocket dodging asteroids in Daily Pick's Gravity Drift space game">
-
-  <link rel="canonical" href="https://dailypick.dev/apps/gravity-drift/">
-
-  <!-- Favicons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-  <link rel="manifest" href="/assets/favicon/site.webmanifest">
-  <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
-  <meta name="msapplication-TileColor" content="#2d89ef">
-  <meta name="theme-color" content="#1a1a2e">
-
-  <!-- Fonts + Global CSS -->
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/theme.css">
-  <link rel="stylesheet" href="/assets/css/glass.css">
-  <link rel="stylesheet" href="/assets/css/standup-panel.css">
-  <link rel="stylesheet" href="./style.css">
-
-  <script src="/assets/js/brand-theme-engine.js" defer></script>
-  <script src="/assets/js/brand-config.js" defer></script>
-  <!-- PiP util -->
-  <script src="/assets/js/results-pip.js" defer></script>
-  <script src="/assets/js/standup-data.js" defer></script>
-  <script src="/assets/js/standup-panel.js" defer></script>
-    <script src="/assets/js/standup-onboarding.js" defer></script>
+<meta charset="utf-8"/>
+<!-- Viewport -->
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- SEO Meta Tags -->
+<title>Gravity Drift – Space Trajectory Challenge | Daily Pick</title>
+<meta content="Pilot rockets through asteroid fields, master orbital physics, and keep teams engaged with Gravity Drift's collaborative space challenge." name="description"/><meta content="index,follow" name="robots"/>
+<meta content="gravity drift, space game, rocket launch, asteroid game, physics game, trajectory game, orbital mechanics, fuel management, space simulation, strategy game, daily pick, browser game" name="keywords"/>
+<!-- Open Graph / Facebook -->
+<meta content="website" property="og:type"/>
+<meta content="https://dailypick.dev/apps/gravity-drift/" property="og:url"/>
+<meta content="Gravity Drift – Space Trajectory Challenge | Daily Pick" property="og:title"/>
+<meta content="Pilot rockets through asteroid fields, master orbital physics, and keep teams engaged with Gravity Drift's collaborative space challenge." property="og:description"/>
+<meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image"/>
+<meta content="Rocket dodging asteroids in Daily Pick's Gravity Drift space game" property="og:image:alt"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://dailypick.dev/apps/gravity-drift/" name="twitter:url"/>
+<meta content="Gravity Drift – Space Trajectory Challenge | Daily Pick" name="twitter:title"/>
+<meta content="Pilot rockets through asteroid fields, master orbital physics, and keep teams engaged with Gravity Drift's collaborative space challenge." name="twitter:description"/>
+<meta content="https://dailypick.dev/assets/og-image-main.png" name="twitter:image"/>
+<meta content="Rocket dodging asteroids in Daily Pick's Gravity Drift space game" name="twitter:image:alt"/>
+<link href="https://dailypick.dev/apps/gravity-drift/" rel="canonical"/>
+<!-- Favicons -->
+<link href="/assets/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/assets/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/favicon/site.webmanifest" rel="manifest"/>
+<link href="/assets/favicon/favicon.ico" rel="shortcut icon"/>
+<meta content="#2d89ef" name="msapplication-TileColor"/>
+<meta content="#1a1a2e" name="theme-color"/>
+<!-- Fonts + Global CSS -->
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="/assets/css/theme.css" rel="stylesheet"/>
+<link href="/assets/css/glass.css" rel="stylesheet"/>
+<link href="/assets/css/standup-panel.css" rel="stylesheet"/>
+<link href="./style.css" rel="stylesheet"/>
+<script defer="" src="/assets/js/brand-theme-engine.js"></script>
+<script defer="" src="/assets/js/brand-config.js"></script>
+<!-- PiP util -->
+<script defer="" src="/assets/js/results-pip.js"></script>
+<script defer="" src="/assets/js/standup-data.js"></script>
+<script defer="" src="/assets/js/standup-panel.js"></script>
+<script defer="" src="/assets/js/standup-onboarding.js"></script>
 </head>
 <body>
   {% include "bg-orbs.html" %}
   {% include "header.html" %}
 
   <p class="settings-hint">Customize rocket names and brand colors from the <a href="/apps/settings/">Settings page</a> before you launch.</p>
-  <div class="game-container" aria-label="Gravity Drift playfield">
-    <canvas id="gameCanvas"></canvas>
-    <div id="controls">
-      <button id="startButton" type="button">Start Game</button>
-    </div>
-  </div>
-
-  <div id="leaderboard" class="glass-card hidden" aria-live="polite" aria-atomic="true">
-    <h2>Leaderboard</h2>
-    <button id="gravityPipBtn" class="pip-trigger" type="button"
-      data-pip-target="#leaderboard"
-      data-pip-title="Gravity Drift Leaderboard"
-      data-pip-exclude="#gravityPipBtn"
-      data-pip-width="360"
-      data-pip-height="440">Open in Picture in Picture</button>
-    <ul id="leaderboardList"></ul>
-  </div>
-
-  <script src="./script.js"></script>
-
-  <!-- SEO Content -->
-  <div class="seo-content">
-    <h1>Gravity Drift: Your Ultimate Space Trajectory Challenge</h1>
-    <p>Embark on an interstellar journey with Gravity Drift, a captivating free online game that tests your understanding of orbital mechanics and strategic planning. Experience the thrill of launching a fleet of rockets from Earth, navigating treacherous asteroid fields, and mastering the gravitational pull of celestial bodies. Your mission: to skillfully pilot your rockets, manage precious fuel reserves, and achieve successful landings on distant planets, all while avoiding the perilous sun and unpredictable asteroids. Are you ready to conquer the cosmos?</p>
-
-    <h2>How to Play Gravity Drift</h2>
-    <p>Begin your space adventure by clicking the "Start Game" button, which launches your rockets from our home planet, Earth. Carefully observe the intricate dance of gravity exerted by the sun and surrounding planets. Success in this physics-based browser game hinges on your ability to strategically anticipate trajectories and make timely adjustments. Your primary objective is to land as many rockets as possible on the target planets. Every decision counts, as you must conserve fuel for long-haul journeys and deftly dodge a dynamic asteroid field. The game concludes when your entire fleet has either reached a planetary destination, drifted helplessly out of fuel, or met an untimely end through collision. Compete for the top spot on the leaderboard, where scores are determined by landing order, fuel efficiency, and total distance traveled.</p>
-
-    <h2>Features</h2>
-    <ul>
-      <li>Realistic Physics Engine: Experience an authentic gravity simulation affecting your rockets around the sun and multiple planets.</li>
-      <li>Dynamic Asteroid Fields: Navigate through ever-present asteroid belts that test your piloting skills and reaction times.</li>
-      <li>Strategic Fuel Management: Every burn counts! Plan your fuel consumption carefully to ensure your rockets can complete their interstellar voyages.</li>
-      <li>Multiple Planetary Targets: Aim for a variety of planets, each with its own mass and gravitational influence, adding layers of strategic depth.</li>
-      <li>Competitive Leaderboard: Track your high scores and compete with other space commanders for the top position.</li>
-      <li>Customizable Rocket Names: Personalize your fleet for a more immersive and engaging gaming experience.</li>
-      <li>Instant Play Browser Game: No downloads needed! Enjoy Gravity Drift directly in your web browser, anytime, anywhere.</li>
-    </ul>
-
-    <h2>Mastering the Cosmos: Tips & Strategy</h2>
-    <p>Success in Gravity Drift isn't just about luck; it's about understanding the subtle art of space navigation. Here are a few tips to guide your rockets to victory:</p>
-    <ul>
-      <li>Observe Orbital Paths: Before launching, take a moment to study the orbits of the planets. This can help you anticipate their future positions.</li>
-      <li>Use Gravitational Slingshots: With careful planning, you can use a planet's gravity to "slingshot" your rocket, saving fuel and gaining speed. This is a key technique in real-world space exploration!</li>
-      <li>Short, Controlled Burns: Instead of long, continuous burns, try using short bursts of thrust to make fine adjustments to your trajectory. This is often more fuel-efficient.</li>
-      <li>Patience is a Virtue: Sometimes the best move is to wait and let gravity do the work. Don't be afraid to let your rockets drift if they are on a good path.</li>
-      <li>Learn from Each Attempt: Each game is a learning opportunity. Analyze what went right and wrong to refine your strategies for future launches.</li>
-    </ul>
-    <p>Gravity Drift offers a rewarding challenge for fans of space simulation games and strategy games alike. Launch your rockets today and see if you have what it takes to master the drift!</p>
-  </div>
+<div aria-label="Gravity Drift playfield" class="game-container">
+<canvas id="gameCanvas"></canvas>
+<div id="controls">
+<button id="startButton" type="button">Start Game</button>
+</div>
+</div>
+<div aria-atomic="true" aria-live="polite" class="glass-card hidden" id="leaderboard">
+<h2>Leaderboard</h2>
+<button class="pip-trigger" data-pip-exclude="#gravityPipBtn" data-pip-height="440" data-pip-target="#leaderboard" data-pip-title="Gravity Drift Leaderboard" data-pip-width="360" id="gravityPipBtn" type="button">Open in Picture in Picture</button>
+<ul id="leaderboardList"></ul>
+</div>
+<script src="./script.js"></script>
+<!-- SEO Content -->
+<div class="seo-content">
+<h1>Gravity Drift: Your Ultimate Space Trajectory Challenge</h1>
+<p>Embark on an interstellar journey with Gravity Drift, a captivating free online game that tests your understanding of orbital mechanics and strategic planning. Experience the thrill of launching a fleet of rockets from Earth, navigating treacherous asteroid fields, and mastering the gravitational pull of celestial bodies. Your mission: to skillfully pilot your rockets, manage precious fuel reserves, and achieve successful landings on distant planets, all while avoiding the perilous sun and unpredictable asteroids. Are you ready to conquer the cosmos?</p>
+<h2>How to Play Gravity Drift</h2>
+<p>Begin your space adventure by clicking the "Start Game" button, which launches your rockets from our home planet, Earth. Carefully observe the intricate dance of gravity exerted by the sun and surrounding planets. Success in this physics-based browser game hinges on your ability to strategically anticipate trajectories and make timely adjustments. Your primary objective is to land as many rockets as possible on the target planets. Every decision counts, as you must conserve fuel for long-haul journeys and deftly dodge a dynamic asteroid field. The game concludes when your entire fleet has either reached a planetary destination, drifted helplessly out of fuel, or met an untimely end through collision. Compete for the top spot on the leaderboard, where scores are determined by landing order, fuel efficiency, and total distance traveled.</p>
+<h2>Features</h2>
+<ul>
+<li>Realistic Physics Engine: Experience an authentic gravity simulation affecting your rockets around the sun and multiple planets.</li>
+<li>Dynamic Asteroid Fields: Navigate through ever-present asteroid belts that test your piloting skills and reaction times.</li>
+<li>Strategic Fuel Management: Every burn counts! Plan your fuel consumption carefully to ensure your rockets can complete their interstellar voyages.</li>
+<li>Multiple Planetary Targets: Aim for a variety of planets, each with its own mass and gravitational influence, adding layers of strategic depth.</li>
+<li>Competitive Leaderboard: Track your high scores and compete with other space commanders for the top position.</li>
+<li>Customizable Rocket Names: Personalize your fleet for a more immersive and engaging gaming experience.</li>
+<li>Instant Play Browser Game: No downloads needed! Enjoy Gravity Drift directly in your web browser, anytime, anywhere.</li>
+</ul>
+<h2>Mastering the Cosmos: Tips &amp; Strategy</h2>
+<p>Success in Gravity Drift isn't just about luck; it's about understanding the subtle art of space navigation. Here are a few tips to guide your rockets to victory:</p>
+<ul>
+<li>Observe Orbital Paths: Before launching, take a moment to study the orbits of the planets. This can help you anticipate their future positions.</li>
+<li>Use Gravitational Slingshots: With careful planning, you can use a planet's gravity to "slingshot" your rocket, saving fuel and gaining speed. This is a key technique in real-world space exploration!</li>
+<li>Short, Controlled Burns: Instead of long, continuous burns, try using short bursts of thrust to make fine adjustments to your trajectory. This is often more fuel-efficient.</li>
+<li>Patience is a Virtue: Sometimes the best move is to wait and let gravity do the work. Don't be afraid to let your rockets drift if they are on a good path.</li>
+<li>Learn from Each Attempt: Each game is a learning opportunity. Analyze what went right and wrong to refine your strategies for future launches.</li>
+</ul>
+<p>Gravity Drift offers a rewarding challenge for fans of space simulation games and strategy games alike. Launch your rockets today and see if you have what it takes to master the drift!</p>
+</div>
 
   {% include "footer.html" %}
 </body>
