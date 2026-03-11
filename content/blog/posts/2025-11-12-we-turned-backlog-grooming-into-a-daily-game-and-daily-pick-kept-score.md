@@ -1,20 +1,21 @@
 ---
-title: "We Turned Backlog Grooming Into a Daily Game (and Daily Pick Kept Score)"
+title: We Turned Backlog Grooming Into a Daily Game (and Daily Pick Kept Score)
 date: 2025-11-12
-description: "Backlog grooming turned into a mini-game that keeps every ticket in view, thanks to Daily Pick’s spin-based rituals."
-layout: "post.njk"
-tags: ["backlog", "grooming", "daily pick", "team rituals", "productivity", "remote work"]
+description: Backlog grooming turned into a mini-game that keeps every ticket in view, thanks to Daily Pick’s spin-based rituals.
+layout: post.njk
+tags: "[\"backlog\", \"grooming\", \"daily pick\", \"team rituals\", \"productivity\", \"remote work\"]"
 canonical: "https://dailypick.dev/blog/we-turned-backlog-grooming-into-a-daily-game-and-daily-pick-kept-score/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-11-12
-section: "Rituals"
-keywords: "backlog, grooming, daily pick, team rituals, productivity, remote work"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Sticky notes on a whiteboard with a spinner hovering above"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Sticky notes on a whiteboard with a spinner hovering above"
----
+section: Rituals
+keywords: backlog, grooming, daily pick, team rituals, productivity, remote work
+ogImage: /assets/og-image-main.png
+ogImageAlt: Sticky notes on a whiteboard with a spinner hovering above
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Sticky notes on a whiteboard with a spinner hovering above
+robots: index,follow
 
+---
 Backlog grooming used to feel like a chore. Long spreadsheets, hidden priorities, and the same people doing heavy lifting. We flipped the script with a daily micro-grooming ritual powered by Daily Pick.
 
 Each morning, the spinner selects a “ticket champion” and a “grooming villain” (spoiler: the villain is just the ticket’s toughest uncertainty). The champion writes a two-sentence summary and what they need to know. The villain is the blocker or unknown that the team pairs up to beat during the ritual.

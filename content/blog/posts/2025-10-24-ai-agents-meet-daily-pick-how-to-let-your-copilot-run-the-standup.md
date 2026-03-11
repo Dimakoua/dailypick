@@ -1,20 +1,21 @@
 ---
 title: "AI Agents + Daily Pick: Let Copilots Run Your Stand-up"
 date: 2025-10-24
-description: "Use AI agents to automate standup prep, note-taking, and blocker tracking. Run standups 60% faster while keeping human connection. Full guide included."
-layout: "post.njk"
-tags: ["ai agents", "copilot", "stand-up automation", "team productivity", "remote work", "meeting facilitation"]
+description: Use AI agents to automate standup prep, note-taking, and blocker tracking. Run standups 60% faster while keeping human connection. Full guide included.
+layout: post.njk
+tags: "[\"ai agents\", \"copilot\", \"stand-up automation\", \"team productivity\", \"remote work\", \"meeting facilitation\"]"
 canonical: "https://dailypick.dev/blog/ai-agents-meet-daily-pick-how-to-let-your-copilot-run-the-standup/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-10-24
-section: "AI at Work"
-keywords: "ai agents, copilot, stand-up automation, team productivity, remote work, meeting facilitation"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "AI copilot dashboard working alongside Daily Pick to coordinate a stand-up"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "AI copilot dashboard working alongside Daily Pick to coordinate a stand-up"
----
+section: AI at Work
+keywords: ai agents, copilot, stand-up automation, team productivity, remote work, meeting facilitation
+ogImage: /assets/og-image-main.png
+ogImageAlt: AI copilot dashboard working alongside Daily Pick to coordinate a stand-up
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: AI copilot dashboard working alongside Daily Pick to coordinate a stand-up
+robots: index,follow
 
+---
 AI agents are the buzziest topic in every product roadmap and LinkedIn thread right now. Teams are unleashing copilots to draft PRDs, summarize meetings, and even chase down blockers. So it’s only a matter of time before someone asks: “Can an AI just run our stand-up for us?” If you’re curious about async-first rituals, bookmark [our Slack + Daily Pick playbook](/blog/2025-10-03-supercharge-async-standups-with-slack-and-daily-pick/) as a companion guide—this post zeroes in on the live stand-up experience.
 
 Short answer: yes—with guardrails. The secret is to let the agent handle the boring bits (collecting updates, summarizing trends) while Daily Pick keeps decisions transparent, playful, and unquestionably fair. That combination gives you the efficiency of an always-on copilot and the human energy that keeps teams glued together.

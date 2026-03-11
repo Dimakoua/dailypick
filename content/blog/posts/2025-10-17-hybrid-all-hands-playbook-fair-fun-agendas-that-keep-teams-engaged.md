@@ -1,20 +1,21 @@
 ---
-title: "Hybrid All-Hands Agendas That Keep Every Voice Engaged"
+title: Hybrid All-Hands Agendas That Keep Every Voice Engaged
 date: 2025-10-17
-description: "Fix hybrid all-hands where remote attendees disappear. Fair speaker selection + engagement rituals that keep 100% of employees invested and heard."
-layout: "post.njk"
-tags: ["hybrid meetings", "all-hands", "company culture", "leadership communication", "employee engagement", "meeting design"]
+description: Fix hybrid all-hands where remote attendees disappear. Fair speaker selection + engagement rituals that keep 100% of employees invested and heard.
+layout: post.njk
+tags: "[\"hybrid meetings\", \"all-hands\", \"company culture\", \"leadership communication\", \"employee engagement\", \"meeting design\"]"
 canonical: "https://dailypick.dev/blog/hybrid-all-hands-playbook-fair-fun-agendas-that-keep-teams-engaged/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-10-17
-section: "Company Rituals"
-keywords: "hybrid meetings, all-hands agenda, company culture, leadership communication, employee engagement, meeting design"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Hybrid team cheering during an all-hands meeting with Daily Pick on the big screen"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Hybrid team cheering during an all-hands meeting with Daily Pick on the big screen"
----
+section: Company Rituals
+keywords: hybrid meetings, all-hands agenda, company culture, leadership communication, employee engagement, meeting design
+ogImage: /assets/og-image-main.png
+ogImageAlt: Hybrid team cheering during an all-hands meeting with Daily Pick on the big screen
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Hybrid team cheering during an all-hands meeting with Daily Pick on the big screen
+robots: index,follow
 
+---
 All-hands meetings are supposed to unite the company. In hybrid reality, they can easily turn into an hour of HQ applause while remote teammates mute their cameras and answer emails. The key to an unforgettable all-hands is intentional design that treats remote and in-office audiences as equal stakeholders—paired with moments of joy that remind everyone why they’re here.
 
 Here’s how to build a hybrid all-hands playbook that balances information, interaction, and fairness, powered by Daily Pick’s favorite tools. Consider it the big-room companion to our [Remote Onboarding Icebreakers](/blog/remote-onboarding-icebreakers-your-new-hires-will-love/) and [async stand-up framework](/blog/supercharge-async-standups-with-slack-and-daily-pick/); together they cover every major team touchpoint.

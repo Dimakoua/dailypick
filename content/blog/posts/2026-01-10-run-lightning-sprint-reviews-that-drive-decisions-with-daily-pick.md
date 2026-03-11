@@ -1,20 +1,21 @@
 ---
-title: "Run Lightning Sprint Reviews that Drive Decisions with Daily Pick"
+title: Run Lightning Sprint Reviews that Drive Decisions with Daily Pick
 date: 2025-12-07
-description: "Transform sprint reviews into 30-minute decision machines by rotating presenters, prioritizing demos, and closing loops with Daily Pick selectors."
-layout: "post.njk"
-tags: ["agile", "sprint review", "product development", "engineering rituals", "scrum", "team alignment"]
+description: Transform sprint reviews into 30-minute decision machines by rotating presenters, prioritizing demos, and closing loops with Daily Pick selectors.
+layout: post.njk
+tags: "[\"agile\", \"sprint review\", \"product development\", \"engineering rituals\", \"scrum\", \"team alignment\"]"
 canonical: "https://dailypick.dev/blog/run-lightning-sprint-reviews-that-drive-decisions-with-daily-pick/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-12-07
-section: "Team Decisions"
-keywords: "sprint review agenda, agile demo meeting, lightning sprint review, Daily Pick"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Agile team sharing sprint demos while Daily Pick selects the next presenter"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Agile team sharing sprint demos while Daily Pick selects the next presenter"
----
+section: Team Decisions
+keywords: sprint review agenda, agile demo meeting, lightning sprint review, Daily Pick
+ogImage: /assets/og-image-main.png
+ogImageAlt: Agile team sharing sprint demos while Daily Pick selects the next presenter
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Agile team sharing sprint demos while Daily Pick selects the next presenter
+robots: index,follow
 
+---
 Sprint reviews often devolve into a slideshow of Jira tickets that nobody beyond the core team understands. High-performing squads treat the meeting as a product launch checkpoint: tight demos, clear decisions, and zero suspense about who speaks next. Daily Pick keeps the pace electrifying by rotating presenters, timeboxing segments, and forcing trade-offs live.
 
 ## The Lightning Review Blueprint

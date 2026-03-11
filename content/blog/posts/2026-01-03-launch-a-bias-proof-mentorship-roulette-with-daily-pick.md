@@ -1,20 +1,21 @@
 ---
-title: "Launch a Bias-Proof Mentorship Roulette with Daily Pick"
+title: Launch a Bias-Proof Mentorship Roulette with Daily Pick
 date: 2025-12-07
-description: "Pair mentors and mentees across offices, levels, and functions using Daily Pick automations that keep rotations fair and fresh."
-layout: "post.njk"
-tags: ["mentorship", "people programs", "DEI", "hybrid work", "team rituals", "culture"]
+description: Pair mentors and mentees across offices, levels, and functions using Daily Pick automations that keep rotations fair and fresh.
+layout: post.njk
+tags: "[\"mentorship\", \"people programs\", \"DEI\", \"hybrid work\", \"team rituals\", \"culture\"]"
 canonical: "https://dailypick.dev/blog/launch-a-bias-proof-mentorship-roulette-with-daily-pick/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-12-07
-section: "Team Decisions"
-keywords: "mentorship program template, mentor matching, cross-team mentorship, Daily Pick"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Mentor and mentee smiling on a video call while Daily Pick highlights their pairing"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Mentor and mentee smiling on a video call while Daily Pick highlights their pairing"
----
+section: Team Decisions
+keywords: mentorship program template, mentor matching, cross-team mentorship, Daily Pick
+ogImage: /assets/og-image-main.png
+ogImageAlt: Mentor and mentee smiling on a video call while Daily Pick highlights their pairing
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Mentor and mentee smiling on a video call while Daily Pick highlights their pairing
+robots: index,follow
 
+---
 Traditional mentorship programs stall because matching happens once, manually, and usually favors whoever knows leadership best. High-growth orgs need a lightweight ritual that rotates connections, surfaces new perspectives, and proves the process is fair. Daily Pick gives people teams the roulette they need to keep pairings fresh without spreadsheets or favoritism.
 
 ## Set Your Mentorship Intent

@@ -1,20 +1,21 @@
 ---
 title: "How to Run Effective Daily Standup Meetings: A Complete Guide"
 date: 2026-02-19
-description: "Learn the proven daily standup format that keeps meetings under 15 minutes while ensuring all blockers surface. Templates, remote tips, and common mistakes."
-layout: "post.njk"
-tags: ["standup meetings", "agile ceremonies", "meeting efficiency", "team leadership", "remote meetings", "productivity"]
+description: Learn the proven daily standup format that keeps meetings under 15 minutes while ensuring all blockers surface. Templates, remote tips, and common mistakes.
+layout: post.njk
+tags: "[\"standup meetings\", \"agile ceremonies\", \"meeting efficiency\", \"team leadership\", \"remote meetings\", \"productivity\"]"
 canonical: "https://dailypick.dev/blog/how-to-run-effective-daily-standup-meetings/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2026-02-19
-section: "Standup Meetings"
-keywords: "how to run standups, daily standup format, effective standups, standup best practices"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Team running an effective standup meeting in a huddle"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Team running an effective standup meeting in a huddle"
----
+section: Standup Meetings
+keywords: how to run standups, daily standup format, effective standups, standup best practices
+ogImage: /assets/og-image-main.png
+ogImageAlt: Team running an effective standup meeting in a huddle
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Team running an effective standup meeting in a huddle
+robots: index,follow
 
+---
 # How to Run Effective Daily Standup Meetings: A Complete Guide
 
 The daily standup is one of the most important agile ceremonies, yet it's also one of the most frequently broken.

@@ -1,20 +1,21 @@
 ---
-title: "Fair Ways to Choose Team Projects Without Fatigue"
+title: Fair Ways to Choose Team Projects Without Fatigue
 date: 2024-10-27
-description: "Cut project debates short with playful fairness frameworks, weighted wheels, and Daily Pick rituals that make prioritization fast and trusted."
-layout: "post.njk"
-tags: ["team building", "project management", "agile", "decision making", "workplace culture", "productivity", "fairness"]
+description: Cut project debates short with playful fairness frameworks, weighted wheels, and Daily Pick rituals that make prioritization fast and trusted.
+layout: post.njk
+tags: "[\"team building\", \"project management\", \"agile\", \"decision making\", \"workplace culture\", \"productivity\", \"fairness\"]"
 canonical: "https://dailypick.dev/blog/conquer-decision-fatigue-fun-fair-ways-to-choose-team-projects/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-08-12
-section: "Project Planning"
-keywords: "team building, project management, agile, decision making, workplace culture, productivity, fairness"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Team comparing project ideas while a Daily Pick decision wheel highlights the winning choice"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Team comparing project ideas while a Daily Pick decision wheel highlights the winning choice"
----
+section: Project Planning
+keywords: team building, project management, agile, decision making, workplace culture, productivity, fairness
+ogImage: /assets/og-image-main.png
+ogImageAlt: Team comparing project ideas while a Daily Pick decision wheel highlights the winning choice
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Team comparing project ideas while a Daily Pick decision wheel highlights the winning choice
+robots: index,follow
 
+---
 ## Conquer Decision Fatigue: Fun & Fair Ways to Choose Team Projects
 
 Project selection.  The mere mention can send shivers down the spines of team leaders everywhere.  Endless debates, clashing priorities, and the ever-present risk of someone feeling slighted – it's a recipe for meeting misery and decreased morale. But what if choosing team projects could actually be…fun?

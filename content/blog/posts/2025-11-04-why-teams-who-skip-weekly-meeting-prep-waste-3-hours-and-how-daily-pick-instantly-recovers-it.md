@@ -1,20 +1,21 @@
 ---
-title: "Why Teams Who Skip Weekly Meeting Prep Waste 3 Hours (and How Daily Pick Instantly Recovers It)"
+title: Why Teams Who Skip Weekly Meeting Prep Waste 3 Hours (and How Daily Pick Instantly Recovers It)
 date: 2025-11-04
 description: "Teams waste 3+ hours weekly on meeting prep. Here's the automation playbook that recovers lost time and keeps meetings focused on decisions, not status."
-layout: "post.njk"
-tags: ["meetings", "stand-up", "planning", "productivity", "daily pick", "prep automation"]
+layout: post.njk
+tags: "[\"meetings\", \"stand-up\", \"planning\", \"productivity\", \"daily pick\", \"prep automation\"]"
 canonical: "https://dailypick.dev/blog/why-teams-who-skip-weekly-meeting-prep-waste-3-hours-and-how-daily-pick-instantly-recovers-it/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-11-04
-section: "Meeting Science"
-keywords: "meetings, stand-up, planning, productivity, daily pick, prep automation"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "A clock melting into sticky notes while teammates watch"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "A clock melting into sticky notes while teammates watch"
----
+section: Meeting Science
+keywords: meetings, stand-up, planning, productivity, daily pick, prep automation
+ogImage: /assets/og-image-main.png
+ogImageAlt: A clock melting into sticky notes while teammates watch
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: A clock melting into sticky notes while teammates watch
+robots: index,follow
 
+---
 Most teams only realize they’re wasting time when someone finally times the stand-up. The catch? The real waste happens *before* the camera turns on. When prep is autopilot, status updates turn into reheated monologues, blockers hide in Slack threads, and people join late because no one told them what was important.
 
 Here’s the math: a 15-minute stand-up with poor prep equals about 3 hours of lost focus per sprint for a 10-person team. Those minutes add up when everyone scrambles to remember what they worked on, why tickets stalled, and who needs help.

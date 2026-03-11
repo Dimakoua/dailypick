@@ -1,20 +1,21 @@
 ---
-title: "Stop PTO Coverage Chaos with Daily Pick’s Fair Holiday Planner"
+title: Stop PTO Coverage Chaos with Daily Pick’s Fair Holiday Planner
 date: 2025-12-07
-description: "Use Daily Pick rituals to balance PTO coverage, protect rest, and keep incidents staffed without back-channel negotiations."
-layout: "post.njk"
-tags: ["PTO planning", "team rituals", "workplace culture", "fairness", "operations", "people leadership"]
+description: Use Daily Pick rituals to balance PTO coverage, protect rest, and keep incidents staffed without back-channel negotiations.
+layout: post.njk
+tags: "[\"PTO planning\", \"team rituals\", \"workplace culture\", \"fairness\", \"operations\", \"people leadership\"]"
 canonical: "https://dailypick.dev/blog/stop-pto-coverage-chaos-fair-holiday-planner-with-daily-pick/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-12-07
-section: "Team Decisions"
-keywords: "PTO coverage plan, holiday staffing, fair vacation scheduling, Daily Pick"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Team calendar showing PTO slots while Daily Pick selects a coverage buddy"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Team calendar showing PTO slots while Daily Pick selects a coverage buddy"
----
+section: Team Decisions
+keywords: PTO coverage plan, holiday staffing, fair vacation scheduling, Daily Pick
+ogImage: /assets/og-image-main.png
+ogImageAlt: Team calendar showing PTO slots while Daily Pick selects a coverage buddy
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Team calendar showing PTO slots while Daily Pick selects a coverage buddy
+robots: index,follow
 
+---
 If your holiday schedule looks like a string of Slack DMs, you’re one PTO request away from a coverage crisis. Teams need a transparent system that honors rest, keeps critical work staffed, and removes the politics from “who stays online.” Daily Pick gives you the randomizers and rotation controls to make holiday coverage predictable—and even friendly.
 
 ## The Three PTO Failure Modes

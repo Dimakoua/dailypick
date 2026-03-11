@@ -1,20 +1,21 @@
 ---
 title: "Banish Meeting Boredom: Fun Team Decision-Making That Works"
 date: 2025-07-02
-description: "Turn decision meetings into energizing moments with playful fairness tools, collaborative rituals, and Daily Pick games that move work forward."
-layout: "post.njk"
-tags: ["team building", "decision making", "productivity hacks", "workplace culture", "team dynamics", "meeting facilitation", "agile methodology"]
+description: Turn decision meetings into energizing moments with playful fairness tools, collaborative rituals, and Daily Pick games that move work forward.
+layout: post.njk
+tags: "[\"team building\", \"decision making\", \"productivity hacks\", \"workplace culture\", \"team dynamics\", \"meeting facilitation\", \"agile methodology\"]"
 canonical: "https://dailypick.dev/blog/banish-meeting-boredom-fun-team-decision-making-that-works/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-07-02
-section: "Team Decisions"
-keywords: "team building, decision making, productivity hacks, workplace culture, team dynamics, meeting facilitation, agile methodology"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Team celebrating after using Daily Pick to choose their next project"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Team celebrating after using Daily Pick to choose their next project"
----
+section: Team Decisions
+keywords: team building, decision making, productivity hacks, workplace culture, team dynamics, meeting facilitation, agile methodology
+ogImage: /assets/og-image-main.png
+ogImageAlt: Team celebrating after using Daily Pick to choose their next project
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Team celebrating after using Daily Pick to choose their next project
+robots: index,follow
 
+---
 # Banish Meeting Boredom: Fun Team Decision-Making That Works
 
 Let's face it: team meetings can be a drag.  Hours spent debating, arguing, or simply staring blankly at a screen while someone else makes all the decisions.  But what if choosing a project lead, assigning tasks, or even deciding on lunch could be… *fun*?  What if those agonizing choices actually boosted team morale and efficiency?

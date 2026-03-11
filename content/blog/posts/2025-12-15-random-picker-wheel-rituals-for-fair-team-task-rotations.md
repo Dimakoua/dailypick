@@ -1,20 +1,21 @@
 ---
-title: "Random Picker Wheel Rituals for Fair Team Task Rotations"
+title: Random Picker Wheel Rituals for Fair Team Task Rotations
 date: 2025-12-15
-description: "Build predictable, fair task rotations with playful Random Picker Wheel rituals that keep teams accountable without micromanaging."
-layout: "post.njk"
-tags: ["team rituals", "task rotation", "fairness", "team productivity", "daily pick"]
+description: Build predictable, fair task rotations with playful Random Picker Wheel rituals that keep teams accountable without micromanaging.
+layout: post.njk
+tags: "[\"team rituals\", \"task rotation\", \"fairness\", \"team productivity\", \"daily pick\"]"
 canonical: "https://dailypick.dev/blog/random-picker-wheel-rituals-for-fair-team-task-rotations/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-12-15
-section: "Team rituals"
-keywords: "random picker wheel, fair task rotation, team rituals, accountability rituals, meeting fun"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Colorful Random Picker Wheel question mark showcasing a fair start to task rotations"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Colorful Random Picker Wheel question mark showcasing a fair start to task rotations"
----
+section: Team rituals
+keywords: random picker wheel, fair task rotation, team rituals, accountability rituals, meeting fun
+ogImage: /assets/og-image-main.png
+ogImageAlt: Colorful Random Picker Wheel question mark showcasing a fair start to task rotations
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Colorful Random Picker Wheel question mark showcasing a fair start to task rotations
+robots: index,follow
 
+---
 Rotating tasks like note-taking, meeting facilitation, or sprint moderation is essential—but it can feel like herding cats if people start opting out or lobbying for “lighter” rounds. The Daily Pick [Random Picker Wheel](/apps/wheel/) takes that friction away with a visual spin that balances fairness and gamified anticipation.
 
 Here’s how to merge the wheel into your team rituals to keep task rotations joyful and trustworthy.

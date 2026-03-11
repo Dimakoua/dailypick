@@ -1,20 +1,21 @@
 ---
-title: "How to Connect Jira to Daily Pick (API Token Guide)"
+title: How to Connect Jira to Daily Pick (API Token Guide)
 date: 2025-10-26
-description: "Follow this step-by-step Jira guide to generate an API token, choose the right project, and stream players plus assignments into Daily Pick."
-layout: "post.njk"
-tags: ["jira", "daily pick", "standup automation", "team productivity", "integrations"]
+description: Follow this step-by-step Jira guide to generate an API token, choose the right project, and stream players plus assignments into Daily Pick.
+layout: post.njk
+tags: "[\"jira\", \"daily pick\", \"standup automation\", \"team productivity\", \"integrations\"]"
 canonical: "https://dailypick.dev/blog/connect-jira-to-daily-pick/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-10-26
-section: "Integrations"
-keywords: "jira api token, jira integration guide, daily pick jira, connect jira to standup tool"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Daily Pick Jira integration instructions displayed on a laptop"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Daily Pick Jira integration instructions displayed on a laptop"
----
+section: Integrations
+keywords: jira api token, jira integration guide, daily pick jira, connect jira to standup tool
+ogImage: /assets/og-image-main.png
+ogImageAlt: Daily Pick Jira integration instructions displayed on a laptop
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Daily Pick Jira integration instructions displayed on a laptop
+robots: index,follow
 
+---
 Daily Pick can pull your Jira players, queues, and assignment snapshots so the stand-up dock always knows who is up next and what they are shipping. This guide walks through the exact clicks inside Atlassian, how to configure the integration card inside **Settings → Third-Party Integrations**, and what to do if something fails along the way.
 
 ---

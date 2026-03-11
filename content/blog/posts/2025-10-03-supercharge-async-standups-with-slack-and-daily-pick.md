@@ -1,20 +1,21 @@
 ---
-title: "Keep Async Stand-ups Aligned with Slack + Daily Pick"
+title: Keep Async Stand-ups Aligned with Slack + Daily Pick
 date: 2025-10-03
-description: "Run async stand-ups across time zones with Slack workflows, Daily Pick fairness games, and recap habits that keep progress visible without late nights."
-layout: "post.njk"
-tags: ["async stand-up", "remote teams", "slack workflow", "distributed work", "team productivity", "meeting alternatives"]
+description: Run async stand-ups across time zones with Slack workflows, Daily Pick fairness games, and recap habits that keep progress visible without late nights.
+layout: post.njk
+tags: "[\"async stand-up\", \"remote teams\", \"slack workflow\", \"distributed work\", \"team productivity\", \"meeting alternatives\"]"
 canonical: "https://dailypick.dev/blog/supercharge-async-standups-with-slack-and-daily-pick/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-10-03
-section: "Async Collaboration"
-keywords: "async stand-up, remote teams, slack workflow, distributed work, team productivity, meeting alternatives"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Distributed team sharing async stand-up updates with help from Daily Pick inside Slack"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Distributed team sharing async stand-up updates with help from Daily Pick inside Slack"
----
+section: Async Collaboration
+keywords: async stand-up, remote teams, slack workflow, distributed work, team productivity, meeting alternatives
+ogImage: /assets/og-image-main.png
+ogImageAlt: Distributed team sharing async stand-up updates with help from Daily Pick inside Slack
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Distributed team sharing async stand-up updates with help from Daily Pick inside Slack
+robots: index,follow
 
+---
 If your team spans time zones, the classic 15-minute daily stand-up can turn into a 5 a.m. alarm for someone—and resentment for everyone. Asynchronous stand-ups are the natural evolution for globally distributed teams, but they can fail fast if they become a graveyard of stale updates in a channel nobody reads. The trick is to maintain the accountability, energy, and fairness of a live huddle while freeing people to contribute on their schedule.
 
 Here’s how to design an async stand-up system that keeps momentum strong, makes blockers obvious, and still adds a dash of fun—powered by Slack automations and Daily Pick’s fairness-first tools. If you still run a weekly live huddle, keep [Spice Up Your Stand-ups](/blog/spice-up-your-standups-5-fun-ways/) in your back pocket to blend async + sync rituals seamlessly.

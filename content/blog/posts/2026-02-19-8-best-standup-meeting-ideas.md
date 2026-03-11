@@ -1,20 +1,21 @@
 ---
-title: "8 Best Standup Meeting Ideas for Remote & In-Office Teams"
+title: 8 Best Standup Meeting Ideas for Remote & In-Office Teams
 date: 2026-02-19
-description: "Master 8 proven standup meeting formats that cut meeting time by 30%, boost engagement, and keep remote and in-office teams aligned. With templates and best practices."
-layout: "post.njk"
-tags: ["standup meetings", "agile ceremonies", "team collaboration", "remote work", "meeting best practices", "productivity"]
-canonical: "https://dailypick.dev/blog/8-standup-meeting-ideas/"
-author: "Daily Pick"
+description: Master 8 proven standup meeting formats that cut meeting time by 30%, boost engagement, and keep remote and in-office teams aligned. With templates and best practices.
+layout: post.njk
+tags: "[\"standup meetings\", \"agile ceremonies\", \"team collaboration\", \"remote work\", \"meeting best practices\", \"productivity\"]"
+canonical: "https://dailypick.dev/blog/8-best-standup-meeting-ideas/"
+author: Daily Pick
 updated: 2026-02-19
-section: "Standup Meetings"
-keywords: "standup meeting ideas, daily standup, standup formats, agile ceremonies, team standup, remote standup"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Diverse remote team in video call using a standup meeting format"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Diverse remote team in video call using a standup meeting format"
----
+section: Standup Meetings
+keywords: standup meeting ideas, daily standup, standup formats, agile ceremonies, team standup, remote standup
+ogImage: /assets/og-image-main.png
+ogImageAlt: Diverse remote team in video call using a standup meeting format
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Diverse remote team in video call using a standup meeting format
+robots: index,follow
 
+---
 # 8 Best Standup Meeting Ideas for Remote & In-Office Teams
 
 Daily standups are the heartbeat of high-performing agile teams. Yet most teams dread them. Thirty minutes that feel like three hours. The same monotone updates. Disengaged participants scrolling emails while half-listening.

@@ -1,20 +1,21 @@
 ---
 title: "Stop Decision Fatigue: Fun Ways to Energize Team Choices"
 date: 2025-09-01
-description: "Beat decision fatigue with playful frameworks, rotating facilitators, and Daily Pick tools that keep choices fair, fast, and energizing for every teammate."
-layout: "post.njk"
-tags: ["team building", "decision making", "meeting facilitation", "productivity", "agile", "remote work", "workplace culture"]
+description: Beat decision fatigue with playful frameworks, rotating facilitators, and Daily Pick tools that keep choices fair, fast, and energizing for every teammate.
+layout: post.njk
+tags: "[\"team building\", \"decision making\", \"meeting facilitation\", \"productivity\", \"agile\", \"remote work\", \"workplace culture\"]"
 canonical: "https://dailypick.dev/blog/stop-the-meeting-meltdown-fun-fair-ways-to-manage-team-decision-fatigue/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-09-01
-section: "Team Decisions"
-keywords: "team building, decision making, meeting facilitation, productivity, agile, remote work, workplace culture"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Team relaxing after a productive Daily Pick session that prevented decision fatigue"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Team relaxing after a productive Daily Pick session that prevented decision fatigue"
----
+section: Team Decisions
+keywords: team building, decision making, meeting facilitation, productivity, agile, remote work, workplace culture
+ogImage: /assets/og-image-main.png
+ogImageAlt: Team relaxing after a productive Daily Pick session that prevented decision fatigue
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Team relaxing after a productive Daily Pick session that prevented decision fatigue
+robots: index,follow
 
+---
 ## Stop the Meeting Meltdown: Fun & Fair Ways to Manage Team Decision Fatigue
 
 Team meetings: the lifeblood of collaboration, or a breeding ground for frustration?  Too often, the simple act of making decisions drags on, sucking the energy from even the most enthusiastic teams.  Decision fatigue—that feeling of mental exhaustion from making too many choices—is a real productivity killer. It leaves team members feeling drained, resentful, and less engaged. But what if we told you there's a way to inject fun and fairness into the process, turning those dreaded decision-making sessions into something to look forward to? If your backlog grooming is in the danger zone, borrow the project-picking rituals from [Conquer Decision Fatigue: Fun & Fair Ways to Choose Team Projects](/blog/conquer-decision-fatigue-fun-fair-ways-to-choose-team-projects/) to keep energy up.

@@ -1,20 +1,21 @@
 ---
-title: "This Unicorn Stand-up Trick Dropped Our Escalation Rate by 62%"
+title: This Unicorn Stand-up Trick Dropped Our Escalation Rate by 62%
 date: 2025-11-07
-description: "A weird-but-toothsome spin of Daily Pick’s Trap! and Decision Wheel cut our escalation chatter by two-thirds—here’s how your team can steal it."
-layout: "post.njk"
-tags: ["stand-up", "escalation", "team rituals", "daily pick", "problem solving", "remote work"]
+description: A weird-but-toothsome spin of Daily Pick’s Trap! and Decision Wheel cut our escalation chatter by two-thirds—here’s how your team can steal it.
+layout: post.njk
+tags: "[\"stand-up\", \"escalation\", \"team rituals\", \"daily pick\", \"problem solving\", \"remote work\"]"
 canonical: "https://dailypick.dev/blog/this-unicorn-stand-up-trick-dropped-our-escalation-rate-by-62/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-11-07
-section: "Culture Hacks"
-keywords: "stand-up, escalation, team rituals, daily pick, problem solving, remote work"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "A unicorn riding a spinning decision wheel with sparkling blockers behind"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "A unicorn riding a spinning decision wheel with sparkling blockers behind"
----
+section: Culture Hacks
+keywords: stand-up, escalation, team rituals, daily pick, problem solving, remote work
+ogImage: /assets/og-image-main.png
+ogImageAlt: A unicorn riding a spinning decision wheel with sparkling blockers behind
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: A unicorn riding a spinning decision wheel with sparkling blockers behind
+robots: index,follow
 
+---
 Imagine a stand-up where escalations vanish before they even reach leadership. That’s not fantasy—it’s what happened when we started pairing Trap! with Daily Pick’s Decision Wheel and created a “first contact” ritual.
 
 Here’s the unicorn trick:

@@ -1,20 +1,21 @@
 ---
 title: "Stop the Meeting Dread: Fun Ways to Make Stand-Ups Engaging"
 date: 2025-06-14
-description: "Cut standup from 30 to 15 minutes and boost engagement 40%+ with 5 proven formats. Stop boring standups with fairness games that actually work."
-layout: "post.njk"
-tags: ["stand-up meetings", "team engagement", "meeting facilitation", "productivity hacks", "agile methodology", "team building", "remote work"]
+description: Cut standup from 30 to 15 minutes and boost engagement 40%+ with 5 proven formats. Stop boring standups with fairness games that actually work.
+layout: post.njk
+tags: "[\"stand-up meetings\", \"team engagement\", \"meeting facilitation\", \"productivity hacks\", \"agile methodology\", \"team building\", \"remote work\"]"
 canonical: "https://dailypick.dev/blog/stop-the-meeting-dread-fun-ways-to-make-stand-ups-engaging/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-06-14
-section: "Stand-ups"
-keywords: "stand-up meetings, team engagement, meeting facilitation, productivity hacks, agile methodology, team building, remote work"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Scrum master energizing a stand-up while a Daily Pick game decides the next speaker"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Scrum master energizing a stand-up while a Daily Pick game decides the next speaker"
----
+section: Stand-ups
+keywords: stand-up meetings, team engagement, meeting facilitation, productivity hacks, agile methodology, team building, remote work
+ogImage: /assets/og-image-main.png
+ogImageAlt: Scrum master energizing a stand-up while a Daily Pick game decides the next speaker
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Scrum master energizing a stand-up while a Daily Pick game decides the next speaker
+robots: index,follow
 
+---
 # Stop the Meeting Dread: Fun Ways to Make Stand-Ups Engaging
 
 Daily stand-ups.  The cornerstone of agile methodologies, yet often the source of team groans.  Let's be honest, fifteen minutes of "what did you do yesterday, what will you do today, and are there any impediments?" can feel like an eternity when the energy is low.  But what if your stand-ups weren't just tolerable, but actually something your team *looked forward to*? 

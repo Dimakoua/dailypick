@@ -1,20 +1,21 @@
 ---
-title: "How to Connect GitHub to Daily Pick (PAT + Repository Guide)"
+title: How to Connect GitHub to Daily Pick (PAT + Repository Guide)
 date: 2025-10-26
-description: "Learn how to create a GitHub personal access token, scope it correctly, and sync collaborators plus open issues into Daily Pick."
-layout: "post.njk"
-tags: ["github", "daily pick", "integrations", "engineering productivity", "standups"]
+description: Learn how to create a GitHub personal access token, scope it correctly, and sync collaborators plus open issues into Daily Pick.
+layout: post.njk
+tags: "[\"github\", \"daily pick\", \"integrations\", \"engineering productivity\", \"standups\"]"
 canonical: "https://dailypick.dev/blog/connect-github-to-daily-pick/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-10-26
-section: "Integrations"
-keywords: "github personal access token, github integration guide, daily pick github, sync github issues to standup"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Daily Pick GitHub integration instructions displayed on dual monitors"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Daily Pick GitHub integration instructions displayed on dual monitors"
----
+section: Integrations
+keywords: github personal access token, github integration guide, daily pick github, sync github issues to standup
+ogImage: /assets/og-image-main.png
+ogImageAlt: Daily Pick GitHub integration instructions displayed on dual monitors
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Daily Pick GitHub integration instructions displayed on dual monitors
+robots: index,follow
 
+---
 GitHub already tracks who owns each issue and which pull requests are waiting for review. When you hook GitHub into Daily Pick, the stand-up dock can automatically display collaborators, open issues, and quick links to “Open” so your team never hunts for context. Here’s the full walkthrough.
 
 ---

@@ -1,20 +1,21 @@
 ---
-title: "Turn Hybrid All-Hands into Async Wins with Daily Pick"
+title: Turn Hybrid All-Hands into Async Wins with Daily Pick
 date: 2025-12-07
-description: "Design an async-friendly all-hands agenda that keeps hybrid teams engaged, spotlights every voice, and runs itself with Daily Pick selectors."
-layout: "post.njk"
-tags: ["async collaboration", "all-hands meeting", "hybrid work", "remote teams", "team rituals", "leadership"]
+description: Design an async-friendly all-hands agenda that keeps hybrid teams engaged, spotlights every voice, and runs itself with Daily Pick selectors.
+layout: post.njk
+tags: "[\"async collaboration\", \"all-hands meeting\", \"hybrid work\", \"remote teams\", \"team rituals\", \"leadership\"]"
 canonical: "https://dailypick.dev/blog/turn-hybrid-all-hands-into-async-wins-with-daily-pick/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-12-07
-section: "Team Decisions"
-keywords: "async all-hands agenda, hybrid all-hands, remote team engagement, Daily Pick"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Hybrid team waving during an all-hands video call with Daily Pick app selecting speakers"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Hybrid team waving during an all-hands video call with Daily Pick app selecting speakers"
----
+section: Team Decisions
+keywords: async all-hands agenda, hybrid all-hands, remote team engagement, Daily Pick
+ogImage: /assets/og-image-main.png
+ogImageAlt: Hybrid team waving during an all-hands video call with Daily Pick app selecting speakers
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Hybrid team waving during an all-hands video call with Daily Pick app selecting speakers
+robots: index,follow
 
+---
 If your hybrid all-hands still tries to cram every win, roadmap, and AMA into one live hour, you’re paying premium attention for a slideshow no one remembers. Async-friendly agendas flip the script: teammates consume updates on their schedule, then show up to the live session energized for connection, celebration, and quick decision-making.
 
 Daily Pick customers use our selectors to choreograph speakers, rotate spotlight segments, and run participatory games that work for folks in-office, remote, or catching up later. Here’s how to rebuild your all-hands so it feels like a product you ship—not a meeting everyone endures.

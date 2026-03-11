@@ -1,20 +1,21 @@
 ---
-title: "Remote Onboarding Icebreakers Your New Hires Will Actually Love"
+title: Remote Onboarding Icebreakers Your New Hires Will Actually Love
 date: 2025-10-10
-description: "Help remote hires bond fast with playful icebreakers, fairness rituals, and Daily Pick games that make onboarding day one feel welcoming."
-layout: "post.njk"
-tags: ["remote onboarding", "team icebreakers", "employee experience", "people operations", "distributed teams", "culture building"]
+description: Help remote hires bond fast with playful icebreakers, fairness rituals, and Daily Pick games that make onboarding day one feel welcoming.
+layout: post.njk
+tags: "[\"remote onboarding\", \"team icebreakers\", \"employee experience\", \"people operations\", \"distributed teams\", \"culture building\"]"
 canonical: "https://dailypick.dev/blog/remote-onboarding-icebreakers-your-new-hires-will-love/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-10-10
-section: "Onboarding"
-keywords: "remote onboarding, team icebreakers, employee experience, people operations, distributed teams, culture building"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "New remote hires smiling during a virtual icebreaker powered by Daily Pick"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "New remote hires smiling during a virtual icebreaker powered by Daily Pick"
----
+section: Onboarding
+keywords: remote onboarding, team icebreakers, employee experience, people operations, distributed teams, culture building
+ogImage: /assets/og-image-main.png
+ogImageAlt: New remote hires smiling during a virtual icebreaker powered by Daily Pick
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: New remote hires smiling during a virtual icebreaker powered by Daily Pick
+robots: index,follow
 
+---
 First impressions set the tone for every remote hire. When onboarding happens through screens, it’s easy for new teammates to feel like floating heads on a gallery view—especially if the intro activities are recycled from 2018. The antidote? Icebreakers that feel personal, purposeful, and fair to every time zone and personality type.
 
 Here’s a playbook packed with creative ideas that combine thoughtful facilitation and Daily Pick’s fairness-first tools, so your new hires feel welcomed, seen, and ready to contribute from day one. Pair it with our [async stand-up guide](/blog/supercharge-async-standups-with-slack-and-daily-pick/) so newcomers know exactly how updates work before their first Monday.

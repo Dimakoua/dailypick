@@ -1,20 +1,21 @@
 ---
-title: "I Let Daily Pick Choose My Entire Week — Here’s What Happened"
+title: I Let Daily Pick Choose My Entire Week — Here’s What Happened
 date: 2025-11-01
 description: "Spoiler: letting Daily Pick shuffle your scrum, time-blocks, and blockers turns a chaotic Monday into a productivity experiment you’ll want to repeat."
-layout: "post.njk"
-tags: ["daily rituals", "stand-up", "productivity experiment", "daily pick", "remote work", "team rituals"]
-canonical: "https://dailypick.dev/blog/i-let-daily-pick-choose-my-entire-week-heres-what-happened/"
-author: "Daily Pick"
+layout: post.njk
+tags: "[\"daily rituals\", \"stand-up\", \"productivity experiment\", \"daily pick\", \"remote work\", \"team rituals\"]"
+canonical: "https://dailypick.dev/blog/i-let-daily-pick-choose-my-entire-week-here-s-what-happened/"
+author: Daily Pick
 updated: 2025-11-01
-section: "Team Rituals"
-keywords: "daily rituals, stand-up, productivity experiment, daily pick, remote work, team rituals"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "A colorful spinner with tasks and smiling teammates around a table"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "A colorful spinner with tasks and smiling teammates around a table"
----
+section: Team Rituals
+keywords: daily rituals, stand-up, productivity experiment, daily pick, remote work, team rituals
+ogImage: /assets/og-image-main.png
+ogImageAlt: A colorful spinner with tasks and smiling teammates around a table
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: A colorful spinner with tasks and smiling teammates around a table
+robots: index,follow
 
+---
 I handed over my calendar to Daily Pick for one week. No, I didn’t literally let it send emails or file requests, but I did let the app decide:
 
 - which stand-up order would happen each day

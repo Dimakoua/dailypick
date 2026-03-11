@@ -1,20 +1,21 @@
 ---
-title: "Fun, Fair Retro Activities to Boost Engagement"
+title: Fun, Fair Retro Activities to Boost Engagement
 date: 2025-09-22
-description: "Master 6 retrospective activities that fix quiet voices, surface hidden insights, and make teams actually look forward to retros. For 5-50 person teams."
-layout: "post.njk"
-tags: ["team building", "agile", "retrospective", "teamwork", "engagement", "productivity", "fairness"]
+description: Master 6 retrospective activities that fix quiet voices, surface hidden insights, and make teams actually look forward to retros. For 5-50 person teams.
+layout: post.njk
+tags: "[\"team building\", \"agile\", \"retrospective\", \"teamwork\", \"engagement\", \"productivity\", \"fairness\"]"
 canonical: "https://dailypick.dev/blog/level-up-your-team-retrospectives-fun-fair-activities-to-boost-engagement/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-09-22
-section: "Retrospectives"
-keywords: "team building, agile, retrospective, teamwork, engagement, productivity, fairness"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Scrum team gathered around a vibrant retrospective board enhanced with Daily Pick activities"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Scrum team gathered around a vibrant retrospective board enhanced with Daily Pick activities"
----
+section: Retrospectives
+keywords: team building, agile, retrospective, teamwork, engagement, productivity, fairness
+ogImage: /assets/og-image-main.png
+ogImageAlt: Scrum team gathered around a vibrant retrospective board enhanced with Daily Pick activities
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Scrum team gathered around a vibrant retrospective board enhanced with Daily Pick activities
+robots: index,follow
 
+---
 ## Level Up Your Team Retrospectives: Fun & Fair Activities to Boost Engagement
 
 Team retrospectives are crucial for continuous improvement, but let's be honest: they can sometimes feel like a drag.  Hours spent in meetings, the same old formats, and a general lack of engagement can leave everyone feeling drained instead of empowered.  This week, we're diving into how to revitalize your retrospectives with fun and fair activities that actually boost team morale and yield valuable insights. 

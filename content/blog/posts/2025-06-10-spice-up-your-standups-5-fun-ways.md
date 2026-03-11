@@ -1,20 +1,21 @@
 ---
-title: "5 Fun Ways to Pick the Next Speaker in Stand-ups"
+title: 5 Fun Ways to Pick the Next Speaker in Stand-ups
 date: 2025-06-10
-description: "Reenergize daily stand-ups with five fair pickers that keep updates quick, inclusive, and fun for in-office and remote teams alike."
-layout: "post.njk"
-tags: ["team engagement", "daily stand-up", "agile meetings", "fun at work", "productivity", "team morale"]
+description: Reenergize daily stand-ups with five fair pickers that keep updates quick, inclusive, and fun for in-office and remote teams alike.
+layout: post.njk
+tags: "[\"team engagement\", \"daily stand-up\", \"agile meetings\", \"fun at work\", \"productivity\", \"team morale\"]"
 canonical: "https://dailypick.dev/blog/spice-up-your-standups-5-fun-ways/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-06-10
-section: "Stand-ups"
-keywords: "team engagement, daily stand-up, agile meetings, fun at work, productivity, team morale"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Daily stand-up team laughing while a Daily Pick decision wheel selects the next speaker"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Daily stand-up team laughing while a Daily Pick decision wheel selects the next speaker"
----
+section: Stand-ups
+keywords: team engagement, daily stand-up, agile meetings, fun at work, productivity, team morale
+ogImage: /assets/og-image-main.png
+ogImageAlt: Daily stand-up team laughing while a Daily Pick decision wheel selects the next speaker
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Daily stand-up team laughing while a Daily Pick decision wheel selects the next speaker
+robots: index,follow
 
+---
 Let's be honest, the daily stand-up. It's essential, yes. But can it sometimes feel a *tad* repetitive? The same order, the same polite-but-slightly-forced "you go next," or the awkward silence until someone bravely steps up. What if we told you that deciding who speaks next could actually be... fun? And fair? And even a mini morale booster?
 
 At Daily Pick, we're all about injecting a bit of playfulness into the workday, especially when it comes to team interactions. A smooth, engaging stand-up sets a positive tone for the entire day. If you’re running hybrid or async updates, pair these ideas with our [Slack + Daily Pick automation guide](/blog/supercharge-async-standups-with-slack-and-daily-pick/) so the fun carries into every channel. So, let's ditch the monotony and explore some creative ways to pick your speaking order!

@@ -1,20 +1,21 @@
 ---
 title: "Planning Poker Hub Guide: Fast, Fair Sprint Estimation"
 date: 2025-10-25
-description: "Cut planning poker from 45 to 20 minutes. Avoid anchoring bias with hidden votes + real-time reveals. Get Jira summaries auto-generated in seconds."
-layout: "post.njk"
-tags: ["agile estimation", "scrum", "planning poker", "team productivity", "jira", "remote teams", "agile tools"]
+description: Cut planning poker from 45 to 20 minutes. Avoid anchoring bias with hidden votes + real-time reveals. Get Jira summaries auto-generated in seconds.
+layout: post.njk
+tags: "[\"agile estimation\", \"scrum\", \"planning poker\", \"team productivity\", \"jira\", \"remote teams\", \"agile tools\"]"
 canonical: "https://dailypick.dev/blog/planning-poker-hub-guide/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-10-25
-section: "Agile Tools"
-keywords: "planning poker, scrum estimation, agile tools, fibonacci cards, jira planning poker, remote agile meetings"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Scrum team estimating story points together using Planning Poker Hub on laptops"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Scrum team estimating story points together using Planning Poker Hub on laptops"
----
+section: Agile Tools
+keywords: planning poker, scrum estimation, agile tools, fibonacci cards, jira planning poker, remote agile meetings
+ogImage: /assets/og-image-main.png
+ogImageAlt: Scrum team estimating story points together using Planning Poker Hub on laptops
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Scrum team estimating story points together using Planning Poker Hub on laptops
+robots: index,follow
 
+---
 Let’s face it — sprint estimation meetings can sometimes drag on. Long discussions, inconsistent votes, awkward silences while waiting for everyone to decide... sound familiar?  
 
 But what if you could *bring energy and clarity* back to the process — and actually make it enjoyable for everyone involved?  

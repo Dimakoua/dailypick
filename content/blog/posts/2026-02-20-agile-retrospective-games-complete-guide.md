@@ -1,17 +1,14 @@
 ---
 title: "Agile Retrospective Games: Complete Guide to Energizing Sprint Reviews"
-description: "Master 8 creative retrospective activities that surface insights, keep every voice heard, and leave teams energized for the next sprint. Proven formats for small teams to large groups."
+description: Master 8 creative retrospective activities that surface insights, keep every voice heard, and leave teams energized for the next sprint. Proven formats for small teams to large groups.
 date: 2026-02-20
-tags:
-  - Retrospectives
-  - Agile Ceremonies
-  - Team Engagement
-  - Sprint Planning
-  - Fair Facilitation
+tags: 
 section: Agile Ceremonies
 keywords: retrospective games, agile retrospective activities, sprint retrospective, retro games, team retrospectives, retrospective formats
----
+canonical: "https://dailypick.dev/blog/agile-retrospective-games-complete-guide/"
+robots: index,follow
 
+---
 Sprint retrospectives are where teams unlock their greatest improvements—but only if everyone contributes. When retros turn into grumbling sessions or silent nods, you're missing 80% of your team's insights. That's where retrospective games come in. They're not fluffy icebreakers; they're structured rituals that surface buried ideas, balance voices, and send teams into the next sprint energized.
 
 In this guide, we'll walk through 8 proven retrospective games and formats that work across team sizes, industries, and remote/hybrid setups.

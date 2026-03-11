@@ -1,20 +1,21 @@
 ---
-title: "Fair Decision Tools That Transform Team Dynamics"
+title: Fair Decision Tools That Transform Team Dynamics
 date: 2025-06-11
-description: "See how fair decision tools curb bias, speed choices, and boost team morale with practical rituals and Daily Pick games."
-layout: "post.njk"
-tags: ["team decisions", "fairness at work", "productivity tools", "team collaboration", "unbiased selection", "workplace culture"]
+description: See how fair decision tools curb bias, speed choices, and boost team morale with practical rituals and Daily Pick games.
+layout: post.njk
+tags: "[\"team decisions\", \"fairness at work\", \"productivity tools\", \"team collaboration\", \"unbiased selection\", \"workplace culture\"]"
 canonical: "https://dailypick.dev/blog/how-fair-decision-tools-revolutionize-team-dynamics/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-06-11
-section: "Team Decisions"
-keywords: "team decisions, fairness at work, productivity tools, team collaboration, unbiased selection, workplace culture"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Coworkers smiling around a laptop while Daily Pick selects a teammate for a task"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Coworkers smiling around a laptop while Daily Pick selects a teammate for a task"
----
+section: Team Decisions
+keywords: team decisions, fairness at work, productivity tools, team collaboration, unbiased selection, workplace culture
+ogImage: /assets/og-image-main.png
+ogImageAlt: Coworkers smiling around a laptop while Daily Pick selects a teammate for a task
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Coworkers smiling around a laptop while Daily Pick selects a teammate for a task
+robots: index,follow
 
+---
 We've all been there. That moment in a team meeting when a less-than-desirable task needs an owner, or someone needs to be chosen for a specific role. The air fills with a chorus of crickets, averted gazes, and the silent, universal chant of "Not it!"
 
 While sometimes humorous, relying on reluctant volunteers or the same go-to individuals can lead to resentment, burnout, and a sense of unfairness within a team. But what if there was a better, more equitable, and even *fun* way to make these small (and sometimes big) team decisions?

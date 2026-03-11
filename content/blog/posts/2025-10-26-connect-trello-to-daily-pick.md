@@ -1,20 +1,21 @@
 ---
-title: "How to Connect Trello to Daily Pick (API Key + Token Walkthrough)"
+title: How to Connect Trello to Daily Pick (API Key + Token Walkthrough)
 date: 2025-10-26
-description: "Detailed instructions for generating a Trello API key and token, selecting the right board or list, and syncing cards into Daily Pick."
-layout: "post.njk"
-tags: ["trello", "daily pick", "integrations", "team productivity", "standup automation"]
+description: Detailed instructions for generating a Trello API key and token, selecting the right board or list, and syncing cards into Daily Pick.
+layout: post.njk
+tags: "[\"trello\", \"daily pick\", \"integrations\", \"team productivity\", \"standup automation\"]"
 canonical: "https://dailypick.dev/blog/connect-trello-to-daily-pick/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-10-26
-section: "Integrations"
-keywords: "trello api key, trello token guide, connect trello to standup, daily pick trello integration"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Daily Pick Trello integration instructions on a tablet"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Daily Pick Trello integration instructions on a tablet"
----
+section: Integrations
+keywords: trello api key, trello token guide, connect trello to standup, daily pick trello integration
+ogImage: /assets/og-image-main.png
+ogImageAlt: Daily Pick Trello integration instructions on a tablet
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Daily Pick Trello integration instructions on a tablet
+robots: index,follow
 
+---
 Trello is perfect for quick stand-up snapshots—cards already encode what each teammate is moving forward. When you connect Trello to Daily Pick, you can import members into the Player List **and** capture a 15-card snapshot of the board or list that matters most. This guide covers every click you need to copy the API key, generate the access token, and wire it into the Settings page.
 
 ---

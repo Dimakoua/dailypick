@@ -1,20 +1,21 @@
 ---
-title: "This Hack Let Daily Pick Plan Our Sprint—We Cut Planning in Half"
+title: This Hack Let Daily Pick Plan Our Sprint—We Cut Planning in Half
 date: 2025-11-10
-description: "A wild experiment where Daily Pick owned sprint planning, reduced prep, and still kept the team aligned."
-layout: "post.njk"
-tags: ["sprint planning", "daily pick", "meeting automation", "productivity", "planning poker"]
+description: A wild experiment where Daily Pick owned sprint planning, reduced prep, and still kept the team aligned.
+layout: post.njk
+tags: "[\"sprint planning\", \"daily pick\", \"meeting automation\", \"productivity\", \"planning poker\"]"
 canonical: "https://dailypick.dev/blog/this-hack-let-daily-pick-plan-our-sprint-we-cut-planning-in-half/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-11-10
-section: "Planning Hacks"
-keywords: "sprint planning, daily pick, meeting automation, productivity, planning poker"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Team dashboards with a spinner overlay on a calendar"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Team dashboards with a spinner overlay on a calendar"
----
+section: Planning Hacks
+keywords: sprint planning, daily pick, meeting automation, productivity, planning poker
+ogImage: /assets/og-image-main.png
+ogImageAlt: Team dashboards with a spinner overlay on a calendar
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Team dashboards with a spinner overlay on a calendar
+robots: index,follow
 
+---
 We tried something ridiculous: we let Daily Pick own sprint planning for one cycle. Instead of the usual 60-minute session, we ran a hybrid ritual where the spinner decided the order, priority, and blocker focus for every participant. The result: half the time, twice the clarity, and zero passive nods.
 
 Here’s the structure that made it work:

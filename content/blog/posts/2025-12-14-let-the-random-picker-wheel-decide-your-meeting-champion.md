@@ -1,20 +1,21 @@
 ---
-title: "Let the Random Picker Wheel Decide Your Meeting Champion"
+title: Let the Random Picker Wheel Decide Your Meeting Champion
 date: 2025-12-14
-description: "Hand over the meeting reclamation to the Random Picker Wheel and keep every voice in your room, remote or hybrid, front and center."
-layout: "post.njk"
-tags: ["team engagement", "meeting rituals", "decision making", "daily stand-up", "fun at work"]
+description: Hand over the meeting reclamation to the Random Picker Wheel and keep every voice in your room, remote or hybrid, front and center.
+layout: post.njk
+tags: "[\"team engagement\", \"meeting rituals\", \"decision making\", \"daily stand-up\", \"fun at work\"]"
 canonical: "https://dailypick.dev/blog/let-the-random-picker-wheel-decide-your-meeting-champion/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-12-14
-section: "Team rituals"
-keywords: "random picker wheel, meeting champion, fair selection, team rituals, hybrid meetings"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Team gathered around a screen with the Daily Pick Random Picker Wheel selecting the next person"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Team gathered around a screen with the Daily Pick Random Picker Wheel selecting the next person"
----
+section: Team rituals
+keywords: random picker wheel, meeting champion, fair selection, team rituals, hybrid meetings
+ogImage: /assets/og-image-main.png
+ogImageAlt: Team gathered around a screen with the Daily Pick Random Picker Wheel selecting the next person
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Team gathered around a screen with the Daily Pick Random Picker Wheel selecting the next person
+robots: index,follow
 
+---
 If your meetings start to feel like deja vu—same starters, same volunteers, same polite pauses—it's time to pass the baton to something more impartial. The [Random Picker Wheel](/apps/wheel/) from Daily Pick sets the tone for fairness before anyone opens their mouth. With a single spin you remove bias, invite engagement, and give every teammate a chance to lead with confidence.
 
 ## Why a Random Picker Wheel feels like a team upgrade

@@ -1,20 +1,21 @@
 ---
-title: "Fix On-Call Resentment with the Fair Rotation Playbook"
+title: Fix On-Call Resentment with the Fair Rotation Playbook
 date: 2025-12-05
-description: "Build a transparent on-call rotation that feels fair, protects weekends, and keeps incident response sharp using Daily Pick’s automation-friendly selectors."
-layout: "post.njk"
-tags: ["on-call", "incident response", "team rituals", "engineering productivity", "DevOps", "fairness", "tech leadership"]
+description: Build a transparent on-call rotation that feels fair, protects weekends, and keeps incident response sharp using Daily Pick’s automation-friendly selectors.
+layout: post.njk
+tags: "[\"on-call\", \"incident response\", \"team rituals\", \"engineering productivity\", \"DevOps\", \"fairness\", \"tech leadership\"]"
 canonical: "https://dailypick.dev/blog/fix-on-call-resentment-fair-rotation-playbook-with-daily-pick/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-12-05
-section: "Team Decisions"
-keywords: "on-call rotation, incident response, fair on-call schedule, engineering rituals, Daily Pick"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Engineer checking a dashboard while Daily Pick highlights the next on-call teammate"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Engineer checking a dashboard while Daily Pick highlights the next on-call teammate"
----
+section: Team Decisions
+keywords: on-call rotation, incident response, fair on-call schedule, engineering rituals, Daily Pick
+ogImage: /assets/og-image-main.png
+ogImageAlt: Engineer checking a dashboard while Daily Pick highlights the next on-call teammate
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Engineer checking a dashboard while Daily Pick highlights the next on-call teammate
+robots: index,follow
 
+---
 If the first thing your engineers do when the on-call sheet drops is check for loopholes, your rotation needs a reset. Skipped shifts, mystery swaps, and opaque calendars turn a crucial reliability ritual into a trust problem. A fair process that everyone can see—and even enjoy—is the fastest way to calm the channel and keep a tight incident response.
 
 Daily Pick teams lean on our randomizers, streak blockers, and Slack automations to make on-call rituals visible, bias-proof, and painless. This playbook walks you through rebuilding your rotation with the same transparency you expect in your alert pipeline.

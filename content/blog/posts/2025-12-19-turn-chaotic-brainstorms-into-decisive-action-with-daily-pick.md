@@ -1,20 +1,21 @@
 ---
-title: "Turn Chaotic Brainstorms into Decisive Action with Daily Pick"
+title: Turn Chaotic Brainstorms into Decisive Action with Daily Pick
 date: 2025-12-07
-description: "Use a simple idea-to-decision pipeline that captures brainstorm energy, ranks ideas fast, and locks next steps with Daily Pick’s fair selectors."
-layout: "post.njk"
-tags: ["brainstorming", "product management", "decision making", "team alignment", "retro rituals", "innovation"]
+description: Use a simple idea-to-decision pipeline that captures brainstorm energy, ranks ideas fast, and locks next steps with Daily Pick’s fair selectors.
+layout: post.njk
+tags: "[\"brainstorming\", \"product management\", \"decision making\", \"team alignment\", \"retro rituals\", \"innovation\"]"
 canonical: "https://dailypick.dev/blog/turn-chaotic-brainstorms-into-decisive-action-with-daily-pick/"
-author: "Daily Pick"
+author: Daily Pick
 updated: 2025-12-07
-section: "Team Decisions"
-keywords: "brainstorm decision framework, idea prioritization, team ideation process, Daily Pick"
-ogImage: "/assets/og-image-main.png"
-ogImageAlt: "Team mapping sticky notes while Daily Pick highlights the next idea to discuss"
-twitterImage: "/assets/og-image-main.png"
-twitterImageAlt: "Team mapping sticky notes while Daily Pick highlights the next idea to discuss"
----
+section: Team Decisions
+keywords: brainstorm decision framework, idea prioritization, team ideation process, Daily Pick
+ogImage: /assets/og-image-main.png
+ogImageAlt: Team mapping sticky notes while Daily Pick highlights the next idea to discuss
+twitterImage: /assets/og-image-main.png
+twitterImageAlt: Team mapping sticky notes while Daily Pick highlights the next idea to discuss
+robots: index,follow
 
+---
 Brainstorms are great at surfacing ideas—and terrible at guaranteeing decisions. You walk away with screenshots of whiteboards, vague next steps, and a Slack thread that fizzles out before anything ships.
 
 High-trust teams run ideation like a pipeline: capture everything, triage quickly, and publish the action plan within 24 hours. Daily Pick brings fairness and speed to each stage so louder voices don’t hijack prioritization and every contributor sees where their idea landed.
