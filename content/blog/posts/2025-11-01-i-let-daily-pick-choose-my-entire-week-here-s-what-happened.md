@@ -3,7 +3,7 @@ title: I Let Daily Pick Choose My Entire Week — Here’s What Happened
 date: 2025-11-01
 description: "Spoiler: letting Daily Pick shuffle your scrum, time-blocks, and blockers turns a chaotic Monday into a productivity experiment you’ll want to repeat."
 layout: post.njk
-tags: "[\"daily rituals\", \"stand-up\", \"productivity experiment\", \"daily pick\", \"remote work\", \"team rituals\"]"
+tags: [\"daily rituals\", \"stand-up\", \"productivity experiment\", \"daily pick\", \"remote work\", \"team rituals\"]
 canonical: "https://dailypick.dev/blog/i-let-daily-pick-choose-my-entire-week-here-s-what-happened/"
 author: Daily Pick
 updated: 2025-11-01

@@ -3,7 +3,7 @@ title: "Stop Decision Fatigue: Fun Ways to Energize Team Choices"
 date: 2025-09-01
 description: Beat decision fatigue with playful frameworks, rotating facilitators, and Daily Pick tools that keep choices fair, fast, and energizing for every teammate.
 layout: post.njk
-tags: "[\"team building\", \"decision making\", \"meeting facilitation\", \"productivity\", \"agile\", \"remote work\", \"workplace culture\"]"
+tags: [\"team building\", \"decision making\", \"meeting facilitation\", \"productivity\", \"agile\", \"remote work\", \"workplace culture\"]
 canonical: "https://dailypick.dev/blog/stop-the-meeting-meltdown-fun-fair-ways-to-manage-team-decision-fatigue/"
 author: Daily Pick
 updated: 2025-09-01

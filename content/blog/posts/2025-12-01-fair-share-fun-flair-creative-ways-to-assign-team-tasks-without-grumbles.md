@@ -3,7 +3,7 @@ title: "Fair Share, Fun Flair: Creative Ways to Assign Team Tasks Without Grumbl
 date: 2025-12-01
 description: Discover fun and fair methods to assign team tasks without grumbles. Boost team morale and productivity with creative strategies, including Daily Pick tools, for equitable chore distribution.
 layout: post.njk
-tags: "[\"team productivity\", \"team building\", \"workplace fairness\", \"agile teams\", \"decision making\", \"morale\", \"collaboration\"]"
+tags: [\"team productivity\", \"team building\", \"workplace fairness\", \"agile teams\", \"decision making\", \"morale\", \"collaboration\"]
 canonical: "https://dailypick.dev/blog/fair-share-fun-flair-creative-ways-to-assign-team-tasks-without-grumbles/"
 robots: index,follow
 

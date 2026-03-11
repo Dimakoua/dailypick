@@ -3,7 +3,7 @@ title: 5 Fun Ways to Pick the Next Speaker in Stand-ups
 date: 2025-06-10
 description: Reenergize daily stand-ups with five fair pickers that keep updates quick, inclusive, and fun for in-office and remote teams alike.
 layout: post.njk
-tags: "[\"team engagement\", \"daily stand-up\", \"agile meetings\", \"fun at work\", \"productivity\", \"team morale\"]"
+tags: ["team engagement", "daily stand-up", "agile meetings", "fun at work", "productivity", "team morale"]
 canonical: "https://dailypick.dev/blog/spice-up-your-standups-5-fun-ways/"
 author: Daily Pick
 updated: 2025-06-10

@@ -3,7 +3,7 @@ title: "Banish Meeting Boredom: Fun Team Decision-Making That Works"
 date: 2025-07-02
 description: Turn decision meetings into energizing moments with playful fairness tools, collaborative rituals, and Daily Pick games that move work forward.
 layout: post.njk
-tags: "[\"team building\", \"decision making\", \"productivity hacks\", \"workplace culture\", \"team dynamics\", \"meeting facilitation\", \"agile methodology\"]"
+tags: [\"team building\", \"decision making\", \"productivity hacks\", \"workplace culture\", \"team dynamics\", \"meeting facilitation\", \"agile methodology\"]
 canonical: "https://dailypick.dev/blog/banish-meeting-boredom-fun-team-decision-making-that-works/"
 author: Daily Pick
 updated: 2025-07-02

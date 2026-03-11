@@ -3,7 +3,7 @@ title: Keep Async Stand-ups Aligned with Slack + Daily Pick
 date: 2025-10-03
 description: Run async stand-ups across time zones with Slack workflows, Daily Pick fairness games, and recap habits that keep progress visible without late nights.
 layout: post.njk
-tags: "[\"async stand-up\", \"remote teams\", \"slack workflow\", \"distributed work\", \"team productivity\", \"meeting alternatives\"]"
+tags: [\"async stand-up\", \"remote teams\", \"slack workflow\", \"distributed work\", \"team productivity\", \"meeting alternatives\"]
 canonical: "https://dailypick.dev/blog/supercharge-async-standups-with-slack-and-daily-pick/"
 author: Daily Pick
 updated: 2025-10-03

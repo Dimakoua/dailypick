@@ -3,7 +3,7 @@ title: Hybrid All-Hands Agendas That Keep Every Voice Engaged
 date: 2025-10-17
 description: Fix hybrid all-hands where remote attendees disappear. Fair speaker selection + engagement rituals that keep 100% of employees invested and heard.
 layout: post.njk
-tags: "[\"hybrid meetings\", \"all-hands\", \"company culture\", \"leadership communication\", \"employee engagement\", \"meeting design\"]"
+tags: [\"hybrid meetings\", \"all-hands\", \"company culture\", \"leadership communication\", \"employee engagement\", \"meeting design\"]
 canonical: "https://dailypick.dev/blog/hybrid-all-hands-playbook-fair-fun-agendas-that-keep-teams-engaged/"
 author: Daily Pick
 updated: 2025-10-17

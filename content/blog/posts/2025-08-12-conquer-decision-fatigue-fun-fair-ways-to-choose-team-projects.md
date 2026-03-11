@@ -3,7 +3,7 @@ title: Fair Ways to Choose Team Projects Without Fatigue
 date: 2024-10-27
 description: Cut project debates short with playful fairness frameworks, weighted wheels, and Daily Pick rituals that make prioritization fast and trusted.
 layout: post.njk
-tags: "[\"team building\", \"project management\", \"agile\", \"decision making\", \"workplace culture\", \"productivity\", \"fairness\"]"
+tags: [\"team building\", \"project management\", \"agile\", \"decision making\", \"workplace culture\", \"productivity\", \"fairness\"]
 canonical: "https://dailypick.dev/blog/conquer-decision-fatigue-fun-fair-ways-to-choose-team-projects/"
 author: Daily Pick
 updated: 2025-08-12

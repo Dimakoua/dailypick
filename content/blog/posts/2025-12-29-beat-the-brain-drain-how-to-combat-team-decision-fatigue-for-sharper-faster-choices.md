@@ -3,7 +3,7 @@ title: "Beat the Brain Drain: How to Combat Team Decision Fatigue for Sharper, F
 date: 2025-12-29
 description: "Is team decision fatigue slowing you down? Learn practical strategies and fun, fair tools like Daily Pick's Decision Wheel to make faster, smarter choices and boost team energy."
 layout: post.njk
-tags: "[\"team productivity\", \"decision making\", \"workplace culture\", \"agile teams\", \"team dynamics\", \"remote work\", \"fairness in teams\"]"
+tags: [\"team productivity\", \"decision making\", \"workplace culture\", \"agile teams\", \"team dynamics\", \"remote work\", \"fairness in teams\"]
 canonical: "https://dailypick.dev/blog/beat-the-brain-drain-how-to-combat-team-decision-fatigue-for-sharper-faster-choices/"
 robots: index,follow
 

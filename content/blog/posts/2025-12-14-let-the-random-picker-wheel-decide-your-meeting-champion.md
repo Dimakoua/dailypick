@@ -3,7 +3,7 @@ title: Let the Random Picker Wheel Decide Your Meeting Champion
 date: 2025-12-14
 description: Hand over the meeting reclamation to the Random Picker Wheel and keep every voice in your room, remote or hybrid, front and center.
 layout: post.njk
-tags: "[\"team engagement\", \"meeting rituals\", \"decision making\", \"daily stand-up\", \"fun at work\"]"
+tags: [\"team engagement\", \"meeting rituals\", \"decision making\", \"daily stand-up\", \"fun at work\"]
 canonical: "https://dailypick.dev/blog/let-the-random-picker-wheel-decide-your-meeting-champion/"
 author: Daily Pick
 updated: 2025-12-14

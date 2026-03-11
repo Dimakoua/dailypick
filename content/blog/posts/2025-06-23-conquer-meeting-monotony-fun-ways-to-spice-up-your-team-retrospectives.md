@@ -3,7 +3,7 @@ title: Spice Up Retros with Fun, Fair Team Activities
 date: 2025-06-23
 description: Transform retrospectives into energizing workshops with playful prompts, unbiased facilitation, and Daily Pick tools that keep every voice heard.
 layout: post.njk
-tags: "[\"agile methodology\", \"retrospective\", \"team building\", \"productivity hacks\", \"workplace culture\", \"meeting facilitation\", \"team dynamics\"]"
+tags: [\"agile methodology\", \"retrospective\", \"team building\", \"productivity hacks\", \"workplace culture\", \"meeting facilitation\", \"team dynamics\"]
 canonical: "https://dailypick.dev/blog/conquer-meeting-monotony-fun-ways-to-spice-up-your-team-retrospectives/"
 author: Daily Pick
 updated: 2025-06-23

@@ -3,7 +3,7 @@ title: "Stop the Meeting Dread: Fun Ways to Make Stand-Ups Engaging"
 date: 2025-06-14
 description: Cut standup from 30 to 15 minutes and boost engagement 40%+ with 5 proven formats. Stop boring standups with fairness games that actually work.
 layout: post.njk
-tags: "[\"stand-up meetings\", \"team engagement\", \"meeting facilitation\", \"productivity hacks\", \"agile methodology\", \"team building\", \"remote work\"]"
+tags: [\"stand-up meetings\", \"team engagement\", \"meeting facilitation\", \"productivity hacks\", \"agile methodology\", \"team building\", \"remote work\"]
 canonical: "https://dailypick.dev/blog/stop-the-meeting-dread-fun-ways-to-make-stand-ups-engaging/"
 author: Daily Pick
 updated: 2025-06-14

@@ -3,7 +3,7 @@ title: Fun, Fair Retro Activities to Boost Engagement
 date: 2025-09-22
 description: Master 6 retrospective activities that fix quiet voices, surface hidden insights, and make teams actually look forward to retros. For 5-50 person teams.
 layout: post.njk
-tags: "[\"team building\", \"agile\", \"retrospective\", \"teamwork\", \"engagement\", \"productivity\", \"fairness\"]"
+tags: [\"team building\", \"agile\", \"retrospective\", \"teamwork\", \"engagement\", \"productivity\", \"fairness\"]
 canonical: "https://dailypick.dev/blog/level-up-your-team-retrospectives-fun-fair-activities-to-boost-engagement/"
 author: Daily Pick
 updated: 2025-09-22

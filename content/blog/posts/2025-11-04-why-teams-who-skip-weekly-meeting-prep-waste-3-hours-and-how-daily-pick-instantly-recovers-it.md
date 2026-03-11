@@ -3,7 +3,7 @@ title: Why Teams Who Skip Weekly Meeting Prep Waste 3 Hours (and How Daily Pick 
 date: 2025-11-04
 description: "Teams waste 3+ hours weekly on meeting prep. Here's the automation playbook that recovers lost time and keeps meetings focused on decisions, not status."
 layout: post.njk
-tags: "[\"meetings\", \"stand-up\", \"planning\", \"productivity\", \"daily pick\", \"prep automation\"]"
+tags: [\"meetings\", \"stand-up\", \"planning\", \"productivity\", \"daily pick\", \"prep automation\"]
 canonical: "https://dailypick.dev/blog/why-teams-who-skip-weekly-meeting-prep-waste-3-hours-and-how-daily-pick-instantly-recovers-it/"
 author: Daily Pick
 updated: 2025-11-04

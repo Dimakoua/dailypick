@@ -3,7 +3,7 @@ title: Fix On-Call Resentment with the Fair Rotation Playbook
 date: 2025-12-05
 description: Build a transparent on-call rotation that feels fair, protects weekends, and keeps incident response sharp using Daily Pick’s automation-friendly selectors.
 layout: post.njk
-tags: "[\"on-call\", \"incident response\", \"team rituals\", \"engineering productivity\", \"DevOps\", \"fairness\", \"tech leadership\"]"
+tags: [\"on-call\", \"incident response\", \"team rituals\", \"engineering productivity\", \"DevOps\", \"fairness\", \"tech leadership\"]
 canonical: "https://dailypick.dev/blog/fix-on-call-resentment-fair-rotation-playbook-with-daily-pick/"
 author: Daily Pick
 updated: 2025-12-05
