@@ -68,61 +68,79 @@
     {% include "bg-orbs.html" %}
     {% include "header.html" %}
 
-    <h1>🏁 Speedway: Turtle Race Name Picker 🏁</h1>
-<p class="settings-hint">Update racers or your brand once in the <a href="/apps/settings/">Settings page</a>, then come back to race.</p>
-<div class="game-layout">
-<div aria-label="Racing track" id="track-container">
-<div id="start-line"></div>
-<div id="finish-line-visual"></div>
-<!-- Racers injected by JS -->
-</div>
-<div aria-atomic="true" aria-live="polite" id="results-area">
-<h2>Order:</h2>
-<button class="pip-trigger" data-pip-exclude="#speedwayPipBtn" data-pip-height="420" data-pip-target="#results-area" data-pip-title="Speedway Results" data-pip-width="320" id="speedwayPipBtn" type="button">Open in Picture in Picture</button>
-<ol id="standupOrderList"></ol>
-</div>
-</div>
-<button id="startRaceBtn">🚀 Start Race!</button>
-<div class="seo-content-area">
-<h2>Speedway Racer: The Turtle Race Name Picker Your Team Will Cheer For</h2>
-<p>Speedway Racer by Daily Pick turns a simple stand-up order into a burst of excitement. This
-            turtle race name picker lets you add your roster, press start, and watch colorful racers sprint for the
-            finish line—whoever wins sets the speaking order, assigns the next presenter, or snags the surprise prize.
-            It’s fast, fair, and endlessly replayable.</p>
-<h3>How to Run a Speedway Race</h3>
-<ul>
-<li>Load your racers: Paste names or import your saved list. Each teammate gets a lane and
-                a turtle avatar.</li>
-<li>Launch the race: Tap <em>Start Race</em> and watch real-time animation determine the
-                winners.</li>
-<li>Capture the results: The leaderboard updates instantly and can pop into
-                Picture-in-Picture so facilitators keep it visible while screensharing.</li>
-<li>Reset and rerun: Need another order? Hit restart for a brand-new outcome—no two races
-                are the same.</li>
-</ul>
-<h3>Why Teams and Classrooms Love Speedway</h3>
-<ul>
-<li>Fair randomization: Removes bias when choosing who goes next, who leads the demo, or
-                who wins a giveaway—every turtle race name picker finish is unique.</li>
-<li>Instant engagement: The playful race animation keeps even camera-off participants glued
-                to the screen.</li>
-<li>Hybrid-friendly: Works equally well in conference rooms and remote stand-ups thanks to
-                results sharing and PiP mode.</li>
-<li>Education ready: Teachers use Speedway to select readers, presenters, and quiz
-                participants without the stress.</li>
-</ul>
-<h3>Level Up Your Rituals with Daily Pick</h3>
-<ul>
-<li>Pair with other games: After the race, spin the <a href="/apps/wheel/">Daily Pick
-                    Decision Wheel</a> for follow-up tasks or drop into <a href="/apps/trap/">Trap!</a> for a
-                suspenseful tiebreaker.</li>
-<li>Log the winners: Export the finishing order or feed it into your retro notes, Jira
-                board, or team wiki.</li>
-</ul>
-<p>Whether you’re running a sprint review, guiding a student debate, or just kicking off Friday with a laugh,
-            Speedway Racer brings the energy. Fire up the turtles and let Daily Pick decide the order
-            with style.</p>
-</div>
+    <div class="app-shell">
+        <div class="app-card">
+            <h1>🏁 Speedway Racer 🏁</h1>
+            <p class="app-subheading">A fast-paced random name picker to energize your team meetings and stand-ups.</p>
+            
+            <div class="game-layout">
+                <div aria-label="Racing track" id="track-container">
+                    <div id="start-line"></div>
+                    <div id="finish-line-visual"></div>
+                    <!-- Racers injected by JS -->
+                </div>
+                
+                <div aria-atomic="true" aria-live="polite" id="results-area">
+                    <h2>Race Results</h2>
+                    <button class="pip-trigger" data-pip-exclude="#speedwayPipBtn" data-pip-height="420" data-pip-target="#results-area" data-pip-title="Speedway Results" data-pip-width="320" id="speedwayPipBtn" type="button">Pop-out Results</button>
+                    <ol id="standupOrderList"></ol>
+                </div>
+            </div>
+
+            <div class="controls-container">
+                <div class="speedway-controls">
+                    <div class="control-group">
+                        <label for="trackStyleSelect">Track Theme</label>
+                        <select id="trackStyleSelect" class="track-style-select">
+                            <option value="classic">🏟️ Classic</option>
+                            <option value="night">🌌 Night</option>
+                            <option value="sunset">🌅 Sunset</option>
+                            <option value="forest">🌲 Forest</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="vehicleStyleSelect">Racer Type</label>
+                        <select id="vehicleStyleSelect" class="track-style-select">
+                            <option value="turtle">🐢 Turtles</option>
+                            <option value="skier">⛷ Skiers</option>
+                            <option value="car">🏎️ Race Cars</option>
+                            <option value="rocket">🚀 Rockets</option>
+                            <option value="cat">🐈 Cats</option>
+                            <option value="ghost">👻 Ghosts</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="startRaceBtn" class="app-button">🚀 Start the Race!</button>
+                    <a href="/apps/settings/" class="app-button app-button--secondary">⚙️ Edit Racers</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="seo-content-area">
+            <div class="app-card">
+                <h2>Speedway Racer: The Random Name Picker Your Team Will Cheer For</h2>
+                <div class="seo-grid">
+                    <div>
+                        <p>Speedway Racer by Daily Pick turns a simple stand-up order into a burst of excitement. This
+                        turtle race name picker lets you add your roster, press start, and watch colorful racers sprint for the
+                        finish line—whoever wins sets the speaking order, assigns the next presenter, or snags the surprise prize.
+                        It’s fast, fair, and endlessly replayable.</p>
+                    </div>
+                    <div>
+                        <h3>Why Teams Love Speedway</h3>
+                        <ul>
+                            <li><strong>Fair randomization:</strong> Removes bias when choosing who goes next.</li>
+                            <li><strong>Instant engagement:</strong> The animation keeps everyone glued to the screen.</li>
+                            <li><strong>Hybrid-friendly:</strong> Works perfectly over screenshare with PiP mode.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     {% include "footer.html" %}
 
     <script>
@@ -145,6 +163,8 @@
         const startRaceBtn = document.getElementById('startRaceBtn');
         const standupOrderList = document.getElementById('standupOrderList');
         const namesInput = document.getElementById('namesInput');
+        const trackStyleSelect = document.getElementById('trackStyleSelect');
+        const vehicleStyleSelect = document.getElementById('vehicleStyleSelect');
         const updateNamesBtn = document.getElementById('updateNamesBtn');
         const syncNamesInput = () => {
             if (namesInput) {
@@ -152,7 +172,9 @@
             }
         };
 
-        const finishLinePercent = 90;
+        const finishLinePercent = 94;
+        const TRACK_STYLE_KEY = 'speedwayTrackStyle';
+        const VEHICLE_STYLE_KEY = 'speedwayVehicleStyle';
 
         /** ====== Names storage ====== */
         function loadNamesFromStorage() {
@@ -206,6 +228,60 @@
             }));
         }
 
+        function applyTrackStyle(style) {
+            const styles = ['classic', 'night', 'sunset', 'forest'];
+            const normalized = styles.includes(style) ? style : 'classic';
+            trackContainer.classList.remove(...styles.map(s => `track-style-${s}`));
+            trackContainer.classList.add(`track-style-${normalized}`);
+
+            if (trackStyleSelect) {
+                trackStyleSelect.value = normalized;
+            }
+        }
+
+        function loadTrackStyle() {
+            const stored = localStorage.getItem(TRACK_STYLE_KEY);
+            applyTrackStyle(stored || 'classic');
+        }
+
+        function saveTrackStyle(style) {
+            localStorage.setItem(TRACK_STYLE_KEY, style);
+            applyTrackStyle(style);
+        }
+
+        function applyVehicleStyle(style) {
+            const styles = ['turtle', 'skier', 'car', 'rocket', 'cat', 'ghost'];
+            const normalized = styles.includes(style) ? style : 'turtle';
+            if (vehicleStyleSelect) {
+                vehicleStyleSelect.value = normalized;
+            }
+            return normalized;
+        }
+
+        function loadVehicleStyle() {
+            const stored = localStorage.getItem(VEHICLE_STYLE_KEY);
+            return applyVehicleStyle(stored || 'turtle');
+        }
+
+        function saveVehicleStyle(style) {
+            localStorage.setItem(VEHICLE_STYLE_KEY, style);
+            applyVehicleStyle(style);
+        }
+
+        let currentVehicleStyle = 'turtle';
+
+        function getVehicleEmoji(style) {
+            const emojiMap = {
+                'turtle': '🐢',
+                'skier': '⛷',
+                'car': '🏎️',
+                'rocket': '🚀',
+                'cat': '🐈',
+                'ghost': '👻'
+            };
+            return emojiMap[style] || '🐢';
+        }
+
         function setupRacers() {
             // Reset DOM + state
             trackContainer.querySelectorAll('.racer').forEach(el => el.remove());
@@ -219,18 +295,25 @@
                 return;
             }
 
-            const racerHeight = 30;
-            const verticalGap = 10;
+            const racerHeight = 34;
+            const verticalGap = 6;
             const totalHeight = originalNames.length * (racerHeight + verticalGap) - verticalGap;
-            trackContainer.style.height = `${Math.max(150, totalHeight + 40)}px`;
+            trackContainer.style.height = `${Math.max(150, totalHeight + 30)}px`;
 
             originalNames.forEach((name, index) => {
                 const racer = document.createElement('div');
                 racer.classList.add('racer');
-                racer.innerHTML = `<span class="racer-emoji">🐢</span><span class="racer-name">${name.substring(0, 3)}</span>`;
-                racer.style.backgroundColor = RACER_PALETTE[index % RACER_PALETTE.length];
+                racer.dataset.vehicle = currentVehicleStyle;
+                const emoji = getVehicleEmoji(currentVehicleStyle);
+                racer.innerHTML = `
+                    <div class="vehicle-body">
+                        <span class="racer-emoji">${emoji}</span>
+                    </div>
+                    <span class="racer-name">${name}</span>
+                `;
+                // Remove background color from racer container, apply to name if needed or let it be transparent
                 racer.style.left = '5%';
-                racer.style.top = `${20 + index * (racerHeight + verticalGap)}px`;
+                racer.style.top = `${15 + index * (racerHeight + verticalGap)}px`;
 
                 trackContainer.appendChild(racer);
                 racersData.push({
@@ -254,7 +337,7 @@
                 if (racer.finished) return;
 
                 allFinished = false;
-                const randomBoost = (Math.random() * 0.4) - 0.1;
+                const randomBoost = (Math.random() * 0.25) - 0.05;
                 racer.positionPercent += randomBoost;
                 racer.element.style.left = `${racer.positionPercent}%`;
 
@@ -299,6 +382,22 @@
             }
         }
 
+        if (trackStyleSelect) {
+            trackStyleSelect.addEventListener('change', (event) => {
+                const value = event.target.value;
+                saveTrackStyle(value);
+            });
+        }
+
+        if (vehicleStyleSelect) {
+            vehicleStyleSelect.addEventListener('change', (event) => {
+                const value = event.target.value;
+                saveVehicleStyle(value);
+                currentVehicleStyle = value;
+                setupRacers();
+            });
+        }
+
         /** ====== Event wiring ====== */
         startRaceBtn.addEventListener('click', () => {
             if (raceInProgress) return;
@@ -315,6 +414,8 @@
 
         /** ====== Init ====== */
         loadNamesFromStorage();
+        loadTrackStyle();
+        currentVehicleStyle = loadVehicleStyle();
         setupRacers();
     </script>
 </body>
