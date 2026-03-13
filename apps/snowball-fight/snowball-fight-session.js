@@ -220,6 +220,40 @@ export class SnowballFightSession extends BaseEphemeralDO {
       projectile
     });
 
+    // Server-side simple tick for collision
+    const tickInterval = setInterval(() => {
+      if (this.gameState !== 'playing') {
+        clearInterval(tickInterval);
+        return;
+      }
+
+      // Small movement step
+      projectile.position.x += projectile.velocity.x;
+      projectile.position.y += projectile.velocity.y;
+
+      // Check collision with all alive players
+      for (const [vId, victim] of this.clients.entries()) {
+        if (!victim.isAlive) continue;
+        // Basic distance (PLAYER_SIZE is 40 client side)
+        const dx = projectile.position.x - victim.position.x;
+        const dy = projectile.position.y - victim.position.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        
+        if (dist < 26) { // 40/2 + 6 = 26 from script.js
+          this.handlePlayerHit(vId, clientId);
+          clearInterval(tickInterval);
+          return;
+        }
+      }
+
+      // Check bounds or lifetime
+      if (projectile.position.x < 0 || projectile.position.x > 1200 || 
+          projectile.position.y < 0 || projectile.position.y > 900 ||
+          Date.now() - projectile.createdAt > 5000) {
+        clearInterval(tickInterval);
+      }
+    }, 1000 / 20); // 20 ticks per second for server-side validation
+
     // Auto-remove old projectiles after 5 seconds
     setTimeout(() => {
       const index = this.projectiles.findIndex(p => p.id === projectile.id);
@@ -234,6 +268,13 @@ export class SnowballFightSession extends BaseEphemeralDO {
     const attacker = this.clients.get(attackerId);
     
     if (!victim || !victim.isAlive) return;
+
+    // Throttle hits on same player (debounce 300ms)
+    const now = Date.now();
+    if (victim.lastHitAt && now - victim.lastHitAt < 300) {
+      return;
+    }
+    victim.lastHitAt = now;
 
     victim.health -= 1;
 

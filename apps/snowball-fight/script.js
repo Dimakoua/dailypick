@@ -760,24 +760,57 @@
       if (hitFort) continue;
       
       // Check collision with players
-      if (ball.ownerId !== userId && myPlayer.isAlive) {
-        const dx = ball.x - myPlayer.x;
-        const dy = ball.y - myPlayer.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        
-        if (dist < PLAYER_SIZE / 2 + SNOWBALL_SIZE) {
-          // Hit!
-          createHitParticles(ball.x, ball.y);
-          snowballs.splice(i, 1);
+      if (myPlayer.isAlive) {
+        // 1. Check if I was hit (Self-hit detection)
+        if (ball.ownerId !== userId) {
+          const dx = ball.x - myPlayer.x;
+          const dy = ball.y - myPlayer.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
           
-          if (ws && ws.readyState === WebSocket.OPEN) {
-            ws.send(JSON.stringify({
-              type: 'player-hit',
-              victimId: userId,
-              attackerId: ball.ownerId
-            }));
+          if (dist < PLAYER_SIZE / 2 + SNOWBALL_SIZE) {
+            // Hit!
+            createHitParticles(ball.x, ball.y);
+            snowballs.splice(i, 1);
+            
+            if (ws && ws.readyState === WebSocket.OPEN) {
+              ws.send(JSON.stringify({
+                type: 'player-hit',
+                victimId: userId,
+                attackerId: ball.ownerId
+              }));
+            }
+            continue;
           }
-          continue;
+        }
+
+        // 2. Check if I hit someone else (Attacker-hit detection)
+        // This improves reliability when many people are in the room
+        if (ball.ownerId === userId) {
+          let otherPlayerHit = false;
+          for (const [id, player] of players.entries()) {
+            if (!player.isAlive) continue;
+            
+            const dx = ball.x - player.x;
+            const dy = ball.y - player.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            
+            if (dist < PLAYER_SIZE / 2 + SNOWBALL_SIZE) {
+              // I hit someone!
+              createHitParticles(ball.x, ball.y);
+              snowballs.splice(i, 1);
+              
+              if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({
+                  type: 'player-hit',
+                  victimId: id,
+                  attackerId: userId
+                }));
+              }
+              otherPlayerHit = true;
+              break;
+            }
+          }
+          if (otherPlayerHit) continue;
         }
       }
       
