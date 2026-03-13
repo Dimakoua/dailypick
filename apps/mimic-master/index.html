@@ -47,40 +47,53 @@
 </div>
 <div class="hero-meta">
 <span aria-atomic="true" aria-live="polite" class="status-pill" id="sessionStatus">Not connected</span>
-<button class="ghost-btn" disabled="" id="copyLinkBtn" type="button">Copy invite link</button>
 </div>
 </header>
 <section class="mimic-grid">
 <article aria-label="Room controls" class="controls-card glass-card">
-<div class="control-block">
-<label for="playerNameInput">Display name</label>
+<div class="status-hints status-hints--top">
+<p class="hint" id="roundHint">Step 1: Save your name and enable camera to begin.</p>
+<p class="hint" id="waitingMessage" style="display:none;">Step 2: Waiting for host to start…</p>
+</div>
+
+<div class="control-block player-identity">
 <div class="inline-controls">
-<input autocomplete="off" id="playerNameInput" maxlength="24" placeholder="e.g. Alex" type="text"/>
-<button id="saveNameBtn" type="button">Save</button>
+<input autocomplete="off" id="playerNameInput" maxlength="24" placeholder="Your Name" type="text"/>
+<button class="btn btn--small" id="saveNameBtn" type="button">Set Name</button>
 </div>
 </div>
+
+<div class="room-actions">
 <div class="control-block">
-<span class="control-label">Room</span>
 <div class="inline-controls">
-<button id="startRoomBtn" type="button">Start new room</button>
-<button id="joinRoomBtn" style="display:none;" type="button">Join room</button>
+<button class="btn btn--primary" id="startRoomBtn" type="button">Create Room</button>
+<button class="btn btn--primary" id="joinRoomBtn" style="display:none;" type="button">Join Room</button>
+<button class="btn btn--secondary" disabled="" id="copyLinkBtn" style="display:none;" type="button">🔗 Copy Invite Link</button>
 </div>
 </div>
+
 <div class="control-block">
-<span class="control-label">Play</span>
 <div class="inline-controls">
-<button id="enableCameraBtn" type="button">Enable camera</button>
-<button disabled="" id="startGameBtn" style="display:none;" type="button">Start reaction round</button>
+<button class="btn btn--camera" id="enableCameraBtn" type="button">📷 Enable Camera</button>
+<div id="hostCameraNotice" class="alert-notice alert-notice--error" style="display: none;">
+  <strong>Wait!</strong> You must enable your camera to start a round.
 </div>
-<div class="host-controls" id="hostControls" style="display:none; margin-top: 8px;">
-<button class="ghost-btn" id="startForNewBtn" style="font-size: 0.9em;" type="button">Start for newcomers</button>
-<button class="ghost-btn" id="resetSessionBtn" style="font-size: 0.9em;" type="button">Reset session</button>
-<button class="ghost-btn" id="clearLeaderboardBtn" style="font-size: 0.9em;" type="button">Clear leaderboard</button>
+<button class="btn btn--play" disabled="" id="startGameBtn" style="display:none;" type="button">▶ Start Round</button>
 </div>
-<p class="hint" id="waitingMessage" style="display:none;">Waiting for host to start the next round…</p>
-<p class="hint" id="roundHint">Enable your camera to begin.</p>
+</div>
+</div>
+
+<div class="host-controls" id="hostControls" style="display:none;">
+<div class="host-controls__inner">
+<div id="hostBlockerNotice" class="alert-notice alert-notice--error" style="display: none;">
+  <strong>Wait!</strong> These players have no camera: <span id="blockers"></span>
+</div>
+<button class="ghost-btn" id="startForNewBtn" type="button">Start for newcomers</button>
+<button class="ghost-btn" id="clearLeaderboardBtn" type="button">Clear leaderboard</button>
+</div>
 </div>
 </article>
+
 <article class="video-card glass-card">
 <div class="video-wrapper">
 <video autoplay="" id="video" muted="" playsinline=""></video>
@@ -89,6 +102,7 @@
 <div id="statusMessage"></div>
 </div>
 </article>
+
 <article class="side-card glass-card">
 <section class="leaderboard-panel">
 <div class="panel-header">

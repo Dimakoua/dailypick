@@ -17,7 +17,10 @@
   const leaderboardList = document.getElementById("leaderboardList");
   const hostControls = document.getElementById("hostControls");
   const startForNewBtn = document.getElementById("startForNewBtn");
-  const resetSessionBtn = document.getElementById("resetSessionBtn");
+  const hostBlockerNotice = document.getElementById("hostBlockerNotice");
+  const hostCameraNotice = document.getElementById("hostCameraNotice");
+  const blockersSpan = document.getElementById("blockers");
+  // const resetSessionBtn = document.getElementById("resetSessionBtn"); // Removed redundant reset
   const clearLeaderboardBtn = document.getElementById("clearLeaderboardBtn");
   const STANDUP_SOURCE = 'mimic-master';
 
@@ -160,38 +163,37 @@
     currentPrompt = null;
   }
 
-  function updatePlayerList(entries, isUserList = false) {
-    leaderboardList.innerHTML = "";
-    if (!entries || entries.length === 0) {
-      const placeholder = document.createElement("li");
-      placeholder.textContent = "No players in the room yet.";
-      leaderboardList.appendChild(placeholder);
-      emitStandupRoster([]);
-      return;
-    }
-    entries.forEach((entry, index) => {
-      const li = document.createElement("li");
-      let displayName = entry.name || `Player ${index + 1}`;
-      if (entry.id === userId) {
-        displayName += " (You)";
-      }
+  function updatePlayerList(users, isUserList = false) {
+    if (!users) return;
+    
+    if (isUserList) {
+      leaderboardList.innerHTML = "";
       
-      if (isUserList) {
-        // For user-list, show play status
-        const playStatus = entry.hasPlayed ? " ✓" : " ⏳";
-        li.innerHTML = `<strong>${displayName}</strong>${playStatus}`;
-      } else {
-        // For leaderboard, show best time
-        const best =
-          typeof entry.bestTime === "number"
-            ? formatMs(entry.bestTime)
-            : "Waiting…";
-        li.innerHTML = `<strong>${displayName}</strong> · ${best}`;
+      // DIAGNOSTICS: Check for blockers (players with no camera)
+      const blockers = users.filter(u => !u.hasCamera && u.id !== userId);
+      if (isHost && blockers.length > 0) {
+        hostBlockerNotice.style.display = "block";
+        blockersSpan.textContent = blockers.map(b => b.name).join(", ");
+      } else if (isHost) {
+        hostBlockerNotice.style.display = "none";
       }
-      leaderboardList.appendChild(li);
-    });
-    if (!isUserList) {
-      emitStandupRoster(entries);
+
+      users.forEach((entry, index) => {
+        const li = document.createElement("li");
+        let displayName = entry.name || `Player ${index + 1}`;
+        if (entry.id === userId) {
+          displayName += " (You)";
+        }
+        
+        // Show checkmark if played this round, or best time if ever played
+        const hasTime = typeof entry.bestTime === "number";
+        const cameraStatus = entry.hasCamera ? "📷" : "🚫";
+        const playStatus = entry.hasPlayed ? " ✓" : (hasTime ? " (Previous)" : " ⏳");
+        const bestTimeStr = hasTime ? ` [${formatMs(entry.bestTime)}]` : "";
+        li.innerHTML = `<strong>${displayName}</strong> ${cameraStatus}${bestTimeStr}${playStatus}`;
+        leaderboardList.appendChild(li);
+      });
+      return;
     }
   }
 
@@ -226,13 +228,25 @@
       overlay.height = video.videoHeight;
       cameraActive = true;
       enableCameraBtn.disabled = true;
+      hostCameraNotice.style.display = "none";
       roundHint.textContent =
-        "Camera ready. Start a round when you are connected to a room.";
+        "Camera ready. Ready to play!";
       setStatus("Camera enabled. Waiting for a round to start.");
+      broadcastCameraStatus(true);
+      if (isHost) {
+        startGameBtn.disabled = false;
+      }
       requestAnimationFrame(detectHandsLoop);
     } catch (err) {
       console.error("Camera access denied", err);
       setStatus("Camera permission is required to play.");
+      broadcastCameraStatus(false);
+    }
+  }
+
+  function broadcastCameraStatus(hasCamera) {
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({ type: "camera-status", hasCamera }));
     }
   }
 
@@ -271,13 +285,17 @@
     ws = new WebSocket(wsUrl.href);
 
     ws.onopen = () => {
-      sessionStatus.textContent = `Connected to room ${sessionId}`;
+      sessionStatus.textContent = `Room ${sessionId}`;
+      copyLinkBtn.style.display = "inline-flex";
       copyLinkBtn.disabled = false;
+      startGameBtn.style.display = isHost ? "block" : "none"; // Ensure button visibility
+      hostCameraNotice.style.display = (isHost && !cameraActive) ? "block" : "none";
       startGameBtn.disabled = !cameraActive || !isHost;
       waitingMessage.style.display = isHost ? "none" : "block";
-      startGameBtn.style.display = isHost ? "block" : "none"; // Ensure button visibility
+      startRoomBtn.style.display = "none"; // Hide Create Room when already in a room
       if (playerName) sendPlayerName(playerName, isHost);
-      setStatus("Connected. Start a reaction round when ready.");
+      broadcastCameraStatus(cameraActive);
+      setStatus("Connected! Ready to play.");
     };
     ws.onmessage = (event) => {
       try {
@@ -289,6 +307,7 @@
     ws.onclose = () => {
       sessionStatus.textContent = "Disconnected.";
       copyLinkBtn.disabled = true;
+      copyLinkBtn.style.display = "none";
       if (isHost) {
         startGameBtn.disabled = true;
       }
@@ -310,6 +329,8 @@
           isHost.toString()
         );
         startGameBtn.style.display = isHost ? "block" : "none";
+        hostCameraNotice.style.display = (isHost && !cameraActive) ? "block" : "none";
+        startRoomBtn.style.display = "none"; // Hide Create Room when already in a room
         hostControls.style.display = isHost ? "block" : "none";
         waitingMessage.style.display = isHost ? "none" : "block";
         startGameBtn.disabled = !isHost || !cameraActive;
@@ -318,6 +339,7 @@
           hostControls.style.display = "block";
         } else {
           hostControls.style.display = "none";
+          hostCameraNotice.style.display = "none";
         }
         break;
       case "leaderboard":
@@ -359,14 +381,29 @@
 
   function requestStartReactionRound() {
     if (!isHost) return;
-    if (!cameraActive) return setStatus("Enable your camera first.");
+    if (!cameraActive) {
+      alert("You must enable your camera to start a round as host.");
+      enableCamera();
+      return;
+    }
     if (!sessionId || !ws || ws.readyState !== WebSocket.OPEN)
       return setStatus("Connect to a room first.");
     if (!playerName) return setStatus("Set your display name.");
+    
+    // Start for everyone (reset played status)
+    ws.send(JSON.stringify({ type: "reset-session" }));
     ws.send(JSON.stringify({ type: "game-start" }));
   }
 
   function handleGameStart(message = {}) {
+    // Force camera enable if not active
+    if (!cameraActive) {
+      setStatus("Round starting! Enabling camera...");
+      enableCamera().then(() => {
+        ensureDetector().catch(console.error);
+      });
+    }
+
     // Check if this game start is targeted at specific players
     if (message.targetPlayers && !message.targetPlayers.includes(userId)) {
       setStatus("This round is for other players. Wait for the next one!");
@@ -585,7 +622,11 @@
 
   startForNewBtn.addEventListener("click", () => {
     if (!isHost) return;
-    if (!cameraActive) return setStatus("Enable your camera first.");
+    if (!cameraActive) {
+      alert("You must enable your camera to start a round as host.");
+      enableCamera();
+      return;
+    }
     if (!sessionId || !ws || ws.readyState !== WebSocket.OPEN)
       return setStatus("Connect to a room first.");
     if (!playerName) return setStatus("Set your display name.");
@@ -593,12 +634,7 @@
     ws.send(JSON.stringify({ type: "game-start" }));
   });
 
-  resetSessionBtn.addEventListener("click", () => {
-    if (!isHost) return;
-    if (!sessionId || !ws || ws.readyState !== WebSocket.OPEN)
-      return setStatus("Connect to a room first.");
-    ws.send(JSON.stringify({ type: "reset-session" }));
-  });
+  // resetSessionBtn removed as part of requestStartReactionRound logic
 
   clearLeaderboardBtn.addEventListener("click", () => {
     if (!isHost) return;

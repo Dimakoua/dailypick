@@ -46,8 +46,13 @@ export class MimicGameSession extends BaseEphemeralDO {
 
     server.addEventListener('message', (event) => {
       try {
-        const data = JSON.parse(event.data);
-        this.handleClientMessage(clientId, data);
+        const data = JSON.parse(event.data);      if (data.type === 'camera-status') {
+        const client = this.clients.get(clientId);
+        if (client) {
+          client.hasCamera = !!data.hasCamera;
+          this.broadcastUserList();
+        }
+      }        this.handleClientMessage(clientId, data);
         this.markActive().catch((error) => console.error('[MimicGameSession] markActive failed', error));
       } catch (err) {
         console.error('[MimicGameSession] Failed to parse message', err);
@@ -191,11 +196,17 @@ export class MimicGameSession extends BaseEphemeralDO {
   }
 
   broadcastUserList() {
-    const users = Array.from(this.clients.entries()).map(([id, data]) => ({ 
-      id, 
-      name: data.name || 'Player',
-      hasPlayed: this.playersWhoPlayed.has(id)
-    }));
+    const users = Array.from(this.clients.entries()).map(([id, data]) => {
+      // Find historical best score for this user by name
+      const bestEntry = this.leaderboard.find(e => e.name === data.name);
+      return { 
+        id, 
+        name: data.name || 'Player',
+        hasPlayed: this.playersWhoPlayed.has(id),
+        bestTime: bestEntry?.bestTime,
+        hasCamera: !!data.hasCamera
+      };
+    });
     this.broadcast({ type: 'user-list', users });
   }
 
