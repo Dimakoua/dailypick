@@ -16,6 +16,9 @@ twitterImageAlt: Team calendar showing PTO slots while Daily Pick selects a cove
 robots: index,follow
 
 ---
+
+![Woman relaxing on a beach, representing healthy PTO](https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=1200)
+
 If your holiday schedule looks like a string of Slack DMs, you’re one PTO request away from a coverage crisis. Teams need a transparent system that honors rest, keeps critical work staffed, and removes the politics from “who stays online.” Daily Pick gives you the randomizers and rotation controls to make holiday coverage predictable—and even friendly.
 
 ## The Three PTO Failure Modes

@@ -16,6 +16,9 @@ twitterImageAlt: Agile team sharing sprint demos while Daily Pick selects the ne
 robots: index,follow
 
 ---
+
+![Team celebrating a successful sprint review and demo](https://images.unsplash.com/photo-1522071823991-b99c22303091?auto=format&fit=crop&q=80&w=1200)
+
 Sprint reviews often devolve into a slideshow of Jira tickets that nobody beyond the core team understands. High-performing squads treat the meeting as a product launch checkpoint: tight demos, clear decisions, and zero suspense about who speaks next. Daily Pick keeps the pace electrifying by rotating presenters, timeboxing segments, and forcing trade-offs live.
 
 ## The Lightning Review Blueprint

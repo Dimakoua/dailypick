@@ -13,6 +13,9 @@ author: Daily Pick
 ogImage: /assets/og-image-main.png
 twitterImage: /assets/og-image-main.png
 ---
+
+![Remote team members laughing during a video call together](https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=1200)
+
 Building trust and camaraderie across distance isn’t optional – it’s the secret sauce that keeps churn down and engagement up. But most “remote team building” suggestions you find online are painfully obvious (Guess That Baby Photo, anyone?). This post collects **real, repeatable activities** that have worked for remote teams of 5–500 people without requiring expensive platforms or awkward forced fun.
 
 In the sections below you’ll discover:

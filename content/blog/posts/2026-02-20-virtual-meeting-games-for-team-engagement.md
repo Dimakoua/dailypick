@@ -12,6 +12,9 @@ author: Daily Pick
 ogImage: /assets/og-image-main.png
 twitterImage: /assets/og-image-main.png
 ---
+
+![Team members in a virtual meeting on a computer screen](https://images.unsplash.com/photo-1616587226960-4a03badbe8bf?auto=format&fit=crop&q=80&w=1200)
+
 Virtual meetings are where human connection goes to suffocate. The camera-on stare. The muted backgrounds. The "Can you hear me?" delays. Thirty people, one person talking, everyone else half-listening while Slack burns in the background.
 
 But here's the truth: meeting-game software hasn't changed that. The problem isn't the tool—it's the format. Teams need **participation rituals**, not trivia apps.

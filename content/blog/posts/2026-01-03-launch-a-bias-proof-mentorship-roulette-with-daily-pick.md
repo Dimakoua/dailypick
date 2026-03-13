@@ -16,6 +16,9 @@ twitterImageAlt: Mentor and mentee smiling on a video call while Daily Pick high
 robots: index,follow
 
 ---
+
+![Mentor and mentee talking in a modern office](https://images.unsplash.com/photo-1521791136064-7986c2959443?auto=format&fit=crop&q=80&w=1200)
+
 Traditional mentorship programs stall because matching happens once, manually, and usually favors whoever knows leadership best. High-growth orgs need a lightweight ritual that rotates connections, surfaces new perspectives, and proves the process is fair. Daily Pick gives people teams the roulette they need to keep pairings fresh without spreadsheets or favoritism.
 
 ## Set Your Mentorship Intent

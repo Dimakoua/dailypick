@@ -12,6 +12,9 @@ ogImage: /assets/og-image-main.png
 twitterImage: /assets/og-image-main.png
 keywords: \team productivity\, \decision making\, \workplace culture\, \agile teams\, \team dynamics\, \remote work\, \fairness in teams\
 ---
+
+![Person with head in hands at a laptop, representing decision fatigue and mental burnout](https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&q=80&w=1200)
+
 Ever finish a long meeting feeling utterly drained, even if you didn't do much talking? Or find your team struggling to make even small choices by the end of the day, leading to procrastination or less-than-optimal outcomes? You're likely experiencing the subtle but powerful impact of **team decision fatigue**.
 
 In our fast-paced work environments, teams are constantly bombarded with decisions – from minor logistical choices to critical strategic pivots. While making decisions is fundamental to progress, the sheer volume and complexity can quickly deplete mental energy, reduce the quality of choices, and even breed resentment.

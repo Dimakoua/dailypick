@@ -13,6 +13,9 @@ author: Daily Pick
 ogImage: /assets/og-image-main.png
 twitterImage: /assets/og-image-main.png
 ---
+
+![Empty office chair with a laptop, representing asynchronous remote work](https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80&w=1200)
+
 Remote teams don’t need yet another video call to stay aligned. When schedules don’t overlap, time zones span twelve hours, or people are heads‑down coding, the traditional stand‑up can feel like noise. The good news? you can get 90 % of the value of a live meeting with an asynchronous ritual that takes 5 minutes per person and costs nothing but discipline.
 
 In this post you’ll learn:
