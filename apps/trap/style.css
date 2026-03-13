@@ -62,10 +62,29 @@ h1 {
   margin: 16px auto 8px;
   width: min(92vw, var(--trap-max));
   height: auto;               /* preserve intrinsic aspect via attributes */
-  background: #fff;
-  border: 1px solid rgba(255,255,255,.55);
-  border-radius: var(--radius-lg, 15px);
-  box-shadow: var(--glass-shadow, 0 8px 30px rgba(0,0,0,.15));
+  background: #f0f0f0;
+  border: 4px solid #333;
+  border-radius: 4px;
+  box-shadow: 8px 8px 0 rgba(0,0,0,0.1);
+  image-rendering: pixelated; /* Keep that pixelated look */
+}
+
+.game-container {
+  position: relative;
+  display: inline-block;
+}
+
+#office-overlay {
+  position: absolute;
+  top: 16px;
+  left: 0;
+  right: 0;
+  bottom: 8px;
+  pointer-events: none;
+  border-radius: 4px;
+  /* Optional: Add a scanline effect for more retro feel */
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.05) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+  background-size: 100% 4px, 3px 100%;
 }
 
 /* Info line (live region) */
