@@ -37,60 +37,77 @@
     {% include "header.html" %}
 
     <main aria-labelledby="snowballHeading" class="snowball-page">
-<header class="hero-card glass-card">
-<div>
-<p class="hero-eyebrow">Battle Arena</p>
-<h1 id="snowballHeading">⛄ Snowball Fight Classic</h1>
-<p class="hero-subtitle">
+        <header class="hero-card glass-card">
+            <div>
+                <p class="hero-eyebrow">Battle Arena</p>
+                <h1 id="snowballHeading">⛄ Snowball Fight</h1>
+                <p class="hero-subtitle">
                     Battle your teammates in a classic Flash-style snowball fight! Last one standing wins.
                     Watch the death order leaderboard to see who lasted longest.
                 </p>
-</div>
-</header>
-<!-- Lobby Section -->
-<section class="lobby-section glass-card" id="lobbySection" style="display: block;">
-<div class="lobby-content">
-<h2>Game Lobby</h2>
-<div class="name-input-group">
-<label for="playerNameInput">Your Name:</label>
-<input id="playerNameInput" maxlength="32" placeholder="Enter your name" type="text"/>
-<button class="btn btn--secondary" id="saveNameBtn">Save Name</button>
-</div>
-<div class="room-controls">
-<button class="btn btn--primary" id="startRoomBtn">🏠 Start New Room</button>
-<button class="btn btn--secondary" id="joinRoomBtn">🚪 Join Existing Room</button>
-<button class="btn btn--accent" disabled="" id="copyLinkBtn">📋 Copy Invite Link</button>
-</div>
-<p class="status-text" id="sessionStatus">Not connected to a room.</p>
-<div class="host-controls" id="hostControls" style="display: none;">
-<h3>Host Controls</h3>
-<button class="btn btn--primary" disabled="" id="startGameBtn">▶️ Start Game</button>
-<button class="btn btn--secondary" id="resetGameBtn">🔄 Reset to Lobby</button>
-<button class="btn btn--danger" id="clearLeaderboardBtn">🗑️ Clear Leaderboard</button>
-</div>
-<div class="waiting-message" id="waitingMessage" style="display: none;">
-<p>⏳ Waiting for host to start the game...</p>
-</div>
-</div>
-<div class="lobby-sidebar">
-<div class="players-panel">
-<h3>Players in Room</h3>
-<ul class="players-list" id="playersList">
-<li>No players yet.</li>
-</ul>
-</div>
-<div class="leaderboard-panel" id="leaderboard">
-<h3>Death Order Leaderboard</h3>
-<p class="leaderboard-hint">First to die at top, last at bottom</p>
-<button class="btn btn--secondary pip-trigger" data-pip-exclude=".pip-trigger" data-pip-height="480" data-pip-target="#leaderboard" data-pip-title="Snowball Fight Leaderboard" data-pip-width="360" id="pipTriggerBtn">
-                        📺 Pop Out
-                    </button>
-<ul class="death-order-list" id="deathOrderList">
-<li>No deaths recorded yet.</li>
-</ul>
-</div>
-</div>
-</section>
+            </div>
+            <div class="hero-meta">
+                <span class="status-pill" id="sessionStatus">Not connected</span>
+            </div>
+        </header>
+
+        <!-- Lobby Section -->
+        <section class="lobby-section mimic-grid" id="lobbySection" style="display: grid;">
+            <div class="controls-card glass-card">
+                <div class="player-identity">
+                    <h3>Your Identity</h3>
+                    <div class="name-setup" id="nameSetup">
+                        <input id="playerNameInput" maxlength="32" placeholder="Enter your name" type="text"/>
+                        <button class="btn btn--small btn--secondary" id="saveNameBtn">Ready</button>
+                    </div>
+                </div>
+
+                <div class="room-actions">
+                    <button class="btn btn--primary" id="startRoomBtn">🏠 Start New Room</button>
+                    <button class="btn btn--secondary" id="joinRoomBtn">🚪 Join Room</button>
+                    <button class="btn btn--secondary ghost-btn" disabled="" id="copyLinkBtn" style="display: none; margin-top: 8px;">📋 Invite Team</button>
+                </div>
+
+                <div class="host-controls" id="hostControls" style="display: none; border-top: 1px solid var(--brand-border); padding-top: 20px;">
+                    <h3>Host Station</h3>
+                    <div class="host-btns">
+                        <button class="btn btn--primary" disabled="" id="startGameBtn">▶️ START BATTLE</button>
+                        <button class="btn btn--secondary" id="resetGameBtn">🔄 Reset Lobby</button>
+                        <button class="btn btn--danger btn--small" id="clearLeaderboardBtn">🗑️ Clear Stats</button>
+                    </div>
+                </div>
+
+                <div class="waiting-message alert-notice" id="waitingMessage" style="display: none;">
+                    <p>⏳ Waiting for host to start the battle...</p>
+                </div>
+            </div>
+
+            <div class="lobby-main-content">
+                <div class="sidebar-cards-row" style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 24px;">
+                    <div class="info-card players-card glass-card">
+                        <div class="card-header">
+                            <h3>Players</h3>
+                            <span class="player-count" id="playerCount">0</span>
+                        </div>
+                        <ul class="players-list" id="playersList">
+                            <li>No players yet.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card leaderboard-card glass-card" id="leaderboard">
+                        <div class="card-header">
+                            <h3>Hall of Fame</h3>
+                            <button class="btn-icon pip-trigger" data-pip-exclude=".pip-trigger" data-pip-height="480" data-pip-target="#leaderboard" data-pip-title="Snowball Fight Leaderboard" data-pip-width="360" id="pipTriggerBtn" title="Pop Out">
+                                📺
+                            </button>
+                        </div>
+                        <ul class="death-order-list" id="deathOrderList">
+                            <li>No deaths recorded yet.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
 <!-- Game Section -->
 <section class="game-section" id="gameSection" style="display: none;">
 <div class="game-container">

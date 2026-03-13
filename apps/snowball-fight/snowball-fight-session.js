@@ -133,11 +133,11 @@ export class SnowballFightSession extends BaseEphemeralDO {
         break;
 
       case 'throw-snowball':
-        this.createProjectile(clientId, data.direction, data.position);
+        this.createProjectile(clientId, data.direction, data.position, data.projectileId);
         break;
 
       case 'player-hit':
-        this.handlePlayerHit(data.victimId, data.attackerId);
+        this.handlePlayerHit(data.victimId, data.attackerId, data.projectileId);
         break;
 
       case 'reset-game':
@@ -198,12 +198,13 @@ export class SnowballFightSession extends BaseEphemeralDO {
     });
   }
 
-  createProjectile(clientId, direction, position) {
+  createProjectile(clientId, direction, position, projectileId) {
     const client = this.clients.get(clientId);
     if (!client || !client.isAlive) return;
 
+    const id = projectileId || `${clientId}-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
     const projectile = {
-      id: this.nextProjectileId++,
+      id,
       ownerId: clientId,
       position: { ...position },
       velocity: {
@@ -222,6 +223,8 @@ export class SnowballFightSession extends BaseEphemeralDO {
 
     // Server-side simple tick for collision
     const tickInterval = setInterval(() => {
+      // Attach interval reference so we can cancel it when projectile is removed
+      projectile._tickInterval = tickInterval;
       if (this.gameState !== 'playing') {
         clearInterval(tickInterval);
         return;
@@ -231,42 +234,64 @@ export class SnowballFightSession extends BaseEphemeralDO {
       projectile.position.x += projectile.velocity.x;
       projectile.position.y += projectile.velocity.y;
 
-      // Check collision with all alive players
+      // Check bounds or lifetime first
+      if (projectile.position.x < 0 || projectile.position.x > 1200 ||
+          projectile.position.y < 0 || projectile.position.y > 900 ||
+          Date.now() - projectile.createdAt > 5000) {
+        clearInterval(tickInterval);
+        this.removeProjectileById(projectile.id);
+        return;
+      }
+
+      // Check collision with all alive players (skip attacker)
       for (const [vId, victim] of this.clients.entries()) {
+        if (vId === clientId) continue;
         if (!victim.isAlive) continue;
+
         // Basic distance (PLAYER_SIZE is 40 client side)
         const dx = projectile.position.x - victim.position.x;
         const dy = projectile.position.y - victim.position.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
+        const hitRadius = 20 + 6 * 0.8; // PLAYER_SIZE/2 + SNOWBALL_SIZE*0.8
         
-        if (dist < 26) { // 40/2 + 6 = 26 from script.js
-          this.handlePlayerHit(vId, clientId);
+        if (dist < hitRadius) {
+          this.handlePlayerHit(vId, clientId, projectile.id);
           clearInterval(tickInterval);
           return;
         }
       }
-
-      // Check bounds or lifetime
-      if (projectile.position.x < 0 || projectile.position.x > 1200 || 
-          projectile.position.y < 0 || projectile.position.y > 900 ||
-          Date.now() - projectile.createdAt > 5000) {
-        clearInterval(tickInterval);
-      }
     }, 1000 / 20); // 20 ticks per second for server-side validation
 
-    // Auto-remove old projectiles after 5 seconds
+    // Auto-remove old projectiles after 5 seconds (fallback)
     setTimeout(() => {
-      const index = this.projectiles.findIndex(p => p.id === projectile.id);
-      if (index !== -1) {
-        this.projectiles.splice(index, 1);
-      }
+      this.removeProjectileById(projectile.id);
     }, 5000);
   }
 
-  handlePlayerHit(victimId, attackerId) {
+  removeProjectileById(projectileId) {
+    const index = this.projectiles.findIndex(p => p.id === projectileId);
+    if (index !== -1) {
+      const projectile = this.projectiles[index];
+      if (projectile._tickInterval) {
+        clearInterval(projectile._tickInterval);
+      }
+      this.projectiles.splice(index, 1);
+    }
+  }
+
+  handlePlayerHit(victimId, attackerId, projectileId) {
     const victim = this.clients.get(victimId);
     const attacker = this.clients.get(attackerId);
-    
+
+    // Ignore hits for projectiles that are already removed (double-hit prevention)
+    if (projectileId) {
+      const existing = this.projectiles.find(p => p.id === projectileId);
+      if (!existing) return;
+
+      // Remove projectile so it can't cause another hit
+      this.removeProjectileById(projectileId);
+    }
+
     if (!victim || !victim.isAlive) return;
 
     // Throttle hits on same player (debounce 300ms)

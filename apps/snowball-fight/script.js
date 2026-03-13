@@ -284,6 +284,15 @@
     sessionStatus.textContent = text;
   }
 
+  function setLobbyControlsVisibility(isConnected) {
+    const show = isConnected ? 'none' : 'inline-flex';
+    startRoomBtn.style.display = show;
+    joinRoomBtn.style.display = show;
+
+    // Invite button is only relevant when connected
+    copyLinkBtn.style.display = isConnected ? 'inline-flex' : 'none';
+  }
+
   function showSection(section) {
     lobbySection.style.display = section === 'lobby' ? 'grid' : 'none';
     gameSection.style.display = section === 'game' ? 'grid' : 'none';
@@ -309,6 +318,7 @@
     ws.onopen = () => {
       showMessage(`Connected to room ${sessionId}`);
       copyLinkBtn.disabled = false;
+      setLobbyControlsVisibility(true);
       
       if (isHost) {
         hostControls.style.display = 'block';
@@ -334,6 +344,7 @@
     ws.onclose = () => {
       showMessage('Disconnected from room.');
       copyLinkBtn.disabled = true;
+      setLobbyControlsVisibility(false);
       startGameBtn.disabled = true;
     };
 
@@ -470,6 +481,11 @@
 
   function updatePlayersList(playerData) {
     playersList.innerHTML = '';
+    const playerCountEl = document.getElementById('playerCount');
+    if (playerCountEl) {
+      playerCountEl.textContent = playerData ? playerData.length : 0;
+    }
+    
     if (!playerData || playerData.length === 0) {
       playersList.innerHTML = '<li>No players yet.</li>';
       return;
@@ -660,10 +676,12 @@
     if (dist === 0) return;
     
     const direction = { x: dx / dist, y: dy / dist };
+    const projectileId = `${userId}-${now}-${Math.floor(Math.random() * 1000)}`;
     
     if (ws && ws.readyState === WebSocket.OPEN) {
       ws.send(JSON.stringify({
         type: 'throw-snowball',
+        projectileId,
         direction,
         position: { x: myPlayer.x, y: myPlayer.y }
       }));
@@ -767,7 +785,7 @@
           const dy = ball.y - myPlayer.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           
-          if (dist < PLAYER_SIZE / 2 + SNOWBALL_SIZE) {
+          if (dist < PLAYER_SIZE / 2 + SNOWBALL_SIZE * 0.8) {
             // Hit!
             createHitParticles(ball.x, ball.y);
             snowballs.splice(i, 1);
@@ -776,7 +794,8 @@
               ws.send(JSON.stringify({
                 type: 'player-hit',
                 victimId: userId,
-                attackerId: ball.ownerId
+                attackerId: ball.ownerId,
+                projectileId: ball.id
               }));
             }
             continue;
@@ -794,7 +813,7 @@
             const dy = ball.y - player.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
             
-            if (dist < PLAYER_SIZE / 2 + SNOWBALL_SIZE) {
+            if (dist < PLAYER_SIZE / 2 + SNOWBALL_SIZE * 0.8) {
               // I hit someone!
               createHitParticles(ball.x, ball.y);
               snowballs.splice(i, 1);
@@ -803,7 +822,8 @@
                 ws.send(JSON.stringify({
                   type: 'player-hit',
                   victimId: id,
-                  attackerId: userId
+                  attackerId: userId,
+                  projectileId: ball.id
                 }));
               }
               otherPlayerHit = true;
