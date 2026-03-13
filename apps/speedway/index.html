@@ -303,11 +303,18 @@
                 racer.classList.add('racer');
                 racer.dataset.vehicle = currentVehicleStyle;
                 const emoji = getVehicleEmoji(currentVehicleStyle);
+                
+                // Get color from palette and calculate hue-rotate for emoji
+                const color = RACER_PALETTE[index % RACER_PALETTE.length];
+                // Approximate hue-rotation mapping (starting from typical emoji colors)
+                const hueRotates = [0, 200, 100, 45, 280, 25]; // Corresponds roughly to red, blue, green, yellow, purple, orange
+                const hueRotate = hueRotates[index % hueRotates.length];
+
                 racer.innerHTML = `
-                    <div class="vehicle-body">
+                    <div class="vehicle-body" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)) hue-rotate(${hueRotate}deg) saturate(1.5);">
                         <span class="racer-emoji">${emoji}</span>
                     </div>
-                    <span class="racer-name">${name}</span>
+                    <span class="racer-name" style="border-left: 4px solid ${color}">${name}</span>
                 `;
                 // Remove background color from racer container, apply to name if needed or let it be transparent
                 racer.style.left = '5%';
