@@ -9,6 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
   let draggedCardId = null;
   let dropIndicator = null;
 
+  // Track rendered DOM elements to minimize re-renders
+  const columnElements = new Map();
+  const cardElements = new Map();
+  const cardRenderCache = new Map();
+
   let userVotes = new Set();
   let userVotesStorageKey = null;
 
@@ -196,24 +201,74 @@ document.addEventListener('DOMContentLoaded', () => {
     return lines.join('\n');
   }
 
-  // Render the board
+  // Render the board (incremental updates, no full re-render)
   function renderBoard(state) {
     if (!state || !state.columns || !state.columnOrder) {
       return;
     }
 
     captureTransientState();
-    retroBoard.innerHTML = '';
 
-    state.columnOrder.forEach(columnId => {
+    // Ensure columns exist and are in correct order
+    const seenColumns = new Set();
+
+    state.columnOrder.forEach((columnId, index) => {
       const column = state.columns[columnId];
       if (!column) return;
 
-      const columnEl = createColumnElement(column, state.cards);
-      retroBoard.appendChild(columnEl);
+      seenColumns.add(columnId);
+
+      let columnEl = columnElements.get(columnId);
+      if (!columnEl) {
+        columnEl = createColumnElement(column, state.cards);
+        columnElements.set(columnId, columnEl);
+        // Insert in order
+        const existing = retroBoard.children[index];
+        if (existing) {
+          retroBoard.insertBefore(columnEl, existing);
+        } else {
+          retroBoard.appendChild(columnEl);
+        }
+      } else {
+        updateColumnElement(columnEl, column, state.cards);
+        // ensure correct order in DOM
+        const expected = retroBoard.children[index];
+        if (expected !== columnEl) {
+          retroBoard.insertBefore(columnEl, expected);
+        }
+      }
+    });
+
+    // Remove columns that are no longer in state
+    Array.from(columnElements.keys()).forEach((columnId) => {
+      if (!seenColumns.has(columnId)) {
+        const el = columnElements.get(columnId);
+        if (el && el.parentNode) {
+          el.parentNode.removeChild(el);
+        }
+        columnElements.delete(columnId);
+      }
     });
 
     restoreTransientState();
+  }
+
+  // Update an existing column element based on new state
+  function updateColumnElement(columnEl, column, cards) {
+    const title = columnEl.querySelector('.column-title');
+    if (title && title.textContent !== column.title) {
+      title.textContent = column.title;
+    }
+
+    const cardCount = columnEl.querySelector('.card-count');
+    if (cardCount) {
+      cardCount.textContent = `${column.cardIds.length} cards`;
+    }
+
+    const cardsContainer = columnEl.querySelector('.cards-container');
+    if (cardsContainer) {
+      updateCardsInContainer(cardsContainer, column.cardIds, cards);
+    }
   }
 
   // Create column element
@@ -317,19 +372,85 @@ document.addEventListener('DOMContentLoaded', () => {
     cardsContainer.addEventListener('dragleave', handleDragLeave);
 
     // Render cards
-    column.cardIds.forEach(cardId => {
-      const card = cards[cardId];
-      if (card) {
-        const cardEl = createCardElement(card);
-        cardsContainer.appendChild(cardEl);
-      }
-    });
+    updateCardsInContainer(cardsContainer, column.cardIds, cards);
 
     columnEl.appendChild(header);
     columnEl.appendChild(form);
     columnEl.appendChild(cardsContainer);
 
     return columnEl;
+  }
+
+  function updateCardsInContainer(container, cardIds, cards) {
+    const existingCards = Array.from(container.querySelectorAll('.retro-card'));
+    const existingById = new Map(existingCards.map(el => [el.dataset.cardId, el]));
+
+    // Insert / update cards in correct order
+    cardIds.forEach((cardId, index) => {
+      const card = cards[cardId];
+      if (!card) return;
+
+      let cardEl = existingById.get(cardId);
+      if (!cardEl) {
+        cardEl = createCardElement(card);
+        cardElements.set(cardId, cardEl);
+        cardRenderCache.set(cardId, { content: card.content, votes: card.votes });
+      } else {
+        updateCardElement(cardEl, card);
+      }
+
+      const existingAt = container.children[index];
+      if (existingAt !== cardEl) {
+        container.insertBefore(cardEl, existingAt || null);
+      }
+
+      existingById.delete(cardId);
+    });
+
+    // Remove any cards that are no longer in this column
+    existingById.forEach((el, cardId) => {
+      if (el && el.parentNode) {
+        el.parentNode.removeChild(el);
+      }
+      cardElements.delete(cardId);
+      cardRenderCache.delete(cardId);
+    });
+  }
+
+  function updateCardElement(cardEl, card) {
+    const last = cardRenderCache.get(card.id) || {};
+
+    // Update content if changed
+    if (last.content !== card.content) {
+      const content = cardEl.querySelector('.card-content');
+      if (content) {
+        content.innerHTML = formatContent(card.content);
+      }
+    }
+
+    // Update vote count if changed
+    if (last.votes !== card.votes) {
+      const voteCount = cardEl.querySelector('.vote-count');
+      if (voteCount) {
+        voteCount.textContent = card.votes || 0;
+      }
+
+      cardEl.classList.toggle('voted', (card.votes || 0) > 0);
+      cardEl.classList.toggle('high-votes', (card.votes || 0) >= 3);
+    }
+
+    // Keep vote button state synced with local user state
+    const voteBtn = cardEl.querySelector('.vote-btn');
+    if (voteBtn) {
+      const hasVoted = userVotes.has(card.id);
+      voteBtn.classList.toggle('active', hasVoted);
+      cardEl.classList.toggle('your-vote', hasVoted);
+    }
+
+    cardRenderCache.set(card.id, {
+      content: card.content,
+      votes: card.votes,
+    });
   }
 
   // Create card element
