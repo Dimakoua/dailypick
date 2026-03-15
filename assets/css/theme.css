@@ -77,6 +77,14 @@ body {
   z-index: -1;
 }
 
+/* When a seasonal theme provides a themed background (e.g. St. Patrick's),
+   prefer that background for the header overlay to improve contrast. */
+:root[data-brand-theme="stPatricks"] .site-header::before {
+  background: var(--brand-theme-background, rgba(15, 74, 50, 0.9));
+  backdrop-filter: blur(4px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
 .site-header .header-content {
   max-width: 1200px;
   width: 100%;

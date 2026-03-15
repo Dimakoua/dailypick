@@ -112,6 +112,11 @@ const DRAWER_Y = CANVAS_HEIGHT - DRAWER_HEIGHT;
 
 const PINBALL_LIGHT_COLORS = ['#FF3333', '#33FF33', '#33CCFF', '#FFFF33', '#FF33FF', '#FF9933', '#FFFFFF']; // Vibrant, light-like colors
 
+// Theme helper to get CSS variables for canvas rendering
+function getThemeColor(varName, fallback) {
+    return getComputedStyle(document.documentElement).getPropertyValue(varName).trim() || fallback;
+}
+
 class Letter {
     constructor(char, x, y) {
         this.char = char.toUpperCase();
@@ -482,22 +487,28 @@ function updateNamesFromInput() {
     resetAndStartGame(); // This will re-initialize availableNames from the new originalNames
 }
 function gameLoop(timestamp) {
-    // Clear canvas with a dark pinball-themed background
-    ctx.fillStyle = '#0d001a'; // Very dark purple/blue, classic for pinball
+    // Fetch theme-aware colors for this frame
+    const bgColor = getThemeColor('--brand-surface', '#0d001a');
+    const drawerBg = getThemeColor('--brand-surface-light', '#2c3e50');
+    const drawerBorder = getThemeColor('--brand-accent', '#34495e');
+    const textColor = getThemeColor('--brand-text', '#ecf0f1');
+
+    // Clear canvas with a theme-aware background
+    ctx.fillStyle = bgColor; // Replaced hardcoded purple/blue
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-    // Draw Drawer (Target Zone) with a more pinball-like style
+    // Draw Drawer (Target Zone) with a theme-aware style
     // Base of the drawer
-    ctx.fillStyle = "#2c3e50"; // Dark slate gray, somewhat metallic
+    ctx.fillStyle = drawerBg; // Replaced hardcoded slate gray
     ctx.fillRect(0, DRAWER_Y, CANVAS_WIDTH, DRAWER_HEIGHT);
 
     // Inner "well" or highlight for depth
     const drawerPadding = 4;
-    ctx.fillStyle = "#34495e"; // Slightly lighter slate gray
+    ctx.fillStyle = drawerBorder; // Replaced hardcoded lighter slate
     ctx.fillRect(drawerPadding, DRAWER_Y + drawerPadding, CANVAS_WIDTH - 2 * drawerPadding, DRAWER_HEIGHT - 2 * drawerPadding);
 
     // Text in the drawer
-    ctx.fillStyle = "#ecf0f1"; // Light silver/white for text
+    ctx.fillStyle = textColor; // Replaced hardcoded white/silver
     ctx.textAlign = "center";
     // Using a more thematic font. Ensure 'Orbitron' is linked via CSS or use a common fallback.
     // For 'Orbitron' or similar fonts, you might need to add: <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet"> to your HTML.
@@ -541,9 +552,9 @@ function gameLoop(timestamp) {
 
     if (availableNames.length === 0 && fallingLetters.length === 0) {
         // Game Over message styling
-        ctx.fillStyle = "rgba(0, 50, 100, 0.85)"; // Darker, more thematic overlay
+        ctx.fillStyle = "rgba(0, 0, 0, 0.85)"; // Keep dark overlay for contrast
         ctx.fillRect(CANVAS_WIDTH / 4, CANVAS_HEIGHT / 3, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 4);
-        ctx.fillStyle = "white";
+        ctx.fillStyle = textColor;
         ctx.font = "bold 30px 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
         ctx.textAlign = "center";
         ctx.fillText("All Names Matched!", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 15);
@@ -563,8 +574,10 @@ function gameLoop(timestamp) {
 function setupObstacles() {
     obstacles = []; // Clear existing obstacles
     // Updated color palette for a more classic pinball feel
+    // Use theme accent as a base for bumpers if available, with vibrant fallbacks
+    const accent = getThemeColor('--brand-accent', '#FFEB3B');
     const bumperColor = '#E91E63'; // Vibrant Pink/Red (like classic bumpers)
-    const pinColor1 = '#FFEB3B';   // Bright Yellow (like lights or pins)
+    const pinColor1 = accent;      // Theme accent (Yellow in St. Patrick's/Default)
     const pinColor2 = '#03A9F4';   // Bright Blue (another light/pin color)
     const guideColor = '#757575';  // Medium Grey (for metallic guides)
     const funnelColor = '#424242'; // Dark Grey (for funnel parts, more depth)

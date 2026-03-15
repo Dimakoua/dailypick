@@ -275,19 +275,22 @@
         return { start, end };
       },
       palette: {
-        accentColor: '#48d985',
-        accentStrong: '#2aa463',
-        backgroundColor: '#0f4a32',
-        surfaceColor: '#1e633f',
-        textColor: '#ecfff5',
-        headingColor: '#f4fff8',
-        subtleTextColor: '#c9ecd8',
-        borderColor: 'rgba(72, 217, 133, 0.35)',
+        // High-contrast St. Patrick's Day palette optimized for accessibility
+        accentColor: '#2ecc71',
+        accentStrong: '#27ae60',
+        accentContrastText: '#ffffff',
+        accentMuted: 'rgba(46, 204, 113, 0.15)',
+        backgroundColor: '#0a3022',
+        surfaceColor: '#123d2e',
+        textColor: '#f0fff8',
+        headingColor: '#ffffff',
+        subtleTextColor: '#e0f2eb',
+        borderColor: 'rgba(46, 204, 113, 0.45)',
       },
       assets: {
         icon: '🍀',
-        background: 'linear-gradient(160deg, rgba(15, 74, 50, 0.92) 0%, rgba(30, 99, 63, 0.9) 100%)',
-        accentGlow: '0 0 28px rgba(72, 217, 133, 0.32)',
+        background: 'linear-gradient(160deg, rgba(10, 48, 34, 0.96) 0%, rgba(18, 61, 46, 0.94) 100%)',
+        accentGlow: '0 0 30px rgba(46, 204, 113, 0.4)',
       },
       metadata: {
         description: 'Emerald greens and clover sparkles nod to parades across both Canada and the U.S.',

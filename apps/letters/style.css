@@ -32,7 +32,7 @@ body {
 h1 {
   font-size: clamp(2rem, 2.6rem, 3rem);
   margin: calc(var(--header-h, 64px) + 12px) 0 22px;
-  color: var(--blue, #3498db);
+  color: var(--brand-accent, #3498db);
   font-weight: 800;
   text-align: center;
 }
@@ -47,13 +47,13 @@ button#restartButton {
   border: 1px solid rgba(255,255,255,0.25);
   border-radius: var(--radius-md, 10px);
   cursor: pointer;
-  color: #fff;
+  color: var(--brand-accent-contrast, #fff);
   transition: transform .2s ease, box-shadow .2s ease, background-color .3s ease;
   box-shadow: 0 10px 22px rgba(0,0,0,0.12);
  
 }
 button#restartButton { 
-  background: linear-gradient(to bottom right, rgba(52,152,219,0.9), rgba(41,128,185,0.9));
+  background: var(--brand-accent, #3498db);
   margin-top: 16px;
 }
 button#restartButton:hover,
@@ -84,16 +84,16 @@ button#restartButton:disabled {
   max-width: var(--letters-max);
   box-sizing: border-box;
 
-  /* glass body with wood trim to keep "pinball" personality */
+  /* glass body with theme-aware trim to blend with the board */
   background: var(--glass-bg-strong, rgba(255,255,255,0.18));
  
-  border: 12px solid #4a3b31;                  /* wood trim */
+  border: 12px solid var(--brand-surface-light, #4a3b31); /* Themed wood/metal trim */
   border-radius: 28px;
   box-shadow: 0 14px 36px rgba(0,0,0,0.18);
   padding: 14px;
 }
 
-/* Canvas stays deep-blue pinball field with inner glow */
+/* Canvas follows theme background with inward depth */
 #gameCanvas {
   display: block;
   flex: 1 1 auto;
@@ -102,7 +102,7 @@ button#restartButton:disabled {
   border-top-right-radius: 90px;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 0;
-  background: linear-gradient(to bottom, #0a3a6b, #041a35);
+  background: var(--brand-surface, #041a35);
   box-shadow: inset 0 0 25px rgba(0,0,0,0.6);
   border: none;
 }
@@ -114,7 +114,7 @@ button#restartButton:disabled {
   flex-shrink: 0;
   overflow-y: auto;
   background: var(--glass-bg, rgba(255,255,255,0.12));
-  border-left: 5px solid #4a3b31;              /* wood separator */
+  border-left: 5px solid var(--brand-surface-light, #4a3b31); /* Themed separator */
   border-top-right-radius: 16px;
   border-bottom-right-radius: 16px;
   box-shadow: inset 0 0 0 1px var(--glass-border, rgba(255,255,255,0.38));
@@ -122,21 +122,21 @@ button#restartButton:disabled {
 #namesPanel h2 {
   margin: 0 0 10px;
   text-align: center;
-  color: var(--blue-600, #2980b9);
+  color: var(--brand-accent, #2980b9); /* Theme-aware title */
   font-weight: 800;
 }
 
-/* PiP trigger uses a subtle brown -> matches wood, but glassy */
+/* PiP trigger matches theme accent */
 #namesPanel .pip-trigger {
   width: 100%;
   margin: 12px 0 14px;
   padding: 10px 14px;
   border-radius: 10px;
   border: 1px solid rgba(255,255,255,0.25);
-  color: #fff;
-  background: linear-gradient(135deg, rgba(109,76,65,0.9) 0%, rgba(141,110,99,0.9) 100%);
+  color: var(--brand-accent-contrast, #fff);
+  background: var(--brand-accent, #3498db);
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  box-shadow: 0 10px 20px rgba(77,52,44,0.3);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
   transition: transform .2s ease, box-shadow .2s ease;
 }
 #namesPanel .pip-trigger::before { content: '🪟'; font-size: 1.05em; }
@@ -144,20 +144,23 @@ button#restartButton:disabled {
 #namesPanel .pip-trigger:focus-visible {
   outline: none;
   transform: translateY(-1px);
-  box-shadow: 0 14px 26px rgba(77,52,44,0.34);
+  box-shadow: 0 14px 26px rgba(0,0,0,0.2);
 }
 
 /* Names list items */
 .name-item {
   padding: 7px 6px;
-  border-bottom: 1px solid rgba(255,255,255,0.18);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
   font-size: 15px;
-  color: var(--gray-700, #374151);
+  color: var(--brand-text, #374151);
+  opacity: 0.8;
   transition: background-color .25s ease, transform .25s ease;
 }
 .name-item.matched {
-  background: rgba(46, 125, 50, 0.15);
-  color: #2e7d32;
+  background: var(--brand-accent, rgba(46, 125, 50, 0.15));
+  color: var(--brand-accent-contrast, #fff);
+  opacity: 1;
+  border-radius: 6px;
   font-weight: 800;
   text-decoration: line-through;
   animation: highlightName .5s ease-in-out;
@@ -179,34 +182,45 @@ button#restartButton:disabled {
 
 /* ---- SEO content adopts intro glass card look ---- */
 .seo-content-area {
-  background: var(--glass-bg, rgba(255,255,255,0.12));
-  border: 1px solid var(--glass-border, rgba(255,255,255,0.38));
+  background: var(--glass-bg, rgba(255,255,255,0.08));
+  border: 1px solid var(--glass-border, rgba(255,255,255,0.2));
   border-radius: var(--radius-lg, 15px);
   box-shadow: var(--glass-shadow, 0 8px 30px rgba(0,0,0,0.15));
   padding: 24px 28px;
   max-width: 780px;
   width: min(92%, 780px);
-  margin: 28px auto 0;
+  margin: 32px auto 40px;
   text-align: left;
-  line-height: 1.7;
+  line-height: 1.8;
+  color: var(--brand-text, #374151); /* Ensure content text matches theme */
 }
 .seo-content-area h2 {
-  color: var(--blue, #3498db);
-  margin: 0 0 12px;
-  font-size: 1.6rem;
+  color: var(--brand-accent, #3498db);
+  margin: 0 0 16px;
+  font-size: 1.8rem;
   text-align: center;
+  font-weight: 800;
 }
 .seo-content-area h3 {
-  color: var(--blue-600, #2980b9);
-  margin: 18px 0 8px;
-  font-size: 1.25rem;
-}
-.seo-content-area a {
-  color: var(--blue-600, #2980b9);
-  text-decoration: none;
+  color: var(--brand-accent, #2980b9);
+  margin: 24px 0 10px;
+  font-size: 1.4rem;
   font-weight: 700;
 }
-.seo-content-area a:hover { text-decoration: underline; }
+.seo-content-area p {
+  margin-bottom: 20px;
+  opacity: 0.95;
+}
+.seo-content-area a {
+  color: var(--brand-accent, #2980b9);
+  text-decoration: none;
+  font-weight: 700;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s ease;
+}
+.seo-content-area a:hover { 
+  border-bottom-color: currentColor;
+}
 
 /* ---- Responsive ---- */
 @media (max-width: 980px) {
@@ -224,7 +238,7 @@ button#restartButton:disabled {
   #namesPanel {
     width: 100%;
     border-left: 0;
-    border-top: 5px solid #4a3b31;
+    border-top: 5px solid var(--brand-surface-light, #4a3b31);
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
     border-bottom-left-radius: 12px;
