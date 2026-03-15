@@ -3,6 +3,8 @@ class RetroBoardSession {
     this.sessionId = sessionId;
     this.onStateChange = onStateChange;
     this.ws = null;
+    this.userId = null;
+    this.lastState = null;
     this.connect();
   }
 
@@ -18,8 +20,29 @@ class RetroBoardSession {
     });
 
     this.ws.addEventListener('message', (event) => {
-      const state = JSON.parse(event.data);
-      this.onStateChange(state);
+      const message = JSON.parse(event.data);
+
+      // Older clients expect the state directly
+      if (!message || typeof message !== 'object' || !message.type) {
+        this.onStateChange(message);
+        return;
+      }
+
+      switch (message.type) {
+        case 'me':
+          this.userId = message.userId;
+          if (this.lastState) {
+            this.onStateChange(this.lastState);
+          }
+          break;
+        case 'state':
+          this.lastState = message.state;
+          this.onStateChange(message.state);
+          break;
+        default:
+          // Unknown message type
+          break;
+      }
     });
 
     this.ws.addEventListener('close', () => {

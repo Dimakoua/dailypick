@@ -41,19 +41,21 @@ export class RetroBoardSession extends BaseEphemeralDO {
 
     // Send initial state to new user
     server.send(JSON.stringify(session.state));
+    // Send the new user's id back so the client can know which cards they own
+    server.send(JSON.stringify({ type: 'me', userId }));
 
     server.addEventListener('message', async (event) => {
       const data = JSON.parse(event.data);
 
       switch (data.type) {
         case 'add-card':
-          this.handleAddCard(session, data.columnId, data.content);
+          this.handleAddCard(session, userId, data.columnId, data.content);
           break;
         case 'update-card':
           this.handleUpdateCard(session, data.cardId, data.content);
           break;
         case 'delete-card':
-          this.handleDeleteCard(session, data.cardId);
+          this.handleDeleteCard(session, userId, data.cardId);
           break;
         case 'vote-card':
           this.handleVoteCard(session, userId, data.cardId);
@@ -110,7 +112,7 @@ export class RetroBoardSession extends BaseEphemeralDO {
     };
   }
 
-  handleAddCard(session, columnId, content) {
+  handleAddCard(session, userId, columnId, content) {
     // Validate content
     if (!content || typeof content !== 'string') {
       return;
@@ -128,6 +130,7 @@ export class RetroBoardSession extends BaseEphemeralDO {
       id: cardId,
       content: trimmedContent,
       votes: 0,
+      owner: userId,
     };
 
     if (session.state.columns[columnId]) {
@@ -155,7 +158,12 @@ export class RetroBoardSession extends BaseEphemeralDO {
     }
   }
 
-  handleDeleteCard(session, cardId) {
+  handleDeleteCard(session, userId, cardId) {
+    const card = session.state.cards[cardId];
+    if (!card || card.owner !== userId) {
+      return; // only the owner can delete their card
+    }
+
     // Remove from columns
     for (const columnId in session.state.columns) {
       const column = session.state.columns[columnId];

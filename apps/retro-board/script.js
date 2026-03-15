@@ -447,6 +447,13 @@ document.addEventListener('DOMContentLoaded', () => {
       cardEl.classList.toggle('your-vote', hasVoted);
     }
 
+    // Show/hide delete button based on ownership
+    const deleteBtn = cardEl.querySelector('.delete-btn');
+    if (deleteBtn) {
+      const isOwner = session.userId && card.owner === session.userId;
+      deleteBtn.hidden = !isOwner;
+    }
+
     cardRenderCache.set(card.id, {
       content: card.content,
       votes: card.votes,
@@ -536,13 +543,17 @@ document.addEventListener('DOMContentLoaded', () => {
     voteSection.appendChild(voteBtn);
     voteSection.appendChild(voteCount);
 
-    // Delete button
+    // Delete button (only for the card owner)
     const deleteBtn = document.createElement('button');
     deleteBtn.className = 'delete-btn';
     deleteBtn.textContent = '🗑️';
     deleteBtn.setAttribute('aria-label', 'Delete card');
 
+    const isOwner = session.userId && card.owner === session.userId;
+    deleteBtn.hidden = !isOwner;
+
     deleteBtn.addEventListener('click', () => {
+      if (!isOwner) return;
       if (confirm('Delete this card?')) {
         session.deleteCard(card.id);
       }
