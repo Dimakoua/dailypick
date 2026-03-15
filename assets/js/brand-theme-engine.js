@@ -369,6 +369,7 @@
         headingColor: '#183b88',
         subtleTextColor: '#6176b7',
         borderColor: 'rgba(45, 107, 255, 0.28)',
+        accentContrastText: '#163d96',
       },
       assets: {
         icon: '🗽',

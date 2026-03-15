@@ -260,7 +260,7 @@
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 16px;
   padding: 14px 16px;
-  background: var(--brand-accent, rgba(255, 255, 255, 0.95));
+  background: var(--brand-surface, rgba(255, 255, 255, 0.95));
   color: var(--brand-accent-contrast-text, #fff);
 
   transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
