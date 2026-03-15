@@ -349,6 +349,40 @@
   align-items: center;
 }
 
+.reaction-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.reaction-btn {
+  padding: 0.35rem 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.reaction-btn:hover {
+  background: var(--brand-accent);
+  border-color: var(--brand-accent);
+  color: white;
+}
+
+.reaction-btn.active {
+  background: var(--brand-accent);
+  border-color: var(--brand-accent);
+  color: white;
+}
+
 .vote-section {
   display: flex;
   align-items: center;

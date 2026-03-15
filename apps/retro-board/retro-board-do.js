@@ -36,7 +36,7 @@ export class RetroBoardSession extends BaseEphemeralDO {
 
     const session = this.sessions.get(sessionId);
     const userId = crypto.randomUUID();
-    session.users.set(userId, { ws: server, votes: new Set() });
+    session.users.set(userId, { ws: server, reactions: new Map() });
     this.markActive().catch((error) => console.error('[RetroBoardSession] Failed to mark session active after user connection:', error));
 
     // Send initial state to new user
@@ -58,7 +58,11 @@ export class RetroBoardSession extends BaseEphemeralDO {
           this.handleDeleteCard(session, userId, data.cardId);
           break;
         case 'vote-card':
-          this.handleVoteCard(session, userId, data.cardId);
+          // Backwards compatibility: thumbs-up
+          this.handleReact(session, userId, data.cardId, 'thumbs');
+          break;
+        case 'react':
+          this.handleReact(session, userId, data.cardId, data.reaction);
           break;
         case 'sort-column':
           this.handleSortColumn(session, data.columnId);
@@ -129,8 +133,13 @@ export class RetroBoardSession extends BaseEphemeralDO {
     session.state.cards[cardId] = {
       id: cardId,
       content: trimmedContent,
-      votes: 0,
       owner: userId,
+      reactions: {
+        thumbs: 0,
+        heart: 0,
+        tada: 0,
+        thinking: 0,
+      },
     };
 
     if (session.state.columns[columnId]) {
@@ -179,7 +188,7 @@ export class RetroBoardSession extends BaseEphemeralDO {
     this.broadcast(session);
   }
 
-  handleVoteCard(session, userId, cardId) {
+  handleReact(session, userId, cardId, reaction) {
     const card = session.state.cards[cardId];
     const user = session.users.get(userId);
 
@@ -187,14 +196,34 @@ export class RetroBoardSession extends BaseEphemeralDO {
       return;
     }
 
-    const hasVoted = user.votes && user.votes.has(cardId);
+    if (!card.reactions) {
+      card.reactions = {
+        thumbs: 0,
+        heart: 0,
+        tada: 0,
+        thinking: 0,
+      };
+    }
 
-    if (hasVoted) {
-      card.votes = Math.max(0, (card.votes || 0) - 1);
-      user.votes.delete(cardId);
+    if (!user.reactions) {
+      user.reactions = new Map();
+    }
+
+    const reactions = user.reactions.get(cardId) || new Set();
+    const hasReacted = reactions.has(reaction);
+
+    if (hasReacted) {
+      card.reactions[reaction] = Math.max(0, (card.reactions[reaction] || 0) - 1);
+      reactions.delete(reaction);
     } else {
-      card.votes = (card.votes || 0) + 1;
-      user.votes.add(cardId);
+      card.reactions[reaction] = (card.reactions[reaction] || 0) + 1;
+      reactions.add(reaction);
+    }
+
+    if (reactions.size > 0) {
+      user.reactions.set(cardId, reactions);
+    } else {
+      user.reactions.delete(cardId);
     }
 
     this.broadcast(session);
@@ -212,10 +241,10 @@ export class RetroBoardSession extends BaseEphemeralDO {
     );
 
     column.cardIds.sort((a, b) => {
-      const aVotes = session.state.cards[a]?.votes || 0;
-      const bVotes = session.state.cards[b]?.votes || 0;
-      if (bVotes !== aVotes) {
-        return bVotes - aVotes;
+      const aThumbs = session.state.cards[a]?.reactions?.thumbs || 0;
+      const bThumbs = session.state.cards[b]?.reactions?.thumbs || 0;
+      if (bThumbs !== aThumbs) {
+        return bThumbs - aThumbs;
       }
       return (originalOrder[a] || 0) - (originalOrder[b] || 0);
     });

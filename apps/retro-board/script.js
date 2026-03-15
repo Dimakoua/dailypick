@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const cardElements = new Map();
   const cardRenderCache = new Map();
 
-  let userVotes = new Set();
-  let userVotesStorageKey = null;
+  let userReactions = new Map();
+  let userReactionsStorageKey = null;
 
   // Keep in-progress input content stable across re-renders
   let pendingCardText = {};
@@ -67,18 +67,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function getUserVotesStorageKey(sessionId) {
-    return `retro-board-votes-${sessionId}`;
+  function getUserReactionsStorageKey(sessionId) {
+    return `retro-board-reactions-${sessionId}`;
   }
 
-  function loadUserVotes() {
-    if (!userVotesStorageKey) return;
+  function loadUserReactions() {
+    if (!userReactionsStorageKey) return;
     try {
-      const stored = localStorage.getItem(userVotesStorageKey);
+      const stored = localStorage.getItem(userReactionsStorageKey);
       if (stored) {
         const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed)) {
-          userVotes = new Set(parsed);
+        if (parsed && typeof parsed === 'object') {
+          userReactions = new Map(Object.entries(parsed).map(([cardId, reactions]) => [cardId, new Set(reactions)]));
         }
       }
     } catch (e) {
@@ -86,10 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function saveUserVotes() {
-    if (!userVotesStorageKey) return;
+  function saveUserReactions() {
+    if (!userReactionsStorageKey) return;
     try {
-      localStorage.setItem(userVotesStorageKey, JSON.stringify(Array.from(userVotes)));
+      const plain = Object.fromEntries(Array.from(userReactions.entries()).map(([cardId, reactions]) => [cardId, Array.from(reactions)]));
+      localStorage.setItem(userReactionsStorageKey, JSON.stringify(plain));
     } catch (e) {
       // ignore storage errors
     }
@@ -105,8 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
       window.history.replaceState({}, '', url);
     }
 
-    userVotesStorageKey = getUserVotesStorageKey(sessionId);
-    loadUserVotes();
+    userReactionsStorageKey = getUserReactionsStorageKey(sessionId);
+    loadUserReactions();
 
     sessionBadge.textContent = `Session: ${sessionId}`;
 
@@ -428,24 +429,25 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Update vote count if changed
-    if (last.votes !== card.votes) {
-      const voteCount = cardEl.querySelector('.vote-count');
-      if (voteCount) {
-        voteCount.textContent = card.votes || 0;
+    // Update reactions counts and buttons
+    const reactions = card.reactions || {};
+    const thumbs = reactions.thumbs || 0;
+
+    reactionButtons.forEach(({ type }) => {
+      const btn = cardEl.querySelector(`.reaction-btn[data-reaction="${type}"]`);
+      if (!btn) return;
+
+      const countEl = btn.querySelector('.reaction-count');
+      if (countEl) {
+        countEl.textContent = String(reactions[type] || 0);
       }
 
-      cardEl.classList.toggle('voted', (card.votes || 0) > 0);
-      cardEl.classList.toggle('high-votes', (card.votes || 0) >= 3);
-    }
+      const active = userReactions.get(card.id)?.has(type);
+      btn.classList.toggle('active', !!active);
+    });
 
-    // Keep vote button state synced with local user state
-    const voteBtn = cardEl.querySelector('.vote-btn');
-    if (voteBtn) {
-      const hasVoted = userVotes.has(card.id);
-      voteBtn.classList.toggle('active', hasVoted);
-      cardEl.classList.toggle('your-vote', hasVoted);
-    }
+    cardEl.classList.toggle('voted', thumbs > 0);
+    cardEl.classList.toggle('high-votes', thumbs >= 3);
 
     // Show/hide delete button based on ownership
     const deleteBtn = cardEl.querySelector('.delete-btn');
@@ -456,19 +458,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     cardRenderCache.set(card.id, {
       content: card.content,
-      votes: card.votes,
+      reactions,
     });
   }
+
+  const reactionButtons = [
+    { type: 'thumbs', emoji: '👍' },
+    { type: 'heart', emoji: '❤️' },
+    { type: 'tada', emoji: '🎉' },
+    { type: 'thinking', emoji: '🤔' },
+  ];
 
   // Create card element
   function createCardElement(card) {
     const cardEl = document.createElement('div');
     cardEl.className = 'retro-card';
-    const votes = card.votes || 0;
-    if (votes > 0) {
+    const reactions = card.reactions || {};
+    const thumbs = reactions.thumbs || 0;
+    const totalReactions = Object.values(reactions).reduce((sum, v) => sum + (v || 0), 0);
+
+    if (thumbs > 0) {
       cardEl.classList.add('voted');
     }
-    if (votes >= 3) {
+    if (thumbs >= 3) {
       cardEl.classList.add('high-votes');
     }
     cardEl.draggable = true;
@@ -510,38 +522,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const actions = document.createElement('div');
     actions.className = 'card-actions';
 
-    // Vote section
-    const voteSection = document.createElement('div');
-    voteSection.className = 'vote-section';
-
-    const voteBtn = document.createElement('button');
-    voteBtn.className = 'vote-btn';
-    voteBtn.innerHTML = '👍';
-    voteBtn.setAttribute('aria-label', 'Vote for this card');
-
-    const voteCount = document.createElement('span');
-    voteCount.className = 'vote-count';
-    voteCount.textContent = card.votes || 0;
-
-    const hasVoted = userVotes.has(card.id);
-    voteBtn.classList.toggle('active', hasVoted);
-    cardEl.classList.toggle('your-vote', hasVoted);
-
-    voteBtn.addEventListener('click', () => {
-      const alreadyVoted = userVotes.has(card.id);
-      if (alreadyVoted) {
-        userVotes.delete(card.id);
-      } else {
-        userVotes.add(card.id);
-      }
-      saveUserVotes();
-      voteBtn.classList.toggle('active', !alreadyVoted);
-      cardEl.classList.toggle('your-vote', !alreadyVoted);
-      session.voteCard(card.id);
-    });
-
-    voteSection.appendChild(voteBtn);
-    voteSection.appendChild(voteCount);
+    const reactionSection = buildReactionSection(card);
 
     // Delete button (only for the card owner)
     const deleteBtn = document.createElement('button');
@@ -559,13 +540,69 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    actions.appendChild(voteSection);
+    actions.appendChild(reactionSection);
     actions.appendChild(deleteBtn);
 
     cardEl.appendChild(content);
     cardEl.appendChild(actions);
 
+    // Cache for rendering
+    cardRenderCache.set(card.id, {
+      content: card.content,
+      reactions: card.reactions || {},
+    });
+
     return cardEl;
+  }
+
+  // Build the reaction UI section for a card
+  function buildReactionSection(card) {
+    const reactionSection = document.createElement('div');
+    reactionSection.className = 'reaction-section';
+
+    reactionButtons.forEach(({ type, emoji }) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'reaction-btn';
+      btn.dataset.reaction = type;
+      btn.setAttribute('aria-label', `React with ${emoji}`);
+      btn.innerHTML = `${emoji} <span class="reaction-count">${(card.reactions && card.reactions[type]) || 0}</span>`;
+
+      const isActive = userReactions.get(card.id)?.has(type);
+      if (isActive) {
+        btn.classList.add('active');
+      }
+
+      btn.addEventListener('click', () => {
+        const reactions = userReactions.get(card.id) || new Set();
+        const already = reactions.has(type);
+        if (already) {
+          reactions.delete(type);
+        } else {
+          reactions.add(type);
+        }
+        if (reactions.size > 0) {
+          userReactions.set(card.id, reactions);
+        } else {
+          userReactions.delete(card.id);
+        }
+        saveUserReactions();
+
+        // Optimistically update UI
+        btn.classList.toggle('active', !already);
+        const countEl = btn.querySelector('.reaction-count');
+        if (countEl) {
+          const current = parseInt(countEl.textContent || '0', 10) || 0;
+          countEl.textContent = String(already ? current - 1 : current + 1);
+        }
+
+        session.reactCard(card.id, type);
+      });
+
+      reactionSection.appendChild(btn);
+    });
+
+    return reactionSection;
   }
 
   // Format content with basic markdown support

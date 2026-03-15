@@ -94,6 +94,16 @@ class RetroBoardSession {
     }
   }
 
+  reactCard(cardId, reaction) {
+    if (this.ws.readyState === WebSocket.OPEN) {
+      this.ws.send(JSON.stringify({ 
+        type: 'react', 
+        cardId,
+        reaction,
+      }));
+    }
+  }
+
   sortColumn(columnId) {
     if (this.ws.readyState === WebSocket.OPEN) {
       this.ws.send(JSON.stringify({
