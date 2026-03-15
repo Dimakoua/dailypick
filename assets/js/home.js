@@ -80,9 +80,9 @@ function initRandomGameButton() {
         dieIcon.classList.add('is-spinning');
       }
       
-      // Trigger theme-specific pixel art effect
+      // Trigger theme-specific pixel art effect (skip default/disabled themes)
       const activeTheme = document.documentElement.getAttribute('data-brand-theme');
-      if (activeTheme) {
+      if (activeTheme && activeTheme !== 'default' && activeTheme !== 'disabled') {
         triggerPixelEffect(activeTheme, btn);
       }
 
@@ -111,40 +111,52 @@ function initRandomGameButton() {
  * @param {HTMLElement} origin - The element to explode from
  */
 function triggerPixelEffect(theme, origin) {
-  const rect = origin.getBoundingClientRect();
-  const centerX = rect.left + rect.width / 2;
-  const centerY = rect.top + rect.height / 2;
-  
-  const container = document.createElement('div');
-  container.className = `pixel-explosion theme-${theme}`;
-  container.style.position = 'fixed';
-  container.style.left = `${centerX}px`;
-  container.style.top = `${centerY}px`;
-  container.style.pointerEvents = 'none';
-  container.style.zIndex = '9999';
-  
-  // Create small pixel "bits"
-  const pixelCount = 30;
+  // For this effect we create a short-lived rain of themed pixel bits.
+  // It can be re-triggered each click and is safe to run multiple times.
+
+  const rainContainer = document.createElement('div');
+  rainContainer.className = `pixel-rain theme-${theme}`;
+  rainContainer.style.position = 'fixed';
+  rainContainer.style.inset = '0';
+  rainContainer.style.pointerEvents = 'none';
+  rainContainer.style.zIndex = '9999';
+
+  const computed = getComputedStyle(document.documentElement);
+  const rawIcon = computed.getPropertyValue('--brand-theme-icon').trim();
+  const themeIcon = rawIcon.replace(/^['"]|['"]$/g, ''); // strip quotes if present
+
+  const pixelCount = 40;
   for (let i = 0; i < pixelCount; i++) {
     const pixel = document.createElement('div');
-    pixel.className = 'pixel-bit';
-    
-    // Randomize trajectory
-    const angle = Math.random() * Math.PI * 2;
-    const velocity = 50 + Math.random() * 150;
-    const tx = Math.cos(angle) * velocity;
-    const ty = Math.sin(angle) * velocity;
-    
-    pixel.style.setProperty('--tx', `${tx}px`);
-    pixel.style.setProperty('--ty', `${ty}px`);
-    
-    container.appendChild(pixel);
+    pixel.className = 'rain-bit';
+
+    // Pass the theme icon per pixel (CSS uses attr to render it)
+    if (themeIcon) {
+      pixel.dataset.themeIcon = themeIcon;
+    }
+
+    // Random x position within viewport
+    const x = Math.random() * 100;
+    pixel.style.left = `${x}vw`;
+
+    // Random delay so not all fall together
+    const delay = Math.random() * 0.6;
+    pixel.style.animationDelay = `${delay}s`;
+
+    // Random size for variation
+    const size = 10 + Math.random() * 8;
+    pixel.style.width = `${size}px`;
+    pixel.style.height = `${size}px`;
+
+    rainContainer.appendChild(pixel);
   }
-  
-  document.body.appendChild(container);
-  
-  // Cleanup
-  setTimeout(() => container.remove(), 1500);
+
+  document.body.appendChild(rainContainer);
+
+  // Cleanup after animation completes
+  setTimeout(() => {
+    rainContainer.remove();
+  }, 2200); // allow full duration + delay
 }
 
 /**

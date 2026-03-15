@@ -301,50 +301,64 @@ body.is-navigating .main-container {
     }
 }
 
-/* Pixel Art Explosion Effects */
-.pixel-explosion {
+/* Pixel Art Rain Effect */
+.pixel-rain {
+    position: fixed;
+    inset: 0;
     pointer-events: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    overflow: hidden;
+    z-index: 9999;
 }
 
-.pixel-bit {
+.rain-bit {
     position: absolute;
-    width: 10px;
-    height: 10px;
+    top: -20px;
+    width: 18px;
+    height: 18px;
     background: var(--brand-accent, #3498db);
-    /* Pixelated look: no anti-aliasing on the edges */
     image-rendering: pixelated;
-    box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
-    animation: pixel-scatter 0.8s cubic-bezier(0.12, 0.4, 0.29, 1.46) forwards;
+    filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.35));
+    opacity: 0.95;
+    animation: rain-fall 1.9s cubic-bezier(0.25, 0.04, 0.18, 0.95) forwards;
+    box-shadow: 0 0 10px var(--brand-theme-accent-glow, rgba(0,0,0,0.25));
 }
 
-/* St. Patrick's Theme specific: Lucky Clovers & Gold */
-.theme-stPatricks .pixel-bit:nth-child(even) {
-    background: #27ae60; /* Kelly Green */
-    /* Shape like a pixel clover leaf */
-    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+/* When theme provides an icon, show it and remove the block background */
+.rain-bit[data-theme-icon] {
+    background: transparent;
 }
 
-.theme-stPatricks .pixel-bit:nth-child(odd) {
-    background: #f1c40f; /* Pot of Gold Yellow */
-    border-radius: 2px;
+.rain-bit::before {
+    content: attr(data-theme-icon);
+    display: block;
+    width: 100%;
+    height: 100%;
+    font-size: 18px;
+    line-height: 18px;
+    text-align: center;
+    opacity: 0.95;
 }
 
-/* Default Theme fallback */
-.theme-default .pixel-bit {
-    background: var(--brand-accent);
-    border-radius: 0;
+/* Hide pseudo if no icon is set */
+.rain-bit:not([data-theme-icon])::before {
+    content: '';
 }
 
-@keyframes pixel-scatter {
+/* Hide the pseudo-element when no icon is set */
+.rain-bit:not([data-theme-icon])::before {
+    content: '';
+}
+
+@keyframes rain-fall {
     0% {
-        transform: translate(0, 0) rotate(0deg) scale(1);
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    90% {
         opacity: 1;
     }
     100% {
-        transform: translate(var(--tx), var(--ty)) rotate(450deg) scale(0);
+        transform: translateY(110vh) rotate(420deg);
         opacity: 0;
     }
 }
