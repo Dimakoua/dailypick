@@ -79,6 +79,13 @@ function initRandomGameButton() {
       if (dieIcon) {
         dieIcon.classList.add('is-spinning');
       }
+      
+      // Trigger theme-specific pixel art effect
+      const activeTheme = document.documentElement.getAttribute('data-brand-theme');
+      if (activeTheme) {
+        triggerPixelEffect(activeTheme, btn);
+      }
+
       document.body.classList.add('is-navigating');
 
       const link = pickRandomLink(links);
@@ -89,13 +96,55 @@ function initRandomGameButton() {
       // Defer to let the animation play and the live region announce
       setTimeout(() => {
         window.location.href = link.href;
-      }, 400); // 600ms matches the CSS animation duration
+      }, 1200); // Increased to allow pixel effect to be seen
     } catch (err) {
       if (announceEl) {
         announceEl.textContent = 'Unable to pick a game right now.';
       }
     }
   });
+}
+
+/**
+ * Creates a pixel-art explosion effect based on the current theme.
+ * @param {string} theme - The ID of the active theme (e.g., 'stPatricks')
+ * @param {HTMLElement} origin - The element to explode from
+ */
+function triggerPixelEffect(theme, origin) {
+  const rect = origin.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+  
+  const container = document.createElement('div');
+  container.className = `pixel-explosion theme-${theme}`;
+  container.style.position = 'fixed';
+  container.style.left = `${centerX}px`;
+  container.style.top = `${centerY}px`;
+  container.style.pointerEvents = 'none';
+  container.style.zIndex = '9999';
+  
+  // Create small pixel "bits"
+  const pixelCount = 30;
+  for (let i = 0; i < pixelCount; i++) {
+    const pixel = document.createElement('div');
+    pixel.className = 'pixel-bit';
+    
+    // Randomize trajectory
+    const angle = Math.random() * Math.PI * 2;
+    const velocity = 50 + Math.random() * 150;
+    const tx = Math.cos(angle) * velocity;
+    const ty = Math.sin(angle) * velocity;
+    
+    pixel.style.setProperty('--tx', `${tx}px`);
+    pixel.style.setProperty('--ty', `${ty}px`);
+    
+    container.appendChild(pixel);
+  }
+  
+  document.body.appendChild(container);
+  
+  // Cleanup
+  setTimeout(() => container.remove(), 1500);
 }
 
 /**

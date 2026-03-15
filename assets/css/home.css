@@ -300,3 +300,56 @@ body.is-navigating .main-container {
         transform: translateY(10px);
     }
 }
+
+/* Pixel Art Explosion Effects */
+.pixel-explosion {
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pixel-bit {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--brand-accent, #3498db);
+    /* Pixelated look: no anti-aliasing on the edges */
+    image-rendering: pixelated;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+    animation: pixel-scatter 0.8s cubic-bezier(0.12, 0.4, 0.29, 1.46) forwards;
+}
+
+/* St. Patrick's Theme specific: Lucky Clovers & Gold */
+.theme-stPatricks .pixel-bit:nth-child(even) {
+    background: #27ae60; /* Kelly Green */
+    /* Shape like a pixel clover leaf */
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.theme-stPatricks .pixel-bit:nth-child(odd) {
+    background: #f1c40f; /* Pot of Gold Yellow */
+    border-radius: 2px;
+}
+
+/* Default Theme fallback */
+.theme-default .pixel-bit {
+    background: var(--brand-accent);
+    border-radius: 0;
+}
+
+@keyframes pixel-scatter {
+    0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty)) rotate(450deg) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Navigation fade out duration adjustment */
+body.is-navigating .main-container {
+    animation: fade-out 0.8s ease-in 0.4s forwards;
+}
