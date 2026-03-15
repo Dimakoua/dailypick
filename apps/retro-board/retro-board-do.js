@@ -36,7 +36,7 @@ export class RetroBoardSession extends BaseEphemeralDO {
 
     const session = this.sessions.get(sessionId);
     const userId = crypto.randomUUID();
-    session.users.set(userId, { ws: server });
+    session.users.set(userId, { ws: server, votes: new Set() });
     this.markActive().catch((error) => console.error('[RetroBoardSession] Failed to mark session active after user connection:', error));
 
     // Send initial state to new user
@@ -56,7 +56,10 @@ export class RetroBoardSession extends BaseEphemeralDO {
           this.handleDeleteCard(session, data.cardId);
           break;
         case 'vote-card':
-          this.handleVoteCard(session, data.cardId);
+          this.handleVoteCard(session, userId, data.cardId);
+          break;
+        case 'sort-column':
+          this.handleSortColumn(session, data.columnId);
           break;
         case 'move-card':
           this.handleMoveCard(session, data.cardId, data.sourceColumnId, data.targetColumnId, data.newIndex);
@@ -168,11 +171,48 @@ export class RetroBoardSession extends BaseEphemeralDO {
     this.broadcast(session);
   }
 
-  handleVoteCard(session, cardId) {
-    if (session.state.cards[cardId]) {
-      session.state.cards[cardId].votes = (session.state.cards[cardId].votes || 0) + 1;
-      this.broadcast(session);
+  handleVoteCard(session, userId, cardId) {
+    const card = session.state.cards[cardId];
+    const user = session.users.get(userId);
+
+    if (!card || !user) {
+      return;
     }
+
+    const hasVoted = user.votes && user.votes.has(cardId);
+
+    if (hasVoted) {
+      card.votes = Math.max(0, (card.votes || 0) - 1);
+      user.votes.delete(cardId);
+    } else {
+      card.votes = (card.votes || 0) + 1;
+      user.votes.add(cardId);
+    }
+
+    this.broadcast(session);
+  }
+
+  handleSortColumn(session, columnId) {
+    const column = session.state.columns[columnId];
+    if (!column) {
+      return;
+    }
+
+    // Stable sort: keep existing order for ties
+    const originalOrder = Object.fromEntries(
+      column.cardIds.map((id, index) => [id, index])
+    );
+
+    column.cardIds.sort((a, b) => {
+      const aVotes = session.state.cards[a]?.votes || 0;
+      const bVotes = session.state.cards[b]?.votes || 0;
+      if (bVotes !== aVotes) {
+        return bVotes - aVotes;
+      }
+      return (originalOrder[a] || 0) - (originalOrder[b] || 0);
+    });
+
+    this.broadcast(session);
   }
 
   handleMoveCard(session, cardId, sourceColumnId, targetColumnId, newIndex) {

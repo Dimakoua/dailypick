@@ -71,6 +71,15 @@ class RetroBoardSession {
     }
   }
 
+  sortColumn(columnId) {
+    if (this.ws.readyState === WebSocket.OPEN) {
+      this.ws.send(JSON.stringify({
+        type: 'sort-column',
+        columnId,
+      }));
+    }
+  }
+
   moveCard(cardId, sourceColumnId, targetColumnId, newIndex) {
     if (this.ws.readyState === WebSocket.OPEN) {
       this.ws.send(JSON.stringify({ 

@@ -9,6 +9,87 @@ document.addEventListener('DOMContentLoaded', () => {
   let draggedCardId = null;
   let dropIndicator = null;
 
+  let userVotes = new Set();
+  let userVotesStorageKey = null;
+
+  // Keep in-progress input content stable across re-renders
+  let pendingCardText = {};
+  let focusedInput = null;
+
+  function captureTransientState() {
+    pendingCardText = {};
+    document.querySelectorAll('.add-card-input').forEach((input) => {
+      const columnId = input.dataset.columnId;
+      if (!columnId) return;
+      pendingCardText[columnId] = input.value;
+    });
+
+    const active = document.activeElement;
+    if (active && active.classList.contains('add-card-input')) {
+      focusedInput = {
+        type: 'add-card',
+        columnId: active.dataset.columnId,
+        selectionStart: active.selectionStart,
+        selectionEnd: active.selectionEnd,
+      };
+    } else {
+      focusedInput = null;
+    }
+  }
+
+  function restoreTransientState() {
+    if (!pendingCardText) return;
+
+    Object.entries(pendingCardText).forEach(([columnId, value]) => {
+      const input = document.querySelector(`.add-card-input[data-column-id="${columnId}"]`);
+      if (input) {
+        input.value = value;
+        const addBtn = input.closest('.add-card-form')?.querySelector('.add-card-btn');
+        if (addBtn) {
+          addBtn.disabled = value.trim().length === 0;
+        }
+      }
+    });
+
+    if (focusedInput && focusedInput.type === 'add-card') {
+      const input = document.querySelector(`.add-card-input[data-column-id="${focusedInput.columnId}"]`);
+      if (input) {
+        input.focus();
+        if (typeof focusedInput.selectionStart === 'number' && typeof focusedInput.selectionEnd === 'number') {
+          input.setSelectionRange(focusedInput.selectionStart, focusedInput.selectionEnd);
+        }
+      }
+    }
+  }
+
+  function getUserVotesStorageKey(sessionId) {
+    return `retro-board-votes-${sessionId}`;
+  }
+
+  function loadUserVotes() {
+    if (!userVotesStorageKey) return;
+    try {
+      const stored = localStorage.getItem(userVotesStorageKey);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          userVotes = new Set(parsed);
+        }
+      }
+    } catch (e) {
+      // ignore invalid local storage values
+    }
+  }
+
+  function saveUserVotes() {
+    if (!userVotesStorageKey) return;
+    try {
+      localStorage.setItem(userVotesStorageKey, JSON.stringify(Array.from(userVotes)));
+    } catch (e) {
+      // ignore storage errors
+    }
+  }
+
   // Initialize session
   function initializeSession() {
     const url = new URL(window.location);
@@ -18,6 +99,9 @@ document.addEventListener('DOMContentLoaded', () => {
       url.searchParams.set('session_id', sessionId);
       window.history.replaceState({}, '', url);
     }
+
+    userVotesStorageKey = getUserVotesStorageKey(sessionId);
+    loadUserVotes();
 
     sessionBadge.textContent = `Session: ${sessionId}`;
 
@@ -118,6 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    captureTransientState();
     retroBoard.innerHTML = '';
 
     state.columnOrder.forEach(columnId => {
@@ -127,6 +212,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const columnEl = createColumnElement(column, state.cards);
       retroBoard.appendChild(columnEl);
     });
+
+    restoreTransientState();
   }
 
   // Create column element
@@ -168,8 +255,18 @@ document.addEventListener('DOMContentLoaded', () => {
     cardCount.className = 'card-count';
     cardCount.textContent = `${column.cardIds.length} cards`;
 
+    const sortBtn = document.createElement('button');
+    sortBtn.className = 'sort-btn';
+    sortBtn.type = 'button';
+    sortBtn.textContent = '⇅ Sort';
+    sortBtn.setAttribute('aria-label', 'Sort cards by votes');
+    sortBtn.addEventListener('click', () => {
+      session.sortColumn(column.id);
+    });
+
     header.appendChild(title);
     header.appendChild(cardCount);
+    header.appendChild(sortBtn);
 
     // Add card form
     const form = document.createElement('form');
@@ -178,8 +275,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const input = document.createElement('input');
     input.type = 'text';
     input.className = 'add-card-input';
+    input.dataset.columnId = column.id;
     input.placeholder = 'Enter card text and press + or Enter';
     input.setAttribute('aria-label', `Add card to ${column.title}`);
+    input.value = pendingCardText[column.id] || '';
 
     const addBtn = document.createElement('button');
     addBtn.type = 'submit';
@@ -190,6 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Enable/disable button based on input content
     input.addEventListener('input', () => {
+      pendingCardText[column.id] = input.value;
       addBtn.disabled = input.value.trim().length === 0;
     });
 
@@ -295,7 +395,20 @@ document.addEventListener('DOMContentLoaded', () => {
     voteCount.className = 'vote-count';
     voteCount.textContent = card.votes || 0;
 
+    const hasVoted = userVotes.has(card.id);
+    voteBtn.classList.toggle('active', hasVoted);
+    cardEl.classList.toggle('your-vote', hasVoted);
+
     voteBtn.addEventListener('click', () => {
+      const alreadyVoted = userVotes.has(card.id);
+      if (alreadyVoted) {
+        userVotes.delete(card.id);
+      } else {
+        userVotes.add(card.id);
+      }
+      saveUserVotes();
+      voteBtn.classList.toggle('active', !alreadyVoted);
+      cardEl.classList.toggle('your-vote', !alreadyVoted);
       session.voteCard(card.id);
     });
 

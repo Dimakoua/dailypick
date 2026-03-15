@@ -142,6 +142,28 @@
   font-weight: 500;
 }
 
+.sort-btn {
+  padding: 0.35rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  font-size: 0.85rem;
+}
+
+.sort-btn:hover {
+  background: var(--brand-accent);
+  border-color: var(--brand-accent);
+  color: white;
+}
+
+.sort-btn:active {
+  transform: translateY(1px);
+}
+
 .add-card-form {
   margin-bottom: 1rem;
   display: flex;
@@ -352,6 +374,16 @@
   background: var(--brand-accent);
   border-color: var(--brand-accent);
   color: white;
+}
+
+.vote-btn.active {
+  background: var(--brand-accent);
+  border-color: var(--brand-accent);
+  color: white;
+}
+
+.retro-card.your-vote {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.35);
 }
 
 .vote-count {
