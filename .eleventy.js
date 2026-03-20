@@ -116,7 +116,11 @@ module.exports = async function(eleventyConfig) {
     ];
 
     const items = collectionApi.getAll().filter(item => {
-      return !excludedPaths.includes(item.inputPath);
+      // Exclude paginated list pages from sitemap handling to avoid
+      // @quasibit/eleventy-plugin-sitemap TemplateContentPrematureUseError in Eleventy v3.
+      const isPaginatedIndex = item.data && item.data.pagination;
+
+      return !excludedPaths.includes(item.inputPath) && !isPaginatedIndex;
     });
 
     for (const item of items) {
