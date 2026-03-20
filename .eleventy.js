@@ -110,9 +110,7 @@ module.exports = async function(eleventyConfig) {
     const excludedPaths = [
       './README.md',
       './Readme.md',
-      './content/blog/prompt.md',
-      './BLOG_OVERHAUL_PHASE_2_COMPLETE.md',
-      './BLOG_OVERHAUL_STRATEGY.md'
+      './content/blog/prompt.md'
     ];
 
     const items = collectionApi.getAll().filter(item => {
