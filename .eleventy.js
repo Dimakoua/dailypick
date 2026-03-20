@@ -1,6 +1,53 @@
 const sitemap = require("@quasibit/eleventy-plugin-sitemap");
+const fs = require("fs");
+const path = require("path");
 
-module.exports = function(eleventyConfig) {
+module.exports = async function(eleventyConfig) {
+  // Enable unique OG image generation for every page using eleventy-plugin-og-image.
+  // This uses Satori under the hood to convert HTML/CSS to SVG, and then Sharp to PNG.
+  const EleventyPluginOgImage = (await import("eleventy-plugin-og-image")).default;
+
+  // Load a local font file (.woff) to be used by Satori for rendering text in images.
+  // Satori requires raw font data buffers to render text correctly.
+  let fontData = null;
+  const fontPath = path.join(
+    __dirname,
+    "node_modules",
+    "@fontsource",
+    "inter",
+    "files",
+    "inter-latin-700-normal.woff"
+  );
+
+  if (fs.existsSync(fontPath)) {
+    fontData = fs.readFileSync(fontPath);
+  }
+
+  // Register the OG Image plugin.
+  eleventyConfig.addPlugin(EleventyPluginOgImage, {
+    inputFileGlob: "**/*.og.njk", // Look for templates ending in .og.njk
+    outputDir: "og-images",
+    urlPath: "/og-images",
+    // Only generate images in production to speed up local development.
+    previewMode: process.env.ELEVENTY_ENV !== "production",
+    // This shortcode returns the URL of the generated image.
+    shortcodeOutput: async ogImage => ogImage.outputUrl(),
+    satoriOptions: {
+      width: 1200,
+      height: 630,
+      fonts: fontData
+        ? [
+            {
+              name: "Inter",
+              data: fontData,
+              weight: 700,
+              style: "normal",
+            },
+          ]
+        : [],
+    },
+  });
+
   // Tell Eleventy to watch your CSS changes for live reload.
   eleventyConfig.addWatchTarget("./content/blog/css/");
   // Passthrough copy for static assets. Eleventy will copy these directly.

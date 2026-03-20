@@ -5,9 +5,11 @@
     "description": "A fun and interactive collection of mini-games designed to liven up team activities! Perfect for adding a bit of engagement to daily meetings or team-building sessions",
     "browserslist": "> 0.5%, last 2 versions, not dead",
     "devDependencies": {
+        "@11ty/eleventy": "^3.1.5",
         "@cloudflare/kv-asset-handler": "^0.3.0",
-        "@11ty/eleventy": "^2.0.1",
+        "@fontsource/inter": "^5.2.8",
         "@quasibit/eleventy-plugin-sitemap": "^2.2.0",
+        "eleventy-plugin-og-image": "^4.2.1",
         "itty-router": "^4.0.23",
         "wrangler": "^4.23.0"
     },
