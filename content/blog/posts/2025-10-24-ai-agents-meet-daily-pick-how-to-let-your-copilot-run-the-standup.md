@@ -16,7 +16,7 @@ twitterImageAlt: AI copilot dashboard working alongside Daily Pick to coordinate
 robots: index,follow
 
 ---
-AI agents are the buzziest topic in every product roadmap and LinkedIn thread right now. Teams are unleashing copilots to draft PRDs, summarize meetings, and even chase down blockers. So it’s only a matter of time before someone asks: “Can an AI just run our stand-up for us?” If you’re curious about async-first rituals, bookmark [our Slack + Daily Pick playbook](/blog/2025-10-03-supercharge-async-standups-with-slack-and-daily-pick/) as a companion guide—this post zeroes in on the live stand-up experience.
+AI agents are the buzziest topic in every product roadmap and LinkedIn thread right now. Teams are unleashing copilots to draft PRDs, summarize meetings, and even chase down blockers. So it’s only a matter of time before someone asks: “Can an AI just run our stand-up for us?” If you’re curious about async-first rituals, bookmark our Slack + Daily Pick playbook as a companion guide—this post zeroes in on the live stand-up experience.
 
 Short answer: yes—with guardrails. The secret is to let the agent handle the boring bits (collecting updates, summarizing trends) while Daily Pick keeps decisions transparent, playful, and unquestionably fair. That combination gives you the efficiency of an always-on copilot and the human energy that keeps teams glued together.
 
