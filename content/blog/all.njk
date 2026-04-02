@@ -1,0 +1,27 @@
+---
+layout: base.njk
+title: All Blog Posts
+description: A full list of all Daily Pick blog articles for easier discovery and SEO internals.
+permalink: /blog/all/
+eleventyNavigation:
+  key: Blog Archive
+  parent: Blog
+---
+
+<div class="main-container blog-listing">
+    <h1>{{ title }}</h1>
+    <p class="sub-header">{{ description }}</p>
+
+    {% if collections.post and collections.post.length > 0 %}
+        <ul class="post-list">
+            {%- for post in collections.post | reverse -%}
+            <li class="post-list-item">
+                <h2><a href="{{ post.url | url }}">{{ post.data.title }}</a></h2>
+                <p class="post-meta"><time datetime="{{ post.date.toISOString() }}">{{ post.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}</time></p>
+            </li>
+            {%- endfor -%}
+        </ul>
+    {% else %}
+        <p>No blog posts yet. Check back soon!</p>
+    {% endif %}
+</div>
