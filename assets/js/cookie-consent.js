@@ -1,5 +1,27 @@
 const GTAG_ID = "G-N83YF635W2";
+const AHREFS_SRC = "https://analytics.ahrefs.com/analytics.js";
+const AHREFS_KEY = "czkmt2L/4SkKBtfNg+BqIQ";
 const CONSENT_KEY = "dailyPickCookieConsent";
+
+function loadAhrefsAnalytics() {
+  if (window.ahrefsAnalyticsInitialized) {
+    return;
+  }
+
+  const existingScript = document.querySelector(`script[src="${AHREFS_SRC}"][data-key="${AHREFS_KEY}"]`);
+  if (existingScript) {
+    window.ahrefsAnalyticsInitialized = true;
+    return;
+  }
+
+  const script = document.createElement("script");
+  script.src = AHREFS_SRC;
+  script.setAttribute("data-key", AHREFS_KEY);
+  script.async = true;
+  document.head.appendChild(script);
+
+  window.ahrefsAnalyticsInitialized = true;
+}
 
 function loadGoogleTag() {
   if (window.gtagInitialized) {
@@ -33,6 +55,7 @@ function loadGoogleTag() {
 
   window.gtag("js", new Date());
   window.gtag("config", GTAG_ID);
+  loadAhrefsAnalytics();
   window.gtagInitialized = true;
 }
 
