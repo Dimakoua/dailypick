@@ -1,0 +1,421 @@
+/* ==========================================================================
+   Raffle Ticket Puller — App Styles
+   ========================================================================== */
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-link:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 8px;
+  padding: 8px 12px;
+  background: var(--brand-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--brand-border);
+  box-shadow: var(--brand-focus-ring);
+  color: var(--brand-heading);
+  z-index: 9999;
+}
+
+/* ── Page shell ─────────────────────────────────────────────────────────── */
+.raffle-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem var(--layout-gutter);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Hero ───────────────────────────────────────────────────────────────── */
+.page-hero {
+  padding: 2rem 2.5rem;
+}
+
+.hero-eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--brand-subtle-text);
+}
+
+.page-hero h1 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: var(--brand-heading);
+  line-height: 1.15;
+}
+
+.page-hero p:not(.hero-eyebrow) {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--brand-text);
+  line-height: 1.65;
+  max-width: 60ch;
+}
+
+/* ── Glass card shared ──────────────────────────────────────────────────── */
+.glass-card {
+  background: var(--glass-bg, rgba(255, 255, 255, 0.12));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--glass-shadow);
+}
+
+/* ── Main card ──────────────────────────────────────────────────────────── */
+.raffle-form {
+  padding: 2rem 2.5rem;
+}
+
+/* ── Two-column layout ──────────────────────────────────────────────────── */
+.raffle-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* ── Sidebar ────────────────────────────────────────────────────────────── */
+.raffle-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sidebar-section {
+  background: var(--brand-surface);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-md);
+  padding: 1.1rem 1.25rem;
+}
+
+.sidebar-section__label {
+  display: block;
+  margin: 0 0 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brand-subtle-text);
+}
+
+.sidebar-section textarea {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--brand-font-family);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  padding: 9px 11px;
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-sm);
+  background: var(--brand-background);
+  color: var(--brand-text);
+  resize: vertical;
+  min-height: 160px;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+.sidebar-section textarea:focus {
+  outline: none;
+  border-color: var(--brand-accent);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.12);
+}
+
+.sidebar-section textarea::placeholder {
+  color: var(--brand-subtle-text);
+  opacity: 0.7;
+}
+
+/* Ticket counter badge */
+.ticket-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.ticket-count-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.15rem 0.55rem;
+  background: var(--brand-accent-muted);
+  color: var(--brand-accent-strong);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.form-tip {
+  font-size: 0.82rem;
+  color: var(--brand-subtle-text);
+  font-style: italic;
+  margin: 0;
+}
+
+/* Sidebar action buttons */
+.sidebar-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* ── Drawn list ─────────────────────────────────────────────────────────── */
+.drawn-section {
+  background: var(--brand-surface);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-md);
+  padding: 1.1rem 1.25rem;
+}
+
+.drawn-section__label {
+  display: block;
+  margin: 0 0 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brand-subtle-text);
+}
+
+.drawn-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  min-height: 1.8rem;
+}
+
+.drawn-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.22rem 0.6rem;
+  background: var(--brand-accent-muted);
+  border: 1px solid rgba(52, 152, 219, 0.2);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--brand-accent-strong);
+  animation: chipIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes chipIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.drawn-empty {
+  font-size: 0.88rem;
+  color: var(--brand-subtle-text);
+  font-style: italic;
+}
+
+/* ── Main column ────────────────────────────────────────────────────────── */
+.raffle-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  align-items: center;
+}
+
+/* Drum stage */
+.drum-wrapper {
+  position: relative;
+  width: 100%;
+  background: linear-gradient(160deg, #1a2a3a 0%, #0d1b2a 100%);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Fixed aspect ratio so canvas fills cleanly */
+  aspect-ratio: 16 / 9;
+  max-height: 320px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.22);
+}
+
+.drum-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% -10%, rgba(52, 152, 219, 0.18) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+#drumCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Draw button */
+.btn-draw {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 0.85rem 2.5rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  color: #fff;
+  background: linear-gradient(135deg, #f5a623 0%, #e0711a 100%);
+  box-shadow: 0 5px 20px rgba(240, 130, 30, 0.35);
+  transition: transform 0.16s, box-shadow 0.16s;
+  width: 100%;
+}
+
+.btn-draw:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(240, 130, 30, 0.45);
+}
+
+.btn-draw:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-draw:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-draw:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.45);
+}
+
+/* Result card */
+.result-card {
+  width: 100%;
+  background: var(--brand-surface);
+  border: 2px solid var(--brand-accent);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.5rem;
+  text-align: center;
+  min-height: 74px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  box-shadow: 0 2px 12px rgba(52, 152, 219, 0.1);
+  transition: box-shadow 0.2s;
+}
+
+.result-card--has-winner {
+  box-shadow: 0 4px 24px rgba(52, 152, 219, 0.2);
+}
+
+.result-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brand-subtle-text);
+}
+
+.result-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--brand-accent-strong);
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+.result-placeholder {
+  font-size: 1rem;
+  color: var(--brand-subtle-text);
+  font-style: italic;
+}
+
+/* ── Button primitives ──────────────────────────────────────────────────── */
+.btn {
+  font: inherit;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: transform 0.14s, box-shadow 0.14s, background-color 0.14s;
+  white-space: nowrap;
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: var(--brand-focus-ring);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn--accent {
+  background: var(--brand-accent);
+  color: var(--brand-accent-contrast-text);
+  border-color: var(--brand-accent);
+  flex: 1;
+}
+
+.btn--accent:hover:not(:disabled) {
+  background: var(--brand-accent-strong);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 12px rgba(52, 152, 219, 0.22);
+}
+
+.btn--secondary {
+  background: var(--brand-surface);
+  color: var(--brand-heading);
+  border-color: var(--brand-border);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background: var(--brand-background);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.07);
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .raffle-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .drum-wrapper {
+    max-height: none;
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (max-width: 640px) {
+  .raffle-page {
+    padding: 1rem var(--layout-gutter);
+    gap: 1rem;
+  }
+
+  .page-hero,
+  .raffle-form {
+    padding: 1.1rem;
+  }
+
+  .btn-draw {
+    font-size: 0.95rem;
+    padding: 0.8rem 1.5rem;
+  }
+
+  .result-value {
+    font-size: 1.5rem;
+  }
+}

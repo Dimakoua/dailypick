@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Raffle Ticket Puller – Draw Names from a Hat Simulator | Daily Pick</title>
+<meta content="Spin a raffle drum and draw winning tickets visually. Perfect for contests, giveaways, and fair team selections. Draw names from a hat simulator." name="description"/><meta content="index,follow" name="robots"/>
+<meta content="raffle ticket puller, draw names from a hat, online raffle generator, ticket drawer, raffle simulator, name draw" name="keywords"/>
+<meta content="https://dailypick.dev/apps/raffle-ticket-puller/" property="og:url"/>
+<meta content="Raffle Ticket Puller – Draw Names from a Hat Simulator | Daily Pick" property="og:title"/>
+<meta content="Spin a raffle drum and draw winning tickets visually. Fair, transparent, and engaging raffle draws for giveaways and contests." property="og:description"/>
+<meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image"/>
+<link href="https://dailypick.dev/apps/raffle-ticket-puller/" rel="canonical"/>
+<link href="/assets/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/assets/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/favicon/site.webmanifest" rel="manifest"/>
+<link href="/assets/favicon/favicon.ico" rel="shortcut icon"/>
+<meta content="#2d89ef" name="theme-color"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<link href="/assets/css/theme.css" rel="stylesheet"/>
+<link href="/assets/css/glass.css" rel="stylesheet"/>
+<link href="./style.css" rel="stylesheet"/>
+<script defer="" src="/assets/js/brand-theme-engine.js"></script>
+<script defer="" src="/assets/js/brand-config.js"></script>
+</head>
+<body>
+    {% include "bg-orbs.html" %}
+    {% include "header.html" %}
+
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <main class="raffle-page" id="main">
+
+      <header class="page-hero glass-card">
+        <p class="hero-eyebrow">Raffle &amp; Draws</p>
+        <h1 id="raffleHeading">Raffle Ticket Puller</h1>
+        <p>Spin the drum and draw winning tickets one by one. Perfect for contest draws, classroom picks, and fair team selections.</p>
+      </header>
+
+      <section class="raffle-form glass-card">
+        <div class="raffle-layout">
+
+          <!-- Sidebar: input + drawn list -->
+          <aside class="raffle-sidebar">
+            <div class="sidebar-section">
+              <label class="sidebar-section__label" for="ticketsInput">Participants</label>
+              <textarea id="ticketsInput" rows="9" placeholder="Alice&#10;Bob&#10;Charlie&#10;Diana&#10;Ethan"></textarea>
+              <div class="ticket-meta">
+                <span class="ticket-count-badge" id="ticketCountBadge" aria-live="polite">5 tickets</span>
+                <span class="form-tip">One per line or comma-separated</span>
+              </div>
+            </div>
+
+            <div class="sidebar-actions">
+              <button id="loadBtn" class="btn btn--accent" type="button">🎫 Load Tickets</button>
+              <button id="resetBtn" class="btn btn--secondary" type="button">↺ Reset</button>
+            </div>
+
+            <div class="drawn-section">
+              <span class="drawn-section__label">Drawn so far</span>
+              <div class="drawn-chips" id="drawnChips" aria-live="polite">
+                <span class="drawn-empty">None yet</span>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Main: drum canvas + controls + result -->
+          <div class="raffle-main">
+            <div class="drum-wrapper">
+              <canvas id="drumCanvas"></canvas>
+            </div>
+
+            <button id="drawBtn" class="btn-draw" type="button">🎟️ Draw a Ticket</button>
+
+            <div class="result-card" id="resultCard" aria-live="polite">
+              <span class="result-placeholder" id="resultPlaceholder">Winner appears here</span>
+              <span class="result-label" id="resultLabel" hidden>Winner</span>
+              <span class="result-value" id="resultText" hidden></span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    {% include "footer.html" %}
+    {% include "cookie-consent.html" %}
+    <script defer="" src="/assets/js/cookie-consent.js"></script>
+
+    <script>
+      const ticketsInput    = document.getElementById('ticketsInput');
+      const loadBtn         = document.getElementById('loadBtn');
+      const resetBtn        = document.getElementById('resetBtn');
+      const drawBtn         = document.getElementById('drawBtn');
+      const resultText      = document.getElementById('resultText');
+      const resultLabel     = document.getElementById('resultLabel');
+      const resultPlaceholder = document.getElementById('resultPlaceholder');
+      const resultCard      = document.getElementById('resultCard');
+      const drawnChips      = document.getElementById('drawnChips');
+      const ticketCountBadge = document.getElementById('ticketCountBadge');
+      const canvas          = document.getElementById('drumCanvas');
+      const ctx             = canvas.getContext('2d');
+
+      const DEFAULT_TICKETS = ['Alice', 'Bob', 'Charlie', 'Diana', 'Ethan'];
+      const STORAGE_KEY = 'dailypick_raffle_tickets';
+      let remainingTickets = [...DEFAULT_TICKETS];
+      let drawnTickets = [];
+      let isDrawing = false;
+      let drumRotation = 0;
+      let drumAnimId = null;
+
+      /* ── Canvas sizing ───────────────────────────────────────────── */
+      function resizeCanvas() {
+        const wrapper = canvas.parentElement;
+        const dpr = window.devicePixelRatio || 1;
+        const w = wrapper.clientWidth;
+        const h = wrapper.clientHeight;
+        canvas.width  = w * dpr;
+        canvas.height = h * dpr;
+        canvas.style.width  = w + 'px';
+        canvas.style.height = h + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        drawDrum();
+      }
+
+      /* ── Draw the drum scene ─────────────────────────────────────── */
+      function drawDrum(flyingTicket) {
+        const W = canvas.clientWidth;
+        const H = canvas.clientHeight;
+        ctx.clearRect(0, 0, W, H);
+
+        const cx = W / 2;
+        const cy = H * 0.48;
+        const rx = Math.min(W * 0.28, 120);  // drum x-radius
+        const ry = rx * 0.38;                 // ellipse y-radius (depth)
+        const drumH = rx * 1.1;              // cylinder height
+
+        /* ── Background tint ── */
+        const bgGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, W * 0.6);
+        bgGrad.addColorStop(0, 'rgba(30,50,80,0)');
+        bgGrad.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, W, H);
+
+        /* ── Drum body (cylinder) ── */
+        // side face
+        const sideGrad = ctx.createLinearGradient(cx - rx, 0, cx + rx, 0);
+        sideGrad.addColorStop(0,   '#1a3550');
+        sideGrad.addColorStop(0.3, '#2a5a8a');
+        sideGrad.addColorStop(0.7, '#2a5a8a');
+        sideGrad.addColorStop(1,   '#0e2236');
+        ctx.fillStyle = sideGrad;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy - drumH / 2, rx, ry, 0, 0, Math.PI);   // top arc (underside)
+        ctx.ellipse(cx, cy + drumH / 2, rx, ry, 0, Math.PI, 0);    // bottom arc
+        ctx.closePath();
+        ctx.fill();
+
+        // highlight stripe on left edge
+        const hlGrad = ctx.createLinearGradient(cx - rx, 0, cx - rx + 18, 0);
+        hlGrad.addColorStop(0, 'rgba(255,255,255,0.12)');
+        hlGrad.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = hlGrad;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy - drumH / 2, rx, ry, 0, 0, Math.PI);
+        ctx.ellipse(cx, cy + drumH / 2, rx, ry, 0, Math.PI, 0);
+        ctx.closePath();
+        ctx.fill();
+
+        /* ── Tickets inside drum ── */
+        const count = remainingTickets.length;
+        const ticketColors = ['#f5a623','#e74c3c','#2ecc71','#9b59b6','#1abc9c','#e91e63'];
+        const visible = Math.min(count, 8);
+        if (visible > 0) {
+          const tw = rx * 0.55;
+          const th = ry * 0.9;
+          for (let i = 0; i < visible; i++) {
+            const angle = drumRotation + (i / visible) * Math.PI * 2;
+            const tx = cx + Math.cos(angle) * (rx * 0.55);
+            const ty = cy + Math.sin(angle) * (ry * 0.55) + (i % 3) * 3;
+            const col = ticketColors[i % ticketColors.length];
+            const alpha = 0.55 + (i / visible) * 0.35;
+
+            ctx.save();
+            ctx.globalAlpha = alpha;
+            ctx.translate(tx, ty);
+            ctx.rotate(angle * 0.4);
+
+            // ticket body
+            ctx.fillStyle = col;
+            roundRect(ctx, -tw/2, -th/2, tw, th, 3);
+            ctx.fill();
+
+            // ticket serrations (left & right)
+            ctx.fillStyle = 'rgba(0,0,0,0.18)';
+            for (let s = -th/2 + 4; s < th/2 - 2; s += 6) {
+              ctx.beginPath();
+              ctx.arc(-tw/2, ty > cy ? s : s, 2.5, 0, Math.PI * 2);
+              ctx.fill();
+            }
+
+            ctx.restore();
+          }
+        }
+
+        /* ── Bottom ellipse (floor) ── */
+        const bottomGrad = ctx.createRadialGradient(cx, cy + drumH / 2, 0, cx, cy + drumH / 2, rx);
+        bottomGrad.addColorStop(0, '#1e4060');
+        bottomGrad.addColorStop(1, '#0d1f30');
+        ctx.fillStyle = bottomGrad;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy + drumH / 2, rx, ry, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        /* ── Top ellipse (lid) ── */
+        const topGrad = ctx.createRadialGradient(cx, cy - drumH / 2, 0, cx, cy - drumH / 2, rx);
+        topGrad.addColorStop(0, '#3a7ec8');
+        topGrad.addColorStop(1, '#1a4a78');
+        ctx.fillStyle = topGrad;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy - drumH / 2, rx, ry, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // lid rim
+        ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy - drumH / 2, rx, ry, 0, 0, Math.PI * 2);
+        ctx.stroke();
+
+        /* ── Outlet slot (right side) ── */
+        const slotX = cx + rx - 4;
+        const slotY = cy - 14;
+        const slotH = 28;
+        ctx.fillStyle = '#e74c3c';
+        roundRect(ctx, slotX, slotY, 12, slotH, 3);
+        ctx.fill();
+        ctx.strokeStyle = '#c0392b';
+        ctx.lineWidth = 1;
+        roundRect(ctx, slotX, slotY, 12, slotH, 3);
+        ctx.stroke();
+
+        // slot glow
+        ctx.shadowColor = 'rgba(231,76,60,0.6)';
+        ctx.shadowBlur = 8;
+        ctx.strokeStyle = '#e74c3c';
+        ctx.lineWidth = 1;
+        roundRect(ctx, slotX, slotY, 12, slotH, 3);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        /* ── Count label ── */
+        ctx.font = `bold ${Math.round(H * 0.065)}px ${getComputedStyle(document.body).fontFamily}`;
+        ctx.textAlign = 'center';
+        ctx.fillStyle = 'rgba(255,255,255,0.9)';
+        ctx.fillText(`${count} remaining`, cx, cy + drumH / 2 + H * 0.13);
+
+        /* ── Flying ticket overlay ── */
+        if (flyingTicket) {
+          const { name, progress } = flyingTicket;
+          const startX = slotX + 12;
+          const startY = cy;
+          const x = startX + progress * W * 0.28;
+          const y = startY - progress * H * 0.35 + Math.sin(progress * Math.PI * 2) * 20;
+          const rot = progress * Math.PI * 5;
+          const fw = rx * 0.8, fh = ry * 1.1;
+
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, 1 - progress * 0.6);
+          ctx.translate(x, y);
+          ctx.rotate(rot);
+
+          ctx.fillStyle = '#f5a623';
+          roundRect(ctx, -fw/2, -fh/2, fw, fh, 4);
+          ctx.fill();
+          ctx.strokeStyle = '#e0711a';
+          ctx.lineWidth = 1.5;
+          roundRect(ctx, -fw/2, -fh/2, fw, fh, 4);
+          ctx.stroke();
+
+          ctx.fillStyle = '#1a1a1a';
+          ctx.font = `bold ${Math.round(fh * 0.38)}px sans-serif`;
+          ctx.textAlign = 'center';
+          const maxW = fw - 8;
+          let label = name;
+          if (ctx.measureText(label).width > maxW) {
+            while (ctx.measureText(label + '…').width > maxW && label.length > 1)
+              label = label.slice(0, -1);
+            label += '…';
+          }
+          ctx.fillText(label, 0, fh * 0.14);
+          ctx.restore();
+        }
+      }
+
+      /* ── Rounded rect helper ─────────────────────────────────────── */
+      function roundRect(ctx, x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.lineTo(x + w - r, y);
+        ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+        ctx.lineTo(x + w, y + h - r);
+        ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+        ctx.lineTo(x + r, y + h);
+        ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+        ctx.lineTo(x, y + r);
+        ctx.quadraticCurveTo(x, y, x + r, y);
+        ctx.closePath();
+      }
+
+      /* ── Spinning idle animation ─────────────────────────────────── */
+      function startIdleSpin() {
+        if (drumAnimId) return;
+        let last = null;
+        function step(ts) {
+          if (!last) last = ts;
+          const dt = (ts - last) / 1000;
+          last = ts;
+          drumRotation += dt * 0.6;
+          drawDrum();
+          drumAnimId = requestAnimationFrame(step);
+        }
+        drumAnimId = requestAnimationFrame(step);
+      }
+
+      function stopIdleSpin() {
+        if (drumAnimId) cancelAnimationFrame(drumAnimId);
+        drumAnimId = null;
+      }
+
+      /* ── localStorage ────────────────────────────────────────────── */
+      function loadTickets() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+          if (saved && Array.isArray(saved) && saved.length > 0) {
+            remainingTickets = saved;
+            drawnTickets = [];
+          } else {
+            remainingTickets = [...DEFAULT_TICKETS];
+            drawnTickets = [];
+          }
+        } catch (e) {
+          remainingTickets = [...DEFAULT_TICKETS];
+          drawnTickets = [];
+        }
+        ticketsInput.value = remainingTickets.join('\n');
+        updateDrawnChips();
+        updateTicketBadge();
+        drawDrum();
+        startIdleSpin();
+      }
+
+      function saveTickets() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(remainingTickets));
+      }
+
+      function parseTickets() {
+        const raw = ticketsInput.value.trim();
+        if (!raw) return [];
+        return Array.from(new Set(raw.split(/[\n,]+/).map(t => t.trim()).filter(Boolean)));
+      }
+
+      /* ── UI helpers ──────────────────────────────────────────────── */
+      function updateTicketBadge() {
+        const n = remainingTickets.length;
+        ticketCountBadge.textContent = n + (n === 1 ? ' ticket' : ' tickets');
+      }
+
+      function updateDrawnChips() {
+        drawnChips.innerHTML = '';
+        if (drawnTickets.length === 0) {
+          drawnChips.innerHTML = '<span class="drawn-empty">None yet</span>';
+          return;
+        }
+        drawnTickets.forEach(name => {
+          const chip = document.createElement('span');
+          chip.className = 'drawn-chip';
+          chip.textContent = '🎟 ' + name;
+          drawnChips.appendChild(chip);
+        });
+      }
+
+      function showResult(name) {
+        resultPlaceholder.hidden = true;
+        resultLabel.hidden = false;
+        resultText.hidden = false;
+        resultText.textContent = '🎉 ' + name;
+        resultCard.classList.add('result-card--has-winner');
+      }
+
+      function clearResult() {
+        resultPlaceholder.hidden = false;
+        resultLabel.hidden = true;
+        resultText.hidden = true;
+        resultCard.classList.remove('result-card--has-winner');
+      }
+
+      /* ── Draw animation ──────────────────────────────────────────── */
+      function animateDraw(ticket, onDone) {
+        stopIdleSpin();
+        isDrawing = true;
+        drawBtn.disabled = true;
+
+        const duration = 1400;
+        const startTime = performance.now();
+
+        function step(now) {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+
+          // Spin drum faster during draw
+          drumRotation += 0.06;
+          drawDrum({ name: ticket, progress });
+
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            isDrawing = false;
+            drawBtn.disabled = remainingTickets.length === 0;
+            showResult(ticket);
+            onDone();
+            startIdleSpin();
+          }
+        }
+
+        requestAnimationFrame(step);
+      }
+
+      /* ── Event listeners ─────────────────────────────────────────── */
+      loadBtn.addEventListener('click', () => {
+        const parsed = parseTickets();
+        if (!parsed.length) {
+          resultText.hidden = false;
+          resultLabel.hidden = true;
+          resultPlaceholder.hidden = true;
+          resultText.textContent = 'Add at least one name first.';
+          return;
+        }
+        remainingTickets = parsed;
+        drawnTickets = [];
+        ticketsInput.value = remainingTickets.join('\n');
+        clearResult();
+        updateDrawnChips();
+        updateTicketBadge();
+        saveTickets();
+        stopIdleSpin();
+        drawDrum();
+        drawBtn.disabled = false;
+        startIdleSpin();
+      });
+
+      resetBtn.addEventListener('click', () => {
+        remainingTickets = [...DEFAULT_TICKETS];
+        drawnTickets = [];
+        ticketsInput.value = remainingTickets.join('\n');
+        clearResult();
+        updateDrawnChips();
+        updateTicketBadge();
+        saveTickets();
+        stopIdleSpin();
+        drawDrum();
+        drawBtn.disabled = false;
+        startIdleSpin();
+      });
+
+      drawBtn.addEventListener('click', () => {
+        if (isDrawing || remainingTickets.length === 0) return;
+        const idx = Math.floor(Math.random() * remainingTickets.length);
+        const chosen = remainingTickets[idx];
+
+        animateDraw(chosen, () => {
+          drawnTickets.push(chosen);
+          remainingTickets.splice(idx, 1);
+          updateDrawnChips();
+          updateTicketBadge();
+          saveTickets();
+          if (remainingTickets.length === 0) drawBtn.disabled = true;
+        });
+      });
+
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+      loadTickets();
+    </script>
+
+</body>
+</html>
