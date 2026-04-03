@@ -109,7 +109,7 @@ jobs:
           for EP in $(echo $ENDPOINTS | tr ',' ' '); do
             EP_TRIM=$(echo "$EP" | xargs)
             echo "Posting to $EP_TRIM"
-            RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST "$EP_TRIM" -H "Content-Type: application/json" -d "{\"host\":\"dailypick.dev\",\"key\":\"${INDEXNOW_KEY}\",\"url\":$URL_JSON}")
+            RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST "$EP_TRIM" -H "Content-Type: application/json" -d "{\"host\":\"dailypick.dev\",\"key\":\"${INDEXNOW_KEY}\",\"urlList\":$URL_JSON}")
             echo "Response from $EP_TRIM:"
             echo "$RESPONSE"
           done
