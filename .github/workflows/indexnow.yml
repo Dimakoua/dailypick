@@ -1,0 +1,110 @@
+name: "IndexNow Submitter"
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Build site (optional)
+        run: |
+          if [ -f package.json ]; then
+            npm ci
+            npm run build || echo "Build failed or not required"
+          else
+            echo "No package.json, skipping build"
+          fi
+
+      - name: Generate sitemap (force)
+        run: |
+          echo "Generating sitemap with Eleventy (force run)"
+          if [ -f package.json ]; then
+            npx @11ty/eleventy --quiet || echo "Eleventy generation failed"
+          else
+            echo "No package.json found; skipping Eleventy generation"
+          fi
+
+      - name: Ensure sitemap available at repo root
+        run: |
+          echo "Searching for generated sitemap in common output folders"
+          if [ -f dist/sitemap.xml ]; then
+            cp dist/sitemap.xml sitemap.xml
+          else
+            echo "Warning: sitemap not found after generation"
+          fi
+
+      - name: Find IndexNow key
+        run: |
+          if [ -n "${{ secrets.INDEXNOW_KEY }}" ]; then
+            echo "Using INDEXNOW_KEY from secrets"
+            echo "INDEXNOW_KEY=${{ secrets.INDEXNOW_KEY }}" >> $GITHUB_ENV
+          else
+            KEY_FILE=$(ls public/*.txt 2>/dev/null | head -n1 || true)
+            if [ -z "$KEY_FILE" ]; then
+              echo "No IndexNow key file found in public/ and no INDEXNOW_KEY secret set."
+              exit 1
+            fi
+            KEY=$(basename "$KEY_FILE" .txt)
+            echo "INDEXNOW_KEY=$KEY" >> $GITHUB_ENV
+          fi
+          echo "IndexNow key is set"
+
+      - name: Prepare URL list from sitemap
+        run: |
+          SITEMAP="sitemap.xml"
+          if [ ! -f "$SITEMAP" ]; then
+            if [ -f dist/sitemap.xml ]; then
+              SITEMAP="dist/sitemap.xml"
+            elif [ -f public/sitemap.xml ]; then
+              SITEMAP="public/sitemap.xml"
+            fi
+          fi
+          if [ ! -f "$SITEMAP" ]; then
+            echo "Sitemap not found; submitting site root only"
+            URL_JSON='["https://dailypick.dev/"]'
+            echo "URL_JSON=$URL_JSON" >> $GITHUB_ENV
+            echo "URL_COUNT=1" >> $GITHUB_ENV
+            exit 0
+          fi
+          mapfile -t URLS < <(grep -oP '(?<=<loc>)[^<]+' "$SITEMAP" | sed 's/\r$//' | head -n 500)
+          if [ "${#URLS[@]}" -eq 0 ]; then
+            echo "No URLs extracted from sitemap; defaulting to root"
+            URL_JSON='["https://dailypick.dev/"]'
+            echo "URL_JSON=$URL_JSON" >> $GITHUB_ENV
+            echo "URL_COUNT=1" >> $GITHUB_ENV
+            exit 0
+          fi
+          URL_JSON=$(printf '%s\n' "${URLS[@]}" | jq -R -s -c 'split("\n")[:-1]')
+          echo "URL_JSON=$URL_JSON" >> $GITHUB_ENV
+          echo "URL_COUNT=${#URLS[@]}" >> $GITHUB_ENV
+
+      - name: Submit to IndexNow endpoints
+        env:
+          INDEXNOW_ENDPOINTS: ${{ secrets.INDEXNOW_ENDPOINTS }}
+        run: |
+          # Default to common IndexNow endpoints (can be overridden via INDEXNOW_ENDPOINTS secret)
+          # Includes global API and several provider endpoints that support IndexNow
+          ENDPOINTS="${INDEXNOW_ENDPOINTS:-https://api.indexnow.org/indexnow,https://www.bing.com/indexnow,https://yandex.com/indexnow,https://searchadvisor.naver.com/indexnow}"
+          echo "Endpoints: $ENDPOINTS"
+          echo "Submitting $URL_COUNT URLs..."
+          for EP in $(echo $ENDPOINTS | tr ',' ' '); do
+            EP_TRIM=$(echo "$EP" | xargs)
+            echo "Posting to $EP_TRIM"
+            RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST "$EP_TRIM" -H "Content-Type: application/json" -d "{\"host\":\"dailypick.dev\",\"key\":\"${INDEXNOW_KEY}\",\"url\":$URL_JSON}")
+            echo "Response from $EP_TRIM:"
+            echo "$RESPONSE"
+          done
