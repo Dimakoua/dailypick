@@ -19,8 +19,6 @@ robots: index,follow
 
 ![Team standing in a circle for a daily standup meeting](https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&q=80&w=1200)
 
-# How to Run Effective Daily Standup Meetings: A Complete Guide
-
 The daily standup is one of the most important agile ceremonies, yet it's also one of the most frequently broken.
 
 Bad standups waste time. Good standups save time—and unblock entire projects.

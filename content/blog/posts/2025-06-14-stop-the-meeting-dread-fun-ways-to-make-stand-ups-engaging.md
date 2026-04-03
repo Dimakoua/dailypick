@@ -16,8 +16,6 @@ twitterImageAlt: Scrum master energizing a stand-up while a Daily Pick game deci
 robots: index,follow
 
 ---
-# Stop the Meeting Dread: Fun Ways to Make Stand-Ups Engaging
-
 Daily stand-ups.  The cornerstone of agile methodologies, yet often the source of team groans.  Let's be honest, fifteen minutes of "what did you do yesterday, what will you do today, and are there any impediments?" can feel like an eternity when the energy is low.  But what if your stand-ups weren't just tolerable, but actually something your team *looked forward to*? 
 
 **Ready to see all 8 proven standup formats?** Check out our complete [guide to standup meeting ideas](/blog/8-best-standup-meeting-ideas/) to pick the right format for your team. Or if you're building rituals now, grab quick wins from [Spice Up Your Stand-ups: 5 Fun Ways to Pick Who Goes Next](/blog/spice-up-your-standups-5-fun-ways/).

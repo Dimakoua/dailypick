@@ -19,8 +19,6 @@ robots: index,follow
 
 ![Team working together on a collaborative project](https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=1200)
 
-# 8 Best Standup Meeting Ideas for Remote & In-Office Teams
-
 Daily standups are the heartbeat of high-performing agile teams. Yet most teams dread them. Thirty minutes that feel like three hours. The same monotone updates. Disengaged participants scrolling emails while half-listening.
 
 The problem isn't the standup *concept*—it's the execution.

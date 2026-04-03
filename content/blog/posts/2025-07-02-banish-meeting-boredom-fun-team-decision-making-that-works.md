@@ -16,8 +16,6 @@ twitterImageAlt: Team celebrating after using Daily Pick to choose their next pr
 robots: index,follow
 
 ---
-# Banish Meeting Boredom: Fun Team Decision-Making That Works
-
 Let's face it: team meetings can be a drag.  Hours spent debating, arguing, or simply staring blankly at a screen while someone else makes all the decisions.  But what if choosing a project lead, assigning tasks, or even deciding on lunch could be… *fun*?  What if those agonizing choices actually boosted team morale and efficiency?
 
 This isn't about turning your workplace into a circus; it's about injecting a dose of playful fairness into your decision-making processes.  It's about recognizing that even mundane choices can be opportunities for team bonding and improved engagement. And that's where the power of fun and fair tools comes in—especially when you pair them with rituals from our [decision fatigue survival kit](/blog/stop-the-meeting-meltdown-fun-fair-ways-to-manage-team-decision-fatigue/) to keep teams refreshed.
