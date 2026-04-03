@@ -1,5 +1,5 @@
 ---
-title: "Fair Share, Fun Flair: Creative Ways to Assign Team Tasks Without Grumbles"
+title: "Fair Share: Creative Task Assignment"
 date: 2025-12-01
 description: "Creative, fair ways to assign team tasks without grumbles—boost morale with playful strategies and tools for equitable distribution."
 layout: post.njk

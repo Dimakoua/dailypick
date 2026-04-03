@@ -1,5 +1,5 @@
 ---
-title: "Virtual Meeting Games for Team Engagement: Quick Activities That Connect"
+title: "Virtual Meeting Games for Team Engagement"
 description: "Ten quick virtual meeting games that spark connection, boost participation, and turn Zoom fatigue into genuine team engagement."
 date: 2026-02-20
 tags: 

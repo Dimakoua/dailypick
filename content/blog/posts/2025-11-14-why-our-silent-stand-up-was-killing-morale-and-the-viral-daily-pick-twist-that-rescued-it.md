@@ -1,5 +1,5 @@
 ---
-title: Why Our Silent Stand-up Was Killing Morale (and the Viral Daily Pick Twist That Rescued It)
+title: Silent Stand-ups: The Daily Pick Fix
 date: 2025-11-14
 description: A quiet stand-up was slamming morale. Daily Pick’s viral micro-game turned it into a lively, safe space again.
 layout: post.njk

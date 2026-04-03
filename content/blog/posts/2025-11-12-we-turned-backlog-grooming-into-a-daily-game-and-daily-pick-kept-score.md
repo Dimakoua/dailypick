@@ -1,5 +1,5 @@
 ---
-title: We Turned Backlog Grooming Into a Daily Game (and Daily Pick Kept Score)
+title: Backlog Grooming: A Daily Game
 date: 2025-11-12
 description: Backlog grooming turned into a mini-game that keeps every ticket in view, thanks to Daily Pick’s spin-based rituals.
 layout: post.njk

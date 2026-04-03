@@ -1,5 +1,5 @@
 ---
-title: "Decision-Making Lottery: How Unbiased Randomness Fuels Fairer Teams & Faster Progress"
+title: "Decision-Making Lottery: Fair Teams & Faster Progress"
 date: 2025-12-22
 description: "Use unbiased randomness to make fairer, faster team decisions—practical rituals and examples to accelerate progress."
 layout: post.njk

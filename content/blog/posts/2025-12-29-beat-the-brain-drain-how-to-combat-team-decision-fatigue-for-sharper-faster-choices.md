@@ -1,5 +1,5 @@
 ---
-title: "Beat the Brain Drain: How to Combat Team Decision Fatigue for Sharper, Faster Choices"
+title: "Beat Brain Drain: Combat Decision Fatigue"
 date: 2025-12-29
 description: "Practical strategies and fun tools to combat decision fatigue—help teams make sharper, faster choices and keep energy high."
 layout: post.njk

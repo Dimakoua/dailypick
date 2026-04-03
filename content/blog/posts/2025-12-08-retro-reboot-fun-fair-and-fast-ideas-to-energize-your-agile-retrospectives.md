@@ -1,5 +1,5 @@
 ---
-title: "Retro Reboot: Fun, Fair, and Fast Ideas to Energize Your Agile Retrospectives"
+title: "Retro Reboot: Energize Your Retrospectives"
 date: 2025-12-08
 description: "Fast, fair ideas to reboot agile retrospectives—boost engagement, surface insights, and drive actionable change with simple prompts."
 layout: post.njk
