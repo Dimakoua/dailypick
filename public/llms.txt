@@ -1,0 +1,29 @@
+# Daily Pick – Team Rituals for Stand-ups & Planning
+
+> Lightweight web experiences that make remote stand-ups, retrospectives, and sprint planning quick, fair, and engaging for distributed teams.
+
+## Core Tools & Games
+
+- [Planning Poker](https://dailypick.dev/apps/planning-poker): Multiplayer Fibonacci voting for sprint estimation with real-time reveal, vote summaries, and Jira/Trello export.
+- [Wheel of Names](https://dailypick.dev/apps/wheel): Visual spinner for fair selection and decision-making during meetings.
+- [Retro Board](https://dailypick.dev/apps/retro-board): Shared retrospective tool for team feedback (went well, didn't go well, action items).
+- [Timer](https://dailypick.dev/apps/timer): Meeting timekeeper with visual countdown.
+- [Morale Thermometer](https://dailypick.dev/apps/morale-thermometer): Quick team pulse check during standups.
+- [Team Alignment Games](https://dailypick.dev/apps/): Ball Game, Mimic Master, Gravity Drift, Speedway, Trap, Letters, and more for engagement and quick team bonding.
+
+## Technical Stack
+
+- Built with Eleventy (11ty) static site generator + Cloudflare Workers serverless runtime
+- Durable Objects for real-time multiplayer sessions (Planning Poker, Mimic Master, Ball Game, Retro Board)
+- Client-side performance focus; no mandatory server-side data storage
+- Privacy-first architecture; suitable for enterprise teams
+
+## Blog & Documentation
+
+Comprehensive guides on agile ceremonies, team rituals, and productivity at [https://dailypick.dev/blog](https://dailypick.dev/blog).
+
+## GitHub & Deployment
+
+- Source: https://github.com/Dimakoua/dailypick
+- Deployed on Cloudflare (https://dailypick.dev)
+
