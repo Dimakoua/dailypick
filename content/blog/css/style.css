@@ -166,13 +166,7 @@ p {
     border-radius: 15px; /* Pill-shaped tags */
     font-size: 0.85em;
     font-weight: bold;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.tag:hover {
-    background-color: #d0e7fb;
-    color: #000;
-    text-decoration: none;
+    cursor: default;
 }
 
 /* Code Blocks Styling */

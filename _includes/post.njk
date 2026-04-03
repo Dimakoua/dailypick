@@ -220,7 +220,7 @@ layout: base.njk
             <div class="post-tags" role="list" aria-label="Post topics">
                 <span class="label">Topics:</span>
                 {% for tag in tags %}
-                    <a href="/blog/?tag={{ tag | slugify }}" class="tag" role="listitem" itemprop="keywords">{{ tag }}</a>
+                    <span class="tag" role="listitem" itemprop="keywords">{{ tag }}</span>
                     {% if not loop.last %}<span class="comma" aria-hidden="true">,</span>{% endif %}
                 {% endfor %}
             </div>
