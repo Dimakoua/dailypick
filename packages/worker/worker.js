@@ -252,6 +252,16 @@ router.get('/ballgame', (request) => {
 
 export default {
     async fetch(request, env, ctx) {
+        const requestUrl = new URL(request.url);
+
+        // Enforce HTTPS canonical URLs by redirecting HTTP traffic to HTTPS.
+        // Skip redirects in local development environments (e.g. localhost, 127.0.0.1, [::1]).
+        const isLocalhost = ['localhost', '127.0.0.1', '0.0.0.0', '[::1]'].includes(requestUrl.hostname);
+        if (requestUrl.protocol === 'http:' && !isLocalhost) {
+            requestUrl.protocol = 'https:';
+            return Response.redirect(requestUrl.toString(), 301);
+        }
+
         const response = await router.handle(request, env, ctx);
         if (response && response.status !== 404) { // Added null/undefined check for response
             return response;
