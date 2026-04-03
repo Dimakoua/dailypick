@@ -260,6 +260,20 @@ layout: base.njk
             </div>
         </div>
 
+        <!-- Related Articles (internal dofollow links) -->
+        <section class="related-posts" aria-label="Related posts">
+            <h2>Explore more from the blog</h2>
+            <ul>
+                {% set relatedCount = 0 %}
+                {% for post in collections.post | reverse %}
+                    {% if post.url != page.url and relatedCount < 3 %}
+                        <li><a href="{{ post.url }}">{{ post.data.title }}</a></li>
+                        {% set relatedCount = relatedCount + 1 %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </section>
+
         <!-- Related Reading -->
         <nav class="post-navigation" role="navigation" aria-label="Post navigation">
             {% if previousPost %}
