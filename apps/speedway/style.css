@@ -49,6 +49,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 20px min(2vw, 24px) !important;
+  background: transparent !important;
 }
 
 h1 {
@@ -449,14 +450,6 @@ button#startRaceBtn {
   padding: 16px 48px;
 }
 
-/* Start/finish lines */
-  padding: 10px 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  background: rgba(255, 255, 255, 0.9);
-  font-weight: 700;
-  cursor: pointer;
-}
 
 .track-style-select:focus {
   outline: none;
@@ -494,32 +487,16 @@ button#startRaceBtn {
 }
 #standupOrderList li {
   font-size: 1.05em; margin-bottom: 8px;
-  color: var(--speedway-accent, #2980b9); font-weight: 700;
+  color: var(--brand-accent, #2980b9); font-weight: 700;
 }
 #standupOrderList li.finished-entry {
   background: rgba(255,255,255,.65);
-  border-left: 4px solid var(--speedway-accent, #3498db);
+  border-left: 4px solid var(--brand-accent, #3498db);
   border-radius: 6px;
   padding: 6px 10px; color: #2d2d2d;
 }
 
-/* SEO content — glass card */
-.seo-content-area {
-  background: var(--glass-bg, rgba(255,255,255,.12));
-  border: 1px solid var(--glass-border, rgba(255,255,255,.38));
-  border-radius: var(--radius-lg, 15px);
-  box-shadow: var(--glass-shadow, 0 8px 30px rgba(0,0,0,.15));
-  padding: 24px 28px;
-  max-width: 780px; width: min(92%, 780px);
-  margin: 28px auto 0; text-align: left; line-height: 1.7;
-}
-.seo-content-area h2 {
-  color: var(--speedway-accent, #3498db);
-  margin: 0 0 12px; font-size: 1.6rem; text-align: center;
-}
-.seo-content-area h3 { color: #2980b9; margin: 18px 0 8px; font-size: 1.25rem; }
-.seo-content-area a { color: #2980b9; text-decoration: none; font-weight: 700; }
-.seo-content-area a:hover { text-decoration: underline; }
+/* SEO visuals moved to assets/css/seo-card.css */
 
 /* Responsive */
 @media (max-width: 820px) {

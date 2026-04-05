@@ -125,7 +125,8 @@ body {
   cursor: pointer;
   transition: all 0.2s ease;
   font-family: var(--brand-font-family);
-  margin: 20px 0;
+  margin: 20px auto;
+  display: block;
 }
 
 #spinBtn:hover {
@@ -147,52 +148,7 @@ body {
   color: var(--brand-heading);
 }
 
-/* SEO Content Area */
-.seo-content-area {
-  max-width: 800px;
-  width: 92%;
-  margin-top: 40px;
-  background: var(--brand-surface);
-  border: 1px solid var(--brand-border);
-  border-radius: var(--radius-md);
-  padding: 30px;
-  line-height: 1.6;
-  color: var(--brand-text);
-}
-
-.seo-content-area h2 {
-  font-size: 1.4rem;
-  color: var(--brand-heading);
-  margin-top: 0;
-  font-weight: 700;
-}
-
-.seo-content-area h3 {
-  font-size: 1.1rem;
-  color: var(--brand-heading);
-  font-weight: 700;
-  margin: 1.5rem 0 0.75rem;
-}
-
-.seo-content-area ul {
-  margin: 1rem 0;
-  padding-left: 1.5rem;
-}
-
-.seo-content-area li {
-  margin: 0.5rem 0;
-}
-
-.seo-content-area a {
-  color: var(--brand-accent);
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.seo-content-area a:hover,
-.seo-content-area a:focus-visible {
-  text-decoration: underline;
-}
+/* SEO visuals moved to assets/css/seo-card.css */
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -231,8 +187,5 @@ body {
     font-size: 1rem;
   }
 
-  .seo-content-area {
-    width: 95%;
-    padding: 20px;
-  }
+  /* responsive tweaks now handled by assets/css/seo-card.css */
 }

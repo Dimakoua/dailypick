@@ -1,72 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>What Should I Eat Wheel – Random Food Picker | Daily Pick</title>
-<meta content="Can't decide what to eat for dinner? Spin the 'What should I eat' wheel to pick from pizza, sushi, tacos, and more. The ultimate random food generator." name="description"/><meta content="index,follow" name="robots"/>
-<meta content="what should i eat wheel, random food picker, dinner decision maker, food roulette, what to eat for lunch generator" name="keywords"/>
-<meta content="https://dailypick.dev/apps/what-should-i-eat/" property="og:url"/>
-<meta content="What Should I Eat Wheel – Random Food Picker | Daily Pick" property="og:title"/>
-<meta content="End the 'I don't know, what do you want?' debate. Spin our food wheel and let fate decide your next meal!" property="og:description"/>
-<meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image"/>
-<link href="https://dailypick.dev/apps/what-should-i-eat/" rel="canonical"/>
-<link href="/assets/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
-<link href="/assets/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
-<link href="/assets/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
-<link href="/assets/favicon/site.webmanifest" rel="manifest"/>
-<link href="/assets/favicon/favicon.ico" rel="shortcut icon"/>
-<meta content="#2d89ef" name="theme-color"/>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet"/>
-<link href="/assets/css/theme.css" rel="stylesheet"/>
-<link href="/assets/css/glass.css" rel="stylesheet"/>
-<link href="./style.css" rel="stylesheet"/>
-<script defer="" src="/assets/js/brand-theme-engine.js"></script>
-<script defer="" src="/assets/js/brand-config.js"></script>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>What Should I Eat Wheel – Random Food Picker | Daily Pick</title>
+    <meta
+        content="Can't decide what to eat for dinner? Spin the 'What should I eat' wheel to pick from pizza, sushi, tacos, and more. The ultimate random food generator."
+        name="description" />
+    <meta content="index,follow" name="robots" />
+    <meta
+        content="what should i eat wheel, random food picker, dinner decision maker, food roulette, what to eat for lunch generator"
+        name="keywords" />
+    <meta content="https://dailypick.dev/apps/what-should-i-eat/" property="og:url" />
+    <meta content="What Should I Eat Wheel – Random Food Picker | Daily Pick" property="og:title" />
+    <meta
+        content="End the 'I don't know, what do you want?' debate. Spin our food wheel and let fate decide your next meal!"
+        property="og:description" />
+    <meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image" />
+    <link href="https://dailypick.dev/apps/what-should-i-eat/" rel="canonical" />
+    <link href="/assets/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
+    <link href="/assets/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
+    <link href="/assets/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
+    <link href="/assets/favicon/site.webmanifest" rel="manifest" />
+    <link href="/assets/favicon/favicon.ico" rel="shortcut icon" />
+    <meta content="#2d89ef" name="theme-color" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link href="/assets/css/theme.css" rel="stylesheet" />
+    <link href="/assets/css/glass.css" rel="stylesheet" />
+    <link href="/assets/css/seo-card.css" rel="stylesheet" />
+    <link href="./style.css" rel="stylesheet" />
+    <script defer="" src="/assets/js/brand-theme-engine.js"></script>
+    <script defer="" src="/assets/js/brand-config.js"></script>
 </head>
+
 <body>
     {% include "bg-orbs.html" %}
     {% include "header.html" %}
 
-    <main class="main-container">
-      <header class="page-hero glass-card">
-        <p class="hero-eyebrow">Hungry & Undecided?</p>
-        <h1>🍕 What Should I Eat Wheel</h1>
-        <p>Can't pick a restaurant or a dish? Spin the wheel and let it decide your culinary destiny!</p>
-      </header>
+    <main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Hungry & Undecided?</p>
+            <h1>🍕 What Should I Eat Wheel</h1>
+            <p>Can't pick a restaurant or a dish? Spin the wheel and let it decide your culinary destiny!</p>
+        </header>
 
-      <div id="wheel-container">
-        <div id="indicator"></div>
-        <canvas height="425" id="wheel" width="425"></canvas>
-      </div>
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
 
-      <div class="preset-btns">
-        <button class="preset-btn" data-items="Pizza,Burger,Sushi,Tacos,Pasta,Salad,Thai,Indian">🌍 Global Mix</button>
-        <button class="preset-btn" data-items="Chinese,Japanese,Thai,Vietnamese,Korean,Indian">🍜 Asian Cuisines</button>
-        <button class="preset-btn" data-items="Tacos,Burritos,Quesadillas,Nachos,Enchiladas">🌮 Mexican Night</button>
-        <button class="preset-btn" data-items="Healthy,Cheat Day,Quick Snack,Full Meal,Just Dessert">🤔 Vibe Check</button>
-      </div>
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Pizza,Burger,Sushi,Tacos,Pasta,Salad,Thai,Indian">🌍 Global
+                Mix</button>
+            <button class="preset-btn" data-items="Chinese,Japanese,Thai,Vietnamese,Korean,Indian">🍜 Asian
+                Cuisines</button>
+            <button class="preset-btn" data-items="Tacos,Burritos,Quesadillas,Nachos,Enchiladas">🌮 Mexican
+                Night</button>
+            <button class="preset-btn" data-items="Healthy,Cheat Day,Quick Snack,Full Meal,Just Dessert">🤔 Vibe
+                Check</button>
+        </div>
 
-      <button id="spinBtn">🍽️ SPIN FOR FOOD!</button>
-      <div id="winner"></div>
+        <button id="spinBtn">🍽️ SPIN FOR FOOD!</button>
+        <div id="winner"></div>
 
-      <section class="seo-content-area">
-        <h2>How the Food Decision Wheel Works</h2>
-        <p>Deciding what to eat can be surprisingly stressful (it's called <strong>decision fatigue</strong>!). Our random food picker takes the pressure off by choosing for you. Whether you're looking for dinner ideas, lunch inspiration, or just a fun way to pick a restaurant with friends, the "What should I eat" wheel is here to help.</p>
-        
-        <h3>Popular Uses:</h3>
-        <ul>
-            <li><strong>The "I Don't Care" Solution:</strong> When your partner says "I don't care," let the wheel decide!</li>
-            <li><strong>New Cuisine Discovery:</strong> Use our "Global Mix" preset to try something outside your comfort zone.</li>
-            <li><strong>Restaurant Roulette:</strong> Enter the names of 5 local spots and spin to see where you're headed.</li>
-        </ul>
+        <section class="seo-content-area">
+            <h2>How the Food Decision Wheel Works</h2>
+            <p>Deciding what to eat can be surprisingly stressful (it's called <strong>decision fatigue</strong>!). Our
+                random food picker takes the pressure off by choosing for you. Whether you're looking for dinner ideas,
+                lunch inspiration, or just a fun way to pick a restaurant with friends, the "What should I eat" wheel is
+                here to help.</p>
 
-        <h3>Customizing Your Meal Wheel</h3>
-        <p>You can easily customize the options. Simply click the <a href="/apps/settings/">Settings</a> to update the list of names (or food items) used by the wheel across all our apps.</p>
+            <h3>Popular Uses:</h3>
+            <ul>
+                <li><strong>The "I Don't Care" Solution:</strong> When your partner says "I don't care," let the wheel
+                    decide!</li>
+                <li><strong>New Cuisine Discovery:</strong> Use our "Global Mix" preset to try something outside your
+                    comfort zone.</li>
+                <li><strong>Restaurant Roulette:</strong> Enter the names of 5 local spots and spin to see where you're
+                    headed.</li>
+            </ul>
 
-        <h3>Why Use a Random Meal Generator?</h3>
-        <p>Scientific studies suggest that having too many choices can actually make us less happy with our final decision. By narrowing it down to one random result, you eliminate the stress of comparison and turn mealtime back into an enjoyable experience.</p>
-      </section>
+            <h3>Customizing Your Meal Wheel</h3>
+            <p>You can easily customize the options. Simply click the <a href="/apps/settings/">Settings</a> to update
+                the list of names (or food items) used by the wheel across all our apps.</p>
+
+            <h3>Why Use a Random Meal Generator?</h3>
+            <p>Scientific studies suggest that having too many choices can actually make us less happy with our final
+                decision. By narrowing it down to one random result, you eliminate the stress of comparison and turn
+                mealtime back into an enjoyable experience.</p>
+        </section>
     </main>
 
     {% include "footer.html" %}
@@ -79,7 +102,7 @@
         const radius = canvas.width / 2;
 
         let foodItems = ['Pizza', 'Sushi', 'Tacos', 'Burgers', 'Pasta', 'Salad', 'Steak', 'Thai'];
-        
+
         function drawWheel(items, rotationAngle = 0) {
             const angleStep = (2 * Math.PI) / items.length;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -153,4 +176,5 @@
         drawWheel(foodItems, 0);
     </script>
 </body>
+
 </html>

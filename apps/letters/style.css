@@ -180,44 +180,7 @@ button#restartButton:disabled {
   padding: 16px;
 }
 
-/* ---- SEO content adopts intro glass card look ---- */
-.seo-content-area {
-  background: var(--glass-bg, rgba(255,255,255,0.08));
-  border: 1px solid var(--glass-border, rgba(255,255,255,0.2));
-  border-radius: var(--radius-lg, 15px);
-  box-shadow: var(--glass-shadow, 0 8px 30px rgba(0,0,0,0.15));
-  padding: 24px 28px;
-  max-width: 780px;
-  width: min(92%, 780px);
-  margin: 32px auto 40px;
-  text-align: left;
-  line-height: 1.8;
-  color: var(--brand-text, #374151); /* Ensure content text matches theme */
-}
-.seo-content-area h2 {
-  color: var(--brand-accent, #3498db);
-  margin: 0 0 16px;
-  font-size: 1.8rem;
-  text-align: center;
-  font-weight: 800;
-}
-.seo-content-area h3 {
-  color: var(--brand-accent, #2980b9);
-  margin: 24px 0 10px;
-  font-size: 1.4rem;
-  font-weight: 700;
-}
-.seo-content-area p {
-  margin-bottom: 20px;
-  opacity: 0.95;
-}
-.seo-content-area a {
-  color: var(--brand-accent, #2980b9);
-  text-decoration: none;
-  font-weight: 700;
-  border-bottom: 2px solid transparent;
-  transition: border-color 0.2s ease;
-}
+/* SEO visuals moved to assets/css/seo-card.css */
 .seo-content-area a:hover { 
   border-bottom-color: currentColor;
 }

@@ -1,207 +1,224 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<base href="/apps/planning-poker/"/>
-<title>Planning Poker Hub – Multiplayer Estimation | Daily Pick</title>
-<meta content="Host a Planning Poker session, invite teammates, reveal Fibonacci votes together, and export Jira-ready summaries in one click." name="description">
-<meta content="planning poker, scrum estimation, fibonacci cards, agile tools, daily pick, jira planning poker, online planning poker" name="keywords"/>
-<meta content="website" property="og:type"/>
-<meta content="https://dailypick.dev/apps/planning-poker/" property="og:url"/>
-<meta content="Planning Poker Hub – Multiplayer Estimation | Daily Pick" property="og:title"/>
-<meta content="Host a Planning Poker session, invite teammates, reveal Fibonacci votes together, and export Jira-ready summaries in one click." property="og:description"/>
-<meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image"/>
-<meta content="Team revealing Planning Poker cards inside Daily Pick" property="og:image:alt"/>
-<meta content="summary_large_image" name="twitter:card"/>
-<meta content="https://dailypick.dev/apps/planning-poker/" name="twitter:url"/>
-<meta content="Planning Poker Hub – Multiplayer Estimation | Daily Pick" name="twitter:title"/>
-<meta content="Host a Planning Poker session, invite teammates, reveal Fibonacci votes together, and export Jira-ready summaries in one click." name="twitter:description"/>
-<meta content="https://dailypick.dev/assets/og-image-main.png" name="twitter:image"/>
-<meta content="Team revealing Planning Poker cards inside Daily Pick" name="twitter:image:alt"/>
-<link href="https://dailypick.dev/apps/planning-poker/" rel="canonical"/>
-<link href="/assets/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
-<link href="/assets/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
-<link href="/assets/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
-<link href="/assets/favicon/site.webmanifest" rel="manifest"/>
-<link href="/assets/favicon/favicon.ico" rel="shortcut icon"/>
-<meta content="#ffffff" name="theme-color"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="/assets/css/theme.css" rel="stylesheet"/>
-<link href="/assets/css/glass.css" rel="stylesheet"/>
-<link href="./style.css" rel="stylesheet"/>
-<script defer="" src="/assets/js/brand-theme-engine.js"></script>
-<script defer="" src="/assets/js/brand-config.js"></script>
-<script defer="" src="/assets/js/standup-data.js"></script>
-<script defer="" src="./script.js"></script>
-</meta><meta content="index,follow" name="robots"/></head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <base href="/apps/planning-poker/" />
+  <title>Planning Poker Hub – Multiplayer Estimation | Daily Pick</title>
+  <meta
+    content="Host a Planning Poker session, invite teammates, reveal Fibonacci votes together, and export Jira-ready summaries in one click."
+    name="description">
+  <meta
+    content="planning poker, scrum estimation, fibonacci cards, agile tools, daily pick, jira planning poker, online planning poker"
+    name="keywords" />
+  <meta content="website" property="og:type" />
+  <meta content="https://dailypick.dev/apps/planning-poker/" property="og:url" />
+  <meta content="Planning Poker Hub – Multiplayer Estimation | Daily Pick" property="og:title" />
+  <meta
+    content="Host a Planning Poker session, invite teammates, reveal Fibonacci votes together, and export Jira-ready summaries in one click."
+    property="og:description" />
+  <meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image" />
+  <meta content="Team revealing Planning Poker cards inside Daily Pick" property="og:image:alt" />
+  <meta content="summary_large_image" name="twitter:card" />
+  <meta content="https://dailypick.dev/apps/planning-poker/" name="twitter:url" />
+  <meta content="Planning Poker Hub – Multiplayer Estimation | Daily Pick" name="twitter:title" />
+  <meta
+    content="Host a Planning Poker session, invite teammates, reveal Fibonacci votes together, and export Jira-ready summaries in one click."
+    name="twitter:description" />
+  <meta content="https://dailypick.dev/assets/og-image-main.png" name="twitter:image" />
+  <meta content="Team revealing Planning Poker cards inside Daily Pick" name="twitter:image:alt" />
+  <link href="https://dailypick.dev/apps/planning-poker/" rel="canonical" />
+  <link href="/assets/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
+  <link href="/assets/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
+  <link href="/assets/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
+  <link href="/assets/favicon/site.webmanifest" rel="manifest" />
+  <link href="/assets/favicon/favicon.ico" rel="shortcut icon" />
+  <meta content="#ffffff" name="theme-color" />
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&amp;display=swap" rel="stylesheet" />
+  <link href="/assets/css/theme.css" rel="stylesheet" />
+  <link href="/assets/css/glass.css" rel="stylesheet" />
+  <link href="/assets/css/seo-card.css" rel="stylesheet" />
+  <link href="./style.css" rel="stylesheet" />
+  <script defer="" src="/assets/js/brand-theme-engine.js"></script>
+  <script defer="" src="/assets/js/brand-config.js"></script>
+  <script defer="" src="/assets/js/standup-data.js"></script>
+  <script defer="" src="./script.js"></script>
+  </meta>
+  <meta content="index,follow" name="robots" />
+</head>
+
 <body>
   {% include "bg-orbs.html" %}
   {% include "header.html" %}
 
-  <main aria-labelledby="planningPokerHeading" class="poker-page">
-<header class="page-hero glass-card">
-<div>
-<p class="hero-eyebrow">Estimation Toolkit</p>
-<h1 id="planningPokerHeading">Planning Poker Hub</h1>
-<p>Spin up a planning poker room, let everyone pick Fibonacci cards, reveal together, and copy Jira-ready
+  <main aria-labelledby="planningPokerHeading" class="poker-page" data-page-type="agile">
+    <header class="page-hero glass-card">
+      <div>
+        <p class="hero-eyebrow">Estimation Toolkit</p>
+        <h1 id="planningPokerHeading">Planning Poker Hub</h1>
+        <p>Spin up a planning poker room, let everyone pick Fibonacci cards, reveal together, and copy Jira-ready
           summaries instantly.</p>
-</div>
-<div class="hero-meta">
-<span aria-live="polite" class="session-badge" id="sessionBadge">Not connected</span>
-<button class="ghost-btn" disabled="" id="copyInviteBtn" type="button">Copy invite link</button>
-</div>
-</header>
-<section class="poker-layout">
-<article aria-live="polite" class="poker-table-card glass-card poker-board">
-<header class="poker-table__toolbar">
-<div>
-<p class="poker-table__toolbar-label">Quick actions</p>
-<p class="poker-table__toolbar-sub">Stay in the flow—open panels as needed.</p>
-</div>
-<div class="poker-table__toolbar-buttons">
-<button class="toolbar-btn" data-panel-toggle="controls" type="button">Room controls</button>
-<button class="toolbar-btn" data-panel-toggle="backlog" type="button">Backlog</button>
-</div>
-</header>
-<section aria-label="Planning poker table" class="poker-table">
-<div class="poker-table__wrap">
-<div class="poker-table__surface">
-<div aria-live="polite" class="table-pot">
-<p class="table-pot__eyebrow">Current story</p>
-<p id="tableStoryDisplay">Waiting for a story card</p>
-</div>
-<section aria-label="Deck style picker" class="deck-toolbar">
-<div class="deck-selector">
-<label for="deckSelect">Deck style</label>
-<div class="deck-select-row">
-<select aria-describedby="deckDescription" id="deckSelect"></select>
-</div>
-<p class="deck-description" id="deckDescription">Classic Fibonacci cards everyone expects.</p>
-</div>
-</section>
-<div aria-label="Fibonacci deck" class="deck" id="cardDeck" role="group"></div>
-<div class="deck-actions">
-<button class="ghost-btn" disabled="" id="clearCardBtn" type="button">Clear selection</button>
-<div class="host-actions">
-<button disabled="" id="revealBtn" type="button">Reveal votes</button>
-<button disabled="" id="resetBtn" type="button">New round</button>
-</div>
-</div>
-</div>
-<section aria-labelledby="participantsHeading" class="participants poker-table__participants">
-<div class="participants-header">
-<h2 id="participantsHeading">Participants</h2>
-<span class="pill" id="participantCount">0</span>
-</div>
-<div class="participants-list" id="participantsList"></div>
-</section>
-</div>
-</section>
-<section class="summary-panel">
-<div class="summary-header">
-<h2>Jira summary</h2>
-<button disabled="" id="copySummaryBtn" type="button">Copy summary</button>
-</div>
-<pre aria-live="polite" id="summaryOutput">Votes will appear here after you reveal.</pre>
-</section>
-</article>
-</section>
-<div class="poker-panel__scrim" hidden="" id="panelScrim"></div>
-<aside aria-hidden="true" class="poker-panel" id="controlsPanel">
-<div class="poker-panel__header">
-<h2>Room controls</h2>
-<button class="poker-panel__close" data-panel-close="" type="button">×</button>
-</div>
-<div class="poker-panel__body">
-<div class="field-group">
-<label for="displayNameInput">Display name</label>
-<div class="inline-field">
-<input autocomplete="off" id="displayNameInput" maxlength="40" placeholder="e.g. Casey" type="text"/>
-<button id="saveNameBtn" type="button">Save</button>
-</div>
-</div>
-<div aria-live="polite" class="host-note" hidden="" id="hostNotice">
-<strong>You are now the host.</strong> You can manage the story label, reveal votes, and share invites.
+      </div>
+      <div class="hero-meta">
+        <span aria-live="polite" class="session-badge" id="sessionBadge">Not connected</span>
+        <button class="ghost-btn" disabled="" id="copyInviteBtn" type="button">Copy invite link</button>
+      </div>
+    </header>
+    <section class="poker-layout">
+      <article aria-live="polite" class="poker-table-card glass-card poker-board">
+        <header class="poker-table__toolbar">
+          <div>
+            <p class="poker-table__toolbar-label">Quick actions</p>
+            <p class="poker-table__toolbar-sub">Stay in the flow—open panels as needed.</p>
           </div>
-<div class="field-group" data-host-only="">
-<label>Room</label>
-<div class="room-actions">
-<button id="createRoomBtn" type="button">Start new room</button>
-<div class="join-row">
-<input autocomplete="off" id="roomCodeInput" inputmode="numeric" placeholder="Enter room code" type="text"/>
-<button id="joinRoomBtn" type="button">Join</button>
-</div>
-</div>
-</div>
-<div class="field-group" data-host-only="">
-<label for="storyInput">Story / Jira link</label>
-<input id="storyInput" maxlength="120" placeholder="e.g. JIRA-123 · Improve onboarding modal" type="text"/>
-<p class="field-hint">Hosts can edit the story label for the current round.</p>
-</div>
-<div class="field-group">
-<label>Status</label>
-<p aria-live="polite" class="status-line" id="connectionStatus">Not connected</p>
-</div>
-</div>
-</aside>
-<aside aria-hidden="true" class="poker-panel" id="backlogPanel">
-<div class="poker-panel__header">
-<h2>Backlog &amp; history</h2>
-<button class="poker-panel__close" data-panel-close="" type="button">×</button>
-</div>
-<div class="poker-panel__body">
-<section aria-labelledby="integrationHeading" class="integration-panel" data-host-only="">
-<div class="integration-panel__header">
-<div>
-<p class="hero-eyebrow integration-panel__eyebrow">Backlog import</p>
-<h2 id="integrationHeading">Trello, Jira, or GitHub work</h2>
-<p class="integration-panel__description">Pull saved tasks, set the current story, and keep a handy history of your estimates.</p>
-</div>
-<button class="ghost-btn" id="refreshIntegrationBtn" type="button">Refresh tasks</button>
-</div>
-<p aria-live="polite" class="integration-panel__status" id="integrationStatus">Connect integrations in <a href="/apps/settings/#integrations">Settings</a> and refresh to load tasks.</p>
-<div class="integration-panel__controls">
-<label class="integration-panel__control">
-<span>Service</span>
-<select id="integrationServiceFilter">
-<option value="">All services</option>
-</select>
-</label>
-<label class="integration-panel__control integration-panel__control--search">
-<span>Search</span>
-<input id="integrationSearch" inputmode="search" placeholder="Title, status, ID..." type="search">
-</input></label>
-</div>
-<div aria-live="polite" class="integration-panel__services" id="integrationServices"></div>
-<div aria-live="polite" class="integration-panel__tasks" id="integrationTasks" role="list"></div>
-<div aria-live="polite" class="integration-panel__completed" id="integrationCompletedTasks" role="list"></div>
-<div class="integration-panel__history">
-<div class="integration-panel__history-header">
-<h3>Recent estimates</h3>
-<span class="pill" id="integrationHistoryCount">0</span>
-</div>
-<ul id="integrationHistoryList"></ul>
-</div>
-</section>
-</div>
-</aside>
-<section class="seo-content glass-card">
-<h2>Why Planning Poker?</h2>
-<p>Story-pointing sessions work best when everyone plays at the same time. The Planning Poker Hub keeps teammates
+          <div class="poker-table__toolbar-buttons">
+            <button class="toolbar-btn" data-panel-toggle="controls" type="button">Room controls</button>
+            <button class="toolbar-btn" data-panel-toggle="backlog" type="button">Backlog</button>
+          </div>
+        </header>
+        <section aria-label="Planning poker table" class="poker-table">
+          <div class="poker-table__wrap">
+            <div class="poker-table__surface">
+              <div aria-live="polite" class="table-pot">
+                <p class="table-pot__eyebrow">Current story</p>
+                <p id="tableStoryDisplay">Waiting for a story card</p>
+              </div>
+              <section aria-label="Deck style picker" class="deck-toolbar">
+                <div class="deck-selector">
+                  <label for="deckSelect">Deck style</label>
+                  <div class="deck-select-row">
+                    <select aria-describedby="deckDescription" id="deckSelect"></select>
+                  </div>
+                  <p class="deck-description" id="deckDescription">Classic Fibonacci cards everyone expects.</p>
+                </div>
+              </section>
+              <div aria-label="Fibonacci deck" class="deck" id="cardDeck" role="group"></div>
+              <div class="deck-actions">
+                <button class="ghost-btn" disabled="" id="clearCardBtn" type="button">Clear selection</button>
+                <div class="host-actions">
+                  <button disabled="" id="revealBtn" type="button">Reveal votes</button>
+                  <button disabled="" id="resetBtn" type="button">New round</button>
+                </div>
+              </div>
+            </div>
+            <section aria-labelledby="participantsHeading" class="participants poker-table__participants">
+              <div class="participants-header">
+                <h2 id="participantsHeading">Participants</h2>
+                <span class="pill" id="participantCount">0</span>
+              </div>
+              <div class="participants-list" id="participantsList"></div>
+            </section>
+          </div>
+        </section>
+        <section class="summary-panel">
+          <div class="summary-header">
+            <h2>Jira summary</h2>
+            <button disabled="" id="copySummaryBtn" type="button">Copy summary</button>
+          </div>
+          <pre aria-live="polite" id="summaryOutput">Votes will appear here after you reveal.</pre>
+        </section>
+      </article>
+    </section>
+    <div class="poker-panel__scrim" hidden="" id="panelScrim"></div>
+    <aside aria-hidden="true" class="poker-panel" id="controlsPanel">
+      <div class="poker-panel__header">
+        <h2>Room controls</h2>
+        <button class="poker-panel__close" data-panel-close="" type="button">×</button>
+      </div>
+      <div class="poker-panel__body">
+        <div class="field-group">
+          <label for="displayNameInput">Display name</label>
+          <div class="inline-field">
+            <input autocomplete="off" id="displayNameInput" maxlength="40" placeholder="e.g. Casey" type="text" />
+            <button id="saveNameBtn" type="button">Save</button>
+          </div>
+        </div>
+        <div aria-live="polite" class="host-note" hidden="" id="hostNotice">
+          <strong>You are now the host.</strong> You can manage the story label, reveal votes, and share invites.
+        </div>
+        <div class="field-group" data-host-only="">
+          <label>Room</label>
+          <div class="room-actions">
+            <button id="createRoomBtn" type="button">Start new room</button>
+            <div class="join-row">
+              <input autocomplete="off" id="roomCodeInput" inputmode="numeric" placeholder="Enter room code"
+                type="text" />
+              <button id="joinRoomBtn" type="button">Join</button>
+            </div>
+          </div>
+        </div>
+        <div class="field-group" data-host-only="">
+          <label for="storyInput">Story / Jira link</label>
+          <input id="storyInput" maxlength="120" placeholder="e.g. JIRA-123 · Improve onboarding modal" type="text" />
+          <p class="field-hint">Hosts can edit the story label for the current round.</p>
+        </div>
+        <div class="field-group">
+          <label>Status</label>
+          <p aria-live="polite" class="status-line" id="connectionStatus">Not connected</p>
+        </div>
+      </div>
+    </aside>
+    <aside aria-hidden="true" class="poker-panel" id="backlogPanel">
+      <div class="poker-panel__header">
+        <h2>Backlog &amp; history</h2>
+        <button class="poker-panel__close" data-panel-close="" type="button">×</button>
+      </div>
+      <div class="poker-panel__body">
+        <section aria-labelledby="integrationHeading" class="integration-panel" data-host-only="">
+          <div class="integration-panel__header">
+            <div>
+              <p class="hero-eyebrow integration-panel__eyebrow">Backlog import</p>
+              <h2 id="integrationHeading">Trello, Jira, or GitHub work</h2>
+              <p class="integration-panel__description">Pull saved tasks, set the current story, and keep a handy
+                history of your estimates.</p>
+            </div>
+            <button class="ghost-btn" id="refreshIntegrationBtn" type="button">Refresh tasks</button>
+          </div>
+          <p aria-live="polite" class="integration-panel__status" id="integrationStatus">Connect integrations in <a
+              href="/apps/settings/#integrations">Settings</a> and refresh to load tasks.</p>
+          <div class="integration-panel__controls">
+            <label class="integration-panel__control">
+              <span>Service</span>
+              <select id="integrationServiceFilter">
+                <option value="">All services</option>
+              </select>
+            </label>
+            <label class="integration-panel__control integration-panel__control--search">
+              <span>Search</span>
+              <input id="integrationSearch" inputmode="search" placeholder="Title, status, ID..." type="search">
+              </input></label>
+          </div>
+          <div aria-live="polite" class="integration-panel__services" id="integrationServices"></div>
+          <div aria-live="polite" class="integration-panel__tasks" id="integrationTasks" role="list"></div>
+          <div aria-live="polite" class="integration-panel__completed" id="integrationCompletedTasks" role="list"></div>
+          <div class="integration-panel__history">
+            <div class="integration-panel__history-header">
+              <h3>Recent estimates</h3>
+              <span class="pill" id="integrationHistoryCount">0</span>
+            </div>
+            <ul id="integrationHistoryList"></ul>
+          </div>
+        </section>
+      </div>
+    </aside>
+    <section class="seo-content glass-card">
+      <h2>Why Planning Poker?</h2>
+      <p>Story-pointing sessions work best when everyone plays at the same time. The Planning Poker Hub keeps teammates
         focused with a clean interface, optional story label, and clear call-to-actions for the facilitator.</p>
-<ul>
-<li>No downloads: Share a link and you’re ready to vote.</li>
-<li>Hidden until reveal: Cards stay secret until the host reveals them.</li>
-<li>Smart summaries: Copy averages, vote counts, and names straight into Jira.</li>
-<li>Team-friendly: If the host drops, the room automatically promotes the next participant.</li>
-</ul>
-</section>
-</main>
+      <ul>
+        <li>No downloads: Share a link and you’re ready to vote.</li>
+        <li>Hidden until reveal: Cards stay secret until the host reveals them.</li>
+        <li>Smart summaries: Copy averages, vote counts, and names straight into Jira.</li>
+        <li>Team-friendly: If the host drops, the room automatically promotes the next participant.</li>
+      </ul>
+    </section>
+  </main>
 
   {% include "footer.html" %}
 </body>
+
 </html>

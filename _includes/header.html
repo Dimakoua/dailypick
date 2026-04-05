@@ -6,7 +6,7 @@
             <span class="brand-name">Daily Pick</span>
         </a>
         <nav>
-            <a href="/">Play</a>
+             <a href="/">Play</a>
             <a href="/blog/">Blog</a>
             <a href="/feedback/">Feedback</a>
             <a href="/apps/settings/">Settings</a>
@@ -15,8 +15,19 @@
             <div class="weather" id="site-weather" aria-label="Current weather" title="Current weather">
                 ⛅ …
             </div>
-            <a href="/apps/settings/">Customize brand & players →</a>
+            <a class="standup-only-link" href="/apps/settings/" data-show-only="standup">Customize brand & players →</a>
         </div>
     </div>
 </header>
 <script src="/assets/js/weather.js" defer></script>
+<script>
+  // Hide standup-only features on non-standup pages
+  document.addEventListener('DOMContentLoaded', function() {
+    const mainEl = document.querySelector('main');
+    const isStandupPage = mainEl && mainEl.hasAttribute('data-page-type') && mainEl.getAttribute('data-page-type') === 'standup';
+    const standupLinks = document.querySelectorAll('[data-show-only="standup"]');
+    standupLinks.forEach(link => {
+      link.style.display = isStandupPage ? 'inline' : 'none';
+    });
+  });
+</script>

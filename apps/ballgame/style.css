@@ -288,34 +288,7 @@ canvas#gameCanvas {
 }
 .guide-section li { margin-bottom: 6px; }
 
-/* ---- SEO content block (shared glass card look) ------------------------ */
-.seo-content-area {
-  background: var(--glass-bg, rgba(255,255,255,0.12));
-  border: 1px solid var(--glass-border, rgba(255,255,255,0.38));
-  border-radius: var(--mm-radius);
-  box-shadow: var(--glass-shadow, 0 8px 30px rgba(0,0,0,0.15));
-  padding: 24px 28px;
-  width: min(92%, 780px);
-  margin: 28px auto 0;
-  text-align: left;
-  line-height: 1.7;
-}
-.seo-content-area h1,
-.seo-content-area h2 { 
-  color: var(--brand-accent, #3498db);
-  margin: 0 0 12px;
-}
-.seo-content-area h3 {
-  color: var(--brand-accent-strong, #2980b9);
-  margin: 18px 0 8px;
-  font-size: 1.25rem;
-}
-.seo-content-area a {
-  color: var(--brand-accent-strong, #2980b9);
-  font-weight: 700;
-  text-decoration: none;
-}
-.seo-content-area a:hover { text-decoration: underline; }
+/* SEO visuals moved to assets/css/seo-card.css */
 
 .button-group {
     text-align: center;

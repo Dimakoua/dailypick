@@ -1,139 +1,157 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Mimic Master – Lightning Reaction Game | Daily Pick</title>
-<meta content="Launch a Mimic Master room, match prompts with your hands, and rally remote teams with real-time leaderboards and screen-share friendly controls." name="description"/><meta content="index,follow" name="robots"/>
-<meta content="mimic master, reaction game, team energizer, camera game, daily pick, remote team activity, lightning round, stand-up energizer" name="keywords"/>
-<meta content="website" property="og:type"/>
-<meta content="https://dailypick.dev/apps/mimic-master/" property="og:url"/>
-<meta content="Mimic Master – Lightning Reaction Game | Daily Pick" property="og:title"/>
-<meta content="Launch a Mimic Master room, match prompts with your hands, and rally remote teams with real-time leaderboards and screen-share friendly controls." property="og:description"/>
-<meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image"/>
-<meta content="Teammate mirroring hand prompts inside Daily Pick's Mimic Master game" property="og:image:alt"/>
-<meta content="summary_large_image" name="twitter:card"/>
-<meta content="https://dailypick.dev/apps/mimic-master/" name="twitter:url"/>
-<meta content="Mimic Master – Lightning Reaction Game | Daily Pick" name="twitter:title"/>
-<meta content="Launch a Mimic Master room, match prompts with your hands, and rally remote teams with real-time leaderboards and screen-share friendly controls." name="twitter:description"/>
-<meta content="https://dailypick.dev/assets/og-image-main.png" name="twitter:image"/>
-<meta content="Teammate mirroring hand prompts inside Daily Pick's Mimic Master game" name="twitter:image:alt"/>
-<link href="https://dailypick.dev/apps/mimic-master/" rel="canonical"/>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="/assets/css/theme.css" rel="stylesheet"/>
-<link href="/assets/css/glass.css" rel="stylesheet"/>
-<link href="/assets/css/standup-panel.css" rel="stylesheet"/>
-<link href="/apps/mimic-master/style.css" rel="stylesheet"/>
-<script defer="" src="/assets/js/brand-theme-engine.js"></script>
-<script defer="" src="/assets/js/brand-config.js"></script>
-<script defer="" src="/assets/js/standup-data.js"></script>
-<script defer="" src="/assets/js/standup-panel.js"></script>
-<script defer="" src="/assets/js/standup-onboarding.js"></script>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Mimic Master – Lightning Reaction Game | Daily Pick</title>
+  <meta
+    content="Launch a Mimic Master room, match prompts with your hands, and rally remote teams with real-time leaderboards and screen-share friendly controls."
+    name="description" />
+  <meta content="index,follow" name="robots" />
+  <meta
+    content="mimic master, reaction game, team energizer, camera game, daily pick, remote team activity, lightning round, stand-up energizer"
+    name="keywords" />
+  <meta content="website" property="og:type" />
+  <meta content="https://dailypick.dev/apps/mimic-master/" property="og:url" />
+  <meta content="Mimic Master – Lightning Reaction Game | Daily Pick" property="og:title" />
+  <meta
+    content="Launch a Mimic Master room, match prompts with your hands, and rally remote teams with real-time leaderboards and screen-share friendly controls."
+    property="og:description" />
+  <meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image" />
+  <meta content="Teammate mirroring hand prompts inside Daily Pick's Mimic Master game" property="og:image:alt" />
+  <meta content="summary_large_image" name="twitter:card" />
+  <meta content="https://dailypick.dev/apps/mimic-master/" name="twitter:url" />
+  <meta content="Mimic Master – Lightning Reaction Game | Daily Pick" name="twitter:title" />
+  <meta
+    content="Launch a Mimic Master room, match prompts with your hands, and rally remote teams with real-time leaderboards and screen-share friendly controls."
+    name="twitter:description" />
+  <meta content="https://dailypick.dev/assets/og-image-main.png" name="twitter:image" />
+  <meta content="Teammate mirroring hand prompts inside Daily Pick's Mimic Master game" name="twitter:image:alt" />
+  <link href="https://dailypick.dev/apps/mimic-master/" rel="canonical" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&amp;display=swap" rel="stylesheet" />
+  <link href="/assets/css/theme.css" rel="stylesheet" />
+  <link href="/assets/css/glass.css" rel="stylesheet" />
+  <link href="/assets/css/standup-panel.css" rel="stylesheet" />
+  <link href="/assets/css/seo-card.css" rel="stylesheet" />
+  <link href="/apps/mimic-master/style.css" rel="stylesheet" />
+  <script defer="" src="/assets/js/brand-theme-engine.js"></script>
+  <script defer="" src="/assets/js/brand-config.js"></script>
+  <script defer="" src="/assets/js/standup-data.js"></script>
+  <script defer="" src="/assets/js/standup-panel.js"></script>
+  <script defer="" src="/assets/js/standup-onboarding.js"></script>
 </head>
+
 <body>
-    {% include "bg-orbs.html" %}
-    {% include "header.html" %}
+  {% include "bg-orbs.html" %}
+  {% include "header.html" %}
 
-    <main aria-labelledby="mimicHeading" class="mimic-page">
-<header class="hero-card glass-card">
-<div>
-<p class="hero-eyebrow">Reaction Challenge</p>
-<h1 id="mimicHeading">🖐️ Mimic Master</h1>
-<p class="hero-subtitle">
-                    Match the on-screen prompt with your hands, beat the countdown, and climb the shared leaderboard. Perfect
-                    for lightning-fast energy boosts during planning or retro breaks.
-                </p>
-</div>
-<div class="hero-meta">
-<span aria-atomic="true" aria-live="polite" class="status-pill" id="sessionStatus">Not connected</span>
-</div>
-</header>
-<section class="mimic-grid">
-<article aria-label="Room controls" class="controls-card glass-card">
-<div class="status-hints status-hints--top">
-<p class="hint" id="roundHint">Step 1: Save your name and enable camera to begin.</p>
-<p class="hint" id="waitingMessage" style="display:none;">Step 2: Waiting for host to start…</p>
-</div>
+  <main data-page-type="standup" aria-labelledby="mimicHeading" class="mimic-page">
+    <header class="hero-card glass-card">
+      <div>
+        <p class="hero-eyebrow">Reaction Challenge</p>
+        <h1 id="mimicHeading">🖐️ Mimic Master</h1>
+        <p class="hero-subtitle">
+          Match the on-screen prompt with your hands, beat the countdown, and climb the shared leaderboard. Perfect
+          for lightning-fast energy boosts during planning or retro breaks.
+        </p>
+      </div>
+      <div class="hero-meta">
+        <span aria-atomic="true" aria-live="polite" class="status-pill" id="sessionStatus">Not connected</span>
+      </div>
+    </header>
+    <section class="mimic-grid">
+      <article aria-label="Room controls" class="controls-card glass-card">
+        <div class="status-hints status-hints--top">
+          <p class="hint" id="roundHint">Step 1: Save your name and enable camera to begin.</p>
+          <p class="hint" id="waitingMessage" style="display:none;">Step 2: Waiting for host to start…</p>
+        </div>
 
-<div class="control-block player-identity">
-<div class="inline-controls">
-<input autocomplete="off" id="playerNameInput" maxlength="24" placeholder="Your Name" type="text"/>
-<button class="btn btn--small" id="saveNameBtn" type="button">Set Name</button>
-</div>
-</div>
+        <div class="control-block player-identity">
+          <div class="inline-controls">
+            <input autocomplete="off" id="playerNameInput" maxlength="24" placeholder="Your Name" type="text" />
+            <button class="btn btn--small" id="saveNameBtn" type="button">Set Name</button>
+          </div>
+        </div>
 
-<div class="room-actions">
-<div class="control-block">
-<div class="inline-controls">
-<button class="btn btn--primary" id="startRoomBtn" type="button">Create Room</button>
-<button class="btn btn--primary" id="joinRoomBtn" style="display:none;" type="button">Join Room</button>
-<button class="btn btn--secondary" disabled="" id="copyLinkBtn" style="display:none;" type="button">🔗 Copy Invite Link</button>
-</div>
-</div>
+        <div class="room-actions">
+          <div class="control-block">
+            <div class="inline-controls">
+              <button class="btn btn--primary" id="startRoomBtn" type="button">Create Room</button>
+              <button class="btn btn--primary" id="joinRoomBtn" style="display:none;" type="button">Join Room</button>
+              <button class="btn btn--secondary" disabled="" id="copyLinkBtn" style="display:none;" type="button">🔗
+                Copy Invite Link</button>
+            </div>
+          </div>
 
-<div class="control-block">
-<div class="inline-controls">
-<button class="btn btn--camera" id="enableCameraBtn" type="button">📷 Enable Camera</button>
-<div id="hostCameraNotice" class="alert-notice alert-notice--error" style="display: none;">
-  <strong>Wait!</strong> You must enable your camera to start a round.
-</div>
-<button class="btn btn--play" disabled="" id="startGameBtn" style="display:none;" type="button">▶ Start Round</button>
-</div>
-</div>
-</div>
+          <div class="control-block">
+            <div class="inline-controls">
+              <button class="btn btn--camera" id="enableCameraBtn" type="button">📷 Enable Camera</button>
+              <div id="hostCameraNotice" class="alert-notice alert-notice--error" style="display: none;">
+                <strong>Wait!</strong> You must enable your camera to start a round.
+              </div>
+              <button class="btn btn--play" disabled="" id="startGameBtn" style="display:none;" type="button">▶ Start
+                Round</button>
+            </div>
+          </div>
+        </div>
 
-<div class="host-controls" id="hostControls" style="display:none;">
-<div class="host-controls__inner">
-<div id="hostBlockerNotice" class="alert-notice alert-notice--error" style="display: none;">
-  <strong>Wait!</strong> These players have no camera: <span id="blockers"></span>
-</div>
-<button class="ghost-btn" id="startForNewBtn" type="button">Start for newcomers</button>
-<button class="ghost-btn" id="clearLeaderboardBtn" type="button">Clear leaderboard</button>
-</div>
-</div>
-</article>
+        <div class="host-controls" id="hostControls" style="display:none;">
+          <div class="host-controls__inner">
+            <div id="hostBlockerNotice" class="alert-notice alert-notice--error" style="display: none;">
+              <strong>Wait!</strong> These players have no camera: <span id="blockers"></span>
+            </div>
+            <button class="ghost-btn" id="startForNewBtn" type="button">Start for newcomers</button>
+            <button class="ghost-btn" id="clearLeaderboardBtn" type="button">Clear leaderboard</button>
+          </div>
+        </div>
+      </article>
 
-<article class="video-card glass-card">
-<div class="video-wrapper">
-<video autoplay="" id="video" muted="" playsinline=""></video>
-<canvas id="overlay"></canvas>
-<div id="promptDisplay">Ready?</div>
-<div id="statusMessage"></div>
-</div>
-</article>
+      <article class="video-card glass-card">
+        <div class="video-wrapper">
+          <video autoplay="" id="video" muted="" playsinline=""></video>
+          <canvas id="overlay"></canvas>
+          <div id="promptDisplay">Ready?</div>
+          <div id="statusMessage"></div>
+        </div>
+      </article>
 
-<article class="side-card glass-card">
-<section class="leaderboard-panel">
-<div class="panel-header">
-<h2>Players in room</h2>
-<button aria-hidden="true" class="sr-only" id="startRoomBtnHidden" type="button"></button>
-</div>
-<ol id="leaderboardList"></ol>
-<p class="leaderboard-note">Results persist across rounds. ✓ = played this session, ⏳ = waiting to play.</p>
-</section>
-<section class="tips-panel">
-<h3>How it works</h3>
-<ul>
-<li>Set a display name and start a room. Share the invite link with teammates.</li>
-<li>Enable your camera, then tap “Start reaction round”. A random number or emoji appears after a short delay.</li>
-<li>Mimic the prompt. As soon as your hands match, your reaction time locks in.</li>
-<li>The leaderboard updates live so everyone sees the fastest response.</li> <li>Host can start rounds for newcomers only, reset sessions, or clear the leaderboard.</li> </ul>
-<p class="privacy-note">All gesture detection runs in your browser. Only your display name and reaction
-                        results are shared with the room.</p>
-</section>
-</article>
-</section>
-</main>
-<!-- Core libraries -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
-<!-- Hand Pose Detection -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection"></script>
-<!-- Optional: MediaPipe runtime -->
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands"></script>
-<script src="script.js"></script>
-    {% include "footer.html" %}
+      <article class="side-card glass-card">
+        <section class="leaderboard-panel">
+          <div class="panel-header">
+            <h2>Players in room</h2>
+            <button aria-hidden="true" class="sr-only" id="startRoomBtnHidden" type="button"></button>
+          </div>
+          <ol id="leaderboardList"></ol>
+          <p class="leaderboard-note">Results persist across rounds. ✓ = played this session, ⏳ = waiting to play.</p>
+        </section>
+        <section class="tips-panel">
+          <h3>How it works</h3>
+          <ul>
+            <li>Set a display name and start a room. Share the invite link with teammates.</li>
+            <li>Enable your camera, then tap “Start reaction round”. A random number or emoji appears after a short
+              delay.</li>
+            <li>Mimic the prompt. As soon as your hands match, your reaction time locks in.</li>
+            <li>The leaderboard updates live so everyone sees the fastest response.</li>
+            <li>Host can start rounds for newcomers only, reset sessions, or clear the leaderboard.</li>
+          </ul>
+          <p class="privacy-note">All gesture detection runs in your browser. Only your display name and reaction
+            results are shared with the room.</p>
+        </section>
+      </article>
+    </section>
+  </main>
+  <!-- Core libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+  <!-- Hand Pose Detection -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection"></script>
+  <!-- Optional: MediaPipe runtime -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands"></script>
+  <script src="script.js"></script>
+  {% include "footer.html" %}
 </body>
+
 </html>

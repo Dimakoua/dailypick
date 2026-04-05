@@ -1,136 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Choices Spinner – Interactive Decision Wheel | Daily Pick</title>
-<meta content="Spin a colorful wheel to choose between options: lunch spots, meeting topics, project priorities, or any decision. Fair, fast, and fun." name="description"/><meta content="index,follow" name="robots"/>
-<meta content="choices spinner, decision spinner, option picker, lunch decision, topic selector, interactive choice wheel" name="keywords"/>
-<meta content="https://dailypick.dev/apps/choices-spinner/" property="og:url"/>
-<meta content="Choices Spinner – Interactive Decision Wheel | Daily Pick" property="og:title"/>
-<meta content="Spin to choose between options: make team decisions fair and engaging with an interactive choice wheel for any scenario." property="og:description"/>
-<meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image"/>
-<link href="https://dailypick.dev/apps/choices-spinner/" rel="canonical"/>
-<link href="/assets/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
-<link href="/assets/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
-<link href="/assets/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
-<link href="/assets/favicon/site.webmanifest" rel="manifest"/>
-<link href="/assets/favicon/favicon.ico" rel="shortcut icon"/>
-<meta content="#2d89ef" name="theme-color"/>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet"/>
-<link href="/assets/css/theme.css" rel="stylesheet"/>
-<link href="/assets/css/glass.css" rel="stylesheet"/>
-<link href="./style.css" rel="stylesheet"/>
-<script defer="" src="/assets/js/brand-theme-engine.js"></script>
-<script defer="" src="/assets/js/brand-config.js"></script>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Choices Spinner – Interactive Decision Wheel | Daily Pick</title>
+  <meta
+    content="Spin a colorful wheel to choose between options: lunch spots, meeting topics, project priorities, or any decision. Fair, fast, and fun."
+    name="description" />
+  <meta content="index,follow" name="robots" />
+  <meta
+    content="choices spinner, decision spinner, option picker, lunch decision, topic selector, interactive choice wheel"
+    name="keywords" />
+  <meta content="https://dailypick.dev/apps/choices-spinner/" property="og:url" />
+  <meta content="Choices Spinner – Interactive Decision Wheel | Daily Pick" property="og:title" />
+  <meta
+    content="Spin to choose between options: make team decisions fair and engaging with an interactive choice wheel for any scenario."
+    property="og:description" />
+  <meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image" />
+  <link href="https://dailypick.dev/apps/choices-spinner/" rel="canonical" />
+  <link href="/assets/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
+  <link href="/assets/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
+  <link href="/assets/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
+  <link href="/assets/favicon/site.webmanifest" rel="manifest" />
+  <link href="/assets/favicon/favicon.ico" rel="shortcut icon" />
+  <meta content="#2d89ef" name="theme-color" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="/assets/css/theme.css" rel="stylesheet" />
+  <link href="/assets/css/glass.css" rel="stylesheet" />
+  <link href="/assets/css/seo-card.css" rel="stylesheet" />
+  <link href="./style.css" rel="stylesheet" />
+  <script defer="" src="/assets/js/brand-theme-engine.js"></script>
+  <script defer="" src="/assets/js/brand-config.js"></script>
 </head>
+
 <body>
-    {% include "bg-orbs.html" %}
-    {% include "header.html" %}
+  {% include "bg-orbs.html" %}
+  {% include "header.html" %}
 
-    <a class="skip-link" href="#main">Skip to main content</a>
+  <a class="skip-link" href="#main">Skip to main content</a>
 
-    <main class="spinner-page" id="main">
+  <main data-page-type="randomizer" class="spinner-page" id="main">
 
-      <header class="page-hero glass-card">
-        <div>
-          <p class="hero-eyebrow">Decision Making</p>
-          <h1 id="spinnerHeading">Choices Spinner</h1>
-          <p>Add options, spin the wheel, and let randomness decide. Perfect for lunch, topics, priorities, or any team choice.</p>
-        </div>
-      </header>
+    <header class="page-hero glass-card">
+      <div>
+        <p class="hero-eyebrow">Decision Making</p>
+        <h1 id="spinnerHeading">Choices Spinner</h1>
+        <p>Add options, spin the wheel, and let randomness decide. Perfect for lunch, topics, priorities, or any team
+          choice.</p>
+      </div>
+    </header>
 
-      <section class="spinner-form glass-card">
-        <div class="spinner-layout">
-          <!-- Left: Options Input & Controls -->
-          <div class="spinner-sidebar">
-            <div class="form-group">
-              <label for="optionsInput">Options (one per line or comma-separated):</label>
-              <textarea id="optionsInput" rows="8" placeholder="Pizza&#10;Tacos&#10;Sushi&#10;Burger&#10;Salad"></textarea>
-            </div>
-
-            <div class="form-actions">
-              <button id="updateBtn" class="btn btn--accent" type="button">🔄 Update</button>
-              <button id="resetBtn" class="btn btn--secondary" type="button">↺ Reset</button>
-            </div>
-
-            <p class="form-tip">Use for team lunch, meeting topics, sprint priorities, or any group choice.</p>
+    <section class="spinner-form glass-card">
+      <div class="spinner-layout">
+        <!-- Left: Options Input & Controls -->
+        <div class="spinner-sidebar">
+          <div class="form-group">
+            <label for="optionsInput">Options (one per line or comma-separated):</label>
+            <textarea id="optionsInput" rows="8"
+              placeholder="Pizza&#10;Tacos&#10;Sushi&#10;Burger&#10;Salad"></textarea>
           </div>
 
-          <!-- Right: Wheel & Result -->
-          <div class="spinner-main">
-            <div id="wheel-container">
-              <div id="indicator"></div>
-              <canvas height="425" id="wheel" width="425"></canvas>
-            </div>
+          <div class="form-actions">
+            <button id="updateBtn" class="btn btn--accent" type="button">🔄 Update</button>
+            <button id="resetBtn" class="btn btn--secondary" type="button">↺ Reset</button>
+          </div>
 
-            <div class="spinner-controls">
-              <button id="spinBtn" class="btn btn-spin" type="button">🎡 SPIN!</button>
-            </div>
+          <p class="form-tip">Use for team lunch, meeting topics, sprint priorities, or any group choice.</p>
+        </div>
 
-            <div class="result-display">
-              <div id="resultText" class="result-value"></div>
-            </div>
+        <!-- Right: Wheel & Result -->
+        <div class="spinner-main">
+          <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+          </div>
+
+          <div class="spinner-controls">
+            <button id="spinBtn" class="btn btn-spin" type="button">🎡 SPIN!</button>
+          </div>
+
+          <div class="result-display">
+            <div id="resultText" class="result-value"></div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-    </main>
+  </main>
 
-    {% include "footer.html" %}
-    {% include "cookie-consent.html" %}
-    <script defer="" src="/assets/js/cookie-consent.js"></script>
+  {% include "footer.html" %}
+  {% include "cookie-consent.html" %}
+  <script defer="" src="/assets/js/cookie-consent.js"></script>
 
-    <script>
-      const optionsInput = document.getElementById('optionsInput');
-      const updateBtn = document.getElementById('updateBtn');
-      const resetBtn = document.getElementById('resetBtn');
-      const spinBtn = document.getElementById('spinBtn');
-      const resultText = document.getElementById('resultText');
-      const canvas = document.getElementById('wheel');
-      const ctx = canvas.getContext('2d');
+  <script>
+    const optionsInput = document.getElementById('optionsInput');
+    const updateBtn = document.getElementById('updateBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const spinBtn = document.getElementById('spinBtn');
+    const resultText = document.getElementById('resultText');
+    const canvas = document.getElementById('wheel');
+    const ctx = canvas.getContext('2d');
 
-      const DEFAULT_OPTIONS = ['Pizza', 'Tacos', 'Sushi', 'Burger', 'Salad'];
-      const STORAGE_KEY = 'dailypick_choices_spinner_options';
-      let options = [...DEFAULT_OPTIONS];
-      let isSpinning = false;
+    const DEFAULT_OPTIONS = ['Pizza', 'Tacos', 'Sushi', 'Burger', 'Salad'];
+    const STORAGE_KEY = 'dailypick_choices_spinner_options';
+    let options = [...DEFAULT_OPTIONS];
+    let isSpinning = false;
 
-      const radius = canvas.width / 2;
+    const radius = canvas.width / 2;
 
-      function loadOptions() {
-        try {
-          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-          if (saved && Array.isArray(saved) && saved.length > 0) {
-            options = saved;
-          } else {
-            options = [...DEFAULT_OPTIONS];
-          }
-        } catch (e) {
+    function loadOptions() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (saved && Array.isArray(saved) && saved.length > 0) {
+          options = saved;
+        } else {
           options = [...DEFAULT_OPTIONS];
         }
-        optionsInput.value = options.join('\n');
-        drawWheel();
+      } catch (e) {
+        options = [...DEFAULT_OPTIONS];
       }
+      optionsInput.value = options.join('\n');
+      drawWheel();
+    }
 
-      function saveOptions() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(options));
-      }
+    function saveOptions() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(options));
+    }
 
-      function parseOptions() {
-        const raw = optionsInput.value.trim();
-        if (!raw) return [];
-        return Array.from(new Set(raw.split(/[\n,]+/).map(o => o.trim()).filter(Boolean)));
-      }
+    function parseOptions() {
+      const raw = optionsInput.value.trim();
+      if (!raw) return [];
+      return Array.from(new Set(raw.split(/[\n,]+/).map(o => o.trim()).filter(Boolean)));
+    }
 
-      function drawWheel() {
-        if (options.length === 0) return;
-        
-        const angleStep = (2 * Math.PI) / options.length;
+    function drawWheel() {
+      if (options.length === 0) return;
+
+      const angleStep = (2 * Math.PI) / options.length;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.save();
+      ctx.translate(radius, radius);
+
+      options.forEach((option, i) => {
+        const angle = i * angleStep;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.arc(0, 0, radius, angle, angle + angleStep);
+        ctx.lineTo(0, 0);
+        ctx.fillStyle = `hsl(${(i * 360) / options.length}, 75%, 55%)`;
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Draw text
+        ctx.save();
+        ctx.rotate(angle + angleStep / 2);
+        ctx.textAlign = 'right';
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 14px Arial';
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+        ctx.shadowBlur = 3;
+        ctx.fillText(option, radius - 20, 6);
+        ctx.restore();
+      });
+
+      ctx.restore();
+    }
+
+    function spinWheel() {
+      if (isSpinning || options.length === 0) return;
+
+      isSpinning = true;
+      spinBtn.disabled = true;
+      resultText.textContent = '';
+
+      const spinDuration = 3000;
+      const spins = 8;
+      const totalRotation = spins * Math.PI * 2;
+      const anglePerSlice = (Math.PI * 2) / options.length;
+      const chosenIndex = Math.floor(Math.random() * options.length);
+
+      // Calculate rotation to point chosen item at the top indicator
+      // Each slice center is at: (i + 0.5) * anglePerSlice
+      // Indicator points to: 3π/2 (top)
+      // So rotation needed: 3π/2 - (chosenIndex + 0.5) * anglePerSlice
+      const indicatorAngle = 3 * Math.PI / 2;
+      const sliceCenter = (chosenIndex + 0.5) * anglePerSlice;
+      const targetRotation = totalRotation + (indicatorAngle - sliceCenter);
+
+      const startTime = Date.now();
+
+      function animateSpin() {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / spinDuration, 1);
+
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const currentRotation = targetRotation * easeOut;
+
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
         ctx.save();
         ctx.translate(radius, radius);
+        ctx.rotate(currentRotation);
 
+        const angleStep = (2 * Math.PI) / options.length;
         options.forEach((option, i) => {
           const angle = i * angleStep;
           ctx.beginPath();
@@ -143,7 +218,6 @@
           ctx.lineWidth = 2;
           ctx.stroke();
 
-          // Draw text
           ctx.save();
           ctx.rotate(angle + angleStep / 2);
           ctx.textAlign = 'right';
@@ -156,106 +230,45 @@
         });
 
         ctx.restore();
+
+        if (progress < 1) {
+          requestAnimationFrame(animateSpin);
+        } else {
+          isSpinning = false;
+          spinBtn.disabled = false;
+          resultText.textContent = `✨ ${options[chosenIndex]}`;
+        }
       }
 
-      function spinWheel() {
-        if (isSpinning || options.length === 0) return;
+      animateSpin();
+    }
 
-        isSpinning = true;
-        spinBtn.disabled = true;
-        resultText.textContent = '';
-
-        const spinDuration = 3000;
-        const spins = 8;
-        const totalRotation = spins * Math.PI * 2;
-        const anglePerSlice = (Math.PI * 2) / options.length;
-        const chosenIndex = Math.floor(Math.random() * options.length);
-        
-        // Calculate rotation to point chosen item at the top indicator
-        // Each slice center is at: (i + 0.5) * anglePerSlice
-        // Indicator points to: 3π/2 (top)
-        // So rotation needed: 3π/2 - (chosenIndex + 0.5) * anglePerSlice
-        const indicatorAngle = 3 * Math.PI / 2;
-        const sliceCenter = (chosenIndex + 0.5) * anglePerSlice;
-        const targetRotation = totalRotation + (indicatorAngle - sliceCenter);
-
-        const startTime = Date.now();
-
-        function animateSpin() {
-          const elapsed = Date.now() - startTime;
-          const progress = Math.min(elapsed / spinDuration, 1);
-
-          const easeOut = 1 - Math.pow(1 - progress, 3);
-          const currentRotation = targetRotation * easeOut;
-
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.save();
-          ctx.translate(radius, radius);
-          ctx.rotate(currentRotation);
-
-          const angleStep = (2 * Math.PI) / options.length;
-          options.forEach((option, i) => {
-            const angle = i * angleStep;
-            ctx.beginPath();
-            ctx.moveTo(0, 0);
-            ctx.arc(0, 0, radius, angle, angle + angleStep);
-            ctx.lineTo(0, 0);
-            ctx.fillStyle = `hsl(${(i * 360) / options.length}, 75%, 55%)`;
-            ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-
-            ctx.save();
-            ctx.rotate(angle + angleStep / 2);
-            ctx.textAlign = 'right';
-            ctx.fillStyle = '#fff';
-            ctx.font = 'bold 14px Arial';
-            ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-            ctx.shadowBlur = 3;
-            ctx.fillText(option, radius - 20, 6);
-            ctx.restore();
-          });
-
-          ctx.restore();
-
-          if (progress < 1) {
-            requestAnimationFrame(animateSpin);
-          } else {
-            isSpinning = false;
-            spinBtn.disabled = false;
-            resultText.textContent = `✨ ${options[chosenIndex]}`;
-          }
-        }
-
-        animateSpin();
+    updateBtn.addEventListener('click', () => {
+      const parsed = parseOptions();
+      if (!parsed.length) {
+        resultText.textContent = 'Add at least one option first.';
+        return;
       }
+      options = parsed;
+      optionsInput.value = options.join('\n');
+      resultText.textContent = '';
+      saveOptions();
+      drawWheel();
+    });
 
-      updateBtn.addEventListener('click', () => {
-        const parsed = parseOptions();
-        if (!parsed.length) {
-          resultText.textContent = 'Add at least one option first.';
-          return;
-        }
-        options = parsed;
-        optionsInput.value = options.join('\n');
-        resultText.textContent = '';
-        saveOptions();
-        drawWheel();
-      });
+    resetBtn.addEventListener('click', () => {
+      options = [...DEFAULT_OPTIONS];
+      optionsInput.value = options.join('\n');
+      resultText.textContent = '';
+      saveOptions();
+      drawWheel();
+    });
 
-      resetBtn.addEventListener('click', () => {
-        options = [...DEFAULT_OPTIONS];
-        optionsInput.value = options.join('\n');
-        resultText.textContent = '';
-        saveOptions();
-        drawWheel();
-      });
+    spinBtn.addEventListener('click', spinWheel);
 
-      spinBtn.addEventListener('click', spinWheel);
-
-      loadOptions();
-    </script>
+    loadOptions();
+  </script>
 
 </body>
+
 </html>

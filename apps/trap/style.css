@@ -36,7 +36,7 @@ h1 {
 
 /* Primary button in a glass gradient */
 #trapBtn {
-  display: inline-block;
+  display: block;
   padding: 12px 24px;
   font-size: 1.1rem;
   font-weight: 800;
@@ -46,9 +46,9 @@ h1 {
   cursor: pointer;
   transition: transform .2s ease, box-shadow .2s ease, background-color .3s ease;
   box-shadow: 0 10px 22px rgba(0,0,0,.12);
- 
+  margin: 8px auto 0;
+  background: var(--brand-accent, linear-gradient(to bottom right, rgba(52,152,219,.9), rgba(41,128,185,.9)));
 }
-#trapBtn        { background: linear-gradient(to bottom right, rgba(52,152,219,.9), rgba(41,128,185,.9)); margin-top: 8px; }
 
 #trapBtn:hover, #trapBtn:focus-visible {
   outline: none;
@@ -58,8 +58,8 @@ h1 {
 
 /* Canvas — crisp with subtle glass frame */
 #gameCanvas {
-  display: block;
-  margin: 16px auto 8px;
+  display: inline-block;
+  margin: 16px 0 8px;
   width: min(92vw, var(--trap-max));
   height: auto;               /* preserve intrinsic aspect via attributes */
   background: #f0f0f0;
@@ -71,7 +71,9 @@ h1 {
 
 .game-container {
   position: relative;
-  display: inline-block;
+  display: block;
+  width: 100%;
+  text-align: center;
 }
 
 #office-overlay {
@@ -97,36 +99,7 @@ h1 {
   text-align: center;
 }
 
-/* SEO content — glass card */
-.seo-content-area {
-  background: var(--glass-bg, rgba(255,255,255,.12));
-  border: 1px solid var(--glass-border, rgba(255,255,255,.38));
-  border-radius: var(--radius-lg, 15px);
-  box-shadow: var(--glass-shadow, 0 8px 30px rgba(0,0,0,.15));
-  padding: 24px 28px;
-  max-width: 780px;
-  width: min(92%, 780px);
-  margin: 28px auto 0;
-  text-align: left;
-  line-height: 1.7;
-}
-.seo-content-area h2 {
-  color: var(--brand-accent, #3498db);
-  margin: 0 0 12px;
-  font-size: 1.6rem;
-  text-align: center;
-}
-.seo-content-area h3 {
-  color: var(--brand-accent-strong, #2980b9);
-  margin: 18px 0 8px;
-  font-size: 1.25rem;
-}
-.seo-content-area a {
-  color: var(--brand-accent-strong, #2980b9);
-  text-decoration: none;
-  font-weight: 700;
-}
-.seo-content-area a:hover { text-decoration: underline; }
+/* SEO visuals moved to assets/css/seo-card.css */
 
 @media (max-width: 520px) {
   h1 { margin-top: calc(var(--header-h, 64px) + 8px); font-size: 1.9rem; }

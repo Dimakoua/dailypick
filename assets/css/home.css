@@ -194,11 +194,13 @@ body {
   transform: translateY(-8px) scale(1.02);
   box-shadow: var(--brand-hover-shadow);
   border-color: var(--brand-accent);
+  text-decoration: none;
 }
 .game-card:focus-visible {
   outline: none;
   box-shadow: var(--brand-focus-ring);
   border-color: var(--brand-accent-strong);
+  text-decoration: none;
 }
 
 .game-card__icon {

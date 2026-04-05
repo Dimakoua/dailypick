@@ -1,199 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Random Student Caller – Classroom Name Roulette | Daily Pick</title>
-<meta content="The perfect random student caller for teachers. Pick names fairly, group students, and ensure everyone participates with our no-repeat name picker." name="description"/><meta content="index,follow" name="robots"/>
-<meta content="random student caller, classroom name picker, teacher name randomizer, no-repeat name picker, random group generator for students" name="keywords"/>
-<meta content="https://dailypick.dev/apps/classroom-name-roulette/" property="og:url"/>
-<meta content="Random Student Caller – Classroom Name Roulette | Daily Pick" property="og:title"/>
-<meta content="Make classroom participation fair and fun. Use our random name roulette to call on students without bias." property="og:description"/>
-<meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image"/>
-<link href="https://dailypick.dev/apps/classroom-name-roulette/" rel="canonical"/>
-<link href="/assets/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
-<link href="/assets/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
-<link href="/assets/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
-<link href="/assets/favicon/site.webmanifest" rel="manifest"/>
-<link href="/assets/favicon/favicon.ico" rel="shortcut icon"/>
-<meta content="#2d89ef" name="theme-color"/>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet"/>
-<link href="/assets/css/theme.css" rel="stylesheet"/>
-<link href="/assets/css/glass.css" rel="stylesheet"/>
-<link href="./style.css" rel="stylesheet"/>
-<script defer="" src="/assets/js/brand-theme-engine.js"></script>
-<script defer="" src="/assets/js/brand-config.js"></script>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Random Student Caller – Classroom Name Roulette | Daily Pick</title>
+  <meta
+    content="The perfect random student caller for teachers. Pick names fairly, group students, and ensure everyone participates with our no-repeat name picker."
+    name="description" />
+  <meta content="index,follow" name="robots" />
+  <meta
+    content="random student caller, classroom name picker, teacher name randomizer, no-repeat name picker, random group generator for students"
+    name="keywords" />
+  <meta content="https://dailypick.dev/apps/classroom-name-roulette/" property="og:url" />
+  <meta content="Random Student Caller – Classroom Name Roulette | Daily Pick" property="og:title" />
+  <meta
+    content="Make classroom participation fair and fun. Use our random name roulette to call on students without bias."
+    property="og:description" />
+  <meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image" />
+  <link href="https://dailypick.dev/apps/classroom-name-roulette/" rel="canonical" />
+  <link href="/assets/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
+  <link href="/assets/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
+  <link href="/assets/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
+  <link href="/assets/favicon/site.webmanifest" rel="manifest" />
+  <link href="/assets/favicon/favicon.ico" rel="shortcut icon" />
+  <meta content="#2d89ef" name="theme-color" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="/assets/css/theme.css" rel="stylesheet" />
+  <link href="/assets/css/glass.css" rel="stylesheet" />
+  <link href="/assets/css/seo-card.css" rel="stylesheet" />
+  <link href="./style.css" rel="stylesheet" />
+  <script defer="" src="/assets/js/brand-theme-engine.js"></script>
+  <script defer="" src="/assets/js/brand-config.js"></script>
 </head>
+
 <body>
-    {% include "bg-orbs.html" %}
-    {% include "header.html" %}
+  {% include "bg-orbs.html" %}
+  {% include "header.html" %}
 
-    <a class="skip-link" href="#main">Skip to main content</a>
+  <a class="skip-link" href="#main">Skip to main content</a>
 
-    <main class="picker-page" id="main">
+  <main data-page-type="randomizer" class="picker-page" id="main">
 
-      <header class="page-hero glass-card">
-        <div>
-          <p class="hero-eyebrow">For Teachers & Educators</p>
-          <h1 id="pickerHeading">Classroom Name Roulette</h1>
-          <p>A fair, fun way to call on students. Enter your class roster and let the roulette decide who's next!</p>
+    <header class="page-hero glass-card">
+      <div>
+        <p class="hero-eyebrow">For Teachers & Educators</p>
+        <h1 id="pickerHeading">Classroom Name Roulette</h1>
+        <p>A fair, fun way to call on students. Enter your class roster and let the roulette decide who's next!</p>
+      </div>
+    </header>
+
+    <section class="picker-form glass-card">
+      <div class="form-group">
+        <label for="namesInput">Class Roster (one name per line):</label>
+        <textarea id="namesInput" rows="10" placeholder="Student 1&#10;Student 2&#10;Student 3"></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button id="pickBtn" class="btn btn--accent" type="button">🎓 Call a Student</button>
+        <button id="resetBtn" class="btn btn--secondary" type="button">↺ Reset Roster</button>
+        <label class="checkbox-label">
+          <input id="removeAfterPick" type="checkbox" checked />
+          <span>Remove after calling (No-repeat mode)</span>
+        </label>
+      </div>
+
+      <div class="result-display">
+        <div id="pickerResult" class="result-value"></div>
+        <div id="remainingCount" style="margin-bottom: 10px; font-weight: 600; color: var(--brand-accent);"></div>
+        <div id="history" class="result-history">
+          <strong>Called students:</strong> <span id="historyList">None</span>
         </div>
-      </header>
+      </div>
 
-      <section class="picker-form glass-card">
-        <div class="form-group">
-          <label for="namesInput">Class Roster (one name per line):</label>
-          <textarea id="namesInput" rows="10" placeholder="Student 1&#10;Student 2&#10;Student 3"></textarea>
-        </div>
+      <div class="seo-content-area">
+        <h2>How to use the Random Student Caller</h2>
+        <p>This tool is designed to make classroom participation more engaging and equitable. By using a
+          <strong>no-repeat name picker</strong>, you can ensure that every student gets a chance to participate before
+          the list resets.</p>
 
-        <div class="form-actions">
-          <button id="pickBtn" class="btn btn--accent" type="button">🎓 Call a Student</button>
-          <button id="resetBtn" class="btn btn--secondary" type="button">↺ Reset Roster</button>
-          <label class="checkbox-label">
-            <input id="removeAfterPick" type="checkbox" checked/>
-            <span>Remove after calling (No-repeat mode)</span>
-          </label>
-        </div>
+        <h3>Key Features for Teachers:</h3>
+        <ul>
+          <li><strong>Fair Selection:</strong> Removes "favoritism" bias by letting the computer choose.</li>
+          <li><strong>No-Repeat Mode:</strong> Toggle the "Remove after calling" checkbox to cycle through your entire
+            class roster.</li>
+          <li><strong>Save Your List:</strong> Your student names are saved in your browser, so they'll be here the next
+            time you open the app.</li>
+        </ul>
 
-        <div class="result-display">
-          <div id="pickerResult" class="result-value"></div>
-          <div id="remainingCount" style="margin-bottom: 10px; font-weight: 600; color: var(--brand-accent);"></div>
-          <div id="history" class="result-history">
-            <strong>Called students:</strong> <span id="historyList">None</span>
-          </div>
-        </div>
+        <h3>Why Randomize Student Calling?</h3>
+        <p>Randomly calling on students (often called "cold calling") keeps the class alert and ensures that quieter
+          students have their voices heard. It creates a "gamified" atmosphere where the anticipation of the draw makes
+          learning more interactive.</p>
 
-        <div class="seo-content-area">
-          <h2>How to use the Random Student Caller</h2>
-          <p>This tool is designed to make classroom participation more engaging and equitable. By using a <strong>no-repeat name picker</strong>, you can ensure that every student gets a chance to participate before the list resets.</p>
-          
-          <h3>Key Features for Teachers:</h3>
-          <ul>
-            <li><strong>Fair Selection:</strong> Removes "favoritism" bias by letting the computer choose.</li>
-            <li><strong>No-Repeat Mode:</strong> Toggle the "Remove after calling" checkbox to cycle through your entire class roster.</li>
-            <li><strong>Save Your List:</strong> Your student names are saved in your browser, so they'll be here the next time you open the app.</li>
-          </ul>
+        <h3>Frequently Asked Questions</h3>
+        <dl>
+          <dt><strong>Is this free to use?</strong></dt>
+          <dd>Yes! Daily Pick's classroom tools are completely free for educators.</dd>
+          <dt><strong>Does it work on tablets?</strong></dt>
+          <dd>Absolutely. It's fully responsive and works great on iPads, Chromebooks, and interactive whiteboards.</dd>
+        </dl>
+      </div>
+    </section>
 
-          <h3>Why Randomize Student Calling?</h3>
-          <p>Randomly calling on students (often called "cold calling") keeps the class alert and ensures that quieter students have their voices heard. It creates a "gamified" atmosphere where the anticipation of the draw makes learning more interactive.</p>
-          
-          <h3>Frequently Asked Questions</h3>
-          <dl>
-            <dt><strong>Is this free to use?</strong></dt>
-            <dd>Yes! Daily Pick's classroom tools are completely free for educators.</dd>
-            <dt><strong>Does it work on tablets?</strong></dt>
-            <dd>Absolutely. It's fully responsive and works great on iPads, Chromebooks, and interactive whiteboards.</dd>
-          </dl>
-        </div>
-      </section>
+  </main>
 
-    </main>
+  {% include "footer.html" %}
+  {% include "cookie-consent.html" %}
+  <script defer="" src="/assets/js/cookie-consent.js"></script>
 
-    {% include "footer.html" %}
-    {% include "cookie-consent.html" %}
-    <script defer="" src="/assets/js/cookie-consent.js"></script>
+  <script>
+    const STORAGE_KEY = 'dailypick_classroom_roulette_names';
+    const namesInput = document.getElementById('namesInput');
+    const pickBtn = document.getElementById('pickBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const removeAfterPick = document.getElementById('removeAfterPick');
+    const pickerResult = document.getElementById('pickerResult');
+    const historyList = document.getElementById('historyList');
+    const remainingCount = document.getElementById('remainingCount');
 
-    <script>
-      const STORAGE_KEY = 'dailypick_classroom_roulette_names';
-      const namesInput = document.getElementById('namesInput');
-      const pickBtn = document.getElementById('pickBtn');
-      const resetBtn = document.getElementById('resetBtn');
-      const removeAfterPick = document.getElementById('removeAfterPick');
-      const pickerResult = document.getElementById('pickerResult');
-      const historyList = document.getElementById('historyList');
-      const remainingCount = document.getElementById('remainingCount');
+    const DEFAULT_NAMES = ['Alex', 'Bailey', 'Charlie', 'Dakota', 'Emerson', 'Finley', 'Gray'];
+    let currentNames = [];
+    let initialList = [];
+    let pickedHistory = [];
 
-      const DEFAULT_NAMES = ['Alex', 'Bailey', 'Charlie', 'Dakota', 'Emerson', 'Finley', 'Gray'];
-      let currentNames = [];
-      let initialList = [];
-      let pickedHistory = [];
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        initialList: initialList,
+        currentNames: currentNames,
+        history: pickedHistory
+      }));
+    }
 
-      function saveState() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({
-            initialList: initialList,
-            currentNames: currentNames, 
-            history: pickedHistory 
-        }));
-      }
-
-      function loadState() {
-        try {
-          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-          if (saved && Array.isArray(saved.initialList)) {
-            initialList = saved.initialList;
-            currentNames = saved.currentNames || [...initialList];
-            pickedHistory = saved.history || [];
-          } else {
-            initialList = [...DEFAULT_NAMES];
-            currentNames = [...DEFAULT_NAMES];
-            pickedHistory = [];
-          }
-        } catch (e) {
+    function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (saved && Array.isArray(saved.initialList)) {
+          initialList = saved.initialList;
+          currentNames = saved.currentNames || [...initialList];
+          pickedHistory = saved.history || [];
+        } else {
           initialList = [...DEFAULT_NAMES];
           currentNames = [...DEFAULT_NAMES];
           pickedHistory = [];
         }
-
-        namesInput.value = initialList.join('\n');
-        updateUI();
-      }
-
-      function updateUI() {
-        historyList.textContent = pickedHistory.length ? pickedHistory.join(', ') : 'None';
-        remainingCount.textContent = `Remaining students: ${currentNames.length} / ${initialList.length}`;
-        if (currentNames.length === 0 && initialList.length > 0) {
-            remainingCount.textContent = "✅ All students have been called! Press Reset to start over.";
-        }
-      }
-
-      function parseInputNames() {
-        const raw = namesInput.value.trim();
-        if (!raw) return [];
-        return Array.from(new Set(raw.split(/[\n,]+/).map(n => n.trim()).filter(Boolean)));
-      }
-
-      function pickStudent() {
-        if (currentNames.length === 0) {
-            pickerResult.textContent = 'Roster empty. Please reset.';
-            return;
-        }
-
-        const index = Math.floor(Math.random() * currentNames.length);
-        const winner = currentNames[index];
-
-        pickerResult.textContent = `🌟 ${winner}`;
-        pickedHistory.push(winner);
-
-        if (removeAfterPick.checked) {
-          currentNames.splice(index, 1);
-        }
-
-        updateUI();
-        saveState();
-      }
-
-      pickBtn.addEventListener('click', pickStudent);
-
-      resetBtn.addEventListener('click', () => {
-        initialList = parseInputNames();
-        if (initialList.length === 0) initialList = [...DEFAULT_NAMES];
-        currentNames = [...initialList];
+      } catch (e) {
+        initialList = [...DEFAULT_NAMES];
+        currentNames = [...DEFAULT_NAMES];
         pickedHistory = [];
-        pickerResult.textContent = '';
-        updateUI();
-        saveState();
-      });
+      }
 
-      namesInput.addEventListener('change', () => {
-        initialList = parseInputNames();
-        currentNames = [...initialList];
-        pickedHistory = [];
-        updateUI();
-        saveState();
-      });
+      namesInput.value = initialList.join('\n');
+      updateUI();
+    }
 
-      loadState();
-    </script>
+    function updateUI() {
+      historyList.textContent = pickedHistory.length ? pickedHistory.join(', ') : 'None';
+      remainingCount.textContent = `Remaining students: ${currentNames.length} / ${initialList.length}`;
+      if (currentNames.length === 0 && initialList.length > 0) {
+        remainingCount.textContent = "✅ All students have been called! Press Reset to start over.";
+      }
+    }
+
+    function parseInputNames() {
+      const raw = namesInput.value.trim();
+      if (!raw) return [];
+      return Array.from(new Set(raw.split(/[\n,]+/).map(n => n.trim()).filter(Boolean)));
+    }
+
+    function pickStudent() {
+      if (currentNames.length === 0) {
+        pickerResult.textContent = 'Roster empty. Please reset.';
+        return;
+      }
+
+      const index = Math.floor(Math.random() * currentNames.length);
+      const winner = currentNames[index];
+
+      pickerResult.textContent = `🌟 ${winner}`;
+      pickedHistory.push(winner);
+
+      if (removeAfterPick.checked) {
+        currentNames.splice(index, 1);
+      }
+
+      updateUI();
+      saveState();
+    }
+
+    pickBtn.addEventListener('click', pickStudent);
+
+    resetBtn.addEventListener('click', () => {
+      initialList = parseInputNames();
+      if (initialList.length === 0) initialList = [...DEFAULT_NAMES];
+      currentNames = [...initialList];
+      pickedHistory = [];
+      pickerResult.textContent = '';
+      updateUI();
+      saveState();
+    });
+
+    namesInput.addEventListener('change', () => {
+      initialList = parseInputNames();
+      currentNames = [...initialList];
+      pickedHistory = [];
+      updateUI();
+      saveState();
+    });
+
+    loadState();
+  </script>
 
 </body>
+
 </html>
