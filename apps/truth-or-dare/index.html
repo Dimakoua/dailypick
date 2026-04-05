@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Truth or Dare Generator – Fun Party Prompts | Daily Pick</title>
+  <meta
+    content="Need fun Truth or Dare prompts? Use our random generator for parties, sleepovers, and team building. Hundreds of truths and dares at your fingertips."
+    name="description" />
+  <meta content="index,follow" name="robots" />
+  <meta
+    content="truth or dare generator, random truth or dare prompts, online party games, truth or dare for friends, team building icebreakers"
+    name="keywords" />
+  <meta content="https://dailypick.dev/apps/truth-or-dare/" property="og:url" />
+  <meta content="Truth or Dare Generator – Fun Party Prompts | Daily Pick" property="og:title" />
+  <meta
+    content="Take your party to the next level with our random Truth or Dare generator. No more boring 'I don't know' moments!"
+    property="og:description" />
+  <meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image" />
+  <link href="https://dailypick.dev/apps/truth-or-dare/" rel="canonical" />
+  <link href="/assets/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
+  <link href="/assets/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
+  <link href="/assets/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
+  <link href="/assets/favicon/site.webmanifest" rel="manifest" />
+  <link href="/assets/favicon/favicon.ico" rel="shortcut icon" />
+  <meta content="#2d89ef" name="theme-color" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="/assets/css/theme.css" rel="stylesheet" />
+  <link href="/assets/css/glass.css" rel="stylesheet" />
+  <link href="./style.css" rel="stylesheet" />
+  <script defer="" src="/assets/js/brand-theme-engine.js"></script>
+  <script defer="" src="/assets/js/brand-config.js"></script>
+</head>
+
+<body>
+  {% include "bg-orbs.html" %}
+  {% include "header.html" %}
+
+  <main class="game-page" id="main">
+    <header class="page-hero glass-card">
+      <div>
+        <p class="hero-eyebrow">Party Game Night</p>
+        <h1>🎲 Truth or Dare Generator</h1>
+        <p>Break the ice and reveal secrets with our curated list of prompts for all occasions.</p>
+      </div>
+    </header>
+
+    <section class="game-form glass-card">
+
+      <div class="game-controls-top">
+        <div class="category-select">
+          <label for="mode">Game Mode: </label>
+          <select id="mode">
+            <option value="classic">Classic (Friendly)</option>
+            <option value="party">Party (Fun & Silly)</option>
+            <option value="deep">Deep (Meaningful)</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="promptCard" class="prompt-card">Select TRUTH or DARE to start!</div>
+
+      <div class="actions">
+        <button id="truthBtn" class="btn btn--truth">🤔 TRUTH</button>
+        <button id="dareBtn" class="btn btn--dare">🔥 DARE</button>
+      </div>
+
+    </section>
+
+    <section class="seo-content-area glass-card">
+      <h2>The Ultimate Truth or Dare Prompt Generator</h2>
+      <p>Whether you're hosting a sleepover, a birthday party, or just hanging out with friends, <strong>Truth or
+          Dare</strong> is the go-to game for entertainment. Our online generator provides a seamless way to play
+        without having to think of questions on the spot.</p>
+
+      <h3>Why play Truth or Dare online?</h3>
+      <ul>
+        <li><strong>Zero Prep:</strong> No need to write down prompts.</li>
+        <li><strong>Variety:</strong> Choose from different modes like Classic, Party, or Deep to match the vibe.</li>
+        <li><strong>Fairness:</strong> The randomizer ensures everyone gets a mix of easy and challenging prompts.</li>
+      </ul>
+
+      <h3>Game Rules</h3>
+      <p>The rules are simple: one player chooses "Truth" or "Dare." If they choose Truth, they must answer a question
+        honestly. If they choose Dare, they must perform a task. If they refuse, there's usually a "penalty" decided by
+        the group (like doing 10 pushups!).</p>
+
+      <h3>Perfect for Remote Teams</h3>
+      <p>Our "Classic" mode is also great for <strong>team building icebreakers</strong>. It helps colleagues get to
+        know each other in a lighthearted, professional way during virtual hangouts.</p>
+    </section>
+  </main>
+
+  {% include "footer.html" %}
+
+  <script>
+    const prompts = {
+      classic: {
+        truth: [
+          "What is your most used emoji?",
+          "What is the last book you read?",
+          "What is your dream vacation destination?",
+          "What is your favorite childhood memory?",
+          "If you could have any superpower, what would it be?",
+          "What is the best piece of advice you've ever received?",
+          "What’s your go-to karaoke song?",
+          "If you could only eat one meal for the rest of your life, what would it be?",
+          "What is your biggest pet peeve?",
+          "Who was your favorite teacher and why?",
+          "What’s the most useful skill you’ve ever learned?",
+          "What is the worst movie you have ever seen in theaters?", // New
+          "Who is your personal hero?", // New
+          "If you won $10,000 today, how would you spend it?", // New
+          "What is your favorite holiday and why?", // New
+          "What is the most 'adult' thing you’ve done recently?" // New
+        ],
+        dare: [
+          "Do your best impression of a celebrity.",
+          "Sing the chorus of your favorite song.",
+          "Tell a joke that makes everyone laugh.",
+          "Do 10 jumping jacks.",
+          "Talk in an accent of the group's choice for 2 minutes.",
+          "Try to juggle three items of the group’s choice.",
+          "Balance a spoon on your nose for 30 seconds.",
+          "Act like a cat for the next two rounds.",
+          "Give a 30-second stand-up comedy routine.",
+          "Do your best runway model walk across the room.",
+          "Balance an object on your head while walking in a circle.", // New
+          "Speak in slow motion until your next turn.", // New
+          "Do your best 'air guitar' solo to an imaginary song.", // New
+          "Try to make the person to your left laugh in 30 seconds.", // New
+          "Spin around 10 times and then try to walk in a straight line." // New
+        ]
+      },
+      party: {
+        truth: [
+          "What is the most embarrassing thing you've done at a party?",
+          "What is your guilty pleasure TV show?",
+          "Who was your first celebrity crush?",
+          "What is the weirdest food combination you enjoy?",
+          "Have you ever lied to get out of a date?",
+          "What’s the most ridiculous thing you’ve ever bought while bored?",
+          "What is the most 'cringe' phase you ever went through?",
+          "Have you ever accidentally sent a text about someone to that person?",
+          "What’s the longest you’ve ever gone without showering?",
+          "What is your most useless talent?",
+          "Who in this room would you choose to survive a zombie apocalypse with?", // New
+          "What is the weirdest thing you have searched for on Google recently?", // New
+          "Have you ever practiced a conversation in the mirror?", // New
+          "What is the most 'rebellious' thing you did as a teenager?", // New
+          "What is your secret 'unpopular opinion' that you’ll defend to the death?" // New
+        ],
+        dare: [
+          "Let the group pose you and take a photo.",
+          "Show the last 3 photos in your camera roll.",
+          "Try to touch your nose with your tongue.",
+          "Dance like a robot for 1 minute.",
+          "Post a silly status on your social media (or send a silly text).",
+          "Call a random contact and sing 'Happy Birthday' to them.",
+          "Let the person to your right redo your hairstyle.",
+          "Eat a spoonful of a condiment of the group’s choice.",
+          "Talk without closing your mouth for the next 2 minutes.",
+          "Attempt to moonwalk from one side of the room to the other.",
+          "Let the person to your left send a GIF to the 5th person in your DMs.", // New
+          "Do a dramatic reading of a random Wikipedia article or cereal box.", // New
+          "Try to drink a glass of water without using your hands.", // New
+          "Serenade a household object for 60 seconds.", // New
+          "Trade one item of clothing with the person to your right (hat, jacket, etc.)." // New
+        ]
+      },
+      deep: {
+        truth: [
+          "What is your biggest fear?",
+          "What is a goal you're currently working towards?",
+          "What do you value most in a friendship?",
+          "What is one thing you would change about your past?",
+          "What makes you feel most accomplished?",
+          "What is a lesson a heartbreak taught you?",
+          "If you could have a conversation with your younger self, what would you say?",
+          "What is a personal trait you are most proud of?",
+          "What does 'home' mean to you?",
+          "When was the last time you felt truly vulnerable?",
+          "What is a habit you wish you could break?", // New
+          "What do you want your legacy to be?", // New
+          "What is the most difficult decision you’ve ever had to make?", // New
+          "What is one thing you’re currently taking for granted?", // New
+          "When was the last time you were so happy you cried?" // New
+        ],
+        dare: [
+          "Give a sincere compliment to everyone in the room.",
+          "Share a story about a time you failed and what you learned.",
+          "Describe your perfect day in detail.",
+          "Write a short poem about the person to your left.",
+          "Tell the group about a secret talent you have.",
+          "Look into the eyes of the person across from you for 60 seconds without speaking.",
+          "Express a feeling you've been holding back lately.",
+          "Describe the most beautiful place you have ever been and how it made you feel.",
+          "Share one thing you want to be remembered for.",
+          "Call someone you haven't spoken to in a long time and tell them you appreciate them.",
+          "List three things you are genuinely grateful for right now.", // New
+          "Close your eyes and describe the personality of the person to your right.", // New
+          "Handwrite a 'thank you' note to someone in the room and give it to them.", // New
+          "Describe a moment that completely changed your perspective on life.", // New
+          "Explain one thing you love about yourself without being modest." // New
+        ]
+      }
+    };
+
+    const promptCard = document.getElementById('promptCard');
+    const truthBtn = document.getElementById('truthBtn');
+    const dareBtn = document.getElementById('dareBtn');
+    const modeSelect = document.getElementById('mode');
+
+    function getPrompt(type) {
+      const mode = modeSelect.value;
+      const list = prompts[mode][type];
+      const randomIndex = Math.floor(Math.random() * list.length);
+
+      promptCard.classList.remove('truth', 'dare');
+      promptCard.classList.add(type);
+      promptCard.textContent = list[randomIndex];
+
+      // Add a little animation
+      promptCard.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        promptCard.style.transform = 'scale(1)';
+      }, 100);
+    }
+
+    truthBtn.addEventListener('click', () => getPrompt('truth'));
+    dareBtn.addEventListener('click', () => getPrompt('dare'));
+  </script>
+</body>
+
+</html>

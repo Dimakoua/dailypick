@@ -1,33 +1,10 @@
 /* ==========================================================================
-   Random List Shuffler — App Styles
+   Truth or Dare — App Styles
    - Theme-aware glass cards, typography, and form controls
-   - Responsive layout with accessibility
+   - Responsive layout with game display
    ========================================================================== */
 
-.skip-link {
-  position: absolute;
-  left: -9999px;
-  top: auto;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
-
-.skip-link:focus {
-  position: static;
-  width: auto;
-  height: auto;
-  margin: 8px;
-  padding: 8px 12px;
-  background: var(--brand-surface);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--brand-border);
-  box-shadow: var(--brand-focus-ring);
-  color: var(--brand-heading);
-  z-index: 9999;
-}
-
-.picker-page {
+.game-page {
   max-width: 900px;
   margin: 0 auto;
   padding: 2rem var(--layout-gutter);
@@ -85,69 +62,103 @@
   box-shadow: var(--glass-shadow);
 }
 
-/* Form */
-.picker-form {
+/* Game Form Section */
+.game-form {
   padding: 2rem 2.5rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-.form-group {
+/* Game Controls Top */
+.game-controls-top {
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1rem;
 }
 
-.form-group label {
+/* Category Select */
+.category-select {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.category-select label {
   font-size: 0.95rem;
   font-weight: 700;
   color: var(--brand-heading);
+  margin: 0;
 }
 
-.form-group textarea {
-  font-family: var(--brand-font-family);
-  font-size: 1rem;
-  line-height: 1.5;
-  padding: 12px 14px;
-  border: 1px solid var(--brand-border);
+.category-select select {
+  padding: 8px 16px;
   border-radius: var(--radius-md);
   background: var(--brand-surface);
   color: var(--brand-text);
-  resize: vertical;
-  min-height: 120px;
+  border: 1px solid var(--brand-border);
+  font-size: 0.95rem;
+  font-family: var(--brand-font-family);
+  cursor: pointer;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.form-group textarea:focus {
+.category-select select:focus {
   outline: none;
   border-color: var(--brand-accent);
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
 
-.form-group textarea::placeholder {
-  color: var(--brand-subtle-text);
-  opacity: 0.7;
+/* Prompt Card Display */
+.prompt-card {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 30px 0;
+  background: var(--brand-surface);
+  border: 2px solid var(--brand-border);
+  border-radius: var(--radius-lg);
+  color: var(--brand-heading);
+  transition: all 0.3s ease;
+  line-height: 1.5;
 }
 
-/* Buttons and Controls */
-.form-actions {
+.prompt-card.truth {
+  border-color: var(--brand-accent);
+  background: linear-gradient(135deg, rgba(52, 152, 219, 0.08), transparent);
+}
+
+.prompt-card.dare {
+  border-color: #e74c3c;
+  background: linear-gradient(135deg, rgba(231, 76, 60, 0.08), transparent);
+}
+
+/* Game Action Buttons */
+.actions {
   display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 30px;
   flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
-  margin-bottom: 1.5rem;
 }
 
 .btn {
   font: inherit;
   border: 1px solid transparent;
   border-radius: var(--radius-md);
-  padding: 10px 20px;
+  padding: 12px 28px;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
   font-size: 0.95rem;
+  min-width: 140px;
 }
 
 .btn:focus-visible {
@@ -155,91 +166,28 @@
   box-shadow: var(--brand-focus-ring);
 }
 
-.btn--accent {
+.btn--truth {
   background-color: var(--brand-accent);
   color: var(--brand-accent-contrast-text);
   border-color: var(--brand-accent);
 }
 
-.btn--accent:hover {
+.btn--truth:hover {
   background-color: var(--brand-accent-strong);
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(52, 152, 219, 0.25);
+  box-shadow: 0 8px 16px rgba(52, 152, 219, 0.35);
 }
 
-.btn--secondary {
-  background-color: var(--brand-surface);
-  color: var(--brand-heading);
-  border-color: var(--brand-border);
+.btn--dare {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+  border-color: #e74c3c;
 }
 
-.btn--secondary:hover {
-  background-color: var(--brand-background);
+.btn--dare:hover {
+  background: linear-gradient(135deg, #c0392b, #a93226);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-/* Form Group Inline (for grouping controls) */
-.form-group-inline {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.form-group-inline label {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--brand-text);
-  margin: 0;
-}
-
-.form-input-small {
-  width: 70px;
-  padding: 8px 10px;
-  border: 1px solid var(--brand-border);
-  border-radius: var(--radius-md);
-  background: var(--brand-surface);
-  color: var(--brand-text);
-  font-family: var(--brand-font-family);
-  font-size: 0.95rem;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.form-input-small:focus {
-  outline: none;
-  border-color: var(--brand-accent);
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-}
-
-/* Result Display */
-.result-box {
-  padding: 1.5rem;
-  background: var(--brand-surface);
-  border: 1px solid var(--brand-border);
-  border-radius: var(--radius-md);
-  font-family: 'Courier New', monospace;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  font-size: 1rem;
-  color: var(--brand-text);
-  line-height: 1.6;
-  min-height: 100px;
-}
-
-.group-item {
-  margin-bottom: 12px;
-  padding: 12px;
-  background: var(--brand-accent-muted);
-  border-left: 4px solid var(--brand-accent);
-  border-radius: var(--radius-md);
-  color: var(--brand-text);
-  font-weight: 600;
-}
-
-.group-item strong {
-  color: var(--brand-heading);
-  font-weight: 700;
+  box-shadow: 0 8px 16px rgba(231, 76, 60, 0.35);
 }
 
 /* SEO Content Area */
@@ -275,23 +223,14 @@
   margin: 0.5rem 0;
 }
 
-.seo-content-area em {
-  color: var(--brand-accent);
-  font-style: italic;
-}
-
-/* Form Tip */
-.form-tip {
-  font-size: 0.9rem;
-  color: var(--brand-subtle-text);
-  margin: 0;
-  padding: 0;
-  font-style: italic;
+.seo-content-area strong {
+  color: var(--brand-heading);
+  font-weight: 700;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .picker-page {
+  .game-page {
     padding: 1.5rem var(--layout-gutter);
     gap: 1.5rem;
   }
@@ -300,25 +239,46 @@
     padding: 1.5rem 1.5rem;
   }
 
-  .picker-form {
+  .game-form {
     padding: 1.5rem 1.5rem;
   }
 
-  .form-actions {
-    gap: 10px;
-    margin-bottom: 1.2rem;
-  }
-
-  .form-group-inline {
-    flex-wrap: wrap;
+  .actions {
+    gap: 12px;
+    margin-bottom: 20px;
   }
 
   .btn {
-    padding: 10px 16px;
+    padding: 10px 20px;
     font-size: 0.9rem;
+    min-width: 120px;
+  }
+
+  .prompt-card {
+    padding: 30px 20px;
+    font-size: 1.3rem;
+    margin: 20px 0;
+    min-height: 160px;
+  }
+
+  .category-select {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .category-select select {
+    width: 100%;
   }
 
   .seo-content-area {
     padding: 1.5rem;
+  }
+
+  .seo-content-area h2 {
+    font-size: 1.2rem;
+  }
+
+  .seo-content-area h3 {
+    font-size: 1rem;
   }
 }
