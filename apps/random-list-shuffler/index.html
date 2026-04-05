@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Random List Shuffler – Daily Pick</title>
+  <meta name="description" content="Paste a list and shuffle it into a random order. Works with newlines or comma-separated items."/>
+  <link href="/assets/favicon/site.webmanifest" rel="manifest"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link href="/assets/css/theme.css" rel="stylesheet"/>
+  <link href="/assets/css/glass.css" rel="stylesheet"/>
+  <link href="./style.css" rel="stylesheet"/>
+  <script defer src="/assets/js/brand-theme-engine.js"></script>
+  <script defer src="/assets/js/brand-config.js"></script>
+</head>
+<body>
+  {% include "bg-orbs.html" %}
+  {% include "header.html" %}
+
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <main class="shuffle-page" id="main">
+
+    <header class="page-hero glass-card">
+      <div>
+        <p class="hero-eyebrow">List Tools</p>
+        <h1>Random List Shuffler</h1>
+        <p>Paste items (one per line or comma-separated) and shuffle into a random order.</p>
+      </div>
+    </header>
+
+    <section class="shuffle-form glass-card">
+      <div class="form-group">
+        <label for="itemsInput">Items (one per line or comma-separated):</label>
+        <textarea id="itemsInput" rows="10" placeholder="Apple&#10;Banana&#10;Cherry"></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button id="shuffleBtn" class="btn btn--accent" type="button">🔀 Shuffle</button>
+        <button id="resetBtn" class="btn btn--secondary" type="button">↺ Reset</button>
+        <button id="clearBtn" class="btn btn--secondary" type="button">🧹 Clear Result</button>
+        <button id="copyBtn" class="btn btn--ghost" type="button">📋 Copy Result</button>
+      </div>
+
+      <div class="result-display">
+        <div id="resultNote" aria-live="polite" class="sr-only">Shuffled result</div>
+        <ol id="resultList" class="result-list" role="list"></ol>
+      </div>
+
+      <p class="form-tip">Tip: press <strong>Ctrl/⌘+Enter</strong> to shuffle quickly.</p>
+    </section>
+
+  </main>
+
+  {% include "footer.html" %}
+  {% include "cookie-consent.html" %}
+  <script defer src="/assets/js/cookie-consent.js"></script>
+
+  <script src="./script.js"></script>
+</body>
+</html>
