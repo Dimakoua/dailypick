@@ -12,6 +12,7 @@ bindings = [
   { name = "BALL_GAME_SESSION", class_name = "BallGameSession" },
   { name = "MIMIC_GAME_SESSION", class_name = "MimicGameSession" },
   { name = "PLANNING_POKER_SESSION", class_name = "PlanningPokerSession" },
+  { name = "TWO_TRUTHS_AND_A_LIE_SESSION", class_name = "TwoTruthsAndALieSession" },
   { name = "INTEGRATION_CONFIG", class_name = "IntegrationConfig" },
   { name = "MORALE_THERMOMETER_SESSION", class_name = "MoraleThermometerSession" },
   { name = "RETRO_BOARD_SESSION", class_name = "RetroBoardSession" },
@@ -45,6 +46,10 @@ new_sqlite_classes = ["RetroBoardSession"]
 [[migrations]]
 tag = "v8"
 new_sqlite_classes = ["SnowballFightSession"]
+
+[[migrations]]
+tag = "v9"
+new_sqlite_classes = ["TwoTruthsAndALieSession"]
 
 [observability.logs]
 enabled = false

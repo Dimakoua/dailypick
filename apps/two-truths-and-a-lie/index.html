@@ -1,0 +1,128 @@
+---
+layout: base_app.njk
+title: "Two Truths and a Lie – Icebreaker Room | Daily Pick"
+description: "Host Two Truths and a Lie for remote teams, let everyone vote on the lie, then reveal the result together."
+keywords: "two truths and a lie, live room, icebreaker game, team building, voting room"
+canonical: "https://dailypick.dev/apps/two-truths-and-a-lie/"
+ogImage: "https://dailypick.dev/assets/og-image-main.png"
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+  <script defer src="./script.js"></script>
+---
+<main data-page-type="standup" class="game-page" id="main">
+  <header class="page-hero glass-card">
+    <div>
+      <h1>🕵️ Two Truths and a Lie</h1>
+      <p>Statements on screen, let your team vote which one is the lie.</p>
+    </div>
+    <div class="hero-meta">
+      <span class="session-badge" id="sessionBadge">Offline</span>
+      <button class="ghost-btn" id="copyInviteBtn" type="button" disabled>Copy invite</button>
+    </div>
+  </header>
+
+  <section class="dashboard-card glass-card">
+    <div class="dashboard-header">
+      <div class="room-fields">
+        <div class="field-group">
+          <label for="displayNameInput">Your display name</label>
+          <div class="inline-row">
+            <input id="displayNameInput" type="text" maxlength="32" placeholder="Enter your name" />
+            <button class="btn btn--secondary" id="saveNameBtn" type="button">Save</button>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="roomCodeInput">Room code</label>
+          <input id="roomCodeInput" type="text" inputmode="text" maxlength="8" placeholder="ABC123" />
+        </div>
+
+        <div class="room-actions">
+          <button class="btn btn--accent" id="createRoomBtn" type="button">Start new room</button>
+          <button class="btn btn--secondary" id="joinRoomBtn" type="button">Join room</button>
+        </div>
+      </div>
+
+      <div class="room-status-panel">
+        <p id="statusLine" class="status-line">Enter name and join a room.</p>
+      </div>
+    </div>
+
+    <div class="host-notice" id="hostNotice" hidden>
+      <strong>You are the host.</strong> Set the statements, prepare the round, and reveal the lie when everyone has voted.
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="statement-panel">
+        <div class="panel-heading">
+          <h2>Statements</h2>
+        </div>
+        <div id="statementCards" class="statement-cards"></div>
+      </div>
+
+      <aside class="side-panel">
+        <div id="hostControls" class="host-controls" hidden>
+          <h2>Host controls</h2>
+          <div class="statement-form">
+            <div class="statement-input">
+              <label for="statement1">Statement 1</label>
+              <textarea id="statement1" rows="2" placeholder="Write a truth or a lie"></textarea>
+              <label class="radio-field">
+                <input type="radio" name="lieChoice" value="0" /> Mark as lie
+              </label>
+            </div>
+            <div class="statement-input">
+              <label for="statement2">Statement 2</label>
+              <textarea id="statement2" rows="2" placeholder="Write a truth or a lie"></textarea>
+              <label class="radio-field">
+                <input type="radio" name="lieChoice" value="1" /> Mark as lie
+              </label>
+            </div>
+            <div class="statement-input">
+              <label for="statement3">Statement 3</label>
+              <textarea id="statement3" rows="2" placeholder="Write a truth or a lie"></textarea>
+              <label class="radio-field">
+                <input type="radio" name="lieChoice" value="2" /> Mark as lie
+              </label>
+            </div>
+          </div>
+          <div class="game-controls">
+            <button id="prepareBtn" class="btn btn--accent" type="button">🧠 Prepare round</button>
+            <button id="revealBtn" class="btn btn--secondary" type="button">🔍 Reveal lie</button>
+            <button id="resetBtn" class="btn btn--secondary" type="button">↺ Reset</button>
+          </div>
+        </div>
+
+        <div class="vote-panel">
+          <div class="panel-heading">
+            <h2>Vote</h2>
+          </div>
+          <div id="voteButtons" class="vote-buttons"></div>
+          <div id="voteSummary" class="vote-summary"></div>
+        </div>
+
+        <div class="participants-panel">
+          <div class="panel-heading">
+            <h2>Participants (<span id="participantCount">0</span>)</h2>
+          </div>
+          <div id="participantsList" class="participants-list"></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="seo-content-area glass-card">
+    <h2>Host remote icebreakers with confidence</h2>
+    <p>Two Truths and a Lie is ideal for meetings, onboarding, and remote team standups. This live room puts the host in control while the group makes guesses in real time.</p>
+
+    <h3>How it works</h3>
+    <ul>
+      <li><strong>Host sets the round:</strong> Add three statements and select which one is the lie.</li>
+      <li><strong>Team votes:</strong> Everyone chooses the statement they believe is false.</li>
+      <li><strong>Reveal together:</strong> The host shares the screen and reveals the lie once the round is complete.</li>
+    </ul>
+
+    <h3>Why this format helps</h3>
+    <p>Live rooms keep everyone focused on the same screen, while the host manages timing and reveal. It’s a great way to learn fun facts about teammates and spark conversation quickly.</p>
+  </section>
+</main>

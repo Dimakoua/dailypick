@@ -7,6 +7,7 @@ import { handleSlackSlashCommand } from '../shared/slack-command.js';
 import { BallGameSession } from '../../apps/ballgame/ball-game-session.js';
 import { MimicGameSession } from '../../apps/mimic-master/mimic-game-session.js';
 import { PlanningPokerSession } from '../../apps/planning-poker/planning-poker-session.js';
+import { TwoTruthsAndALieSession } from '../../apps/two-truths-and-a-lie/two-truths-and-a-lie-session.js';
 import { PollSession as MoraleThermometerSession } from '../../apps/morale-thermometer/morale-thermometer-do.js';
 import { RetroBoardSession } from '../../apps/retro-board/retro-board-do.js';
 import { SnowballFightSession } from '../../apps/snowball-fight/snowball-fight-session.js';
@@ -67,6 +68,19 @@ router.get('/api/planning-poker/websocket', (request, env) => {
 
     const durableObjectId = env.PLANNING_POKER_SESSION.idFromName(id);
     const durableObject = env.PLANNING_POKER_SESSION.get(durableObjectId);
+    return durableObject.fetch(request);
+});
+
+router.get('/api/two-truths-and-a-lie/websocket', (request, env) => {
+    const url = new URL(request.url);
+    const id = url.searchParams.get('session_id');
+
+    if (!id) {
+        return new Response('Missing session_id query parameter', { status: 400 });
+    }
+
+    const durableObjectId = env.TWO_TRUTHS_AND_A_LIE_SESSION.idFromName(id);
+    const durableObject = env.TWO_TRUTHS_AND_A_LIE_SESSION.get(durableObjectId);
     return durableObject.fetch(request);
 });
 
@@ -322,4 +336,4 @@ export default {
     },
 };
 
-export { CollaborationSession, BallGameSession, MimicGameSession, PlanningPokerSession, MoraleThermometerSession, RetroBoardSession, SnowballFightSession, IntegrationConfig };
+export { CollaborationSession, BallGameSession, MimicGameSession, PlanningPokerSession, TwoTruthsAndALieSession, MoraleThermometerSession, RetroBoardSession, SnowballFightSession, IntegrationConfig };
