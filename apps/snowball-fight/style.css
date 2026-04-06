@@ -6,7 +6,6 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-  background: var(--brand-background);
 }
 
 /* Hero Card */
