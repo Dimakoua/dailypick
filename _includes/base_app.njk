@@ -64,6 +64,24 @@
 
     <script defer src="/assets/js/brand-theme-engine.js"></script>
     <script defer src="/assets/js/brand-config.js"></script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "{{ pageTitle }}",
+      "description": "{{ pageDescription }}",
+      "url": "{{ canonicalUrl }}",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Web",
+      "author": {
+        "@type": "Organization",
+        "name": "DailyPick",
+        "url": "{{ metadata.url }}"
+      },
+      "image": "{{ ogImageAbsolute }}"
+    }
+    </script>
     {% if headExtra %}{{ headExtra | safe }}{% endif %}
 </head>
 <body>
