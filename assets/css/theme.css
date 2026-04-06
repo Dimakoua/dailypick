@@ -331,7 +331,6 @@ h6 {
 }
 
 .site-footer__inner {
-  max-width: var(--layout-max-width);
   margin: 0 auto;
 }
 
