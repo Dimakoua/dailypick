@@ -1,0 +1,197 @@
+---
+layout: base_app.njk
+title: "Yes or No Wheel – Instant Decision Spinner | Daily Pick"
+description: "Spin the Yes/No Wheel to make quick decisions, settle debates, or break ties instantly with a fair random choice."
+keywords: "yes or no wheel, decision wheel, decision maker, coin flip alternative, random choice, instant decision, settle debate"
+canonical: "https://dailypick.dev/apps/yes-or-no-wheel/"
+ogImage: "https://dailypick.dev/assets/og-image-main.png"
+ogImageAlt: "Green yes and red no options on the Yes or No decision wheel"
+appStyles: |
+  <link href="/apps/yes-or-no-wheel/style.css" rel="stylesheet" />
+---
+
+<main id="main" class="yes-no-page" data-page-type="randomizer">
+
+  <header class="page-hero">
+    <h1>🎡 Yes or No Wheel</h1>
+    <p>Can't decide? Spin the wheel and let randomness settle the question. Perfect for making quick choices, settling debates, or breaking ties.</p>
+  </header>
+
+  <div class="wheel-container">
+    <div id="indicator"></div>
+    <canvas id="wheel" width="425" height="425"></canvas>
+  </div>
+
+  <div class="wheel-controls">
+    <button id="spinBtn" class="btn-spin" type="button">🎲 SPIN!</button>
+    <button id="resetBtn" class="btn-secondary" type="button">↺ Reset</button>
+  </div>
+
+  <div class="result-display">
+    <div id="resultText" class="result-value"></div>
+    <div id="resultMessage" class="result-message"></div>
+  </div>
+
+  <section class="info-card">
+    <h2>Quick Decisions Made Easy</h2>
+    <p>The Yes/No Wheel is your go-to tool for making instant decisions without overthinking. Whether you're deciding on lunch plans, settling a friendly debate, or making a random choice, this wheel takes the guesswork out of decision-making.</p>
+    <h3 style="font-size: 1.15rem; color: var(--brand-heading);">Why Use a Yes/No Wheel?</h3>
+    <ul>
+      <li><strong>Instant Decisions:</strong> No more endless deliberation. Get an answer in seconds.</li>
+      <li><strong>Fair and Unbiased:</strong> Randomness ensures no one can argue with the result.</li>
+      <li><strong>Breaks Ties:</strong> Perfect when you and a friend can't agree on something.</li>
+      <li><strong>Quick Icebreaker:</strong> Add some fun and unpredictability to meetings or social gatherings.</li>
+      <li><strong>Stress-Free:</strong> Let the wheel decide so you don't have to!</li>
+    </ul>
+    <p>Just spin, hold your breath, and accept what the wheel decides. Sometimes the universe (or probability) has the answer!</p>
+  </section>
+
+</main>
+
+<script>
+  const canvas = document.getElementById('wheel');
+  const ctx = canvas.getContext('2d');
+  const spinBtn = document.getElementById('spinBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const resultText = document.getElementById('resultText');
+  const resultMessage = document.getElementById('resultMessage');
+
+  const YES_COLOR = '#27ae60';
+  const NO_COLOR = '#e74c3c';
+  const TEXT_COLOR = '#ffffff';
+
+  const options = ['YES', 'NO'];
+  const radius = canvas.width / 2;
+  let isSpinning = false;
+  let currentRotation = 0;
+
+  function drawWheel() {
+    const angleStep = (2 * Math.PI) / options.length;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.save();
+    ctx.translate(radius, radius);
+    ctx.rotate(currentRotation);
+
+    options.forEach((option, i) => {
+      const angle = i * angleStep;
+      const color = i === 0 ? YES_COLOR : NO_COLOR;
+
+      // Draw slice
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.arc(0, 0, radius, angle, angle + angleStep);
+      ctx.lineTo(0, 0);
+      ctx.fillStyle = color;
+      ctx.fill();
+
+      // Draw border
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      // Draw text
+      ctx.save();
+      ctx.rotate(angle + angleStep / 2);
+      ctx.textAlign = 'right';
+      ctx.fillStyle = TEXT_COLOR;
+      ctx.font = 'bold 48px Nunito, sans-serif';
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+      ctx.shadowBlur = 4;
+      ctx.fillText(option, radius - 50, 8);
+      ctx.restore();
+    });
+
+    ctx.restore();
+  }
+
+  function spinWheel() {
+    if (isSpinning) return;
+
+    isSpinning = true;
+    spinBtn.disabled = true;
+    resetBtn.disabled = true;
+    resultText.textContent = '';
+    resultMessage.textContent = '';
+
+    const spinDuration = 3000;
+    const spins = 10;
+    const baseRotation = spins * Math.PI * 2;
+    const chosenIndex = Math.floor(Math.random() * options.length);
+    
+    const startRotation = currentRotation;
+    
+    // Normalize current rotation to 0-2π range
+    const normalizedCurrent = currentRotation % (2 * Math.PI);
+    
+    // Target rotations where slice centers align with the indicator
+    // YES (index 0) center is at π/2, so rotate to π to face top
+    // NO (index 1) center is at 3π/2, so rotate to 0 to face top
+    const targets = [Math.PI, 0];
+    let targetRotation = targets[chosenIndex];
+    
+    // Calculate forward distance to target
+    let distance = targetRotation - normalizedCurrent;
+    if (distance <= 0) {
+      distance += 2 * Math.PI;
+    }
+    
+    // Total rotation: base spins + forward distance to target
+    const finalRotation = baseRotation + distance;
+
+    const startTime = Date.now();
+
+    function animate() {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / spinDuration, 1);
+
+      // Easing function for smooth deceleration
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+
+      currentRotation = startRotation + finalRotation * easeProgress;
+      drawWheel();
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        isSpinning = false;
+        spinBtn.disabled = false;
+        resetBtn.disabled = false;
+        showResult(chosenIndex);
+      }
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  function showResult(index) {
+    const result = options[index];
+    resultText.textContent = result;
+    resultText.className = `result-value ${result.toLowerCase()}`;
+
+    const messages = {
+      YES: ['Go for it!', 'The wheel has spoken: YES!', 'Destiny says YES!'],
+      NO: ['Better luck next time!', 'The wheel has spoken: NO!', 'Destiny says NO!']
+    };
+
+    const messageList = messages[result];
+    const randomMessage = messageList[Math.floor(Math.random() * messageList.length)];
+    resultMessage.textContent = randomMessage;
+  }
+
+  function reset() {
+    isSpinning = false;
+    currentRotation = 0;
+    spinBtn.disabled = false;
+    resetBtn.disabled = false;
+    resultText.textContent = '';
+    resultMessage.textContent = '';
+    drawWheel();
+  }
+
+  spinBtn.addEventListener('click', spinWheel);
+  resetBtn.addEventListener('click', reset);
+
+  // Initial draw
+  drawWheel();
+</script>

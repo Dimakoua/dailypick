@@ -1,0 +1,210 @@
+/* Random Letter Generator — App Styles */
+.picker-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem var(--layout-gutter);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.page-hero {
+  padding: 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.page-hero > div > p:first-child {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--brand-subtle-text);
+}
+
+.page-hero > div > h1 {
+  margin: 0.5rem 0 0;
+  font-size: clamp(1.8rem, 2rem, 2.4rem);
+  color: var(--brand-heading);
+  font-weight: 700;
+}
+
+.page-hero > div > p:not(:first-child) {
+  margin: 0.5rem 0 0;
+  font-size: 1rem;
+  color: var(--brand-text);
+  line-height: 1.6;
+}
+
+.hero-eyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--brand-subtle-text);
+}
+
+.glass-card {
+  background: var(--glass-bg, rgba(255, 255, 255, 0.12));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--glass-shadow);
+}
+
+.picker-form {
+  padding: 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.form-group label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--brand-heading);
+}
+
+.form-group input,
+.form-group select {
+  font-family: var(--brand-font-family);
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 12px 14px;
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-md);
+  background: var(--brand-surface);
+  color: var(--brand-text);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--brand-accent);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.form-group input::placeholder,
+.form-group select::placeholder {
+  color: var(--brand-subtle-text);
+  opacity: 0.7;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn {
+  font: inherit;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: var(--brand-focus-ring);
+}
+
+.btn--accent {
+  background-color: var(--brand-accent);
+  color: var(--brand-accent-contrast-text);
+  border-color: var(--brand-accent);
+}
+
+.btn--accent:hover {
+  background-color: var(--brand-accent-strong);
+  transform: translateY(-2px);
+}
+
+.btn--secondary {
+  background-color: var(--brand-surface);
+  color: var(--brand-heading);
+  border-color: var(--brand-border);
+}
+
+.btn--secondary:hover {
+  background-color: var(--brand-background);
+  transform: translateY(-2px);
+}
+
+.result-display {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: var(--brand-surface);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-md);
+  min-height: 90px;
+  justify-content: center;
+}
+
+.result-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--brand-accent-strong);
+  min-height: 1.8em;
+}
+
+.form-tip {
+  font-size: 0.9rem;
+  color: var(--brand-subtle-text);
+  margin: 0;
+  font-style: italic;
+}
+
+.seo-content-area {
+  padding: 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .picker-page {
+    padding: 1rem var(--layout-gutter);
+  }
+
+  .page-hero,
+  .picker-form,
+  .seo-content-area {
+    padding: 1.5rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .btn {
+    padding: 9px 16px;
+    font-size: 0.9rem;
+  }
+
+  .result-value {
+    font-size: 1.4rem;
+  }
+}

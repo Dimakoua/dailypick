@@ -1,0 +1,112 @@
+---
+layout: base_app.njk
+title: "Random Number Generator – Number Picker | Daily Pick"
+description: "Generate a random number between your chosen minimum and maximum values instantly."
+keywords: "random number generator, number picker, generate random number, integer generator, random number tool"
+canonical: "https://dailypick.dev/apps/random-number-generator/"
+ogImage: "https://dailypick.dev/assets/og-image-main.png"
+ogImageAlt: "A number generator display showing a random number"
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+  <main data-page-type="randomizer" class="picker-page" id="main">
+    <header class="page-hero glass-card">
+      <div>
+        <p class="hero-eyebrow">Numbers</p>
+        <h1>🔢 Random Number Generator</h1>
+        <p>Generate a random number instantly between any minimum and maximum values. Great for choosing winners, assigning tasks, or settling numeric questions.</p>
+      </div>
+    </header>
+
+    <section class="picker-form glass-card">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="minInput">Minimum value</label>
+          <input id="minInput" type="number" value="1" />
+        </div>
+        <div class="form-group">
+          <label for="maxInput">Maximum value</label>
+          <input id="maxInput" type="number" value="10" />
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button id="generateBtn" class="btn btn--accent" type="button">🎲 Generate</button>
+        <button id="resetBtn" class="btn btn--secondary" type="button">↺ Reset</button>
+      </div>
+
+      <div class="result-display">
+        <div id="numberResult" class="result-value">Enter a range and click Generate.</div>
+        <p class="form-tip">If the minimum is higher than the maximum, the range will be corrected automatically.</p>
+      </div>
+    </section>
+
+    <section class="seo-content-area glass-card">
+      <h2>Quick random numbers for every use case</h2>
+      <p>Use this tool to generate a fair random integer for contests, surveys, or quick decision-making. The generator supports positive, negative, and zero values.</p>
+      <ul>
+        <li>Instant output: generate a random integer in one click.</li>
+        <li>Flexible ranges: choose any minimum and maximum values.</li>
+        <li>Reliable results: the number is selected fairly from the full inclusive range.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    const minInput = document.getElementById('minInput');
+    const maxInput = document.getElementById('maxInput');
+    const generateBtn = document.getElementById('generateBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const numberResult = document.getElementById('numberResult');
+    const STORAGE_KEY = 'dailypick_random_number_generator_range';
+
+    function saveRange(min, max) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ min, max }));
+    }
+
+    function loadRange() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (saved && Number.isFinite(saved.min) && Number.isFinite(saved.max)) {
+          minInput.value = saved.min;
+          maxInput.value = saved.max;
+          return;
+        }
+      } catch (error) {
+        // ignore
+      }
+
+      minInput.value = 1;
+      maxInput.value = 10;
+    }
+
+    function getRange() {
+      let min = Number(minInput.value.trim());
+      let max = Number(maxInput.value.trim());
+      if (!Number.isFinite(min)) min = 1;
+      if (!Number.isFinite(max)) max = 10;
+      if (min > max) {
+        [min, max] = [max, min];
+      }
+      return { min, max };
+    }
+
+    function generateNumber() {
+      const { min, max } = getRange();
+      const randomValue = Math.floor(Math.random() * (max - min + 1)) + min;
+      numberResult.textContent = `✨ ${randomValue}`;
+      saveRange(min, max);
+    }
+
+    function resetRange() {
+      minInput.value = 1;
+      maxInput.value = 10;
+      numberResult.textContent = 'Enter a range and click Generate.';
+      saveRange(1, 10);
+    }
+
+    generateBtn.addEventListener('click', generateNumber);
+    resetBtn.addEventListener('click', resetRange);
+
+    loadRange();
+  </script>

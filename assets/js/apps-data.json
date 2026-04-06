@@ -180,6 +180,33 @@
     "description": "Quickly flip a coin or roll a die for those moments when you just need a random binary choice."
   },
   {
+    "id": "yes-or-no-wheel",
+    "name": "Yes or No Wheel",
+    "path": "/apps/yes-or-no-wheel/",
+    "category": "randomizer",
+    "footerGroup": "Randomizers",
+    "emoji": "🟢",
+    "description": "Spin a simple yes/no decision wheel for fast, fair binary choices."
+  },
+  {
+    "id": "random-number-generator",
+    "name": "Random Number Generator",
+    "path": "/apps/random-number-generator/",
+    "category": "randomizer",
+    "footerGroup": "Randomizers",
+    "emoji": "🔢",
+    "description": "Generate a random number between your chosen minimum and maximum values instantly."
+  },
+  {
+    "id": "random-letter-generator",
+    "name": "Random Letter Generator",
+    "path": "/apps/random-letter-generator/",
+    "category": "randomizer",
+    "footerGroup": "Randomizers",
+    "emoji": "🔤",
+    "description": "Generate one or more random letters for naming, brainstorming, and creative prompts."
+  },
+  {
     "id": "choices-spinner",
     "name": "Choices Spinner",
     "path": "/apps/choices-spinner/",
