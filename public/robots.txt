@@ -16,5 +16,10 @@ Disallow: /
 # General site rules
 User-agent: *
 Disallow: /assets/
+Disallow: /blog/page/
+Disallow: /Readme/
+Disallow: /feedback/
+Disallow: /feedback/thank-you/
+Disallow: /apps/whats-new/
 
 Sitemap: https://dailypick.dev/sitemap.xml
