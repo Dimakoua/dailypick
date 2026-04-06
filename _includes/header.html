@@ -11,6 +11,10 @@
             <a href="/feedback/">Feedback</a>
             <a href="/apps/settings/">Settings</a>
         </nav>
+        <div class="search-container" id="search-container">
+            <input type="text" id="search-input" class="search-input" placeholder="Search games..." aria-label="Search games and settings">
+            <div id="search-results"></div>
+        </div>
         <div class="branding-controls">
             <div class="weather" id="site-weather" aria-label="Current weather" title="Current weather">
                 ⛅ …
@@ -20,6 +24,8 @@
     </div>
 </header>
 <script src="/assets/js/weather.js" defer></script>
+<link href="/assets/css/search.css" rel="stylesheet">
+<script src="/assets/js/search.js" defer></script>
 <script>
   // Hide standup-only features on non-standup pages
   document.addEventListener('DOMContentLoaded', function() {
