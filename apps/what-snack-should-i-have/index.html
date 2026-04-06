@@ -1,0 +1,128 @@
+---
+layout: base_app.njk
+title: "What Snack Should I Have? – Snack Picker | Daily Pick"
+description: "Spin the snack wheel to choose between sweet, salty, healthy, and movie-night treats."
+keywords: "what snack should i have, snack picker, snack wheel, snack decision, snack ideas"
+canonical: "https://dailypick.dev/apps/what-snack-should-i-have/"
+ogImage: "https://dailypick.dev/assets/og-image-main.png"
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container" id="main">
+    <header class="page-hero glass-card">
+        <p class="hero-eyebrow">Snack Attack</p>
+        <h1>🍿 What Snack Should I Have?</h1>
+        <p>Let the snack wheel choose something tasty, crunchy, sweet, or savory for your next bite.</p>
+    </header>
+
+    <div id="wheel-container">
+        <div id="indicator"></div>
+        <canvas height="425" id="wheel" width="425"></canvas>
+    </div>
+
+    <div class="preset-btns">
+        <button class="preset-btn" data-items="Cookies,Brownies,Chocolate,Donuts,Trail Mix">🍫 Sweet Treats</button>
+        <button class="preset-btn" data-items="Chips,Pretzels,Nachos,Popcorn,Crackers">🥨 Savory Snacks</button>
+        <button class="preset-btn" data-items="Apple Slices,Carrots,Hummus,Nuts,Yogurt">🥗 Healthy Picks</button>
+        <button class="preset-btn" data-items="Popcorn,Gummy Bears,Candy,Cheese Sticks,Pretzels">🎬 Movie Night</button>
+    </div>
+
+    <button id="spinBtn">🍿 SPIN FOR SNACKS</button>
+    <div id="winner"></div>
+
+    <section class="seo-content-area">
+        <h2>Perfect Snack Picks In Seconds</h2>
+        <p>Stop standing in front of the pantry and let the wheel suggest a snack. Whether you want sweet, salty, healthy, or something fun, this tool picks a treat fast.</p>
+
+        <h3>Smart snack use cases:</h3>
+        <ul>
+            <li><strong>Work break cravings:</strong> Pick a quick bite without overthinking.</li>
+            <li><strong>Movie night:</strong> Spin for a snack that matches your watch party mood.</li>
+            <li><strong>Healthier choices:</strong> Use the healthy preset to keep your snack simple and satisfying.</li>
+        </ul>
+
+        <h3>Customize your snack list</h3>
+        <p>The wheel is ready for any snack style. Refresh the page to return to the default set, or update the preset options directly in the app as you explore your favorites.</p>
+    </section>
+</main>
+
+<script>
+    const canvas = document.getElementById('wheel');
+    const ctx = canvas.getContext('2d');
+    const spinBtn = document.getElementById('spinBtn');
+    const winnerDiv = document.getElementById('winner');
+    const radius = canvas.width / 2;
+
+    let snackItems = ['Popcorn', 'Chips', 'Fruit', 'Nachos', 'Cookies', 'Granola', 'Yogurt', 'Pretzels'];
+
+    function drawWheel(items, rotationAngle = 0) {
+        const angleStep = (2 * Math.PI) / items.length;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.save();
+        ctx.translate(radius, radius);
+        ctx.rotate(rotationAngle);
+        ctx.translate(-radius, -radius);
+
+        items.forEach((item, i) => {
+            const angle = i * angleStep;
+            ctx.beginPath();
+            ctx.moveTo(radius, radius);
+            ctx.arc(radius, radius, radius, angle, angle + angleStep);
+            ctx.fillStyle = `hsl(${(i * 360) / items.length}, 75%, 55%)`;
+            ctx.fill();
+
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(angle + angleStep / 2);
+            ctx.textAlign = 'right';
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 18px Nunito, Arial';
+            ctx.shadowColor = 'rgba(0,0,0,0.35)';
+            ctx.shadowBlur = 4;
+            ctx.fillText(item, radius - 20, 8);
+            ctx.restore();
+        });
+        ctx.restore();
+    }
+
+    let isSpinning = false;
+    function spinWheel() {
+        if (isSpinning) return;
+        isSpinning = true;
+        winnerDiv.innerText = '';
+
+        const angleStep = (2 * Math.PI) / snackItems.length;
+        const selectedIndex = Math.floor(Math.random() * snackItems.length);
+        const selectedItem = snackItems[selectedIndex];
+        const fullSpins = 6;
+        const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+        let currentRotation = 0;
+
+        function animate() {
+            const progress = currentRotation / targetRotation;
+            const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+            currentRotation += easeOutSpeed;
+            drawWheel(snackItems, currentRotation);
+
+            if (currentRotation < targetRotation) {
+                requestAnimationFrame(animate);
+            } else {
+                winnerDiv.innerHTML = `🍿 Snack pick: <span style="color: var(--brand-accent-strong); font-size: 2rem; display: block;">${selectedItem}</span>`;
+                isSpinning = false;
+            }
+        }
+        animate();
+    }
+
+    spinBtn.addEventListener('click', spinWheel);
+
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            snackItems = btn.dataset.items.split(',');
+            winnerDiv.innerText = '';
+            drawWheel(snackItems, 0);
+        });
+    });
+
+    drawWheel(snackItems, 0);
+</script>

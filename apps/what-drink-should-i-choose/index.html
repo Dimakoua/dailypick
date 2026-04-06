@@ -1,0 +1,130 @@
+---
+layout: base_app.njk
+title: "What Drink Should I Choose? – Beverage Picker | Daily Pick"
+description: "Use the drink decision wheel to find water, coffee, tea, smoothies, or something refreshing."
+keywords: "what drink should i choose, drink picker, beverage wheel, drink decision, beverage ideas"
+canonical: "https://dailypick.dev/apps/what-drink-should-i-choose/"
+ogImage: "https://dailypick.dev/assets/og-image-main.png"
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<main data-page-type="randomizer" class="main-container" id="main">
+    <header class="page-hero glass-card">
+        <p class="hero-eyebrow">Drink Choice</p>
+        <h1>🥤 What Drink Should I Choose?</h1>
+        <p>Need a drink decision? Spin the wheel to pick from coffee, tea, juice, water, or something fun.</p>
+    </header>
+
+    <div id="wheel-container">
+        <div id="indicator"></div>
+        <canvas height="425" id="wheel" width="425"></canvas>
+    </div>
+
+    <div class="preset-btns">
+        <button class="preset-btn" data-items="Water,Sparkling Water,Coconut Water,Infused Water,Herbal Tea">💧 Hydration</button>
+        <button class="preset-btn" data-items="Coffee,Latte,Cold Brew,Cappuccino,Espresso">☕ Coffee Break</button>
+        <button class="preset-btn" data-items="Green Tea,Black Tea,Chamomile,Matcha,Oolong">🍵 Tea Time</button>
+        <button class="preset-btn" data-items="Smoothie,Juice,Soda,Mocktail,Milkshake">🍹 Treat Yourself</button>
+    </div>
+
+    <button id="spinBtn">🥤 SPIN FOR A DRINK</button>
+    <div id="winner"></div>
+
+    <section class="seo-content-area">
+        <h2>Find the Perfect Beverage Fast</h2>
+        <p>Whether you want something energizing, refreshing, or cozy, this drink picker helps you decide fast so you can get back to the moment.</p>
+
+        <h3>When it helps most:</h3>
+        <ul>
+            <li><strong>Morning routine:</strong> Pick the right beverage to start your day.</li>
+            <li><strong>Afternoon slump:</strong> Decide between coffee, tea, or a refreshing hydration boost.</li>
+            <li><strong>Snack pairing:</strong> Match your snack with a fun and balanced drink.</li>
+        </ul>
+
+        <h3>Customize your drink mix</h3>
+        <p>This wheel is built for flexible drink ideas. Use the preset buttons to try different beverage categories and discover a new favorite sip.</p>
+    </section>
+</main>
+
+<script>
+    const canvas = document.getElementById('wheel');
+    const ctx = canvas.getContext('2d');
+    const spinBtn = document.getElementById('spinBtn');
+    const winnerDiv = document.getElementById('winner');
+    const radius = canvas.width / 2;
+
+    let drinkItems = ['Water', 'Coffee', 'Tea', 'Soda', 'Smoothie', 'Juice', 'Mocktail', 'Sparkling Water'];
+
+    function drawWheel(items, rotationAngle = 0) {
+        const angleStep = (2 * Math.PI) / items.length;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.save();
+        ctx.translate(radius, radius);
+        ctx.rotate(rotationAngle);
+        ctx.translate(-radius, -radius);
+
+        items.forEach((item, i) => {
+            const angle = i * angleStep;
+            ctx.beginPath();
+            ctx.moveTo(radius, radius);
+            ctx.arc(radius, radius, radius, angle, angle + angleStep);
+            ctx.fillStyle = `hsl(${(i * 360) / items.length}, 75%, 55%)`;
+            ctx.fill();
+
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(angle + angleStep / 2);
+            ctx.textAlign = 'right';
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 18px Nunito, Arial';
+            ctx.shadowColor = 'rgba(0,0,0,0.35)';
+            ctx.shadowBlur = 4;
+            ctx.fillText(item, radius - 20, 8);
+            ctx.restore();
+        });
+        ctx.restore();
+    }
+
+    let isSpinning = false;
+    function spinWheel() {
+        if (isSpinning) return;
+        isSpinning = true;
+        winnerDiv.innerText = '';
+
+        const angleStep = (2 * Math.PI) / drinkItems.length;
+        const selectedIndex = Math.floor(Math.random() * drinkItems.length);
+        const selectedItem = drinkItems[selectedIndex];
+        const fullSpins = 6;
+        const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+        let currentRotation = 0;
+
+        function animate() {
+            const progress = currentRotation / targetRotation;
+            const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+            currentRotation += easeOutSpeed;
+            drawWheel(drinkItems, currentRotation);
+
+            if (currentRotation < targetRotation) {
+                requestAnimationFrame(animate);
+            } else {
+                winnerDiv.innerHTML = `🥤 Drink pick: <span style="color: var(--brand-accent-strong); font-size: 2rem; display: block;">${selectedItem}</span>`;
+                isSpinning = false;
+            }
+        }
+        animate();
+    }
+
+    spinBtn.addEventListener('click', spinWheel);
+
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            drinkItems = btn.dataset.items.split(',');
+            winnerDiv.innerText = '';
+            drawWheel(drinkItems, 0);
+        });
+    });
+
+    drawWheel(drinkItems, 0);
+</script>

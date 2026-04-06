@@ -1,0 +1,112 @@
+---
+layout: base_app.njk
+title: "Cook or Order In – Meal Decision Helper | Daily Pick"
+description: "Decide whether to cook at home or order takeout with a playful meal decision wheel."
+keywords: "cook or order in, dinner decision, takeout or home cooking, meal choice, food decision wheel"
+canonical: "https://dailypick.dev/apps/cook-or-order-in/"
+ogImage: "https://dailypick.dev/assets/og-image-main.png"
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container" id="main">
+    <header class="page-hero glass-card">
+        <p class="hero-eyebrow">Meal Decision</p>
+        <h1>🍳 Cook or Order In</h1>
+        <p>Can’t decide whether to prepare dinner or order something tasty? Spin the wheel for a fair call.</p>
+    </header>
+
+    <div id="wheel-container">
+        <div id="indicator"></div>
+        <canvas height="425" id="wheel" width="425"></canvas>
+    </div>
+
+    <button id="spinBtn">🍽️ MAKE THE CALL</button>
+    <div id="winner"></div>
+
+    <section class="seo-content-area">
+        <h2>Choose Cook vs. Order with Confidence</h2>
+        <p>When the dinner question feels overwhelming, a simple random decision can remove the second-guessing. Use this wheel to get a fast, unbiased choice and move on to planning the meal.</p>
+
+        <h3>How to Use It</h3>
+        <ul>
+            <li><strong>Feeling tired:</strong> Let the wheel choose if tonight should be takeout or a quick home-cooked meal.</li>
+            <li><strong>Short on time:</strong> Spin once and commit to the result, then enjoy the stress-free decision.</li>
+            <li><strong>Group dinners:</strong> Use it with friends or family when everyone says “I don’t care.”</li>
+        </ul>
+
+        <h3>Why this works</h3>
+        <p>Decision fatigue comes from weighing too many options. By boiling the choice down to two equally possible outcomes, this tool turns uncertainty into action.</p>
+    </section>
+</main>
+
+<script>
+    const canvas = document.getElementById('wheel');
+    const ctx = canvas.getContext('2d');
+    const spinBtn = document.getElementById('spinBtn');
+    const winnerDiv = document.getElementById('winner');
+    const radius = canvas.width / 2;
+
+    let mealChoices = ['Cook', 'Order In'];
+
+    function drawWheel(items, rotationAngle = 0) {
+        const angleStep = (2 * Math.PI) / items.length;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.save();
+        ctx.translate(radius, radius);
+        ctx.rotate(rotationAngle);
+        ctx.translate(-radius, -radius);
+
+        items.forEach((item, i) => {
+            const angle = i * angleStep;
+            ctx.beginPath();
+            ctx.moveTo(radius, radius);
+            ctx.arc(radius, radius, radius, angle, angle + angleStep);
+            ctx.fillStyle = `hsl(${(i * 360) / items.length}, 65%, 55%)`;
+            ctx.fill();
+
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(angle + angleStep / 2);
+            ctx.textAlign = 'right';
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 20px Nunito, Arial';
+            ctx.shadowColor = 'rgba(0,0,0,0.35)';
+            ctx.shadowBlur = 4;
+            ctx.fillText(item, radius - 20, 8);
+            ctx.restore();
+        });
+        ctx.restore();
+    }
+
+    let isSpinning = false;
+    function spinWheel() {
+        if (isSpinning) return;
+        isSpinning = true;
+        winnerDiv.innerText = '';
+
+        const angleStep = (2 * Math.PI) / mealChoices.length;
+        const selectedIndex = Math.floor(Math.random() * mealChoices.length);
+        const selectedItem = mealChoices[selectedIndex];
+        const fullSpins = 6;
+        const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+        let currentRotation = 0;
+
+        function animate() {
+            const progress = currentRotation / targetRotation;
+            const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.85);
+            currentRotation += easeOutSpeed;
+            drawWheel(mealChoices, currentRotation);
+
+            if (currentRotation < targetRotation) {
+                requestAnimationFrame(animate);
+            } else {
+                winnerDiv.innerHTML = `✨ Decision: <span style="color: var(--brand-accent-strong); font-size: 2rem; display: block;">${selectedItem}</span>`;
+                isSpinning = false;
+            }
+        }
+        animate();
+    }
+
+    spinBtn.addEventListener('click', spinWheel);
+    drawWheel(mealChoices, 0);
+</script>
