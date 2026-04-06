@@ -1,0 +1,179 @@
+---
+layout: base_app.njk
+title: "Never Have I Ever – Icebreaker Prompts | Daily Pick"
+description: "Play a friendly Never Have I Ever game with curated statements and custom prompts for icebreakers, team meetings, and gatherings."
+keywords: "never have i ever game, icebreaker prompts, team builder, party game, conversation starter"
+canonical: "https://dailypick.dev/apps/never-have-i-ever/"
+ogImage: "https://dailypick.dev/assets/og-image-main.png"
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container" id="main">
+
+    <header class="page-hero glass-card">
+        <div>
+            <p class="hero-eyebrow">Icebreaker Game</p>
+            <h1>🙌 Never Have I Ever</h1>
+            <p>Draw a new statement for your group, add your own experiences, and use the game to spark laughter, sharing, and connection.</p>
+        </div>
+    </header>
+
+    <section class="never-form glass-card">
+        <div class="form-group">
+            <label for="statementInput">Add your own statement</label>
+            <input id="statementInput" class="text-input" type="text" placeholder="Never have I ever ridden a roller coaster" />
+        </div>
+
+        <div class="form-actions">
+            <button id="addBtn" class="btn btn--secondary" type="button">➕ Add prompt</button>
+            <button id="newPromptBtn" class="btn btn--accent" type="button">🎲 New prompt</button>
+            <button id="resetBtn" class="btn btn--secondary" type="button">↺ Reset list</button>
+        </div>
+
+        <p id="statementCount" class="statement-count">0 prompts available</p>
+
+        <div class="result-display" aria-live="polite">
+            <div id="resultText" class="result-value">Tap “New prompt” to reveal a statement.</div>
+        </div>
+    </section>
+
+    <section class="seo-content-area glass-card">
+        <h2>How to Play Never Have I Ever</h2>
+        <p>Our Never Have I Ever generator makes it easy to run a lighthearted icebreaker without needing to think of prompts on the fly.</p>
+        <ul>
+            <li><strong>Quick setup:</strong> Tap “New prompt” for a fresh statement and ask the group who has done it.</li>
+            <li><strong>Custom prompts:</strong> Add your own experiences to keep the game personal and relevant.</li>
+            <li><strong>Group play:</strong> Great for remote teams, classrooms, and casual gatherings where everyone can share stories.</li>
+        </ul>
+        <p>This game is best when everyone answers honestly and keeps the tone friendly. Use the built-in prompts or customize your own list for a memorable conversation starter.</p>
+    </section>
+</main>
+
+<script>
+    const STORAGE_KEY = 'dailypick_never_have_i_ever_state';
+    const statementInput = document.getElementById('statementInput');
+    const addBtn = document.getElementById('addBtn');
+    const newPromptBtn = document.getElementById('newPromptBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const statementCount = document.getElementById('statementCount');
+    const resultText = document.getElementById('resultText');
+
+    const DEFAULT_PROMPTS = [
+        'Never have I ever ridden a roller coaster.',
+        'Never have I ever stayed awake all night on purpose.',
+        'Never have I ever performed in front of more than 10 people.',
+        'Never have I ever been to a concert.',
+        'Never have I ever eaten dessert for breakfast.',
+        'Never have I ever traveled to another country.',
+        'Never have I ever sung karaoke in public.',
+        'Never have I ever gone camping in a tent.',
+        'Never have I ever learned a second language.',
+        'Never have I ever met someone famous.',
+        'Never have I ever tried a food I could not pronounce.',
+        'Never have I ever taken a spontaneous road trip.',
+        'Never have I ever ridden a bicycle without holding the handlebars.',
+        'Never have I ever stayed in a hotel on a holiday.',
+        'Never have I ever watched a movie more than three times in a row.',
+        'Never have I ever woken up before sunrise to see it.',
+        'Never have I ever sent a message to the wrong person.',
+        'Never have I ever worn pajamas to a grocery store.',
+        'Never have I ever built a sandcastle.',
+        'Never have I ever danced in the rain.',
+        'Never have I ever tried a new recipe without a plan.',
+        'Never have I ever made a paper airplane and flown it indoors.',
+        'Never have I ever gone to a museum on a weekend.',
+        'Never have I ever made a playlist for a road trip.',
+        'Never have I ever learned a magic trick.',
+        'Never have I ever written a letter by hand and mailed it.',
+        'Never have I ever finished a book in one day.',
+        'Never have I ever watched a sunrise from a beach.',
+        'Never have I ever taken part in a group game night.',
+        'Never have I ever used a disposable camera.'
+    ];
+
+    let customPrompts = [];
+    let currentPrompts = [];
+
+    function saveState() {
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify({ customPrompts })
+        );
+    }
+
+    function loadState() {
+        try {
+            const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            if (saved && Array.isArray(saved.customPrompts)) {
+                customPrompts = saved.customPrompts.filter((item) => typeof item === 'string' && item.trim());
+            }
+        } catch (error) {
+            customPrompts = [];
+        }
+
+        currentPrompts = [...DEFAULT_PROMPTS, ...customPrompts];
+        updatePromptCount();
+        resultText.textContent = 'Tap “New prompt” to reveal a statement.';
+    }
+
+    function updatePromptCount() {
+        statementCount.textContent = `${currentPrompts.length} prompts available`;
+    }
+
+    function normalizeStatement(value) {
+        const trimmed = value.trim();
+        if (!trimmed) return '';
+        const lower = trimmed.toLowerCase();
+        if (lower.startsWith('never have i ever')) {
+            return trimmed.endsWith('.') ? trimmed : `${trimmed}.`;
+        }
+        return `Never have I ever ${trimmed.replace(/\.*$/, '')}.`;
+    }
+
+    function showRandomPrompt() {
+        if (!currentPrompts.length) {
+            resultText.textContent = 'There are no prompts available. Add one to get started.';
+            return;
+        }
+
+        const randomIndex = Math.floor(Math.random() * currentPrompts.length);
+        resultText.textContent = currentPrompts[randomIndex];
+    }
+
+    function addCustomPrompt() {
+        const rawValue = statementInput.value;
+        const prompt = normalizeStatement(rawValue);
+
+        if (!prompt) {
+            resultText.textContent = 'Enter a statement before adding it.';
+            return;
+        }
+
+        if (currentPrompts.includes(prompt)) {
+            resultText.textContent = 'That prompt is already in the list. Try another one.';
+            return;
+        }
+
+        customPrompts.push(prompt);
+        currentPrompts.push(prompt);
+        statementInput.value = '';
+        updatePromptCount();
+        saveState();
+        resultText.textContent = 'Added! Tap “New prompt” for the next statement.';
+    }
+
+    function resetPrompts() {
+        customPrompts = [];
+        currentPrompts = [...DEFAULT_PROMPTS];
+        statementInput.value = '';
+        updatePromptCount();
+        saveState();
+        resultText.textContent = 'The prompt list has been reset. Tap “New prompt” to start again.';
+    }
+
+    addBtn.addEventListener('click', addCustomPrompt);
+    newPromptBtn.addEventListener('click', showRandomPrompt);
+    resetBtn.addEventListener('click', resetPrompts);
+
+    loadState();
+</script>
