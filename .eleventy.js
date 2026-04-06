@@ -141,6 +141,13 @@ module.exports = async function(eleventyConfig) {
     return items;
   });
 
+  const appsDataPath = path.join(__dirname, 'content', 'blog', '_data', 'apps.js');
+  const appsJsonPath = path.join(__dirname, 'assets', 'js', 'apps-data.json');
+  if (fs.existsSync(appsDataPath)) {
+    const apps = require(appsDataPath);
+    fs.writeFileSync(appsJsonPath, JSON.stringify(apps, null, 2));
+  }
+
   return {
     dir: {
       input: ".", // Process files from the project root

@@ -1,0 +1,13 @@
+{% macro appCards(apps, category) %}
+  {% for app in apps %}
+    {% if app.category == category %}
+      <li class="game-grid__item">
+        <a aria-label="Open {{ app.name }}" class="game-card" data-category="{{ app.category }}" data-game="{{ app.id }}" href="{{ app.path }}">
+          <span aria-hidden="true" class="game-card__icon">{{ app.emoji }}</span>
+          <span class="game-card__title">{{ app.name }}</span>
+          <span class="game-card__desc">{{ app.description }}</span>
+        </a>
+      </li>
+    {% endif %}
+  {% endfor %}
+{% endmacro %}

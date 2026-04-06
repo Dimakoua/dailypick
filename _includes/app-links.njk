@@ -1,0 +1,7 @@
+{% macro appLinks(apps, footerGroup) %}
+  {% for app in apps %}
+    {% if app.footerGroup == footerGroup %}
+      <li><a href="{{ app.path }}">{{ app.name }}</a></li>
+    {% endif %}
+  {% endfor %}
+{% endmacro %}

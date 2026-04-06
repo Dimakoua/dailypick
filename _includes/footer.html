@@ -8,66 +8,39 @@
         </p>
       </div>
       
+      {% from "_includes/app-links.njk" import appLinks %}
       <div class="site-footer__group">
         <h4 class="footer-heading">Stand-up</h4>
         <ul class="site-footer__links">
-          <li><a href="/apps/ballgame/">Ball Game</a></li>
-          <li><a href="/apps/gravity-drift/">Gravity Drift</a></li>
-          <li><a href="/apps/mimic-master/">Mimic Master</a></li>
-          <li><a href="/apps/snowball-fight/">Snowball Fight</a></li>
-          <li><a href="/apps/speedway/">Speedway</a></li>
-          <li><a href="/apps/trap/">Trap</a></li>
-          <li><a href="/apps/patchinko-machine/">Patchinko Machine</a></li>
-          <li><a href="/apps/wheel/">Wheel</a></li>
-          <li><a href="/apps/letters/">Letters</a></li>
+          {{ appLinks(apps, "Stand-up") }}
         </ul>
       </div>
 
       <div class="site-footer__group">
         <h4 class="footer-heading">Tools</h4>
         <ul class="site-footer__links">
-          <li><a href="/apps/planning-poker/">Planning Poker</a></li>
-          <li><a href="/apps/retro-board/">Retro Board</a></li>
-          <li><a href="/apps/timer/">Timer</a></li>
-          <li><a href="/apps/morale-thermometer/">Morale Thermometer</a></li>
-          <li><a href="/apps/capacity-dice/">Capacity Dice</a></li>
+          {{ appLinks(apps, "Tools") }}
         </ul>
       </div>
 
       <div class="site-footer__group">
         <h4 class="footer-heading">Randomizers</h4>
         <ul class="site-footer__links">
-          <li><a href="/apps/coin-flip-dice-roller/">Coin Flip &amp; Dice Roller</a></li>
-          <li><a href="/apps/choices-spinner/">Choices Spinner</a></li>
-          <li><a href="/apps/random-name-picker/">Random Name Picker</a></li>
-          <li><a href="/apps/random-list-shuffler/">Random List Shuffler</a></li>
-          <li><a href="/apps/giveaway-winner-picker/">Giveaway Winner Picker</a></li>
-          <li><a href="/apps/raffle-ticket-puller/">Raffle Ticket Puller</a></li>
-          <li><a href="/apps/classroom-name-roulette/">Classroom Name Roulette</a></li>
-          <li><a href="/apps/never-have-i-ever/">Never Have I Ever</a></li>
+          {{ appLinks(apps, "Randomizers") }}
         </ul>
       </div>
 
       <div class="site-footer__group">
         <h4 class="footer-heading">Games</h4>
         <ul class="site-footer__links">
-          <li><a href="/apps/truth-or-dare/">Truth or Dare</a></li>
-          <li><a href="/apps/what-should-i-eat/">What Should I Eat?</a></li>
-          <li><a href="/apps/cook-or-order-in/">Cook or Order In</a></li>
-          <li><a href="/apps/two-truths-and-a-lie/">Two Truths and a Lie</a></li>
-          <li><a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose?</a></li>
-          <li><a href="/apps/what-snack-should-i-have/">What Snack Should I Have?</a></li>
-          <li><a href="/apps/would-you-rather/">Would You Rather</a></li>
+          {{ appLinks(apps, "Games") }}
         </ul>
       </div>
 
       <div class="site-footer__group">
         <h4 class="footer-heading">Resources</h4>
         <ul class="site-footer__links">
-          <li><a href="/blog/">Blog</a></li>
-          <li><a href="/apps/whats-new/">What's New</a></li>
-          <li><a href="/apps/settings/">Settings</a></li>
-          <li><a href="/feedback/">Feedback</a></li>
+          {{ appLinks(apps, "Resources") }}
         </ul>
       </div>
     </div>

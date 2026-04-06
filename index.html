@@ -93,77 +93,9 @@
 <h2 class="section-title" id="standups-heading">Keep daily updates fresh</h2>
 <p class="section-subtitle">Shuffle speakers, run icebreakers, or celebrate wins with these lively picks. Customize player names and branding for all standup games in <a href="/apps/settings/">Settings</a>.</p>
 </div>
+{% from "_includes/app-grid.njk" import appCards %}
 <ul class="game-grid" role="list">
-<li class="game-grid__item">
-<a aria-label="Play Wheel" class="game-card" data-category="standup" data-game="wheel" href="/apps/wheel/">
-<span aria-hidden="true" class="game-card__icon">🎡</span>
-<span class="game-card__title">Wheel</span>
-<span class="game-card__desc">A fair and fun spin to decide who shares updates next. Quick,
-                            easy, and no more “who’s first?” dilemmas!</span>
-</a>
-</li>
-<li class="game-grid__item">
-<a aria-label="Play Speedway" class="game-card" data-category="standup" data-game="speedway" href="/apps/speedway/">
-<span aria-hidden="true" class="game-card__icon">🐢</span>
-<span class="game-card__title">Speedway</span>
-<span class="game-card__desc">A delightful turtle race to determine your team’s stand-up
-                            sequence. May the best colleague (and their turtle) win!</span>
-</a>
-</li>
-<li class="game-grid__item">
-<a aria-label="Play Trap!" class="game-card" data-category="standup" data-game="trap" href="/apps/trap/">
-<span aria-hidden="true" class="game-card__icon">🎯</span>
-<span class="game-card__title">Trap!</span>
-<span class="game-card__desc">A lighthearted game of strategy. Great for a quick team
-                            brain-teaser or deciding who tackles the next coffee run!</span>
-</a>
-</li>
-<li class="game-grid__item">
-<a aria-label="Play Falling Letters Pinball" class="game-card" data-category="standup" data-game="letters" href="/apps/letters/">
-<span aria-hidden="true" class="game-card__icon">🕹️</span>
-<span class="game-card__title">Falling Letters Pinball</span>
-<span class="game-card__desc">Match names by typing letters as they tumble down a pinball
-                            playfield. A fun test of speed and accuracy!</span>
-</a>
-</li>
-<li class="game-grid__item">
-<a aria-label="Play Gravity Drift" class="game-card" data-category="standup" data-game="gravity-drift" href="/apps/gravity-drift/">
-<span aria-hidden="true" class="game-card__icon">🚀</span>
-<span class="game-card__title">Gravity Drift</span>
-<span class="game-card__desc">Launch rockets and navigate asteroid fields. A space-themed
-                            adventure of trajectory and fuel management!</span>
-</a>
-</li>
-<li class="game-grid__item">
-<a aria-label="Play Patchinko Machine" class="game-card" data-category="standup" data-game="patchinko-machine" href="/apps/patchinko-machine/">
-<span aria-hidden="true" class="game-card__icon">🎳</span>
-<span class="game-card__title">Patchinko Machine</span>
-<span class="game-card__desc">Drop balls through a pachinko board to set the speaking order—fast, fair, and fun.</span>
-</a>
-</li>
-<li class="game-grid__item">
-<a aria-label="Play Momentum Mayhem" class="game-card" data-category="standup" data-game="momentum-mayhem" href="/apps/ballgame/">
-<span aria-hidden="true" class="game-card__icon">🔴</span>
-<span class="game-card__title">Momentum Mayhem</span>
-<span class="game-card__desc">Unleash physics-based chaos! Push the ball into moving traps,
-                            triggering wild special effects with every capture.</span>
-</a>
-</li>
-<li class="game-grid__item">
-<a aria-label="Play Mimic Master" class="game-card" data-category="standup" data-game="mimic-master" href="/apps/mimic-master/">
-<span aria-hidden="true" class="game-card__icon">🖐️</span>
-<span class="game-card__title">Mimic Master</span>
-<span class="game-card__desc">Match numbers or emojis with your hands and climb the shared
-                            reaction-time leaderboard.</span>
-</a>
-</li>
-<li class="game-grid__item">
-<a aria-label="Play Snowball Fight Classic" class="game-card" data-category="standup" data-game="snowball-fight" href="/apps/snowball-fight/">
-<span aria-hidden="true" class="game-card__icon">⛄</span>
-<span class="game-card__title">Snowball Fight Classic</span>
-<span class="game-card__desc">Battle in a classic Flash-style multiplayer arena. Last one standing wins—death order leaderboard tracks who fell first!</span>
-</a>
-</li>
+  {{ appCards(apps, "standup") }}
 </ul>
 </section>
 

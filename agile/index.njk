@@ -23,42 +23,9 @@ sitemap:
             <h2 class="section-title" id="planning-heading">Prep Sprints with Clarity</h2>
             <p class="section-subtitle">Collaborative tools designed for Scrum Masters and Agile teams to streamline every ceremony.</p>
         </div>
+        {% from "_includes/app-grid.njk" import appCards %}
         <ul class="game-grid" role="list">
-            <li class="game-grid__item">
-                <a aria-label="Open Planning Poker Hub" class="game-card" data-category="planning" data-game="planning-poker" href="/apps/planning-poker/">
-                    <span aria-hidden="true" class="game-card__icon">🃏</span>
-                    <span class="game-card__title">Planning Poker Hub</span>
-                    <span class="game-card__desc">Real-time Fibonacci estimation rooms with hidden votes, host controls, and Jira-ready summaries.</span>
-                </a>
-            </li>
-            <li class="game-grid__item">
-                <a aria-label="Open Retro Board" class="game-card" data-category="planning" data-game="retro-board" href="/apps/retro-board/">
-                    <span aria-hidden="true" class="game-card__icon">📋</span>
-                    <span class="game-card__title">Retro Board</span>
-                    <span class="game-card__desc">Run collaborative retrospectives with drag-and-drop cards, voting, and real-time team insights.</span>
-                </a>
-            </li>
-            <li class="game-grid__item">
-                <a aria-label="Open Cadence Timer Studio" class="game-card" data-category="planning" data-game="timer" href="/apps/timer/">
-                    <span aria-hidden="true" class="game-card__icon">⏱️</span>
-                    <span class="game-card__title">Cadence Timer Studio</span>
-                    <span class="game-card__desc">Build multi-stage meeting timers with shareable presets and audio cues to keep your meetings on track.</span>
-                </a>
-            </li>
-            <li class="game-grid__item">
-                <a aria-label="Play Capacity Planner Dice" class="game-card" data-category="planning" data-game="capacity-dice" href="/apps/capacity-dice/">
-                    <span aria-hidden="true" class="game-card__icon">🎲</span>
-                    <span class="game-card__title">Capacity Planner Dice</span>
-                    <span class="game-card__desc">Roll PTO, meeting, and wildcard dice to stress-test sprint capacity and copy the summary.</span>
-                </a>
-            </li>
-            <li class="game-grid__item">
-                <a aria-label="Play Team Morale Thermometer" class="game-card" data-category="planning" data-game="morale-thermometer" href="/apps/morale-thermometer/">
-                    <span aria-hidden="true" class="game-card__icon">🌡️</span>
-                    <span class="game-card__title">Morale Thermometer</span>
-                    <span class="game-card__desc">Anonymously rate team energy on a visual scale and see the aggregated results in real-time.</span>
-                </a>
-            </li>
+          {{ appCards(apps, "agile") }}
         </ul>
     </section>
 
