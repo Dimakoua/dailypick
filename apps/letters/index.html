@@ -1,62 +1,19 @@
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-    <meta charset="utf-8" />
-    <!-- Viewport meta tag is already present and good -->
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Falling Letters Pinball – Fast Name Picker | Daily Pick</title>
-    <meta
-        content="Match falling letters to reveal names, spark competition, and pick the next speaker with Daily Pick's arcade pinball name picker."
-        name="description" />
-    <meta content="index,follow" name="robots" />
-    <meta
-        content="falling letters pinball, random name picker, interactive team game, classroom attendance game, agile icebreaker, meeting energizer, Daily Pick tools, letter matching challenge, remote team activity, fun name selection"
-        name="keywords" />
-    <!-- Open Graph / Facebook -->
-    <meta content="website" property="og:type" />
-    <meta content="https://dailypick.dev/apps/letters/" property="og:url" />
-    <meta content="Falling Letters Pinball – Fast Name Picker | Daily Pick" property="og:title" />
-    <meta
-        content="Match falling letters to reveal names, spark competition, and pick the next speaker with Daily Pick's arcade pinball name picker."
-        property="og:description" />
-    <meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image" />
-    <meta content="Player typing letters in the Falling Letters Pinball name picker" property="og:image:alt" />
-    <!-- Twitter -->
-    <meta content="summary_large_image" name="twitter:card" />
-    <meta content="https://dailypick.dev/apps/letters/" name="twitter:url" />
-    <meta content="Falling Letters Pinball – Fast Name Picker | Daily Pick" name="twitter:title" />
-    <meta
-        content="Match falling letters to reveal names, spark competition, and pick the next speaker with Daily Pick's arcade pinball name picker."
-        name="twitter:description" />
-    <meta content="https://dailypick.dev/assets/og-image-main.png" name="twitter:image" />
-    <meta content="Player typing letters in the Falling Letters Pinball name picker" name="twitter:image:alt" />
-    <link href="https://dailypick.dev/apps/letters/" rel="canonical" />
-    <!-- Favicon Links -->
-    <link href="/assets/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
-    <link href="/assets/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
-    <link href="/assets/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
-    <link href="/assets/favicon/site.webmanifest" rel="manifest" />
-    <link href="/assets/favicon/favicon.ico" rel="shortcut icon" />
-    <meta content="#2d89ef" name="msapplication-TileColor" />
-    <meta content="#ffffff" name="theme-color" />
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&amp;display=swap"
-        rel="stylesheet" />
-    <link href="/assets/css/theme.css" rel="stylesheet" />
-    <link href="/assets/css/glass.css" rel="stylesheet" />
-    <link href="/assets/css/standup-panel.css" rel="stylesheet" />
-    <link href="/assets/css/seo-card.css" rel="stylesheet" />
-    <link href="/apps/letters/style.css" rel="stylesheet" />
-    <script defer="" src="/assets/js/brand-theme-engine.js"></script>
-    <script defer="" src="/assets/js/brand-config.js"></script>
-    <script defer="" src="/assets/js/results-pip.js"></script>
-    <script defer="" src="/assets/js/standup-data.js"></script>
-    <script defer="" src="/assets/js/standup-panel.js"></script>
-    <script defer="" src="/assets/js/standup-onboarding.js"></script>
-    <script type="application/ld+json">
+---
+layout: base_app.njk
+title: "Falling Letters Pinball – Fast Name Picker | Daily Pick"
+description: "Match falling letters to reveal names, spark competition, and pick the next speaker with Daily Pick"
+keywords: "falling letters pinball, random name picker, interactive team game, classroom attendance game, agile icebreaker, meeting energizer, Daily Pick tools, letter matching challenge, remote team activity, fun name selection"
+canonical: "https://dailypick.dev/apps/letters/"
+ogImage: "https://dailypick.dev/assets/og-image-main.png"
+ogImageAlt: "Player typing letters in the Falling Letters Pinball name picker"
+appStyles: |
+  <link href="/apps/letters/style.css" rel="stylesheet" />
+headExtra: |
+  <script defer="" src="/assets/js/results-pip.js"></script>
+  <script defer="" src="/assets/js/standup-data.js"></script>
+  <script defer="" src="/assets/js/standup-panel.js"></script>
+  <script defer="" src="/assets/js/standup-onboarding.js"></script>
+  <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "WebApplication",
@@ -73,13 +30,8 @@
         }
     }
     </script>
-</head>
-
-<body>
-    {% include "bg-orbs.html" %}
-
-    {% include "header.html" %}
-    <main id="main" data-page-type="standup">
+---
+<main id="main" data-page-type="standup">
         <h1>🕹️ Falling Letters Pinball 🕹️</h1>
         <p class="settings-hint">Manage your players and branding once on the <a href="/apps/settings/">Settings
                 page</a>.</p>
@@ -143,7 +95,3 @@
         </div>
     </main>
     <script src="game.js"></script>
-    {% include "footer.html" %}
-</body>
-
-</html>

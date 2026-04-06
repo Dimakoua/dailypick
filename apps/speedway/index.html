@@ -1,64 +1,22 @@
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-    <meta charset="utf-8" />
-    <!-- Viewport meta tag is already present and good -->
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Speedway Racer – Turtle Stand-up Order Game | Daily Pick</title>
-    <meta
-        content="Launch a turtle race name picker that randomizes speaking order, rewards winners, and energizes hybrid stand-ups with playful suspense."
-        name="description" />
-    <meta content="index,follow" name="robots" />
-    <meta
-        content="turtle race name picker, speedway racer, random name picker, stand-up order game, turtle racing, agile icebreaker, meeting energizer, classroom participation game, remote team activity, Daily Pick tools, fair speaking order"
-        name="keywords" />
-    <!-- Open Graph / Facebook -->
-    <meta content="website" property="og:type" />
-    <meta content="https://dailypick.dev/apps/speedway/" property="og:url" />
-    <meta content="Speedway Racer – Turtle Stand-up Order Game | Daily Pick" property="og:title" />
-    <meta
-        content="Launch a turtle race name picker that randomizes speaking order, rewards winners, and energizes hybrid stand-ups with playful suspense."
-        property="og:description" />
-    <meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image" />
-    <meta content="Colorful turtle racers sprinting on the Daily Pick Speedway track" property="og:image:alt" />
-    <!-- Twitter -->
-    <meta content="summary_large_image" name="twitter:card" />
-    <meta content="https://dailypick.dev/apps/speedway/" name="twitter:url" />
-    <meta content="Speedway Racer – Turtle Stand-up Order Game | Daily Pick" name="twitter:title" />
-    <meta
-        content="Launch a turtle race name picker that randomizes speaking order, rewards winners, and energizes hybrid stand-ups with playful suspense."
-        name="twitter:description" />
-    <meta content="https://dailypick.dev/assets/og-image-main.png" name="twitter:image" />
-    <meta content="Colorful turtle racers sprinting on the Daily Pick Speedway track" name="twitter:image:alt" />
-    <link href="https://dailypick.dev/apps/speedway/" rel="canonical" />
-    <!-- Favicon Links -->
-    <link href="/assets/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
-    <link href="/assets/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
-    <link href="/assets/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
-    <link href="/assets/favicon/site.webmanifest" rel="manifest" />
-    <link href="/assets/favicon/favicon.ico" rel="shortcut icon" />
-    <meta content="#2d89ef" name="msapplication-TileColor" />
-    <meta content="#ffffff" name="theme-color" />
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&amp;display=swap"
-        rel="stylesheet" />
-    <link href="/assets/css/seo-card.css" rel="stylesheet" />
-    <link href="/assets/css/theme.css" rel="stylesheet" />
-    <link href="/assets/css/glass.css" rel="stylesheet" />
-    <link href="/assets/css/standup-panel.css" rel="stylesheet" />
-    <link href="/apps/speedway/style.css" rel="stylesheet" />
-    <script defer="" src="/assets/js/brand-theme-engine.js"></script>
-    <script defer="" src="/assets/js/brand-config.js"></script>
-    <script defer="" src="/assets/js/results-pip.js"></script>
-    <script defer="" src="/assets/js/standup-data.js"></script>
-    <script defer="" src="/assets/js/standup-panel.js"></script>
-    <script defer="" src="/assets/js/standup-onboarding.js"></script>
-    <!-- (Optional) Collaboration includes — keep if used elsewhere -->
-    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-    <link href="/assets/css/collaboration.css" rel="stylesheet" />
-    <script defer="" src="/assets/js/collaboration.js"></script>
-    <script type="application/ld+json">
+---
+layout: base_app.njk
+title: "Speedway Racer – Turtle Stand-up Order Game | Daily Pick"
+description: "Launch a turtle race name picker that randomizes speaking order, rewards winners, and energizes hybrid stand-ups with playful suspense."
+keywords: "turtle race name picker, speedway racer, random name picker, stand-up order game, turtle racing, agile icebreaker, meeting energizer, classroom participation game, remote team activity, Daily Pick tools, fair speaking order"
+canonical: "https://dailypick.dev/apps/speedway/"
+ogImage: "https://dailypick.dev/assets/og-image-main.png"
+ogImageAlt: "Colorful turtle racers sprinting on the Daily Pick Speedway track"
+appStyles: |
+  <link href="/apps/speedway/style.css" rel="stylesheet" />
+headExtra: |
+  <link href="/assets/css/collaboration.css" rel="stylesheet" />
+  <script defer="" src="/assets/js/results-pip.js"></script>
+  <script defer="" src="/assets/js/standup-data.js"></script>
+  <script defer="" src="/assets/js/standup-panel.js"></script>
+  <script defer="" src="/assets/js/standup-onboarding.js"></script>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script defer="" src="/assets/js/collaboration.js"></script>
+  <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -75,13 +33,8 @@
     }
   }
   </script>
-</head>
-
-<body>
-    {% include "bg-orbs.html" %}
-    {% include "header.html" %}
-
-        <main id="main" data-page-type="standup" class="app-shell">
+---
+<main id="main" data-page-type="standup" class="app-shell">
             <div class="app-card">
                 <h1>🏁 Speedway Racer 🏁</h1>
                 <p class="app-subheading">A fast-paced random name picker to energize your team meetings and stand-ups.
@@ -158,7 +111,7 @@
                 </div>
             </div>
         </main>
-        {% include "footer.html" %}
+        
 
         <script>
             "use strict";
@@ -442,6 +395,3 @@
             currentVehicleStyle = loadVehicleStyle();
             setupRacers();
         </script>
-</body>
-
-</html>

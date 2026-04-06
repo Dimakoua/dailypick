@@ -1,55 +1,20 @@
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Snowball Fight Classic – Multiplayer Battle Arena | Daily Pick</title>
-    <meta
-        content="Launch a Snowball Fight room and battle your team in classic Flash-style action. Real-time multiplayer with death order leaderboard."
-        name="description" />
-    <meta content="index,follow" name="robots" />
-    <meta
-        content="snowball fight, multiplayer game, team battle, daily pick, stand-up energizer, classic flash game, battle arena"
-        name="keywords" />
-    <meta content="website" property="og:type" />
-    <meta content="https://dailypick.dev/apps/snowball-fight/" property="og:url" />
-    <meta content="Snowball Fight Classic – Multiplayer Battle Arena | Daily Pick" property="og:title" />
-    <meta
-        content="Launch a Snowball Fight room and battle your team in classic Flash-style action. Real-time multiplayer with death order leaderboard."
-        property="og:description" />
-    <meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image" />
-    <meta content="Team members battling in Daily Pick's Snowball Fight game" property="og:image:alt" />
-    <meta content="summary_large_image" name="twitter:card" />
-    <meta content="https://dailypick.dev/apps/snowball-fight/" name="twitter:url" />
-    <meta content="Snowball Fight Classic – Multiplayer Battle Arena | Daily Pick" name="twitter:title" />
-    <meta
-        content="Launch a Snowball Fight room and battle your team in classic Flash-style action. Real-time multiplayer with death order leaderboard."
-        name="twitter:description" />
-    <meta content="https://dailypick.dev/assets/og-image-main.png" name="twitter:image" />
-    <meta content="Team members battling in Daily Pick's Snowball Fight game" name="twitter:image:alt" />
-    <link href="https://dailypick.dev/apps/snowball-fight/" rel="canonical" />
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&amp;display=swap"
-        rel="stylesheet" />
-    <link href="/assets/css/theme.css" rel="stylesheet" />
-    <link href="/assets/css/glass.css" rel="stylesheet" />
-    <link href="/assets/css/standup-panel.css" rel="stylesheet" />
-    <link href="/assets/css/seo-card.css" rel="stylesheet" />
-    <link href="/apps/snowball-fight/style.css" rel="stylesheet" />
-    <script defer="" src="/assets/js/brand-theme-engine.js"></script>
-    <script defer="" src="/assets/js/brand-config.js"></script>
-    <script defer="" src="/assets/js/standup-data.js"></script>
-    <script defer="" src="/assets/js/standup-panel.js"></script>
-    <script defer="" src="/assets/js/standup-onboarding.js"></script>
-    <script defer="" src="/assets/js/results-pip.js"></script>
-</head>
-
-<body>
-    {% include "bg-orbs.html" %}
-    {% include "header.html" %}
-
-    <main data-page-type="standup" aria-labelledby="snowballHeading" class="snowball-page">
+---
+layout: base_app.njk
+title: "Snowball Fight Classic – Multiplayer Battle Arena | Daily Pick"
+description: "Launch a Snowball Fight room and battle your team in classic Flash-style action. Real-time multiplayer with death order leaderboard."
+keywords: "snowball fight, multiplayer game, team battle, daily pick, stand-up energizer, classic flash game, battle arena"
+canonical: "https://dailypick.dev/apps/snowball-fight/"
+ogImage: "https://dailypick.dev/assets/og-image-main.png"
+ogImageAlt: "Team members battling in Daily Pick"
+appStyles: |
+  <link href="/apps/snowball-fight/style.css" rel="stylesheet" />
+headExtra: |
+  <script defer="" src="/assets/js/standup-data.js"></script>
+  <script defer="" src="/assets/js/standup-panel.js"></script>
+  <script defer="" src="/assets/js/standup-onboarding.js"></script>
+  <script defer="" src="/assets/js/results-pip.js"></script>
+---
+<main data-page-type="standup" aria-labelledby="snowballHeading" class="snowball-page">
         <header class="hero-card glass-card">
             <div>
                 <p class="hero-eyebrow">Battle Arena</p>
@@ -186,9 +151,6 @@
         </aside>
     </main>
 
-    {% include "footer.html" %}
+    
 
     <script src="script.js" type="module"></script>
-</body>
-
-</html>

@@ -1,53 +1,19 @@
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-  <meta charset="utf-8" />
-  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>Mimic Master – Lightning Reaction Game | Daily Pick</title>
-  <meta
-    content="Launch a Mimic Master room, match prompts with your hands, and rally remote teams with real-time leaderboards and screen-share friendly controls."
-    name="description" />
-  <meta content="index,follow" name="robots" />
-  <meta
-    content="mimic master, reaction game, team energizer, camera game, daily pick, remote team activity, lightning round, stand-up energizer"
-    name="keywords" />
-  <meta content="website" property="og:type" />
-  <meta content="https://dailypick.dev/apps/mimic-master/" property="og:url" />
-  <meta content="Mimic Master – Lightning Reaction Game | Daily Pick" property="og:title" />
-  <meta
-    content="Launch a Mimic Master room, match prompts with your hands, and rally remote teams with real-time leaderboards and screen-share friendly controls."
-    property="og:description" />
-  <meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image" />
-  <meta content="Teammate mirroring hand prompts inside Daily Pick's Mimic Master game" property="og:image:alt" />
-  <meta content="summary_large_image" name="twitter:card" />
-  <meta content="https://dailypick.dev/apps/mimic-master/" name="twitter:url" />
-  <meta content="Mimic Master – Lightning Reaction Game | Daily Pick" name="twitter:title" />
-  <meta
-    content="Launch a Mimic Master room, match prompts with your hands, and rally remote teams with real-time leaderboards and screen-share friendly controls."
-    name="twitter:description" />
-  <meta content="https://dailypick.dev/assets/og-image-main.png" name="twitter:image" />
-  <meta content="Teammate mirroring hand prompts inside Daily Pick's Mimic Master game" name="twitter:image:alt" />
-  <link href="https://dailypick.dev/apps/mimic-master/" rel="canonical" />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&amp;display=swap" rel="stylesheet" />
-  <link href="/assets/css/theme.css" rel="stylesheet" />
-  <link href="/assets/css/glass.css" rel="stylesheet" />
-  <link href="/assets/css/standup-panel.css" rel="stylesheet" />
-  <link href="/assets/css/seo-card.css" rel="stylesheet" />
+---
+layout: base_app.njk
+title: "Mimic Master – Lightning Reaction Game | Daily Pick"
+description: "Launch a Mimic Master room, match prompts with your hands, and rally remote teams with real-time leaderboards and screen-share friendly controls."
+keywords: "mimic master, reaction game, team energizer, camera game, daily pick, remote team activity, lightning round, stand-up energizer"
+canonical: "https://dailypick.dev/apps/mimic-master/"
+ogImage: "https://dailypick.dev/assets/og-image-main.png"
+ogImageAlt: "Teammate mirroring hand prompts inside Daily Pick"
+appStyles: |
   <link href="/apps/mimic-master/style.css" rel="stylesheet" />
-  <script defer="" src="/assets/js/brand-theme-engine.js"></script>
-  <script defer="" src="/assets/js/brand-config.js"></script>
+headExtra: |
   <script defer="" src="/assets/js/standup-data.js"></script>
   <script defer="" src="/assets/js/standup-panel.js"></script>
   <script defer="" src="/assets/js/standup-onboarding.js"></script>
-</head>
-
-<body>
-  {% include "bg-orbs.html" %}
-  {% include "header.html" %}
-
-  <main data-page-type="standup" aria-labelledby="mimicHeading" class="mimic-page">
+---
+<main data-page-type="standup" aria-labelledby="mimicHeading" class="mimic-page">
     <header class="hero-card glass-card">
       <div>
         <p class="hero-eyebrow">Reaction Challenge</p>
@@ -151,7 +117,3 @@
   <!-- Optional: MediaPipe runtime -->
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands"></script>
   <script src="script.js"></script>
-  {% include "footer.html" %}
-</body>
-
-</html>

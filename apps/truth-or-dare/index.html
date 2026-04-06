@@ -1,44 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8" />
-  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>Truth or Dare Generator – Fun Party Prompts | Daily Pick</title>
-  <meta
-    content="Need fun Truth or Dare prompts? Use our random generator for parties, sleepovers, and team building. Hundreds of truths and dares at your fingertips."
-    name="description" />
-  <meta content="index,follow" name="robots" />
-  <meta
-    content="truth or dare generator, random truth or dare prompts, online party games, truth or dare for friends, team building icebreakers"
-    name="keywords" />
-  <meta content="https://dailypick.dev/apps/truth-or-dare/" property="og:url" />
-  <meta content="Truth or Dare Generator – Fun Party Prompts | Daily Pick" property="og:title" />
-  <meta
-    content="Take your party to the next level with our random Truth or Dare generator. No more boring 'I don't know' moments!"
-    property="og:description" />
-  <meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image" />
-  <link href="https://dailypick.dev/apps/truth-or-dare/" rel="canonical" />
-  <link href="/assets/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
-  <link href="/assets/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
-  <link href="/assets/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
-  <link href="/assets/favicon/site.webmanifest" rel="manifest" />
-  <link href="/assets/favicon/favicon.ico" rel="shortcut icon" />
-  <meta content="#2d89ef" name="theme-color" />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet" />
-  <link href="/assets/css/theme.css" rel="stylesheet" />
-  <link href="/assets/css/glass.css" rel="stylesheet" />
-  <link href="/assets/css/seo-card.css" rel="stylesheet" />
+---
+layout: base_app.njk
+title: "Truth or Dare Generator – Fun Party Prompts | Daily Pick"
+description: "Need fun Truth or Dare prompts? Use our random generator for parties, sleepovers, and team building. Hundreds of truths and dares at your fingertips."
+keywords: "truth or dare generator, random truth or dare prompts, online party games, truth or dare for friends, team building icebreakers"
+canonical: "https://dailypick.dev/apps/truth-or-dare/"
+ogImage: "https://dailypick.dev/assets/og-image-main.png"
+headExtra: |
   <link href="./style.css" rel="stylesheet" />
-  <script defer="" src="/assets/js/brand-theme-engine.js"></script>
-  <script defer="" src="/assets/js/brand-config.js"></script>
-</head>
-
-<body>
-  {% include "bg-orbs.html" %}
-  {% include "header.html" %}
-
-  <main data-page-type="randomizer" class="game-page" id="main">
+---
+<main data-page-type="randomizer" class="game-page" id="main">
     <header class="page-hero glass-card">
       <div>
         <p class="hero-eyebrow">Party Game Night</p>
@@ -93,7 +63,7 @@
     </section>
   </main>
 
-  {% include "footer.html" %}
+  
 
   <script>
     const prompts = {
@@ -232,6 +202,3 @@
     truthBtn.addEventListener('click', () => getPrompt('truth'));
     dareBtn.addEventListener('click', () => getPrompt('dare'));
   </script>
-</body>
-
-</html>

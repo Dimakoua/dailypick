@@ -1,44 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8" />
-  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>Random Student Caller – Classroom Name Roulette | Daily Pick</title>
-  <meta
-    content="The perfect random student caller for teachers. Pick names fairly, group students, and ensure everyone participates with our no-repeat name picker."
-    name="description" />
-  <meta content="index,follow" name="robots" />
-  <meta
-    content="random student caller, classroom name picker, teacher name randomizer, no-repeat name picker, random group generator for students"
-    name="keywords" />
-  <meta content="https://dailypick.dev/apps/classroom-name-roulette/" property="og:url" />
-  <meta content="Random Student Caller – Classroom Name Roulette | Daily Pick" property="og:title" />
-  <meta
-    content="Make classroom participation fair and fun. Use our random name roulette to call on students without bias."
-    property="og:description" />
-  <meta content="https://dailypick.dev/assets/og-image-main.png" property="og:image" />
-  <link href="https://dailypick.dev/apps/classroom-name-roulette/" rel="canonical" />
-  <link href="/assets/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
-  <link href="/assets/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
-  <link href="/assets/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
-  <link href="/assets/favicon/site.webmanifest" rel="manifest" />
-  <link href="/assets/favicon/favicon.ico" rel="shortcut icon" />
-  <meta content="#2d89ef" name="theme-color" />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet" />
-  <link href="/assets/css/theme.css" rel="stylesheet" />
-  <link href="/assets/css/glass.css" rel="stylesheet" />
-  <link href="/assets/css/seo-card.css" rel="stylesheet" />
+---
+layout: base_app.njk
+title: "Random Student Caller – Classroom Name Roulette | Daily Pick"
+description: "The perfect random student caller for teachers. Pick names fairly, group students, and ensure everyone participates with our no-repeat name picker."
+keywords: "random student caller, classroom name picker, teacher name randomizer, no-repeat name picker, random group generator for students"
+canonical: "https://dailypick.dev/apps/classroom-name-roulette/"
+ogImage: "https://dailypick.dev/assets/og-image-main.png"
+headExtra: |
   <link href="./style.css" rel="stylesheet" />
-  <script defer="" src="/assets/js/brand-theme-engine.js"></script>
-  <script defer="" src="/assets/js/brand-config.js"></script>
-</head>
-
-<body>
-  {% include "bg-orbs.html" %}
-  {% include "header.html" %}
-
-  <a class="skip-link" href="#main">Skip to main content</a>
+---
+<a class="skip-link" href="#main">Skip to main content</a>
 
   <main data-page-type="randomizer" class="picker-page" id="main">
 
@@ -104,11 +74,7 @@
     </section>
 
   </main>
-
-  {% include "footer.html" %}
-  {% include "cookie-consent.html" %}
-  <script defer="" src="/assets/js/cookie-consent.js"></script>
-
+  
   <script>
     const STORAGE_KEY = 'dailypick_classroom_roulette_names';
     const namesInput = document.getElementById('namesInput');
@@ -210,7 +176,3 @@
 
     loadState();
   </script>
-
-</body>
-
-</html>
