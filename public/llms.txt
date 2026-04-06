@@ -1,29 +1,49 @@
 # Daily Pick – Team Rituals for Stand-ups & Planning
 
-> Lightweight web experiences that make remote stand-ups, retrospectives, and sprint planning quick, fair, and engaging for distributed teams.
+> Lightweight web experiences that help distributed teams stay focused, fair, and energized during stand-ups, retrospectives, planning sessions, and team rituals.
 
-## Core Tools & Games
+## Core Experience
 
-- [Planning Poker](https://dailypick.dev/apps/planning-poker): Multiplayer Fibonacci voting for sprint estimation with real-time reveal, vote summaries, and Jira/Trello export.
-- [Wheel of Names](https://dailypick.dev/apps/wheel): Visual spinner for fair selection and decision-making during meetings.
-- [Retro Board](https://dailypick.dev/apps/retro-board): Shared retrospective tool for team feedback (went well, didn't go well, action items).
-- [Timer](https://dailypick.dev/apps/timer): Meeting timekeeper with visual countdown.
-- [Morale Thermometer](https://dailypick.dev/apps/morale-thermometer): Quick team pulse check during standups.
-- [Team Alignment Games](https://dailypick.dev/apps/): Ball Game, Mimic Master, Gravity Drift, Speedway, Trap, Letters, and more for engagement and quick team bonding.
+- [Planning Poker](https://dailypick.dev/apps/planning-poker): Multiplayer estimation with hidden Fibonacci voting, reveal rounds, and Jira/Trello-friendly summaries.
+- [Retro Board](https://dailypick.dev/apps/retro-board): Collaborative sprint retrospectives with card creation, voting, drag-and-drop organization, and live updates.
+- [Timer](https://dailypick.dev/apps/timer): Multi-stage ritual timers with color-coded stages, audio cues, presets, and shareable cadence links.
+- [Wheel of Names](https://dailypick.dev/apps/wheel): Fair spinner for decisions, random selection, and meeting facilitation.
+- [Morale Thermometer](https://dailypick.dev/apps/morale-thermometer): Fast team pulse checks for standups and health checks.
+
+## Selection & Decision Tools
+
+- [Random Name Picker](https://dailypick.dev/apps/random-name-picker): Draw names fairly with optional remove-after-pick behavior and history tracking.
+- [Random List Shuffler](https://dailypick.dev/apps/random-list-shuffler): Shuffle entries, generate team names, and split groups instantly.
+- [Giveaway Winner Picker](https://dailypick.dev/apps/giveaway-winner-picker): Pick lucky winners from lists with simple randomness.
+- [Raffle Ticket Puller](https://dailypick.dev/apps/raffle-ticket-puller): Pull tickets fairly for giveaways and team awards.
+- [Coin Flip & Dice Roller](https://dailypick.dev/apps/coin-flip-dice-roller): Quick randomizers for decisions and icebreakers.
+- [Capacity Dice](https://dailypick.dev/apps/capacity-dice): Estimate team capacity and sprint effort with lightweight dice rolls.
+
+## Engagement & Team Games
+
+- [Mimic Master](https://dailypick.dev/apps/mimic-master): Camera-based reaction game with hand prompts and live leaderboards.
+- [Ball Game](https://dailypick.dev/apps/ballgame): Real-time team agility challenge with collaborative scoring.
+- [Gravity Drift](https://dailypick.dev/apps/gravity-drift): Shareable arcade-style drift racing for quick energizers.
+- [Speedway](https://dailypick.dev/apps/speedway): Mini racing game for fast friendly competition.
+- [Trap](https://dailypick.dev/apps/trap): Reaction-based reflex challenge with simple controls.
+- [Letters](https://dailypick.dev/apps/letters): Word and letter-based team play.
+- [Truth or Dare](https://dailypick.dev/apps/truth-or-dare): Lighthearted prompts for icebreaker conversations.
+- [Classroom Name Roulette](https://dailypick.dev/apps/classroom-name-roulette): Random name selection for facilitation and classroom participation.
+- [What Should I Eat?](https://dailypick.dev/apps/what-should-i-eat): Quick group decision helper for lunch, snacks, and food choices.
 
 ## Technical Stack
 
-- Built with Eleventy (11ty) static site generator + Cloudflare Workers serverless runtime
-- Durable Objects for real-time multiplayer sessions (Planning Poker, Mimic Master, Ball Game, Retro Board)
-- Client-side performance focus; no mandatory server-side data storage
-- Privacy-first architecture; suitable for enterprise teams
+- Eleventy (11ty) static site generator powering site content
+- Cloudflare Workers for edge delivery and app hosting
+- Durable Objects used for real-time multiplayer sessions across select apps
+- Browser-first design with minimal required server storage and privacy-friendly interactions
 
 ## Blog & Documentation
 
-Comprehensive guides on agile ceremonies, team rituals, and productivity at [https://dailypick.dev/blog](https://dailypick.dev/blog).
+Explore guides on agile ceremonies, team rituals, and remote collaboration at [https://dailypick.dev/blog](https://dailypick.dev/blog).
 
 ## GitHub & Deployment
 
 - Source: https://github.com/Dimakoua/dailypick
-- Deployed on Cloudflare (https://dailypick.dev)
+- Live on Cloudflare: https://dailypick.dev
 
