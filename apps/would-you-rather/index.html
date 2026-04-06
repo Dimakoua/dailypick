@@ -1,0 +1,228 @@
+---
+layout: base_app.njk
+title: "Would You Rather – Icebreaker Choice Game | Daily Pick"
+description: "Play a quick Would You Rather game with custom prompts or custom options for team icebreakers, meetings, and group decision moments."
+keywords: "would you rather game, icebreaker questions, decision maker, team building game, choice generator"
+canonical: "https://dailypick.dev/apps/would-you-rather/"
+ogImage: "https://dailypick.dev/assets/og-image-main.png"
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container" id="main">
+
+    <header class="page-hero glass-card">
+        <div>
+            <p class="hero-eyebrow">Conversation Starter</p>
+            <h1>🤔 Would You Rather</h1>
+            <p>Choose between two fun options or generate a fresh prompt to break the ice, warm up meetings, and spark
+                team conversation.</p>
+        </div>
+    </header>
+
+    <section class="rwr-form glass-card">
+        <div class="form-group">
+            <label for="optionAInput">Option A</label>
+            <input id="optionAInput" class="text-input" type="text" placeholder="Explore a new city together" />
+        </div>
+
+        <div class="form-group">
+            <label for="optionBInput">Option B</label>
+            <input id="optionBInput" class="text-input" type="text" placeholder="Spend the day at a quiet beach" />
+        </div>
+
+        <div class="form-actions">
+            <button id="chooseBtn" class="btn btn--accent" type="button">🎯 Choose for me</button>
+            <button id="newPromptBtn" class="btn btn--secondary" type="button">🧩 New prompt</button>
+            <button id="swapBtn" class="btn btn--secondary" type="button">🔁 Swap options</button>
+            <button id="resetBtn" class="btn btn--secondary" type="button">↺ Reset</button>
+        </div>
+
+        <p class="form-tip">Enter your own ideas, or tap “New prompt” to cycle through curated Would You Rather choices.
+        </p>
+
+        <div class="result-display" aria-live="polite">
+            <div id="resultText" class="result-value">Pick an option to reveal the answer.</div>
+        </div>
+    </section>
+
+    <section class="seo-content-area glass-card">
+        <h2>How to Use Would You Rather</h2>
+        <p>Would You Rather makes it easy to introduce a playful choice into your next standup, icebreaker, or team
+            conversation. Use the built-in prompts for quick laughs, or type your own options for a customized moment.
+        </p>
+        <ul>
+            <li><strong>Quick icebreakers:</strong> Ask teams a fun question to get everyone talking.</li>
+            <li><strong>Custom input:</strong> Enter your own options to tailor the prompt to your group or meeting
+                theme.</li>
+            <li><strong>Instant decision:</strong> Use the random chooser when the group can’t agree on a single
+                direction.</li>
+        </ul>
+        <p>Perfect for remote teams, classroom warm-ups, or casual get-togethers where a lighthearted decision can spark
+            connection.</p>
+    </section>
+</main>
+
+<script>
+    const STORAGE_KEY = 'dailypick_would_you_rather_state';
+    const optionAInput = document.getElementById('optionAInput');
+    const optionBInput = document.getElementById('optionBInput');
+    const chooseBtn = document.getElementById('chooseBtn');
+    const newPromptBtn = document.getElementById('newPromptBtn');
+    const swapBtn = document.getElementById('swapBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const resultText = document.getElementById('resultText');
+
+    const DEFAULT_PROMPTS = [
+        { a: 'Explore a new city together', b: 'Spend the day at a quiet beach' },
+        { a: 'Be able to speak every language', b: 'Be able to play every instrument' },
+        { a: 'Always have free coffee', b: 'Always have free snacks' },
+        { a: 'Work from a mountain cabin', b: 'Work from a beachfront house' },
+        { a: 'Read minds for a day', b: 'Be invisible for a day' },
+        { a: 'Never wait in line again', b: 'Never get a cold again' },
+        { a: 'Have a rewind button for life', b: 'Have a pause button for life' },
+        { a: 'Always know the right answer', b: 'Always find the right question' },
+        { a: 'Win every argument', b: 'Never have to apologize again' },
+        { a: 'Be the funniest person in the room', b: 'Be the most charming person in the room' },
+        // --- New Additions ---
+        { a: 'Teleport anywhere instantly', b: 'Be able to fly (but only at 20mph)' },
+        { a: 'Never have to sleep again', b: 'Never have to eat again (no hunger)' },
+        { a: 'Live in a world with no internet', b: 'Live in a world with no air conditioning' },
+        { a: 'Be a famous actor', b: 'Be a famous singer' },
+        { a: 'Always be 10 minutes early', b: 'Always be exactly on time' },
+        { a: 'Have a personal chef', b: 'Have a personal driver' },
+        { a: 'Visit the future by 100 years', b: 'Visit the past by 100 years' },
+        { a: 'Always have a full battery on your phone', b: 'Always have perfect Wi-Fi' },
+        { a: 'Be the best at a sport', b: 'Be the best at a board game' },
+        { a: 'Have an extra $1,000 every month', b: 'Have one extra day of the weekend' },
+        { a: 'Know the date of your death', b: 'Know the cause of your death' },
+        { a: 'Eat only sweet foods for a week', b: 'Eat only spicy foods for a week' },
+        { a: 'Have a house in the woods', b: 'Have an apartment in a skyscraper' },
+        { a: 'Be able to talk to animals', b: 'Be able to speak with your future self' },
+        { a: 'Never have to wash dishes again', b: 'Never have to do laundry again' },
+        { a: 'Win an Olympic gold medal', b: 'Win a Nobel Prize' },
+        { a: 'Work 4 days a week for 10 hours', b: 'Work 5 days a week for 8 hours' },
+        { a: 'Have a super fast car', b: 'Have a super comfortable car' },
+        { a: 'Be an expert at everything you try', b: 'Be incredibly lucky at everything you do' },
+        { a: 'Spend a night in a museum', b: 'Spend a night in an aquarium' },
+        { a: 'Own a private island', b: 'Own a private jet' },
+        { a: 'Always have a cold pillow', b: 'Always have a warm shower' },
+        { a: 'Live in a world with magic', b: 'Live in a world with space travel' },
+        { a: 'See 5 minutes into the future', b: 'See 100 years into the future' },
+        { a: 'Only travel by boat', b: 'Only travel by train' },
+        { a: 'Be able to breathe underwater', b: 'Be completely fireproof' },
+        { a: 'Have a completely automated home', b: 'Have a massive garden you tend yourself' },
+        { a: 'Lose your sense of taste', b: 'Lose your sense of smell' },
+        { a: 'Always be the tallest person in the room', b: 'Always be the smartest person in the room' },
+        { a: 'Have 10 mediocre friends', b: 'Have 1 extremely loyal best friend' },
+        { a: 'Never have to pay for a flight again', b: 'Never have to pay for a hotel again' },
+        { a: 'Have a photographic memory', b: 'Be able to forget anything you want' },
+        { a: 'Only be able to whisper', b: 'Only be able to shout' },
+        { a: 'Go to a high-end black-tie gala', b: 'Go to a casual backyard bonfire' },
+        { a: 'Be able to change your appearance', b: 'Be able to change your age' },
+        { a: 'Always find a parking spot instantly', b: 'Never hit a red light again' },
+        { a: 'Live in a tiny house in a dream location', b: 'Live in a mansion in a boring city' },
+        { a: 'Be the first person to step on Mars', b: 'Be the first person to discover an ocean city' },
+        { a: 'Have an unlimited gift card for clothes', b: 'Have an unlimited gift card for tech' },
+        { a: 'Wake up with the sunrise', b: 'Stay up until the sunrise' }
+    ];
+
+    let prompts = [];
+    let currentPromptIndex = 0;
+    let customOptionA = '';
+    let customOptionB = '';
+
+    function loadState() {
+        try {
+            const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            if (saved && typeof saved === 'object') {
+                prompts = Array.isArray(saved.prompts) && saved.prompts.length ? saved.prompts : [...DEFAULT_PROMPTS];
+                currentPromptIndex = typeof saved.currentPromptIndex === 'number' ? saved.currentPromptIndex : 0;
+                customOptionA = typeof saved.customOptionA === 'string' ? saved.customOptionA : '';
+                customOptionB = typeof saved.customOptionB === 'string' ? saved.customOptionB : '';
+            }
+        } catch (err) {
+            prompts = [...DEFAULT_PROMPTS];
+            currentPromptIndex = 0;
+            customOptionA = '';
+            customOptionB = '';
+        }
+
+        if (!Array.isArray(prompts) || !prompts.length) {
+            prompts = [...DEFAULT_PROMPTS];
+            currentPromptIndex = 0;
+        }
+
+        if (customOptionA || customOptionB) {
+            optionAInput.value = customOptionA || DEFAULT_PROMPTS[0].a;
+            optionBInput.value = customOptionB || DEFAULT_PROMPTS[0].b;
+        } else {
+            const prompt = prompts[currentPromptIndex] || DEFAULT_PROMPTS[0];
+            optionAInput.value = prompt.a;
+            optionBInput.value = prompt.b;
+        }
+
+        resultText.textContent = 'Pick an option to reveal the answer.';
+        saveState();
+    }
+
+    function saveState() {
+        customOptionA = optionAInput.value.trim();
+        customOptionB = optionBInput.value.trim();
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify({ prompts, currentPromptIndex, customOptionA, customOptionB })
+        );
+    }
+
+    function parseOptions() {
+        const a = optionAInput.value.trim();
+        const b = optionBInput.value.trim();
+        return { a, b };
+    }
+
+    function chooseOption() {
+        const { a, b } = parseOptions();
+        if (!a || !b) {
+            resultText.textContent = 'Please enter both options before choosing.';
+            return;
+        }
+
+        const chosen = Math.random() > 0.5 ? a : b;
+        resultText.textContent = `✨ You should rather: ${chosen}`;
+    }
+
+    function loadNextPrompt() {
+        currentPromptIndex = (currentPromptIndex + 1) % prompts.length;
+        const prompt = prompts[currentPromptIndex];
+        optionAInput.value = prompt.a;
+        optionBInput.value = prompt.b;
+        resultText.textContent = 'Ready for the next question?';
+        saveState();
+    }
+
+    function swapOptions() {
+        const { a, b } = parseOptions();
+        optionAInput.value = b;
+        optionBInput.value = a;
+        resultText.textContent = 'Options swapped. Pick again when ready.';
+    }
+
+    function resetForm() {
+        currentPromptIndex = 0;
+        const prompt = DEFAULT_PROMPTS[0];
+        optionAInput.value = prompt.a;
+        optionBInput.value = prompt.b;
+        resultText.textContent = 'Pick an option to reveal the answer.';
+        saveState();
+    }
+
+    chooseBtn.addEventListener('click', chooseOption);
+    newPromptBtn.addEventListener('click', loadNextPrompt);
+    swapBtn.addEventListener('click', swapOptions);
+    resetBtn.addEventListener('click', resetForm);
+
+    optionAInput.addEventListener('input', saveState);
+    optionBInput.addEventListener('input', saveState);
+
+    loadState();
+</script>
