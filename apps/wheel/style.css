@@ -28,15 +28,6 @@ body {
 }
 
 /* Title */
-h1 {
-  font-size: clamp(2rem, 2.6rem, 3rem);
-  margin: calc(var(--header-h, 64px) + 12px) 0 20px;
-  color: var(--blue, #3498db);
-  font-weight: 800;
-  text-align: center;
-  text-shadow: 0 1px 1px rgba(255,255,255,.35);
-}
-
 /* Buttons */
 #spinBtn {
   padding: 12px 24px;
@@ -114,7 +105,6 @@ canvas {
 
 /* Responsive */
 @media (max-width: 520px) {
-  h1 { margin-top: calc(var(--header-h, 64px) + 8px); font-size: 1.9rem; }
   .seo-content-area { padding: 18px 16px; }
   /* tighten indicator and canvas border a touch */
   #indicator { border-left-width: 10px; border-right-width: 10px; border-bottom-width: 18px; top: -10px; }

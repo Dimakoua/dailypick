@@ -34,6 +34,52 @@ body {
   min-height: 100vh;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--brand-font-family);
+  color: var(--brand-heading);
+  margin: 1.5em 0 0.75em;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  scroll-margin-top: calc(var(--header-h, 120px) + 10px);
+}
+
+h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+}
+
+h2 {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+}
+
+h3 {
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  font-weight: 700;
+}
+
+h4 {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+h5 {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+h6 {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+@media (max-width: 520px) {
+  h1 {
+    font-size: 1.9rem;
+    margin-top: calc(var(--header-h, 64px) + 8px);
+  }
+}
+
 .settings-hint {
   margin: 1rem auto;
   padding: 0.75rem 1rem;

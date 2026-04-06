@@ -25,15 +25,6 @@ body {
   overflow-x: hidden;
 }
 
-h1 {
-  font-size: clamp(2rem, 2.6rem, 3rem);
-  margin: calc(var(--header-h, 64px) + 12px) 0 20px;
-  color: var(--brand-accent, #3498db);
-  font-weight: 800;
-  text-align: center;
-  text-shadow: 0 1px 1px rgba(255,255,255,.35);
-}
-
 /* Primary button in a glass gradient */
 #trapBtn {
   display: block;
@@ -102,6 +93,5 @@ h1 {
 /* SEO visuals moved to assets/css/seo-card.css */
 
 @media (max-width: 520px) {
-  h1 { margin-top: calc(var(--header-h, 64px) + 8px); font-size: 1.9rem; }
   .seo-content-area { padding: 18px 16px; }
 }
