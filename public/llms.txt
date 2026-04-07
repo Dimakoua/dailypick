@@ -1,3 +1,4 @@
+
 # Daily Pick – Team Rituals for Stand-ups & Planning
 
 > Lightweight web experiences that help distributed teams stay focused, fair, and energized during stand-ups, retrospectives, planning sessions, and team rituals.
@@ -9,6 +10,7 @@
 - [Timer](https://dailypick.dev/apps/timer): Multi-stage ritual timers with color-coded stages, audio cues, presets, and shareable cadence links.
 - [Wheel of Names](https://dailypick.dev/apps/wheel): Fair spinner for decisions, random selection, and meeting facilitation.
 - [Morale Thermometer](https://dailypick.dev/apps/morale-thermometer): Fast team pulse checks for standups and health checks.
+- [Settings & Brand Studio](https://dailypick.dev/apps/settings): Centralize rosters, brand presets, third-party integrations, and live previews for theme changes.
 
 ## Selection & Decision Tools
 
@@ -18,18 +20,28 @@
 - [Raffle Ticket Puller](https://dailypick.dev/apps/raffle-ticket-puller): Pull tickets fairly for giveaways and team awards.
 - [Coin Flip & Dice Roller](https://dailypick.dev/apps/coin-flip-dice-roller): Quick randomizers for decisions and icebreakers.
 - [Capacity Dice](https://dailypick.dev/apps/capacity-dice): Estimate team capacity and sprint effort with lightweight dice rolls.
+- [Choices Spinner](https://dailypick.dev/apps/choices-spinner): Editable wheels with fairness rules and persistent option lists.
+- [Random Letter Generator](https://dailypick.dev/apps/random-letter-generator): Generate letters in various cases and batch sizes for naming and prompts.
+- [Random Number Generator](https://dailypick.dev/apps/random-number-generator): Generate integers within a range with optional no-repeat rules.
+- [What Drink Should I Choose](https://dailypick.dev/apps/what-drink-should-i-choose): Filtered drink wheel for coffee, tea, smoothies, and quick hydration choices.
+- [What Should I Eat](https://dailypick.dev/apps/what-should-i-eat): Meal suggestion wheel with cuisine filters and dietary constraints.
+- [What Snack Should I Have](https://dailypick.dev/apps/what-snack-should-i-have): Snack picker with categories for sweet, salty, healthy, and movie-night options.
 
 ## Engagement & Team Games
 
-- [Mimic Master](https://dailypick.dev/apps/mimic-master): Camera-based reaction game with hand prompts and live leaderboards.
-- [Ball Game](https://dailypick.dev/apps/ballgame): Real-time team agility challenge with collaborative scoring.
-- [Gravity Drift](https://dailypick.dev/apps/gravity-drift): Shareable arcade-style drift racing for quick energizers.
-- [Speedway](https://dailypick.dev/apps/speedway): Mini racing game for fast friendly competition.
-- [Trap](https://dailypick.dev/apps/trap): Reaction-based reflex challenge with simple controls.
-- [Letters](https://dailypick.dev/apps/letters): Word and letter-based team play.
-- [Truth or Dare](https://dailypick.dev/apps/truth-or-dare): Lighthearted prompts for icebreaker conversations.
+- [Mimic Master](https://dailypick.dev/apps/mimic-master): Prompt-based party game with rounds and leaderboards.
+- [Ball Game](https://dailypick.dev/apps/ballgame): Real-time cooperative orb game for team energizers.
+- [Gravity Drift](https://dailypick.dev/apps/gravity-drift): Arcade-style drift racing for short, shareable sessions.
+- [Speedway](https://dailypick.dev/apps/speedway): Mini racing name picker with podium and celebratory highlights.
+- [Trap](https://dailypick.dev/apps/trap): Pixel-themed surprise trap game with fast rounds.
+- [Letters](https://dailypick.dev/apps/letters): Falling-letter matching game for quick competition.
+- [Truth or Dare](https://dailypick.dev/apps/truth-or-dare): Curated prompts with safe-mode options.
 - [Classroom Name Roulette](https://dailypick.dev/apps/classroom-name-roulette): Random name selection for facilitation and classroom participation.
-- [What Should I Eat?](https://dailypick.dev/apps/what-should-i-eat): Quick group decision helper for lunch, snacks, and food choices.
+- [Snowball Fight](https://dailypick.dev/apps/snowball-fight): Real-time multiplayer snowball battles with short elimination rounds.
+- [Patchinko Machine](https://dailypick.dev/apps/patchinko-machine): Pachinko-style visual ordering tool for fair, playful picks.
+- [Two Truths and a Lie](https://dailypick.dev/apps/two-truths-and-a-lie): Collect statements, gather votes, and reveal outcomes live.
+- [Would You Rather](https://dailypick.dev/apps/would-you-rather): Quick choice prompts and voting for team discussion.
+- [Never Have I Ever](https://dailypick.dev/apps/never-have-i-ever): Icebreaker prompts with voting and sharing.
 
 ## Technical Stack
 
