@@ -546,6 +546,41 @@ h6 {
   min-width: 140px;
 }
 
+/* Ensure cookie-consent buttons keep a consistent appearance
+   even when app-level styles redefine `.btn` or `.btn--*` classes. */
+.cookie-consent__actions .btn {
+  font: inherit;
+  border: 0;
+  border-radius: var(--radius-md, 8px);
+  padding: 10px 18px;
+  font-weight: 600;
+}
+
+.cookie-consent__actions .btn--accent {
+  background-color: var(--brand-accent);
+  color: var(--brand-accent-contrast-text);
+  border: 1px solid var(--brand-accent);
+  text-shadow: none;
+  box-shadow: none;
+}
+.cookie-consent__actions .btn--accent:hover,
+.cookie-consent__actions .btn--accent:focus-visible {
+  background-color: var(--brand-accent-strong);
+  transform: translateY(-2px);
+  box-shadow: var(--brand-hover-shadow, 0 12px 35px rgba(0,0,0,0.12));
+}
+
+.cookie-consent__actions .btn--secondary {
+  background-color: var(--brand-surface);
+  color: var(--brand-heading);
+  border: 1px solid var(--brand-border);
+}
+.cookie-consent__actions .btn--secondary:hover,
+.cookie-consent__actions .btn--secondary:focus-visible {
+  background-color: var(--brand-background);
+  transform: translateY(-2px);
+}
+
 .cookie-consent__note {
   margin: 16px 0 0;
   font-size: 0.85rem;
