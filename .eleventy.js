@@ -110,7 +110,9 @@ module.exports = async function(eleventyConfig) {
     const excludedPaths = [
       './README.md',
       './Readme.md',
-      './content/blog/prompt.md'
+      './content/blog/prompt.md',
+      './content/feedback/index.njk',
+      './content/feedback/thank-you.njk'
     ];
 
     const items = collectionApi.getAll().filter(item => {
@@ -129,6 +131,9 @@ module.exports = async function(eleventyConfig) {
       if (item.url === '/') {
         item.data.sitemap.changefreq = 'daily';
         item.data.sitemap.priority = 1.0;
+      } else if (item.inputPath.startsWith('./apps/')) {
+        item.data.sitemap.changefreq = 'weekly';
+        item.data.sitemap.priority = 0.8;
       } else if (item.inputPath.startsWith('./content/blog/posts/')) {
         item.data.sitemap.changefreq = 'weekly';
         item.data.sitemap.priority = 0.8;
