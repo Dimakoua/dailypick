@@ -19,7 +19,6 @@ appStyles: |
     </div>
     <div class="hero-actions">
       <a class="btn-link" href="/apps/roster/">Manage Team Roster →</a>
-      <button class="btn-link ghost" id="startTourBtn" type="button">Take the studio tour</button>
     </div>
   </section>
 
@@ -134,22 +133,6 @@ appStyles: |
   </article>
 </main>
 
-<div aria-hidden="true" class="setup-tour" hidden="" id="setupTour">
-  <div class="setup-tour__backdrop" data-tour-backdrop=""></div>
-  <div class="setup-tour__focus" data-tour-focus=""></div>
-  <div aria-modal="true" class="setup-tour__card" data-tour-card="" role="dialog" tabindex="-1">
-    <p class="setup-tour__badge">
-      Step <span data-tour-step-number="">1</span> of <span data-tour-step-total="">1</span>
-    </p>
-    <h3 class="setup-tour__title" data-tour-title=""></h3>
-    <p class="setup-tour__description" data-tour-description=""></p>
-    <div class="setup-tour__actions">
-      <button class="ghost" id="tourPrevBtn" type="button">Back</button>
-      <button id="tourNextBtn" type="button">Next</button>
-      <button class="ghost" id="tourCloseBtn" type="button">Close</button>
-    </div>
-  </div>
-</div>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {

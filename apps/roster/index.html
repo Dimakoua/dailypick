@@ -19,7 +19,6 @@ appStyles: |
     </div>
     <div class="hero-actions">
       <a class="btn-link" href="/apps/brand/">Customize Brand Studio →</a>
-      <button class="btn-link ghost" id="startTourBtn" type="button">Take the roster tour</button>
     </div>
   </section>
 
@@ -320,22 +319,6 @@ appStyles: |
   </section>
 </main>
 
-<div aria-hidden="true" class="setup-tour" hidden="" id="setupTour">
-  <div class="setup-tour__backdrop" data-tour-backdrop=""></div>
-  <div class="setup-tour__focus" data-tour-focus=""></div>
-  <div aria-modal="true" class="setup-tour__card" data-tour-card="" role="dialog" tabindex="-1">
-    <p class="setup-tour__badge">
-      Step <span data-tour-step-number="">1</span> of <span data-tour-step-total="">1</span>
-    </p>
-    <h3 class="setup-tour__title" data-tour-title=""></h3>
-    <p class="setup-tour__description" data-tour-description=""></p>
-    <div class="setup-tour__actions">
-      <button class="ghost" id="tourPrevBtn" type="button">Back</button>
-      <button id="tourNextBtn" type="button">Next</button>
-      <button class="ghost" id="tourCloseBtn" type="button">Close</button>
-    </div>
-  </div>
-</div>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
@@ -528,46 +511,6 @@ appStyles: |
       res.hidden = false;
       card.querySelector('.integration-action-update').disabled = !players.length;
     }
-
-    // Tour Logic
-    const startTourBtn = document.getElementById('startTourBtn');
-    const TOUR_STEPS = [
-      { title: 'Build your player list', description: 'List every teammate on its own line, save the roster, and reuse it across games.', target: '#playerNamesInput' },
-      { title: 'Connect integrations', description: 'Enable Jira, Trello, GitHub, or Slack to import teammates automatically.', target: '.integration-layout' }
-    ];
-    let currentStep = 0;
-    function renderStep() {
-      const step = TOUR_STEPS[currentStep];
-      document.querySelector('[data-tour-title]').textContent = step.title;
-      document.querySelector('[data-tour-description]').textContent = step.description;
-      document.querySelector('[data-tour-step-number]').textContent = currentStep + 1;
-      document.querySelector('[data-tour-step-total]').textContent = TOUR_STEPS.length;
-      document.getElementById('tourPrevBtn').disabled = currentStep === 0;
-      document.getElementById('tourNextBtn').textContent = currentStep === TOUR_STEPS.length - 1 ? 'Finish' : 'Next';
-      const target = document.querySelector(step.target);
-      if (target) {
-        target.scrollIntoView({ block: 'center', behavior: 'smooth' });
-        const rect = target.getBoundingClientRect();
-        const focus = document.querySelector('.setup-tour__focus');
-        focus.style.top = `${rect.top + window.scrollY - 10}px`;
-        focus.style.left = `${rect.left + window.scrollX - 10}px`;
-        focus.style.width = `${rect.width + 20}px`;
-        focus.style.height = `${rect.height + 20}px`;
-        focus.style.opacity = '1';
-      }
-    }
-
-    startTourBtn.addEventListener('click', () => {
-      currentStep = 0;
-      document.getElementById('setupTour').hidden = false;
-      renderStep();
-    });
-    document.getElementById('tourNextBtn').addEventListener('click', () => {
-      if (currentStep < TOUR_STEPS.length - 1) { currentStep++; renderStep(); }
-      else document.getElementById('setupTour').hidden = true;
-    });
-    document.getElementById('tourPrevBtn').addEventListener('click', () => { if (currentStep > 0) { currentStep--; renderStep(); } });
-    document.getElementById('tourCloseBtn').addEventListener('click', () => document.getElementById('setupTour').hidden = true);
 
     // Initial Load
     savePlayersBtn.addEventListener('click', savePlayers);
