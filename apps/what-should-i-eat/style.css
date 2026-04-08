@@ -148,6 +148,82 @@ body {
   color: var(--brand-heading);
 }
 
+.embed-section {
+  max-width: 900px;
+  width: 92%;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.12));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin: 20px 0;
+  backdrop-filter: blur(14px);
+}
+
+.embed-section h2 {
+  margin-top: 0;
+  font-size: 1.4rem;
+  color: var(--brand-heading);
+}
+
+.embed-section p {
+  color: var(--brand-text);
+  line-height: 1.65;
+}
+
+.embed-controls {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+#embedCode {
+  width: 100%;
+  min-height: 120px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: var(--brand-surface);
+  color: var(--brand-text);
+  padding: 16px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  resize: vertical;
+}
+
+#copyEmbedBtn {
+  align-self: start;
+  justify-self: start;
+  padding: 12px 22px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: linear-gradient(to bottom right, var(--brand-accent), var(--brand-accent-strong));
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#copyEmbedBtn:hover {
+  transform: translateY(-1px);
+}
+
+.embed-note {
+  margin-top: 12px;
+  color: var(--brand-subtle-text);
+  font-size: 0.95rem;
+}
+
+body.embed-mode .site-header,
+body.embed-mode .site-footer,
+body.embed-mode .cookie-consent,
+body.embed-mode .page-hero,
+body.embed-mode .seo-content-area,
+body.embed-mode .embed-section {
+  display: none !important;
+}
+
+body.embed-mode .main-container {
+  padding-top: 16px;
+}
+
 /* SEO visuals moved to assets/css/seo-card.css */
 
 /* Responsive */

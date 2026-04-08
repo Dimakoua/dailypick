@@ -1,0 +1,86 @@
+.embed-section {
+  max-width: 900px;
+  width: 92%;
+  margin: 24px auto;
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
+  background: var(--glass-bg, rgba(255, 255, 255, 0.12));
+  backdrop-filter: blur(14px);
+}
+
+.embed-section h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  color: var(--brand-heading);
+}
+
+.embed-section p {
+  color: var(--brand-text);
+  line-height: 1.7;
+}
+
+.embed-controls {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+#embedCode {
+  min-height: 140px;
+  padding: 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: var(--brand-surface);
+  color: var(--brand-text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  resize: vertical;
+}
+
+#copyEmbedBtn {
+  width: fit-content;
+  padding: 12px 22px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: linear-gradient(to bottom right, var(--brand-accent), var(--brand-accent-strong));
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#copyEmbedBtn:hover {
+  transform: translateY(-1px);
+}
+
+.embed-note {
+  margin-top: 12px;
+  color: var(--brand-subtle-text);
+  font-size: 0.95rem;
+}
+
+body.embed-mode .site-header,
+body.embed-mode .site-footer,
+body.embed-mode .cookie-consent,
+body.embed-mode .bg-orbs,
+body.embed-mode .embed-section,
+body.embed-mode .page-hero,
+body.embed-mode .seo-content-area,
+body.embed-mode .info-card {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+body.embed-mode .main-container {
+  padding-top: 16px !important;
+  margin: 0 auto !important;
+  max-width: 100% !important;
+}
+
+body.embed-mode main {
+  padding: 0;
+}

@@ -64,6 +64,7 @@
 
     <script defer src="/assets/js/brand-theme-engine.js"></script>
     <script defer src="/assets/js/brand-config.js"></script>
+    <script defer src="/assets/js/embed.js"></script>
 
     <script type="application/ld+json">
     {
@@ -83,12 +84,23 @@
     }
     </script>
     {% if headExtra %}{{ headExtra | safe }}{% endif %}
+    <link rel="stylesheet" href="/assets/css/embed.css" />
 </head>
 <body>
     {% include "bg-orbs.html" %}
     {% include "header.html" %}
 
     {{ content | safe }}
+
+    <section class="embed-section glass-card" id="embedSection">
+        <h2>Embed this page</h2>
+        <p>Share this page on your own site by embedding it in an iframe. Copy the HTML below and paste it into any page.</p>
+        <div class="embed-controls">
+            <textarea id="embedCode" readonly aria-label="Embed code"></textarea>
+            <button id="copyEmbedBtn" type="button">Copy embed code</button>
+        </div>
+        <p class="embed-note">This iframe loads only the embedded game experience without the site header, footer, or SEO content.</p>
+    </section>
 
     {% include "footer.html" %}
 
