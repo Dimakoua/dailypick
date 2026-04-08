@@ -92,6 +92,7 @@
 
     {{ content | safe }}
 
+    {% if not hideEmbed %}
     <section class="embed-section glass-card" id="embedSection">
         <h2>Embed this page</h2>
         <p>Share this page on your own site by embedding it in an iframe. Copy the HTML below and paste it into any page.</p>
@@ -101,6 +102,7 @@
         </div>
         <p class="embed-note">This iframe loads only the embedded game experience without the site header, footer, or SEO content.</p>
     </section>
+    {% endif %}
 
     {% include "footer.html" %}
 
