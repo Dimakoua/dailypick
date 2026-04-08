@@ -79,6 +79,9 @@
   let localBrandConfig = null;
   let isUIShown = false;
   let gameName = '';
+  // Tracks which CSS vars local-brand-studio has actively overridden,
+  // so we never blindly remove vars set by brand-config.js (holiday themes).
+  let appliedLocalVars = new Set();
 
   /**
    * Initialize local brand studio with game-specific config
@@ -139,24 +142,41 @@
   }
 
   /**
-   * Apply local brand config to CSS variables (overrides global config)
+   * Apply local brand config to CSS variables (overrides global config).
+   * Only touches vars that local-brand-studio itself manages — never wipes
+   * inline styles set by brand-config.js (holiday/seasonal themes).
    */
   function applyLocalBrandConfig() {
     const root = document.documentElement;
-    const hasLocalConfig = Object.keys(localBrandConfig).length > 0;
+    const prevApplied = new Set(appliedLocalVars);
+    const newApplied = new Set();
 
-    // Get all possible CSS variables and either set or remove them
     Object.keys(cssVarMap).forEach((key) => {
       const cssVar = cssVarMap[key];
-      
-      if (hasLocalConfig && localBrandConfig[key] && localBrandConfig[key] !== 'inherited') {
-        // Apply local override
-        root.style.setProperty(cssVar, localBrandConfig[key]);
-      } else {
-        // Remove inline style to fall back to global brand or theme
-        root.style.removeProperty(cssVar);
+      const localValue = localBrandConfig[key];
+
+      if (localValue && localValue !== 'inherited') {
+        // Apply local override on top of whatever brand-config set
+        root.style.setProperty(cssVar, localValue);
+        newApplied.add(cssVar);
       }
     });
+
+    // Restore vars that were previously overridden but are no longer in local config
+    prevApplied.forEach((cssVar) => {
+      if (!newApplied.has(cssVar)) {
+        // Look up the matching config key to restore the brand-config value
+        const configKey = Object.keys(cssVarMap).find((k) => cssVarMap[k] === cssVar);
+        const brandValue = configKey != null ? window.currentBrandConfig?.[configKey] : undefined;
+        if (brandValue !== undefined && brandValue !== null && brandValue !== '') {
+          root.style.setProperty(cssVar, brandValue);
+        } else {
+          root.style.removeProperty(cssVar);
+        }
+      }
+    });
+
+    appliedLocalVars = newApplied;
 
     // Dispatch event so other systems know about the change
     window.dispatchEvent(
@@ -355,17 +375,22 @@
    * Reset all local brand customizations
    */
   function handleReset() {
+    const storageKey = `${LOCAL_BRAND_CONFIG_PREFIX}${gameName}`;
+    window.localStorage?.removeItem(storageKey);
+
     localBrandConfig = {};
-    saveLocalBrandConfig();
+    appliedLocalVars.clear();
     applyLocalBrandConfig();
     
-    // Refresh the UI
+    // Refresh the UI to inherited/default values
     document.querySelectorAll('.local-brand-studio-color-input, .local-brand-studio-text-input')
       .forEach((input) => {
         input.value = normalizeColorToHex(getCurrentValue(
           input.id.replace('local-brand-', ''),
         ));
       });
+
+    window.location.reload();
   }
 
   /**

@@ -238,6 +238,7 @@ appStyles: |
     saveBrandBtn.addEventListener('click', saveBrand);
     resetBrandBtn.addEventListener('click', () => {
       localStorage.removeItem(BRAND_CONFIG_KEY);
+      window.dispatchEvent(new CustomEvent('brandConfigUpdated', { detail: DEFAULT_BRAND }));
       loadBrand();
       brandStatus.textContent = 'Reset to defaults.';
       setTimeout(() => brandStatus.textContent = '', 3000);
