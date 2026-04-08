@@ -244,14 +244,20 @@ appStyles: |
       setTimeout(() => brandStatus.textContent = '', 3000);
     });
 
+    function applyDraftBrandConfig() {
+      const draft = collectForm();
+      updatePreview(draft);
+      window.dispatchEvent(new CustomEvent('brandConfigUpdated', { detail: draft }));
+    }
+
     themeModeInput.addEventListener('change', () => {
       setManualThemeVisibility(themeModeInput.value, seasonalThemesToggle.checked);
-      updatePreview(collectForm());
+      applyDraftBrandConfig();
     });
 
     seasonalThemesToggle.addEventListener('change', () => {
       setManualThemeVisibility(themeModeInput.value, seasonalThemesToggle.checked);
-      updatePreview(collectForm());
+      applyDraftBrandConfig();
     });
 
     function collectForm() {
@@ -263,7 +269,7 @@ appStyles: |
       return data;
     }
 
-    Object.values(brandInputs).forEach(input => input?.addEventListener('input', () => updatePreview(collectForm())));
+    Object.values(brandInputs).forEach(input => input?.addEventListener('input', applyDraftBrandConfig));
     loadBrand();
   });
 </script>
