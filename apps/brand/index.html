@@ -1,0 +1,284 @@
+---
+layout: base_app.njk
+title: "Brand Studio – Daily Pick"
+description: "Tailor the Daily Pick look-and-feel to match your team. Customize colors, emojis, and typography."
+keywords: "daily pick brand, custom theme, brand studio, team customization"
+canonical: "https://dailypick.dev/apps/brand/"
+ogImage: "https://dailypick.dev/assets/og-image-main.png"
+ogImageAlt: "Brand Studio for customizing Daily Pick"
+appStyles: |
+  <link href="/assets/css/settings.css" rel="stylesheet"/>
+---
+<main aria-labelledby="brandHeading" class="settings-page">
+  <section class="settings-hero glass-card">
+    <div>
+      <p class="eyebrow">Visual Identity</p>
+      <h1 id="brandHeading">Brand Studio</h1>
+      <p>Customize colors, emojis, and typography to make Daily Pick feel native to your team. Changes apply instantly across all games.</p>
+    </div>
+    <div class="hero-actions">
+      <a class="btn-link" href="/apps/roster/">Manage Team Roster →</a>
+      <button class="btn-link ghost" id="startTourBtn" type="button">Take the studio tour</button>
+    </div>
+  </section>
+
+  <article aria-labelledby="brandConfigHeading" class="settings-card glass-card">
+    <div class="card-header">
+      <h2 id="brandConfigHeading">Brand Configuration</h2>
+      <p>Use your own palette and mark to stay on-brand during every ritual.</p>
+    </div>
+    <div class="brand-layout">
+      <form class="brand-form" id="brandForm" novalidate="">
+        <section aria-labelledby="brandIdentityHeading" class="brand-subcard brand-subcard--identity">
+          <div class="brand-subcard-header">
+            <h3 id="brandIdentityHeading">Brand identity</h3>
+            <p class="field-hint">Name, emoji, and typography that appear across the interface.</p>
+          </div>
+          <div class="brand-grid brand-grid--identity">
+            <label>
+              Brand name
+              <input id="brandNameInput" maxlength="32" type="text"/>
+            </label>
+            <label>
+              Brand emoji / mark
+              <input id="brandMarkInput" maxlength="4" type="text"/>
+            </label>
+            <label>
+              Font stack
+              <input id="fontFamilyInput" placeholder="'Nunito', system-ui, sans-serif" type="text"/>
+            </label>
+            <label>
+              Logo image URL (optional)
+              <input id="logoUrlInput" placeholder="https://example.com/logo.png" type="url"/>
+            </label>
+          </div>
+        </section>
+
+        <section aria-labelledby="brandPaletteHeading" class="brand-subcard brand-subcard--palette">
+          <div class="brand-subcard-header">
+            <h3 id="brandPaletteHeading">Color palette</h3>
+            <p class="field-hint">Primary accents and surface colors for your workspace.</p>
+          </div>
+          <div class="brand-grid brand-grid--palette">
+            <label>Accent color <input id="accentColorInput" type="color"/></label>
+            <label>Accent (strong) <input id="accentStrongInput" type="color"/></label>
+            <label>Background color <input id="backgroundColorInput" type="color"/></label>
+            <label>Surface color <input id="surfaceColorInput" type="color"/></label>
+            <label>Text color <input id="textColorInput" type="color"/></label>
+            <label>Heading color <input id="headingColorInput" type="color"/></label>
+            <label>Subtle text color <input id="subtleTextColorInput" type="color"/></label>
+            <label>Border color <input id="borderColorInput" type="color"/></label>
+          </div>
+        </section>
+
+        <section aria-labelledby="brandThemeHeading" class="brand-subcard brand-subcard--themes">
+          <div class="brand-subcard-header">
+            <h3 id="brandThemeHeading">Seasonal themes</h3>
+            <p class="field-hint">Decide how holiday looks are activated across your brand.</p>
+          </div>
+          <fieldset aria-labelledby="themeControlsHeading" class="theme-controls">
+            <legend id="themeControlsHeading">Seasonal themes</legend>
+            <label class="theme-toggle">
+              <input checked="" id="seasonalThemesToggle" type="checkbox"/>
+              <span class="toggle-copy">
+                <span class="toggle-title">Enable seasonal themes</span>
+                <span class="toggle-description">Show holiday colors and emojis across the site when available.</span>
+              </span>
+            </label>
+            <p class="field-hint" hidden="" id="seasonalThemesDisabledHint">Seasonal looks are paused.</p>
+            <label>
+              Theme mode
+              <select id="themeModeInput">
+                <option value="auto">Automatic (follow holiday calendar)</option>
+                <option value="manual">Manual selection</option>
+              </select>
+            </label>
+            <label class="manual-theme" data-theme-manual="">
+              Active holiday theme
+              <select disabled="" id="themeSelectInput">
+                <option value="default">Default Daily Pick</option>
+              </select>
+            </label>
+          </fieldset>
+          <div aria-live="polite" class="theme-summary" id="themeSummary"></div>
+        </section>
+
+        <div class="brand-form-actions">
+          <div class="button-row">
+            <button id="saveBrandBtn" type="button">Save Brand</button>
+            <button class="ghost" id="resetBrandBtn" type="button">Reset Brand</button>
+          </div>
+          <p aria-live="polite" class="settings-status" id="brandStatus"></p>
+        </div>
+      </form>
+
+      <aside aria-label="Brand preview" class="brand-preview-column">
+        <div aria-live="polite" class="brand-preview">
+          <div class="preview-header">
+            <span aria-hidden="true" class="preview-mark">🎯</span>
+            <span class="preview-name">Daily Pick</span>
+          </div>
+          <div class="preview-theme" data-theme-active="false">
+            <span aria-hidden="true" class="preview-theme-icon">🎄</span>
+            <div class="preview-theme-copy">
+              <span class="preview-theme-name">Seasonal theme</span>
+              <span class="preview-theme-dates">Dec 1 – Jan 5</span>
+            </div>
+          </div>
+          <p>Buttons, headers, and accents update instantly.</p>
+          <button disabled="" type="button">Sample Button</button>
+        </div>
+      </aside>
+    </div>
+  </article>
+</main>
+
+<div aria-hidden="true" class="setup-tour" hidden="" id="setupTour">
+  <div class="setup-tour__backdrop" data-tour-backdrop=""></div>
+  <div class="setup-tour__focus" data-tour-focus=""></div>
+  <div aria-modal="true" class="setup-tour__card" data-tour-card="" role="dialog" tabindex="-1">
+    <p class="setup-tour__badge">
+      Step <span data-tour-step-number="">1</span> of <span data-tour-step-total="">1</span>
+    </p>
+    <h3 class="setup-tour__title" data-tour-title=""></h3>
+    <p class="setup-tour__description" data-tour-description=""></p>
+    <div class="setup-tour__actions">
+      <button class="ghost" id="tourPrevBtn" type="button">Back</button>
+      <button id="tourNextBtn" type="button">Next</button>
+      <button class="ghost" id="tourCloseBtn" type="button">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const BRAND_CONFIG_KEY = 'brandConfig';
+    const themeEngine = window.BrandThemeEngine;
+    const FALLBACK_BRAND = {
+      brandName: 'Daily Pick', brandMark: '🎯',
+      accentColor: '#3498db', accentStrong: '#2980b9',
+      backgroundColor: '#f4f7f6', surfaceColor: '#ffffff',
+      textColor: '#34495e', headingColor: '#2d3e50',
+      subtleTextColor: '#7f8c8d', borderColor: '#dde4eb',
+      radius: '18px', fontFamily: "'Nunito', sans-serif",
+      themeMode: 'auto', seasonalThemesEnabled: true
+    };
+    const DEFAULT_BRAND = themeEngine ? themeEngine.createDefaultBrandConfig() : { ...FALLBACK_BRAND };
+
+    const brandInputs = {
+      brandName: document.getElementById('brandNameInput'),
+      brandMark: document.getElementById('brandMarkInput'),
+      accentColor: document.getElementById('accentColorInput'),
+      accentStrong: document.getElementById('accentStrongInput'),
+      backgroundColor: document.getElementById('backgroundColorInput'),
+      surfaceColor: document.getElementById('surfaceColorInput'),
+      textColor: document.getElementById('textColorInput'),
+      headingColor: document.getElementById('headingColorInput'),
+      subtleTextColor: document.getElementById('subtleTextColorInput'),
+      borderColor: document.getElementById('borderColorInput'),
+      fontFamily: document.getElementById('fontFamilyInput'),
+      logoUrl: document.getElementById('logoUrlInput'),
+    };
+    const saveBrandBtn = document.getElementById('saveBrandBtn');
+    const resetBrandBtn = document.getElementById('resetBrandBtn');
+    const brandStatus = document.getElementById('brandStatus');
+    const brandPreview = document.querySelector('.brand-preview');
+    const themeModeInput = document.getElementById('themeModeInput');
+    const themeSelectInput = document.getElementById('themeSelectInput');
+    const seasonalThemesToggle = document.getElementById('seasonalThemesToggle');
+
+    const seasonalThemesDisabledHint = document.getElementById('seasonalThemesDisabledHint');
+    const manualThemeControl = document.querySelector('[data-theme-manual]');
+    
+    let holidayThemes = themeEngine && typeof themeEngine.buildHolidayThemes === 'function' ? themeEngine.buildHolidayThemes() : {};
+
+    function setManualThemeVisibility(mode, seasonalEnabled = true) {
+      const manual = seasonalEnabled && mode === 'manual';
+      manualThemeControl.classList.toggle('is-active', manual);
+      themeSelectInput.disabled = !manual;
+      themeModeInput.disabled = !seasonalEnabled;
+      if (seasonalThemesDisabledHint) seasonalThemesDisabledHint.hidden = seasonalEnabled;
+    }
+
+    function populateThemeOptions() {
+      themeSelectInput.innerHTML = '<option value="default">Default Daily Pick</option>';
+      Object.values(holidayThemes).forEach(theme => {
+        const option = document.createElement('option');
+        option.value = theme.id;
+        option.textContent = `${theme.name} ${theme.metadata?.rangeLabel ? `(${theme.metadata.rangeLabel})` : ''}`;
+        themeSelectInput.appendChild(option);
+      });
+    }
+
+    function updatePreview(config) {
+      const fullConfig = { ...DEFAULT_BRAND, ...config, holidayThemes };
+      const comp = themeEngine ? themeEngine.composeBrandStyles(fullConfig) : { styles: fullConfig };
+      const { styles } = comp;
+      Object.entries({
+        '--preview-accent': styles.accentColor,
+        '--preview-surface': styles.surfaceColor,
+        '--preview-text': styles.textColor,
+        '--preview-heading': styles.headingColor,
+        '--preview-border': styles.borderColor,
+        '--preview-font': styles.fontFamily
+      }).forEach(([k, v]) => brandPreview.style.setProperty(k, v));
+      brandPreview.querySelector('.preview-name').textContent = styles.brandName;
+      brandPreview.querySelector('.preview-mark').textContent = styles.brandMark;
+      brandPreview.querySelector('button').style.background = styles.accentColor;
+    }
+
+    function loadBrand() {
+      const stored = JSON.parse(localStorage.getItem(BRAND_CONFIG_KEY) || '{}');
+      const data = { ...DEFAULT_BRAND, ...stored };
+      populateThemeOptions();
+      Object.entries(brandInputs).forEach(([k, v]) => { if (v) v.value = data[k] ?? ''; });
+      if (themeModeInput) themeModeInput.value = data.themeMode || 'auto';
+      if (seasonalThemesToggle) seasonalThemesToggle.checked = data.seasonalThemesEnabled !== false;
+      if (themeSelectInput) themeSelectInput.value = data.activeThemeId || 'default';
+      setManualThemeVisibility(data.themeMode, data.seasonalThemesEnabled !== false);
+      updatePreview(data);
+    }
+
+    function saveBrand() {
+      const data = {};
+      Object.entries(brandInputs).forEach(([k, v]) => { if (v) data[k] = v.value.trim(); });
+      data.themeMode = themeModeInput.value;
+      data.seasonalThemesEnabled = seasonalThemesToggle.checked;
+      data.activeThemeId = themeModeInput.value === 'manual' ? themeSelectInput.value : null;
+      localStorage.setItem(BRAND_CONFIG_KEY, JSON.stringify(data));
+      window.dispatchEvent(new CustomEvent('brandConfigUpdated', { detail: data }));
+      brandStatus.textContent = 'Brand saved!';
+      setTimeout(() => brandStatus.textContent = '', 3000);
+    }
+
+    saveBrandBtn.addEventListener('click', saveBrand);
+    resetBrandBtn.addEventListener('click', () => {
+      localStorage.removeItem(BRAND_CONFIG_KEY);
+      loadBrand();
+      brandStatus.textContent = 'Reset to defaults.';
+      setTimeout(() => brandStatus.textContent = '', 3000);
+    });
+
+    themeModeInput.addEventListener('change', () => {
+      setManualThemeVisibility(themeModeInput.value, seasonalThemesToggle.checked);
+      updatePreview(collectForm());
+    });
+
+    seasonalThemesToggle.addEventListener('change', () => {
+      setManualThemeVisibility(themeModeInput.value, seasonalThemesToggle.checked);
+      updatePreview(collectForm());
+    });
+
+    function collectForm() {
+      const data = {};
+      Object.entries(brandInputs).forEach(([k, v]) => { if (v) data[k] = v.value.trim(); });
+      data.themeMode = themeModeInput.value;
+      data.seasonalThemesEnabled = seasonalThemesToggle.checked;
+      data.activeThemeId = themeSelectInput.value;
+      return data;
+    }
+
+    Object.values(brandInputs).forEach(input => input?.addEventListener('input', () => updatePreview(collectForm())));
+    loadBrand();
+  });
+</script>

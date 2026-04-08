@@ -1,0 +1,599 @@
+---
+layout: base_app.njk
+title: "Team Roster – Daily Pick"
+description: "Manage your shared player roster and connect Jira, Trello, or GitHub to sync your team automatically."
+keywords: "daily pick roster, team players, jira integration, trello integration, github integration"
+canonical: "https://dailypick.dev/apps/roster/"
+ogImage: "https://dailypick.dev/assets/og-image-main.png"
+ogImageAlt: "Team Roster and Integrations for Daily Pick"
+appStyles: |
+  <link href="/assets/css/settings.css" rel="stylesheet"/>
+---
+<main aria-labelledby="rosterHeading" class="settings-page">
+  <section class="settings-hero glass-card">
+    <div>
+      <p class="eyebrow">Team Management</p>
+      <h1 id="rosterHeading">Team Roster</h1>
+      <p>Update the shared player roster used across our games and connect to your delivery tools to sync teammates automatically.</p>
+    </div>
+    <div class="hero-actions">
+      <a class="btn-link" href="/apps/brand/">Customize Brand Studio →</a>
+      <button class="btn-link ghost" id="startTourBtn" type="button">Take the roster tour</button>
+    </div>
+  </section>
+
+  <section class="settings-grid">
+    <article aria-labelledby="playersHeading" class="settings-card glass-card">
+      <div class="card-header">
+        <h2 id="playersHeading">Player List</h2>
+        <p>One list powers every picker. Add each teammate on its own line.</p>
+      </div>
+      <label class="sr-only" for="playerNamesInput">Player names</label>
+      <textarea id="playerNamesInput" rows="8" spellcheck="false"></textarea>
+      <p class="field-hint">Tip: paste from Slack or CSV, we clean it automatically.</p>
+      <div class="button-row">
+        <button id="savePlayersBtn" type="button">Save Players</button>
+        <button class="ghost" id="resetPlayersBtn" type="button">Reset Names</button>
+      </div>
+      <p aria-live="polite" class="settings-status" id="playersStatus"></p>
+    </article>
+
+    <section aria-labelledby="integrationsHeading" class="settings-card glass-card integrations-panel">
+      <div class="card-header">
+        <h2 id="integrationsHeading">Third-Party Integrations</h2>
+        <p>Connect Daily Pick to your delivery tools to sync boards and participants automatically.</p>
+      </div>
+      <div class="integration-overview">
+        <p class="integration-intro">Connections save to the Daily Pick Worker so you can safely reuse them from any device. Tokens are masked after you save them.</p>
+        <ul class="integration-highlights">
+          <li><span>🔒</span> Secure tokens live on the Worker, never in the browser.</li>
+          <li><span>👥</span> Import players or keep their current work as a snapshot.</li>
+          <li><span>⚡</span> Test a connection to preview teammates before saving.</li>
+          <li><span>💬</span> Slack slash command runs rituals directly inside your workspace.</li>
+        </ul>
+      </div>
+      <div class="integration-layout">
+        <aside aria-label="Choose an integration" class="integration-list" role="tablist">
+          <button aria-controls="integration-panel-jira" aria-selected="true" class="integration-list__button is-active" data-integration-target="jira" role="tab" type="button">
+            <span class="integration-list__icon">🗂️</span>
+            <span class="integration-list__copy">
+              <strong>Jira</strong>
+              <small>Boards &amp; assignments</small>
+            </span>
+          </button>
+          <button aria-controls="integration-panel-trello" aria-selected="false" class="integration-list__button" data-integration-target="trello" role="tab" type="button">
+            <span class="integration-list__icon">🗒️</span>
+            <span class="integration-list__copy">
+              <strong>Trello</strong>
+              <small>Boards &amp; cards</small>
+            </span>
+          </button>
+          <button aria-controls="integration-panel-github" aria-selected="false" class="integration-list__button" data-integration-target="github" role="tab" type="button">
+            <span class="integration-list__icon">🐙</span>
+            <span class="integration-list__copy">
+              <strong>GitHub</strong>
+              <small>Repos &amp; issues</small>
+            </span>
+          </button>
+          <button aria-controls="integration-panel-slack" aria-selected="false" class="integration-list__button" data-integration-target="slack" role="tab" type="button">
+            <span class="integration-list__icon">💬</span>
+            <span class="integration-list__copy">
+              <strong>Slack</strong>
+              <small>Slash command</small>
+            </span>
+          </button>
+        </aside>
+        <div class="integration-panels">
+          <!-- Jira -->
+          <section aria-labelledby="integration-jira-heading" class="integration-card is-active" data-service="jira" id="integration-panel-jira">
+            <header class="integration-card-header">
+              <div aria-hidden="true" class="integration-icon">🗂️</div>
+              <div>
+                <h3 id="integration-jira-heading">Jira</h3>
+                <p>Import Jira teammates and their active work.</p>
+              </div>
+            </header>
+            <label class="integration-toggle">
+              <input class="integration-enabled" type="checkbox"/>
+              <span>Enable connection</span>
+            </label>
+            <label>
+              Jira site URL
+              <input class="integration-field" data-field="siteUrl" placeholder="https://yourteam.atlassian.net" type="url"/>
+            </label>
+            <label>
+              Project key
+              <input class="integration-resource" placeholder="e.g. DP" type="text"/>
+            </label>
+            <label>
+              Account email
+              <input class="integration-field" data-field="email" placeholder="you@company.com" type="email"/>
+            </label>
+            <label>
+              API token
+              <input class="integration-token" placeholder="Paste a Jira API token" type="password"/>
+            </label>
+            <div class="integration-options">
+              <label class="integration-option">
+                <input class="integration-include-assignments" type="checkbox"/>
+                <span class="integration-option__content">
+                  <strong>Fetch assigned work preview</strong>
+                  <small>Allow Daily Pick to load the current Jira issues for each teammate when you test the connection.</small>
+                </span>
+              </label>
+            </div>
+            <p aria-live="polite" class="integration-token-preview"></p>
+            <p aria-live="polite" class="integration-status"></p>
+            <div class="integration-results" hidden="">
+              <div aria-live="polite" class="integration-preview">
+                <div class="integration-preview-section">
+                  <h4>Players detected</h4>
+                  <p class="integration-preview-players"></p>
+                </div>
+                <div class="integration-preview-section">
+                  <h4>Assigned work</h4>
+                  <div class="integration-preview-assignments"></div>
+                </div>
+              </div>
+              <div class="integration-actions">
+                <button class="integration-action integration-action-update" type="button">Update Player List</button>
+                <button class="integration-action integration-action-save ghost" type="button">Save assigned work snapshot</button>
+              </div>
+            </div>
+            <div class="button-row">
+              <button class="integration-save" type="button">Save Connection</button>
+              <button class="ghost integration-test" type="button">Test Connection</button>
+              <button class="ghost integration-disconnect" type="button">Disconnect</button>
+            </div>
+          </section>
+
+          <!-- Trello -->
+          <section aria-labelledby="integration-trello-heading" class="integration-card" data-service="trello" id="integration-panel-trello">
+            <header class="integration-card-header">
+              <div aria-hidden="true" class="integration-icon">🗒️</div>
+              <div>
+                <h3 id="integration-trello-heading">Trello</h3>
+                <p>Pull Trello board members and their cards.</p>
+              </div>
+            </header>
+            <label class="integration-toggle">
+              <input class="integration-enabled" type="checkbox"/>
+              <span>Enable connection</span>
+            </label>
+            <label>
+              Board or list URL
+              <input class="integration-resource" placeholder="https://trello.com/b/..." type="url"/>
+            </label>
+            <label>
+              API key
+              <input class="integration-field" data-field="apiKey" placeholder="Trello API key" type="text"/>
+            </label>
+            <label>
+              API token
+              <input class="integration-token" placeholder="Paste a Trello API token" type="password"/>
+            </label>
+            <p class="integration-hint">
+              Need credentials? Copy the 32-character API key from
+              <a href="https://trello.com/app-key" rel="noopener" target="_blank">trello.com/app-key</a>,
+              then generate a read token for your account and paste it here. This is different from the API secret.
+              <button class="integration-hint-link trello-token-helper" type="button">Open token generator</button>
+            </p>
+            <div class="integration-options">
+              <label class="integration-option">
+                <input class="integration-include-assignments" type="checkbox"/>
+                <span class="integration-option__content">
+                  <strong>Fetch assigned work preview</strong>
+                  <small>Pull card assignees and titles from this Trello board so the stand-up dock can show them.</small>
+                </span>
+              </label>
+            </div>
+            <p aria-live="polite" class="integration-token-preview"></p>
+            <p aria-live="polite" class="integration-status"></p>
+            <div class="integration-results" hidden="">
+              <div aria-live="polite" class="integration-preview">
+                <div class="integration-preview-section">
+                  <h4>Players detected</h4>
+                  <p class="integration-preview-players"></p>
+                </div>
+                <div class="integration-preview-section">
+                  <h4>Assigned work</h4>
+                  <div class="integration-preview-assignments"></div>
+                </div>
+              </div>
+              <div class="integration-actions">
+                <button class="integration-action integration-action-update" type="button">Update Player List</button>
+                <button class="integration-action integration-action-save ghost" type="button">Save assigned work snapshot</button>
+              </div>
+            </div>
+            <div class="button-row">
+              <button class="integration-save" type="button">Save Connection</button>
+              <button class="ghost integration-test" type="button">Test Connection</button>
+              <button class="ghost integration-disconnect" type="button">Disconnect</button>
+            </div>
+          </section>
+
+          <!-- GitHub -->
+          <section aria-labelledby="integration-github-heading" class="integration-card" data-service="github" id="integration-panel-github">
+            <header class="integration-card-header">
+              <div aria-hidden="true" class="integration-icon">🐙</div>
+              <div>
+                <h3 id="integration-github-heading">GitHub</h3>
+                <p>Bring in GitHub collaborators and their open issues.</p>
+              </div>
+            </header>
+            <label class="integration-toggle">
+              <input class="integration-enabled" type="checkbox"/>
+              <span>Enable connection</span>
+            </label>
+            <label>
+              Repository full name
+              <input class="integration-resource" placeholder="owner/repository" type="text"/>
+            </label>
+            <label>
+              Personal access token
+              <input class="integration-token" placeholder="Paste a GitHub token" type="password"/>
+            </label>
+            <div class="integration-options">
+              <label class="integration-option">
+                <input class="integration-include-assignments" type="checkbox"/>
+                <span class="integration-option__content">
+                  <strong>Fetch assigned work preview</strong>
+                  <small>Let Daily Pick read open GitHub issues for collaborators when you run a test.</small>
+                </span>
+              </label>
+            </div>
+            <p aria-live="polite" class="integration-token-preview"></p>
+            <p aria-live="polite" class="integration-status"></p>
+            <div class="integration-results" hidden="">
+              <div aria-live="polite" class="integration-preview">
+                <div class="integration-preview-section">
+                  <h4>Players detected</h4>
+                  <p class="integration-preview-players"></p>
+                </div>
+                <div class="integration-preview-section">
+                  <h4>Assigned work</h4>
+                  <div class="integration-preview-assignments"></div>
+                </div>
+              </div>
+              <div class="integration-actions">
+                <button class="integration-action integration-action-update" type="button">Update Player List</button>
+                <button class="integration-action integration-action-save ghost" type="button">Save assigned work snapshot</button>
+              </div>
+            </div>
+            <div class="button-row">
+              <button class="integration-save" type="button">Save Connection</button>
+              <button class="ghost integration-test" type="button">Test Connection</button>
+              <button class="ghost integration-disconnect" type="button">Disconnect</button>
+            </div>
+          </section>
+
+          <!-- Slack -->
+          <section aria-labelledby="integration-slack-heading" class="integration-card" data-service="slack" id="integration-panel-slack">
+            <header class="integration-card-header">
+              <div aria-hidden="true" class="integration-icon">💬</div>
+              <div>
+                <h3 id="integration-slack-heading">Slack slash command</h3>
+                <p>Let teams launch Daily Pick rituals from Slack.</p>
+              </div>
+            </header>
+            <label class="integration-toggle">
+              <input class="integration-enabled" type="checkbox"/>
+              <span>Enable Slack slash command</span>
+            </label>
+            <label>
+              Slash command
+              <input class="integration-resource" data-field="command" placeholder="/dailypick" type="text"/>
+            </label>
+            <label>
+              Signing secret
+              <input class="integration-token" placeholder="Paste the Slack signing secret" type="password"/>
+            </label>
+            <p class="integration-hint">Set Slack’s Request URL to <code id="slackCommandUrl">https://dailypick.dev/api/slack/command?client_id=...</code> and use the same client_id from this page.</p>
+            <p aria-live="polite" class="integration-token-preview"></p>
+            <p aria-live="polite" class="integration-status"></p>
+            <div class="button-row">
+              <button class="integration-save" type="button">Save Connection</button>
+              <button class="ghost integration-disconnect" type="button">Disconnect</button>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div class="integration-guide-links">
+        <p><strong>Need a full walkthrough?</strong> Read the integration playbooks on our blog:</p>
+        <ul>
+          <li><a href="/blog/connect-jira-to-daily-pick/" rel="noopener" target="_blank">How to connect Jira to Daily Pick</a></li>
+          <li><a href="/blog/connect-trello-to-daily-pick/" rel="noopener" target="_blank">How to connect Trello to Daily Pick</a></li>
+          <li><a href="/blog/connect-github-to-daily-pick/" rel="noopener" target="_blank">How to connect GitHub to Daily Pick</a></li>
+        </ul>
+      </div>
+    </section>
+  </section>
+
+  <section class="settings-card glass-card tips">
+    <h2>How it works</h2>
+    <ul>
+      <li>Player names are stored locally in your browser via <code>localStorage</code>.</li>
+      <li>Every game loads this list before a match starts.</li>
+      <li>Integrations help you sync with external boards to keep your roster up-to-date.</li>
+    </ul>
+  </section>
+</main>
+
+<div aria-hidden="true" class="setup-tour" hidden="" id="setupTour">
+  <div class="setup-tour__backdrop" data-tour-backdrop=""></div>
+  <div class="setup-tour__focus" data-tour-focus=""></div>
+  <div aria-modal="true" class="setup-tour__card" data-tour-card="" role="dialog" tabindex="-1">
+    <p class="setup-tour__badge">
+      Step <span data-tour-step-number="">1</span> of <span data-tour-step-total="">1</span>
+    </p>
+    <h3 class="setup-tour__title" data-tour-title=""></h3>
+    <p class="setup-tour__description" data-tour-description=""></p>
+    <div class="setup-tour__actions">
+      <button class="ghost" id="tourPrevBtn" type="button">Back</button>
+      <button id="tourNextBtn" type="button">Next</button>
+      <button class="ghost" id="tourCloseBtn" type="button">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
+    const PLAYERS_KEY = 'namesList';
+    const playerNamesInput = document.getElementById('playerNamesInput');
+    const savePlayersBtn = document.getElementById('savePlayersBtn');
+    const resetPlayersBtn = document.getElementById('resetPlayersBtn');
+    const playersStatus = document.getElementById('playersStatus');
+
+    const integrationEndpoint = '/api/integrations/config';
+    const integrationCards = Array.from(document.querySelectorAll('.integration-card'));
+    const integrationNavButtons = Array.from(document.querySelectorAll('[data-integration-target]'));
+    const ASSIGNMENTS_STORAGE_KEY = 'integrationAssignments';
+    const ASSIGNMENT_ITEM_FIELDS = ['id', 'key', 'name', 'summary', 'status', 'url', 'number', 'title', 'state', 'listId'];
+    const INTEGRATION_CLIENT_KEY = 'integrationClientId';
+    const integrationResults = new Map();
+
+    // Player Functions
+    function showStatus(el, message) {
+      if (!el) return;
+      el.textContent = message;
+      setTimeout(() => { el.textContent = ''; }, 4000);
+    }
+
+    function normalizeNamesInput(raw) {
+      if (!raw) return [];
+      return raw.split(/[\n,]+/).map(name => name.trim()).filter(Boolean);
+    }
+
+    function dedupeNames(names = []) {
+      const seen = new Set();
+      const result = [];
+      names.forEach((name) => {
+        if (typeof name !== 'string') return;
+        const trimmed = name.trim();
+        if (!trimmed) return;
+        const key = trimmed.toLowerCase();
+        if (seen.has(key)) return;
+        seen.add(key);
+        result.push(trimmed);
+      });
+      return result;
+    }
+
+    function loadPlayers() {
+      const stored = localStorage.getItem(PLAYERS_KEY);
+      let names = DEFAULT_NAMES;
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length) names = parsed;
+        } catch { names = DEFAULT_NAMES; }
+      }
+      if (playerNamesInput) playerNamesInput.value = names.join('\n');
+    }
+
+    function savePlayers() {
+      if (!playerNamesInput) return;
+      const names = normalizeNamesInput(playerNamesInput.value);
+      const toPersist = names.length ? names : DEFAULT_NAMES;
+      playerNamesInput.value = toPersist.join('\n');
+      localStorage.setItem(PLAYERS_KEY, JSON.stringify(toPersist));
+      showStatus(playersStatus, `Saved ${toPersist.length} player${toPersist.length === 1 ? '' : 's'}.`);
+    }
+
+    function resetPlayers() {
+      if (!playerNamesInput) return;
+      localStorage.removeItem(PLAYERS_KEY);
+      playerNamesInput.value = DEFAULT_NAMES.join('\n');
+      showStatus(playersStatus, 'Reverted to default names.');
+    }
+
+    // Integration Utilities
+    function loadIntegrationClientId() {
+      try {
+        const existing = localStorage.getItem(INTEGRATION_CLIENT_KEY);
+        if (existing && existing.trim().length >= 8) return existing.trim();
+      } catch (e) {}
+      const fresh = (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : `dp-${Math.random().toString(36).slice(2, 10)}${Date.now().toString(36)}`;
+      try { localStorage.setItem(INTEGRATION_CLIENT_KEY, fresh); } catch (e) {}
+      return fresh;
+    }
+    const integrationClientId = loadIntegrationClientId();
+
+    function updateSlackCommandUrl(clientId) {
+      const urlEl = document.getElementById('slackCommandUrl');
+      if (!urlEl || !clientId) return;
+      const origin = window.location.origin || 'https://dailypick.dev';
+      urlEl.textContent = `${origin.replace(/\/$/, '')}/api/slack/command?client_id=${clientId}`;
+    }
+    updateSlackCommandUrl(integrationClientId);
+
+    function setIntegrationStatus(card, message, tone = 'info') {
+      const statusEl = card.querySelector('.integration-status');
+      if (!statusEl) return;
+      statusEl.textContent = message || '';
+      statusEl.dataset.tone = tone;
+      if (message) setTimeout(() => { if (statusEl.textContent === message) statusEl.textContent = ''; }, 7000);
+    }
+
+    function setIntegrationBusy(card, busy) {
+      card.classList.toggle('is-busy', busy);
+      card.querySelectorAll('.integration-save, .integration-disconnect, .integration-test, .integration-action').forEach(btn => btn.disabled = busy);
+    }
+
+    function setActiveIntegration(service) {
+      integrationNavButtons.forEach(btn => {
+        const match = btn.dataset.integrationTarget === service;
+        btn.classList.toggle('is-active', match);
+        btn.setAttribute('aria-selected', match ? 'true' : 'false');
+      });
+      integrationCards.forEach(card => {
+        const match = card.dataset.service === service;
+        card.classList.toggle('is-active', match);
+        card.hidden = !match;
+      });
+    }
+
+    async function refreshIntegrationCards() {
+      try {
+        const response = await fetch(integrationEndpoint, { headers: { 'X-Integration-Client': integrationClientId } });
+        if (!response.ok) throw new Error('Failed to load integration settings');
+        const data = await response.json();
+        integrationCards.forEach(card => {
+          const service = card.dataset.service;
+          const info = data?.services?.[service];
+          card.querySelector('.integration-enabled').checked = !!info?.enabled;
+          if (card.querySelector('.integration-resource')) card.querySelector('.integration-resource').value = info?.resource ?? '';
+          if (card.querySelector('.integration-include-assignments')) card.querySelector('.integration-include-assignments').checked = !!info?.includeAssignments;
+          card.querySelectorAll('[data-field]').forEach(input => input.value = info?.fields?.[input.dataset.field] ?? '');
+          const tokenPreview = card.querySelector('.integration-token-preview');
+          if (tokenPreview) {
+            tokenPreview.textContent = info?.hasToken ? `Token saved (${info.tokenPreview || '••••'})${info.lastUpdated ? ` – updated ${new Date(info.lastUpdated).toLocaleString()}` : ''}.` : 'No token stored yet.';
+          }
+          if (card.querySelector('.integration-disconnect')) card.querySelector('.integration-disconnect').disabled = !(info?.hasToken || info?.enabled);
+        });
+      } catch (e) { console.error(e); }
+    }
+
+    async function handleSaveIntegration(card, service) {
+      const payload = {
+        enabled: card.querySelector('.integration-enabled')?.checked ?? false,
+        resource: card.querySelector('.integration-resource')?.value?.trim() ?? '',
+        includeAssignments: card.querySelector('.integration-include-assignments')?.checked ?? false,
+        fields: {}
+      };
+      card.querySelectorAll('[data-field]').forEach(input => payload.fields[input.dataset.field] = input.value?.trim());
+      const token = card.querySelector('.integration-token')?.value?.trim();
+      if (token) payload.token = token;
+
+      try {
+        setIntegrationBusy(card, true);
+        const response = await fetch(`${integrationEndpoint}/${service}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', 'X-Integration-Client': integrationClientId },
+          body: JSON.stringify(payload)
+        });
+        if (!response.ok) throw new Error((await response.json()).error || 'Save failed');
+        setIntegrationStatus(card, 'Connection saved.', 'success');
+        if (card.querySelector('.integration-token')) card.querySelector('.integration-token').value = '';
+        await refreshIntegrationCards();
+      } catch (e) { setIntegrationStatus(card, e.message, 'error'); }
+      finally { setIntegrationBusy(card, false); }
+    }
+
+    async function handleTestIntegration(card, service) {
+      try {
+        setIntegrationBusy(card, true);
+        const includeAssignments = !!card.querySelector('.integration-include-assignments')?.checked;
+        const response = await fetch(`/api/integrations/${service}/pull`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-Integration-Client': integrationClientId },
+          body: JSON.stringify({ includeAssignments })
+        });
+        const body = await response.json();
+        if (!response.ok) throw new Error(body.error || 'Test failed');
+        integrationResults.set(service, { data: body.data, includeAssignments });
+        updateIntegrationResult(card, service, body.data, includeAssignments);
+        setIntegrationStatus(card, 'Connection test succeeded. Review and update your roster below.', 'success');
+      } catch (e) { setIntegrationStatus(card, e.message, 'error'); }
+      finally { setIntegrationBusy(card, false); }
+    }
+
+    function updateIntegrationResult(card, service, data, includeAssignments) {
+      const res = card.querySelector('.integration-results');
+      if (!res) return;
+      const players = Array.isArray(data?.players) ? dedupeNames(data.players) : [];
+      res.querySelector('.integration-preview-players').textContent = players.length ? `${players.length} teammate${players.length === 1 ? '' : 's'} ready: ${players.slice(0, 5).join(', ')}${players.length > 5 ? '…' : ''}` : 'No players detected.';
+      res.hidden = false;
+      card.querySelector('.integration-action-update').disabled = !players.length;
+    }
+
+    // Tour Logic
+    const startTourBtn = document.getElementById('startTourBtn');
+    const TOUR_STEPS = [
+      { title: 'Build your player list', description: 'List every teammate on its own line, save the roster, and reuse it across games.', target: '#playerNamesInput' },
+      { title: 'Connect integrations', description: 'Enable Jira, Trello, GitHub, or Slack to import teammates automatically.', target: '.integration-layout' }
+    ];
+    let currentStep = 0;
+    function renderStep() {
+      const step = TOUR_STEPS[currentStep];
+      document.querySelector('[data-tour-title]').textContent = step.title;
+      document.querySelector('[data-tour-description]').textContent = step.description;
+      document.querySelector('[data-tour-step-number]').textContent = currentStep + 1;
+      document.querySelector('[data-tour-step-total]').textContent = TOUR_STEPS.length;
+      document.getElementById('tourPrevBtn').disabled = currentStep === 0;
+      document.getElementById('tourNextBtn').textContent = currentStep === TOUR_STEPS.length - 1 ? 'Finish' : 'Next';
+      const target = document.querySelector(step.target);
+      if (target) {
+        target.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        const rect = target.getBoundingClientRect();
+        const focus = document.querySelector('.setup-tour__focus');
+        focus.style.top = `${rect.top + window.scrollY - 10}px`;
+        focus.style.left = `${rect.left + window.scrollX - 10}px`;
+        focus.style.width = `${rect.width + 20}px`;
+        focus.style.height = `${rect.height + 20}px`;
+        focus.style.opacity = '1';
+      }
+    }
+
+    startTourBtn.addEventListener('click', () => {
+      currentStep = 0;
+      document.getElementById('setupTour').hidden = false;
+      renderStep();
+    });
+    document.getElementById('tourNextBtn').addEventListener('click', () => {
+      if (currentStep < TOUR_STEPS.length - 1) { currentStep++; renderStep(); }
+      else document.getElementById('setupTour').hidden = true;
+    });
+    document.getElementById('tourPrevBtn').addEventListener('click', () => { if (currentStep > 0) { currentStep--; renderStep(); } });
+    document.getElementById('tourCloseBtn').addEventListener('click', () => document.getElementById('setupTour').hidden = true);
+
+    // Initial Load
+    savePlayersBtn.addEventListener('click', savePlayers);
+    resetPlayersBtn.addEventListener('click', resetPlayers);
+    integrationNavButtons.forEach(btn => btn.addEventListener('click', () => setActiveIntegration(btn.dataset.integrationTarget)));
+    integrationCards.forEach(card => {
+      const svc = card.dataset.service;
+      card.querySelector('.integration-save')?.addEventListener('click', () => handleSaveIntegration(card, svc));
+      card.querySelector('.integration-test')?.addEventListener('click', () => handleTestIntegration(card, svc));
+      card.querySelector('.integration-action-update')?.addEventListener('click', () => {
+        const data = integrationResults.get(svc)?.data;
+        if (data?.players) {
+          const names = dedupeNames([...normalizeNamesInput(playerNamesInput.value), ...data.players]);
+          playerNamesInput.value = names.join('\n');
+          savePlayers();
+        }
+      });
+      if (svc === 'trello') {
+        card.querySelector('.trello-token-helper')?.addEventListener('click', () => {
+          const key = card.querySelector('[data-field="apiKey"]')?.value;
+          if (key) window.open(`https://trello.com/1/authorize?expiration=never&scope=read&response_type=token&name=DailyPick&key=${key}`, '_blank');
+        });
+      }
+    });
+
+    loadPlayers();
+    refreshIntegrationCards();
+    setActiveIntegration('jira');
+  });
+</script>
