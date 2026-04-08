@@ -75,7 +75,12 @@ body.embed-mode .standup-section,
 body.embed-mode .standup-queue,
 body.embed-mode .standup-panel__header,
 body.embed-mode .standup-panel__content,
-body.embed-mode .standup-panel__services {
+body.embed-mode .standup-panel__services,
+body.embed-mode .standup-walkthrough-overlay,
+body.embed-mode .standup-walkthrough-tooltip,
+body.embed-mode .standup-walkthrough-highlight,
+body.embed-mode .standup-walkthrough-actions,
+body.embed-mode .standup-walkthrough-content {
   display: none !important;
   visibility: hidden !important;
   height: 0 !important;

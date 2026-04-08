@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
       embedSection.style.display = "none";
     }
     document.querySelectorAll(
-      ".seo-content-area, .info-card, .page-hero, .embed-section, .site-header, .site-footer, .cookie-consent, .bg-orbs, .standup-panel, .standup-dock, .standup-dock-toggle, .standup-only-link, .standup-section, .standup-queue, .standup-panel__header, .standup-panel__content, .standup-panel__services"
+      ".seo-content-area, .info-card, .page-hero, .embed-section, .site-header, .site-footer, .cookie-consent, .bg-orbs, .standup-panel, .standup-dock, .standup-dock-toggle, .standup-only-link, .standup-section, .standup-queue, .standup-panel__header, .standup-panel__content, .standup-panel__services, .standup-walkthrough-overlay, .standup-walkthrough-tooltip, .standup-walkthrough-highlight, .standup-walkthrough-actions, .standup-walkthrough-content"
     ).forEach(function (element) {
       element.style.display = "none";
       element.style.visibility = "hidden";
