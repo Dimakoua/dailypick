@@ -66,7 +66,16 @@ body.embed-mode .bg-orbs,
 body.embed-mode .embed-section,
 body.embed-mode .page-hero,
 body.embed-mode .seo-content-area,
-body.embed-mode .info-card {
+body.embed-mode .info-card,
+body.embed-mode .standup-panel,
+body.embed-mode .standup-dock,
+body.embed-mode .standup-dock-toggle,
+body.embed-mode .standup-only-link,
+body.embed-mode .standup-section,
+body.embed-mode .standup-queue,
+body.embed-mode .standup-panel__header,
+body.embed-mode .standup-panel__content,
+body.embed-mode .standup-panel__services {
   display: none !important;
   visibility: hidden !important;
   height: 0 !important;

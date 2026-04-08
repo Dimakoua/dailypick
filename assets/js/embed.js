@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
       embedSection.style.display = "none";
     }
     document.querySelectorAll(
-      ".seo-content-area, .info-card, .page-hero, .embed-section, .site-header, .site-footer, .cookie-consent, .bg-orbs"
+      ".seo-content-area, .info-card, .page-hero, .embed-section, .site-header, .site-footer, .cookie-consent, .bg-orbs, .standup-panel, .standup-dock, .standup-dock-toggle, .standup-only-link, .standup-section, .standup-queue, .standup-panel__header, .standup-panel__content, .standup-panel__services"
     ).forEach(function (element) {
       element.style.display = "none";
       element.style.visibility = "hidden";
