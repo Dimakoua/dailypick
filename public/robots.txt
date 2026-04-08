@@ -19,6 +19,8 @@ Disallow: /assets/
 Disallow: /blog/page/
 Disallow: /Readme/
 Disallow: /feedback/
+Disallow: /apps/brand/
+Disallow: /apps/roster/
 Disallow: /feedback/thank-you/
 Disallow: /apps/whats-new/
 
