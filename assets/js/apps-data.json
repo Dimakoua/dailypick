@@ -18,6 +18,15 @@
     "description": "A delightful turtle race to determine your team’s stand-up sequence. May the best colleague win."
   },
   {
+    "id": "raceway",
+    "name": "Raceway Randomizer",
+    "path": "/apps/raceway/",
+    "category": "standup",
+    "footerGroup": "Stand-up",
+    "emoji": "🏁",
+    "description": "A flexible race-based order picker for meetings, classrooms, and group activities."
+  },
+  {
     "id": "trap",
     "name": "Trap!",
     "path": "/apps/trap/",

@@ -1,0 +1,366 @@
+---
+layout: base_app.njk
+title: "Raceway Randomizer – Group Order Picker | Daily Pick"
+description: "Launch a playful random order picker that turns any participant list into a lively race with customizable themes and racer styles."
+keywords: "random order picker, raceway randomizer, participant order game, meeting energizer, team icebreaker, classroom engagement, hybrid stand-up tool, Daily Pick tools"
+canonical: "https://dailypick.dev/apps/raceway/"
+ogImage: "https://dailypick.dev/assets/og-image-main.png"
+ogImageAlt: "Colorful racers speeding toward the finish line on the Daily Pick Raceway track"
+appStyles: |
+  <link href="/apps/raceway/style.css" rel="stylesheet" />
+headExtra: |
+  <link href="/assets/css/collaboration.css" rel="stylesheet" />
+  <script defer="" src="/assets/js/results-pip.js"></script>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script defer="" src="/assets/js/collaboration.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Raceway Randomizer",
+    "operatingSystem": "Any",
+    "applicationCategory": "GameApplication",
+    "url": "https://dailypick.dev/apps/raceway/",
+    "image": "https://dailypick.dev/assets/og-image-main.png",
+    "description": "Play Raceway Randomizer by Daily Pick—a playful race-based order picker for meetings, classrooms, and group activities.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Daily Pick",
+      "url": "https://dailypick.dev"
+    }
+  }
+  </script>
+---
+<main id="main" data-page-type="game" class="app-shell">
+    
+    <div class="app-card pro-dashboard">
+        <!-- TOP NAV: Header & Settings -->
+        <header class="pro-header">
+            <div class="pro-title">
+                <h1>🏁 Raceway Randomizer</h1>
+                <p>Fair, fast, and fun group order picking</p>
+            </div>
+            <div class="pro-settings">
+                <div class="pro-control">
+                    <label for="trackStyleSelect">Track Theme</label>
+                    <select id="trackStyleSelect" class="pro-select">
+                        <option value="classic">🏟️ Classic</option>
+                        <option value="night">🌌 Night</option>
+                        <option value="sunset">🌅 Sunset</option>
+                        <option value="forest">🌲 Forest</option>
+                    </select>
+                </div>
+                <div class="pro-control">
+                    <label for="vehicleStyleSelect">Racer Type</label>
+                    <select id="vehicleStyleSelect" class="pro-select">
+                        <option value="turtle">🐢 Turtles</option>
+                        <option value="skier">⛷ Skiers</option>
+                        <option value="car">🏎️ Race Cars</option>
+                        <option value="rocket">🚀 Rockets</option>
+                        <option value="cat">🐈 Cats</option>
+                        <option value="ghost">👻 Ghosts</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN WORKSPACE: 3-Pane Layout -->
+        <div class="pro-workspace">
+            
+            <!-- LEFT PANE: Inputs & Action -->
+            <div class="pro-panel side-panel input-panel">
+                <div class="panel-header">
+                    <label for="namesInput">Participants</label>
+                    <button id="updateNamesBtn" class="icon-btn" title="Update Participants">↻ Sync</button>
+                </div>
+                <textarea id="namesInput" spellcheck="false" placeholder="One name per line...">Nova
+Ezra
+Mina
+Soren
+Ari
+Juniper
+Theo</textarea>
+                <div class="panel-footer">
+                    <button id="startRaceBtn" class="pro-primary-btn">🚀 Start Race!</button>
+                </div>
+            </div>
+
+            <!-- CENTER PANE: The Track -->
+            <div class="pro-panel main-panel track-panel">
+                <div aria-label="Racing track" id="track-container">
+                    <div id="start-line"></div>
+                    <div id="finish-line-visual"></div>
+                    <!-- Racers injected by JS -->
+                </div>
+            </div>
+
+            <!-- RIGHT PANE: Results -->
+            <div class="pro-panel side-panel results-panel" aria-atomic="true" aria-live="polite" id="results-area">
+                <div class="panel-header">
+                    <h2>Results</h2>
+                    <button class="icon-btn pip-trigger" data-pip-exclude="#racewayPipBtn" data-pip-height="420"
+                            data-pip-target="#results-area" data-pip-title="Raceway Results" data-pip-width="320"
+                            id="racewayPipBtn" type="button">⧉ Pop-out</button>
+                </div>
+                <div class="results-scroll-area">
+                    <ol id="resultsOrderList"></ol>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="seo-content-area">
+        <h2>Raceway Randomizer: A Fast, Fair Way to Pick Any Group Order</h2>
+        <div class="seo-grid">
+            <div>
+                <p>Raceway Randomizer by Daily Pick turns a simple participant list into a lively race. Add names,
+                    choose a theme, and launch the finish line—then use the result order for meetings, games,
+                    prizes, or classroom participation.
+                    It’s customizable, replayable, and perfect for hybrid or in-person group activities.</p>
+            </div>
+            <div>
+                <h3>Why Folks Choose Raceway</h3>
+                <ul>
+                    <li><strong>Fair randomization:</strong> Removes bias and makes everyone feel included.</li>
+                    <li><strong>Instant engagement:</strong> The racer animation turns order selection into a moment
+                        of fun.</li>
+                    <li><strong>Flexible use:</strong> Great for stand-ups, icebreakers, prize draws, or team games.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    "use strict";
+
+    /** ====== Config & State ====== */
+    const DEFAULT_NAMES = ['Nova', 'Ezra', 'Mina', 'Soren', 'Ari', 'Juniper', 'Theo'];
+    const LOCAL_STORAGE_KEY = 'racewayNamesList';
+    const RACER_PALETTE = ['#e74c3c', '#3498db', '#2ecc71', '#f1c40f', '#9b59b6', '#e67e22'];
+
+    let originalNames = [...DEFAULT_NAMES];
+    let racersData = [];
+    let raceInProgress = false;
+    let animationFrameId = null;
+
+    /** ====== DOM ====== */
+    const trackContainer = document.getElementById('track-container');
+    const startRaceBtn = document.getElementById('startRaceBtn');
+    const resultsOrderList = document.getElementById('resultsOrderList');
+    const namesInput = document.getElementById('namesInput');
+    const trackStyleSelect = document.getElementById('trackStyleSelect');
+    const vehicleStyleSelect = document.getElementById('vehicleStyleSelect');
+    const updateNamesBtn = document.getElementById('updateNamesBtn');
+    
+    const syncNamesInput = () => {
+        if (namesInput) {
+            namesInput.value = originalNames.join('\n');
+        }
+    };
+
+    const finishLinePercent = 94;
+    const TRACK_STYLE_KEY = 'racewayTrackStyle';
+    const VEHICLE_STYLE_KEY = 'racewayVehicleStyle';
+
+    /** ====== Storage ====== */
+    function loadNamesFromStorage() {
+        const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (!stored) {
+            syncNamesInput();
+            return;
+        }
+        try {
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.length) {
+                originalNames = [...parsed];
+            } else {
+                originalNames = [...DEFAULT_NAMES];
+            }
+        } catch {
+            originalNames = [...DEFAULT_NAMES];
+        }
+        syncNamesInput();
+    }
+
+    function saveNamesToStorage() {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(originalNames));
+    }
+
+    /** ====== Game Logic ====== */
+    function sanitizedParticipants() {
+        return originalNames.map((name) => name.trim()).filter(Boolean);
+    }
+
+    function emitOrderReset() {
+        window.dispatchEvent(new CustomEvent('raceway:order-reset', {
+            detail: { source: 'raceway', participants: sanitizedParticipants() },
+        }));
+    }
+
+    function emitOrderUpdate() {
+        const order = Array.from(resultsOrderList.children)
+            .map((entry) => entry.textContent.trim())
+            .filter(Boolean);
+        window.dispatchEvent(new CustomEvent('raceway:order', {
+            detail: { source: 'raceway', mode: 'auto', order, participants: sanitizedParticipants() },
+        }));
+    }
+
+    function applyTrackStyle(style) {
+        const styles = ['classic', 'night', 'sunset', 'forest'];
+        const normalized = styles.includes(style) ? style : 'classic';
+        trackContainer.className = ''; // reset classes
+        trackContainer.classList.add(`track-style-${normalized}`);
+        if (trackStyleSelect) trackStyleSelect.value = normalized;
+    }
+
+    function applyVehicleStyle(style) {
+        const styles = ['turtle', 'skier', 'car', 'rocket', 'cat', 'ghost'];
+        const normalized = styles.includes(style) ? style : 'turtle';
+        if (vehicleStyleSelect) vehicleStyleSelect.value = normalized;
+        return normalized;
+    }
+
+    let currentVehicleStyle = 'turtle';
+
+    function getVehicleEmoji(style) {
+        const emojiMap = { 'turtle': '🐢', 'skier': '⛷', 'car': '🏎️', 'rocket': '🚀', 'cat': '🐈', 'ghost': '👻' };
+        return emojiMap[style] || '🐢';
+    }
+
+    function setupRacers() {
+        trackContainer.querySelectorAll('.racer').forEach(el => el.remove());
+        racersData = [];
+        resultsOrderList.innerHTML = '';
+        startRaceBtn.disabled = originalNames.length === 0;
+        startRaceBtn.textContent = '🚀 Start Race!';
+
+        if (originalNames.length === 0) return;
+
+        const racerHeight = 34;
+        const verticalGap = 8;
+        
+        // Ensure track is tall enough for all participants
+        const totalHeight = originalNames.length * (racerHeight + verticalGap);
+        trackContainer.style.minHeight = `${Math.max(100, totalHeight + 40)}px`;
+
+        originalNames.forEach((name, index) => {
+            const racer = document.createElement('div');
+            racer.classList.add('racer');
+            racer.dataset.vehicle = currentVehicleStyle;
+            const emoji = getVehicleEmoji(currentVehicleStyle);
+
+            const color = RACER_PALETTE[index % RACER_PALETTE.length];
+            const hueRotates = [0, 200, 100, 45, 280, 25]; 
+            const hueRotate = hueRotates[index % hueRotates.length];
+
+            racer.innerHTML = `
+                <div class="vehicle-body" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)) hue-rotate(${hueRotate}deg) saturate(1.5);">
+                    <span class="racer-emoji">${emoji}</span>
+                </div>
+                <span class="racer-name" style="border-left: 4px solid ${color}">${name}</span>
+            `;
+            
+            racer.style.left = '5%';
+            racer.style.top = `${20 + index * (racerHeight + verticalGap)}px`;
+
+            trackContainer.appendChild(racer);
+            racersData.push({
+                name, element: racer, positionPercent: 5, finished: false, finishTime: 0
+            });
+        });
+        emitOrderReset();
+    }
+
+    function raceTick() {
+        if (!raceInProgress) return;
+        let allFinished = true;
+
+        racersData.forEach((racer) => {
+            if (racer.finished) return;
+            allFinished = false;
+            
+            // Random speed boost logic
+            const randomBoost = (Math.random() * 0.3) - 0.02;
+            racer.positionPercent += randomBoost;
+            racer.element.style.left = `${racer.positionPercent}%`;
+
+            if (racer.positionPercent >= finishLinePercent) {
+                racer.finished = true;
+                racer.finishTime = performance.now();
+                racer.element.style.left = `${finishLinePercent}%`;
+                racer.element.classList.add('finished');
+
+                const li = document.createElement('li');
+                li.textContent = racer.name;
+                li.classList.add('finished-entry');
+                resultsOrderList.appendChild(li);
+                
+                // Auto-scroll results to bottom as they come in
+                const resultsArea = document.querySelector('.results-scroll-area');
+                if (resultsArea) resultsArea.scrollTop = resultsArea.scrollHeight;
+                
+                emitOrderUpdate();
+            }
+        });
+
+        if (allFinished) {
+            raceInProgress = false;
+            startRaceBtn.disabled = false;
+            startRaceBtn.textContent = '🏁 Race Again!';
+            cancelAnimationFrame(animationFrameId);
+        } else {
+            animationFrameId = requestAnimationFrame(raceTick);
+        }
+    }
+
+    /** ====== Event Listeners ====== */
+    function updateNamesFromInput() {
+        if (!namesInput) return;
+        const input = namesInput.value.trim();
+        const parsed = input ? input.split(/[\n,]+/).map(n => n.trim()).filter(Boolean) : [];
+        originalNames = parsed.length ? parsed : [...DEFAULT_NAMES];
+        syncNamesInput();
+        saveNamesToStorage();
+        setupRacers();
+        if (raceInProgress) {
+            raceInProgress = false;
+            cancelAnimationFrame(animationFrameId);
+        }
+    }
+
+    startRaceBtn.addEventListener('click', () => {
+        if (raceInProgress) return;
+        raceInProgress = true;
+        startRaceBtn.disabled = true;
+        startRaceBtn.textContent = '🚦 Racing...';
+        setupRacers(); 
+        animationFrameId = requestAnimationFrame(raceTick);
+    });
+
+    if (updateNamesBtn) updateNamesBtn.addEventListener('click', updateNamesFromInput);
+    if (namesInput) namesInput.addEventListener('blur', updateNamesFromInput);
+
+    if (trackStyleSelect) {
+        trackStyleSelect.addEventListener('change', (e) => {
+            applyTrackStyle(e.target.value);
+            localStorage.setItem(TRACK_STYLE_KEY, e.target.value);
+        });
+    }
+
+    if (vehicleStyleSelect) {
+        vehicleStyleSelect.addEventListener('change', (e) => {
+            currentVehicleStyle = applyVehicleStyle(e.target.value);
+            localStorage.setItem(VEHICLE_STYLE_KEY, e.target.value);
+            setupRacers();
+        });
+    }
+
+    /** ====== Init ====== */
+    loadNamesFromStorage();
+    applyTrackStyle(localStorage.getItem(TRACK_STYLE_KEY) || 'classic');
+    currentVehicleStyle = applyVehicleStyle(localStorage.getItem(VEHICLE_STYLE_KEY) || 'turtle');
+    setupRacers();
+</script>
