@@ -75,8 +75,8 @@
     "id": "ballgame",
     "name": "Momentum Mayhem",
     "path": "/apps/ballgame/",
-    "category": "games",
-    "footerGroup": "Games",
+    "category": "standup",
+    "footerGroup": "Stand-up",
     "emoji": "🔴",
     "description": "Unleash physics-based chaos! Push the ball into moving traps, triggering wild special effects with every capture."
   },
