@@ -1,0 +1,906 @@
+---
+layout: base_app.njk
+title: "Falling Letters Pinball – Fast Name Picker | Daily Pick"
+description: "Match falling letters to reveal names, spark competition, and pick the next speaker with Daily Pick"
+keywords: "falling letters pinball, random name picker, interactive team game, classroom attendance game, agile icebreaker, meeting energizer, Daily Pick tools, letter matching challenge, remote team activity, fun name selection"
+canonical: "https://dailypick.dev/apps/pinball-picker/"
+ogImage: "https://dailypick.dev/assets/og-image-main.png"
+ogImageAlt: "Player typing letters in the Falling Letters Pinball name picker"
+appStyles: |
+  <link href="/apps/letters/style.css" rel="stylesheet" />
+headExtra: |
+  <script defer="" src="/assets/js/results-pip.js"></script>
+  <script defer="" src="/assets/js/standup-data.js"></script>
+  <script defer="" src="/assets/js/standup-panel.js"></script>
+  <script defer="" src="/assets/js/standup-onboarding.js"></script>
+  <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Falling Letters Pinball",
+        "operatingSystem": "Any",
+        "applicationCategory": "GameApplication",
+        "url": "https://dailypick.dev/apps/letters/",
+        "image": "https://dailypick.dev/assets/og-image-main.png",
+        "description": "Play Falling Letters Pinball, a Daily Pick mini-game that turns name picking into a fun pinball challenge.",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Daily Pick",
+            "url": "https://dailypick.dev"
+        }
+    }
+    </script>
+---
+<main id="main" data-page-type="standup" class="app-shell">
+
+    <div class="app-card pro-dashboard">
+        <header class="pro-header">
+            <div class="pro-title">
+                <h1>🕹️ AlphaBounce</h1>
+                <p>Match falling letters to reveal names and spark competition.</p>
+            </div>
+            <div class="pro-settings">
+                <p class="settings-hint">Brand colors? Visit <a href="/apps/roster/">Settings</a></p>
+            </div>
+        </header>
+
+        <div class="pro-workspace">
+            
+            <div class="pro-panel side-panel input-panel">
+                <div class="panel-header">
+                    <label for="namesInput">Participants</label>
+                    <button id="updateNamesBtn" class="icon-btn" title="Update Participants">↻ Sync</button>
+                </div>
+                <textarea id="namesInput" spellcheck="false" placeholder="One name per line...">Alice
+Bob
+Charlie
+Diana
+Ethan
+Fiona
+George</textarea>
+                <div class="panel-footer">
+                    <button id="restartButton" class="pro-primary-btn">🔄 Restart Game</button>
+                </div>
+            </div>
+
+            <div class="pro-panel main-panel track-panel game-panel" style="background: var(--brand-surface, #041a35);">
+                <div class="game-container">
+                    <canvas id="gameCanvas" width="450" height="675"></canvas>
+                </div>
+            </div>
+
+            <div class="pro-panel side-panel results-panel" id="namesPanelContainer">
+                <div class="panel-header">
+                    <h2>Matched Names</h2>
+                    <button class="icon-btn pip-trigger" data-pip-exclude="#lettersPipBtn" data-pip-height="480"
+                        data-pip-target="#namesList" data-pip-title="Falling Letters Status" data-pip-width="320"
+                        id="lettersPipBtn" type="button">⧉ Pop-out</button>
+                </div>
+                <div class="results-scroll-area" id="namesList">
+                    </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="seo-content-area">
+        <h2>AlphaBounce: The Daily Pick Name Picker Experience</h2>
+        <p>Welcome to AlphaBounce, an exciting and visually engaging game from Daily Pick
+            that turns name picking into a pinball showdown. Watch letters tumble down the playfield and see who can
+            match their roster first—it’s perfect for classrooms, agile teams, and anyone who wants a fresh
+            alternative
+            to boring randomizers.</p>
+        <h3>How to Play AlphaBounce</h3>
+        <ul>
+            <li>Set your list: Drop in your roster—students, teammates, or participants—one per line in
+                the settings panel.</li>
+            <li>Watch the letters fall: The game pulls only the letters it needs for the remaining
+                names, keeping the action fast and fair.</li>
+            <li>Type to match: As letters enter the <em>Target Zone</em>, type the matching name. The
+                buffer highlights your progress so you never lose track.</li>
+            <li>Celebrate the win: Complete a name and it disappears from the board. Clear the list to
+                finish the challenge or keep playing for friendly competition.</li>
+        </ul>
+        <h3>Why Teams Love AlphaBounce</h3>
+        <ul>
+            <li>Interactive name picker: Keeps everyone engaged compared to simple random name wheels.
+            </li>
+            <li>Skill plus chance: Randomized letters add suspense while typing skills keep things
+                competitive.</li>
+            <li>Meeting energizer: Great for deciding who presents next, assigning tasks, or kicking
+                off retros.</li>
+            <li>Classroom friendly: Teachers use it for attendance games, spelling reinforcement, and
+                participation boosts.</li>
+        </ul>
+    </div>
+</main>
+
+<script>
+    "use strict";
+
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const namesPanel = document.getElementById('namesList');
+    const restartButton = document.getElementById('restartButton');
+    const namesInputElement = document.getElementById('namesInput'); 
+    const updateNamesButton = document.getElementById('updateNamesBtn'); 
+
+    const CANVAS_WIDTH = 450;
+    const CANVAS_HEIGHT = 675;
+    canvas.width = CANVAS_WIDTH;
+    canvas.height = CANVAS_HEIGHT;
+
+    const DEFAULT_NAMES = ['Alice', 'Bob', 'Charlie', 'Diana', 'Ethan', 'Fiona', 'George'];
+    const LOCAL_STORAGE_KEY = 'namesList';
+    let originalNames = [...DEFAULT_NAMES]; 
+    let availableNames = [...originalNames]; 
+    let fallingLetters = [];
+    let matchedNamesInOrder = []; 
+    const STANDUP_SOURCE = 'letters';
+
+    function normalizeStandupKey(name) {
+        return typeof name === 'string' ? name.trim().toLowerCase() : '';
+    }
+
+    function uniqueNameList(names) {
+        const seen = new Set();
+        const result = [];
+        names.forEach((name) => {
+            const trimmed = typeof name === 'string' ? name.trim() : '';
+            const key = normalizeStandupKey(trimmed);
+            if (!key || seen.has(key)) return;
+            seen.add(key);
+            result.push(trimmed);
+        });
+        return result;
+    }
+
+    function standupParticipants() {
+        return uniqueNameList(originalNames);
+    }
+
+    function emitStandupReset() {
+        const participants = standupParticipants();
+        window.dispatchEvent(new CustomEvent('standup:queue-reset', {
+            detail: { source: STANDUP_SOURCE, participants },
+        }));
+        emitStandupUpdate();
+    }
+
+    function emitStandupUpdate(currentNameOverride) {
+        const participants = standupParticipants();
+        const completed = uniqueNameList(matchedNamesInOrder);
+        const remainingList = uniqueNameList(availableNames);
+
+        let current = null;
+        if (typeof currentNameOverride === 'string') {
+            const trimmed = currentNameOverride.trim();
+            if (normalizeStandupKey(trimmed)) {
+                current = trimmed;
+            }
+        }
+
+        if (!current) {
+            if (remainingList.length > 0) {
+                current = remainingList[0];
+            } else if (completed.length > 0) {
+                current = completed[completed.length - 1];
+            }
+        }
+
+        const currentKey = normalizeStandupKey(current);
+        const upcoming = currentKey
+            ? remainingList.filter((name) => normalizeStandupKey(name) !== currentKey)
+            : remainingList;
+
+        const detail = {
+            source: STANDUP_SOURCE, mode: 'auto', participants, completed, remaining: upcoming,
+        };
+        if (currentKey) {
+            detail.current = current;
+        }
+
+        window.dispatchEvent(new CustomEvent('standup:queue', { detail }));
+    }
+
+    let obstacles = [];
+    let currentWordBuffer = "";
+    let gameLoopId = null;
+    let gameIsOver = false;
+
+    const GRAVITY = 0.08;
+    const LETTER_SPAWN_INTERVAL = 500; 
+    let lastSpawnTime = 0;
+    const LETTER_SIZE = 24;
+
+    const DRAWER_HEIGHT = 60;
+    const DRAWER_Y = CANVAS_HEIGHT - DRAWER_HEIGHT;
+
+    const PINBALL_LIGHT_COLORS = ['#FF3333', '#33FF33', '#33CCFF', '#FFFF33', '#FF33FF', '#FF9933', '#FFFFFF']; 
+
+    function getThemeColor(varName, fallback) {
+        return getComputedStyle(document.documentElement).getPropertyValue(varName).trim() || fallback;
+    }
+
+    class Letter {
+        constructor(char, x, y) {
+            this.char = char.toUpperCase();
+            this.x = x;
+            this.y = y;
+            this.vy = 0; 
+            this.vx = (Math.random() - 0.5) * 1.5; 
+            this.radius = LETTER_SIZE / 2;
+            this.color = PINBALL_LIGHT_COLORS[Math.floor(Math.random() * PINBALL_LIGHT_COLORS.length)];
+            this.rotation = 0;
+            this.angularVelocity = 0;
+            this.hasBouncedThisFrame = {}; 
+        }
+
+        update() {
+            this.vy += GRAVITY;
+            this.y += this.vy;
+            this.x += this.vx;
+            this.rotation += this.angularVelocity;
+            this.angularVelocity *= 0.97; 
+
+            if (this.x - this.radius < 0) {
+                this.x = this.radius; this.vx *= -0.7;
+            } else if (this.x + this.radius > CANVAS_WIDTH) {
+                this.x = CANVAS_WIDTH - this.radius; this.vx *= -0.7;
+            }
+        }
+
+        draw() {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.rotation);
+            ctx.shadowColor = this.color; 
+            ctx.shadowBlur = 8;
+            ctx.fillStyle = this.color;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.font = `bold ${LETTER_SIZE}px 'Arial Black', Gadget, sans-serif`;
+            ctx.fillText(this.char, 0, 0);
+            ctx.shadowBlur = 0; 
+            ctx.restore();
+        }
+    }
+
+    class Obstacle {
+        constructor(id, x, y, width, height, type = 'rect', color = "#777") {
+            this.id = id; 
+            this.x = x; this.y = y;
+            this.width = width; this.height = height;
+            this.type = type; 
+            this.radius = type === 'circle' ? width / 2 : 0; 
+            this.originalColor = color;
+            this.color = this.originalColor; 
+            this.hitColor = '#FFFFFF'; 
+            this.isAnimatingHit = false;
+            this.hitAnimationDuration = 8; 
+            this.hitAnimationProgress = 0;
+        }
+
+        update() {
+            if (this.isAnimatingHit) {
+                this.hitAnimationProgress--;
+                if (this.hitAnimationProgress <= 0) {
+                    this.isAnimatingHit = false;
+                    this.color = this.originalColor; 
+                }
+            }
+        }
+
+        draw() {
+            ctx.fillStyle = this.isAnimatingHit ? this.hitColor : this.color;
+            if (this.type === 'rect') {
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+            } else if (this.type === 'circle') {
+                ctx.beginPath();
+                ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+    }
+
+    function getNeededLettersToSpawn() {
+        if (availableNames.length === 0) return [];
+        const needed = new Set();
+        const bufferLength = currentWordBuffer.length;
+
+        if (bufferLength === 0) { 
+            availableNames.forEach(name => {
+                if (name.length > 0) needed.add(name[0].toUpperCase());
+            });
+        } else { 
+            availableNames.forEach(name => {
+                const nameUpper = name.toUpperCase();
+                if (nameUpper.startsWith(currentWordBuffer) && nameUpper.length > bufferLength) {
+                    needed.add(nameUpper[bufferLength]); 
+                }
+            });
+            if (needed.size === 0 && availableNames.length > 0) {
+                 availableNames.forEach(name => {
+                    if (name.length > 0) needed.add(name[0].toUpperCase());
+                });
+            }
+        }
+        return Array.from(needed);
+    }
+
+    function spawnLetter() {
+        const neededChars = getNeededLettersToSpawn();
+        let char;
+        if (neededChars.length > 0) {
+            char = neededChars[Math.floor(Math.random() * neededChars.length)];
+        } else {
+            return; 
+        }
+        const x = Math.random() * (CANVAS_WIDTH - LETTER_SIZE * 2) + LETTER_SIZE;
+        fallingLetters.push(new Letter(char, x, -LETTER_SIZE)); 
+    }
+
+    function updateNamesDisplay() {
+        if(!namesPanel) return;
+        namesPanel.innerHTML = '';
+
+        if (matchedNamesInOrder.length === 0) {
+            const emptyEl = document.createElement('div');
+            emptyEl.style.color = '#94a3b8';
+            emptyEl.style.fontSize = '0.9rem';
+            emptyEl.style.textAlign = 'center';
+            emptyEl.style.marginTop = '20px';
+            emptyEl.style.fontStyle = 'italic';
+            emptyEl.textContent = 'Awaiting first match...';
+            namesPanel.appendChild(emptyEl);
+            return;
+        }
+
+        matchedNamesInOrder.forEach(name => {
+            const nameEl = document.createElement('div');
+            nameEl.classList.add('name-item', 'matched');
+            nameEl.textContent = name;
+            nameEl.id = `name-${name.toLowerCase().replace(/\s+/g, '-')}`;
+            namesPanel.appendChild(nameEl);
+            
+            namesPanel.scrollTop = namesPanel.scrollHeight;
+        });
+    }
+
+    function animateMatchedName(name) {
+        const nameEl = document.getElementById(`name-${name.toLowerCase().replace(/\s+/g, '-')}`);
+        if (nameEl) nameEl.classList.add('matched'); 
+    }
+
+    function checkCollisions() {
+        fallingLetters.forEach(letter => {
+            obstacles.forEach(obstacle => {
+                if (letter.hasBouncedThisFrame[obstacle.id]) return; 
+
+                let collided = false;
+                const restitution = 0.75; 
+
+                if (obstacle.type === 'rect') {
+                    const closestX = Math.max(obstacle.x, Math.min(letter.x, obstacle.x + obstacle.width));
+                    const closestY = Math.max(obstacle.y, Math.min(letter.y, obstacle.y + obstacle.height));
+                    const dx = letter.x - closestX;
+                    const dy = letter.y - closestY;
+
+                    if ((dx * dx + dy * dy) < (letter.radius * letter.radius)) {
+                        collided = true;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        const overlap = letter.radius - distance;
+
+                        if (distance > 0) {
+                            letter.x += (dx / distance) * overlap;
+                            letter.y += (dy / distance) * overlap;
+                        } else { 
+                            letter.y -= overlap; 
+                        }
+
+                        const normalX = distance > 0 ? dx / distance : 0;
+                        const normalY = distance > 0 ? dy / distance : (letter.y < obstacle.y + obstacle.height / 2 ? -1 : 1);
+     
+                        const dot = letter.vx * normalX + letter.vy * normalY;
+                        letter.vx -= (1 + restitution) * dot * normalX;
+                        letter.vy -= (1 + restitution) * dot * normalY;
+
+                        if (normalY < -0.85) { 
+                            const nudgeSpeed = 0.45; 
+                            if (obstacle.id.startsWith("funnel_L_shoulder_step") || obstacle.id.startsWith("slant_L")) {
+                                letter.vx += nudgeSpeed; 
+                            } else if (obstacle.id.startsWith("funnel_R_shoulder_step") || obstacle.id.startsWith("slant_R")) {
+                                letter.vx -= nudgeSpeed; 
+                            }
+                        }
+                    }
+                } else if (obstacle.type === 'circle') {
+                    const obsCenterX = obstacle.x + obstacle.radius;
+                    const obsCenterY = obstacle.y + obstacle.radius;
+                    const dx = letter.x - obsCenterX;
+                    const dy = letter.y - obsCenterY;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < letter.radius + obstacle.radius) {
+                        collided = true;
+                        const overlap = letter.radius + obstacle.radius - distance;
+
+                        const normalX = dx / distance;
+                        const normalY = dy / distance;
+
+                        letter.x += normalX * overlap;
+                        letter.y += normalY * overlap;
+
+                        const dot = letter.vx * normalX + letter.vy * normalY;
+                        letter.vx -= (1 + restitution) * dot * normalX;
+                        letter.vy -= (1 + restitution) * dot * normalY;
+                    }
+                }
+
+                if (collided) {
+                    letter.hasBouncedThisFrame[obstacle.id] = true;
+                    if (!obstacle.isAnimatingHit) {
+                        obstacle.isAnimatingHit = true;
+                        obstacle.hitAnimationProgress = obstacle.hitAnimationDuration;
+                        obstacle.color = obstacle.hitColor; 
+                    }
+                    letter.angularVelocity += (Math.random() - 0.5) * 0.3; 
+                    setTimeout(() => { delete letter.hasBouncedThisFrame[obstacle.id]; }, 100); 
+                    const spinFactor = 0.15 * (Math.random() - 0.5); 
+                    letter.vx += -letter.vy * spinFactor * 0.1; 
+                    letter.vy += letter.vx * spinFactor * 0.1;
+                }
+            });
+        });
+    }
+
+    function completeMatch(matchedName) {
+        animateMatchedName(matchedName);
+        matchedNamesInOrder.push(matchedName);
+        availableNames = availableNames.filter(n => n !== matchedName);
+        updateNamesDisplay();
+        currentWordBuffer = ""; 
+        emitStandupUpdate();
+    }
+
+    function processLetterInDrawer(char) {
+        const incomingCharUpper = char.toUpperCase();
+        const currentAttempt = (currentWordBuffer + incomingCharUpper).toUpperCase();
+        let potentialMatchesForAttempt = availableNames.filter(name =>
+            name.toUpperCase().startsWith(currentAttempt)
+        );
+
+        if (potentialMatchesForAttempt.length === 1) {
+            completeMatch(potentialMatchesForAttempt[0]);
+            return;
+        }
+
+        if (potentialMatchesForAttempt.length > 1) {
+            currentWordBuffer = currentAttempt; 
+            return;
+        }
+
+        if (currentWordBuffer.length > 0) {
+            const potentialMatchesForExistingBuffer = availableNames.filter(name =>
+                name.toUpperCase().startsWith(currentWordBuffer)
+            );
+            if (potentialMatchesForExistingBuffer.length > 1) {
+                return; 
+            }
+        }
+
+        let potentialMatchesForSingleChar = availableNames.filter(name =>
+            name.toUpperCase().startsWith(incomingCharUpper)
+        );
+
+        if (potentialMatchesForSingleChar.length === 1) {
+            completeMatch(potentialMatchesForSingleChar[0]);
+        } else if (potentialMatchesForSingleChar.length > 1) {
+            currentWordBuffer = incomingCharUpper; 
+        } else {
+            currentWordBuffer = ""; 
+        }
+    }
+
+    function loadNamesFromStorage() {
+        const storedNamesJson = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (storedNamesJson) {
+            try {
+                const storedNames = JSON.parse(storedNamesJson);
+                if (Array.isArray(storedNames) && storedNames.length > 0) {
+                    originalNames = [...storedNames];
+                } else {
+                    originalNames = [...DEFAULT_NAMES]; 
+                }
+            } catch (e) {
+                originalNames = [...DEFAULT_NAMES]; 
+            }
+        } else {
+            originalNames = [...DEFAULT_NAMES];
+        }
+        if (namesInputElement) {
+            namesInputElement.value = originalNames.join('\n');
+        }
+    }
+
+    function saveNamesToStorage() {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(originalNames));
+    }
+
+    function updateNamesFromInput() {
+        if (!namesInputElement) return;
+        const inputText = namesInputElement.value.trim();
+        const newNames = inputText ? inputText.split(/[\n,]+/).map(name => name.trim()).filter(name => name.length > 0) : [];
+        originalNames = newNames.length > 0 ? [...newNames] : [...DEFAULT_NAMES];
+        
+        if (namesInputElement) { 
+            namesInputElement.value = originalNames.join('\n');
+        }
+        saveNamesToStorage();
+        resetAndStartGame(); 
+    }
+
+    function gameLoop(timestamp) {
+        const bgColor = getThemeColor('--brand-surface', '#041a35');
+        const drawerBg = getThemeColor('--brand-surface-light', '#2c3e50');
+        const drawerBorder = getThemeColor('--brand-accent', '#34495e');
+        const textColor = getThemeColor('--brand-text', '#ecf0f1');
+
+        ctx.fillStyle = bgColor; 
+        ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+        ctx.fillStyle = drawerBg; 
+        ctx.fillRect(0, DRAWER_Y, CANVAS_WIDTH, DRAWER_HEIGHT);
+
+        const drawerPadding = 4;
+        ctx.fillStyle = drawerBorder; 
+        ctx.fillRect(drawerPadding, DRAWER_Y + drawerPadding, CANVAS_WIDTH - 2 * drawerPadding, DRAWER_HEIGHT - 2 * drawerPadding);
+
+        ctx.fillStyle = textColor; 
+        ctx.textAlign = "center";
+        ctx.font = `bold ${LETTER_SIZE - 4}px 'Orbitron', sans-serif`;
+        ctx.fillText(currentWordBuffer || "TARGET ZONE", CANVAS_WIDTH / 2, DRAWER_Y + DRAWER_HEIGHT / 2 + (LETTER_SIZE - 4)/2 - 2); 
+
+        if (!gameIsOver && timestamp - lastSpawnTime > LETTER_SPAWN_INTERVAL) {
+            if (availableNames.length > 0) { 
+                spawnLetter();
+            }
+            lastSpawnTime = timestamp;
+        }
+        
+        obstacles.forEach(obstacle => {
+            obstacle.update(); 
+            obstacle.draw();
+        });
+
+        for (let i = fallingLetters.length - 1; i >= 0; i--) {
+            const letter = fallingLetters[i];
+            letter.update();
+
+            if (letter.y + letter.radius > DRAWER_Y) {
+                processLetterInDrawer(letter.char);
+                fallingLetters.splice(i, 1); 
+            }
+            else if (letter.y - letter.radius > CANVAS_HEIGHT) {
+                fallingLetters.splice(i, 1);
+            }
+        }
+
+        checkCollisions();
+        fallingLetters.forEach(letter => letter.draw());
+
+        if (availableNames.length === 0 && fallingLetters.length === 0) {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.85)"; 
+            ctx.fillRect(CANVAS_WIDTH / 4, CANVAS_HEIGHT / 3, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 4);
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 30px 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+            ctx.textAlign = "center";
+            ctx.fillText("All Matched!", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 15);
+            ctx.font = "16px 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+            ctx.fillText("Click Restart to play again.", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 20);
+
+            if (!gameIsOver) { 
+                gameIsOver = true;
+            }
+            return; 
+        }
+
+        gameLoopId = requestAnimationFrame(gameLoop);
+    }
+
+    function setupObstacles() {
+        obstacles = []; 
+        const accent = getThemeColor('--brand-accent', '#FFEB3B');
+        const bumperColor = '#E91E63'; 
+        const pinColor1 = accent;      
+        const pinColor2 = '#03A9F4';   
+        const guideColor = '#757575';  
+        const funnelColor = '#424242'; 
+
+        obstacles.push(new Obstacle("top_bump1", CANVAS_WIDTH / 2 - 20, 80, 40, 40, 'circle', pinColor1)); 
+        obstacles.push(new Obstacle("top_bump2", CANVAS_WIDTH / 4, 130, 30, 30, 'circle', bumperColor)); 
+        obstacles.push(new Obstacle("top_bump3", CANVAS_WIDTH * 3 / 4 - 30, 130, 30, 30, 'circle', bumperColor)); 
+        obstacles.push(new Obstacle("side_guide_L1", 40, 180, 20, 150, 'rect', guideColor));
+        obstacles.push(new Obstacle("side_guide_R1", CANVAS_WIDTH - 60, 180, 20, 150, 'rect', guideColor));
+        obstacles.push(new Obstacle("mid_pin1", CANVAS_WIDTH / 2 - 60, 250, 25, 25, 'circle', pinColor2)); 
+        obstacles.push(new Obstacle("mid_pin2", CANVAS_WIDTH / 2 + 35, 250, 25, 25, 'circle', pinColor2)); 
+        obstacles.push(new Obstacle("mid_pin3", CANVAS_WIDTH / 2 - 12, 320, 25, 25, 'circle', pinColor1)); 
+        obstacles.push(new Obstacle("slant_L", 80, 380, 100, 15, 'rect', funnelColor)); 
+        obstacles.push(new Obstacle("slant_R", CANVAS_WIDTH - 180, 380, 100, 15, 'rect', funnelColor)); 
+
+        const funnelTopY = DRAWER_Y - 120;
+        const funnelOpeningWidth = 80; 
+
+        const shoulderTotalWidth = (CANVAS_WIDTH / 2 - 50 - funnelOpeningWidth / 2);
+        const totalShoulderDrop = Math.floor(shoulderTotalWidth * 0.10); 
+
+        const shoulderStepWidth = shoulderTotalWidth / 2;
+        const shoulderStepDrop = totalShoulderDrop / 2; 
+
+        obstacles.push(new Obstacle("funnel_L_shoulder_step1", 0, funnelTopY, shoulderStepWidth, shoulderStepDrop, 'rect', funnelColor));
+        obstacles.push(new Obstacle("funnel_L_shoulder_step2", 50 + shoulderStepWidth, funnelTopY + shoulderStepDrop, shoulderStepWidth, shoulderStepDrop, 'rect', funnelColor));
+        
+        const R_shoulder_X_start = CANVAS_WIDTH / 2 + funnelOpeningWidth / 2;
+        obstacles.push(new Obstacle("funnel_R_shoulder_step1", CANVAS_WIDTH - shoulderStepWidth, funnelTopY, shoulderStepWidth, shoulderStepDrop, 'rect', funnelColor));
+        obstacles.push(new Obstacle("funnel_R_shoulder_step2", R_shoulder_X_start, funnelTopY + shoulderStepDrop, shoulderStepWidth, shoulderStepDrop, 'rect', funnelColor));
+
+        const funnelPassageStartY = funnelTopY + totalShoulderDrop;
+        const funnelPassageHeight = 100 - totalShoulderDrop; 
+
+        obstacles.push(new Obstacle("funnel_L_passage", CANVAS_WIDTH / 2 - funnelOpeningWidth / 2 - 20, funnelPassageStartY, 20, funnelPassageHeight, 'rect', funnelColor));
+        obstacles.push(new Obstacle("funnel_R_passage", CANVAS_WIDTH / 2 + funnelOpeningWidth / 2, funnelPassageStartY, 20, funnelPassageHeight, 'rect', funnelColor));
+    }
+
+    function resetAndStartGame() {
+        availableNames = [...originalNames]; 
+        matchedNamesInOrder = []; 
+        fallingLetters = [];
+        currentWordBuffer = "";
+        lastSpawnTime = performance.now();
+        gameIsOver = false;
+        emitStandupReset();
+
+        updateNamesDisplay();
+        ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT); 
+
+        if (gameLoopId) cancelAnimationFrame(gameLoopId); 
+        gameLoopId = requestAnimationFrame(gameLoop);
+    }
+
+    function initGame() {
+        loadNamesFromStorage(); 
+        setupObstacles(); 
+
+        if (restartButton) restartButton.addEventListener('click', resetAndStartGame);
+        if (updateNamesButton) updateNamesButton.addEventListener('click', updateNamesFromInput);
+        if (namesInputElement) namesInputElement.addEventListener('blur', updateNamesFromInput);
+        
+        resetAndStartGame(); 
+    }
+
+    initGame();
+</script>
+
+<style>
+/* =========================================================
+   PROFESSIONAL DASHBOARD LAYOUT (Applied to Pinball)
+   ========================================================= */
+
+/* Override global app-shell for full width */
+.app-shell {
+  padding: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Base Dashboard Container */
+.pro-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  height: calc(100vh - var(--header-h, 100px) - 40px);
+  min-height: 500px;
+  padding: 16px min(2vw, 24px) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* --- HEADER BAR --- */
+.pro-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: 1px solid var(--brand-border, #e2e8f0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+.pro-title h1 {
+  font-size: 1.4rem;
+  margin: 0 0 4px 0;
+  color: var(--brand-text, #1e293b);
+}
+.pro-title p, .settings-hint {
+  font-size: 0.85rem;
+  margin: 0;
+  color: var(--brand-subtle-text, #64748b);
+}
+.settings-hint a { color: #3498db; text-decoration: none; font-weight: bold; }
+
+/* --- 3-PANE WORKSPACE --- */
+.pro-workspace {
+  display: grid;
+  grid-template-columns: 240px 1fr 240px;
+  gap: 16px;
+  flex: 1; 
+  min-height: 0; 
+}
+
+.pro-panel {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--brand-border, #e2e8f0);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+}
+
+/* Common Header within Panes */
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+}
+.panel-header label, .panel-header h2 {
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #475569;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+.icon-btn {
+  background: none;
+  border: none;
+  color: #3498db;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+.icon-btn:hover { background: #e0f2fe; }
+
+/* Left Pane: Inputs */
+#namesInput {
+  flex: 1;
+  resize: none;
+  border: none;
+  padding: 12px 16px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  background: transparent;
+  color: #334155;
+}
+#namesInput:focus { outline: none; background: #ffffff; }
+
+.panel-footer {
+  padding: 12px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}
+.pro-primary-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--brand-accent, linear-gradient(to bottom right, rgba(52,152,219,.9), rgba(41,128,185,.9)));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(52, 152, 219, 0.3);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.pro-primary-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 0 2px rgba(52, 152, 219, 0.3);
+}
+
+/* Right Pane: Results */
+.results-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.name-item {
+  padding: 8px 10px;
+  font-size: 0.9rem;
+  color: var(--brand-text, #374151);
+  background: #ffffff;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.25s ease;
+}
+.name-item.matched {
+  background: rgba(46, 125, 50, 0.15);
+  color: #1e293b;
+  border-left: 4px solid #2ecc71;
+  border-color: rgba(46, 125, 50, 0.2);
+  font-weight: 700;
+  text-decoration: none; /* Removed line-through as it only shows matched names now */
+  animation: highlightName 0.5s ease-in-out;
+}
+@keyframes highlightName {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+/* --- CENTER PANE: GAME CANVAS --- */
+.game-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--brand-surface, #041a35);
+}
+
+.game-container {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  width: 100%;
+  min-height: 0;
+}
+
+#gameCanvas {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.4), inset 0 0 20px rgba(0,0,0,0.5);
+  background: #041a35; 
+  border: 4px solid #4a3b31; 
+}
+
+/* --- SEO SECTION --- */
+.seo-content-area { margin-top: 3rem; padding: 0 20px; max-width: 1000px; margin-left: auto; margin-right: auto; }
+.seo-content-area h2, .seo-content-area h3 { color: var(--brand-text); }
+.seo-content-area ul { padding-left: 1.5rem; line-height: 1.6; }
+
+/* --- RESPONSIVE TABLET & MOBILE --- */
+@media (max-width: 1024px) {
+  .pro-workspace { grid-template-columns: 200px 1fr 200px; }
+}
+
+@media (max-width: 850px) {
+  .pro-dashboard { height: auto; min-height: 800px; padding: 12px; }
+  .pro-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .pro-workspace { grid-template-columns: 1fr; grid-template-rows: auto 500px auto; }
+  #namesInput { min-height: 120px; }
+}
+</style>
