@@ -23,6 +23,9 @@
 - [Choices Spinner](https://dailypick.dev/apps/choices-spinner): Editable wheels with fairness rules and persistent option lists.
 - [Random Letter Generator](https://dailypick.dev/apps/random-letter-generator): Generate letters in various cases and batch sizes for naming and prompts.
 - [Random Number Generator](https://dailypick.dev/apps/random-number-generator): Generate integers within a range with optional no-repeat rules.
+- [Yes or No Wheel](https://dailypick.dev/apps/yes-or-no-wheel): Spin a simple yes/no decision wheel for fast, fair binary choices.
+- [Raceway Randomizer](https://dailypick.dev/apps/raceway): Race-based order picker for meetings, classrooms, and group activities.
+- [Office Trap](https://dailypick.dev/apps/office-trap): Eliminate options one by one until the final choice remains — great for team decisions and surprise outcomes.
 - [What Drink Should I Choose](https://dailypick.dev/apps/what-drink-should-i-choose): Filtered drink wheel for coffee, tea, smoothies, and quick hydration choices.
 - [What Should I Eat](https://dailypick.dev/apps/what-should-i-eat): Meal suggestion wheel with cuisine filters and dietary constraints.
 - [What Snack Should I Have](https://dailypick.dev/apps/what-snack-should-i-have): Snack picker with categories for sweet, salty, healthy, and movie-night options.
@@ -42,6 +45,7 @@
 - [Two Truths and a Lie](https://dailypick.dev/apps/two-truths-and-a-lie): Collect statements, gather votes, and reveal outcomes live.
 - [Would You Rather](https://dailypick.dev/apps/would-you-rather): Quick choice prompts and voting for team discussion.
 - [Never Have I Ever](https://dailypick.dev/apps/never-have-i-ever): Icebreaker prompts with voting and sharing.
+- [Cook or Order In](https://dailypick.dev/apps/cook-or-order-in): Spin a wheel to decide between cooking at home or ordering takeout.
 
 ## Technical Stack
 
