@@ -1,0 +1,43 @@
+---
+layout: base.njk
+title: Games & Group Activities – Playful Team Games | Daily Pick
+description: Discover social games, party activities, and icebreaker experiences for teams, classrooms, and remote groups.
+keywords: team games, party games, icebreakers, group activities, multiplayer challenges, online games for teams
+sitemap:
+  priority: 0.9
+  changefreq: weekly
+---
+
+<main class="main-container" id="main" data-page-type="games">
+    <header class="hero">
+        <h1 class="hero__title">Games & Group Activities</h1>
+        <p class="hero__subtitle">
+            Discover social games, icebreakers, and group activities that keep teams laughing, connected, and energized.
+        </p>
+    </header>
+
+    <section aria-labelledby="games-heading" class="game-selection">
+        <div class="game-section__header">
+            <p class="section-eyebrow">Playful Experiences</p>
+            <h2 class="section-title" id="games-heading">Fun for Teams and Gatherings</h2>
+            <p class="section-subtitle">Choose from multiplayer challenges, interactive prompts, and playful decision games to spark conversation and friendly competition.</p>
+        </div>
+        {% from "_includes/app-grid.njk" import appCards %}
+        <ul class="game-grid" role="list">
+          {{ appCards(apps, "games") }}
+        </ul>
+    </section>
+
+    <section aria-labelledby="why-heading" class="intro">
+        <h2 class="section-title" id="why-heading">Bring energy to every meeting</h2>
+        <div class="intro__content">
+            <p>These games are designed to be quick to start, easy to play, and great for teams that want to add a playful break without slowing down their day.</p>
+            <ul>
+                <li><strong>Fast setup:</strong> Open, play, and share with no downloads or sign-ins required.</li>
+                <li><strong>Group-friendly:</strong> Perfect for remote or in-person teams, classrooms, and social gatherings.</li>
+                <li><strong>Flexible formats:</strong> Pick from spin wheels, trivia-style prompts, and competitive group games.</li>
+            </ul>
+            <p>Looking for meeting-focused tools instead? Visit our <a href="/standups/">Standup Games Hub</a> or <a href="/randomizers/">Random Pickers &amp; Decision Tools</a>.</p>
+        </div>
+    </section>
+</main>
