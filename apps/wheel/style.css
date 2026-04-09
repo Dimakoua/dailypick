@@ -27,6 +27,20 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+main#main {
+  width: min(92vw, 940px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px 16px 40px;
+}
+
+main#main h1,
+main#main .settings-hint {
+  text-align: center;
+}
+
 /* Title */
 /* Buttons */
 #spinBtn {
