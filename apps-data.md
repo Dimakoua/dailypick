@@ -198,15 +198,6 @@
     "description": "Quickly flip a coin or roll a die for those moments when you just need a random binary choice."
   },
   {
-    "id": "yes-or-no-wheel",
-    "name": "Yes or No Wheel",
-    "path": "/apps/yes-or-no-wheel/",
-    "category": "randomizer",
-    "footerGroup": "Randomizers",
-    "emoji": "🟢",
-    "description": "Spin a simple yes/no decision wheel for fast, fair binary choices."
-  },
-  {
     "id": "random-number-generator",
     "name": "Random Number Generator",
     "path": "/apps/random-number-generator/",
