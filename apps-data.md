@@ -216,15 +216,6 @@
     "description": "Generate one or more random letters for naming, brainstorming, and creative prompts."
   },
   {
-    "id": "choices-spinner",
-    "name": "Choices Spinner",
-    "path": "/apps/choices-spinner/",
-    "category": "randomizer",
-    "footerGroup": "Randomizers",
-    "emoji": "🎡",
-    "description": "Spin a decision wheel for tacos, tasks, or any list of possibilities."
-  },
-  {
     "id": "truth-or-dare",
     "name": "Truth or Dare",
     "path": "/apps/truth-or-dare/",
