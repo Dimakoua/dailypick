@@ -21,10 +21,19 @@ module.exports = [
     id: "raceway",
     name: "Raceway Randomizer",
     path: "/apps/raceway/",
-    category: "standup",
-    footerGroup: "Stand-up",
+    category: "randomizer",
+    footerGroup: "Randomizers",
     emoji: "🏁",
     description: "A flexible race-based order picker for meetings, classrooms, and group activities."
+  },
+  {
+    id: "office-trap",
+    name: "Office Trap",
+    path: "/apps/office-trap/",
+    category: "randomizer",
+    footerGroup: "Randomizers",
+    emoji: "🪤",
+    description: "Eliminate options one by one until the final choice remains. Great for team decisions and surprise outcomes."
   },
   {
     id: "trap",
