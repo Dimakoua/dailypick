@@ -402,4 +402,4 @@ Pick one. Run it this week. Track which games land best. Rotate them. Your meeti
 - [How to Run Effective Daily Standup Meetings](/blog/how-to-run-effective-daily-standup-meetings/)
 - [Agile Retrospective Games: Complete Guide to Energizing Sprint Reviews](/blog/agile-retrospective-games-complete-guide/)
 - [Hybrid All-Hands Agendas That Keep Every Voice Engaged](/blog/hybrid-all-hands-playbook-fair-fun-agendas-that-keep-teams-engaged/)
-- [Stop the Meeting Dread: Fun Ways to Make Stand-Ups Engaging](/blog/stop-the-meeting-dread-fun-ways-to-make-stand-ups-engaging/)
+- Stop the Meeting Dread: Fun Ways to Make Stand-Ups Engaging

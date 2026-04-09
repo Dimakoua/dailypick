@@ -18,7 +18,7 @@ robots: index,follow
 ---
 Let's be honest, the daily stand-up. It's essential, yes. But can it sometimes feel a *tad* repetitive? The same order, the same polite-but-slightly-forced "you go next," or the awkward silence until someone bravely steps up. What if we told you that deciding who speaks next could actually be... fun? And fair? And even a mini morale booster?
 
-At Daily Pick, we're all about injecting a bit of playfulness into the workday, especially when it comes to team interactions. A smooth, engaging stand-up sets a positive tone for the entire day. If you’re running hybrid or async updates, pair these ideas with our [Slack + Daily Pick automation guide](/blog/supercharge-async-standups-with-slack-and-daily-pick/) so the fun carries into every channel. So, let's ditch the monotony and explore some creative ways to pick your speaking order!
+At Daily Pick, we're all about injecting a bit of playfulness into the workday, especially when it comes to team interactions. A smooth, engaging stand-up sets a positive tone for the entire day. If you’re running hybrid or async updates, pair these ideas with our Slack + Daily Pick automation guide so the fun carries into every channel. So, let's ditch the monotony and explore some creative ways to pick your speaking order!
 
 ## Why Bother Shaking Things Up?
 
@@ -60,4 +60,4 @@ The key is to find what works for your team. Maybe you rotate through different 
 
 By introducing a little unpredictability and fun, you're not just choosing who speaks next; you're building a more connected and energized team.
 
-*Ready to make your stand-ups and team decisions more engaging?* Start with our [complete guide to 8 standup meeting ideas](/blog/8-best-standup-meeting-ideas/) to pick your format, then layer on speaker selection games from Daily Pick. Explore the fun and fair games at [Daily Pick](/) today, then level up with our tips for [energizing daily stand-ups](/blog/stop-the-meeting-dread-fun-ways-to-make-stand-ups-engaging/) or the [remote onboarding icebreaker hits](/blog/remote-onboarding-icebreakers-your-new-hires-will-love/) that keep new teammates smiling. For a quick refresher on the format fundamentals, the official [Scrum Guide](https://scrumguides.org/scrum-guide.html) is still the gold standard—Daily Pick just makes the ritual infinitely more fun.
+*Ready to make your stand-ups and team decisions more engaging?* Start with our [complete guide to 8 standup meeting ideas](/blog/8-best-standup-meeting-ideas/) to pick your format, then layer on speaker selection games from Daily Pick. Explore the fun and fair games at [Daily Pick](/) today, then level up with our tips for energizing daily stand-ups or the remote onboarding icebreaker hits that keep new teammates smiling. For a quick refresher on the format fundamentals, the official [Scrum Guide](https://scrumguides.org/scrum-guide.html) is still the gold standard—Daily Pick just makes the ritual infinitely more fun.

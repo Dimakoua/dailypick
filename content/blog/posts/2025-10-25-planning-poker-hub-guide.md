@@ -19,7 +19,7 @@ robots: index,follow
 Let’s face it — sprint estimation meetings can sometimes drag on. Long discussions, inconsistent votes, awkward silences while waiting for everyone to decide... sound familiar?  
 
 But what if you could *bring energy and clarity* back to the process — and actually make it enjoyable for everyone involved?  
-Enter *[Planning Poker Hub](/apps/planning-poker/)* by Daily Pick — your team's new favorite way to estimate stories *together*. It's the natural follow-up to our guides on [energizing stand-ups](/blog/stop-the-meeting-dread-fun-ways-to-make-stand-ups-engaging/) and [making retros fun](/blog/level-up-your-team-retrospectives-fun-fair-activities-to-boost-engagement/), giving your entire agile loop a fairness upgrade.
+Enter *[Planning Poker Hub](/apps/planning-poker/)* by Daily Pick — your team's new favorite way to estimate stories *together*. It's the natural follow-up to our guides on energizing stand-ups and [making retros fun](/blog/level-up-your-team-retrospectives-fun-fair-activities-to-boost-engagement/), giving your entire agile loop a fairness upgrade.
 
 ---
 
@@ -111,4 +111,4 @@ With *Planning Poker Hub*, you can bring focus, fairness, and fun back to sprint
 ---
 
 *Ready to level up your agile ceremonies?*  
-Explore more team-friendly tools at [Daily Pick](/) — designed to make every meeting a little smarter (and a lot more fun). Next up, try the [decision-fatigue fixes](/blog/stop-the-meeting-meltdown-fun-fair-ways-to-manage-team-decision-fatigue/) or our [hybrid all-hands playbook](/blog/hybrid-all-hands-playbook-fair-fun-agendas-that-keep-teams-engaged/) to give the rest of your rituals the same treatment.
+Explore more team-friendly tools at [Daily Pick](/) — designed to make every meeting a little smarter (and a lot more fun).

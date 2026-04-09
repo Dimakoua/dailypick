@@ -18,7 +18,7 @@ robots: index,follow
 ---
 Let's face it: retrospectives can sometimes feel like a necessary evil.  Another meeting, another list of what went wrong, another session of potentially awkward feedback. But what if we told you that your retrospectives could be transformed from tedious tasks into engaging, energizing team-building experiences?  It's entirely possible, and the benefits are significant:  improved team morale, better collaboration, and ultimately, more effective sprints.
 
-This week, we're diving deep into the art of making your Agile retrospectives truly *fun* and *fair*. We'll explore techniques that not only gather valuable feedback but also foster a positive, engaging environment where everyone feels comfortable contributing. Looking for pre-work ideas? Try the energizers in [Stop the Meeting Dread: Fun Ways to Make Stand-Ups Engaging](/blog/stop-the-meeting-dread-fun-ways-to-make-stand-ups-engaging/) at the start of retro to warm up the room.
+This week, we're diving deep into the art of making your Agile retrospectives truly *fun* and *fair*. We'll explore techniques that not only gather valuable feedback but also foster a positive, engaging environment where everyone feels comfortable contributing. Looking for pre-work ideas? Try the energizers in Stop the Meeting Dread: Fun Ways to Make Stand-Ups Engaging at the start of retro to warm up the room.
 
 
 ## Beyond the Usual Suspects: Ditching the Monotony
@@ -81,4 +81,4 @@ Remember, the goal is to improve future sprints, not to dwell on past mistakes. 
 
 By incorporating these fun and fair approaches, you'll transform your retrospectives from dreaded meetings into valuable team-building experiences. The added energy and engagement will lead to better feedback, more effective solutions, and a stronger, more motivated team.
 
-Ready to make your team retrospectives less of a drag and more of a delight? Explore the fun and fair tools at Daily Pick today, then send folks to our [Hybrid All-Hands Playbook](/blog/hybrid-all-hands-playbook-fair-fun-agendas-that-keep-teams-engaged/) when you need bigger-room inspiration or the [decision fatigue guide](/blog/stop-the-meeting-meltdown-fun-fair-ways-to-manage-team-decision-fatigue/) to keep action items balanced. Want more retro science? Atlassian’s [Team Playbook retrospective guide](https://www.atlassian.com/team-playbook/plays/retrospective) gives the perfect structure to complement your Daily Pick games.
+Ready to make your team retrospectives less of a drag and more of a delight? Explore the fun and fair tools at Daily Pick today, then send folks to our [Hybrid All-Hands Playbook](/blog/hybrid-all-hands-playbook-fair-fun-agendas-that-keep-teams-engaged/) when you need bigger-room inspiration.

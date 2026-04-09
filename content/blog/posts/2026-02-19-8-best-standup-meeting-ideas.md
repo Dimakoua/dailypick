@@ -233,7 +233,7 @@ Then during the **live 10-min standup**, you:
 
 ### Tools:
 - Slack thread-based updates
-- [Daily Pick + Slack integration](/blog/supercharge-async-standups-with-slack-and-daily-pick/)
+- Daily Pick + Slack integration
 - Loom video standups (recorded, watched async)
 
 ---
@@ -441,7 +441,7 @@ Pick one standup idea above and start this week. Notice which moments create eng
 **Related guides for team rituals:**
 - **Running estimations alongside standups?** Read our [Planning Poker Hub Guide](/blog/planning-poker-hub-guide/)
 - **Make sprints even stronger?** Check out our [Agile Retro Activities Guide](/blog/level-up-your-team-retrospectives-fun-fair-activities-to-boost-engagement/)
-- **Async or distributed team?** Explore [Async Standups with Slack Integration](/blog/supercharge-async-standups-with-slack-and-daily-pick/)
+- **Async or distributed team?** Explore Async Standups with Slack Integration
 - **Want to automate standup prep?** Read about [Meeting Prep Automation](/blog/why-teams-who-skip-weekly-meeting-prep-waste-3-hours-and-how-daily-pick-instantly-recovers-it/)
 
 Your team's standup doesn't have to be a slog. It can be the moment the team aligns, surfaces problems early, and feels genuinely connected.

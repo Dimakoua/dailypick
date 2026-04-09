@@ -273,7 +273,7 @@ The classic 3-question format is a starting point. As your team matures, conside
 
 **Tools:**
 - Slack thread-based updates
-- [Daily Pick + Slack integration](/blog/supercharge-async-standups-with-slack-and-daily-pick/)
+- Daily Pick + Slack integration
 - Loom video updates
 
 ---
@@ -527,7 +527,7 @@ The tools for structure:
 - **[Daily Pick Timer](/apps/timer/)** — Visual countdown that keeps everyone moving
 - **[Decision Wheel](/apps/wheel/)** — Randomize speaker order fairly each day
 - **[Speedway Racer](/apps/speedway/)** — Race-based fun that energizes standups
-- **[Daily Pick + Slack Integration](/blog/supercharge-async-standups-with-slack-and-daily-pick/)** — For async-first teams
+- **Daily Pick + Slack Integration** — For async-first teams
 
 Your standup doesn't have to be boring. It can be the moment your team aligns, feels supported, and knows what's happening.
 
