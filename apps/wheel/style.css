@@ -107,6 +107,14 @@ canvas {
   text-align: center;
 }
 
+.seo-grid img {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.08);
+  display: block;
+}
+
 /* SEO visuals moved to assets/css/seo-card.css */
 
 .button-group {
