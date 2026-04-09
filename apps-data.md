@@ -1,0 +1,351 @@
+[
+  {
+    "id": "wheel",
+    "name": "Wheel",
+    "path": "/apps/wheel/",
+    "category": "standup",
+    "footerGroup": "Stand-up",
+    "emoji": "🎡",
+    "description": "A fair and fun spin to decide who shares updates next. Quick, easy, and no more ‘who’s first?’ dilemmas."
+  },
+  {
+    "id": "speedway",
+    "name": "Speedway",
+    "path": "/apps/speedway/",
+    "category": "standup",
+    "footerGroup": "Stand-up",
+    "emoji": "🐢",
+    "description": "A delightful turtle race to determine your team’s stand-up sequence. May the best colleague win."
+  },
+  {
+    "id": "raceway",
+    "name": "Raceway Randomizer",
+    "path": "/apps/raceway/",
+    "category": "randomizer",
+    "footerGroup": "Randomizers",
+    "emoji": "🏁",
+    "description": "A flexible race-based order picker for meetings, classrooms, and group activities."
+  },
+  {
+    "id": "office-trap",
+    "name": "Office Trap",
+    "path": "/apps/office-trap/",
+    "category": "randomizer",
+    "footerGroup": "Randomizers",
+    "emoji": "🪤",
+    "description": "Eliminate options one by one until the final choice remains. Great for team decisions and surprise outcomes."
+  },
+  {
+    "id": "trap",
+    "name": "Trap!",
+    "path": "/apps/trap/",
+    "category": "standup",
+    "footerGroup": "Stand-up",
+    "emoji": "🎯",
+    "description": "A lighthearted game of strategy. Great for a quick team brain-teaser."
+  },
+  {
+    "id": "letters",
+    "name": "Falling Letters Pinball",
+    "path": "/apps/letters/",
+    "category": "standup",
+    "footerGroup": "Stand-up",
+    "emoji": "🕹️",
+    "description": "Match names by typing letters as they tumble down. A fun test of speed and accuracy."
+  },
+  {
+    "id": "gravity-drift",
+    "name": "Gravity Drift",
+    "path": "/apps/gravity-drift/",
+    "category": "standup",
+    "footerGroup": "Stand-up",
+    "emoji": "🚀",
+    "description": "Launch rockets and navigate asteroid fields. A space-themed adventure of trajectory and fuel management."
+  },
+  {
+    "id": "patchinko-machine",
+    "name": "Patchinko Machine",
+    "path": "/apps/patchinko-machine/",
+    "category": "standup",
+    "footerGroup": "Stand-up",
+    "emoji": "🎳",
+    "description": "Drop balls through a pachinko board to set the speaking order—fast, fair, and fun."
+  },
+  {
+    "id": "ballgame",
+    "name": "Momentum Mayhem",
+    "path": "/apps/ballgame/",
+    "category": "standup",
+    "footerGroup": "Stand-up",
+    "emoji": "🔴",
+    "description": "Unleash physics-based chaos! Push the ball into moving traps, triggering wild special effects with every capture."
+  },
+  {
+    "id": "mimic-master",
+    "name": "Mimic Master",
+    "path": "/apps/mimic-master/",
+    "category": "standup",
+    "footerGroup": "Stand-up",
+    "emoji": "🖐️",
+    "description": "Match numbers or emojis with your hands and climb the shared reaction-time leaderboard."
+  },
+  {
+    "id": "snowball-fight",
+    "name": "Snowball Fight",
+    "path": "/apps/snowball-fight/",
+    "category": "standup",
+    "footerGroup": "Stand-up",
+    "emoji": "⛄",
+    "description": "Battle in a classic multiplayer arena. Last one standing wins—death order leaderboard tracks who fell first."
+  },
+  {
+    "id": "planning-poker",
+    "name": "Planning Poker",
+    "path": "/apps/planning-poker/",
+    "category": "agile",
+    "footerGroup": "Tools",
+    "emoji": "🃏",
+    "description": "Real-time Fibonacci estimation rooms with hidden votes, host controls, and Jira-ready summaries."
+  },
+  {
+    "id": "retro-board",
+    "name": "Retro Board",
+    "path": "/apps/retro-board/",
+    "category": "agile",
+    "footerGroup": "Tools",
+    "emoji": "📋",
+    "description": "Run collaborative retrospectives with drag-and-drop cards, voting, and real-time team insights."
+  },
+  {
+    "id": "timer",
+    "name": "Timer",
+    "path": "/apps/timer/",
+    "category": "agile",
+    "footerGroup": "Tools",
+    "emoji": "⏱️",
+    "description": "Build multi-stage meeting timers with shareable presets and audio cues to keep your meetings on track."
+  },
+  {
+    "id": "capacity-dice",
+    "name": "Capacity Dice",
+    "path": "/apps/capacity-dice/",
+    "category": "agile",
+    "footerGroup": "Tools",
+    "emoji": "🎲",
+    "description": "Roll PTO, meeting, and wildcard dice to stress-test sprint capacity and copy the summary."
+  },
+  {
+    "id": "morale-thermometer",
+    "name": "Morale Thermometer",
+    "path": "/apps/morale-thermometer/",
+    "category": "agile",
+    "footerGroup": "Tools",
+    "emoji": "🌡️",
+    "description": "Anonymously rate team energy on a visual scale and see the aggregated results in real-time."
+  },
+  {
+    "id": "random-name-picker",
+    "name": "Random Name Picker",
+    "path": "/apps/random-name-picker/",
+    "category": "randomizer",
+    "footerGroup": "Randomizers",
+    "emoji": "📝",
+    "description": "A quick and simple way to pick one or more names from a list fairly. Perfect for group selection."
+  },
+  {
+    "id": "classroom-name-roulette",
+    "name": "Classroom Name Roulette",
+    "path": "/apps/classroom-name-roulette/",
+    "category": "randomizer",
+    "footerGroup": "Randomizers",
+    "emoji": "🎓",
+    "description": "A fair and friendly way for teachers to call on students or pick helpers fairly."
+  },
+  {
+    "id": "random-list-shuffler",
+    "name": "Random List Shuffler",
+    "path": "/apps/random-list-shuffler/",
+    "category": "randomizer",
+    "footerGroup": "Randomizers",
+    "emoji": "🔀",
+    "description": "Randomize any list, generate creative team names, or split groups instantly."
+  },
+  {
+    "id": "giveaway-winner-picker",
+    "name": "Giveaway Winner Picker",
+    "path": "/apps/giveaway-winner-picker/",
+    "category": "randomizer",
+    "footerGroup": "Randomizers",
+    "emoji": "🏆",
+    "description": "Pick fair winners for contests and social giveaways with a transparent and fun draw."
+  },
+  {
+    "id": "raffle-ticket-puller",
+    "name": "Raffle Ticket Puller",
+    "path": "/apps/raffle-ticket-puller/",
+    "category": "randomizer",
+    "footerGroup": "Randomizers",
+    "emoji": "🎫",
+    "description": "Draw a winning ticket quickly and keep every giveaway feeling fair."
+  },
+  {
+    "id": "coin-flip-dice-roller",
+    "name": "Coin Flip & Dice Roller",
+    "path": "/apps/coin-flip-dice-roller/",
+    "category": "randomizer",
+    "footerGroup": "Randomizers",
+    "emoji": "🪙",
+    "description": "Quickly flip a coin or roll a die for those moments when you just need a random binary choice."
+  },
+  {
+    "id": "yes-or-no-wheel",
+    "name": "Yes or No Wheel",
+    "path": "/apps/yes-or-no-wheel/",
+    "category": "randomizer",
+    "footerGroup": "Randomizers",
+    "emoji": "🟢",
+    "description": "Spin a simple yes/no decision wheel for fast, fair binary choices."
+  },
+  {
+    "id": "random-number-generator",
+    "name": "Random Number Generator",
+    "path": "/apps/random-number-generator/",
+    "category": "randomizer",
+    "footerGroup": "Randomizers",
+    "emoji": "🔢",
+    "description": "Generate a random number between your chosen minimum and maximum values instantly."
+  },
+  {
+    "id": "random-letter-generator",
+    "name": "Random Letter Generator",
+    "path": "/apps/random-letter-generator/",
+    "category": "randomizer",
+    "footerGroup": "Randomizers",
+    "emoji": "🔤",
+    "description": "Generate one or more random letters for naming, brainstorming, and creative prompts."
+  },
+  {
+    "id": "choices-spinner",
+    "name": "Choices Spinner",
+    "path": "/apps/choices-spinner/",
+    "category": "randomizer",
+    "footerGroup": "Randomizers",
+    "emoji": "🎡",
+    "description": "Spin a decision wheel for tacos, tasks, or any list of possibilities."
+  },
+  {
+    "id": "truth-or-dare",
+    "name": "Truth or Dare",
+    "path": "/apps/truth-or-dare/",
+    "category": "randomizer",
+    "footerGroup": "Games",
+    "emoji": "🎲",
+    "description": "Break the ice at parties or team hangouts with hundreds of curated fun and friendly prompts."
+  },
+  {
+    "id": "what-should-i-eat",
+    "name": "What Should I Eat?",
+    "path": "/apps/what-should-i-eat/",
+    "category": "randomizer",
+    "footerGroup": "Games",
+    "emoji": "🍕",
+    "description": "Can’t decide on dinner? Spin the wheel to pick between pizza, sushi, tacos, and more!"
+  },
+  {
+    "id": "cook-or-order-in",
+    "name": "Cook or Order In",
+    "path": "/apps/cook-or-order-in/",
+    "category": "randomizer",
+    "footerGroup": "Games",
+    "emoji": "🍳",
+    "description": "Can’t choose between cooking at home or ordering takeout? Let the wheel make the call."
+  },
+  {
+    "id": "what-snack-should-i-have",
+    "name": "What Snack Should I Have?",
+    "path": "/apps/what-snack-should-i-have/",
+    "category": "randomizer",
+    "footerGroup": "Games",
+    "emoji": "🍿",
+    "description": "Spin for snack ideas from sweet treats and crunchy bites to healthy nibbles."
+  },
+  {
+    "id": "what-drink-should-i-choose",
+    "name": "What Drink Should I Choose?",
+    "path": "/apps/what-drink-should-i-choose/",
+    "category": "randomizer",
+    "footerGroup": "Games",
+    "emoji": "🥤",
+    "description": "Pick a beverage for the moment, from coffee and tea to juice, soda, or hydration."
+  },
+  {
+    "id": "two-truths-and-a-lie",
+    "name": "Two Truths and a Lie",
+    "path": "/apps/two-truths-and-a-lie/",
+    "category": "randomizer",
+    "footerGroup": "Games",
+    "emoji": "🕵️",
+    "description": "Enter three statements, mark the lie, and reveal the answer after the group guesses."
+  },
+  {
+    "id": "would-you-rather",
+    "name": "Would You Rather",
+    "path": "/apps/would-you-rather/",
+    "category": "randomizer",
+    "footerGroup": "Games",
+    "emoji": "🤔",
+    "description": "Play a quick choice game with custom prompts or curated icebreakers for teams and gatherings."
+  },
+  {
+    "id": "settings",
+    "name": "Settings",
+    "path": "/apps/settings/",
+    "category": "nav",
+    "footerGroup": "Resources",
+    "emoji": "⚙️",
+    "description": "Customize branding, player names, and game settings in one place."
+  },
+  {
+    "id": "blog",
+    "name": "Blog",
+    "path": "/blog/",
+    "category": "nav",
+    "footerGroup": "Resources",
+    "emoji": "📚",
+    "description": "Read articles, updates, and tips for making everyday meetings more engaging."
+  },
+  {
+    "id": "whats-new",
+    "name": "What's New",
+    "path": "/apps/whats-new/",
+    "category": "nav",
+    "footerGroup": "Resources",
+    "emoji": "✨",
+    "description": "See recently added features, games, and improvements."
+  },
+  {
+    "id": "feedback",
+    "name": "Feedback",
+    "path": "/feedback/",
+    "category": "nav",
+    "footerGroup": "Resources",
+    "emoji": "💬",
+    "description": "Share your ideas and help us improve Daily Pick with your feedback."
+  },
+  {
+    "id": "agile",
+    "name": "Agile Planning Hub",
+    "path": "/agile/",
+    "category": "nav",
+    "emoji": "📊",
+    "description": "Explore Planning Poker, Retro Board, Timer, Capacity Dice, and Morale Thermometer."
+  },
+  {
+    "id": "randomizers",
+    "name": "Randomizers Hub",
+    "path": "/randomizers/",
+    "category": "nav",
+    "emoji": "🎲",
+    "description": "Browse all decision-making tools from name pickers to meal wheel games."
+  }
+]
