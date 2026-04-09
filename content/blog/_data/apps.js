@@ -75,8 +75,8 @@ module.exports = [
     id: "ballgame",
     name: "Momentum Mayhem",
     path: "/apps/ballgame/",
-    category: "standup",
-    footerGroup: "Stand-up",
+    category: "games",
+    footerGroup: "Games",
     emoji: "🔴",
     description: "Unleash physics-based chaos! Push the ball into moving traps, triggering wild special effects with every capture."
   },
@@ -84,8 +84,8 @@ module.exports = [
     id: "mimic-master",
     name: "Mimic Master",
     path: "/apps/mimic-master/",
-    category: "standup",
-    footerGroup: "Stand-up",
+    category: "games",
+    footerGroup: "Games",
     emoji: "🖐️",
     description: "Match numbers or emojis with your hands and climb the shared reaction-time leaderboard."
   },
@@ -93,8 +93,8 @@ module.exports = [
     id: "snowball-fight",
     name: "Snowball Fight",
     path: "/apps/snowball-fight/",
-    category: "standup",
-    footerGroup: "Stand-up",
+    category: "games",
+    footerGroup: "Games",
     emoji: "⛄",
     description: "Battle in a classic multiplayer arena. Last one standing wins—death order leaderboard tracks who fell first."
   },
@@ -237,7 +237,7 @@ module.exports = [
     id: "truth-or-dare",
     name: "Truth or Dare",
     path: "/apps/truth-or-dare/",
-    category: "randomizer",
+    category: "games",
     footerGroup: "Games",
     emoji: "🎲",
     description: "Break the ice at parties or team hangouts with hundreds of curated fun and friendly prompts."
@@ -246,7 +246,7 @@ module.exports = [
     id: "what-should-i-eat",
     name: "What Should I Eat?",
     path: "/apps/what-should-i-eat/",
-    category: "randomizer",
+    category: "games",
     footerGroup: "Games",
     emoji: "🍕",
     description: "Can’t decide on dinner? Spin the wheel to pick between pizza, sushi, tacos, and more!"
@@ -255,7 +255,7 @@ module.exports = [
     id: "cook-or-order-in",
     name: "Cook or Order In",
     path: "/apps/cook-or-order-in/",
-    category: "randomizer",
+    category: "games",
     footerGroup: "Games",
     emoji: "🍳",
     description: "Can’t choose between cooking at home or ordering takeout? Let the wheel make the call."
@@ -264,7 +264,7 @@ module.exports = [
     id: "what-snack-should-i-have",
     name: "What Snack Should I Have?",
     path: "/apps/what-snack-should-i-have/",
-    category: "randomizer",
+    category: "games",
     footerGroup: "Games",
     emoji: "🍿",
     description: "Spin for snack ideas from sweet treats and crunchy bites to healthy nibbles."
@@ -273,7 +273,7 @@ module.exports = [
     id: "what-drink-should-i-choose",
     name: "What Drink Should I Choose?",
     path: "/apps/what-drink-should-i-choose/",
-    category: "randomizer",
+    category: "games",
     footerGroup: "Games",
     emoji: "🥤",
     description: "Pick a beverage for the moment, from coffee and tea to juice, soda, or hydration."
@@ -282,7 +282,7 @@ module.exports = [
     id: "two-truths-and-a-lie",
     name: "Two Truths and a Lie",
     path: "/apps/two-truths-and-a-lie/",
-    category: "randomizer",
+    category: "games",
     footerGroup: "Games",
     emoji: "🕵️",
     description: "Enter three statements, mark the lie, and reveal the answer after the group guesses."
@@ -291,7 +291,7 @@ module.exports = [
     id: "would-you-rather",
     name: "Would You Rather",
     path: "/apps/would-you-rather/",
-    category: "randomizer",
+    category: "games",
     footerGroup: "Games",
     emoji: "🤔",
     description: "Play a quick choice game with custom prompts or curated icebreakers for teams and gatherings."
