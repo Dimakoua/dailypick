@@ -180,15 +180,6 @@
     "description": "Pick fair winners for contests and social giveaways with a transparent and fun draw."
   },
   {
-    "id": "raffle-ticket-puller",
-    "name": "Raffle Ticket Puller",
-    "path": "/apps/raffle-ticket-puller/",
-    "category": "randomizer",
-    "footerGroup": "Randomizers",
-    "emoji": "🎫",
-    "description": "Draw a winning ticket quickly and keep every giveaway feeling fair."
-  },
-  {
     "id": "coin-flip-dice-roller",
     "name": "Coin Flip & Dice Roller",
     "path": "/apps/coin-flip-dice-roller/",
