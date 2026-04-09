@@ -1,0 +1,558 @@
+---
+layout: base_app.njk
+title: "Trap! – Strategic Name Picker Game | Daily Pick"
+description: "Place surprise traps, capture teammates, and make quick decisions with Daily Pick"
+keywords: "trap game, name picker game, strategy game, team game, fun decision maker, interactive game, daily pick"
+canonical: "https://dailypick.dev/apps/trap/"
+ogImage: "https://dailypick.dev/assets/og-image-main.png"
+ogImageAlt: "Animated trap catching a player token in Daily Pick"
+appStyles: |
+  <link href="/apps/office_trap/style.css" rel="stylesheet" />
+headExtra: |
+  <script defer="" src="/assets/js/standup-data.js"></script>
+  <script defer="" src="/assets/js/standup-panel.js"></script>
+  <script defer="" src="/assets/js/standup-onboarding.js"></script>
+---
+<main id="main" data-page-type="standup" class="app-shell">
+
+    <div class="app-card pro-dashboard">
+        <!-- TOP NAV: Header & Settings -->
+        <header class="pro-header">
+            <div class="pro-title">
+                <h1>🎯 Office Trap!</h1>
+                <p>Place surprise traps, capture teammates, and make quick decisions.</p>
+            </div>
+            <div class="pro-settings">
+                <p class="settings-hint">Brand colors? Visit <a href="/apps/roster/">Settings</a></p>
+            </div>
+        </header>
+
+        <!-- MAIN WORKSPACE: 3-Pane Layout -->
+        <div class="pro-workspace">
+            
+            <!-- LEFT PANE: Inputs & Action -->
+            <div class="pro-panel side-panel input-panel">
+                <div class="panel-header">
+                    <label for="namesInput">Participants</label>
+                    <button id="updateNamesBtn" class="icon-btn" title="Update Participants">↻ Sync</button>
+                </div>
+                <textarea id="namesInput" spellcheck="false" placeholder="One name per line...">Kate
+Andre
+Juan
+Dmytro
+Vetura
+Zachary
+Lindsay</textarea>
+                <div class="panel-footer">
+                    <button id="trapBtn" class="pro-primary-btn">🪤 Set Trap!</button>
+                </div>
+            </div>
+
+            <!-- CENTER PANE: The Track/Game Area -->
+            <div class="pro-panel main-panel track-panel game-panel">
+                <div class="game-container">
+                    <canvas height="400" id="gameCanvas" width="500"></canvas>
+                    <div id="office-overlay"></div>
+                </div>
+                <!-- Status area below canvas -->
+                <div aria-atomic="true" aria-live="polite" id="info">Welcome to the office!</div>
+            </div>
+
+            <!-- RIGHT PANE: Results -->
+            <div class="pro-panel side-panel results-panel" aria-atomic="true" aria-live="polite" id="results-area">
+                <div class="panel-header">
+                    <h2>Caught!</h2>
+                </div>
+                <div class="results-scroll-area">
+                    <ol id="resultsOrderList"></ol>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="seo-content-area">
+        <h2>Welcome to Office Trap! - The Strategic Selection Game</h2>
+        <p>Office Trap! is an interactive game where your teammates (and maybe a few office mice) wander around the
+            workstation. Strategically place a trap to pick your next stand-up leader!
+        </p>
+        <h3>How to Play</h3>
+        <ul>
+            <li>Enter teammate names in the list and click Sync.</li>
+            <li>Click "Set Trap!" to place a trap randomly in the office.</li>
+            <li>Watch as teammates move around the furniture. The first one to step into the trap zone is "caught".
+            </li>
+            <li>Click the button again to confirm your selection or move the trap if no one was caught.</li>
+        </ul>
+        <h3>Why Trap! is Great for Teams</h3>
+        <p>This fun decision maker is ideal for:</p>
+        <ul>
+            <li>Breaking the ice in meetings.</li>
+            <li>Deciding who leads the next stand-up or presents a demo.</li>
+            <li>Adding a playful element to task assignments.</li>
+            <li>Any situation where a bit of light-hearted competition can make choices more engaging.</li>
+        </ul>
+    </div>
+</main>
+
+<script>
+    "use strict";
+
+    const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
+    const LOCAL_STORAGE_KEY = 'namesList';
+
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const trapBtn = document.getElementById('trapBtn');
+    const info = document.getElementById('info');
+    const namesInput = document.getElementById("namesInput");
+    const updateNamesBtn = document.getElementById("updateNamesBtn");
+    const resultsOrderList = document.getElementById('resultsOrderList');
+
+    const syncNamesInput = () => {
+        if (namesInput) {
+            namesInput.value = originalNames.join('\n');
+        }
+    };
+
+    let originalNames = [...DEFAULT_NAMES];
+    let members = [];
+    let eliminatedNames = [];
+    const STANDUP_SOURCE = 'trap';
+
+    function normalizeStandupKey(name) {
+        return typeof name === 'string' ? name.trim().toLowerCase() : '';
+    }
+
+    function uniqueNameList(names) {
+        const seen = new Set();
+        const result = [];
+        names.forEach((name) => {
+            const trimmed = typeof name === 'string' ? name.trim() : '';
+            const key = normalizeStandupKey(trimmed);
+            if (!key || seen.has(key)) return;
+            seen.add(key);
+            result.push(trimmed);
+        });
+        return result;
+    }
+
+    function standupParticipants() {
+        return uniqueNameList(originalNames);
+    }
+
+    function emitStandupReset() {
+        const participants = standupParticipants();
+        window.dispatchEvent(new CustomEvent('standup:queue-reset', {
+            detail: { source: STANDUP_SOURCE, participants },
+        }));
+        emitStandupUpdate();
+    }
+
+    function emitStandupUpdate(currentNameOverride) {
+        const participants = standupParticipants();
+        const completed = uniqueNameList(eliminatedNames);
+        const remainingList = uniqueNameList(members.map(member => member.name));
+
+        let current = null;
+        if (typeof currentNameOverride === 'string') {
+            const trimmed = currentNameOverride.trim();
+            if (normalizeStandupKey(trimmed)) {
+                current = trimmed;
+            }
+        }
+
+        if (!current) {
+            if (remainingList.length > 0) {
+                current = remainingList[0];
+            } else if (completed.length > 0) {
+                current = completed[completed.length - 1];
+            }
+        }
+
+        const currentKey = normalizeStandupKey(current);
+        const upcoming = currentKey
+            ? remainingList.filter((name) => normalizeStandupKey(name) !== currentKey)
+            : remainingList;
+
+        const detail = {
+            source: STANDUP_SOURCE,
+            mode: 'manual',
+            participants,
+            completed,
+            remaining: upcoming,
+        };
+        if (currentKey) {
+            detail.current = current;
+        }
+
+        window.dispatchEvent(new CustomEvent('standup:queue', { detail }));
+    }
+
+    function updateResultsUI() {
+        if (!resultsOrderList) return;
+        resultsOrderList.innerHTML = '';
+        eliminatedNames.forEach(name => {
+            const li = document.createElement('li');
+            li.textContent = name;
+            li.classList.add('finished-entry');
+            resultsOrderList.appendChild(li);
+        });
+        const resultsArea = document.querySelector('.results-scroll-area');
+        if (resultsArea) resultsArea.scrollTop = resultsArea.scrollHeight;
+    }
+
+    function recordTrapCatch(name) {
+        if (typeof name !== 'string') {
+            emitStandupUpdate();
+            return;
+        }
+        const trimmed = name.trim();
+        const key = normalizeStandupKey(trimmed);
+        if (!key) {
+            emitStandupUpdate();
+            return;
+        }
+        if (!eliminatedNames.some((entry) => normalizeStandupKey(entry) === key)) {
+            eliminatedNames.push(trimmed);
+            updateResultsUI(); // Update the right pane
+        }
+        emitStandupUpdate(trimmed);
+    }
+
+    const colors = [
+        '#e74c3c', '#3498db', '#2ecc71', '#f1c40f', '#9b59b6', '#e67e22',
+        '#1abc9c', '#34495e', '#d35400', '#27ae60', '#c0392b'
+    ];
+
+    const trapRadius = 45;
+    let trap = null; 
+    let trapActive = false;
+    let trapStartTime = 0;
+    const ATTRACTION_DELAY = 5000; 
+    const ATTRACTION_FORCE = 0.05; 
+
+    const PIXEL_WORKERS = ['👨‍💻', '👩‍💻', '👨‍💼', '👩‍💼', '👨‍🎨', '👩‍🎨', '👨‍🔬', '👩‍🔬'];
+    const furniture = [];
+
+    function setupOfficeFurniture() {
+        furniture.length = 0;
+        const rows = 3;
+        const cols = 2;
+        const paddingX = 80;
+        const paddingY = 70;
+        const spacingX = (canvas.width - paddingX * 2) / (cols - 1);
+        const spacingY = (canvas.height - paddingY * 2) / (rows - 1);
+
+        for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+                const x = paddingX + c * spacingX;
+                const y = paddingY + r * spacingY;
+                furniture.push({ type: 'desk', icon: '📦', x: x, y: y, items: ['🖥️', '☕', '🪴'][Math.floor(Math.random() * 3)] });
+                furniture.push({ type: 'chair', icon: '💺', x: x, y: y + 25 });
+            }
+        }
+        furniture.push({ type: 'decor', icon: '🚰', x: 40, y: 40 }); 
+        furniture.push({ type: 'decor', icon: '🛋️', x: canvas.width - 50, y: 40 }); 
+    }
+
+    function loadNamesFromStorage() {
+        const storedNamesJson = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (storedNamesJson) {
+            try {
+                const storedNames = JSON.parse(storedNamesJson);
+                if (Array.isArray(storedNames) && storedNames.length > 0) {
+                    originalNames = [...storedNames];
+                }
+            } catch (e) {
+                originalNames = [...DEFAULT_NAMES];
+            }
+        } else {
+            originalNames = [...DEFAULT_NAMES];
+        }
+        syncNamesInput();
+    }
+
+    function saveNamesToStorage() {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(originalNames));
+    }
+
+    function initializeMembers(currentNames) {
+        members = currentNames.map(name => ({
+            name,
+            sprite: PIXEL_WORKERS[Math.floor(Math.random() * PIXEL_WORKERS.length)],
+            color: colors[Math.floor(Math.random() * colors.length)],
+            x: Math.random() * (canvas.width - 60) + 30,
+            y: Math.random() * (canvas.height - 60) + 30,
+            vx: (Math.random() * 1.0 + 0.5) * (Math.random() < 0.5 ? 1 : -1),
+            vy: (Math.random() * 1.0 + 0.5) * (Math.random() < 0.5 ? 1 : -1),
+            trapped: false,
+            facing: Math.random() < 0.5 ? 1 : -1
+        }));
+
+        for (let i = 0; i < 3; i++) {
+            members.push({
+                name: "Office Mouse", sprite: '🐭', color: '#999',
+                x: Math.random() * (canvas.width - 60) + 30,
+                y: Math.random() * (canvas.height - 60) + 30,
+                vx: (Math.random() * 2.0 + 1.0) * (Math.random() < 0.5 ? 1 : -1),
+                vy: (Math.random() * 2.0 + 1.0) * (Math.random() < 0.5 ? 1 : -1),
+                trapped: false, facing: Math.random() < 0.5 ? 1 : -1,
+                isMouse: true
+            });
+        }
+
+        trapBtn.disabled = members.filter(m => !m.isMouse).length === 0;
+        if (members.length === 0 && originalNames.length > 0) {
+            info.innerHTML = "All caught! End of the shift. ✨";
+        } else if (members.length === 0 && originalNames.length === 0) {
+            info.textContent = "Please add office mates to the list.";
+        }
+    }
+
+    function drawOfficeFloor() {
+        ctx.fillStyle = '#f5f7f9';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.strokeStyle = '#e1e4e8';
+        ctx.lineWidth = 1;
+        const tileSize = 60;
+        for (let x = 0; x <= canvas.width; x += tileSize) {
+            ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+        }
+        for (let y = 0; y <= canvas.height; y += tileSize) {
+            ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+        }
+
+        furniture.forEach(item => {
+            ctx.save();
+            ctx.translate(item.x, item.y);
+            if (item.type === 'desk') {
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath(); ctx.roundRect(-30, -15, 60, 30, 4); ctx.fill();
+                ctx.shadowColor = 'rgba(0,0,0,0.05)'; ctx.shadowBlur = 4; ctx.shadowOffsetY = 2;
+                ctx.strokeStyle = '#d1d5da'; ctx.stroke(); ctx.shadowColor = 'transparent';
+                ctx.font = '24px serif'; ctx.fillText(item.items, 0, 0);
+            } else {
+                ctx.font = '24px serif'; ctx.fillText(item.icon, 0, 5);
+            }
+            ctx.restore();
+        });
+    }
+
+    function drawShape(m) {
+        ctx.font = m.isMouse ? '18px serif' : '32px serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.shadowColor = 'rgba(0,0,0,0.1)'; ctx.shadowBlur = 4; ctx.shadowOffsetY = 4;
+
+        ctx.save();
+        ctx.translate(m.x, m.y);
+        if (m.facing < 0) ctx.scale(-1, 1);
+        ctx.fillText(m.sprite, 0, 0);
+        ctx.restore();
+
+        ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+
+        if (!m.isMouse) {
+            ctx.font = 'bold 9px Nunito, Arial, sans-serif';
+            const textWidth = ctx.measureText(m.name).width;
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.beginPath(); ctx.roundRect(m.x - (textWidth / 2 + 4), m.y + 18, textWidth + 8, 12, 4); ctx.fill();
+            ctx.strokeStyle = '#ddd'; ctx.stroke();
+            ctx.fillStyle = '#444'; ctx.fillText(m.name, m.x, m.y + 24);
+        }
+
+        if (m.trapped && !m.isMouse) {
+            ctx.strokeStyle = '#e74c3c'; ctx.lineWidth = 2; ctx.setLineDash([4, 2]);
+            ctx.beginPath(); ctx.arc(m.x, m.y, 22, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
+        }
+    }
+
+    function moveMembers() {
+        const now = Date.now();
+        const pulling = trap && trapActive && (now - trapStartTime > ATTRACTION_DELAY);
+
+        members.forEach(m => {
+            if (m.trapped) return;
+            if (pulling && !m.isMouse) {
+                const dx = trap.x - m.x; const dy = trap.y - m.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist > 5) { 
+                    m.vx += (dx / dist) * ATTRACTION_FORCE; m.vy += (dy / dist) * ATTRACTION_FORCE;
+                    const speed = Math.sqrt(m.vx * m.vx + m.vy * m.vy);
+                    const maxSpeed = 3.5;
+                    if (speed > maxSpeed) { m.vx = (m.vx / speed) * maxSpeed; m.vy = (m.vy / speed) * maxSpeed; }
+                }
+            }
+
+            m.x += m.vx; m.y += m.vy;
+            if (m.vx > 0) m.facing = 1; if (m.vx < 0) m.facing = -1;
+
+            if (m.x < 30) { m.x = 30; m.vx = -m.vx; } else if (m.x > canvas.width - 30) { m.x = canvas.width - 30; m.vx = -m.vx; }
+            if (m.y < 30) { m.y = 30; m.vy = -m.vy; } else if (m.y > canvas.height - 30) { m.y = canvas.height - 30; m.vy = -m.vy; }
+            if (Math.random() < 0.02) m.vx = (Math.random() * 2 - 1);
+            if (Math.random() < 0.02) m.vy = (Math.random() * 2 - 1);
+        });
+    }
+
+    function drawTrap() {
+        if (!trap) return;
+        const now = Date.now();
+        const pulling = trapActive && (now - trapStartTime > ATTRACTION_DELAY);
+
+        ctx.save(); ctx.globalAlpha = 0.2; ctx.fillStyle = '#e74c3c'; ctx.beginPath();
+        ctx.arc(trap.x, trap.y, trapRadius, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+
+        ctx.strokeStyle = '#c0392b'; ctx.lineWidth = 2; ctx.setLineDash([6, 4]);
+        ctx.beginPath(); ctx.arc(trap.x, trap.y, trapRadius, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
+
+        ctx.font = '32px serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText(pulling ? '🍔' : '🎤', trap.x, trap.y);
+    }
+
+    function celebrateFinalUser(user) {
+        const cards = [];
+        const startY = canvas.height - 50;
+        for (let i = 0; i < 50; i++) {
+            cards.push({
+                x: Math.random() * canvas.width, y: startY,
+                vx: (Math.random() - 0.5) * 8, vy: -15 - Math.random() * 10,
+                gravity: 0.6, rotation: 0, rotationSpeed: (Math.random() - 0.5) * 0.4,
+                delay: i * 3, active: false, color: user.color,
+                icon: ['📁', '🖊️', '☕', '📅'][Math.floor(Math.random() * 4)]
+            });
+        }
+
+        let frame = 0;
+        function animate() {
+            drawOfficeFloor();
+            ctx.font = '80px serif'; ctx.fillText('⭐', canvas.width / 2, canvas.height / 2 - 40);
+
+            ctx.save(); ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.font = '64px serif'; ctx.fillText(user.sprite, 0, 0); ctx.restore();
+
+            ctx.font = 'bold 24px Nunito'; ctx.fillStyle = '#333';
+            ctx.fillText(`${user.name} wins!`, canvas.width / 2, canvas.height / 2 + 60);
+
+            for (const card of cards) {
+                if (!card.active && frame > card.delay) card.active = true;
+                if (card.active) {
+                    card.vy += card.gravity; card.x += card.vx; card.y += card.vy; card.rotation += card.rotationSpeed;
+                    ctx.save(); ctx.translate(card.x, card.y); ctx.rotate(card.rotation);
+                    ctx.font = '24px serif'; ctx.fillText(card.icon, 0, 0); ctx.restore();
+                }
+            }
+
+            frame++;
+            if (frame < 300) requestAnimationFrame(animate);
+            else { info.innerHTML = `🎉 ${user.name} is the survivor! Update list to restart.`; }
+        }
+        animate();
+    }
+
+    function checkTrap() {
+        if (!trap) return [];
+        if (trapActive) {
+            const trapable = members.filter(m => !m.isMouse);
+            for (const m of trapable) {
+                if (m.trapped) continue;
+                const dx = m.x - trap.x; const dy = m.y - trap.y;
+                if (Math.sqrt(dx * dx + dy * dy) <= trapRadius) {
+                    m.trapped = true; trapActive = false;
+                    info.innerHTML = `🎯 <strong>${m.name}</strong> pinned! Click to confirm.`;
+                    trapBtn.textContent = '✅ Confirm Trap!';
+                    return [m];
+                }
+            }
+            return [];
+        } else {
+            return members.filter(m => m.trapped);
+        }
+    }
+
+    function resetAndInitializeGame() {
+        eliminatedNames = [];
+        updateResultsUI();
+        setupOfficeFurniture();
+        initializeMembers(originalNames);
+        trap = null;
+        trapActive = false;
+        trapBtn.textContent = '🪤 Set Trap!';
+        
+        if (originalNames.length > 0) {
+            info.textContent = "Everyone is at their desks. Ready?";
+        } else {
+            info.textContent = "Please add names to the list.";
+        }
+        trapBtn.disabled = originalNames.length === 0;
+        emitStandupReset();
+    }
+
+    function updateNamesFromInput() {
+        if (!namesInput) return;
+        const inputText = namesInput.value.trim();
+        const newNames = inputText ? inputText.split(/[\n,]+/).map(name => name.trim()).filter(name => name.length > 0) : [];
+        originalNames = newNames.length > 0 ? [...newNames] : [...DEFAULT_NAMES];
+        syncNamesInput();
+        saveNamesToStorage();
+        resetAndInitializeGame();
+    }
+
+    function gameLoop() {
+        drawOfficeFloor();
+        moveMembers();
+        if (trap && trapActive) checkTrap();
+        drawTrap();
+        members.forEach(drawShape);
+        requestAnimationFrame(gameLoop);
+    }
+
+    trapBtn.addEventListener('click', () => {
+        if (trap) {
+            const caughtMembers = members.filter(m => m.trapped && !m.isMouse);
+            if (caughtMembers.length > 0) {
+                const caughtMember = caughtMembers[0];
+                members = members.filter(m => m.name !== caughtMember.name);
+                
+                trap = null;
+                trapActive = false;
+                trapBtn.textContent = '🪤 Set Trap!';
+                members.forEach(m => m.trapped = false);
+                recordTrapCatch(caughtMember.name);
+
+                const humanRemaining = members.filter(m => !m.isMouse).length;
+                if (humanRemaining === 0) {
+                    info.innerHTML = `🎉 SURVIVOR: ${caughtMember.name} made it!`;
+                    celebrateFinalUser(caughtMember);
+                    trapBtn.disabled = true;
+                } else {
+                    info.innerHTML = `<strong>${caughtMember.name}</strong> caught! ${humanRemaining} colleagues left.`;
+                }
+            } else {
+                info.textContent = "They dodged it! Try again.";
+                trapBtn.textContent = '🪤 Set Trap!';
+                trap = null;
+                trapActive = false;
+            }
+        } else {
+            const humanRemaining = members.filter(m => !m.isMouse).length;
+            if (humanRemaining === 0) return;
+            const margin = trapRadius + 10;
+            trap = {
+                x: Math.random() * (canvas.width - margin * 2) + margin,
+                y: Math.random() * (canvas.height - margin * 2) + margin
+            };
+            trapActive = true;
+            trapStartTime = Date.now();
+            info.textContent = "Trap set! Let's see who steps in...";
+            trapBtn.textContent = '❌ Cancel Trap';
+        }
+    });
+
+    if (updateNamesBtn) updateNamesBtn.addEventListener("click", updateNamesFromInput);
+    if (namesInput) namesInput.addEventListener("blur", updateNamesFromInput);
+
+    loadNamesFromStorage();
+    resetAndInitializeGame();
+    gameLoop();
+</script>
