@@ -40,7 +40,13 @@
   text-decoration: underline;
 }
 
-/* Small-screen tweaks (keeps the same breakpoints used across apps) */
-@media (max-width: 520px) {
-  .seo-content-area { padding: 18px 16px; }
+.seo-content-area img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 20px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.08);
+  object-fit: contain;
+  max-height: 300px;
 }
+
