@@ -139,7 +139,7 @@
 .runner-controls .ghost,
 .panel-actions .ghost {
   background: transparent;
-  color: var(--brand-accent-contrast-text);
+  color: var(--brand-accent);
   border-style: dashed;
   box-shadow: none;
 }
@@ -261,7 +261,7 @@
   border-radius: 16px;
   padding: 14px 16px;
   background: var(--brand-surface, rgba(255, 255, 255, 0.95));
-  color: var(--brand-accent-contrast-text, #fff);
+  color: var(--brand-accent, #fff);
 
   transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
   cursor: pointer;
