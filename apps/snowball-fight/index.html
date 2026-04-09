@@ -9,9 +9,6 @@ ogImageAlt: "Team members battling in Daily Pick"
 appStyles: |
   <link href="/apps/snowball-fight/style.css" rel="stylesheet" />
 headExtra: |
-  <script defer="" src="/assets/js/standup-data.js"></script>
-  <script defer="" src="/assets/js/standup-panel.js"></script>
-  <script defer="" src="/assets/js/standup-onboarding.js"></script>
   <script defer="" src="/assets/js/results-pip.js"></script>
 ---
 <main data-page-type="standup" aria-labelledby="snowballHeading" class="snowball-page">
@@ -139,16 +136,6 @@ headExtra: |
                 <li><strong>Leaderboard:</strong> First to die appears at the top, last survivor at the bottom.</li>
             </ol>
         </section>
-        <!-- Standup Panel Integration -->
-        <aside aria-labelledby="standupPanelTitle" class="standup-panel" id="standup-panel" style="display: none;">
-            <header class="standup-panel__header">
-                <h2 id="standupPanelTitle">Stand-up Queue</h2>
-                <button aria-label="Close" class="standup-panel__close" id="standup-panel-close">×</button>
-            </header>
-            <div class="standup-panel__content">
-                <div class="standup-queue" id="standup-panel-queue"></div>
-            </div>
-        </aside>
 
     <section class="seo-content-area glass-card">
       <h2>Snowball Fight – multiplayer battle arena for remote team energizers</h2>
@@ -178,14 +165,24 @@ headExtra: |
         <li>Enter your display name and create or join a room.</li>
         <li>Share the invite link with teammates so everyone can join the battle.</li>
       </ol>
-      <p>[Image: room creation and join controls]</p>
-      <ol start="3">
-        <li>Start the match and use WASD or arrow keys to move while throwing snowballs with clicks or the spacebar.</li>
-      </ol>
-      <p>[Image: gameplay controls and arena view]</p>
-      <ol start="4">
-        <li>Watch the live leaderboard and see who survives longest in the death order list.</li>
-      </ol>
+      <div class="seo-grid">
+        <figure>
+          <img src="/assets/images/snowball-fight/snowball-fight-room-controls.png" alt="Snowball Fight room creation and join controls" loading="lazy" decoding="async" />
+          <figcaption>Create or join a room, then send the invite link to your team.</figcaption>
+        </figure>
+        <figure>
+          <img src="/assets/images/snowball-fight/snowball-fight-initial-controls.png" alt="Snowball Fight initial keyboard and click controls" loading="lazy" decoding="async" />
+          <figcaption>Use WASD or arrows to move and click or spacebar to throw snowballs.</figcaption>
+        </figure>
+        <figure>
+          <img src="/assets/images/snowball-fight/snowball-fight-gameplay.png" alt="Snowball Fight gameplay arena with players and snowballs" loading="lazy" decoding="async" />
+          <figcaption>Battle in the arena and dodge snowballs as your death order updates live.</figcaption>
+        </figure>
+        <figure>
+          <img src="/assets/images/snowball-fight/snowball-fight-result-screen.png" alt="Snowball Fight live leaderboard and result screen" loading="lazy" decoding="async" />
+          <figcaption>Watch the live leaderboard and see who lasted longest in the match.</figcaption>
+        </figure>
+      </div>
 
       <h2 id="key-features-customization">3. Key Features &amp; Customization</a></h2>
       <ul>
