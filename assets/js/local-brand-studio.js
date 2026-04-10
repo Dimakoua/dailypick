@@ -379,9 +379,8 @@
     window.localStorage?.removeItem(storageKey);
 
     localBrandConfig = {};
-    appliedLocalVars.clear();
     applyLocalBrandConfig();
-    
+
     // Refresh the UI to inherited/default values
     document.querySelectorAll('.local-brand-studio-color-input, .local-brand-studio-text-input')
       .forEach((input) => {
@@ -389,8 +388,6 @@
           input.id.replace('local-brand-', ''),
         ));
       });
-
-    window.location.reload();
   }
 
   /**
