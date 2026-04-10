@@ -153,6 +153,15 @@ module.exports = [
     description: "A quick and simple way to pick one or more names from a list fairly. Perfect for group selection."
   },
   {
+    id: "pinball-picker",
+    name: "Pinball Picker",
+    path: "/apps/pinball-picker/",
+    category: "randomizer",
+    footerGroup: "Randomizers",
+    emoji: "🎱",
+    description: "Pick participants with falling letters and pinball-style physics. A playful way to choose who speaks next."
+  },
+  {
     id: "classroom-name-roulette",
     name: "Classroom Name Roulette",
     path: "/apps/classroom-name-roulette/",
