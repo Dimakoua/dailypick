@@ -253,7 +253,12 @@
 
     const description = document.createElement('p');
     description.className = 'local-brand-studio-description';
-    description.textContent = 'Customize colors for this page. Resets when you leave.';
+    description.textContent = 'Customize colors for this page. Resets when you leave. ';
+    const brandLink = document.createElement('a');
+    brandLink.href = '/apps/brand/';
+    brandLink.textContent = 'More options in Brand Studio →';
+    brandLink.className = 'local-brand-studio-brand-link';
+    description.appendChild(brandLink);
     controlsContainer.appendChild(description);
 
     // Create controls for each customizable property
