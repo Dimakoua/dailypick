@@ -4,7 +4,7 @@ Daily Pick is a collection of lightweight web experiences and supporting automat
 
 ## Quick Start
 - `npm install` – install dependencies
-- `npm run build` – generate the static site into `dist/`
+- `npm run build` – generate the static site into `dist/` and minify HTML, CSS, and JS
 - `npm run dev` – run the Cloudflare Worker locally with Wrangler (includes static assets from `dist/`)
 - `npm run deploy` – publish the worker to production (requires configured credentials)
 

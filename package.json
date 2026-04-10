@@ -10,12 +10,15 @@
         "@fontsource/inter": "^5.2.8",
         "@quasibit/eleventy-plugin-sitemap": "^2.2.0",
         "eleventy-plugin-og-image": "^4.2.1",
+        "html-minifier-terser": "^7.2.0",
         "itty-router": "^4.0.23",
+        "lightningcss": "^1.32.0",
         "puppeteer": "^24.40.0",
+        "terser": "^5.46.1",
         "wrangler": "^4.23.0"
     },
     "scripts": {
-        "build": "eleventy",
+        "build": "eleventy && node scripts/minify-dist.js",
         "dev": "wrangler dev",
         "deploy": "wrangler deploy"
     }
