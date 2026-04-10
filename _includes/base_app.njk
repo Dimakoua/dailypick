@@ -10,7 +10,11 @@
     {% set robotsMeta = robots or "index,follow" %}
     {% set canonicalUrl = canonical or (metadata.url + page.url) %}
 
-    {% set ogImagePath = ogImage or metadata.defaultOgImage or '/assets/og-image-main.png' %}
+    {% setAsync "generatedOgImage" -%}
+      {% ogImage "./_includes/og-image.og.njk", { title: pageTitle, subtitle: pageDescription } %}
+    {%- endsetAsync %}
+
+    {% set ogImagePath = generatedOgImage or ogImage or metadata.defaultOgImage or '/assets/og-image-main.png' %}
     {% set twitterImagePath = twitterImage or ogImagePath %}
     {% set ogImageAbsolute = ogImagePath %}
     {% if ogImageAbsolute and not ogImageAbsolute.startsWith("http") %}
