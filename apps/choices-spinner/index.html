@@ -7,6 +7,7 @@ canonical: "https://dailypick.dev/apps/choices-spinner/"
 ogImage: "https://dailypick.dev/assets/og-image-main.png"
 headExtra: |
   <link href="./style.css" rel="stylesheet" />
+localBrandConfig: /apps/choices-spinner/local-brand-config.js
 ---
   <main data-page-type="randomizer" class="spinner-page" id="main">
 
@@ -187,14 +188,36 @@ headExtra: |
       return Array.from(new Set(raw.split(/[\n,]+/).map(o => o.trim()).filter(Boolean)));
     }
 
-    function drawWheel() {
+    function getSegmentColors(count) {
+      const style = getComputedStyle(document.documentElement);
+      const palette = [
+        style.getPropertyValue('--wheel-segment-1').trim() || '#ff6b6b',
+        style.getPropertyValue('--wheel-segment-2').trim() || '#4ecdc4',
+        style.getPropertyValue('--wheel-segment-3').trim() || '#45b7d1',
+        style.getPropertyValue('--wheel-segment-4').trim() || '#ffa502',
+      ];
+      const colors = [];
+      for (let i = 0; i < count; i++) {
+        if (i < palette.length) {
+          colors.push(palette[i]);
+        } else {
+          colors.push(`hsl(${(i * 360 / count + 30) % 360}, 70%, 58%)`);
+        }
+      }
+      return colors;
+    }
+
+    function drawWheel(rotation = 0) {
       if (options.length === 0) return;
 
+      const segmentColors = getSegmentColors(options.length);
+      const borderColor = getComputedStyle(document.documentElement).getPropertyValue('--wheel-border').trim() || 'rgba(255, 255, 255, 0.3)';
       const angleStep = (2 * Math.PI) / options.length;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       ctx.save();
       ctx.translate(radius, radius);
+      ctx.rotate(rotation);
 
       options.forEach((option, i) => {
         const angle = i * angleStep;
@@ -202,9 +225,9 @@ headExtra: |
         ctx.moveTo(0, 0);
         ctx.arc(0, 0, radius, angle, angle + angleStep);
         ctx.lineTo(0, 0);
-        ctx.fillStyle = `hsl(${(i * 360) / options.length}, 75%, 55%)`;
+        ctx.fillStyle = segmentColors[i % segmentColors.length];
         ctx.fill();
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+        ctx.strokeStyle = borderColor;
         ctx.lineWidth = 2;
         ctx.stroke();
 
@@ -253,36 +276,7 @@ headExtra: |
         const easeOut = 1 - Math.pow(1 - progress, 3);
         const currentRotation = targetRotation * easeOut;
 
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.save();
-        ctx.translate(radius, radius);
-        ctx.rotate(currentRotation);
-
-        const angleStep = (2 * Math.PI) / options.length;
-        options.forEach((option, i) => {
-          const angle = i * angleStep;
-          ctx.beginPath();
-          ctx.moveTo(0, 0);
-          ctx.arc(0, 0, radius, angle, angle + angleStep);
-          ctx.lineTo(0, 0);
-          ctx.fillStyle = `hsl(${(i * 360) / options.length}, 75%, 55%)`;
-          ctx.fill();
-          ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
-          ctx.lineWidth = 2;
-          ctx.stroke();
-
-          ctx.save();
-          ctx.rotate(angle + angleStep / 2);
-          ctx.textAlign = 'right';
-          ctx.fillStyle = '#fff';
-          ctx.font = 'bold 14px Arial';
-          ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-          ctx.shadowBlur = 3;
-          ctx.fillText(option, radius - 20, 6);
-          ctx.restore();
-        });
-
-        ctx.restore();
+        drawWheel(currentRotation);
 
         if (progress < 1) {
           requestAnimationFrame(animateSpin);
@@ -318,6 +312,10 @@ headExtra: |
     });
 
     spinBtn.addEventListener('click', spinWheel);
+
+    window.addEventListener('localBrandConfigUpdated', () => {
+      if (!isSpinning) drawWheel();
+    });
 
     loadOptions();
   </script>

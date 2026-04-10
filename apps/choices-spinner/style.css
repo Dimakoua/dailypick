@@ -4,6 +4,15 @@
    - Glass cards and responsive layout
    ========================================================================== */
 
+:root {
+  /* Wheel segment defaults (overridable via Local Brand Studio) */
+  --wheel-segment-1: #ff6b6b;
+  --wheel-segment-2: #4ecdc4;
+  --wheel-segment-3: #45b7d1;
+  --wheel-segment-4: #ffa502;
+  --wheel-border: rgba(255, 255, 255, 0.3);
+}
+
 .skip-link {
   position: absolute;
   left: -9999px;

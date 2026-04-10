@@ -8,6 +8,7 @@ ogImage: "https://dailypick.dev/assets/og-image-main.png"
 ogImageAlt: "Green yes and red no options on the Yes or No decision wheel"
 appStyles: |
   <link href="/apps/yes-or-no-wheel/style.css" rel="stylesheet" />
+localBrandConfig: /apps/yes-or-no-wheel/local-brand-config.js
 ---
 
 <main id="main" class="yes-no-page" data-page-type="randomizer">
@@ -156,9 +157,6 @@ appStyles: |
   const resultText = document.getElementById('resultText');
   const resultMessage = document.getElementById('resultMessage');
 
-  const YES_COLOR = '#27ae60';
-  const NO_COLOR = '#e74c3c';
-  const MAYBE_COLOR = '#f39c12';
   const TEXT_COLOR = '#ffffff';
 
   const modes = {
@@ -173,9 +171,10 @@ appStyles: |
   let options = [...modes.twoOption];
 
   function getSliceColor(option) {
-    if (option === 'YES') return YES_COLOR;
-    if (option === 'NO') return NO_COLOR;
-    if (option === 'MAYBE') return MAYBE_COLOR;
+    const style = getComputedStyle(document.documentElement);
+    if (option === 'YES') return style.getPropertyValue('--yes-color').trim() || '#27ae60';
+    if (option === 'NO') return style.getPropertyValue('--no-color').trim() || '#e74c3c';
+    if (option === 'MAYBE') return style.getPropertyValue('--maybe-color').trim() || '#f39c12';
     return '#95a5a6';
   }
 
@@ -326,6 +325,10 @@ appStyles: |
   spinBtn.addEventListener('click', spinWheel);
   resetBtn.addEventListener('click', reset);
   modeBtn.addEventListener('click', switchMode);
+
+  window.addEventListener('localBrandConfigUpdated', () => {
+    if (!isSpinning) drawWheel();
+  });
 
   // Initial draw
   drawWheel();
