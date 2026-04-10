@@ -112,7 +112,9 @@ module.exports = async function(eleventyConfig) {
       './Readme.md',
       './content/blog/prompt.md',
       './content/feedback/index.njk',
-      './content/feedback/thank-you.njk'
+      './content/feedback/thank-you.njk',
+      './seo-instructions.md',
+      './apps/whats-new/screenshots/README.md'
     ];
 
     const items = collectionApi.getAll().filter(item => {
