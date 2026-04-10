@@ -20,7 +20,7 @@ robots: index,follow
 
 Project selection.  The mere mention can send shivers down the spines of team leaders everywhere.  Endless debates, clashing priorities, and the ever-present risk of someone feeling slighted – it's a recipe for meeting misery and decreased morale. But what if choosing team projects could actually be…fun?
 
-This week, we're diving into the surprisingly simple solutions to a common team challenge: selecting projects fairly and efficiently, without sacrificing team enthusiasm. Pair these ideas with the momentum from [Banish Meeting Boredom: Fun Team Decision-Making That Works](/blog/banish-meeting-boredom-fun-team-decision-making-that-works/) so your rituals stay consistent across every meeting.
+This week, we're diving into the surprisingly simple solutions to a common team challenge: selecting projects fairly and efficiently, without sacrificing team enthusiasm. Pair these ideas with the momentum from Banish Meeting Boredom: Fun Team Decision-Making That Works so your rituals stay consistent across every meeting.
 
 The traditional approaches – assigning projects based on seniority, skillset alone, or simply letting the loudest voice win – often lead to resentment and stifle creativity. They lack the crucial element of *fairness*, which is a cornerstone of positive team dynamics and productivity.
 
