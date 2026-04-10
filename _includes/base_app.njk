@@ -65,6 +65,7 @@
 
     <script defer src="/assets/js/brand-theme-engine.js"></script>
     <script defer src="/assets/js/brand-config.js"></script>
+    {% if localBrandConfig %}<script defer src="{{ localBrandConfig }}"></script>{% endif %}
     <script defer src="/assets/js/local-brand-studio.js"></script>
     <script defer src="/assets/js/embed.js"></script>
 

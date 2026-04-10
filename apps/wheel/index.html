@@ -8,6 +8,7 @@ ogImage: "https://dailypick.dev/assets/og-image-main.png"
 ogImageAlt: "Colorful slices on the Daily Pick decision wheel ready to select the next speaker"
 appStyles: |
   <link href="/apps/wheel/style.css" rel="stylesheet" />
+localBrandConfig: /apps/wheel/local-brand-config.js
 headExtra: |
   <script defer="" src="/assets/js/standup-data.js"></script>
   <script defer="" src="/assets/js/standup-panel.js"></script>
@@ -210,8 +211,19 @@ headExtra: |
             // toggleConfigArea(false);
         }
 
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#ff6b6b',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#4ecdc4',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#45b7d1',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#ffa502',
+            ];
+        }
+
         function drawWheel(names, rotationAngle = 0) {
             const angleStep = (2 * Math.PI) / names.length;
+            const segmentColors = getSegmentColors();
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             ctx.save();
@@ -224,7 +236,7 @@ headExtra: |
                 ctx.beginPath();
                 ctx.moveTo(radius, radius);
                 ctx.arc(radius, radius, radius, angle, angle + angleStep);
-                ctx.fillStyle = `hsl(${(i * 360) / names.length}, 80%, 60%)`;
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
                 ctx.fill();
 
                 // Draw text in the middle of each slice
@@ -323,6 +335,11 @@ headExtra: |
         if (updateNamesBtn && namesInput) {
             updateNamesBtn.addEventListener("click", updateNamesFromInput);
         }
+
+        // Redraw idle wheel when brand colors change
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(remaining, 0);
+        });
 
         // Initial setup
         loadNamesFromStorage(); // Load names first
