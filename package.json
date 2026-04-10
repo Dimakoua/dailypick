@@ -14,6 +14,7 @@
         "itty-router": "^4.0.23",
         "lightningcss": "^1.32.0",
         "puppeteer": "^24.40.0",
+        "sharp": "^0.34.5",
         "terser": "^5.46.1",
         "wrangler": "^4.23.0"
     },
