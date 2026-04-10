@@ -6,11 +6,12 @@ keywords: "team morale thermometer, sprint health check, agile pulse check, plan
 canonical: "https://dailypick.dev/apps/morale-thermometer/"
 ogImage: "https://dailypick.dev/assets/og-image-main.png"
 ogImageAlt: "Team checking the Daily Pick morale thermometer results during planning"
-headExtra: |
-  <link href="./style.css" rel="stylesheet" />
+appStyles: |
+  <link href="/apps/morale-thermometer/style.css" rel="stylesheet" />
+localBrandConfig: /apps/morale-thermometer/local-brand-config.js
 ---
 <main data-page-type="agile" aria-labelledby="moraleHeading" class="morale-page">
-                <header class="morale-hero glass-card">
+                <header class="page-hero glass-card">
                         <div>
                                 <p class="hero-eyebrow">Sprint Health Insight</p>
                                 <h1 id="moraleHeading">Team Morale Thermometer</h1>
@@ -18,9 +19,9 @@ headExtra: |
                                         aggregated pulse visible
                                         while you discuss next steps.</p>
                         </div>
-                        <p class="hero-note">Scores stay in sync for the room you create. Refresh the session before a
-                                new meeting to
-                                start fresh.</p>
+                        <div class="hero-meta">
+                                <p class="hero-note">Scores stay in sync for the room you create. Refresh the session before a new meeting to start fresh.</p>
+                        </div>
                 </header>
                 <section class="morale-grid">
                         <article aria-labelledby="thermometerHeading" class="thermometer-card glass-card">
@@ -67,7 +68,7 @@ headExtra: |
                                 </p>
                         </article>
                 </section>
-                <section class="seo-content-area glass-card">
+                <section class="seo-content-area">
                         <h2>Team Morale Thermometer – anonymous sprint pulse check for agile teams</h2>
                         <p>Team Morale Thermometer is an agile pulse check tool that helps teams collect anonymous energy ratings during planning and retros. It turns feelings into actionable data so teams can spot burnout, celebrate momentum, and adjust plans before the sprint gets off track.</p>
                         <p>Use this tool to gather instant mood feedback from your team, share a room link, and keep the session focused on results rather than individual responses.</p>
