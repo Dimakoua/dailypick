@@ -1,5 +1,5 @@
 ---
-title: "Stop the 'Who Goes Next?' Awkwardness: 3 Fun Ways to Order Your Standup"
+title: "3 Fun Ways to Order Your Standup"
 date: 2026-04-03
 description: "Eliminate the morning stand-up stall. Discover how to use a random list shuffler and mini-games to fairly determine your team's speaking order."
 layout: post.njk
