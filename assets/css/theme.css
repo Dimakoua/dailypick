@@ -106,10 +106,7 @@ h6 {
   padding: 20px min(5vw, 48px);
   box-sizing: border-box;
   position: relative;
-  z-index: 100;
-  display: flex;
-  justify-content: center;
-  background: none;
+  z-index: 1000;
   align-self: stretch;
 }
 
@@ -526,6 +523,9 @@ h6 {
   }
 
   .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
     padding: 14px 20px;
   }
 
