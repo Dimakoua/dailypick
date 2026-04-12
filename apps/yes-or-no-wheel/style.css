@@ -168,44 +168,6 @@
   margin-top: 0.75rem;
 }
 
-/* Info Card */
-.info-card {
-  background: var(--glass-bg, rgba(255, 255, 255, 0.12));
-  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
-  border-radius: var(--radius-lg);
-  backdrop-filter: blur(14px);
-  padding: 2rem 2.5rem;
-}
-
-.info-card h2 {
-  font-size: 1.4rem;
-  color: var(--brand-heading);
-  margin: 0 0 0.75rem;
-}
-
-.info-card h3 {
-  font-size: 1.15rem;
-  color: var(--brand-heading);
-  margin: 1.25rem 0 0.75rem;
-}
-
-.info-card p {
-  margin: 0.75rem 0;
-  line-height: 1.7;
-  color: var(--brand-text);
-}
-
-.info-card ul {
-  margin: 1rem 0;
-  padding-left: 1.5rem;
-}
-
-.info-card li {
-  margin: 0.5rem 0;
-  line-height: 1.6;
-  color: var(--brand-text);
-}
-
 /* Responsive */
 .mode-switch {
   display: flex;
