@@ -1,0 +1,26 @@
+<div id="pwa-search-overlay" role="dialog" aria-modal="true" aria-label="Search apps" aria-hidden="true">
+  <div class="pwa-search-header">
+    <div class="pwa-search-input-wrap">
+      <svg class="pwa-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" stroke-width="2"/>
+        <path d="M16.5 16.5L21 21" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <input
+        type="search"
+        id="pwa-search-input"
+        class="pwa-search-input"
+        placeholder="Search games & tools…"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+        enterkeyhint="go"
+        aria-label="Search games and tools"
+        aria-controls="pwa-search-results"
+        aria-autocomplete="list"
+      />
+    </div>
+    <button class="pwa-search-cancel" id="pwa-search-cancel" type="button">Cancel</button>
+  </div>
+  <div id="pwa-search-results" class="pwa-search-results" role="listbox" aria-label="Search results"></div>
+</div>

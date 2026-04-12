@@ -107,6 +107,193 @@
   pointer-events: none;
 }
 
+/* Search button — injected by JS on the right of the app bar */
+.pwa-search-btn {
+  position: absolute;
+  right: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--brand-accent, #3498db);
+  padding: 0.5rem;
+  border-radius: var(--radius-sm, 8px);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s;
+  z-index: 1;
+}
+.pwa-search-btn svg { width: 20px; height: 20px; }
+.pwa-search-btn:active { background: var(--brand-accent-muted, rgba(52, 152, 219, 0.12)); }
+
+/* ── Search overlay ────────────────────────────────────── */
+#pwa-search-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  background: var(--brand-background, #f4f7f6);
+  padding-top: env(safe-area-inset-top, 0px);
+  /* Hidden state */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+#pwa-search-overlay.pwa-search-open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.pwa-search-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--glass-border, rgba(221, 228, 235, 0.5));
+  background: color-mix(in srgb, var(--brand-surface, #fff) 92%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.pwa-search-input-wrap {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.pwa-search-icon {
+  position: absolute;
+  left: 10px;
+  width: 16px;
+  height: 16px;
+  color: var(--brand-subtle-text, #7f8c8d);
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.pwa-search-input {
+  width: 100%;
+  padding: 9px 12px 9px 34px;
+  border: 1px solid var(--brand-border, #dde4eb);
+  border-radius: var(--radius-md, 12px);
+  background: var(--brand-surface, #fff);
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--brand-text, #34495e);
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.pwa-search-input:focus {
+  outline: none;
+  border-color: var(--brand-accent, #3498db);
+  box-shadow: var(--brand-focus-ring, 0 0 0 3px rgba(52, 152, 219, 0.35));
+}
+/* Hide the native clear button on search inputs */
+.pwa-search-input::-webkit-search-cancel-button { display: none; }
+
+.pwa-search-cancel {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--brand-accent, #3498db);
+  cursor: pointer;
+  padding: 0.4rem 0.2rem;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.pwa-search-results {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding: 0.5rem 0;
+}
+
+.pwa-search-result {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 16px;
+  text-decoration: none;
+  color: var(--brand-text, #34495e);
+  border-bottom: 1px solid var(--brand-background, #f4f7f6);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: background 0.1s;
+}
+.pwa-search-result:active { background: var(--brand-accent-muted, rgba(52,152,219,0.1)); }
+
+.pwa-search-result__emoji {
+  font-size: 1.5rem;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--brand-accent-muted, rgba(52,152,219,0.1));
+  border-radius: var(--radius-sm, 8px);
+  flex-shrink: 0;
+}
+
+.pwa-search-result__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.pwa-search-result__name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--brand-heading, #2d3e50);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pwa-search-result__cat {
+  font-size: 0.78rem;
+  color: var(--brand-subtle-text, #7f8c8d);
+  text-transform: capitalize;
+}
+
+.pwa-search-empty {
+  text-align: center;
+  color: var(--brand-subtle-text, #7f8c8d);
+  padding: 2.5rem 1rem;
+  font-size: 0.95rem;
+}
+
+.pwa-search-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 3rem 1rem;
+  color: var(--brand-subtle-text, #7f8c8d);
+}
+.pwa-search-prompt svg {
+  width: 40px;
+  height: 40px;
+  opacity: 0.3;
+}
+.pwa-search-prompt p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
 /* ── Global app feel ───────────────────────────────────── */
 html.pwa-standalone {
   overscroll-behavior: none;

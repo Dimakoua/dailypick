@@ -6,7 +6,8 @@
 
   var isStandalone =
     window.matchMedia('(display-mode: standalone)').matches ||
-    ('standalone' in navigator && navigator.standalone === true);
+    ('standalone' in navigator && navigator.standalone === true) ||
+    new URLSearchParams(window.location.search).has('pwa');
 
   // Always register the service worker
   if ('serviceWorker' in navigator) {
@@ -17,6 +18,8 @@
   if (isStandalone) {
     setupAppNav();
     setupAppBar();
+    setupSearchBtn();
+    setupSearch();
     return;
   }
 
@@ -141,5 +144,141 @@
     // Hide logo on non-home pages
     var siteTitle = headerContent.querySelector('.site-title');
     if (siteTitle) siteTitle.classList.add('pwa-hidden-logo');
+  }
+
+  function setupSearchBtn() {
+    var headerContent = document.querySelector('.header-content');
+    if (!headerContent) return;
+
+    // Inject search button on the right
+    var searchBtn = document.createElement('button');
+    searchBtn.className = 'pwa-search-btn';
+    searchBtn.setAttribute('aria-label', 'Search');
+    searchBtn.setAttribute('aria-expanded', 'false');
+    searchBtn.setAttribute('aria-controls', 'pwa-search-overlay');
+    searchBtn.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">' +
+      '<circle cx="11" cy="11" r="7" stroke-width="2"/>' +
+      '<path d="M16.5 16.5L21 21" stroke-width="2" stroke-linecap="round"/>' +
+      '</svg>';
+    searchBtn.addEventListener('click', openSearch);
+    headerContent.appendChild(searchBtn);
+  }
+
+  // ── Search overlay ──────────────────────────────────────────────────────────
+
+  var searchDB = [];
+  var searchLoaded = false;
+
+  function loadSearchDB() {
+    if (searchLoaded) return Promise.resolve();
+    return fetch('/assets/js/apps-data.json')
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        searchDB = data;
+        searchLoaded = true;
+      })
+      .catch(function () {});
+  }
+
+  function fuzzySearch(query, items) {
+    var q = query.toLowerCase().trim();
+    if (!q) return [];
+    return items
+      .map(function (item) {
+        var name = item.name.toLowerCase();
+        var score = 0;
+        if (name === q) return { item: item, score: 1000 };
+        if (name.startsWith(q)) score = 500;
+        var qi = 0;
+        for (var i = 0; i < name.length && qi < q.length; i++) {
+          if (name[i] === q[qi]) { score += 100 - i; qi++; }
+        }
+        return qi === q.length ? { item: item, score: score } : null;
+      })
+      .filter(Boolean)
+      .sort(function (a, b) { return b.score - a.score; })
+      .slice(0, 10)
+      .map(function (r) { return r.item; });
+  }
+
+  function setupSearch() {
+    var overlay = document.getElementById('pwa-search-overlay');
+    var input = document.getElementById('pwa-search-input');
+    var results = document.getElementById('pwa-search-results');
+    var cancel = document.getElementById('pwa-search-cancel');
+    if (!overlay || !input || !results || !cancel) return;
+
+    cancel.addEventListener('click', closeSearch);
+
+    overlay.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeSearch();
+    });
+
+    input.addEventListener('input', function () {
+      renderResults(input.value);
+    });
+
+    renderPrompt(results);
+  }
+
+  function openSearch() {
+    var overlay = document.getElementById('pwa-search-overlay');
+    var input = document.getElementById('pwa-search-input');
+    var searchBtn = document.querySelector('.pwa-search-btn');
+    if (!overlay) return;
+    overlay.removeAttribute('aria-hidden');
+    overlay.classList.add('pwa-search-open');
+    if (searchBtn) searchBtn.setAttribute('aria-expanded', 'true');
+    loadSearchDB().then(function () {
+      if (input) { input.value = ''; input.focus(); }
+      renderPrompt(document.getElementById('pwa-search-results'));
+    });
+  }
+
+  function closeSearch() {
+    var overlay = document.getElementById('pwa-search-overlay');
+    var searchBtn = document.querySelector('.pwa-search-btn');
+    if (!overlay) return;
+    overlay.classList.remove('pwa-search-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    if (searchBtn) searchBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  function renderPrompt(container) {
+    if (!container) return;
+    container.innerHTML =
+      '<div class="pwa-search-prompt">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7" stroke-width="1.5"/><path d="M16.5 16.5L21 21" stroke-width="1.5" stroke-linecap="round"/></svg>' +
+      '<p>Search games &amp; tools</p>' +
+      '</div>';
+  }
+
+  function renderResults(query) {
+    var container = document.getElementById('pwa-search-results');
+    if (!container) return;
+    if (!query.trim()) { renderPrompt(container); return; }
+    var hits = fuzzySearch(query, searchDB);
+    if (!hits.length) {
+      container.innerHTML = '<p class="pwa-search-empty">No results for &ldquo;' + escHtml(query) + '&rdquo;</p>';
+      return;
+    }
+    container.innerHTML = hits.map(function (item) {
+      return '<a class="pwa-search-result" href="' + escHtml(item.path) + '">' +
+        '<span class="pwa-search-result__emoji" aria-hidden="true">' + escHtml(item.emoji || '🎯') + '</span>' +
+        '<span class="pwa-search-result__text">' +
+          '<span class="pwa-search-result__name">' + escHtml(item.name) + '</span>' +
+          '<span class="pwa-search-result__cat">' + escHtml(item.category || '') + '</span>' +
+        '</span>' +
+        '</a>';
+    }).join('');
+  }
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
   }
 })();
