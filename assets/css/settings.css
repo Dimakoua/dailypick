@@ -1034,7 +1034,6 @@ label.is-disabled select:disabled {
     width: 100%;
   }
   .btn-link {
-    width: 100%;
     justify-content: center;
   }
 }
