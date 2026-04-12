@@ -17,6 +17,37 @@
 /* Logo hidden on non-home pages (JS adds this class) */
 .pwa-standalone .pwa-hidden-logo { display: none !important; }
 
+/* ── Compact headings ──────────────────────────────────── */
+/* h1 is sized for SEO/desktop; scale it down to native-app
+   title size in standalone mode */
+.pwa-standalone h1 {
+  font-size: clamp(1.3rem, 5vw, 1.7rem) !important;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  margin-bottom: 0.4rem;
+  line-height: 1.2;
+}
+
+/* Tighten the hero card — it's the biggest space-eater */
+.pwa-standalone .page-hero,
+.pwa-standalone .hero-card {
+  padding: 14px 18px !important;
+}
+
+/* Hero eyebrow label — useful on desktop, noisy in app mode */
+.pwa-standalone .hero-eyebrow,
+.pwa-standalone .eyebrow {
+  display: none !important;
+}
+
+/* Hero description paragraph — already in the app bar title */
+.pwa-standalone .page-hero > p,
+.pwa-standalone .hero-card > div > p {
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  color: var(--brand-subtle-text);
+}
+
 /* ── Compact native app bar ────────────────────────────── */
 .pwa-standalone .site-header {
   position: sticky;
