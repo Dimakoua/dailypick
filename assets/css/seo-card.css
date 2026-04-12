@@ -3,6 +3,42 @@
    Extracted from multiple app styles to avoid repetition
    ========================================================= */
 
+/* Glass card base — shared for all glass-card usages site-wide */
+.glass-card {
+  background: var(--glass-bg, rgba(255, 255, 255, 0.12));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.38));
+  border-radius: var(--radius-lg, 15px);
+  box-shadow: var(--glass-shadow, 0 8px 30px rgba(0, 0, 0, 0.15));
+  backdrop-filter: blur(calc(var(--glass-blur, 14px))) saturate(160%);
+  -webkit-backdrop-filter: blur(calc(var(--glass-blur, 14px))) saturate(160%);
+  box-sizing: border-box;
+}
+
+/* Page hero — shared base */
+.page-hero {
+  text-align: center;
+  max-width: 800px;
+  width: 92%;
+  margin: 0 auto;
+  padding: 28px 32px;
+  box-sizing: border-box;
+}
+
+.page-hero h1 {
+  margin: 0.5rem 0;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  color: var(--brand-heading);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.page-hero p {
+  margin: 0.75rem 0 0;
+  font-size: 1rem;
+  color: var(--brand-text);
+  line-height: 1.6;
+}
+
 .seo-content-area {
   background: var(--glass-bg, rgba(255,255,255,0.12));
   border: 1px solid var(--glass-border, rgba(255,255,255,0.38));
@@ -70,6 +106,23 @@
 }
 
 @media (max-width: 720px) {
+  .glass-card {
+    border-radius: 12px;
+  }
+
+  .page-hero {
+    width: 100%;
+    padding: 18px 16px;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(1.35rem, 5vw, 1.75rem);
+  }
+
+  .page-hero p {
+    font-size: 0.95rem;
+  }
+
   .seo-content-area {
     width: 100%;
     padding: 18px 16px;
