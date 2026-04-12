@@ -76,7 +76,7 @@ main#main .settings-hint {
 /* Wheel container (glass panel) */
 #wheel-container {
   position: relative;
-  width: min(92vw, var(--wheel-max));
+  width: min(80vw, var(--wheel-max));
   margin: 20px auto 12px;
   padding: 16px;
 }
