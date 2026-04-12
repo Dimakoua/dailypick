@@ -87,7 +87,8 @@
       (function () {
         var standalone =
           window.matchMedia('(display-mode: standalone)').matches ||
-          (navigator.standalone === true);
+          (navigator.standalone === true) ||
+          new URLSearchParams(window.location.search).has('pwa');
         if (standalone) document.documentElement.classList.add('pwa-standalone');
       })();
     </script>
