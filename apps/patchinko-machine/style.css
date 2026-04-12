@@ -314,6 +314,94 @@
     }
 }
 
+/* Scale-down the board on tablets/phones */
+@media (max-width: 760px) {
+    :root {
+        --board-width: 100%;
+        --board-height: calc(var(--board-width) * 820 / 700);
+        --controls-width: 100%;
+        --bucket-height: 48px;
+    }
+
+    .patchinko-page {
+        gap: 20px;
+    }
+
+    .patchinko-container {
+        padding: 16px;
+        gap: 20px;
+    }
+
+    .patchinko-board-container {
+        width: 100%;
+        /* Keep the 700:820 aspect ratio */
+        aspect-ratio: 700 / 820;
+        height: auto;
+    }
+
+    #patchinko-canvas {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .patchinko-controls {
+        width: 100%;
+    }
+
+    .control-group {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .queue-header {
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+
+    .queue-action-buttons {
+        width: 100%;
+        justify-content: stretch;
+    }
+
+    .queue-action-buttons .app-button {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .control-group--queue .pip-trigger {
+        align-self: stretch;
+        justify-content: center;
+        font-size: 0.9rem;
+    }
+
+    .bucket {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .patchinko-container {
+        padding: 12px;
+        gap: 16px;
+    }
+
+    .app-section-heading {
+        font-size: clamp(1.5rem, 6vw, 2rem);
+    }
+
+    .pattern-selector {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .standup-queue li {
+        font-size: 0.9rem;
+    }
+
+    :root {
+        --bucket-height: 40px;
+    }
+}
+
 .seo-copy {
     background: var(--glass-bg, rgba(255, 255, 255, 0.12));
     border: 1px solid var(--glass-border, rgba(221, 228, 235, 0.5));
