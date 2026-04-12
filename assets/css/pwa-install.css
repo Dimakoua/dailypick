@@ -1,4 +1,29 @@
 /* ============================================================
+   PWA Standalone Mode — hide redundant web chrome
+   ============================================================ */
+
+/* Footer: not useful in app mode */
+.pwa-standalone .site-footer { display: none !important; }
+
+/* Embed block: irrelevant when already installed */
+.pwa-standalone .embed-section { display: none !important; }
+
+/* Header: keep logo, hide the full nav links + search */
+.pwa-standalone .site-header .header-collapse { display: none !important; }
+.pwa-standalone .site-header .nav-toggle  { display: none !important; }
+
+/* Add safe-area padding for notches/home-bar on iOS */
+.pwa-standalone .site-header {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.pwa-standalone main {
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 1rem);
+}
+
+/* SEO card blocks (used in some app pages) */
+.pwa-standalone .seo-card { display: none !important; }
+
+/* ============================================================
    PWA Install Banner
    Slides up from the bottom on Android (native prompt) and iOS
    (manual instructions). Uses existing glass/theme CSS tokens.

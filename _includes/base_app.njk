@@ -98,6 +98,15 @@
     </script>
     {% if headExtra %}{{ headExtra | safe }}{% endif %}
     <link rel="stylesheet" href="/assets/css/embed.css" />
+    <!-- Detect PWA standalone early to avoid FOUC -->
+    <script>
+      (function () {
+        var standalone =
+          window.matchMedia('(display-mode: standalone)').matches ||
+          (navigator.standalone === true);
+        if (standalone) document.documentElement.classList.add('pwa-standalone');
+      })();
+    </script>
 </head>
 <body>
     {% include "bg-orbs.html" %}
