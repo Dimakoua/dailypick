@@ -89,9 +89,3 @@ body {
   font-weight: 700;
   text-align: center;
 }
-
-/* SEO visuals moved to assets/css/seo-card.css */
-
-@media (max-width: 520px) {
-  .seo-content-area { padding: 18px 16px; }
-}

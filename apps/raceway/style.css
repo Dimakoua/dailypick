@@ -305,10 +305,6 @@
   to { opacity: 1; transform: translateX(0); }
 }
 
-/* --- SEO SECTION --- */
-.seo-content-area { margin-top: 3rem; padding: 0 20px; max-width: 1000px; margin-left: auto; margin-right: auto; }
-.seo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; text-align: left; margin-top: 1rem; }
-
 /* --- RESPONSIVE TABLET & MOBILE --- */
 @media (max-width: 1024px) {
   .pro-workspace { grid-template-columns: 200px 1fr 200px; }

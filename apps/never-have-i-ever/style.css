@@ -162,30 +162,6 @@ body {
   line-height: 1.35;
 }
 
-.seo-content-area {
-  padding: 2rem 2.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.seo-content-area h2,
-.seo-content-area h3 {
-  margin: 0;
-  color: var(--brand-heading);
-}
-
-.seo-content-area p,
-.seo-content-area ul {
-  margin: 0;
-  color: var(--brand-text);
-  line-height: 1.75;
-}
-
-.seo-content-area ul {
-  padding-left: 1.2rem;
-}
-
 @media (max-width: 768px) {
   .main-container {
     padding: 1.5rem var(--layout-gutter);

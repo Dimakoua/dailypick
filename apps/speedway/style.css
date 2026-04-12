@@ -509,12 +509,6 @@ body {
     margin-top: 1rem;
 }
 
-/* SEO Grid */
-.seo-content-area {
-    margin-top: 4rem;
-    width: 100%;
-}
-
 .seo-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;

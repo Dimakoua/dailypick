@@ -143,33 +143,6 @@ body {
   color: var(--brand-heading);
 }
 
-.seo-content-area {
-  max-width: 840px;
-  width: 92%;
-  margin: 0 auto 40px;
-  padding: 30px;
-  background: var(--glass-bg, rgba(255, 255, 255, 0.12));
-  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
-  border-radius: var(--radius-lg);
-  backdrop-filter: blur(14px);
-  box-shadow: var(--glass-shadow);
-}
-
-.seo-content-area h2,
-.seo-content-area h3 {
-  color: var(--brand-heading);
-}
-
-.seo-content-area p,
-.seo-content-area li {
-  color: var(--brand-text);
-  line-height: 1.7;
-}
-
-.seo-content-area ul {
-  padding-left: 1.2rem;
-}
-
 @media (max-width: 768px) {
   .main-container {
     padding-top: 10px;

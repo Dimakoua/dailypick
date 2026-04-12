@@ -425,29 +425,6 @@
   font-size: 0.9rem;
 }
 
-.seo-content-area {
-  padding: 2rem;
-  background: var(--glass-bg, rgba(255, 255, 255, 0.12));
-  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
-  border-radius: var(--radius-lg);
-  box-shadow: var(--glass-shadow);
-}
-
-.seo-content-area h2,
-.seo-content-area h3 {
-  color: var(--brand-heading);
-}
-
-.seo-content-area p,
-.seo-content-area li {
-  color: var(--brand-text);
-  line-height: 1.7;
-}
-
-.seo-content-area ul {
-  padding-left: 1.3rem;
-}
-
 @media (max-width: 940px) {
   .dashboard-header,
   .board-grid,

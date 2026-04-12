@@ -173,11 +173,6 @@ button#restartButton:disabled {
   padding: 16px;
 }
 
-/* SEO visuals moved to assets/css/seo-card.css */
-.seo-content-area a:hover { 
-  border-bottom-color: currentColor;
-}
-
 /* ---- Responsive ---- */
 @media (max-width: 980px) {
   :root { --letters-panel-w: 250px; }
@@ -202,7 +197,4 @@ button#restartButton:disabled {
   }
 
   button#restartButton { width: fit-content; }
-}
-@media (max-width: 520px) {
-  .seo-content-area { padding: 18px 16px; }
 }
