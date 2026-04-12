@@ -8,8 +8,9 @@
 
 .local-brand-studio-container {
   position: fixed;
+  /* Desktop: right side, above the standup-dock-toggle (which sits at bottom: 1.5rem) */
   bottom: 5rem;
-  right: var(--layout-gutter, 1rem);
+  right: var(--layout-gutter, 1.5rem);
   z-index: 1000;
   font-family: var(--brand-font-family);
 }
@@ -275,8 +276,10 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .local-brand-studio-container {
-    bottom: 4.5rem;
-    left: 0.75rem;
+    /* Mobile: right side — standup-dock-toggle is bottom-left, so no collision */
+    bottom: 1rem;
+    right: 1rem;
+    left: auto;
   }
 
   .local-brand-studio-toggle {
@@ -289,6 +292,9 @@
     width: calc(100vw - 1rem);
     max-height: 75vh;
     bottom: 44px;
+    /* Anchor to right on mobile to match toggle position */
+    right: 0;
+    left: auto;
   }
 
   .local-brand-studio-controls {
@@ -298,8 +304,9 @@
 
 @media (max-width: 480px) {
   .local-brand-studio-container {
-    bottom: 4rem;
-    left: 0.5rem;
+    bottom: 1rem;
+    right: 0.75rem;
+    left: auto;
   }
 
   .local-brand-studio-toggle {
