@@ -1036,4 +1036,51 @@ label.is-disabled select:disabled {
   .btn-link {
     justify-content: center;
   }
+
+  /* brand-form mobile fixes */
+  .brand-form {
+    gap: 14px;
+  }
+
+  .brand-subcard {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .brand-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .brand-grid--palette {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  }
+
+  .brand-form input[type="text"],
+  .brand-form input[type="url"],
+  .brand-form select {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1rem; /* prevents iOS auto-zoom */
+    padding: 12px 10px;
+  }
+
+  .brand-form-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .brand-form-actions .btn-link {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .theme-controls {
+    margin-top: 16px;
+    padding: 12px;
+  }
+
+  .theme-toggle {
+    padding: 10px;
+  }
 }
