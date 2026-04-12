@@ -4,11 +4,21 @@
   var DISMISS_KEY = 'pwa-dismissed-at';
   var DISMISS_DAYS = 14;
 
-  // Don't show if already running as installed PWA
   var isStandalone =
     window.matchMedia('(display-mode: standalone)').matches ||
     ('standalone' in navigator && navigator.standalone === true);
-  if (isStandalone) return;
+
+  // Always register the service worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').catch(function () {});
+  }
+
+  // ── Standalone app UI ──────────────────────────────────────────────────────
+  if (isStandalone) {
+    setupAppNav();
+    setupAppBar();
+    return;
+  }
 
   // Don't show if dismissed recently
   var dismissedAt = localStorage.getItem(DISMISS_KEY);
@@ -80,10 +90,56 @@
     deferredPrompt = null;
   });
 
-  // ── Register service worker ────────────────────────────────────────────────
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').catch(function () {
-      // Silently ignore SW registration failures
+  // ── Standalone helper functions ──────────────────────────────────────────
+
+  function setupAppNav() {
+    var nav = document.getElementById('pwa-bottom-nav');
+    if (!nav) return;
+    var pathname = window.location.pathname;
+    var items = nav.querySelectorAll('.pwa-nav-item');
+    items.forEach(function (item) {
+      var href = item.getAttribute('href');
+      var active = href === '/'
+        ? pathname === '/'
+        : (pathname === href || pathname.startsWith(href));
+      if (active) {
+        item.classList.add('is-active');
+        item.setAttribute('aria-current', 'page');
+      }
     });
+  }
+
+  function setupAppBar() {
+    var pathname = window.location.pathname;
+    var headerContent = document.querySelector('.header-content');
+    if (!headerContent || pathname === '/') return;
+
+    // Inject back button
+    var backBtn = document.createElement('button');
+    backBtn.className = 'pwa-back-btn';
+    backBtn.setAttribute('aria-label', 'Go back');
+    backBtn.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">' +
+      '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>' +
+      '</svg><span>Back</span>';
+    backBtn.addEventListener('click', function () {
+      if (window.history.length > 1) window.history.back();
+      else window.location.href = '/';
+    });
+    headerContent.insertBefore(backBtn, headerContent.firstChild);
+
+    // Extract page title from first h1, stripping leading emoji/symbols
+    var h1 = document.querySelector('main h1, h1');
+    var rawTitle = (h1 ? h1.textContent : document.title.split('|')[0]).trim();
+    rawTitle = rawTitle.replace(/^[^\w\d(]+/, '').trim();
+
+    var titleEl = document.createElement('span');
+    titleEl.className = 'pwa-app-title';
+    titleEl.textContent = rawTitle || 'Daily Pick';
+    headerContent.appendChild(titleEl);
+
+    // Hide logo on non-home pages
+    var siteTitle = headerContent.querySelector('.site-title');
+    if (siteTitle) siteTitle.classList.add('pwa-hidden-logo');
   }
 })();
