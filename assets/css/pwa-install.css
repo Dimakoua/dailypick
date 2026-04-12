@@ -1,0 +1,124 @@
+/* ============================================================
+   PWA Install Banner
+   Slides up from the bottom on Android (native prompt) and iOS
+   (manual instructions). Uses existing glass/theme CSS tokens.
+   ============================================================ */
+
+#pwa-install-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.9rem clamp(1rem, 5vw, 2rem);
+  background: color-mix(in srgb, var(--brand-surface, #fff) 88%, transparent);
+  backdrop-filter: blur(var(--glass-blur, 14px));
+  -webkit-backdrop-filter: blur(var(--glass-blur, 14px));
+  border-top: 1px solid var(--glass-border, rgba(255, 255, 255, 0.38));
+  box-shadow: 0 -6px 32px rgba(0, 0, 0, 0.1);
+  /* Start hidden below the viewport */
+  transform: translateY(110%);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#pwa-install-banner.pwa-visible {
+  transform: translateY(0);
+}
+
+.pwa-banner__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm, 10px);
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.pwa-banner__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.pwa-banner__title {
+  font-weight: 700;
+  font-size: 0.925rem;
+  color: var(--brand-heading, #2d3e50);
+  margin: 0 0 0.15rem;
+  line-height: 1.2;
+}
+
+.pwa-banner__subtitle {
+  font-size: 0.8rem;
+  color: var(--brand-subtle-text, #7f8c8d);
+  margin: 0;
+  line-height: 1.35;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.pwa-banner__subtitle svg {
+  flex-shrink: 0;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+.pwa-banner__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.pwa-btn-install {
+  background: var(--brand-accent, #3498db);
+  color: var(--brand-accent-contrast-text, #fff);
+  border: none;
+  border-radius: var(--radius-sm, 10px);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.pwa-btn-install:hover {
+  background: var(--brand-accent-strong, #2980b9);
+  box-shadow: var(--brand-hover-shadow, 0 4px 12px rgba(52, 152, 219, 0.3));
+}
+
+.pwa-btn-dismiss {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--brand-subtle-text, #7f8c8d);
+  padding: 0.4rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background 0.2s, color 0.2s;
+}
+
+.pwa-btn-dismiss:hover {
+  background: var(--brand-accent-muted, rgba(52, 152, 219, 0.12));
+  color: var(--brand-heading, #2d3e50);
+}
+
+@media (max-width: 380px) {
+  .pwa-banner__icon {
+    display: none;
+  }
+
+  .pwa-btn-install {
+    padding: 0.45rem 0.75rem;
+    font-size: 0.82rem;
+  }
+}

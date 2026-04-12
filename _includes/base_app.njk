@@ -63,6 +63,7 @@
     <link rel="stylesheet" href="/assets/css/theme.css" />
     <link rel="stylesheet" href="/assets/css/glass.css" />
     <link rel="stylesheet" href="/assets/css/seo-card.css" />
+    <link rel="stylesheet" href="/assets/css/pwa-install.css" />
     <link rel="stylesheet" href="/assets/css/standup-panel.css" />
     <link rel="stylesheet" href="/assets/css/local-brand-studio.css" />
     {% if appStyles %}{{ appStyles | safe }}{% endif %}
@@ -119,6 +120,8 @@
     {% include "footer.html" %}
 
     {% include "cookie-consent.html" %}
+    {% include "pwa-install.html" %}
     <script src="/assets/js/cookie-consent.js" defer></script>
+    <script src="/assets/js/pwa-install.js" defer></script>
 </body>
 </html>
