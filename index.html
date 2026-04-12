@@ -48,6 +48,7 @@
 <link href="/assets/css/home.css" rel="stylesheet"/>
 <link href="/assets/css/glass.css" rel="stylesheet"/>
 <link href="/assets/css/whats-new.css" rel="stylesheet"/>
+<link href="/assets/css/pwa-install.css" rel="stylesheet"/>
 <script defer="" src="/assets/js/brand-theme-engine.js"></script>
 <script defer="" src="/assets/js/brand-config.js"></script>
 <!-- Structured Data (basic) -->
@@ -66,6 +67,15 @@
   </script>
 </meta></head>
 <body>
+<!-- Detect PWA standalone early to avoid FOUC -->
+<script>
+  (function () {
+    var standalone =
+      window.matchMedia('(display-mode: standalone)').matches ||
+      (navigator.standalone === true);
+    if (standalone) document.documentElement.classList.add('pwa-standalone');
+  })();
+</script>
 <!-- Skip link for a11y -->
     {% include "bg-orbs.html" %}
 
@@ -154,10 +164,14 @@
 </main>
     {% include "footer.html" %}
 
-
+    {% include "cookie-consent.html" %}
+    {% include "pwa-install.html" %}
+    {% include "pwa-nav.html" %}
     <!-- JS -->
 <script defer="" src="/assets/js/home.js" type="module"></script>
 <script defer="" src="/assets/js/whats-new.js"></script>
+<script defer="" src="/assets/js/cookie-consent.js"></script>
+<script defer="" src="/assets/js/pwa-install.js"></script>
 
     {% include "whats-new.html" %}
 </body>

@@ -69,6 +69,7 @@
     <link rel="stylesheet" href="{{ '/css/style.css' | url }}">
     <link rel="stylesheet" href="{{ '/assets/css/glass.css' | url }}">
     <link rel="stylesheet" href="{{ '/assets/css/seo-card.css' | url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/pwa-install.css' | url }}">
         {% if page.url == '/' or (page.url and (page.url == '/blog/' or page.url.startsWith('/blog/page') or page.url == '/agile/' or page.url == '/randomizers/' or page.url == '/standups/' or page.url == '/games/')) %}
         <link rel="stylesheet" href="{{ '/assets/css/home.css' | url }}">
     {% endif %}
@@ -81,6 +82,15 @@
         function gtag() { dataLayer.push(arguments); }
     </script>
     {% if headExtra %}{{ headExtra | safe }}{% endif %}
+    <!-- Detect PWA standalone early to avoid FOUC -->
+    <script>
+      (function () {
+        var standalone =
+          window.matchMedia('(display-mode: standalone)').matches ||
+          (navigator.standalone === true);
+        if (standalone) document.documentElement.classList.add('pwa-standalone');
+      })();
+    </script>
 </head>
 <body>
 {% include "header.html" %}
@@ -92,9 +102,12 @@
 {% include "footer.html" %}
 
 {% include "cookie-consent.html" %}
+{% include "pwa-install.html" %}
+{% include "pwa-nav.html" %}
 
     <!-- Any global scripts can go here -->
     <script src="/assets/js/cookie-consent.js" defer></script>
+    <script src="/assets/js/pwa-install.js" defer></script>
 </body>
 {% include "bg-orbs.html" %}
 </html>

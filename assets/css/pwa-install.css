@@ -140,6 +140,23 @@ html.pwa-standalone {
   transform: scale(0.985);
 }
 
+/* ── Listing pages (Home / Games / Agile / Randomizers) ── */
+/* "Why Daily Pick?" and similar prose sections add no value in app mode */
+.pwa-standalone .intro { display: none !important; }
+
+/* Section eyebrows and subtitles are SEO padding */
+.pwa-standalone .section-eyebrow { display: none !important; }
+.pwa-standalone .section-subtitle { display: none !important; }
+
+/* Hero subtitle on listing pages */
+.pwa-standalone .hero__subtitle { display: none !important; }
+
+/* Compact the hero block itself */
+.pwa-standalone .hero {
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+}
+
 /* ── Float-over-nav offsets ───────────────────────────── */
 /* The bottom nav is 65px + safe-area-inset-bottom.
    Lift fixed FABs so they sit above it. */
