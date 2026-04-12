@@ -263,6 +263,13 @@ router.get('/ballgame', (request) => {
     return Response.redirect(target.toString(), 301);
 });
 
+router.get('/apps/choices-spinner', (request) => {
+    return Response.redirect(new URL('/apps/the-wheel-spinner/', request.url).toString(), 301);
+});
+router.get('/apps/choices-spinner/', (request) => {
+    return Response.redirect(new URL('/apps/the-wheel-spinner/', request.url).toString(), 301);
+});
+
 
 export default {
     async fetch(request, env, ctx) {
