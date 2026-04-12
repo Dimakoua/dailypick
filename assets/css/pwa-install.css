@@ -20,8 +20,11 @@
   padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 1rem);
 }
 
-/* SEO card blocks (used in some app pages) */
-.pwa-standalone .seo-card { display: none !important; }
+/* SEO content blocks */
+.pwa-standalone .seo-content-area,
+.pwa-standalone .seo-copy,
+.pwa-standalone .seo-grid,
+.pwa-standalone .seo-toc { display: none !important; }
 
 /* ============================================================
    PWA Install Banner
