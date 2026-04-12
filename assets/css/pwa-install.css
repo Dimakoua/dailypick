@@ -18,20 +18,21 @@
 .pwa-standalone .pwa-hidden-logo { display: none !important; }
 
 /* ── Compact headings ──────────────────────────────────── */
-/* h1 is sized for SEO/desktop; scale it down to native-app
-   title size in standalone mode */
-.pwa-standalone h1 {
-  font-size: clamp(1.3rem, 5vw, 1.7rem) !important;
-  font-weight: 700;
-  margin-top: 0.5rem;
-  margin-bottom: 0.4rem;
-  line-height: 1.2;
-}
+/* Hide the page-title h1 — already shown in the PWA app bar.
+   Target the first h1 in main (always the page title) plus
+   known hero container variants. */
+.pwa-standalone main > h1:first-of-type,
+.pwa-standalone main > header h1,
+.pwa-standalone .page-hero h1,
+.pwa-standalone .hero-card h1,
+.pwa-standalone .timer-hero h1,
+.pwa-standalone .hero__title { display: none !important; }
 
-/* Tighten the hero card — it's the biggest space-eater */
+/* With h1 gone, collapse the hero card further */
 .pwa-standalone .page-hero,
-.pwa-standalone .hero-card {
-  padding: 14px 18px !important;
+.pwa-standalone .hero-card,
+.pwa-standalone .timer-hero {
+  padding: 10px 16px !important;
 }
 
 /* Hero eyebrow label — useful on desktop, noisy in app mode */
@@ -44,7 +45,7 @@
 .pwa-standalone .page-hero > p,
 .pwa-standalone .hero-card > div > p {
   font-size: 0.875rem;
-  margin-top: 0.25rem;
+  margin-top: 0;
   color: var(--brand-subtle-text);
 }
 
