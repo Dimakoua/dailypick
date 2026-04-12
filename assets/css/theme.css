@@ -242,6 +242,66 @@ h6 {
   cursor: default;
 }
 
+/* On desktop, header-collapse is a transparent wrapper — its children become direct flex items */
+.header-collapse {
+  display: contents;
+}
+
+/* Hamburger toggle button — hidden on desktop, shown on mobile */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 10px;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+
+.nav-toggle:hover,
+.nav-toggle:focus-visible {
+  background: var(--brand-accent-muted);
+  outline: none;
+}
+
+.nav-toggle__bar {
+  display: block;
+  width: 22px;
+  height: 2.5px;
+  background: var(--brand-heading);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center;
+}
+
+/* Hamburger → X animation when open */
+.nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+}
+
+@keyframes headerSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .app-shell {
   min-height: 100vh;
   display: flex;
@@ -462,24 +522,82 @@ h6 {
 
 @media (max-width: 720px) {
   :root {
-    --app-header-offset: 96px;
+    --app-header-offset: 64px;
   }
 
   .site-header {
-    padding: 16px 20px;
+    padding: 14px 20px;
   }
 
   .site-header::before {
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.95);
   }
 
   .site-header .header-content {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0;
   }
 
-  .site-header nav {
-    justify-content: space-between;
+  /* Mobile menu panel — hidden by default, shown when .nav-open */
+  .header-collapse {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 20px 20px;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(221, 228, 235, 0.8);
+    border-bottom: 1px solid rgba(221, 228, 235, 0.4);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    z-index: 5;
+    animation: headerSlideDown 0.22s ease both;
+  }
+
+  .header-collapse.nav-open {
+    display: flex;
+  }
+
+  /* Nav links stacked vertically in the mobile panel */
+  .site-header .header-collapse nav {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .site-header .header-collapse nav a {
+    padding: 11px 16px;
+    font-size: 1rem;
+  }
+
+  /* Full-width search in the mobile panel */
+  .header-collapse .search-container {
+    width: 100%;
+    padding-top: 4px;
+  }
+
+  .header-collapse .search-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 14px;
+  }
+
+  /* Weather + branding controls row at the bottom of the panel */
+  .site-header .branding-controls {
+    justify-content: flex-start;
+    padding-top: 12px;
+    margin-top: 4px;
+    border-top: 1px solid var(--brand-border);
+  }
+
+  /* Show hamburger on mobile */
+  .nav-toggle {
+    display: flex;
   }
 
   .app-shell {
@@ -488,10 +606,6 @@ h6 {
 
   .app-card {
     padding: 24px 20px;
-  }
-
-  .site-header .branding-controls {
-    justify-content: center;
   }
 }
 

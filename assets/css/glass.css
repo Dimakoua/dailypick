@@ -270,7 +270,6 @@
 
 /* 2) Enhanced (optional): full-width footer bar when wrapped */
 .site-footer {
-  width: 100%;
   margin-top: 56px;
   border-top: 1px solid var(--glass-border, rgba(255,255,255,.38));
   background:
