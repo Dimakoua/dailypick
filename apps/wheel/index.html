@@ -347,6 +347,13 @@ headExtra: |
             if (!isSpinning) drawWheel(remaining, 0);
         });
 
+        // Redraw when the game is moved into / back from a PiP window,
+        // because canvas bitmaps reset on document adoption.
+        function redrawOnPiP() { if (!isSpinning) drawWheel(remaining, 0); }
+        window.addEventListener('game-pip:enter', redrawOnPiP);
+        window.addEventListener('game-pip:exit',  redrawOnPiP);
+        window.addEventListener('resize',         redrawOnPiP);
+
         // Initial setup
         loadNamesFromStorage(); // Load names first
         drawWheel(remaining, 0);
