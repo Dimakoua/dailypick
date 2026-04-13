@@ -92,6 +92,7 @@
             'html,body{margin:0;overflow-x:hidden}',
             'body{padding-bottom:' + BAR_HEIGHT + 'px}',
             '.game-pip-scaler{width:100%;}',
+            'h1{display:none!important;}',
             '.game-pip-bar{position:fixed;bottom:0;left:0;right:0;',
             'background:var(--brand-surface,rgba(11,17,34,.96));',
             'border-top:1px solid var(--brand-border,rgba(255,255,255,.14));',
