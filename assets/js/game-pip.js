@@ -38,6 +38,7 @@
             '.game-pip-placeholder__icon{font-size:3rem;line-height:1;}',
             '.game-pip-placeholder__text{color:var(--brand-subtle-text,rgba(231,236,248,.7));',
             'font-size:1rem;margin:0;}',
+            '@media(display-mode:standalone){.game-pip-trigger{display:none!important;}}',
         ].join('');
         document.head.appendChild(s);
     }
