@@ -6,6 +6,7 @@ keywords: "two truths and a lie, live room, icebreaker game, team building, voti
 canonical: "https://dailypick.dev/apps/two-truths-and-a-lie/"
 headExtra: |
   <link href="./style.css" rel="stylesheet" />
+  <script defer src="/assets/js/game-pip.js"></script>
   <script defer src="./script.js"></script>
 ---
 <main data-page-type="standup" class="game-page" id="main">
@@ -17,6 +18,12 @@ headExtra: |
     <div class="hero-meta">
       <span class="session-badge" id="sessionBadge">Offline</span>
       <button class="ghost-btn" id="copyInviteBtn" type="button" disabled>Copy invite</button>
+      <button class="app-button app-button--secondary game-pip-trigger" type="button"
+        data-game-pip-target=".game-page"
+        data-game-pip-exclude=".seo-content-area, .game-pip-trigger"
+        data-game-pip-title="🕵️ Two Truths and a Lie"
+        data-game-pip-width="1100"
+        data-game-pip-height="820">🪟 Pop-out Game</button>
     </div>
   </header>
 

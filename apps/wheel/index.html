@@ -9,6 +9,7 @@ appStyles: |
   <link href="/apps/wheel/style.css" rel="stylesheet" />
 localBrandConfig: /apps/wheel/local-brand-config.js
 headExtra: |
+  <script defer="" src="/assets/js/game-pip.js"></script>
   <script defer="" src="/assets/js/standup-data.js"></script>
   <script defer="" src="/assets/js/standup-panel.js"></script>
   <script defer="" src="/assets/js/standup-onboarding.js"></script>
@@ -22,6 +23,12 @@ headExtra: |
             <canvas height="425" id="wheel" width="425"></canvas> <!-- Match CSS size -->
         </div>
         <button id="spinBtn">🎲 SPIN!</button>
+        <button class="app-button app-button--secondary game-pip-trigger" type="button"
+            data-game-pip-target="#main"
+            data-game-pip-exclude=".seo-content-area, .game-pip-trigger"
+            data-game-pip-title="🎯 Random Picker Wheel"
+            data-game-pip-width="700"
+            data-game-pip-height="620">🪟 Pop-out Game</button>
         <div id="winner"></div>
         <div class="seo-content-area">
             <h2>Random Picker Wheel: A Fair Decision Wheel for Teams</h2>

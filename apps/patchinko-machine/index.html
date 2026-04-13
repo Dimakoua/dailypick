@@ -8,6 +8,7 @@ appStyles: |
   <link rel="stylesheet" href="/apps/patchinko-machine/style.css">
 headExtra: |
   <script src="/assets/js/results-pip.js" defer></script>
+  <script src="/assets/js/game-pip.js" defer></script>
   <script src="/assets/js/standup-data.js" defer></script>
   <script src="/assets/js/standup-panel.js" defer></script>
   <script src="/assets/js/standup-onboarding.js" defer></script>
@@ -19,6 +20,12 @@ headExtra: |
         <div>
           <h1 class="app-section-heading">🎯 Patchinko Machine</h1>
         </div>
+        <button class="app-button app-button--secondary game-pip-trigger" type="button"
+          data-game-pip-target=".glass-card.patchinko-container"
+          data-game-pip-exclude=".seo-content-area, .pip-trigger, .game-pip-trigger"
+          data-game-pip-title="🎯 Patchinko Machine"
+          data-game-pip-width="1100"
+          data-game-pip-height="780">🪟 Pop-out Game</button>
       </header>
       <p class="settings-hint" style="margin-bottom:0;">Customize players and the brand before you launch from the <a href="/apps/roster/">Settings page</a>.</p>
       

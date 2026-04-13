@@ -8,6 +8,7 @@ ogImageAlt: "Rocket dodging asteroids in Daily Pick"
 headExtra: |
   <link href="./style.css" rel="stylesheet" />
   <script defer="" src="/assets/js/results-pip.js"></script>
+  <script defer="" src="/assets/js/game-pip.js"></script>
   <script defer="" src="/assets/js/standup-data.js"></script>
   <script defer="" src="/assets/js/standup-panel.js"></script>
   <script defer="" src="/assets/js/standup-onboarding.js"></script>
@@ -19,6 +20,12 @@ headExtra: |
       <canvas id="gameCanvas"></canvas>
       <div id="controls">
         <button id="startButton" type="button">Start Game</button>
+        <button class="app-button app-button--secondary game-pip-trigger" type="button"
+          data-game-pip-target="#main"
+          data-game-pip-exclude=".seo-content-area, .pip-trigger, .game-pip-trigger"
+          data-game-pip-title="🚀 Gravity Drift"
+          data-game-pip-width="920"
+          data-game-pip-height="700">🪟 Pop-out Game</button>
       </div>
     </div>
     <div aria-atomic="true" aria-live="polite" class="glass-card hidden" id="leaderboard">

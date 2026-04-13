@@ -7,6 +7,8 @@ canonical: "https://dailypick.dev/apps/mimic-master/"
 ogImageAlt: "Teammate mirroring hand prompts inside Daily Pick"
 appStyles: |
   <link href="/apps/mimic-master/style.css" rel="stylesheet" />
+headExtra: |
+  <script defer="" src="/assets/js/game-pip.js"></script>
 ---
 <main data-page-type="standup" aria-labelledby="mimicHeading" class="mimic-page">
     <header class="hero-card glass-card">
@@ -20,6 +22,12 @@ appStyles: |
       </div>
       <div class="hero-meta">
         <span aria-atomic="true" aria-live="polite" class="status-pill" id="sessionStatus">Not connected</span>
+        <button class="app-button app-button--secondary game-pip-trigger" type="button"
+          data-game-pip-target=".mimic-page"
+          data-game-pip-exclude=".seo-content-area, .game-pip-trigger"
+          data-game-pip-title="🖐️ Mimic Master"
+          data-game-pip-width="1100"
+          data-game-pip-height="820">🪟 Pop-out Game</button>
       </div>
     </header>
     <section class="mimic-grid">

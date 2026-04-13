@@ -9,6 +9,7 @@ appStyles: |
   <link href="/apps/snowball-fight/style.css" rel="stylesheet" />
 headExtra: |
   <script defer="" src="/assets/js/results-pip.js"></script>
+  <script defer="" src="/assets/js/game-pip.js"></script>
 ---
 <main data-page-type="standup" aria-labelledby="snowballHeading" class="snowball-page">
         <header class="hero-card glass-card">
@@ -22,6 +23,12 @@ headExtra: |
             </div>
             <div class="hero-meta">
                 <span class="status-pill" id="sessionStatus">Not connected</span>
+                <button class="app-button app-button--secondary game-pip-trigger" type="button"
+                    data-game-pip-target=".snowball-page"
+                    data-game-pip-exclude=".seo-content-area, .pip-trigger, .game-pip-trigger"
+                    data-game-pip-title="⛄ Snowball Fight"
+                    data-game-pip-width="1200"
+                    data-game-pip-height="860">🪟 Pop-out Game</button>
             </div>
         </header>
 

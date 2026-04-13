@@ -13,6 +13,7 @@ headExtra: |
   <script defer="" src="/assets/js/standup-panel.js"></script>
   <script defer="" src="/assets/js/standup-onboarding.js"></script>
   <script defer="" src="/assets/js/results-pip.js" type="module"></script>
+  <script defer="" src="/assets/js/game-pip.js"></script>
   <script defer="" src="/assets/js/collaboration.js"></script>
   <script defer="" src="/apps/ballgame/ball-game.js" type="module"></script>
 ---
@@ -26,6 +27,12 @@ headExtra: |
         <div class="button-group">
             <button id="startGameBtn">Start New Game</button>
             <button id="howToPlayBtn">How to Play</button>
+            <button class="app-button app-button--secondary game-pip-trigger" type="button"
+                data-game-pip-target=".main-container"
+                data-game-pip-exclude=".seo-content-area, #how-to-play-modal, .pip-trigger, .game-pip-trigger"
+                data-game-pip-title="🔴 Momentum Mayhem"
+                data-game-pip-width="1020"
+                data-game-pip-height="760">🪟 Pop-out Game</button>
         </div>
         <p class="settings-hint">Update player names or branding in the <a href="/apps/roster/">Settings page</a>,
             then start a new session.</p>

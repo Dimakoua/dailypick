@@ -9,6 +9,7 @@ appStyles: |
   <link href="/apps/letters/style.css" rel="stylesheet" />
 headExtra: |
   <script defer="" src="/assets/js/results-pip.js"></script>
+  <script defer="" src="/assets/js/game-pip.js"></script>
   <script defer="" src="/assets/js/standup-data.js"></script>
   <script defer="" src="/assets/js/standup-panel.js"></script>
   <script defer="" src="/assets/js/standup-onboarding.js"></script>
@@ -18,6 +19,13 @@ headExtra: |
         <p class="settings-hint">Manage your players and branding once on the <a href="/apps/roster/">Settings
                 page</a>.</p>
         <div id="appContainer" style="display: flex; flex-direction: column; align-items: center;">
+            <button class="app-button app-button--secondary game-pip-trigger" type="button"
+                style="align-self: flex-end; margin-bottom: 10px;"
+                data-game-pip-target="#appContainer"
+                data-game-pip-exclude=".pip-trigger, .game-pip-trigger"
+                data-game-pip-title="🕹️ Falling Letters Pinball"
+                data-game-pip-width="920"
+                data-game-pip-height="700">🪟 Pop-out Game</button>
             <div id="gameContainer">
                 <canvas id="gameCanvas"></canvas>
                 <div id="namesPanel">
