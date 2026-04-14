@@ -20,7 +20,7 @@
 - [Raffle Ticket Puller](https://dailypick.dev/apps/raffle-ticket-puller): Pull tickets fairly for giveaways and team awards.
 - [Coin Flip & Dice Roller](https://dailypick.dev/apps/coin-flip-dice-roller): Quick randomizers for decisions and icebreakers.
 - [Capacity Dice](https://dailypick.dev/apps/capacity-dice): Estimate team capacity and sprint effort with lightweight dice rolls.
-- [Choices Spinner](https://dailypick.dev/apps/choices-spinner): Editable wheels with fairness rules and persistent option lists.
+- [Choices Spinner](https://dailypick.dev/apps/the-wheel-spinner): Editable wheels with fairness rules and persistent option lists.
 - [Random Letter Generator](https://dailypick.dev/apps/random-letter-generator): Generate letters in various cases and batch sizes for naming and prompts.
 - [Random Number Generator](https://dailypick.dev/apps/random-number-generator): Generate integers within a range with optional no-repeat rules.
 - [Yes or No Wheel](https://dailypick.dev/apps/yes-or-no-wheel): Spin a simple yes/no decision wheel for fast, fair binary choices.

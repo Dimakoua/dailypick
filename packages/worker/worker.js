@@ -266,7 +266,7 @@ router.get('/ballgame', (request) => {
 router.get('/apps/choices-spinner', (request) => {
     return Response.redirect(new URL('/apps/the-wheel-spinner/', request.url).toString(), 301);
 });
-router.get('/apps/choices-spinner/', (request) => {
+router.get('/apps/the-wheel-spinner/', (request) => {
     return Response.redirect(new URL('/apps/the-wheel-spinner/', request.url).toString(), 301);
 });
 router.get('/apps/settings', (request) => {

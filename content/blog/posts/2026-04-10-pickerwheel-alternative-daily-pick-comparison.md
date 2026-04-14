@@ -70,7 +70,7 @@ This is where the gap is biggest. Picker Wheel is fundamentally a solo tool that
 ### Decision-making tools on Daily Pick:
 - **[Wheel](/apps/wheel/)** – yes, we have a wheel too, clean and ad-free
 - **[Yes or No Wheel](/apps/yes-or-no-wheel/)** – instant binary decisions
-- **[Choices Spinner](/apps/choices-spinner/)** – fast custom picks
+- **[Choices Spinner](/apps/the-wheel-spinner/)** – fast custom picks
 - **[Coin Flip & Dice Roller](/apps/coin-flip-dice-roller/)** – classic randomness
 - **[Random Number Generator](/apps/random-number-generator/)** – just the number, nothing else
 - **[Random Letter Generator](/apps/random-letter-generator/)** – for games and icebreakers

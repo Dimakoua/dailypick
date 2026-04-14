@@ -65,7 +65,7 @@ Daily Pick ships **30+ apps**, each purpose-built for a different moment:
 ### Decision-making:
 - **[Wheel](/apps/wheel/)** – a clean, fast spinner with no ads
 - **[Yes or No Wheel](/apps/yes-or-no-wheel/)** – binary decisions in one click
-- **[Choices Spinner](/apps/choices-spinner/)** – rapid custom picks
+- **[Choices Spinner](/apps/the-wheel-spinner/)** – rapid custom picks
 - **[Coin Flip & Dice Roller](/apps/coin-flip-dice-roller/)** – instant classics
 - **[Random Number Generator](/apps/random-number-generator/)** – just the number
 - **[Random Letter Generator](/apps/random-letter-generator/)** – for games and word puzzles

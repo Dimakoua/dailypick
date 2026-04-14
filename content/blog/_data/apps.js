@@ -234,9 +234,9 @@ module.exports = [
     description: "Generate one or more random letters for naming, brainstorming, and creative prompts."
   },
   {
-    id: "choices-spinner",
+    id: "the-wheel-spinner",
     name: "Choices Spinner",
-    path: "/apps/choices-spinner/",
+    path: "/apps/the-wheel-spinner/",
     category: "randomizer",
     footerGroup: "Randomizers",
     emoji: "🎡",
