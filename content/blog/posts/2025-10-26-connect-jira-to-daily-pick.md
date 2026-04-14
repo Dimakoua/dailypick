@@ -46,7 +46,7 @@ Daily Pick can pull your Jira players, queues, and assignment snapshots so the s
 
 ## Configure the Jira integration card in Daily Pick
 
-1. Open [Daily Pick Settings](/apps/settings/) and scroll to **Third-Party Integrations**.
+1. Open [Daily Pick Settings](/apps/brand/) and scroll to **Third-Party Integrations**.
 2. Select **Jira** in the navigation rail.
 3. Fill out the fields:
    - **Jira site URL:** the base domain where you access Jira Cloud.
@@ -88,4 +88,4 @@ Still blocked? Toggle **Include assigned work** off and re-run the test to confi
 - **Use a dedicated service account** if multiple facilitators rely on the integration. That prevents accidental token revocation when someone leaves the team.
 - **Refresh before the stand-up.** Click the **Refresh** button inside the stand-up dock to pull the latest assignments if you know big changes landed overnight.
 
-With Jira linked, Daily Pick can act as your real-time queue coordinator—no more copying names from a spreadsheet before the meeting. Jump into the [Settings page](/apps/settings/) whenever you need to tweak the connection.
+With Jira linked, Daily Pick can act as your real-time queue coordinator—no more copying names from a spreadsheet before the meeting. Jump into the [Settings page](/apps/brand/) whenever you need to tweak the connection.

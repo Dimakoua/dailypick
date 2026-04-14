@@ -45,7 +45,7 @@ Daily Pick only needs read access. You can keep two-factor auth enabled and stil
 
 ## Step 2 — Complete the GitHub card in Daily Pick
 
-1. Visit [Daily Pick Settings](/apps/settings/) → **Third-Party Integrations** → **GitHub**.
+1. Visit [Daily Pick Settings](/apps/brand/) → **Third-Party Integrations** → **GitHub**.
 2. Enter:
    - **Repository full name:** `owner/repository` exactly as it appears in the URL.
    - **Personal access token:** the value you just generated.
@@ -83,4 +83,4 @@ Daily Pick only needs read access. You can keep two-factor auth enabled and stil
 - **Use a shared service account** if multiple facilitators manage stand-ups; keep personal accounts for emergency overrides only.
 - **Leverage snapshots.** If a deploy freezes mid-sprint, click **Save assigned work snapshot** so the state is preserved for the retrospective.
 
-With GitHub wired in, Daily Pick becomes your unified view: queue order, notes, and the exact issues each teammate is touching. Revisit [the Settings page](/apps/settings/) any time you want to switch repositories or revoke the connection.
+With GitHub wired in, Daily Pick becomes your unified view: queue order, notes, and the exact issues each teammate is touching. Revisit [the Settings page](/apps/brand/) any time you want to switch repositories or revoke the connection.

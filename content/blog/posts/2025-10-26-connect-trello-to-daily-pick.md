@@ -49,7 +49,7 @@ Trello is perfect for quick stand-up snapshots—cards already encode what each 
 
 ## Step 3 — Fill out the Trello card inside Daily Pick
 
-1. Visit [Daily Pick Settings](/apps/settings/) and choose the **Trello** tab in the integration rail.
+1. Visit [Daily Pick Settings](/apps/brand/) and choose the **Trello** tab in the integration rail.
 2. Paste the following values:
    - **Board or list URL:** the direct link to the board/list you want to sync.
    - **API key:** the value from Step 1.
@@ -91,4 +91,4 @@ Need multiple boards? Repeat the process with a different URL, or temporarily sw
 - **Use custom views.** Daily Pick respects filtered lists if you point to a list URL instead of the parent board.
 - **Limit snapshots to 15 cards** for clarity. The stand-up panel intentionally caps the list so updates stay digestible.
 
-Bookmark [the Settings page](/apps/settings/) for next time—you can revisit it at any point to refresh or disconnect the Trello integration.
+Bookmark [the Settings page](/apps/brand/) for next time—you can revisit it at any point to refresh or disconnect the Trello integration.

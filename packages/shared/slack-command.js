@@ -126,7 +126,7 @@ function getBaseUrl(env) {
 
 function buildSlackPayload(flowKey, baseUrl, userId) {
   const flow = FLOW_DETAILS[flowKey] || FLOW_DETAILS.standup;
-  const settingsUrl = `${baseUrl}/apps/settings/#slack`;
+  const settingsUrl = `${baseUrl}/apps/roster/`;
   const userMention = userId ? `<@${userId}>` : 'Team';
 
   return {

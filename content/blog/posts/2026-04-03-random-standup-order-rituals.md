@@ -54,7 +54,7 @@ Daily Pick offers three distinct ways to mix things up:
 
 ## Pro-Tips for Efficient Stand-ups
 
--   **Integrate with Slack:** If your team lives in Slack, use our [Slash Command](/apps/settings/) to launch these tools directly from your stand-up channel.
+-   **Integrate with Slack:** If your team lives in Slack, use our [Slash Command](/apps/brand/) to launch these tools directly from your stand-up channel.
 -   **Host Rotating:** Let a different person "host" the tool each day. It’s a great way to distribute leadership across the team.
 -   **Screenshot for Later:** If you use the [Random List Shuffler](/apps/random-list-shuffler/), take a screenshot of the order. It’s helpful if someone joins the meeting late or you need to remember who hasn't gone yet.
 

@@ -308,7 +308,7 @@
   {
     "id": "settings",
     "name": "Settings",
-    "path": "/apps/settings/",
+    "path": "/apps/brand/",
     "category": "nav",
     "footerGroup": "Resources",
     "emoji": "⚙️",

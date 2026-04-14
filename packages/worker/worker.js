@@ -269,6 +269,12 @@ router.get('/apps/choices-spinner', (request) => {
 router.get('/apps/choices-spinner/', (request) => {
     return Response.redirect(new URL('/apps/the-wheel-spinner/', request.url).toString(), 301);
 });
+router.get('/apps/settings', (request) => {
+    return Response.redirect(new URL('/apps/brand/', request.url).toString(), 301);
+});
+router.get('/apps/settings/', (request) => {
+    return Response.redirect(new URL('/apps/brand/', request.url).toString(), 301);
+});
 
 
 export default {

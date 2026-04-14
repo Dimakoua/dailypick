@@ -90,9 +90,9 @@ Here are some potential new games and tools being considered for Daily Pick, ali
 These ideas aim to address specific team needs (psychological safety, morale checks, icebreakers) while fitting into the existing fun, lightweight, and multiplayer-friendly architecture of the project.
 ## Slack integration
 
-The `/dailypick` slash command keeps rituals, polling, and morale checks within Slack. Nod to the new Slack card inside `/apps/settings/` for the step-by-step setup, required tokens, and handy command examples.
+The `/dailypick` slash command keeps rituals, polling, and morale checks within Slack. Nod to the new Slack card inside `/apps/brand/` for the step-by-step setup, required tokens, and handy command examples.
 
-1. Create a Slack App that exposes your `/dailypick` slash command and point its Request URL to `https://<your-cloudflare-worker>/api/slack/command?client_id=<integrationClientId>` (copy the value shown inside `/apps/settings/`).
+1. Create a Slack App that exposes your `/dailypick` slash command and point its Request URL to `https://<your-cloudflare-worker>/api/slack/command?client_id=<integrationClientId>` (copy the value shown inside `/apps/brand/`).
 2. In the Worker environment define `SLACK_SIGNING_SECRET` (from the Slack app’s “Basic Information” page) and optionally `DAILYPICK_BASE_URL` if you’re hosting somewhere besides `https://dailypick.dev`.
 3. When a user runs the command (e.g., `/dailypick planning` or `/dailypick morale`), the Worker validates Slack’s signature and responds with an ephemeral card that links directly to the chosen experience and the Slack setup doc inside Settings.
 4. If you ever need to expand what the command can do (follow-ups, scheduled reminders, etc.), Slack scopes can be added to the app later—this route currently stays within ephemeral replies.

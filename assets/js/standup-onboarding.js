@@ -30,7 +30,7 @@
     },
     {
       title: 'Connect Your Tools 🔗',
-      description: 'To see your tasks here, connect to **Jira**, **GitHub**, or **Trello** via the <a href="/apps/settings/" target="_blank">Settings</a>. Once connected, your assigned work filters in automatically!',
+      description: 'To see your tasks here, connect to **Jira**, **GitHub**, or **Trello** via the <a href="/apps/brand/" target="_blank">Settings</a>. Once connected, your assigned work filters in automatically!',
       target: '.standup-panel__services',
       position: 'left'
     },

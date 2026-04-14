@@ -10,7 +10,7 @@
 - [Timer](https://dailypick.dev/apps/timer): Multi-stage ritual timers with color-coded stages, audio cues, presets, and shareable cadence links.
 - [Wheel of Names](https://dailypick.dev/apps/wheel): Fair spinner for decisions, random selection, and meeting facilitation.
 - [Morale Thermometer](https://dailypick.dev/apps/morale-thermometer): Fast team pulse checks for standups and health checks.
-- [Settings & Brand Studio](https://dailypick.dev/apps/settings): Centralize rosters, brand presets, third-party integrations, and live previews for theme changes.
+- [Settings & Brand Studio](https://dailypick.dev/apps/brand): Centralize rosters, brand presets, third-party integrations, and live previews for theme changes.
 
 ## Selection & Decision Tools
 
