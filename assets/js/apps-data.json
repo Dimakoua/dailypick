@@ -369,6 +369,15 @@
     "description": "Every option is never. Classic Never, Strong No, Nuanced Never, Poetic Never — pick your flavour and make peace with it."
   },
   {
+    "id": "when-should-i-go-on-vacation",
+    "name": "When Should I Go on Vacation?",
+    "path": "/apps/when-should-i-go-on-vacation/",
+    "category": "games",
+    "footerGroup": "Games",
+    "emoji": "✈️",
+    "description": "Stop putting it off. Spin the wheel for your vacation timing — from booking it right now to the best travel season. Go!"
+  },
+  {
     "id": "cook-or-order-in",
     "name": "Cook or Order In",
     "path": "/apps/cook-or-order-in/",

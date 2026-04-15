@@ -1,0 +1,211 @@
+---
+layout: base_app.njk
+title: "When Should I Go on Vacation Wheel – Random Holiday Timing Picker | Daily Pick"
+description: "Can't decide when to take a vacation? Spin the wheel for honest timing, best seasons, spontaneous getaways, and the nudge you need to finally book it."
+keywords: "when should I go on vacation, vacation timing wheel, holiday picker, when to travel, vacation schedule randomizer, travel timing wheel, book vacation wheel, holiday planning"
+canonical: "https://dailypick.dev/apps/when-should-i-go-on-vacation/"
+localBrandConfig: /apps/when-should-i-go-on-vacation/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">You deserve a break — the wheel will sort out when</p>
+            <h1>✈️ When Should I Go on Vacation?</h1>
+            <p>Been putting it off? Let the wheel pick your holiday timing — from "Book it right now" to "Next long weekend". No more waiting for the perfect moment.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Book It Right Now!,Next Long Weekend,End of This Month,Next Month,After This Project,Summer,Christmas Break,Whenever I Have Money">😅 The Real Talk</button>
+            <button class="preset-btn" data-items="January,February,March,April,May,June,July,August,September,October,November,December">📅 Pick a Month</button>
+            <button class="preset-btn" data-items="Spring Escape,Summer Adventure,Autumn Colour Trip,Winter Sun,Ski Season,Cherry Blossom Season,Festival Season,Shoulder Season Deal">🌍 Best Travel Seasons</button>
+            <button class="preset-btn" data-items="BOOK IT NOW!,This Weekend,Take a Sick Day,Next Payday,After the Next Meeting,Stop Waiting — Just Go,Life is Short,You're Already Burnt Out">🔥 Just Go Already</button>
+        </div>
+
+        <button id="spinBtn">✈️ SPIN FOR YOUR VACATION!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>When Should I Go on Vacation Wheel: Random Holiday Timing Picker</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>When Should I Go on Vacation Wheel settles the question you've been dodging for months. From "Book It Right Now" and "Next Long Weekend" to "Ski Season" and "Shoulder Season Deal" — every spin either picks your timing or gives you the push you clearly needed. One spin, one holiday date, done.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>Four travel presets:</strong> The Real Talk, Pick a Month, Best Travel Seasons, and Just Go Already.</li>
+                        <li><strong>Honest and useful:</strong> Covers everything from spontaneous weekend breaks to seasonal planning and mildly aggressive motivation.</li>
+                        <li><strong>One spin, one answer:</strong> Stop deliberating. The wheel has decided. Go book it.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-vacation-wheel">What is the Vacation Wheel?</a></li>
+                    <li><a href="#who-should-use-vacation-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-vacation-wheel-works">How it works</a></li>
+                    <li><a href="#vacation-wheel-features">Features</a></li>
+                    <li><a href="#vacation-wheel-categories">Wheel categories</a></li>
+                    <li><a href="#vacation-wheel-tips">Tips</a></li>
+                    <li><a href="#vacation-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-vacation-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-vacation-wheel">
+                <h3>1. What is the Vacation Wheel?</h3>
+                <p>When Should I Go on Vacation Wheel is a random holiday timing picker that cuts through the endless procrastination loop of "I'll book it when things calm down". It picks your travel window — whether that's this weekend, a specific month, the best travel season for your destination type, or an outright command to stop hesitating and just go.</p>
+            </section>
+
+            <section id="who-should-use-vacation-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Anyone who has accrued annual leave they haven't used. People who have been "meaning to book something" since January. Anyone whose last proper vacation was disturbingly long ago. If you're reading this instead of looking at flights, the wheel is already doing its job.</p>
+            </section>
+
+            <section id="how-vacation-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Choose one of the four presets, then hit Spin. The wheel picks your holiday timing. Open a flight search immediately after. Do not negotiate with the result. Spin again only if the pick is genuinely impossible — then go on the second spin.</p>
+            </section>
+
+            <section id="vacation-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four presets:</strong> The Real Talk, Pick a Month, Best Travel Seasons, and Just Go Already.</li>
+                    <li><strong>Twelve-month option:</strong> The Pick a Month preset gives you all 12 months for a fully random annual timing pick.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones — spin it at your desk when you should be booking a holiday.</li>
+                    <li><strong>Instant result:</strong> The answer is clear, the timing is set, open flights.google.com now.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel in your favourite travel brand colours.</li>
+                </ul>
+            </section>
+
+            <section id="vacation-wheel-categories">
+                <h3>5. Wheel categories</h3>
+                <p><strong>The Real Talk</strong> is the honest preset covering the full spectrum of vacation procrastination — "Book It Right Now!", "Next Long Weekend", "End of This Month", "Next Month", "After This Project", "Summer", "Christmas Break", and the ever-relatable "Whenever I Have Money". <strong>Pick a Month</strong> gives you all twelve months for a completely random calendar pick — great when you have flexibility and no idea where to start. <strong>Best Travel Seasons</strong> covers the smartest times to travel by vibe — Spring Escape, Summer Adventure, Autumn Colour Trip, Winter Sun, Ski Season, Cherry Blossom Season, Festival Season, and the savvy Shoulder Season Deal. <strong>Just Go Already</strong> is the motivational preset for chronic bookers — "BOOK IT NOW!", "This Weekend", "Take a Sick Day", "Next Payday", "After the Next Meeting", "Stop Waiting — Just Go", "Life is Short", and "You're Already Burnt Out".</p>
+            </section>
+
+            <section id="vacation-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Use The Real Talk when you want an honest reality check on your timeline, Pick a Month when you're flexible and need a random calendar anchor, Best Travel Seasons when you want inspiration based on what makes each time of year special, and Just Go Already when you need someone (or something) to tell you to stop overthinking it. Honour the spin. The wheel has no patience for excuses.</p>
+            </section>
+
+            <section id="vacation-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>Now that you know when, you need to decide where — try the <a href="/apps/the-wheel-spinner/">Wheel Spinner</a> with your destination shortlist. Once you're back and need to recover from the jet lag, the <a href="/apps/when-should-i-go-to-the-gym/">Gym Wheel</a> will help you figure out when to get back into shape. And if you need to decide what to eat on your first night back, the <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a> has you covered.</p>
+            </section>
+
+            <section id="why-vacation-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>The biggest barrier to taking a vacation is not money, not time, not work — it's the decision itself. People delay choosing a date because any date feels like a commitment and no date feels perfect. The wheel removes the choosing. It picks a window, you check availability, you book it. Research consistently shows that the anticipation of a holiday is itself a major source of wellbeing. One spin could start that. Go on.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let items = ['Book It Right Now!', 'Next Long Weekend', 'End of This Month', 'Next Month', 'After This Project', 'Summer', 'Christmas Break', 'Whenever I Have Money'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#1a8fc1',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#e8a020',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#2d9e6b',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#c0392b',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#1e3a6e',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#9b59b6',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#16a085',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#d35400',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 15px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / items.length;
+            const selectedIndex = Math.floor(Math.random() * items.length);
+            const selectedItem = items[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(items, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `✈️ The wheel says: <span style="color: var(--vacation-blue); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                items = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(items, 0);
+            });
+        });
+
+        // Redraw idle wheel when brand colors change via Local Brand Studio
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(items, 0);
+        });
+
+        drawWheel(items, 0);
+    </script>
