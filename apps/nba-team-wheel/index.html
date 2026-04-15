@@ -1,0 +1,210 @@
+---
+layout: base_app.njk
+title: "NBA Team Wheel – Random NBA Team Picker | Daily Pick"
+description: "Need a basketball team to root for? Spin the wheel for a random NBA team — Eastern Conference, Western Conference, Atlantic Division, or all 30 teams. Let the ball decide."
+keywords: "NBA team wheel, random NBA team picker, which NBA team should I root for, NBA team randomizer, pick an NBA team wheel"
+canonical: "https://dailypick.dev/apps/nba-team-wheel/"
+localBrandConfig: /apps/nba-team-wheel/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">30 teams. One shot. One spin.</p>
+            <h1>🏀 NBA Team Wheel</h1>
+            <p>Can’t pick an NBA team to root for? Spin the wheel and let it choose between the Lakers, Heat, Celtics, Warriors, and every franchise in the league.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Boston Celtics,Brooklyn Nets,New York Knicks,Philadelphia 76ers,Toronto Raptors">🏀 Atlantic Division</button>
+            <button class="preset-btn" data-items="Boston Celtics,Brooklyn Nets,New York Knicks,Philadelphia 76ers,Toronto Raptors,Chicago Bulls,Cleveland Cavaliers,Detroit Pistons,Indiana Pacers,Milwaukee Bucks,Atlanta Hawks,Charlotte Hornets,Miami Heat,Orlando Magic,Washington Wizards">🌆 Eastern Conference</button>
+            <button class="preset-btn" data-items="Dallas Mavericks,Denver Nuggets,Golden State Warriors,Houston Rockets,Los Angeles Clippers,Los Angeles Lakers,Memphis Grizzlies,Minnesota Timberwolves,New Orleans Pelicans,Oklahoma City Thunder,Phoenix Suns,Portland Trail Blazers,Sacramento Kings,San Antonio Spurs,Utah Jazz">🌉 Western Conference</button>
+            <button class="preset-btn" data-items="Boston Celtics,Brooklyn Nets,New York Knicks,Philadelphia 76ers,Toronto Raptors,Chicago Bulls,Cleveland Cavaliers,Detroit Pistons,Indiana Pacers,Milwaukee Bucks,Atlanta Hawks,Charlotte Hornets,Miami Heat,Orlando Magic,Washington Wizards,Dallas Mavericks,Denver Nuggets,Golden State Warriors,Houston Rockets,Los Angeles Clippers,Los Angeles Lakers,Memphis Grizzlies,Minnesota Timberwolves,New Orleans Pelicans,Oklahoma City Thunder,Phoenix Suns,Portland Trail Blazers,Sacramento Kings,San Antonio Spurs,Utah Jazz">🏟️ All 30 Teams</button>
+        </div>
+
+        <button id="spinBtn">🏀 SPIN THE NBA WHEEL!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>NBA Team Wheel: Random NBA Team Picker</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>The NBA Team Wheel randomly chooses one of the league’s 30 franchises. Use it when you want a team to follow, need a fantasy rivalry, or want a neutral way to pick a squad.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>Four presets:</strong> Atlantic Division, Eastern Conference, Western Conference, and All 30 Teams.</li>
+                        <li><strong>All current NBA clubs:</strong> From Boston to Sacramento.</li>
+                        <li><strong>Fast result:</strong> Drop the spin, see the winner instantly.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-nba-wheel">What is the NBA Team Wheel?</a></li>
+                    <li><a href="#who-should-use-nba-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-nba-wheel-works">How it works</a></li>
+                    <li><a href="#nba-wheel-features">Features</a></li>
+                    <li><a href="#nba-wheel-teams">All 30 NBA Teams</a></li>
+                    <li><a href="#nba-wheel-tips">Tips</a></li>
+                    <li><a href="#nba-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-nba-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-nba-wheel">
+                <h3>1. What is the NBA Team Wheel?</h3>
+                <p>The NBA Team Wheel is a random NBA team picker that picks one of the league’s 30 teams for you. Choose a preset or use the full league wheel if you want a purely unbiased cup pick.</p>
+            </section>
+
+            <section id="who-should-use-nba-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>New fans who want a team, fantasy players deciding a side, friends settling a debate, or anyone who prefers a neutral selection over hometown bias.</p>
+            </section>
+
+            <section id="how-nba-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Pick a preset, click the spin button, and watch the wheel choose a team. The result appears immediately when the wheel stops.</p>
+            </section>
+
+            <section id="nba-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four easy presets:</strong> Atlantic Division, Eastern Conference, Western Conference, and All 30 Teams.</li>
+                    <li><strong>Mobile friendly:</strong> Spin on phone or desktop.</li>
+                    <li><strong>Instant winner:</strong> The chosen team is displayed as soon as the wheel stops.</li>
+                    <li><strong>Custom colors:</strong> Use the local brand config to tweak the wheel palette.</li>
+                </ul>
+            </section>
+
+            <section id="nba-wheel-teams">
+                <h3>5. All 30 NBA Teams</h3>
+                <p><strong>Eastern Conference:</strong> Boston Celtics, Brooklyn Nets, New York Knicks, Philadelphia 76ers, Toronto Raptors, Chicago Bulls, Cleveland Cavaliers, Detroit Pistons, Indiana Pacers, Milwaukee Bucks, Atlanta Hawks, Charlotte Hornets, Miami Heat, Orlando Magic, Washington Wizards.</p>
+                <p><strong>Western Conference:</strong> Dallas Mavericks, Denver Nuggets, Golden State Warriors, Houston Rockets, Los Angeles Clippers, Los Angeles Lakers, Memphis Grizzlies, Minnesota Timberwolves, New Orleans Pelicans, Oklahoma City Thunder, Phoenix Suns, Portland Trail Blazers, Sacramento Kings, San Antonio Spurs, Utah Jazz.</p>
+            </section>
+
+            <section id="nba-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Use the Atlantic Division preset when you want a smaller wheel with big-market teams. Pick Eastern or Western Conference when you want one side of the league. Use All 30 Teams for full NBA randomness.</p>
+            </section>
+
+            <section id="nba-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>Need game day food? Try the <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. Need a quick yes/no on who starts? Use the <a href="/apps/yes-or-no-wheel/">Yes or No Wheel</a>.</p>
+            </section>
+
+            <section id="why-nba-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>NBA fandom can be overwhelming with so many teams and storylines. This wheel removes the pressure and gives you one clean, neutral pick.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let items = ['Boston Celtics', 'Brooklyn Nets', 'New York Knicks', 'Philadelphia 76ers', 'Toronto Raptors'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#17408b',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#ed174c',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#fdb827',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#0f5a8f',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#3b2d65',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#008669',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#d35400',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#9b1d20',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 15px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 14, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / items.length;
+            const selectedIndex = Math.floor(Math.random() * items.length);
+            const selectedItem = items[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(items, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🏀 Your team: <span style="color: var(--basketball-navy); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                items = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(items, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(items, 0);
+        });
+
+        drawWheel(items, 0);
+    </script>

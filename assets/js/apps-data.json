@@ -414,6 +414,15 @@
     "description": "Can’t decide which MLB team to root for? Spin the wheel for a random baseball team from the American League, National League, AL East, or all 30 clubs."
   },
   {
+    "id": "nba-team-wheel",
+    "name": "NBA Team Wheel",
+    "path": "/apps/nba-team-wheel/",
+    "category": "games",
+    "footerGroup": "Games",
+    "emoji": "🏀",
+    "description": "Can’t decide which NBA team to root for? Spin the wheel for a random basketball team from the Eastern Conference, Western Conference, Atlantic Division, or all 30 clubs."
+  },
+  {
     "id": "cook-or-order-in",
     "name": "Cook or Order In",
     "path": "/apps/cook-or-order-in/",
