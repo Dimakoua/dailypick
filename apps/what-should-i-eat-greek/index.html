@@ -1,0 +1,211 @@
+---
+layout: base_app.njk
+title: "Greek Food Wheel – Random Greek Dish Picker | Daily Pick"
+description: "Can't decide what Greek food to eat? Spin the wheel for classic mezedes, grilled meats, seafood, hearty mains, and baklava. Opa!"
+keywords: "Greek food wheel, Greek dish picker, what Greek food to eat, Greek cuisine spinner, mezedes wheel, souvlaki picker, Greek food random, Greek meal ideas"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-greek/"
+localBrandConfig: /apps/what-should-i-eat-greek/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Sun, sea, and olive oil — what are you eating?</p>
+            <h1>🇬🇷 Greek Food Wheel</h1>
+            <p>Torn between a souvlaki and a plate of spanakopita? Between fresh grilled octopus and a rich moussaka? Spin the wheel and let Greece decide!</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Moussaka,Souvlaki,Spanakopita,Tzatziki & Pita,Gyros,Horiatiki Salad,Baklava,Taramasalata">🏛️ Greek Classics</button>
+            <button class="preset-btn" data-items="Grilled Octopus,Kalamari,Grilled Sea Bream,Shrimp Saganaki,Gavros,Kakavia Fish Soup,Grilled Sardines,Lobster Pasta">🌊 Seafood & Coastal</button>
+            <button class="preset-btn" data-items="Lamb Kleftiko,Kokoretsi,Souvla,Keftedes,Lamb Chops,Pastitsio,Giouvetsi,Stifado">🔥 Grills & Mains</button>
+            <button class="preset-btn" data-items="Baklava,Loukoumades,Galaktoboureko,Rizogalo,Halva,Melomakarona,Kourabiedes,Bougatsa">🍯 Sweets & Pastries</button>
+        </div>
+
+        <button id="spinBtn">🇬🇷 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Greek Food Wheel: Random Greek Dish &amp; Meal Picker</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Greek Food Wheel takes the delicious indecision out of your hands and picks something magnificent for you. From the iconic moussaka and slow-roasted lamb kleftiko to fresh grilled octopus by the Aegean, crispy spanakopita, and honey-soaked loukoumades — every spin lands on something worth eating right now.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>Full menu range:</strong> Four presets spanning Greek Classics, Seafood & Coastal, Grills & Mains, and Sweets & Pastries.</li>
+                        <li><strong>Authentic Greek dishes:</strong> Every item is a genuine Greek recipe rooted in centuries of Mediterranean culinary tradition.</li>
+                        <li><strong>Instant pick:</strong> Stop staring at the taverna menu — one spin, one dish, Opa!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-greek-food-wheel">What is the Greek Food Wheel?</a></li>
+                    <li><a href="#who-should-use-greek-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-greek-food-wheel-works">How it works</a></li>
+                    <li><a href="#greek-food-wheel-features">Features</a></li>
+                    <li><a href="#greek-food-wheel-categories">Greek food categories</a></li>
+                    <li><a href="#greek-food-wheel-tips">Tips</a></li>
+                    <li><a href="#greek-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-greek-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-greek-food-wheel">
+                <h3>1. What is the Greek Food Wheel?</h3>
+                <p>Greek Food Wheel is a random dish picker built around the real Greek culinary tradition. It covers Greece's incredible range — from the mezedes spread and hearty mainland stews to the fresh seafood of the Aegean islands, the smoky grilled meats of a proper Greek barbecue, and the honey-drenched pastries that round off every celebration.</p>
+            </section>
+
+            <section id="who-should-use-greek-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Anyone who loves Greek food and can never choose between mezedes, grilled fish, and a rich slow-cooked stew. Home cooks looking for tonight's recipe inspiration, diners at a Greek taverna paralysed by the menu, and travellers planning what to eat in Athens, Santorini, Thessaloniki, or Crete. Spin, choose, Opa!</p>
+            </section>
+
+            <section id="how-greek-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Choose one of the four presets, then hit Spin. The wheel lands on a dish and announces it. Take it as your recipe for the evening or your order at the taverna. Spin again if another contender is calling your name.</p>
+            </section>
+
+            <section id="greek-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four authentic presets:</strong> Greek Classics, Seafood & Coastal, Grills & Mains, and Sweets & Pastries.</li>
+                    <li><strong>Genuine Greek dishes:</strong> Every item is a real recipe with deep roots in Greek culinary history.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops — perfect at the dinner table or by the grill.</li>
+                    <li><strong>Instant result:</strong> Winner is shown clearly after every spin so you can start cooking or ordering immediately.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel in Greek flag blue and white.</li>
+                </ul>
+            </section>
+
+            <section id="greek-food-wheel-categories">
+                <h3>5. Greek food categories</h3>
+                <p><strong>Greek Classics</strong> covers the dishes that define Greek food worldwide — moussaka, souvlaki, spanakopita, tzatziki with warm pita, gyros, a proper horiatiki village salad, baklava, and taramasalata. <strong>Seafood & Coastal</strong> brings the Aegean to your table — chargrilled octopus, crispy kalamari, fresh sea bream, shrimp saganaki, gavros anchovies, kakavia fish soup, grilled sardines, and the indulgent lobster pasta from the islands. <strong>Grills & Mains</strong> is the heart of Greek hospitality — slow-baked lamb kleftiko, kokoretsi on the spit, souvla, juicy keftedes meatballs, char-grilled lamb chops, pastitsio, giouvetsi baked pasta, and the rich wine-braised stifado. <strong>Sweets & Pastries</strong> is the golden end to any Greek meal — baklava dripping with honey and walnuts, crispy loukoumades, creamy galaktoboureko custard pie, rizogalo rice pudding, halva, melomakarona honey cookies, kourabiedes almond shortbreads, and the warm cream-filled bougatsa.</p>
+            </section>
+
+            <section id="greek-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Use Greek Classics for a crowd-pleasing spread everyone will love, Seafood & Coastal when you want a light, fresh meal from the islands, Grills & Mains for a proper Greek feast night with family and friends, and Sweets & Pastries when the only question left is dessert. Add your own favourite Greek dishes for a personalised wheel.</p>
+            </section>
+
+            <section id="greek-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader global food picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. Explore Mediterranean neighbours with the <a href="/apps/what-should-i-eat-italian/">Italian Food Wheel</a>, or venture further with the <a href="/apps/what-should-i-eat-indian/">Indian Food Wheel</a>, <a href="/apps/what-should-i-eat-chinese/">Chinese Food Wheel</a>, or <a href="/apps/what-yousef-should-eat/">Persian Food Wheel</a>. Looking for a city food wheel? Try <a href="/apps/what-should-i-eat-toronto/">Toronto Food Wheel</a> or <a href="/apps/what-should-i-eat-new-york/">New York Food Wheel</a>. To pick a drink with your meal, <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a> has you covered.</p>
+            </section>
+
+            <section id="why-greek-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Greek cuisine is one of the oldest and most influential food traditions in the world — the foundation of the Mediterranean diet and a culinary culture defined by quality ingredients, communal eating, and an unapologetic love of good food. That richness is exactly what makes choosing so hard when standing in front of a Greek menu. This wheel makes the decision for you. One spin, one dish — Opa!</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Moussaka', 'Souvlaki', 'Spanakopita', 'Tzatziki & Pita', 'Gyros', 'Horiatiki Salad', 'Baklava', 'Taramasalata'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#0d5eaf',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#1a8fc1',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#c8860a',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#1c5c1c',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#1e3a6e',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#c0392b',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#6b3d9a',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#7a5230',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🇬🇷 Opa! <span style="color: var(--greek-blue); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        // Redraw idle wheel when brand colors change via Local Brand Studio
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>

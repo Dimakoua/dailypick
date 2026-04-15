@@ -1,25 +1,25 @@
 /* ==========================================================================
-   Italian Food Wheel – App Styles
-   - Italian flag green & red theme layered over base design tokens
-   - Responsive layout with preset buttons and Italian-accented winner display
+   Greek Food Wheel – App Styles
+   - Greek flag blue & white theme layered over base design tokens
+   - Responsive layout with preset buttons and Greek-accented winner display
    ========================================================================== */
 
-/* Italian colour palette */
+/* Greek colour palette */
 :root {
-  --italian-green: #009246;
-  --italian-red: #ce2b37;
-  --italian-gold: #c8860a;
+  --greek-blue: #0d5eaf;
+  --greek-sky: #1a8fc1;
+  --greek-gold: #c8860a;
 
-  /* Wheel segment defaults — Italian flag green, red, and rich complementary tones */
-  --wheel-segment-1: #009246; /* Italian flag green */
-  --wheel-segment-2: #ce2b37; /* Italian flag red */
-  --wheel-segment-3: #1a5c2e; /* deep forest green */
-  --wheel-segment-4: #a51c30; /* deep crimson */
-  --wheel-segment-5: #c8860a; /* Tuscan gold */
-  --wheel-segment-6: #1c5f8e; /* Amalfi blue */
+  /* Wheel segment defaults — Greek flag blue, Aegean sky, Hellenic gold tones */
+  --wheel-segment-1: #0d5eaf; /* Greek flag blue */
+  --wheel-segment-2: #1a8fc1; /* Aegean sky blue */
+  --wheel-segment-3: #c8860a; /* Hellenic gold / olive */
+  --wheel-segment-4: #1c5c1c; /* olive grove green */
+  --wheel-segment-5: #1e3a6e; /* deep navy */
+  --wheel-segment-6: #c0392b; /* terracotta red */
   --wheel-segment-7: #6b3d9a; /* purple */
-  --wheel-segment-8: #7a5230; /* terracotta brown */
-  --wheel-result-text: var(--italian-green);
+  --wheel-segment-8: #7a5230; /* earth brown */
+  --wheel-result-text: var(--greek-blue);
 }
 
 body {
@@ -69,7 +69,7 @@ body {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--italian-green);
+  color: var(--greek-sky);
 }
 
 /* Wheel container */
@@ -86,7 +86,7 @@ body {
   height: 0;
   border-left: 15px solid transparent;
   border-right: 15px solid transparent;
-  border-top: 30px solid var(--italian-red);
+  border-top: 30px solid var(--greek-gold);
   top: -14px;
   left: 50%;
   transform: translateX(-50%);
@@ -106,7 +106,7 @@ body {
 
 .preset-btn {
   background: var(--glass-bg, rgba(255, 255, 255, 0.1));
-  border: 1px solid var(--italian-green);
+  border: 1px solid var(--greek-blue);
   color: var(--brand-text);
   padding: 8px 16px;
   border-radius: var(--radius-full, 9999px);
@@ -117,14 +117,14 @@ body {
 }
 
 .preset-btn:hover {
-  background: var(--italian-green);
+  background: var(--greek-blue);
   color: #fff;
   transform: scale(1.04);
 }
 
 /* Spin button */
 #spinBtn {
-  background: var(--italian-green);
+  background: var(--greek-blue);
   color: #fff;
   border: none;
   padding: 14px 36px;
@@ -134,13 +134,13 @@ body {
   cursor: pointer;
   letter-spacing: 0.04em;
   transition: transform 0.15s, box-shadow 0.15s;
-  box-shadow: 0 4px 18px rgba(0, 146, 70, 0.4);
+  box-shadow: 0 4px 18px rgba(13, 94, 175, 0.4);
   margin: 16px 0;
 }
 
 #spinBtn:hover {
   transform: scale(1.05);
-  box-shadow: 0 6px 24px rgba(0, 146, 70, 0.6);
+  box-shadow: 0 6px 24px rgba(13, 94, 175, 0.6);
 }
 
 #spinBtn:active {
@@ -153,7 +153,7 @@ body {
   font-weight: 800;
   text-align: center;
   min-height: 3.5rem;
-  color: var(--wheel-result-text, var(--italian-green));
+  color: var(--wheel-result-text, var(--greek-blue));
   margin: 8px 0 16px;
 }
 
@@ -182,7 +182,7 @@ body {
 }
 
 .seo-toc a {
-  color: var(--italian-green);
+  color: var(--greek-blue);
   text-decoration: none;
 }
 
@@ -202,7 +202,7 @@ body {
 }
 
 .seo-content-area a {
-  color: var(--italian-green);
+  color: var(--greek-blue);
 }
 
 .seo-content-area section {

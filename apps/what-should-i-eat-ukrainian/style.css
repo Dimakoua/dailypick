@@ -156,34 +156,6 @@ body {
   padding: 8px 16px;
 }
 
-/* SEO content */
-.seo-content-area {
-  max-width: 800px;
-  width: 92%;
-  margin: 32px auto 48px;
-  color: var(--brand-text);
-  line-height: 1.7;
-}
-
-.seo-content-area h2 {
-  font-size: 1.4rem;
-  color: var(--brand-heading);
-  margin-bottom: 1rem;
-}
-
-.seo-content-area h3 {
-  font-size: 1.1rem;
-  color: var(--brand-heading);
-  margin: 1.5rem 0 0.5rem;
-}
-
-.seo-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-bottom: 24px;
-}
-
 @media (max-width: 600px) {
   .seo-grid {
     grid-template-columns: 1fr;
