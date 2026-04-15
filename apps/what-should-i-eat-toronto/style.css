@@ -1,0 +1,225 @@
+/* ==========================================================================
+   Toronto Food Wheel – App Styles
+   - Toronto red & city night theme layered over base design tokens
+   - Responsive layout with preset buttons and Toronto-accented winner display
+   ========================================================================== */
+
+/* Toronto colour palette */
+:root {
+  --toronto-red: #d52b1e;
+  --toronto-dark: #1a1a2e;
+  --toronto-gold: #c8860a;
+
+  /* Wheel segment defaults — Toronto Maple Leafs red, city night dark, multicultural palette */
+  --wheel-segment-1: #d52b1e; /* Toronto red */
+  --wheel-segment-2: #1a1a2e; /* city night */
+  --wheel-segment-3: #c0392b; /* deep red */
+  --wheel-segment-4: #2d6a4f; /* green (multicultural) */
+  --wheel-segment-5: #1a5f8e; /* lake Ontario blue */
+  --wheel-segment-6: #c8860a; /* gold */
+  --wheel-segment-7: #6b3d9a; /* purple */
+  --wheel-segment-8: #8b4513; /* earth brown */
+  --wheel-result-text: var(--toronto-red);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  flex-grow: 1;
+}
+
+/* Page Hero */
+.page-hero {
+  text-align: center;
+  max-width: 800px;
+  width: 92%;
+  padding: 30px;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.12));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--glass-shadow);
+}
+
+.page-hero h1 {
+  margin: 0.5rem 0;
+  font-size: clamp(1.6rem, 2rem, 2.2rem);
+  color: var(--brand-heading);
+  font-weight: 700;
+}
+
+.page-hero p {
+  margin: 0.75rem 0 0;
+  font-size: 1rem;
+  color: var(--brand-text);
+  line-height: 1.6;
+}
+
+.hero-eyebrow {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--toronto-red);
+}
+
+/* Wheel container */
+#wheel-container {
+  position: relative;
+  margin: 30px 0;
+}
+
+#indicator {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 30px solid var(--toronto-red);
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+#wheel {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Preset buttons */
+.preset-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  max-width: 600px;
+  margin: 0 auto 16px;
+  padding: 0 16px;
+}
+
+.preset-btn {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 2px solid var(--toronto-red);
+  background: transparent;
+  color: var(--brand-text);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.preset-btn:hover,
+.preset-btn:focus-visible {
+  background: var(--toronto-red);
+  color: #fff;
+  outline: none;
+}
+
+/* Spin button */
+#spinBtn {
+  display: block;
+  margin: 4px auto 16px;
+  padding: 14px 40px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 999px;
+  background: var(--toronto-red);
+  color: #fff;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+#spinBtn:hover {
+  opacity: 0.88;
+}
+
+#spinBtn:active {
+  transform: scale(0.97);
+}
+
+/* Winner display */
+#winner {
+  min-height: 60px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--brand-heading);
+  padding: 8px 16px;
+}
+
+/* SEO content */
+.seo-content-area {
+  max-width: 800px;
+  width: 92%;
+  margin: 32px auto 48px;
+  color: var(--brand-text);
+  line-height: 1.7;
+}
+
+.seo-content-area h2 {
+  font-size: 1.4rem;
+  color: var(--brand-heading);
+  margin-bottom: 1rem;
+}
+
+.seo-content-area h3 {
+  font-size: 1.1rem;
+  color: var(--brand-heading);
+  margin: 1.5rem 0 0.5rem;
+}
+
+.seo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 600px) {
+  .seo-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.seo-toc {
+  background: var(--glass-bg, rgba(255,255,255,0.08));
+  border: 1px solid var(--glass-border, rgba(255,255,255,0.15));
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+
+.seo-toc ol {
+  margin: 0.5rem 0 0;
+  padding-left: 1.4rem;
+}
+
+.seo-toc li {
+  margin-bottom: 0.3rem;
+}
+
+.seo-toc a {
+  color: var(--toronto-red);
+  text-decoration: none;
+}
+
+.seo-toc a:hover {
+  text-decoration: underline;
+}
+
+.seo-content-area a {
+  color: var(--toronto-red);
+}

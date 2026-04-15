@@ -309,6 +309,14 @@ module.exports = [
     emoji: "🥢",
     description: "Spin the wheel for authentic Chinese dishes — Peking Duck, dim sum, Sichuan hot pot, dumplings, and more. 干杯!"
   },  {
+    id: "what-should-i-eat-toronto",
+    name: "Toronto Food Wheel",
+    path: "/apps/what-should-i-eat-toronto/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🍁",
+    description: "Spin the wheel for Toronto icons, multicultural eats, neighbourhood gems, and downtown picks. The 6ix decides!"
+  },  {
     id: "cook-or-order-in",
     name: "Cook or Order In",
     path: "/apps/cook-or-order-in/",

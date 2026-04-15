@@ -1,0 +1,211 @@
+---
+layout: base_app.njk
+title: "Toronto Food Wheel – Random Toronto Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide where to eat in Toronto? Spin the wheel for Toronto icons, multicultural eats, neighbourhood gems, and downtown dining picks."
+keywords: "Toronto food wheel, Toronto restaurant picker, what to eat in Toronto, Toronto cuisine spinner, Toronto food guide, where to eat Toronto"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-toronto/"
+localBrandConfig: /apps/what-should-i-eat-toronto/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">The 6ix is calling — What are you eating?</p>
+            <h1>🍁 Toronto Food Wheel</h1>
+            <p>Torn between a peameal bacon sandwich and Korean BBQ? Spin the wheel and let the 6ix decide!</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Peameal Bacon Sandwich,Butter Tart,Poutine,Nanaimo Bar,BeaverTail,Timbits,Jerk Chicken,Kensington Empanada">🍁 Toronto Icons</button>
+            <button class="preset-btn" data-items="Sushi,Ramen,Steakhouse,Oysters,Craft Burger,Tacos,Rooftop Pizza,Izakaya">🌃 Downtown Eats</button>
+            <button class="preset-btn" data-items="Vietnamese Pho,West Indian Roti,Korean BBQ,Sri Lankan Curry,Dim Sum,Ethiopian Injera,Falafel Wrap,Jamaican Patty">🌍 Multicultural Mix</button>
+            <button class="preset-btn" data-items="Danforth Souvlaki,Little Italy Pasta,St Lawrence Peameal,Gerrard Butter Chicken,Roncy Pierogi,Chinatown Dim Sum,Kensington Tacos,Harbourfront Fish & Chips">🏘️ Neighbourhood Gems</button>
+        </div>
+
+        <button id="spinBtn">🍁 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Toronto Food Wheel: Random Restaurant & Dish Picker for the 6ix</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Toronto Food Wheel cuts through the city's overwhelming dining scene and picks something delicious for you. From the legendary peameal bacon sandwich at St Lawrence Market and the flakiest butter tarts in the city to Korean BBQ on Bloor, West Indian roti in Scarborough, and souvlaki on the Danforth — spin and eat.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>City-wide variety:</strong> Four presets spanning Toronto Icons, Downtown Eats, Multicultural Mix, and Neighbourhood Gems.</li>
+                        <li><strong>Real Toronto food:</strong> Every item is a dish, restaurant style, or neighbourhood classic rooted in the actual Toronto food scene.</li>
+                        <li><strong>Instant pick:</strong> No more scrolling Yelp for 20 minutes — one spin, one meal, let's go!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-toronto-food-wheel">What is the Toronto Food Wheel?</a></li>
+                    <li><a href="#who-should-use-toronto-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-toronto-food-wheel-works">How it works</a></li>
+                    <li><a href="#toronto-food-wheel-features">Features</a></li>
+                    <li><a href="#toronto-food-wheel-categories">Toronto food categories</a></li>
+                    <li><a href="#toronto-food-wheel-tips">Tips</a></li>
+                    <li><a href="#toronto-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-toronto-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-toronto-food-wheel">
+                <h3>1. What is the Toronto Food Wheel?</h3>
+                <p>Toronto Food Wheel is a random restaurant and dish picker built around the real Toronto dining scene. It covers the city's culinary identity — from the iconic peameal bacon sandwich and butter tarts that define Toronto food culture, to the multicultural neighbourhoods that make the 6ix one of the most exciting cities to eat in on earth.</p>
+            </section>
+
+            <section id="who-should-use-toronto-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Torontonians who can't pick between a hundred excellent options, visitors trying to experience the city's food scene, and anyone who has stood at Yonge and Dundas paralysed by too many great choices. Spin, walk, eat.</p>
+            </section>
+
+            <section id="how-toronto-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Choose one of the four presets, then hit Spin. The wheel lands on a pick and announces it. Use it as a category prompt — then find the best spot near you for that dish or neighbourhood. Spin again if it lands somewhere too far.</p>
+            </section>
+
+            <section id="toronto-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> Toronto Icons, Downtown Eats, Multicultural Mix, and Neighbourhood Gems.</li>
+                    <li><strong>Real Toronto picks:</strong> Every item is grounded in an actual Toronto food tradition, district, or scene.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops — ideal for deciding on the go.</li>
+                    <li><strong>Instant result:</strong> Winner is shown clearly after every spin so you can act on it fast.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel in Toronto red.</li>
+                </ul>
+            </section>
+
+            <section id="toronto-food-wheel-categories">
+                <h3>5. Toronto food categories</h3>
+                <p><strong>Toronto Icons</strong> covers the dishes that define the city — the peameal bacon sandwich from St Lawrence Market, butter tarts, poutine, Nanaimo bars, BeaverTails, Timbits, jerk chicken from Eglinton West, and empanadas from Kensington. <strong>Downtown Eats</strong> reflects the King West and Entertainment District dining scene — sushi, ramen, steakhouses, oyster bars, craft burgers, and rooftop pizza. <strong>Multicultural Mix</strong> is Toronto at its best — Vietnamese pho on Spadina, West Indian roti in Scarborough, Korean BBQ on Bloor, Sri Lankan curry on Gerrard, dim sum in Markham, Ethiopian injera on Danforth, falafel wraps in Kensington, and Jamaican patties everywhere. <strong>Neighbourhood Gems</strong> maps the city's distinct food villages — souvlaki on the Danforth, pasta in Little Italy, pierogi on Roncesvalles, butter chicken on Gerrard, dim sum in Chinatown, tacos in Kensington, and fish & chips at the Harbourfront.</p>
+            </section>
+
+            <section id="toronto-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Use Toronto Icons for a classic local experience, Multicultural Mix when you want to explore the city's diversity, Downtown Eats for a date night or expense account dinner, and Neighbourhood Gems when you want to pick a destination neighbourhood and wander. Swap in your personal Toronto restaurant favourites for a fully personalised city food wheel.</p>
+            </section>
+
+            <section id="toronto-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader global food picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. If the wheel lands on something international, dig deeper with the <a href="/apps/what-should-i-eat-indian/">Indian Food Wheel</a>, <a href="/apps/what-should-i-eat-chinese/">Chinese Food Wheel</a>, or <a href="/apps/what-yousef-should-eat/">Persian Food Wheel</a>. To pick a drink to go with your meal, <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a> has you covered.</p>
+            </section>
+
+            <section id="why-toronto-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Toronto has more restaurants per capita than New York City, and a culinary diversity that makes every neighbourhood feel like a different country. That richness is exactly what makes choosing so hard. This wheel turns the city's best food moments into one fast, playful decision. One spin, one meal — let's go.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Peameal Bacon Sandwich', 'Butter Tart', 'Poutine', 'Nanaimo Bar', 'BeaverTail', 'Timbits', 'Jerk Chicken', 'Kensington Empanada'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#d52b1e',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#1a1a2e',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#c0392b',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#2d6a4f',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#1a5f8e',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#c8860a',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#6b3d9a',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#8b4513',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🍁 The 6ix says: <span style="color: var(--toronto-red); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        // Redraw idle wheel when brand colors change via Local Brand Studio
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
