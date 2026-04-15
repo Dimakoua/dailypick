@@ -1,0 +1,211 @@
+---
+layout: base_app.njk
+title: "Nepali Food Wheel – Random Nepali Dish & Drink Picker | Daily Pick"
+description: "Can't decide what Nepali food to eat? Spin the wheel for authentic dal bhat, momo, sekuwa, Newari plates, and traditional Himalayan drinks."
+keywords: "Nepali food wheel, random Nepali dish picker, what should I eat Nepali, Nepal cuisine spinner, momo picker, dal bhat wheel"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-nepali/"
+localBrandConfig: /apps/what-should-i-eat-nepali/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">के खाने? — What to eat?</p>
+            <h1>🥟 Nepali Food Wheel</h1>
+            <p>Torn between Dal Bhat and Momo? Spin the wheel and let Himalayan cuisine make the call!</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Dal Bhat,Momo,Dhido,Sel Roti,Gundruk,Chiura Bhatmas,Aloo Tama,Newari Samay Baji">🥟 Nepali Classics</button>
+            <button class="preset-btn" data-items="Khasi Ko Masu,Sekuwa,Choila,Buff Curry,Chatamari,Yomari,Thukpa,Bara">🍢 Mains & Grills</button>
+            <button class="preset-btn" data-items="Jhol Momo,Kwati,Aloo Chop,Woh,Phaphar Ko Roti,Sadheko Masu,Kachila,Sukuti">🥗 Snacks & Starters</button>
+            <button class="preset-btn" data-items="Tongba,Chhaang,Raksi,Masala Chai,Lassi,Juju Dhau,Kheer,Sikarni">🍹 Drinks & Sweets</button>
+        </div>
+
+        <button id="spinBtn">🥟 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Nepali Food Wheel: Random Nepali Dish Picker for Fast Meal Decisions</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Nepali Food Wheel takes the guesswork out of choosing from one of the Himalayas' most comforting and diverse cuisines. From steaming dal bhat and hand-folded momo to smoky sekuwa skewers, Newari feast plates, and warming millet tongba — pick a preset, spin, and eat.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>Regional variety:</strong> Four presets spanning Nepali Classics, Mains & Grills, Snacks & Starters, and Drinks & Sweets.</li>
+                        <li><strong>Authentic dishes:</strong> Every item is a real, well-loved dish from Nepali culinary tradition.</li>
+                        <li><strong>Instant choice:</strong> No more debating between momo and thukpa — one spin, one meal, स्वादिलो!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-nepali-food-wheel">What is the Nepali Food Wheel?</a></li>
+                    <li><a href="#who-should-use-nepali-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-nepali-food-wheel-works">How it works</a></li>
+                    <li><a href="#nepali-food-wheel-features">Features</a></li>
+                    <li><a href="#nepali-food-wheel-categories">Nepali food categories</a></li>
+                    <li><a href="#nepali-food-wheel-tips">Tips</a></li>
+                    <li><a href="#nepali-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-nepali-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-nepali-food-wheel">
+                <h3>1. What is the Nepali Food Wheel?</h3>
+                <p>Nepali Food Wheel is a random dish picker built for Nepali and Himalayan cuisine. It covers the full range — from the everyday comfort of dal bhat and gundruk to the rich Newari tradition of choila and samay baji, the street favourite momo, and warming high-altitude drinks like tongba and chhaang.</p>
+            </section>
+
+            <section id="who-should-use-nepali-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Anyone who loves Nepali food and can't pick from the rich spread of options. Whether you are cooking at home, visiting a Nepali restaurant, or planning a meal inspired by the Himalayas, the wheel makes the choice for you — instantly and fairly.</p>
+            </section>
+
+            <section id="how-nepali-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Choose one of the four category presets, then hit Spin. The wheel lands on a dish or drink and announces it with a स्वादिलो! — Nepali for "delicious!". Spin again for another suggestion, or head straight to the kitchen.</p>
+            </section>
+
+            <section id="nepali-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four category presets:</strong> Nepali Classics, Mains & Grills, Snacks & Starters, and Drinks & Sweets.</li>
+                    <li><strong>Authentic dish names:</strong> Items are real, widely recognised Nepali and Newari dishes.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>स्वादिलो result display:</strong> Winner is shown with Himalayan warmth after every spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel in Nepal's crimson and blue.</li>
+                </ul>
+            </section>
+
+            <section id="nepali-food-wheel-categories">
+                <h3>5. Nepali food categories</h3>
+                <p><strong>Nepali Classics</strong> covers everyday staples — Dal Bhat, Momo, Dhido, Sel Roti, Gundruk, Chiura Bhatmas, Aloo Tama, and the Newari ceremonial spread Samay Baji. <strong>Mains & Grills</strong> includes Khasi Ko Masu, smoky Sekuwa skewers, the Newari speciality Choila, Chatamari rice crepes, and Thukpa noodle soup. <strong>Snacks & Starters</strong> features Jhol Momo in spiced broth, Kwati mixed bean soup, Woh lentil patties, and dried Sukuti meat. <strong>Drinks & Sweets</strong> rounds out the experience with the millet-fermented Tongba, Chhaang, Masala Chai, thick Juju Dhau yoghurt, and the creamy Sikarni.</p>
+            </section>
+
+            <section id="nepali-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Use Nepali Classics for an everyday meal, Snacks & Starters when you want something light or shared, Mains & Grills for a weekend feast, and Drinks & Sweets to round off any occasion. Swap in your favourite local Nepali restaurant's dishes for the most practical daily use.</p>
+            </section>
+
+            <section id="nepali-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader global food picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. For Indian cuisine nearby, see the <a href="/apps/what-should-i-eat-indian/">Indian Food Wheel</a>. For a Persian spin, <a href="/apps/what-yousef-should-eat/">What Yousef Should Eat</a> covers Iranian dishes. To pair a drink with your meal, <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a> is a great companion.</p>
+            </section>
+
+            <section id="why-nepali-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Decision fatigue is real — even with the hearty, welcoming cuisine of Nepal. This wheel turns a hard choice into a fast, playful ritual drawn from the foot of the Himalayas. One spin, one dish, स्वादिलो!</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Dal Bhat', 'Momo', 'Dhido', 'Sel Roti', 'Gundruk', 'Chiura Bhatmas', 'Aloo Tama', 'Samay Baji'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#dc143c',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#003399',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#c8860a',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#2d6a4f',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#8b4513',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#6b3d9a',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#1a7a8a',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#c45c35',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🥟 स्वादिलो! You should eat: <span style="color: var(--nepali-crimson); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        // Redraw idle wheel when brand colors change via Local Brand Studio
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
