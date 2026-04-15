@@ -4,6 +4,7 @@ title: "Indian Food Wheel – Random Indian Dish Picker | Daily Pick"
 description: "Can't decide what Indian food to eat? Spin the wheel for authentic North Indian, South Indian, street food, and sweet suggestions."
 keywords: "Indian food wheel, random Indian dish picker, what should I eat Indian, Indian cuisine spinner, desi food picker"
 canonical: "https://dailypick.dev/apps/what-should-i-eat-indian/"
+localBrandConfig: /apps/what-should-i-eat-indian/local-brand-config.js
 headExtra: |
   <link href="./style.css" rel="stylesheet" />
 ---
@@ -115,8 +116,23 @@ headExtra: |
 
         let foodItems = ['Butter Chicken', 'Dal Makhani', 'Paneer Tikka Masala', 'Biryani', 'Rogan Josh', 'Chole Bhature', 'Rajma Chawal', 'Kadai Paneer'];
 
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#e8a020',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#d2691e',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#c0392b',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#1a7a5e',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#1c5f8e',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#b5451b',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#e5a000',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#6b2d6b',
+            ];
+        }
+
         function drawWheel(items, rotationAngle = 0) {
             const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.save();
             ctx.translate(radius, radius);
@@ -128,7 +144,7 @@ headExtra: |
                 ctx.beginPath();
                 ctx.moveTo(radius, radius);
                 ctx.arc(radius, radius, radius, angle, angle + angleStep);
-                ctx.fillStyle = `hsl(${(i * 360) / items.length}, 68%, 55%)`;
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
                 ctx.fill();
 
                 ctx.save();
@@ -183,6 +199,11 @@ headExtra: |
                 winnerDiv.innerText = "";
                 drawWheel(foodItems, 0);
             });
+        });
+
+        // Redraw idle wheel when brand colors change via Local Brand Studio
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
         });
 
         drawWheel(foodItems, 0);
