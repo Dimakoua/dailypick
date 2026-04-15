@@ -1,0 +1,211 @@
+---
+layout: base_app.njk
+title: "Never Wheel – Spin the Never Wheel | Daily Pick"
+description: "The Never Wheel. All options are never. Spin it anyway. For procrastinators, realists, and anyone who has made peace with not doing the thing."
+keywords: "never wheel, never gonna happen, procrastination wheel, spin the never wheel, funny decision wheel, never do it wheel, never ever wheel"
+canonical: "https://dailypick.dev/apps/never-wheel/"
+localBrandConfig: /apps/never-wheel/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Every option. Every time.</p>
+            <h1>🚫 The Never Wheel</h1>
+            <p>Spin it. Go on. Every segment says never. Pick your flavour of never and make peace with it.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Never,Never Ever,Definitely Never,Not in This Lifetime,When Pigs Fly,Ask Me in 10 Years,Never Gonna Happen,Over My Dead Body">🚫 Classic Never</button>
+            <button class="preset-btn" data-items="Absolutely Not,Hard Pass,Not a Chance,No Way José,Not Today,Not Tomorrow Either,Don't Hold Your Breath,In Your Dreams">😤 Strong No</button>
+            <button class="preset-btn" data-items="Maybe Never,Probably Never,Almost Certainly Never,Technically Never,Realistically Never,Statistically Never,Definitionally Never,Philosophically Never">🤔 Nuanced Never</button>
+            <button class="preset-btn" data-items="When Hell Freezes Over,After the Sun Burns Out,Once Pigs Fly,At the End of Time,When the Stars Align (They Won't),After Pigs Learn to Fly,In Another Universe,When I Feel Like It (Never)">🌌 Poetic Never</button>
+        </div>
+
+        <button id="spinBtn">🚫 SPIN THE NEVER WHEEL!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>The Never Wheel: Spin for Your Perfect Flavour of Never</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>The Never Wheel is a spin wheel with a guarantee: every single segment says never. Spin it for clarity, for catharsis, for comedy, or for the deeply relatable feeling of knowing you will definitely not be doing the thing — and wanting to know exactly which flavour of never applies to your situation today.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel exists</h3>
+                    <ul>
+                        <li><strong>Complete commitment:</strong> Four presets — Classic Never, Strong No, Nuanced Never, and Poetic Never. All never.</li>
+                        <li><strong>Honest spin wheel:</strong> No pretending. No "maybe someday". The wheel knows the truth.</li>
+                        <li><strong>Instant clarity:</strong> Spin once, confirm what you already knew, move on with your life.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-never-wheel">What is the Never Wheel?</a></li>
+                    <li><a href="#who-should-use-never-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-never-wheel-works">How it works</a></li>
+                    <li><a href="#never-wheel-features">Features</a></li>
+                    <li><a href="#never-wheel-categories">Never wheel categories</a></li>
+                    <li><a href="#never-wheel-tips">Tips</a></li>
+                    <li><a href="#never-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-never-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-never-wheel">
+                <h3>1. What is the Never Wheel?</h3>
+                <p>The Never Wheel is a spin wheel where every possible outcome is a variation of never. It is the only wheel on the internet that offers complete certainty — you will always get never. It honours the procrastinator, the realist, the person who said "I'll start Monday" in 2019, and anyone who has quietly accepted that some things are simply not going to happen.</p>
+            </section>
+
+            <section id="who-should-use-never-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Anyone who needs to confirm what they already know. People who have been meaning to do the thing for three years. Those who need an official ruling from a neutral third party (the wheel) that it is acceptable to not do it. Also great for gifting to a friend who keeps promising to come to your event and definitely won't.</p>
+            </section>
+
+            <section id="how-never-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Choose a preset — Classic Never, Strong No, Nuanced Never, or Poetic Never — then spin. The wheel lands on a never. You accept the never. You feel better. The end.</p>
+            </section>
+
+            <section id="never-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four presets of never:</strong> Classic Never, Strong No, Nuanced Never, and Poetic Never — for every occasion and mood.</li>
+                    <li><strong>100% never guaranteed:</strong> Unlike every other wheel, there are no surprise outcomes here. The result is always never.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on all devices — for when you need a never on the go.</li>
+                    <li><strong>Instant catharsis:</strong> The result is announced clearly and without judgement. The wheel does not ask why.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to personalise your never wheel.</li>
+                </ul>
+            </section>
+
+            <section id="never-wheel-categories">
+                <h3>5. Never wheel categories</h3>
+                <p><strong>Classic Never</strong> is the foundational preset — Never, Never Ever, Definitely Never, Not in This Lifetime, When Pigs Fly, Ask Me in 10 Years, Never Gonna Happen, and Over My Dead Body. <strong>Strong No</strong> is for when you need to be emphatic — Absolutely Not, Hard Pass, Not a Chance, No Way José, Not Today, Not Tomorrow Either, Don't Hold Your Breath, and In Your Dreams. <strong>Nuanced Never</strong> is for the philosopher — Maybe Never, Probably Never, Almost Certainly Never, Technically Never, Realistically Never, Statistically Never, Definitionally Never, and Philosophically Never. <strong>Poetic Never</strong> is for the hopeless romantic who still won't do it — When Hell Freezes Over, After the Sun Burns Out, Once Pigs Fly, At the End of Time, When the Stars Align (They Won't), After Pigs Learn to Fly, In Another Universe, and When I Feel Like It (Never).</p>
+            </section>
+
+            <section id="never-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Use Classic Never for everyday never situations, Strong No when you need to make a clear statement, Nuanced Never when you want to soften the blow with statistical language, and Poetic Never when the situation deserves a more dramatic form of refusal. Spin multiple times to collect a full range of nevers for maximum clarity.</p>
+            </section>
+
+            <section id="never-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>If you are looking for a wheel that might actually say yes, try the <a href="/apps/yes-or-no-wheel/">Yes or No Wheel</a>. If the never is specifically about going to the gym, the <a href="/apps/when-should-i-go-to-the-gym/">When Should I Go to the Gym Wheel</a> has a dedicated Never preset. For decisions with actual options, try the <a href="/apps/the-wheel-spinner/">Wheel Spinner</a> or <a href="/apps/random-list-shuffler/">Random List Shuffler</a>.</p>
+            </section>
+
+            <section id="why-never-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>The Never Wheel works because sometimes you already know the answer and you just need something to confirm it officially. The wheel is neutral, non-judgemental, and always consistent. It will never tell you to do the thing. That is its promise and its purpose. Spin, accept, move on.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let items = ['Never', 'Never Ever', 'Definitely Never', 'Not in This Lifetime', 'When Pigs Fly', 'Ask Me in 10 Years', 'Never Gonna Happen', 'Over My Dead Body'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#4a1942',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#7b2d2d',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#1e3a6e',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#3b1f5e',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#5c3317',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#1a5040',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#6b2737',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#2e4a2e',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 15px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.7)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / items.length;
+            const selectedIndex = Math.floor(Math.random() * items.length);
+            const selectedItem = items[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(items, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🚫 The wheel has spoken: <span style="color: var(--never-red); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                items = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(items, 0);
+            });
+        });
+
+        // Redraw idle wheel when brand colors change via Local Brand Studio
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(items, 0);
+        });
+
+        drawWheel(items, 0);
+    </script>

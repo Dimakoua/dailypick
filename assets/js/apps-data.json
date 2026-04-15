@@ -360,6 +360,15 @@
     "description": "Still haven't gone? Spin the wheel for honest answers, realistic schedules, best workout times, and motivational nudges. No more excuses!"
   },
   {
+    "id": "never-wheel",
+    "name": "Never Wheel",
+    "path": "/apps/never-wheel/",
+    "category": "games",
+    "footerGroup": "Games",
+    "emoji": "🚫",
+    "description": "Every option is never. Classic Never, Strong No, Nuanced Never, Poetic Never — pick your flavour and make peace with it."
+  },
+  {
     "id": "cook-or-order-in",
     "name": "Cook or Order In",
     "path": "/apps/cook-or-order-in/",
