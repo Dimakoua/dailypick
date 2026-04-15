@@ -378,6 +378,15 @@
     "description": "Every result is upbeat and encouraging. Classic Positive, Motivational Yes, Optimistic Yes, and Celebration Yes — spin a dose of optimism."
   },
   {
+    "id": "self-care-wheel",
+    "name": "Self-Care Wheel",
+    "path": "/apps/self-care-wheel/",
+    "category": "games",
+    "footerGroup": "Games",
+    "emoji": "💆",
+    "description": "Spin for a calm wellness prompt, mini break idea, or gentle self-care reminder to reset your day."
+  },
+  {
     "id": "when-should-i-go-on-vacation",
     "name": "When Should I Go on Vacation?",
     "path": "/apps/when-should-i-go-on-vacation/",

@@ -1,0 +1,200 @@
+---
+layout: base_app.njk
+title: "Self-Care Wheel – Spin the Self-Care Wheel | Daily Pick"
+description: "The Self-Care Wheel. Spin for quick wellness prompts, mini break ideas, and gentle self-care reminders to reset your day."
+keywords: "self-care wheel, wellness wheel, self care spinner, break ideas, small habits, mental health reminders, calming prompts"
+canonical: "https://dailypick.dev/apps/self-care-wheel/"
+localBrandConfig: /apps/self-care-wheel/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Pause, breathe, choose something kind.</p>
+            <h1>💆 Self-Care Wheel</h1>
+            <p>Spin for a gentle wellness prompt, a small mood boost, or a quick habit that helps you feel better right now.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Take three deep breaths,Drink a glass of water,Stretch your shoulders,Step outside for a minute,Close your eyes for 10 seconds,Write one thing you're grateful for,Send a kind message,Slow down and breathe">🌿 Quick Reset</button>
+            <button class="preset-btn" data-items="Listen to a favorite song,Read one page of a book,Make a warm drink,Light a candle or open a window,Stand up and stretch,Take a mindful walk,Do a gentle neck roll,Smile for yourself">✨ Mindful Moment</button>
+            <button class="preset-btn" data-items="Try a five-minute journal,Create a mini to-do list,Declutter one small space,Play with a pet or plant,Give yourself a compliment,Take a screen break,Step away and rest,Visualize a calm place">💖 Kindness Choice</button>
+            <button class="preset-btn" data-items="Put on comfy clothes,Share a hug,Do a simple breathing exercise,Try a small creative task,Sip tea slowly,Practice a positive affirmation,Plan one joyful thing,Slowly stretch arms overhead">🌸 Gentle Glow</button>
+        </div>
+
+        <button id="spinBtn">💫 SPIN THE SELF-CARE WHEEL</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>The Self-Care Wheel: Spin for a quick wellness prompt</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>The Self-Care Wheel offers simple, nourishing suggestions for when you need a break, a reset, or a mood lift. Every prompt is designed to be easy to do and kind to yourself.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel exists</h3>
+                    <ul>
+                        <li><strong>Simple wellness prompts:</strong> Gentle actions that fit into any day.</li>
+                        <li><strong>Mini break inspiration:</strong> The wheel helps you choose a small habit without overthinking it.</li>
+                        <li><strong>Encouraging design:</strong> Soft visuals and calm language make self-care feel inviting.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-self-care-wheel">What is the Self-Care Wheel?</a></li>
+                    <li><a href="#who-should-use-self-care-wheel">Who should use the Self-Care Wheel?</a></li>
+                    <li><a href="#how-self-care-wheel-works">How it works</a></li>
+                    <li><a href="#self-care-wheel-features">Features</a></li>
+                    <li><a href="#self-care-wheel-presets">Self-care wheel presets</a></li>
+                    <li><a href="#self-care-wheel-tips">Tips</a></li>
+                    <li><a href="#self-care-wheel-alternatives">Alternatives</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-self-care-wheel">
+                <h3>1. What is the Self-Care Wheel?</h3>
+                <p>The Self-Care Wheel is a gentle spinner that gives you a wellness prompt when you need a soft reset. It is designed for small, achievable self-care actions that can fit into the busy parts of your day.</p>
+            </section>
+
+            <section id="who-should-use-self-care-wheel">
+                <h3>2. Who should use the Self-Care Wheel?</h3>
+                <p>Anyone who wants a quick reminder to slow down, recharge, or treat themselves kindly. It is especially useful during work breaks, low-energy moments, or when you want to add a little calm to your routine.</p>
+            </section>
+
+            <section id="how-self-care-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Select one of the self-care presets, spin the wheel, and follow the resulting prompt. Each outcome is intended to be easy, restorative, and supportive.</p>
+            </section>
+
+            <section id="self-care-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Soft self-care prompts:</strong> calming suggestions for mood, movement, rest, and kindness.</li>
+                    <li><strong>Curated presets:</strong> Choose from Quick Reset, Mindful Moment, Kindness Choice, or Gentle Glow.</li>
+                    <li><strong>Responsive canvas wheel:</strong> Smooth spinning animation for desktop and mobile.</li>
+                    <li><strong>Calming design:</strong> pastel colors and relaxed typography create a restful experience.</li>
+                    <li><strong>Customizable style:</strong> Use Local Brand Studio to personalize the wheel and interface.</li>
+                </ul>
+            </section>
+
+            <section id="self-care-wheel-presets">
+                <h3>5. Self-care wheel presets</h3>
+                <p><strong>Quick Reset</strong> is for fast, low-effort actions. <strong>Mindful Moment</strong> gives you a calming pause. <strong>Kindness Choice</strong> is all about treating yourself better. <strong>Gentle Glow</strong> invites small comforts and soothing rituals.</p>
+            </section>
+
+            <section id="self-care-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Spin the wheel when you feel stuck, overwhelmed, or just in need of a small lift. Keep it open during work breaks, use it as a mini wellness check-in, or share it with a friend who could use a kind reminder.</p>
+            </section>
+
+            <section id="self-care-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>If you want a cheerful decision wheel instead, try the <a href="/apps/positive-wheel/">Positive Wheel</a>. For something more playful, the <a href="/apps/the-wheel-spinner/">Wheel Spinner</a> can pick from many custom options. If you need quick productivity help, the <a href="/apps/random-list-shuffler/">Random List Shuffler</a> can choose a simple task for you.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let items = ['Take three deep breaths', 'Drink a glass of water', 'Stretch your shoulders', 'Step outside for a minute', 'Close your eyes for 10 seconds', "Write one thing you're grateful for", 'Send a kind message', 'Slow down and breathe'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#b8e0d2',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#f6d6ad',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#d6c5f2',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#f7c9d9',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#c5ddff',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#cdeac0',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#f5e8c7',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#d8e7ff',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#2c3e50";
+                ctx.font = "bold 14px Nunito, Arial";
+                ctx.shadowColor = "rgba(255,255,255,0.6)";
+                ctx.shadowBlur = 6;
+                ctx.fillText(item, radius - 18, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / items.length;
+            const selectedIndex = Math.floor(Math.random() * items.length);
+            const selectedItem = items[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(items, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `💚 Your self-care prompt: <span style="color: var(--self-care-accent); font-size: 2rem; display: block;">${selectedItem}</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                items = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(items);
+            });
+        });
+
+        drawWheel(items);
+    </script>
