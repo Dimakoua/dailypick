@@ -1,0 +1,189 @@
+---
+layout: base_app.njk
+title: "Indian Food Wheel – Random Indian Dish Picker | Daily Pick"
+description: "Can't decide what Indian food to eat? Spin the wheel for authentic North Indian, South Indian, street food, and sweet suggestions."
+keywords: "Indian food wheel, random Indian dish picker, what should I eat Indian, Indian cuisine spinner, desi food picker"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-indian/"
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">खाना क्या खाएं? — What to eat?</p>
+            <h1>🍛 Indian Food Wheel</h1>
+            <p>Torn between Butter Chicken and Masala Dosa? Spin the wheel and let Indian cuisine make the call!</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Butter Chicken,Dal Makhani,Paneer Tikka Masala,Biryani,Rogan Josh,Chole Bhature,Rajma Chawal,Kadai Paneer">🍛 North Indian</button>
+            <button class="preset-btn" data-items="Masala Dosa,Idli Sambar,Medu Vada,Pongal,Rasam,Chettinad Chicken,Kerala Fish Curry,Bisi Bele Bath">🥥 South Indian</button>
+            <button class="preset-btn" data-items="Pani Puri,Vada Pav,Pav Bhaji,Bhel Puri,Aloo Tikki,Chaat,Kachori,Samosa">🌶️ Street Food</button>
+            <button class="preset-btn" data-items="Gulab Jamun,Jalebi,Kheer,Rasgulla,Ladoo,Gajar Halwa,Chai,Mango Lassi">🍮 Sweets & Drinks</button>
+        </div>
+
+        <button id="spinBtn">🍛 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Indian Food Wheel: Random Indian Dish Picker for Fast Meal Decisions</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Indian Food Wheel takes the guesswork out of choosing from one of the world's most diverse and flavourful cuisines. From rich North Indian gravies and crispy South Indian fermented crepes to chaotic street food and syrup-soaked sweets — pick a preset, spin, and eat.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>Regional variety:</strong> Four presets spanning North Indian, South Indian, Street Food, and Sweets & Drinks.</li>
+                        <li><strong>Authentic dishes:</strong> Every item is a real, well-loved dish from Indian culinary tradition.</li>
+                        <li><strong>Instant choice:</strong> No more endless scrolling through Zomato or Swiggy — one spin decides.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-indian-food-wheel">What is the Indian Food Wheel?</a></li>
+                    <li><a href="#who-should-use-indian-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-indian-food-wheel-works">How it works</a></li>
+                    <li><a href="#indian-food-wheel-features">Features</a></li>
+                    <li><a href="#indian-food-wheel-categories">Indian food categories</a></li>
+                    <li><a href="#indian-food-wheel-tips">Tips</a></li>
+                    <li><a href="#indian-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-indian-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-indian-food-wheel">
+                <h3>1. What is the Indian Food Wheel?</h3>
+                <p>Indian Food Wheel is a random dish picker built specifically for Indian and South Asian cuisine. It covers the full spectrum — from slow-simmered North Indian dals and tandoor-fired kebabs to crispy South Indian tiffin, chaotic street chaat, and sugar-drenched mithai.</p>
+            </section>
+
+            <section id="who-should-use-indian-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Anyone who loves Indian food and faces the daily paralysis of choosing between too many great options. Whether you are cooking at home, ordering delivery, or picking a dish at a restaurant, the wheel cuts through the indecision instantly.</p>
+            </section>
+
+            <section id="how-indian-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Choose one of the four regional presets, then hit Spin. The wheel lands on a dish and announces it with a बोन अपेटिट — spin again if you want a different suggestion, or go cook.</p>
+            </section>
+
+            <section id="indian-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four regional presets:</strong> North Indian, South Indian, Street Food, and Sweets & Drinks.</li>
+                    <li><strong>Authentic dish names:</strong> Every entry is a real, widely recognised Indian dish.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Works on phones, tablets, and desktops.</li>
+                    <li><strong>Instant result display:</strong> Your dish is shown clearly after every spin so you can act on it fast.</li>
+                </ul>
+            </section>
+
+            <section id="indian-food-wheel-categories">
+                <h3>5. Indian food categories</h3>
+                <p><strong>North Indian</strong> covers the rich, cream- and tomato-based gravies of the subcontinent's heartland — Butter Chicken, Dal Makhani, Biryani, Chole Bhature, and Rajma Chawal. <strong>South Indian</strong> brings coconut-forward, fermented, and rice-based dishes — Masala Dosa, Idli Sambar, Pongal, Rasam, and Kerala Fish Curry. <strong>Street Food</strong> is the chaotic, tangy, deep-fried heart of Indian snacking — Pani Puri, Vada Pav, Bhel Puri, and Samosa. <strong>Sweets & Drinks</strong> closes the loop with Gulab Jamun, Jalebi, Kheer, and Mango Lassi.</p>
+            </section>
+
+            <section id="indian-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Use North Indian for a hearty weeknight dinner, South Indian for a lighter weekend breakfast, and Street Food when you want a quick snack or cheat meal. Sweets & Drinks works great as a dessert-or-beverage decider after the main course is already chosen.</p>
+            </section>
+
+            <section id="indian-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a global food picker across all cuisines, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. For a Persian spin on the same idea, <a href="/apps/what-yousef-should-eat/">What Yousef Should Eat</a> covers Iranian dishes. To pair a drink with your meal, <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a> is a great companion.</p>
+            </section>
+
+            <section id="why-indian-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Indian cuisine has hundreds of iconic dishes across dozens of regional traditions — that richness is also what makes choosing so hard. This wheel transforms that overwhelming abundance into one quick, playful spin. बोन अपेटिट!</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Butter Chicken', 'Dal Makhani', 'Paneer Tikka Masala', 'Biryani', 'Rogan Josh', 'Chole Bhature', 'Rajma Chawal', 'Kadai Paneer'];
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = `hsl(${(i * 360) / items.length}, 68%, 55%)`;
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🍛 बोन अपेटिट! You should eat: <span style="color: var(--indian-spice); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        drawWheel(foodItems, 0);
+    </script>

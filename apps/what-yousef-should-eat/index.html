@@ -115,6 +115,19 @@ headExtra: |
 
         let foodItems = ['Ghormeh Sabzi', 'Fesenjan', 'Chelo Kabab', 'Ash Reshteh', 'Baghali Polo', 'Abgoosht', 'Dolmeh', 'Mirza Ghasemi'];
 
+        // Persian colour palette: saffron, pomegranate, lapis, turquoise,
+        // pistachio, terracotta, mulberry, violet — inspired by Persian tiles & carpets
+        const persianColors = [
+            '#e8a020', // saffron gold
+            '#c0392b', // pomegranate red
+            '#1c5f8e', // lapis lazuli blue
+            '#1a9b8a', // Persian turquoise
+            '#2e7d44', // pistachio green
+            '#c45c35', // terracotta
+            '#8b2252', // mulberry wine
+            '#6b3d9a', // Persian violet
+        ];
+
         function drawWheel(items, rotationAngle = 0) {
             const angleStep = (2 * Math.PI) / items.length;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -128,7 +141,7 @@ headExtra: |
                 ctx.beginPath();
                 ctx.moveTo(radius, radius);
                 ctx.arc(radius, radius, radius, angle, angle + angleStep);
-                ctx.fillStyle = `hsl(${(i * 360) / items.length}, 68%, 55%)`;
+                ctx.fillStyle = persianColors[i % persianColors.length];
                 ctx.fill();
 
                 ctx.save();

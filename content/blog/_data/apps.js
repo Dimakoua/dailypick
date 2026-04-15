@@ -267,6 +267,15 @@ module.exports = [
     footerGroup: "Games",
     emoji: "🫕",
     description: "Spin the Persian food wheel for authentic Iranian dishes, kababs, rice plates, and traditional snacks. نوش جان!"
+  },
+  {
+    id: "what-should-i-eat-indian",
+    name: "Indian Food Wheel",
+    path: "/apps/what-should-i-eat-indian/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🍛",
+    description: "Spin the wheel for authentic Indian dishes — North Indian curries, South Indian tiffin, street food, and sweets."
   },  {
     id: "cook-or-order-in",
     name: "Cook or Order In",
