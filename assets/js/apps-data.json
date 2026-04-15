@@ -378,6 +378,15 @@
     "description": "Stop putting it off. Spin the wheel for your vacation timing — from booking it right now to the best travel season. Go!"
   },
   {
+    "id": "what-car-should-i",
+    "name": "What Car Should I Buy, Rent or Drive?",
+    "path": "/apps/what-car-should-i/",
+    "category": "games",
+    "footerGroup": "Games",
+    "emoji": "🚗",
+    "description": "SUV or sports coupe? Ferrari or Kei car? Spin the wheel to pick your next car to buy, rent, or dream about."
+  },
+  {
     "id": "cook-or-order-in",
     "name": "Cook or Order In",
     "path": "/apps/cook-or-order-in/",

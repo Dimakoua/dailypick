@@ -1,0 +1,211 @@
+---
+layout: base_app.njk
+title: "What Car Should I Buy, Rent or Drive Wheel – Random Car Picker | Daily Pick"
+description: "Can't decide what car to buy, rent or drive? Spin the wheel for practical car types, dream cars, rental picks, and wildcard drives. Let the wheel choose your wheels."
+keywords: "what car should I buy, car picker wheel, what car to rent, dream car wheel, random car generator, car decision wheel, what car should I drive, vehicle picker"
+canonical: "https://dailypick.dev/apps/what-car-should-i/"
+localBrandConfig: /apps/what-car-should-i/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Too many cars, not enough decisions — the wheel chooses</p>
+            <h1>🚗 What Car Should I Buy, Rent or Drive?</h1>
+            <p>Stuck between an SUV and a sports car? Can't pick a rental? Dreaming too big? Spin the wheel and let it choose your next set of wheels.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="SUV,Sedan,Hatchback,Pickup Truck,Minivan,Electric Car,Hybrid,Sports Coupe">🚗 What to Buy</button>
+            <button class="preset-btn" data-items="Porsche 911,Ferrari,Tesla Model S,Land Rover Defender,Ford Mustang,BMW M3,Lamborghini,Range Rover">🏎️ Dream Garage</button>
+            <button class="preset-btn" data-items="Economy Hatchback,Compact Sedan,Midsize SUV,Full-size SUV,Luxury Sedan,Convertible,Minivan,Pickup Truck">🚙 Rent This</button>
+            <button class="preset-btn" data-items="Classic Muscle Car,Vintage VW Camper,Supercar for a Day,Off-Road Beast,Electric Hypercar,American Pickup,Italian Sports Car,Japanese Kei Car">🎲 Wildcard Drive</button>
+        </div>
+
+        <button id="spinBtn">🚗 SPIN FOR YOUR CAR!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>What Car Should I Buy, Rent or Drive Wheel: Random Car Picker</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>The What Car Should I wheel takes the paralysis out of one of life's most over-researched decisions. Whether you are stuck choosing between car types, need to pick a rental without spending an hour on comparison sites, want to know which dream car to covet next, or just fancy a wildcard suggestion — spin once, get an answer, done.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>Four presets:</strong> What to Buy, Dream Garage, Rent This, and Wildcard Drive.</li>
+                        <li><strong>Practical and aspirational:</strong> Covers sensible family SUVs all the way to Lamborghinis and Kei cars.</li>
+                        <li><strong>One spin, zero spreadsheets:</strong> Stop reading comparison reviews. The wheel decided.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-car-wheel">What is the Car Wheel?</a></li>
+                    <li><a href="#who-should-use-car-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-car-wheel-works">How it works</a></li>
+                    <li><a href="#car-wheel-features">Features</a></li>
+                    <li><a href="#car-wheel-categories">Wheel categories</a></li>
+                    <li><a href="#car-wheel-tips">Tips</a></li>
+                    <li><a href="#car-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-car-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-car-wheel">
+                <h3>1. What is the Car Wheel?</h3>
+                <p>The What Car Should I wheel is a random car picker for every car situation — buying, renting, dreaming, or just wanting a wildcard suggestion. It covers practical car categories for real-life purchase decisions, dream cars for aspirational scrolling, rental tiers for the next trip, and wildcard options for when you want the wheel to go completely off-script.</p>
+            </section>
+
+            <section id="who-should-use-car-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Anyone who has had 47 browser tabs open comparing cars for three weeks. People standing at the rental desk who can't decide between compact and midsize. Dreamers who want an official wheel ruling on which supercar to fixate on. Anyone who just wants to know what car to drive next without committing to a spreadsheet.</p>
+            </section>
+
+            <section id="how-car-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Choose a preset — What to Buy for practical categories, Dream Garage for aspirational picks, Rent This for rental tiers, or Wildcard Drive for a surprise — then hit Spin. The wheel selects your car. Use the result as inspiration, a starting point for research, or just go with it entirely.</p>
+            </section>
+
+            <section id="car-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four presets:</strong> What to Buy, Dream Garage, Rent This, and Wildcard Drive — covering every car scenario.</li>
+                    <li><strong>Practical to aspirational range:</strong> Economy hatchbacks to Ferraris, all on the same wheel.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones — perfect for the rental desk, the dealership forecourt, or the sofa.</li>
+                    <li><strong>Instant result:</strong> One spin, one car, move to the next step.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel in your brand or favourite manufacturer's colours.</li>
+                </ul>
+            </section>
+
+            <section id="car-wheel-categories">
+                <h3>5. Wheel categories</h3>
+                <p><strong>What to Buy</strong> covers the main car categories for a real purchase decision — SUV, Sedan, Hatchback, Pickup Truck, Minivan, Electric Car, Hybrid, and Sports Coupe. <strong>Dream Garage</strong> is for aspirational spinning — the Porsche 911, Ferrari, Tesla Model S, Land Rover Defender, Ford Mustang, BMW M3, Lamborghini, and Range Rover. <strong>Rent This</strong> maps rental tiers from economy to premium — Economy Hatchback, Compact Sedan, Midsize SUV, Full-size SUV, Luxury Sedan, Convertible, Minivan, and Pickup Truck. <strong>Wildcard Drive</strong> is for the adventurous — Classic Muscle Car, Vintage VW Camper, Supercar for a Day, Off-Road Beast, Electric Hypercar, American Pickup, Italian Sports Car, and Japanese Kei Car.</p>
+            </section>
+
+            <section id="car-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Use What to Buy when narrowing down a real purchase, Dream Garage when you need to dream big and argue about cars, Rent This at the budget screen of any car hire site to end deliberation instantly, and Wildcard Drive when you want the wheel to take you somewhere unexpected. Add your own shortlist of specific models for a fully personalised car picker.</p>
+            </section>
+
+            <section id="car-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>Once the car is sorted, you'll need somewhere to go — try the <a href="/apps/when-should-i-go-on-vacation/">Vacation Wheel</a> to pick your trip timing. Need to decide what to eat on the road? The <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a> has the food sorted. For any other big decision, the <a href="/apps/yes-or-no-wheel/">Yes or No Wheel</a> can settle whether you're actually buying it today.</p>
+            </section>
+
+            <section id="why-car-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Car buying paralysis is one of the most documented forms of decision fatigue — too many makes, models, trims, reviews, and "just one more test drive" loops. This wheel doesn't replace research, but it breaks the deadlock. It gives you a direction to start from instead of an infinite field of options. Pick a category, spin, research that category. One spin, one direction, let's drive.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let items = ['SUV', 'Sedan', 'Hatchback', 'Pickup Truck', 'Minivan', 'Electric Car', 'Hybrid', 'Sports Coupe'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#2c3e50',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#c0392b',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#1a5f8e',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#7f8c8d',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#d35400',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#27ae60',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#8e44ad',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#c8860a',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / items.length;
+            const selectedIndex = Math.floor(Math.random() * items.length);
+            const selectedItem = items[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(items, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🚗 Your wheels: <span style="color: var(--car-red); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                items = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(items, 0);
+            });
+        });
+
+        // Redraw idle wheel when brand colors change via Local Brand Studio
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(items, 0);
+        });
+
+        drawWheel(items, 0);
+    </script>
