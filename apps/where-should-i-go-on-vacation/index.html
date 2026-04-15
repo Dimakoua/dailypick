@@ -1,0 +1,211 @@
+---
+layout: base_app.njk
+title: "Where Should I Go on Vacation Wheel – Random Travel Destination Picker | Daily Pick"
+description: "Can't decide where to go on holiday? Spin the wheel for world city breaks, beach escapes, adventure destinations, and hidden gems. Let the wheel pick your next trip."
+keywords: "where should I go on vacation, travel destination wheel, holiday destination picker, where to travel wheel, random destination generator, vacation destination randomizer, where to go on holiday"
+canonical: "https://dailypick.dev/apps/where-should-i-go-on-vacation/"
+localBrandConfig: /apps/where-should-i-go-on-vacation/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">The world is waiting — the wheel picks where</p>
+            <h1>🌍 Where Should I Go on Vacation?</h1>
+            <p>Tokyo or Tuscany? Bali or Banff? The Maldives or Morocco? Stop staring at Pinterest boards and spin the wheel — your next destination is one click away.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Paris,Tokyo,New York,Rome,Barcelona,Istanbul,Amsterdam,Lisbon">🏙️ City Breaks</button>
+            <button class="preset-btn" data-items="Maldives,Bali,Santorini,Phuket,Mauritius,Tulum,Amalfi Coast,Fiji">🏖️ Beach Escapes</button>
+            <button class="preset-btn" data-items="Banff,Patagonia,New Zealand,Machu Picchu,Safari Kenya,Iceland,Nepal,Borneo">🏔️ Adventures</button>
+            <button class="preset-btn" data-items="Georgia (Tbilisi),Albania,Kosovo,Armenia,El Salvador,Faroe Islands,Oman,Laos">💎 Hidden Gems</button>
+        </div>
+
+        <button id="spinBtn">🌍 SPIN FOR YOUR DESTINATION!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Where Should I Go on Vacation Wheel: Random Travel Destination Picker</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Where Should I Go on Vacation Wheel ends the most enjoyable yet maddening planning loop in travel — picking where to actually go. From iconic city breaks in Paris and Tokyo to remote beach escapes in the Maldives and Fiji, wild adventures in Patagonia and Iceland, and underrated hidden gems like Tbilisi and the Faroe Islands — one spin picks your next trip.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>Four destination presets:</strong> City Breaks, Beach Escapes, Adventures, and Hidden Gems.</li>
+                        <li><strong>Global range:</strong> Covers every continent and every travel mood from the iconic to the obscure.</li>
+                        <li><strong>One spin, open flights:</strong> The wheel chose. Now go check availability.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-destination-wheel">What is the Destination Wheel?</a></li>
+                    <li><a href="#who-should-use-destination-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-destination-wheel-works">How it works</a></li>
+                    <li><a href="#destination-wheel-features">Features</a></li>
+                    <li><a href="#destination-wheel-categories">Destination categories</a></li>
+                    <li><a href="#destination-wheel-tips">Tips</a></li>
+                    <li><a href="#destination-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-destination-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-destination-wheel">
+                <h3>1. What is the Destination Wheel?</h3>
+                <p>Where Should I Go on Vacation Wheel is a random travel destination picker that breaks the endless shortlist loop. It covers four distinct travel moods — iconic city breaks, dreamy beach escapes, proper adventure destinations, and hidden gems most people overlook — and picks one for you so you can stop planning and start booking.</p>
+            </section>
+
+            <section id="who-should-use-destination-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Anyone with a saved folder of travel inspo that has never turned into a booked trip. Couples who agree they want to travel but can never agree on where. Solo travellers who want the universe to decide. Groups who have been in a WhatsApp thread about "the holiday" for six months with no resolution. The wheel settles it.</p>
+            </section>
+
+            <section id="how-destination-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Choose a preset that matches your mood — city, beach, adventure, or hidden gem — then hit Spin. The wheel picks your destination. Open a flight search immediately. If it's genuinely impossible for this trip, spin again — but honour the second spin.</p>
+            </section>
+
+            <section id="destination-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four mood-based presets:</strong> City Breaks, Beach Escapes, Adventures, and Hidden Gems.</li>
+                    <li><strong>Global destinations:</strong> Picks from every continent covering a wide range of travel styles and budgets.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones — use it in a planning session, at the travel agent, or lying on the sofa dreaming.</li>
+                    <li><strong>Instant result:</strong> The destination is announced, flights.google.com is waiting.</li>
+                    <li><strong>Customisable:</strong> Add your own shortlist of destinations for a personalised picker.</li>
+                </ul>
+            </section>
+
+            <section id="destination-wheel-categories">
+                <h3>5. Destination categories</h3>
+                <p><strong>City Breaks</strong> covers the world's most compelling urban destinations — Paris, Tokyo, New York, Rome, Barcelona, Istanbul, Amsterdam, and Lisbon. Every one of those cities is worth three trips. <strong>Beach Escapes</strong> goes straight to the best coastlines on earth — the Maldives, Bali, Santorini, Phuket, Mauritius, Tulum, the Amalfi Coast, and Fiji. <strong>Adventures</strong> is for the traveller who wants to earn the view — Banff in the Canadian Rockies, Patagonia, New Zealand, Machu Picchu, a Kenya safari, Iceland's ring road, Nepal, and Borneo. <strong>Hidden Gems</strong> is for the traveller who wants to go somewhere most people haven't been yet — Tbilisi in Georgia, Albania, Kosovo, Armenia, El Salvador, the Faroe Islands, Oman, and Laos.</p>
+            </section>
+
+            <section id="destination-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Use City Breaks for a long weekend or culture-first trip, Beach Escapes when you need sun and nothing else, Adventures when you want to come home with a story, and Hidden Gems when you want to go somewhere that isn't on everyone's Instagram yet. Swap in your own bucket list destinations for a fully personalised wheel. Spin with friends and let everyone add one destination — wherever the wheel lands, everyone agreed before the spin.</p>
+            </section>
+
+            <section id="destination-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>Once you know where, figure out when with the <a href="/apps/when-should-i-go-on-vacation/">When Should I Go on Vacation Wheel</a>. Once you're there, decide what to eat with the <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a> or explore local food with wheels for <a href="/apps/what-should-i-eat-italian/">Italian food</a>, <a href="/apps/what-should-i-eat-greek/">Greek food</a>, <a href="/apps/what-should-i-eat-chinese/">Chinese food</a>, and more. Getting there? The <a href="/apps/what-car-should-i/">Car Wheel</a> will sort out your rental.</p>
+            </section>
+
+            <section id="why-destination-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Travel destination paralysis is real — too many great options, fear of picking the wrong one, and an endless loop of research that never converts to a booking. The wheel bypasses the analysis by making a neutral, random pick you can treat as a sign. Psychologically, people are more likely to commit to a randomly chosen destination than to pick one themselves because the responsibility for the choice is shared with the wheel. One spin, one destination, open those tabs.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let items = ['Paris', 'Tokyo', 'New York', 'Rome', 'Barcelona', 'Istanbul', 'Amsterdam', 'Lisbon'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#1a8fc1',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#e8a020',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#2d9e6b',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#c0392b',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#1e3a6e',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#9b59b6',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#16a085',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#d35400',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / items.length;
+            const selectedIndex = Math.floor(Math.random() * items.length);
+            const selectedItem = items[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(items, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🌍 Your next destination: <span style="color: var(--dest-blue); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                items = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(items, 0);
+            });
+        });
+
+        // Redraw idle wheel when brand colors change via Local Brand Studio
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(items, 0);
+        });
+
+        drawWheel(items, 0);
+    </script>

@@ -1,0 +1,203 @@
+/* ==========================================================================
+   NHL Team Wheel – App Styles
+   - Puck-ready blue/red theme with a polished, glassy layout
+   - Responsive hero, wheel, preset controls, and SEO card styling
+   ========================================================================== */
+
+:root {
+  --nhl-blue: #1a6fa8;
+  --nhl-red: #c0392b;
+  --nhl-gold: #e8a020;
+  --nhl-dark: #0d1e33;
+  --nhl-ice: #eaf4fb;
+
+  --wheel-segment-1: #1a6fa8;
+  --wheel-segment-2: #c0392b;
+  --wheel-segment-3: #1e5fa8;
+  --wheel-segment-4: #e8a020;
+  --wheel-segment-5: #1a8c7a;
+  --wheel-segment-6: #7a3d8c;
+  --wheel-segment-7: #d35400;
+  --wheel-segment-8: #2d8a4e;
+  --wheel-result-text: var(--nhl-blue);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  flex-grow: 1;
+}
+
+.page-hero {
+  text-align: center;
+  max-width: 800px;
+  width: 92%;
+  padding: 30px;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.12));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--glass-shadow);
+}
+
+.page-hero h1 {
+  margin: 0.5rem 0;
+  font-size: clamp(1.6rem, 2rem, 2.2rem);
+  color: var(--brand-heading, var(--nhl-dark));
+  font-weight: 700;
+}
+
+.page-hero p {
+  margin: 0.75rem 0 0;
+  font-size: 1rem;
+  color: var(--brand-text, #10203f);
+  line-height: 1.6;
+}
+
+.hero-eyebrow {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--nhl-gold);
+}
+
+#wheel-container {
+  position: relative;
+  margin: 30px 0;
+}
+
+#indicator {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 30px solid var(--nhl-gold);
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+#wheel {
+  max-width: 100%;
+  height: auto;
+}
+
+.preset-btns {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.preset-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--brand-border, var(--nhl-blue));
+  background: var(--brand-surface, rgba(255, 255, 255, 0.12));
+  color: var(--brand-heading, var(--nhl-blue));
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  font-family: var(--brand-font-family, system-ui, sans-serif);
+}
+
+.preset-btn:hover {
+  background: rgba(26, 111, 168, 0.12);
+  border-color: var(--nhl-blue);
+  color: var(--nhl-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(26, 111, 168, 0.2);
+}
+
+.preset-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(26, 111, 168, 0.35);
+}
+
+#spinBtn {
+  padding: 12px 32px;
+  border: none;
+  border-radius: var(--radius-md, 40px);
+  background: linear-gradient(to bottom right, var(--nhl-blue), var(--nhl-dark));
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--brand-font-family, system-ui, sans-serif);
+  margin: 20px auto;
+  display: block;
+}
+
+#spinBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(26, 111, 168, 0.4);
+}
+
+#spinBtn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(26, 111, 168, 0.35);
+}
+
+#winner {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--brand-heading, var(--nhl-dark));
+}
+
+.seo-content-area {
+  max-width: 800px;
+  width: 92%;
+  margin: 30px 0;
+}
+
+.seo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 20px 0;
+}
+
+@media (max-width: 600px) {
+  .seo-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.seo-toc {
+  background: var(--glass-bg, rgba(255, 255, 255, 0.07));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.15));
+  border-radius: var(--radius-md, 12px);
+  padding: 20px 24px;
+  margin: 24px 0;
+}
+
+.seo-toc ol {
+  margin: 0.5rem 0 0;
+  padding-left: 1.4rem;
+}
+
+.seo-toc a {
+  color: var(--nhl-blue);
+  text-decoration: none;
+}
+
+.seo-toc a:hover {
+  text-decoration: underline;
+}

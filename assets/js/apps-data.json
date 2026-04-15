@@ -387,6 +387,24 @@
     "description": "SUV or sports coupe? Ferrari or Kei car? Spin the wheel to pick your next car to buy, rent, or dream about."
   },
   {
+    "id": "where-should-i-go-on-vacation",
+    "name": "Where Should I Go on Vacation?",
+    "path": "/apps/where-should-i-go-on-vacation/",
+    "category": "games",
+    "footerGroup": "Games",
+    "emoji": "🌍",
+    "description": "Paris or Patagonia? Bali or the Faroe Islands? Spin the wheel for your next travel destination — city breaks, beaches, adventures and hidden gems."
+  },
+  {
+    "id": "nhl-team-wheel",
+    "name": "NHL Team Wheel",
+    "path": "/apps/nhl-team-wheel/",
+    "category": "games",
+    "footerGroup": "Games",
+    "emoji": "🏒",
+    "description": "Bruins or Canucks? Avalanche or Lightning? Spin the wheel to randomly pick an NHL team to cheer for — all 32 teams, Eastern, Western, or Cup Contenders."
+  },
+  {
     "id": "cook-or-order-in",
     "name": "Cook or Order In",
     "path": "/apps/cook-or-order-in/",

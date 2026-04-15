@@ -1,0 +1,213 @@
+---
+layout: base_app.njk
+title: "NHL Team Wheel – Random NHL Team Picker | Daily Pick"
+description: "Can't pick an NHL team to root for? Spin the wheel for a random hockey team — all 32 teams, Eastern Conference, Western Conference, or Cup Contenders. Let the puck decide."
+keywords: "NHL team wheel, random NHL team picker, which NHL team should I root for, hockey team randomizer, NHL team generator, pick an NHL team wheel"
+canonical: "https://dailypick.dev/apps/nhl-team-wheel/"
+localBrandConfig: /apps/nhl-team-wheel/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">32 teams. One puck. One spin.</p>
+            <h1>🏒 NHL Team Wheel</h1>
+            <p>Bruins or Canucks? Avalanche or Lightning? Whether you need a team to follow, someone to cheer for in the playoffs, or just want the wheel to settle a debate — drop the puck and spin.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Florida Panthers,Colorado Avalanche,Vegas Golden Knights,Toronto Maple Leafs,Edmonton Oilers,Carolina Hurricanes,Dallas Stars,Winnipeg Jets">🏆 Cup Contenders</button>
+            <button class="preset-btn" data-items="Bruins,Sabres,Red Wings,Panthers,Canadiens,Senators,Lightning,Maple Leafs,Hurricanes,Blue Jackets,Devils,Islanders,Rangers,Flyers,Penguins,Capitals">🥅 Eastern Conference</button>
+            <button class="preset-btn" data-items="Blackhawks,Avalanche,Stars,Wild,Predators,Blues,Utah HC,Jets,Ducks,Flames,Oilers,Kings,Sharks,Kraken,Canucks,Golden Knights">🎿 Western Conference</button>
+            <button class="preset-btn" data-items="Bruins,Sabres,Red Wings,Panthers,Canadiens,Senators,Lightning,Maple Leafs,Hurricanes,Blue Jackets,Devils,Islanders,Rangers,Flyers,Penguins,Capitals,Blackhawks,Avalanche,Stars,Wild,Predators,Blues,Utah HC,Jets,Ducks,Flames,Oilers,Kings,Sharks,Kraken,Canucks,Golden Knights">🏒 All 32 Teams</button>
+        </div>
+
+        <button id="spinBtn">🏒 DROP THE PUCK!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>NHL Team Wheel: Random Hockey Team Picker</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>NHL Team Wheel randomly picks one of the 32 National Hockey League franchises for you. Whether you're a new fan trying to find a team, settling a friendly argument, running a draft pool, or just curious which team the hockey gods assign you — one spin picks your squad for life (or at least tonight).</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>Four presets:</strong> Cup Contenders, Eastern Conference, Western Conference, and All 32 Teams.</li>
+                        <li><strong>All franchises included:</strong> Every current NHL team from Anaheim to Winnipeg, including Utah Hockey Club.</li>
+                        <li><strong>Drop the puck:</strong> One spin. One team. No going back.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-nhl-wheel">What is the NHL Team Wheel?</a></li>
+                    <li><a href="#who-should-use-nhl-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-nhl-wheel-works">How it works</a></li>
+                    <li><a href="#nhl-wheel-features">Features</a></li>
+                    <li><a href="#nhl-wheel-teams">All 32 NHL Teams</a></li>
+                    <li><a href="#nhl-wheel-tips">Tips</a></li>
+                    <li><a href="#nhl-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-nhl-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-nhl-wheel">
+                <h3>1. What is the NHL Team Wheel?</h3>
+                <p>The NHL Team Wheel is a random hockey team picker covering all 32 current NHL franchises. Spin it to find out which team you're cheering for in the playoffs, who you're drafting in a hockey pool, or simply which franchise claims your loyalty when you can't decide for yourself. Four presets cover Cup Contenders, the Eastern Conference, the Western Conference, and the full 32-team league.</p>
+            </section>
+
+            <section id="who-should-use-nhl-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>New hockey fans who want to pick a team without bias. Casual viewers neutral in the playoffs who want a team to cheer for. Fantasy hockey drafters breaking a tie. Fans visiting a city and wanting to know which local team to check out. Anyone who's moved to a new market and needs the wheel to assign them a franchise. Pub quiz groups settling a "best NHL team" argument neutrally.</p>
+            </section>
+
+            <section id="how-nhl-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Choose a preset — Cup Contenders for playoff-ready picks, Eastern or Western Conference to stay in your half of the league, or All 32 Teams for the full random lottery. Hit Drop the Puck and the wheel spins. Whatever it lands on, that's your team. This is now non-negotiable.</p>
+            </section>
+
+            <section id="nhl-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four presets:</strong> Cup Contenders, Eastern Conference (16 teams), Western Conference (16 teams), and All 32 Teams.</li>
+                    <li><strong>All current franchises:</strong> Updated to include Utah Hockey Club (formerly Arizona Coyotes).</li>
+                    <li><strong>Mobile-friendly:</strong> Spin on your phone during a game, at the bar, or in the middle of a hockey argument.</li>
+                    <li><strong>Customisable:</strong> Load your own list — division rivals, your fantasy pool names, or historical dynasties.</li>
+                    <li><strong>Instant result:</strong> Your team is displayed clearly the moment the wheel stops.</li>
+                </ul>
+            </section>
+
+            <section id="nhl-wheel-teams">
+                <h3>5. All 32 NHL Teams</h3>
+                <p><strong>Eastern Conference — Atlantic:</strong> Boston Bruins, Buffalo Sabres, Detroit Red Wings, Florida Panthers, Montreal Canadiens, Ottawa Senators, Tampa Bay Lightning, Toronto Maple Leafs.</p>
+                <p><strong>Eastern Conference — Metropolitan:</strong> Carolina Hurricanes, Columbus Blue Jackets, New Jersey Devils, New York Islanders, New York Rangers, Philadelphia Flyers, Pittsburgh Penguins, Washington Capitals.</p>
+                <p><strong>Western Conference — Central:</strong> Chicago Blackhawks, Colorado Avalanche, Dallas Stars, Minnesota Wild, Nashville Predators, St. Louis Blues, Utah Hockey Club, Winnipeg Jets.</p>
+                <p><strong>Western Conference — Pacific:</strong> Anaheim Ducks, Calgary Flames, Edmonton Oilers, Los Angeles Kings, San Jose Sharks, Seattle Kraken, Vancouver Canucks, Vegas Golden Knights.</p>
+            </section>
+
+            <section id="nhl-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Use Cup Contenders when you just want to follow a serious playoff race and need to pick a side. Use Eastern or Western Conference when you want to support a team in a specific half of the bracket. Use All 32 Teams for a truly unbiased assignment — the wheel doesn't care if it gives you the Sharks or the Avalanche. Once the wheel picks, commit. Look up their schedule, buy a jersey, add them to your calendar.</p>
+            </section>
+
+            <section id="nhl-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>Can't decide when to catch a game? Use the <a href="/apps/timer/">Timer</a> to track periods. Planning a watch party? The <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a> picks the food. Need a snack for the third period? Hit the <a href="/apps/what-snack-should-i-have/">Snack Wheel</a>. Watching with friends who can't agree on anything? The <a href="/apps/yes-or-no-wheel/">Yes or No Wheel</a> settles puck drop debates instantly.</p>
+            </section>
+
+            <section id="why-nhl-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Picking a sports team is surprisingly hard — there's too much tribal pressure, geography, family loyalty, and bandwagon guilt wrapped up in the choice. The wheel removes all of that by making a purely random, neutral decision that nobody can argue with. The wheel picked. The puck dropped. You're a fan now.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let items = ['Florida Panthers', 'Colorado Avalanche', 'Vegas Golden Knights', 'Toronto Maple Leafs', 'Edmonton Oilers', 'Carolina Hurricanes', 'Dallas Stars', 'Winnipeg Jets'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#1a6fa8',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#c0392b',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#1e5fa8',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#e8a020',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#1a8c7a',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#7a3d8c',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#d35400',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#2d8a4e',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 15px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 14, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / items.length;
+            const selectedIndex = Math.floor(Math.random() * items.length);
+            const selectedItem = items[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(items, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🏒 Your team: <span style="color: var(--nhl-blue); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                items = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(items, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(items, 0);
+        });
+
+        drawWheel(items, 0);
+    </script>
