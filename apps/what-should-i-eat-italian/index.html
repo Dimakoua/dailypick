@@ -1,0 +1,211 @@
+---
+layout: base_app.njk
+title: "Italian Food Wheel – Random Italian Dish Picker | Daily Pick"
+description: "Can't decide what Italian food to eat? Spin the wheel for classic pasta, pizza, risotto, antipasti, regional Italian dishes, and dolci. Mangia!"
+keywords: "Italian food wheel, Italian dish picker, what Italian food to eat, Italian cuisine spinner, pasta wheel, pizza picker, Italian food random, Italian meal ideas"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-italian/"
+localBrandConfig: /apps/what-should-i-eat-italian/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Every meal is a reason to celebrate — what are you eating?</p>
+            <h1>🇮🇹 Italian Food Wheel</h1>
+            <p>Torn between cacio e pepe and a Neapolitan margherita? Between osso buco and a creamy risotto? Spin the wheel and let Italy decide!</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Spaghetti Carbonara,Margherita Pizza,Risotto alla Milanese,Lasagne al Forno,Tiramisu,Arancini,Bruschetta,Cannoli">🍝 Italian Classics</button>
+            <button class="preset-btn" data-items="Cacio e Pepe,Amatriciana,Gricia,Saltimbocca alla Romana,Supplì,Trippa alla Romana,Coda alla Vaccinara,Maritozzo">🏛️ Roman Specialities</button>
+            <button class="preset-btn" data-items="Tagliatelle al Ragù,Mortadella Sandwich,Parmigiana di Melanzane,Spaghetti alle Vongole,Bistecca alla Fiorentina,Ribollita,Panzanella,Torta della Nonna">🌿 Regional Gems</button>
+            <button class="preset-btn" data-items="Tiramisu,Cannoli,Panna Cotta,Gelato,Sfogliatella,Zeppole,Affogato,Torrone">🍮 Dolci & Desserts</button>
+        </div>
+
+        <button id="spinBtn">🇮🇹 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Italian Food Wheel: Random Italian Dish &amp; Meal Picker</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Italian Food Wheel takes the endless delicious debate off your plate and picks something magnificent for you. From the perfect simplicity of cacio e pepe and a Neapolitan margherita to the deep richness of a Bolognese ragù and osso buco — every spin lands on something worth cooking or ordering immediately.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>Regional authenticity:</strong> Four presets spanning Italian Classics, Roman Specialities, Regional Gems, and Dolci & Desserts.</li>
+                        <li><strong>Real Italian dishes:</strong> Every item is a genuine Italian recipe or tradition, from north to south.</li>
+                        <li><strong>Instant pick:</strong> Stop scrolling menus and recipe sites — one spin, one dish, mangia!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-italian-food-wheel">What is the Italian Food Wheel?</a></li>
+                    <li><a href="#who-should-use-italian-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-italian-food-wheel-works">How it works</a></li>
+                    <li><a href="#italian-food-wheel-features">Features</a></li>
+                    <li><a href="#italian-food-wheel-categories">Italian food categories</a></li>
+                    <li><a href="#italian-food-wheel-tips">Tips</a></li>
+                    <li><a href="#italian-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-italian-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-italian-food-wheel">
+                <h3>1. What is the Italian Food Wheel?</h3>
+                <p>Italian Food Wheel is a random dish picker built around the real Italian culinary tradition. It covers Italy's extraordinary range — from the Roman pasta canon and the Neapolitan pizza heritage to the rich ragù of Bologna, the seafood of the Amalfi Coast, and the dolci that finish every Italian meal with something unforgettable.</p>
+            </section>
+
+            <section id="who-should-use-italian-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Anyone who loves Italian food and can never decide between pasta, pizza, risotto, or a beautiful piece of grilled fish. Home cooks looking for tonight's recipe inspiration, diners choosing between Italian restaurants, and travellers planning what to eat in Rome, Florence, Naples, or Milan. Spin the wheel, honour the pick.</p>
+            </section>
+
+            <section id="how-italian-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Choose one of the four presets, then hit Spin. The wheel lands on a dish and announces it. Take it as your recipe for the night or your order at the trattoria. Spin again if you need a second opinion from the wheel.</p>
+            </section>
+
+            <section id="italian-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four authentic presets:</strong> Italian Classics, Roman Specialities, Regional Gems, and Dolci & Desserts.</li>
+                    <li><strong>Genuine Italian dishes:</strong> Every item is a real recipe with centuries of Italian culinary history behind it.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops — perfect at the dinner table or in the kitchen.</li>
+                    <li><strong>Instant result:</strong> Winner is shown clearly after every spin so you can start cooking or ordering immediately.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel in Italian flag green, white, and red.</li>
+                </ul>
+            </section>
+
+            <section id="italian-food-wheel-categories">
+                <h3>5. Italian food categories</h3>
+                <p><strong>Italian Classics</strong> covers the dishes that define Italian food worldwide — spaghetti carbonara, margherita pizza, risotto alla Milanese, lasagne al forno, tiramisù, arancini, bruschetta, and cannoli. <strong>Roman Specialities</strong> digs into Rome's extraordinary pasta and meat canon — cacio e pepe, amatriciana, gricia, saltimbocca alla Romana, supplì, trippa alla Romana, coda alla vaccinara, and the beloved maritozzo. <strong>Regional Gems</strong> travels the country — tagliatelle al ragù from Bologna, mortadella sandwiches from Emilia, parmigiana di melanzane from Naples, spaghetti alle vongole from the coast, bistecca alla Fiorentina from Tuscany, ribollita and panzanella, and the classic torta della nonna. <strong>Dolci & Desserts</strong> is the sweet finish Italy does best — tiramisù, cannoli, panna cotta, gelato, sfogliatella, zeppole, the perfect affogato, and torrone.</p>
+            </section>
+
+            <section id="italian-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Use Italian Classics for a crowd-pleasing pick everyone will love, Roman Specialities when you want to cook or eat something truly authentic, Regional Gems when you want to explore beyond the usual suspects, and Dolci & Desserts when the only question left is which dessert. Swap in your own favourite Italian dishes for a fully personalised wheel.</p>
+            </section>
+
+            <section id="italian-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader global food picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. Explore other world cuisines with the <a href="/apps/what-should-i-eat-indian/">Indian Food Wheel</a>, <a href="/apps/what-should-i-eat-chinese/">Chinese Food Wheel</a>, <a href="/apps/what-should-i-eat-colombian/">Colombian Food Wheel</a>, or <a href="/apps/what-yousef-should-eat/">Persian Food Wheel</a>. Looking for a city food wheel? Try <a href="/apps/what-should-i-eat-toronto/">Toronto Food Wheel</a> or <a href="/apps/what-should-i-eat-new-york/">New York Food Wheel</a>. To pick a drink with your meal, <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a> has you covered.</p>
+            </section>
+
+            <section id="why-italian-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Italian cuisine has shaped how the entire world thinks about food — from pasta and pizza to espresso and gelato. The problem is there are too many magnificent options and never enough meals in a week to try everything. This wheel turns Italy's greatest food moments into one fast, joyful decision. One spin, one dish — mangia!</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Spaghetti Carbonara', 'Margherita Pizza', 'Risotto alla Milanese', 'Lasagne al Forno', 'Tiramisu', 'Arancini', 'Bruschetta', 'Cannoli'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#009246',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#ce2b37',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#1a5c2e',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#a51c30',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#c8860a',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#1c5f8e',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#6b3d9a',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#7a5230',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🇮🇹 Mangia! <span style="color: var(--italian-green); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        // Redraw idle wheel when brand colors change via Local Brand Studio
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>

@@ -325,6 +325,14 @@ module.exports = [
     emoji: "🗽",
     description: "Spin the wheel for NYC icons, borough bites, street food classics, and Manhattan dining picks. The city decides!"
   },  {
+    id: "what-should-i-eat-italian",
+    name: "Italian Food Wheel",
+    path: "/apps/what-should-i-eat-italian/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🇮🇹",
+    description: "Spin the wheel for Italian classics, Roman pasta, regional gems, and dolci. Carbonara or cannoli? Let the wheel decide. Mangia!"
+  },  {
     id: "cook-or-order-in",
     name: "Cook or Order In",
     path: "/apps/cook-or-order-in/",
