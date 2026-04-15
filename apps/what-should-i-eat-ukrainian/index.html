@@ -1,0 +1,211 @@
+---
+layout: base_app.njk
+title: "Ukrainian Food Wheel – Random Ukrainian Dish & Drink Picker | Daily Pick"
+description: "Can't decide what Ukrainian food to eat or drink? Spin the wheel for authentic Ukrainian classics, soups, mains, and traditional drinks."
+keywords: "Ukrainian food wheel, random Ukrainian dish picker, what should I eat Ukrainian, Ukrainian cuisine spinner, Ukrainian drinks picker"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-ukrainian/"
+localBrandConfig: /apps/what-should-i-eat-ukrainian/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Що будемо їсти? — What shall we eat?</p>
+            <h1>🥣 Ukrainian Food Wheel</h1>
+            <p>Can't choose between Borscht and Varenyky? Spin the wheel and let Ukrainian cuisine make the call!</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Borscht,Varenyky,Holubtsi,Chicken Kyiv,Deruny,Pampushky,Kapusnyak,Salo">🥣 Ukrainian Classics</button>
+            <button class="preset-btn" data-items="Shashlik,Chicken Kyiv,Kovbasa,Mlyntsi,Banosh,Kasha,Nalysnyky,Kotleta Po-Kyivsky">🍢 Mains & Grills</button>
+            <button class="preset-btn" data-items="Borscht,Solyanka,Okroshka,Kapusnyak,Rosolnyk,Yushka,Zelenyy Borshch,Vushka">🥗 Soups & Starters</button>
+            <button class="preset-btn" data-items="Uzvar,Kvass,Kompot,Medovukha,Varenukha,Horilka z Medom,Kefir,Ryazhenka">🍹 Drinks & Sweets</button>
+        </div>
+
+        <button id="spinBtn">🥣 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Ukrainian Food Wheel: Random Ukrainian Dish Picker for Fast Meal Decisions</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Ukrainian Food Wheel takes the guesswork out of choosing from one of Eastern Europe's most hearty and flavourful cuisines. From ruby-red borscht and pillowy varenyky to smoky shashlyk and thick Hutsul banosh — pick a preset, spin, and eat.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>Regional variety:</strong> Four presets spanning Ukrainian Classics, Mains & Grills, Soups & Starters, and Drinks & Sweets.</li>
+                        <li><strong>Authentic dishes:</strong> Every item is a real, well-loved dish from Ukrainian culinary tradition.</li>
+                        <li><strong>Instant choice:</strong> No more scrolling through menus — one spin, one meal, Смачного!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-ukrainian-food-wheel">What is the Ukrainian Food Wheel?</a></li>
+                    <li><a href="#who-should-use-ukrainian-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-ukrainian-food-wheel-works">How it works</a></li>
+                    <li><a href="#ukrainian-food-wheel-features">Features</a></li>
+                    <li><a href="#ukrainian-food-wheel-categories">Ukrainian food categories</a></li>
+                    <li><a href="#ukrainian-food-wheel-tips">Tips</a></li>
+                    <li><a href="#ukrainian-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-ukrainian-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-ukrainian-food-wheel">
+                <h3>1. What is the Ukrainian Food Wheel?</h3>
+                <p>Ukrainian Food Wheel is a random dish picker built specifically for Ukrainian and Eastern European cuisine. It covers the full spectrum — from slow-simmered beet soups and hand-folded dumplings to open-fire grills, honey meads, and fermented drinks.</p>
+            </section>
+
+            <section id="who-should-use-ukrainian-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Anyone who loves Ukrainian food and faces the daily paralysis of choosing between too many delicious options. Whether you are cooking at home, visiting a Ukrainian restaurant, or hosting a festive dinner, the wheel cuts through the indecision instantly.</p>
+            </section>
+
+            <section id="how-ukrainian-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Choose one of the four category presets, then hit Spin. The wheel lands on a dish or drink and announces it with a Смачного! — Ukrainian for "bon appétit". Spin again if you want another suggestion, or head straight to the kitchen.</p>
+            </section>
+
+            <section id="ukrainian-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four category presets:</strong> Ukrainian Classics, Mains & Grills, Soups & Starters, and Drinks & Sweets.</li>
+                    <li><strong>Authentic dish names:</strong> Items are real, well-known Ukrainian dishes used in everyday and festive cooking.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>Смачного result display:</strong> Winner is shown with Ukrainian warmth after every spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel in Ukraine's sunflower yellow and sky blue.</li>
+                </ul>
+            </section>
+
+            <section id="ukrainian-food-wheel-categories">
+                <h3>5. Ukrainian food categories</h3>
+                <p><strong>Ukrainian Classics</strong> covers iconic staples — Borscht, Varenyky, Holubtsi, Chicken Kyiv, Deruny, Pampushky, and the beloved salo. <strong>Mains & Grills</strong> includes Shashlik, Kovbasa, Mlyntsi, and the rich Hutsul polenta dish Banosh. <strong>Soups & Starters</strong> features Solyanka, Okroshka, Kapusnyak, and the green summer Zelenyy Borshch. <strong>Drinks & Sweets</strong> rounds out the experience with Uzvar, Kvass, Kompot, Medovukha, and the warming spiced Varenukha.</p>
+            </section>
+
+            <section id="ukrainian-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Use Ukrainian Classics for a comforting weeknight dinner, Soups & Starters when the weather turns cold, Mains & Grills for weekend gatherings, and Drinks & Sweets to finish a festive meal. Add your favourite local Ukrainian restaurant's dishes to spin between real nearby options.</p>
+            </section>
+
+            <section id="ukrainian-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader global food picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. For a Persian spin on the same idea, <a href="/apps/what-yousef-should-eat/">What Yousef Should Eat</a> covers Iranian dishes. For Indian cuisine, see the <a href="/apps/what-should-i-eat-indian/">Indian Food Wheel</a>. To pair a drink with your meal, <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a> is a great companion.</p>
+            </section>
+
+            <section id="why-ukrainian-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Decision fatigue hits even harder with a cuisine as rich and deeply layered as Ukrainian food. This wheel turns an overwhelming choice into a fast, joyful ritual. One spin, one dish, Смачного.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Borscht', 'Varenyky', 'Holubtsi', 'Chicken Kyiv', 'Deruny', 'Pampushky', 'Kapusnyak', 'Salo'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#f7c300',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#005bbb',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#d4a017',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#1a6b9e',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#c0392b',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#2d6a4f',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#8b5e3c',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#6c5a9e',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🥣 Смачного! You should eat: <span style="color: var(--ukrainian-sunflower); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        // Redraw idle wheel when brand colors change via Local Brand Studio
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
