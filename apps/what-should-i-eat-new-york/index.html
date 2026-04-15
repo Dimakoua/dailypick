@@ -1,0 +1,211 @@
+---
+layout: base_app.njk
+title: "New York Food Wheel – Random NYC Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide what to eat in New York City? Spin the wheel for NYC classics, iconic street food, borough bites, and world-class dining picks."
+keywords: "New York food wheel, NYC restaurant picker, what to eat in New York, NYC food spinner, New York City cuisine, where to eat NYC, New York restaurant wheel"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-new-york/"
+localBrandConfig: /apps/what-should-i-eat-new-york/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">The city that never sleeps — what are you eating?</p>
+            <h1>🗽 New York Food Wheel</h1>
+            <p>From a dollar slice on the go to a Katz's pastrami, from Chinatown dumplings to a Harlem soul food spread — spin and let the city decide!</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="NY Pizza Slice,Pastrami on Rye,Bagel with Lox,Cheesecake,Hot Dog,Buffalo Wings,Cronut,Black & White Cookie">🗽 NYC Icons</button>
+            <button class="preset-btn" data-items="Steakhouse,Sushi Omakase,French Bistro,Oyster Bar,Tasting Menu,Rooftop Bar Bites,Speakeasy Snacks,Jazz Club Supper">🌃 Manhattan Dining</button>
+            <button class="preset-btn" data-items="Chinatown Dumplings,Flushing Soup Dumplings,Jackson Heights Biryani,East Harlem Tacos,Arthur Avenue Pasta,Sunset Park Tacos,Brighton Beach Borscht,Flatbush Jerk Chicken">🌍 Borough Bites</button>
+            <button class="preset-btn" data-items="Halal Cart Rice & Chicken,Dollar Slice,Knish,Soft Pretzel,Dirty Water Hot Dog,Egg & Cheese Bodega Sandwich,Deli Sandwich,Street Corn">🚕 Street Food</button>
+        </div>
+
+        <button id="spinBtn">🗽 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>New York Food Wheel: Random Restaurant & Dish Picker for NYC</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>New York Food Wheel cuts through the city's infinite dining options and picks something delicious for you. From the iconic New York pizza slice sold through a window and a Katz's Deli pastrami on rye, to Flushing soup dumplings, halal cart chicken-over-rice, and Jackson Heights biryani — this wheel covers the full spectrum of what makes NYC the greatest food city on earth.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>Borough-wide variety:</strong> Four presets spanning NYC Icons, Manhattan Dining, Borough Bites, and Street Food.</li>
+                        <li><strong>Real NYC food:</strong> Every item is a dish, restaurant style, or neighbourhood classic rooted in the actual New York food scene.</li>
+                        <li><strong>Instant pick:</strong> No more paralysis by endless Yelp and Google Maps choices — one spin, one meal, let's eat!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-nyc-food-wheel">What is the New York Food Wheel?</a></li>
+                    <li><a href="#who-should-use-nyc-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-nyc-food-wheel-works">How it works</a></li>
+                    <li><a href="#nyc-food-wheel-features">Features</a></li>
+                    <li><a href="#nyc-food-wheel-categories">NYC food categories</a></li>
+                    <li><a href="#nyc-food-wheel-tips">Tips</a></li>
+                    <li><a href="#nyc-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-nyc-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-nyc-food-wheel">
+                <h3>1. What is the New York Food Wheel?</h3>
+                <p>New York Food Wheel is a random restaurant and dish picker built around the real NYC dining scene. It covers the city's culinary identity — from the legendary pizza slice and pastrami on rye that define New York food culture, to the immigrant neighbourhoods across all five boroughs that have made the city one of the most extraordinary places to eat on the planet.</p>
+            </section>
+
+            <section id="who-should-use-nyc-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>New Yorkers who can't pick between a thousand excellent options, tourists trying to experience the city's iconic food scene, and anyone who has stood in Midtown or the Village completely stumped by too many great choices. Spin, walk, eat.</p>
+            </section>
+
+            <section id="how-nyc-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Choose one of the four presets, then hit Spin. The wheel lands on a pick and announces it. Use it as a category prompt — then find the best spot near you for that dish or style. Spin again if the pick is in the wrong borough.</p>
+            </section>
+
+            <section id="nyc-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> NYC Icons, Manhattan Dining, Borough Bites, and Street Food.</li>
+                    <li><strong>Real NYC picks:</strong> Every item is grounded in an actual New York food tradition, neighbourhood, or iconic institution.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops — ideal for deciding on the go.</li>
+                    <li><strong>Instant result:</strong> Winner is shown clearly after every spin so you can act on it fast.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel in NYC yellow cab gold or subway map colours.</li>
+                </ul>
+            </section>
+
+            <section id="nyc-food-wheel-categories">
+                <h3>5. NYC food categories</h3>
+                <p><strong>NYC Icons</strong> covers the dishes that define New York — the dollar pizza slice, Katz's pastrami on rye, bagel with lox and cream cheese, New York cheesecake, hot dog from a cart, Buffalo wings, the Dominique Ansel Cronut, and the black and white cookie. <strong>Manhattan Dining</strong> reflects the city's world-class restaurant scene — steakhouses in the Meatpacking District, sushi omakase in the West Village, French bistros on the Upper East Side, oyster bars in Midtown, tasting menu dinners, and rooftop bar bites. <strong>Borough Bites</strong> is New York at its most authentic — Chinatown dumplings on Mott Street, Flushing soup dumplings, Jackson Heights biryani, East Harlem tacos, Arthur Avenue pasta in the Bronx, Sunset Park tacos in Brooklyn, Brighton Beach borscht, and Flatbush jerk chicken. <strong>Street Food</strong> is the beating heart of NYC eating — halal cart chicken-over-rice, the dollar slice, a knish, a soft pretzel, a dirty water hot dog, a bodega egg & cheese sandwich, and a deli sandwich piled high.</p>
+            </section>
+
+            <section id="nyc-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Use NYC Icons for a classic tourist-bucket-list meal, Borough Bites when you want to eat like a real New Yorker, Manhattan Dining for a special occasion or expense account dinner, and Street Food when you want something fast, cheap, and deeply satisfying. Add your own favourite NYC spots for a fully personalised city food wheel.</p>
+            </section>
+
+            <section id="nyc-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader global food picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. If you are deciding between cuisines, dig deeper with the <a href="/apps/what-should-i-eat-chinese/">Chinese Food Wheel</a>, <a href="/apps/what-should-i-eat-indian/">Indian Food Wheel</a>, or <a href="/apps/what-should-i-eat-colombian/">Colombian Food Wheel</a>. Looking for another city wheel? Try the <a href="/apps/what-should-i-eat-toronto/">Toronto Food Wheel</a>. To pick a drink to go with your meal, <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a> has you covered.</p>
+            </section>
+
+            <section id="why-nyc-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>New York City has more restaurants than any other city in the United States, and a cultural diversity that puts food from every corner of the world within a subway ride. That richness is exactly what makes choosing so hard. This wheel turns the city's best food moments into one fast, playful decision. One spin, one meal — let's eat.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['NY Pizza Slice', 'Pastrami on Rye', 'Bagel with Lox', 'Cheesecake', 'Hot Dog', 'Buffalo Wings', 'Cronut', 'Black & White Cookie'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#003580',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#f7c300',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#c0392b',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#1a1a2e',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#e8650a',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#2d6a4f',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#6b3d9a',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#8b4513',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🗽 NYC says: <span style="color: var(--nyc-blue); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        // Redraw idle wheel when brand colors change via Local Brand Studio
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>

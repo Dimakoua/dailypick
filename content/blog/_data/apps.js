@@ -317,6 +317,14 @@ module.exports = [
     emoji: "🍁",
     description: "Spin the wheel for Toronto icons, multicultural eats, neighbourhood gems, and downtown picks. The 6ix decides!"
   },  {
+    id: "what-should-i-eat-new-york",
+    name: "New York Food Wheel",
+    path: "/apps/what-should-i-eat-new-york/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🗽",
+    description: "Spin the wheel for NYC icons, borough bites, street food classics, and Manhattan dining picks. The city decides!"
+  },  {
     id: "cook-or-order-in",
     name: "Cook or Order In",
     path: "/apps/cook-or-order-in/",

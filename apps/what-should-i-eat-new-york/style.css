@@ -1,0 +1,243 @@
+/* ==========================================================================
+   New York Food Wheel – App Styles
+   - NYC subway blue & yellow cab gold theme layered over base design tokens
+   - Responsive layout with preset buttons and NYC-accented winner display
+   ========================================================================== */
+
+/* NYC colour palette */
+:root {
+  --nyc-blue: #003580;
+  --nyc-yellow: #f7c300;
+  --nyc-red: #c0392b;
+
+  /* Wheel segment defaults — subway blue, cab yellow, NYC red, multicultural palette */
+  --wheel-segment-1: #003580; /* subway blue */
+  --wheel-segment-2: #f7c300; /* yellow cab gold */
+  --wheel-segment-3: #c0392b; /* NYC red */
+  --wheel-segment-4: #1a1a2e; /* city night */
+  --wheel-segment-5: #e8650a; /* Brooklyn orange */
+  --wheel-segment-6: #2d6a4f; /* Central Park green */
+  --wheel-segment-7: #6b3d9a; /* purple */
+  --wheel-segment-8: #8b4513; /* earth brown */
+  --wheel-result-text: var(--nyc-blue);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  flex-grow: 1;
+}
+
+/* Page Hero */
+.page-hero {
+  text-align: center;
+  max-width: 800px;
+  width: 92%;
+  padding: 30px;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.12));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--glass-shadow);
+}
+
+.page-hero h1 {
+  margin: 0.5rem 0;
+  font-size: clamp(1.6rem, 2rem, 2.2rem);
+  color: var(--brand-heading);
+  font-weight: 700;
+}
+
+.page-hero p {
+  margin: 0.75rem 0 0;
+  font-size: 1rem;
+  color: var(--brand-text);
+  line-height: 1.6;
+}
+
+.hero-eyebrow {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--nyc-yellow);
+}
+
+/* Wheel container */
+#wheel-container {
+  position: relative;
+  display: inline-block;
+  margin: 24px auto 0;
+}
+
+/* Top indicator — downward-pointing triangle */
+#indicator {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 30px solid var(--nyc-yellow);
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+/* Preset buttons */
+.preset-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+  max-width: 520px;
+  width: 92%;
+}
+
+.preset-btn {
+  background: var(--glass-bg, rgba(255, 255, 255, 0.1));
+  border: 1px solid var(--nyc-blue);
+  color: var(--brand-text);
+  padding: 8px 16px;
+  border-radius: var(--radius-full, 9999px);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.preset-btn:hover {
+  background: var(--nyc-blue);
+  color: #fff;
+  transform: scale(1.04);
+}
+
+/* Spin button */
+#spinBtn {
+  background: var(--nyc-blue);
+  color: var(--nyc-yellow);
+  border: none;
+  padding: 14px 36px;
+  border-radius: var(--radius-full, 9999px);
+  font-size: 1.1rem;
+  font-weight: 800;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 18px rgba(0, 53, 128, 0.4);
+  margin: 16px 0;
+}
+
+#spinBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 24px rgba(0, 53, 128, 0.6);
+}
+
+#spinBtn:active {
+  transform: scale(0.97);
+}
+
+/* Winner display */
+#winner {
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-align: center;
+  min-height: 3.5rem;
+  color: var(--wheel-result-text, var(--nyc-blue));
+  margin: 8px 0 16px;
+}
+
+/* SEO content area */
+.seo-content-area {
+  max-width: 820px;
+  width: 92%;
+  margin: 32px auto 48px;
+  line-height: 1.7;
+  color: var(--brand-text);
+}
+
+.seo-content-area h2 {
+  font-size: clamp(1.25rem, 1.6rem, 1.8rem);
+  margin-bottom: 1rem;
+  color: var(--brand-heading);
+}
+
+.seo-content-area h3 {
+  font-size: 1.05rem;
+  color: var(--brand-heading);
+  margin: 1.5rem 0 0.5rem;
+}
+
+.seo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 600px) {
+  .seo-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.seo-toc {
+  background: var(--glass-bg, rgba(255, 255, 255, 0.08));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.15));
+  border-radius: var(--radius-lg);
+  padding: 16px 24px;
+  margin-bottom: 24px;
+}
+
+.seo-toc ol {
+  margin: 0.5rem 0 0 1.2rem;
+  padding: 0;
+}
+
+.seo-toc li {
+  margin: 0.3rem 0;
+  font-size: 0.9rem;
+}
+
+.seo-toc a {
+  color: var(--nyc-blue);
+  text-decoration: none;
+}
+
+.seo-toc a:hover {
+  text-decoration: underline;
+}
+
+.seo-content-area ul,
+.seo-content-area ol {
+  padding-left: 1.4rem;
+  margin: 0.5rem 0;
+}
+
+.seo-content-area li {
+  margin: 0.4rem 0;
+  font-size: 0.95rem;
+}
+
+.seo-content-area a {
+  color: var(--nyc-blue);
+}
+
+.seo-content-area section {
+  margin-bottom: 1.5rem;
+}
+
+.seo-content-area p {
+  font-size: 0.95rem;
+  margin: 0.5rem 0;
+}
