@@ -9,6 +9,17 @@
   --persian-saffron: #e8a020;
   --persian-pomegranate: #c0392b;
   --persian-turquoise: #1a9b8a;
+
+  /* Wheel segment defaults — Persian tiles & carpet palette */
+  --wheel-segment-1: #e8a020; /* saffron gold */
+  --wheel-segment-2: #c0392b; /* pomegranate red */
+  --wheel-segment-3: #1c5f8e; /* lapis lazuli blue */
+  --wheel-segment-4: #1a9b8a; /* Persian turquoise */
+  --wheel-segment-5: #2e7d44; /* pistachio green */
+  --wheel-segment-6: #c45c35; /* terracotta */
+  --wheel-segment-7: #8b2252; /* mulberry wine */
+  --wheel-segment-8: #6b3d9a; /* Persian violet */
+  --wheel-result-text: var(--persian-saffron);
 }
 
 body {

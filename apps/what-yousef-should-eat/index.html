@@ -4,6 +4,7 @@ title: "What Yousef Should Eat – Iranian Food Wheel | Daily Pick"
 description: "Yousef can't decide what to eat? Spin the Persian food wheel for authentic Iranian dishes, kebabs, rice plates, and traditional snacks."
 keywords: "Iranian food wheel, Persian food picker, what should I eat Iranian, Persian cuisine spinner, Iranian snack picker"
 canonical: "https://dailypick.dev/apps/what-yousef-should-eat/"
+localBrandConfig: /apps/what-yousef-should-eat/local-brand-config.js
 headExtra: |
   <link href="./style.css" rel="stylesheet" />
 ---
@@ -115,21 +116,24 @@ headExtra: |
 
         let foodItems = ['Ghormeh Sabzi', 'Fesenjan', 'Chelo Kabab', 'Ash Reshteh', 'Baghali Polo', 'Abgoosht', 'Dolmeh', 'Mirza Ghasemi'];
 
-        // Persian colour palette: saffron, pomegranate, lapis, turquoise,
-        // pistachio, terracotta, mulberry, violet — inspired by Persian tiles & carpets
-        const persianColors = [
-            '#e8a020', // saffron gold
-            '#c0392b', // pomegranate red
-            '#1c5f8e', // lapis lazuli blue
-            '#1a9b8a', // Persian turquoise
-            '#2e7d44', // pistachio green
-            '#c45c35', // terracotta
-            '#8b2252', // mulberry wine
-            '#6b3d9a', // Persian violet
-        ];
+        // Persian colour palette read from CSS vars — configurable via Local Brand Studio
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#e8a020',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#c0392b',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#1c5f8e',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#1a9b8a',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#2e7d44',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#c45c35',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#8b2252',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#6b3d9a',
+            ];
+        }
 
         function drawWheel(items, rotationAngle = 0) {
             const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.save();
             ctx.translate(radius, radius);
@@ -141,7 +145,7 @@ headExtra: |
                 ctx.beginPath();
                 ctx.moveTo(radius, radius);
                 ctx.arc(radius, radius, radius, angle, angle + angleStep);
-                ctx.fillStyle = persianColors[i % persianColors.length];
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
                 ctx.fill();
 
                 ctx.save();
@@ -196,6 +200,11 @@ headExtra: |
                 winnerDiv.innerText = "";
                 drawWheel(foodItems, 0);
             });
+        });
+
+        // Redraw idle wheel when brand colors change via Local Brand Studio
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
         });
 
         drawWheel(foodItems, 0);
