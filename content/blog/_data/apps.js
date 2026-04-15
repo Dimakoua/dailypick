@@ -293,6 +293,14 @@ module.exports = [
     emoji: "🥟",
     description: "Spin the wheel for authentic Nepali dishes and drinks — dal bhat, momo, sekuwa, tongba, and more. स्वादिलो!"
   },  {
+    id: "what-should-i-eat-colombian",
+    name: "Colombian Food Wheel",
+    path: "/apps/what-should-i-eat-colombian/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🥔",
+    description: "Spin the wheel for authentic Colombian dishes and drinks — bandeja paisa, ajiaco, arepas, empanadas, and more. ¡Buen provecho!"
+  },  {
     id: "cook-or-order-in",
     name: "Cook or Order In",
     path: "/apps/cook-or-order-in/",

@@ -1,0 +1,211 @@
+---
+layout: base_app.njk
+title: "Colombian Food Wheel – Random Colombian Dish & Drink Picker | Daily Pick"
+description: "Can't decide what Colombian food to eat? Spin the wheel for authentic bandeja paisa, ajiaco, empanadas, arepas, and traditional Colombian drinks."
+keywords: "Colombian food wheel, random Colombian dish picker, what should I eat Colombian, Colombia cuisine spinner, bandeja paisa wheel, arepas picker"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-colombian/"
+localBrandConfig: /apps/what-should-i-eat-colombian/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">¿Qué vamos a comer? — What are we eating?</p>
+            <h1>🫔 Colombian Food Wheel</h1>
+            <p>Torn between Bandeja Paisa and Ajiaco? Spin the wheel and let Colombian cuisine make the call!</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Bandeja Paisa,Ajiaco,Arepa,Empanada,Sancocho,Lechona,Tamale,Changua">🫔 Colombian Classics</button>
+            <button class="preset-btn" data-items="Fritanga,Chicharrón,Lomo al Trapo,Pollo Asado,Costilla de Res,Sobrebarriga,Morcilla,Hogao">🍢 Mains & Grills</button>
+            <button class="preset-btn" data-items="Caldo de Costilla,Sopa de Mondongo,Patacones,Buñuelos,Papas Chorreadas,Cazuela de Mariscos,Arroz con Coco,Plátano Maduro">🥗 Soups & Sides</button>
+            <button class="preset-btn" data-items="Aguardiente,Café Colombiano,Champús,Lulada,Chicha,Arequipe,Natilla,Obleas">🍹 Drinks & Sweets</button>
+        </div>
+
+        <button id="spinBtn">🫔 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Colombian Food Wheel: Random Colombian Dish Picker for Fast Meal Decisions</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Colombian Food Wheel takes the guesswork out of choosing from one of Latin America's most vibrant and hearty cuisines. From the legendary bandeja paisa and warming ajiaco to smoky fritanga grills, crispy patacones, and sweet arequipe — pick a preset, spin, and eat.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>Regional variety:</strong> Four presets spanning Colombian Classics, Mains & Grills, Soups & Sides, and Drinks & Sweets.</li>
+                        <li><strong>Authentic dishes:</strong> Every item is a real, well-loved dish from Colombian culinary tradition.</li>
+                        <li><strong>Instant choice:</strong> No more debating between arepa and empanada — one spin, one meal, ¡Buen provecho!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-colombian-food-wheel">What is the Colombian Food Wheel?</a></li>
+                    <li><a href="#who-should-use-colombian-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-colombian-food-wheel-works">How it works</a></li>
+                    <li><a href="#colombian-food-wheel-features">Features</a></li>
+                    <li><a href="#colombian-food-wheel-categories">Colombian food categories</a></li>
+                    <li><a href="#colombian-food-wheel-tips">Tips</a></li>
+                    <li><a href="#colombian-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-colombian-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-colombian-food-wheel">
+                <h3>1. What is the Colombian Food Wheel?</h3>
+                <p>Colombian Food Wheel is a random dish picker built for Colombian and Andean cuisine. It covers the full range — from the iconic bandeja paisa piled high with beans, rice, chicharrón, and arepa, to the warming herb-rich ajiaco soup, open-fire lomo al trapo, coastal arroz con coco, and sweet caramel-thick arequipe.</p>
+            </section>
+
+            <section id="who-should-use-colombian-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Anyone who loves Colombian food and can't pick from the rich, diverse spread of options. Whether you are cooking at home, visiting a Colombian restaurant, ordering from a food truck, or just craving something hearty, the wheel cuts through the indecision instantly.</p>
+            </section>
+
+            <section id="how-colombian-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Choose one of the four category presets, then hit Spin. The wheel lands on a dish or drink and announces it with a ¡Buen provecho! — Colombian for "bon appétit". Spin again for another suggestion, or head straight to the kitchen.</p>
+            </section>
+
+            <section id="colombian-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four category presets:</strong> Colombian Classics, Mains & Grills, Soups & Sides, and Drinks & Sweets.</li>
+                    <li><strong>Authentic dish names:</strong> Items are real, widely recognised Colombian dishes from across the country's regions.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>¡Buen provecho! result display:</strong> Winner is shown with Colombian warmth after every spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel in Colombia's yellow, blue, and red.</li>
+                </ul>
+            </section>
+
+            <section id="colombian-food-wheel-categories">
+                <h3>5. Colombian food categories</h3>
+                <p><strong>Colombian Classics</strong> covers the iconic staples — Bandeja Paisa, warming Ajiaco, Arepa, golden Empanada, hearty Sancocho, slow-roasted Lechona, and the milky Changua breakfast soup. <strong>Mains & Grills</strong> includes flame-wrapped Lomo al Trapo, smoky Fritanga platters, crispy Chicharrón, Sobrebarriga, and blood-rich Morcilla. <strong>Soups & Sides</strong> features Caldo de Costilla, Tripe Mondongo, twice-fried Patacones, cheesy Papas Chorreadas, coconut Arroz con Coco, and sweet Plátano Maduro. <strong>Drinks & Sweets</strong> rounds out the experience with anise-sharp Aguardiente, world-famous Café Colombiano, fruity Lulada, fermented Chicha, thick Arequipe, and the crispy wafer Obleas.</p>
+            </section>
+
+            <section id="colombian-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Use Colombian Classics for a full comforting meal, Soups & Sides when you want something lighter or as an accompaniment, Mains & Grills for a weekend asado, and Drinks & Sweets to finish any occasion. Add your favourite local Colombian restaurant's specials for the most practical daily spin.</p>
+            </section>
+
+            <section id="colombian-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader global food picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. For Indian cuisine, see the <a href="/apps/what-should-i-eat-indian/">Indian Food Wheel</a>. For a Persian spin, <a href="/apps/what-yousef-should-eat/">What Yousef Should Eat</a> covers Iranian dishes. To pair a drink with your meal, <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a> is a great companion.</p>
+            </section>
+
+            <section id="why-colombian-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Colombian cuisine spans four distinct geographic regions — Andean highlands, Pacific coast, Caribbean coast, and Amazon lowlands — making the choice overwhelming in the best possible way. This wheel turns that abundance into a fast, joyful ritual. One spin, one dish, ¡Buen provecho!</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Bandeja Paisa', 'Ajiaco', 'Arepa', 'Empanada', 'Sancocho', 'Lechona', 'Tamale', 'Changua'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#f5d800',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#003087',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#ce1126',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#c8860a',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#2d6a4f',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#8b4513',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#6b3d9a',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#1a7a8a',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🫔 ¡Buen provecho! You should eat: <span style="color: var(--colombian-yellow); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        // Redraw idle wheel when brand colors change via Local Brand Studio
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
