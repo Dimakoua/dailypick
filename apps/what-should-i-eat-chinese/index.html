@@ -1,0 +1,211 @@
+---
+layout: base_app.njk
+title: "Chinese Food Wheel – Random Chinese Dish & Drink Picker | Daily Pick"
+description: "Can't decide what Chinese food to eat? Spin the wheel for authentic dim sum, Sichuan classics, Cantonese favourites, noodles, and traditional Chinese drinks."
+keywords: "Chinese food wheel, random Chinese dish picker, what should I eat Chinese, China cuisine spinner, dim sum picker, Sichuan food wheel"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-chinese/"
+localBrandConfig: /apps/what-should-i-eat-chinese/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">吃什么好呢？— What shall we eat?</p>
+            <h1>🥢 Chinese Food Wheel</h1>
+            <p>Torn between Peking Duck and Mapo Tofu? Spin the wheel and let Chinese cuisine make the call!</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Peking Duck,Kung Pao Chicken,Mapo Tofu,Char Siu,Wonton Soup,Spring Rolls,Dumplings,Fried Rice">🥢 Chinese Classics</button>
+            <button class="preset-btn" data-items="Mapo Tofu,Dan Dan Noodles,Twice-Cooked Pork,Kung Pao Chicken,Fish-Fragrant Pork,Steamed Fish with Chilli,Hot Pot,Mala Xiang Guo">🌶️ Sichuan & Spicy</button>
+            <button class="preset-btn" data-items="Har Gow,Siu Mai,Cheung Fun,Char Siu Bao,Egg Tart,Lo Mai Gai,Turnip Cake,Steamed Spare Ribs">🫖 Dim Sum</button>
+            <button class="preset-btn" data-items="Jasmine Tea,Bubble Tea,Soy Milk,Chrysanthemum Tea,Osmanthus Wine,Baijiu,Red Bean Soup,Tangyuan">🍵 Drinks & Sweets</button>
+        </div>
+
+        <button id="spinBtn">🥢 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Chinese Food Wheel: Random Chinese Dish Picker for Fast Meal Decisions</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Chinese Food Wheel takes the guesswork out of choosing from one of the world's oldest and most diverse culinary traditions. From lacquered Peking Duck and numbing Sichuan hot pot to delicate Cantonese dim sum baskets and sweet osmanthus wine — pick a preset, spin, and eat.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>Regional variety:</strong> Four presets spanning Chinese Classics, Sichuan & Spicy, Dim Sum, and Drinks & Sweets.</li>
+                        <li><strong>Authentic dishes:</strong> Every item is a real, well-loved dish from China's rich regional culinary traditions.</li>
+                        <li><strong>Instant choice:</strong> No more debating between dumplings and noodles — one spin, one meal, 干杯!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-chinese-food-wheel">What is the Chinese Food Wheel?</a></li>
+                    <li><a href="#who-should-use-chinese-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-chinese-food-wheel-works">How it works</a></li>
+                    <li><a href="#chinese-food-wheel-features">Features</a></li>
+                    <li><a href="#chinese-food-wheel-categories">Chinese food categories</a></li>
+                    <li><a href="#chinese-food-wheel-tips">Tips</a></li>
+                    <li><a href="#chinese-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-chinese-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-chinese-food-wheel">
+                <h3>1. What is the Chinese Food Wheel?</h3>
+                <p>Chinese Food Wheel is a random dish picker built for Chinese and regional Chinese cuisine. It covers the full range — from the imperial grandeur of Peking Duck and the tongue-numbing heat of Sichuan mapo tofu, to the weekend ritual of Cantonese dim sum, hand-folded dumplings, and sweet red bean desserts.</p>
+            </section>
+
+            <section id="who-should-use-chinese-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Anyone who loves Chinese food and can't pick from the vast, regionally diverse spread of options. Whether you are ordering takeaway, choosing from a dim sum trolley, planning a hot pot night, or cooking at home, the wheel cuts through the indecision instantly.</p>
+            </section>
+
+            <section id="how-chinese-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Choose one of the four category presets, then hit Spin. The wheel lands on a dish or drink and announces it with a 干杯! — a classic Chinese toast. Spin again for another suggestion, or head straight to the kitchen or your favourite Chinese restaurant.</p>
+            </section>
+
+            <section id="chinese-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four category presets:</strong> Chinese Classics, Sichuan & Spicy, Dim Sum, and Drinks & Sweets.</li>
+                    <li><strong>Authentic dish names:</strong> Items are real, widely recognised Chinese dishes from across China's eight major culinary traditions.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>干杯 result display:</strong> Winner is shown with Chinese flair after every spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel in China's imperial red and gold.</li>
+                </ul>
+            </section>
+
+            <section id="chinese-food-wheel-categories">
+                <h3>5. Chinese food categories</h3>
+                <p><strong>Chinese Classics</strong> covers the iconic dishes recognised worldwide — Peking Duck, Kung Pao Chicken, Wonton Soup, Char Siu, crispy Spring Rolls, steamed Dumplings, and Fried Rice. <strong>Sichuan & Spicy</strong> dives into the numbing heat of the southwest — Mapo Tofu, Dan Dan Noodles, Twice-Cooked Pork, Fish-Fragrant Pork, and bubbling communal Hot Pot. <strong>Dim Sum</strong> celebrates the Cantonese yum cha tradition — translucent Har Gow, open-topped Siu Mai, silky Cheung Fun, fluffy Char Siu Bao, and flaky Egg Tart. <strong>Drinks & Sweets</strong> rounds out the experience with Jasmine Tea, Bubble Tea, Chrysanthemum Tea, warming Tangyuan, and the potent clear spirit Baijiu.</p>
+            </section>
+
+            <section id="chinese-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Use Chinese Classics for a reliable weeknight order, Dim Sum for a weekend brunch outing, Sichuan & Spicy when you want bold heat, and Drinks & Sweets to round off the meal. Add your favourite local Chinese restaurant's specials to spin between real nearby options.</p>
+            </section>
+
+            <section id="chinese-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader global food picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. For Indian cuisine, see the <a href="/apps/what-should-i-eat-indian/">Indian Food Wheel</a>. For a Persian spin, <a href="/apps/what-yousef-should-eat/">What Yousef Should Eat</a> covers Iranian dishes. To pair a drink with your meal, <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a> is a great companion.</p>
+            </section>
+
+            <section id="why-chinese-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Chinese cuisine spans eight major regional traditions and thousands of years of culinary history — making the choice genuinely overwhelming. This wheel turns that abundance into a fast, joyful ritual. One spin, one dish, 干杯!</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Peking Duck', 'Kung Pao Chicken', 'Mapo Tofu', 'Char Siu', 'Wonton Soup', 'Spring Rolls', 'Dumplings', 'Fried Rice'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#c8102e',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#d4a017',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#8b0000',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#c8860a',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#2d6a4f',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#1a5f8e',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#7b3f00',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#6b3d9a',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🥢 干杯! You should eat: <span style="color: var(--chinese-gold); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        // Redraw idle wheel when brand colors change via Local Brand Studio
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
