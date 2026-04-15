@@ -357,6 +357,14 @@ module.exports = [
     emoji: "🚫",
     description: "Every option is never. Classic Never, Strong No, Nuanced Never, Poetic Never — pick your flavour and make peace with it."
   },  {
+    id: "positive-wheel",
+    name: "Positive Wheel",
+    path: "/apps/positive-wheel/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "✨",
+    description: "Every result is upbeat and encouraging. Classic Positive, Motivational Yes, Optimistic Yes, and Celebration Yes — spin a dose of optimism."
+  },  {
     id: "when-should-i-go-on-vacation",
     name: "When Should I Go on Vacation?",
     path: "/apps/when-should-i-go-on-vacation/",
