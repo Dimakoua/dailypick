@@ -1,0 +1,214 @@
+---
+layout: base_app.njk
+title: "Baseball Team Wheel – Random MLB Team Picker | Daily Pick"
+description: "Need a baseball team to root for? Spin the wheel for a random MLB team — American League, National League, AL East, or all 30 teams. Let the ball decide."
+keywords: "baseball team wheel, random MLB team picker, which baseball team should I root for, MLB team randomizer, pick an MLB team wheel"
+canonical: "https://dailypick.dev/apps/baseball-team-wheel/"
+localBrandConfig: /apps/baseball-team-wheel/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">30 teams. One pitch. One spin.</p>
+            <h1>⚾ Baseball Team Wheel</h1>
+            <p>Can’t choose a new MLB team to follow? Spin the wheel and let the baseball gods pick between Red Sox, Dodgers, Yankees, and every team in the league. Perfect for fans, fantasy leagues, or baseball debates.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Baltimore Orioles,Boston Red Sox,New York Yankees,Tampa Bay Rays,Toronto Blue Jays">⚾ AL East</button>
+            <button class="preset-btn" data-items="Baltimore Orioles,Boston Red Sox,New York Yankees,Tampa Bay Rays,Toronto Blue Jays,Chicago White Sox,Cleveland Guardians,Detroit Tigers,Kansas City Royals,Minnesota Twins,Houston Astros,Los Angeles Angels,Oakland Athletics,Seattle Mariners,Texas Rangers">🧢 American League</button>
+            <button class="preset-btn" data-items="Atlanta Braves,Miami Marlins,New York Mets,Philadelphia Phillies,Washington Nationals,Chicago Cubs,Cincinnati Reds,Milwaukee Brewers,Pittsburgh Pirates,St. Louis Cardinals,Arizona Diamondbacks,Colorado Rockies,Los Angeles Dodgers,San Diego Padres,San Francisco Giants">🎩 National League</button>
+            <button class="preset-btn" data-items="Baltimore Orioles,Boston Red Sox,New York Yankees,Tampa Bay Rays,Toronto Blue Jays,Chicago White Sox,Cleveland Guardians,Detroit Tigers,Kansas City Royals,Minnesota Twins,Houston Astros,Los Angeles Angels,Oakland Athletics,Seattle Mariners,Texas Rangers,Atlanta Braves,Miami Marlins,New York Mets,Philadelphia Phillies,Washington Nationals,Chicago Cubs,Cincinnati Reds,Milwaukee Brewers,Pittsburgh Pirates,St. Louis Cardinals,Arizona Diamondbacks,Colorado Rockies,Los Angeles Dodgers,San Diego Padres,San Francisco Giants">🏟️ All 30 Teams</button>
+        </div>
+
+        <button id="spinBtn">⚾ SPIN THE BASEBALL WHEEL!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Baseball Team Wheel: Random MLB Team Picker</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>The Baseball Team Wheel randomly chooses one of Major League Baseball’s franchises for you. Whether you want a team to cheer for this season, need a draft opponent, or want to settle a fan fight, one spin names your squad.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>Four presets:</strong> AL East, American League, National League, and All 30 Teams.</li>
+                        <li><strong>All current MLB clubs:</strong> From the Bronx to Anaheim, from Atlanta to Seattle.</li>
+                        <li><strong>Fast and fun:</strong> Drop the pitch, spin the wheel, and get a result in seconds.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-baseball-wheel">What is the Baseball Team Wheel?</a></li>
+                    <li><a href="#who-should-use-baseball-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-baseball-wheel-works">How it works</a></li>
+                    <li><a href="#baseball-wheel-features">Features</a></li>
+                    <li><a href="#baseball-wheel-teams">All 30 MLB Teams</a></li>
+                    <li><a href="#baseball-wheel-tips">Tips</a></li>
+                    <li><a href="#baseball-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-baseball-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-baseball-wheel">
+                <h3>1. What is the Baseball Team Wheel?</h3>
+                <p>The Baseball Team Wheel is a random MLB team picker that helps you land on a franchise without overthinking it. Pick the American League, National League, AL East, or all 30 teams and let the wheel choose your next baseball obsession.</p>
+            </section>
+
+            <section id="who-should-use-baseball-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>New baseball fans who want a team to support. Fantasy players deciding which club to follow. Friends settling a rivalry bet. Anyone exploring MLB without hometown bias or who wants the league to choose for them.</p>
+            </section>
+
+            <section id="how-baseball-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Choose a preset list, then hit Spin the Baseball Wheel. The wheel rotates and stops on one team. The selected club becomes your pick for the game, the season, or the next matchup.</p>
+            </section>
+
+            <section id="baseball-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four fast presets:</strong> AL East, American League, National League, and All 30 Teams.</li>
+                    <li><strong>Mobile-ready interface:</strong> Spin the wheel on your phone or desktop.</li>
+                    <li><strong>Easy spin result:</strong> Immediate winner text once the wheel stops.</li>
+                    <li><strong>Customizable colors:</strong> Use the local brand config to change the wheel palette.</li>
+                </ul>
+            </section>
+
+            <section id="baseball-wheel-teams">
+                <h3>5. All 30 MLB Teams</h3>
+                <p><strong>American League — East:</strong> Baltimore Orioles, Boston Red Sox, New York Yankees, Tampa Bay Rays, Toronto Blue Jays.</p>
+                <p><strong>American League — Central:</strong> Chicago White Sox, Cleveland Guardians, Detroit Tigers, Kansas City Royals, Minnesota Twins.</p>
+                <p><strong>American League — West:</strong> Houston Astros, Los Angeles Angels, Oakland Athletics, Seattle Mariners, Texas Rangers.</p>
+                <p><strong>National League — East:</strong> Atlanta Braves, Miami Marlins, New York Mets, Philadelphia Phillies, Washington Nationals.</p>
+                <p><strong>National League — Central:</strong> Chicago Cubs, Cincinnati Reds, Milwaukee Brewers, Pittsburgh Pirates, St. Louis Cardinals.</p>
+                <p><strong>National League — West:</strong> Arizona Diamondbacks, Colorado Rockies, Los Angeles Dodgers, San Diego Padres, San Francisco Giants.</p>
+            </section>
+
+            <section id="baseball-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Start with AL East if you want a small, readable wheel. Use American League or National League when you want one side of the league. Use All 30 Teams for the full random MLB experience.</p>
+            </section>
+
+            <section id="baseball-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>Looking for food during the game? Try the <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. Need a snack before the ninth inning? Use the <a href="/apps/what-snack-should-i-have/">Snack Wheel</a>. Want a quick yes/no choice on who starts the lineup? Use the <a href="/apps/yes-or-no-wheel/">Yes or No Wheel</a>.</p>
+            </section>
+
+            <section id="why-baseball-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Baseball fandom can feel overwhelming with 30 teams, rivalries, and history. The Baseball Team Wheel removes the guesswork and gives you a neutral, fun way to pick a club. Once the wheel lands, it’s time to root for the result.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let items = ['Baltimore Orioles', 'Boston Red Sox', 'New York Yankees', 'Tampa Bay Rays', 'Toronto Blue Jays'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#0a2e6f',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#c8102e',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#fdb827',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#1a3d5d',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#3a5a94',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#b41f2a',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#2e6b2f',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#4e3b76',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 15px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 14, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / items.length;
+            const selectedIndex = Math.floor(Math.random() * items.length);
+            const selectedItem = items[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(items, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `⚾ Your team: <span style="color: var(--baseball-navy); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                items = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(items, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(items, 0);
+        });
+
+        drawWheel(items, 0);
+    </script>

@@ -1,0 +1,198 @@
+/* ==========================================================================
+   Baseball Team Wheel – App Styles
+   - Baseball-inspired navy/red theme with a clean, polished layout
+   ========================================================================== */
+
+:root {
+  --baseball-navy: #0a2e6f;
+  --baseball-red: #c8102e;
+  --baseball-gold: #fdb827;
+  --baseball-charcoal: #1f2933;
+  --baseball-white: #f8f9fa;
+
+  --wheel-segment-1: #0a2e6f;
+  --wheel-segment-2: #c8102e;
+  --wheel-segment-3: #fdb827;
+  --wheel-segment-4: #1f3a70;
+  --wheel-segment-5: #7d121a;
+  --wheel-segment-6: #2f4b8f;
+  --wheel-segment-7: #d95724;
+  --wheel-segment-8: #0f4e2a;
+  --wheel-result-text: var(--baseball-navy);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  flex-grow: 1;
+}
+
+.page-hero {
+  text-align: center;
+  max-width: 800px;
+  width: 92%;
+  padding: 30px;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.12));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--glass-shadow);
+}
+
+.page-hero h1 {
+  margin: 0.5rem 0;
+  font-size: clamp(1.6rem, 2rem, 2.2rem);
+  color: var(--brand-heading, var(--baseball-charcoal));
+  font-weight: 700;
+}
+
+.page-hero p {
+  margin: 0.75rem 0 0;
+  font-size: 1rem;
+  color: var(--brand-text, #10203f);
+  line-height: 1.6;
+}
+
+.hero-eyebrow {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--baseball-red);
+}
+
+#wheel-container {
+  position: relative;
+  margin: 30px 0;
+}
+
+#indicator {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 30px solid var(--baseball-gold);
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+#wheel {
+  max-width: 100%;
+  height: auto;
+}
+
+.preset-btns {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.preset-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--brand-border, var(--baseball-navy));
+  background: var(--brand-surface, rgba(255, 255, 255, 0.12));
+  color: var(--brand-heading, var(--baseball-navy));
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  font-family: var(--brand-font-family, system-ui, sans-serif);
+}
+
+.preset-btn:hover {
+  background: rgba(10, 46, 111, 0.12);
+  border-color: var(--baseball-navy);
+  color: var(--baseball-navy);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(10, 46, 111, 0.2);
+}
+
+.preset-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(10, 46, 111, 0.35);
+}
+
+#spinBtn {
+  padding: 12px 32px;
+  border: none;
+  border-radius: var(--radius-md, 40px);
+  background: linear-gradient(to bottom right, var(--baseball-navy), var(--baseball-charcoal));
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--brand-font-family, system-ui, sans-serif);
+  margin: 20px auto;
+  display: block;
+}
+
+#spinBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(10, 46, 111, 0.4);
+}
+
+#spinBtn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(10, 46, 111, 0.35);
+}
+
+#winner {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--brand-heading, var(--baseball-charcoal));
+}
+
+.seo-content-area {
+  max-width: 800px;
+  width: 92%;
+  margin: 30px 0;
+}
+
+.seo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 20px 0;
+}
+
+@media (max-width: 600px) {
+  .seo-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.seo-toc {
+  background: var(--glass-bg, rgba(255, 255, 255, 0.07));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.15));
+  border-radius: var(--radius-md, 12px);
+  padding: 20px 24px;
+  margin: 24px 0;
+}
+
+.seo-toc ol {
+  margin: 0.5rem 0 0;
+  padding-left: 1.4rem;
+}
+
+.seo-toc a {
+  color: var(--baseball-navy);
+  text-decoration: none;
+}

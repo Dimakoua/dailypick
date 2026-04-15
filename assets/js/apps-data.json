@@ -405,6 +405,15 @@
     "description": "Bruins or Canucks? Avalanche or Lightning? Spin the wheel to randomly pick an NHL team to cheer for — all 32 teams, Eastern, Western, or Cup Contenders."
   },
   {
+    "id": "baseball-team-wheel",
+    "name": "Baseball Team Wheel",
+    "path": "/apps/baseball-team-wheel/",
+    "category": "games",
+    "footerGroup": "Games",
+    "emoji": "⚾",
+    "description": "Can’t decide which MLB team to root for? Spin the wheel for a random baseball team from the American League, National League, AL East, or all 30 clubs."
+  },
+  {
     "id": "cook-or-order-in",
     "name": "Cook or Order In",
     "path": "/apps/cook-or-order-in/",
