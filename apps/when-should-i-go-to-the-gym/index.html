@@ -1,0 +1,211 @@
+---
+layout: base_app.njk
+title: "When Should I Go to the Gym Wheel – Random Gym Schedule Picker | Daily Pick"
+description: "Can't decide when to go to the gym? Spin the wheel for honest answers, realistic schedules, best workout times, and motivational nudges. No more excuses!"
+keywords: "when should I go to the gym, gym schedule wheel, gym picker, workout time randomizer, gym motivation wheel, when to work out, gym time picker, workout schedule"
+canonical: "https://dailypick.dev/apps/when-should-i-go-to-the-gym/"
+localBrandConfig: /apps/when-should-i-go-to-the-gym/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">No more excuses — the wheel decides</p>
+            <h1>💪 When Should I Go to the Gym?</h1>
+            <p>Still haven't gone? Spin the wheel and let fate, science, or brutal honesty determine your next workout. No backsies.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Right Now!,After This Episode,Tomorrow,Monday Fresh Start,Next Month,When Motivated,First of the Month,After This Snack">😅 The Real Talk</button>
+            <button class="preset-btn" data-items="Mon Wed Fri,Tue Thu Sat,Weekdays Only,Weekends,Every Other Day,Three Times a Week,Daily,Whenever I Feel Like It">📅 Realistic Schedule</button>
+            <button class="preset-btn" data-items="6am Before Work,Lunch Break,Right After Work,Early Evening,Late Night,Weekend Morning,Midday,When the Gym is Empty">🌅 Best Times to Go</button>
+            <button class="preset-btn" data-items="RIGHT NOW!,Stop Scrolling — Go!,No Excuses Today,Before Dinner,Champion Mode,Power Hour Time,This Is the Sign,Just This Once">🔥 Motivation Mode</button>
+        </div>
+
+        <button id="spinBtn">💪 SPIN THE WHEEL!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>When Should I Go to the Gym Wheel: Random Workout Schedule Picker</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>The When Should I Go to the Gym Wheel is the last piece of fitness equipment you actually need. It handles the hardest part of any workout — deciding when to go. Spin for brutally honest options, a realistic training schedule, the best time of day, or a little motivational push to get off the couch right now.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>Four honest presets:</strong> The Real Talk, Realistic Schedule, Best Times to Go, and Motivation Mode.</li>
+                        <li><strong>Relatable and actionable:</strong> From "Monday Fresh Start" to "RIGHT NOW!" — it covers the full spectrum of gym-goer psychology.</li>
+                        <li><strong>One spin, zero excuses:</strong> The wheel decided. You have to honour it.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-gym-wheel">What is the Gym Wheel?</a></li>
+                    <li><a href="#who-should-use-gym-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-gym-wheel-works">How it works</a></li>
+                    <li><a href="#gym-wheel-features">Features</a></li>
+                    <li><a href="#gym-wheel-categories">Wheel categories</a></li>
+                    <li><a href="#gym-wheel-tips">Tips</a></li>
+                    <li><a href="#gym-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-gym-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-gym-wheel">
+                <h3>1. What is the Gym Wheel?</h3>
+                <p>The When Should I Go to the Gym Wheel is a random workout schedule picker that removes the only thing standing between you and the gym: the decision. Procrastination, analysis paralysis, and the eternal "I'll start Monday" loop are no match for a spin wheel. It selects your gym time and you go. Simple.</p>
+            </section>
+
+            <section id="who-should-use-gym-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Anyone who has said "I'll go tomorrow" more than twice this week. People who have a gym membership and haven't used it since January. Anyone who spends more time researching the optimal workout schedule than actually working out. If the wheel tells you to go right now and you're reading this instead of going — that's the target audience.</p>
+            </section>
+
+            <section id="how-gym-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Choose one of the four presets, then hit Spin. The wheel lands on your gym time and announces it. The social contract is now sealed. You have to go. Spin again only if you genuinely can't honour the result — and then go on the second spin, no exceptions.</p>
+            </section>
+
+            <section id="gym-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four presets:</strong> The Real Talk, Realistic Schedule, Best Times to Go, and Motivation Mode.</li>
+                    <li><strong>Relatable options:</strong> Covers every stage of gym-goer psychology from seasoned athlete to confirmed couch occupant.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones — spin it in bed, on the sofa, or wherever the procrastination is happening.</li>
+                    <li><strong>Instant result:</strong> The answer is clear, the wheel has spoken, there is nothing left to decide.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel in your gym's brand colours.</li>
+                </ul>
+            </section>
+
+            <section id="gym-wheel-categories">
+                <h3>5. Wheel categories</h3>
+                <p><strong>The Real Talk</strong> is the honest preset — "Right Now!", "After This Episode", "Tomorrow", "Monday Fresh Start", "Next Month", "When Motivated", "First of the Month", and the fan-favourite "After This Snack". <strong>Realistic Schedule</strong> is for when you want to actually commit to something — Mon/Wed/Fri, Tue/Thu/Sat, weekdays only, weekends, every other day, three times a week, daily, or the wildcard "Whenever I Feel Like It". <strong>Best Times to Go</strong> covers when science and gym-goer wisdom say workouts actually happen — 6am before work, lunch break, right after work, early evening, late night for the empty-gym crowd, weekend morning, midday, or "When the Gym is Empty". <strong>Motivation Mode</strong> is for when you need a push — "RIGHT NOW!", "Stop Scrolling — Go!", "No Excuses Today", "Before Dinner", "Champion Mode", "Power Hour Time", "This Is the Sign", and "Just This Once" (which we both know becomes a habit).</p>
+            </section>
+
+            <section id="gym-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Use The Real Talk for maximum honesty, Realistic Schedule when you want to build an actual routine, Best Times to Go when you need to find your optimal training window, and Motivation Mode when you just need someone — or something — to tell you to get up and go. Add your own time slots for a personalised gym wheel. Honour every spin. That is the deal.</p>
+            </section>
+
+            <section id="gym-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>If the wheel sends you to the gym and you need motivation for what to eat after, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a> for a post-workout meal. Still can't decide on anything? The <a href="/apps/yes-or-no-wheel/">Yes or No Wheel</a> can settle whether you're actually going today. If you want to reward yourself after the gym, <a href="/apps/what-snack-should-i-have/">What Snack Should I Have</a> has your recovery snack sorted.</p>
+            </section>
+
+            <section id="why-gym-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>The hardest part of going to the gym is deciding to go. Once you're there, you'll work out. The decision — not the workout — is where people get stuck. A spin wheel sidesteps the whole mental negotiation by outsourcing the choice entirely. The wheel said go. You go. It works because it removes you from the equation at the exact moment you're most likely to talk yourself out of it. One spin, no excuses, let's go.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let items = ['Right Now!', 'After This Episode', 'Tomorrow', 'Monday Fresh Start', 'Next Month', 'When Motivated', 'First of the Month', 'After This Snack'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#1db954',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#1a1a2e',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#e8650a',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#157a3a',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#c0392b',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#0d5eaf',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#6b3d9a',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#7a5230',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 15px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / items.length;
+            const selectedIndex = Math.floor(Math.random() * items.length);
+            const selectedItem = items[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(items, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `💪 The wheel says: <span style="color: var(--gym-green); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                items = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(items, 0);
+            });
+        });
+
+        // Redraw idle wheel when brand colors change via Local Brand Studio
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(items, 0);
+        });
+
+        drawWheel(items, 0);
+    </script>
