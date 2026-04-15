@@ -106,8 +106,8 @@ async function walk(directory) {
       const beforeBytes = input.length;
       const image = sharp(input).rotate();
       const output = entry.name.endsWith(".png")
-        ? await image.png({ compressionLevel: 9, adaptiveFiltering: true, effort: 6 }).toBuffer()
-        : await image.jpeg({ quality: 82, mozjpeg: true, progressive: true }).toBuffer();
+        ? await image.png({ compressionLevel: 9, adaptiveFiltering: true, effort: 10, palette: true, colors: 256 }).toBuffer()
+        : await image.jpeg({ quality: 76, mozjpeg: true, progressive: true }).toBuffer();
 
       await fs.writeFile(entryPath, output);
       recordStat(stats, "image", beforeBytes, output.length);
@@ -119,7 +119,7 @@ async function walk(directory) {
       const beforeBytes = input.length;
       const output = await sharp(input)
         .rotate()
-        .webp({ quality: 80, effort: 6 })
+        .webp({ quality: 75, effort: 6 })
         .toBuffer();
 
       await fs.writeFile(entryPath, output);

@@ -1,0 +1,189 @@
+---
+layout: base_app.njk
+title: "What Yousef Should Eat – Iranian Food Wheel | Daily Pick"
+description: "Yousef can't decide what to eat? Spin the Persian food wheel for authentic Iranian dishes, kebabs, rice plates, and traditional snacks."
+keywords: "Iranian food wheel, Persian food picker, what should I eat Iranian, Persian cuisine spinner, Iranian snack picker"
+canonical: "https://dailypick.dev/apps/what-yousef-should-eat/"
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">گرسنه‌ای یوسف؟ — Hungry, Yousef?</p>
+            <h1>🫕 What Yousef Should Eat</h1>
+            <p>Torn between Ghormeh Sabzi and Chelo Kabab again? Spin the wheel and let Persian cuisine decide your fate!</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Ghormeh Sabzi,Fesenjan,Chelo Kabab,Ash Reshteh,Baghali Polo,Abgoosht,Dolmeh,Mirza Ghasemi">🥘 Persian Classics</button>
+            <button class="preset-btn" data-items="Koobideh,Joojeh Kabab,Barg,Shishlik,Chenjeh,Kabab Tikka,Soltani,Shami">🍢 Kabab Night</button>
+            <button class="preset-btn" data-items="Zereshk Polo,Baghali Polo,Adas Polo,Loobia Polo,Shirin Polo,Tahdig,Sabzi Polo,Reshteh Polo">🍚 Rice Dishes</button>
+            <button class="preset-btn" data-items="Lavashak,Ajil,Sohan,Nokhodchi,Bastani Sonnati,Faloodeh,Gaz,Reshteh Khoshkar">🍬 Iranian Snacks</button>
+        </div>
+
+        <button id="spinBtn">🫕 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>What Yousef Should Eat: Iranian Food Wheel for Persian Meal Decisions</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>What Yousef Should Eat is a Persian food wheel built around authentic Iranian dishes and traditional snacks. From slow-cooked khoresh stews to smoky kabab platters and saffron-laced rice, pick a category, spin the wheel, and enjoy a curated suggestion straight from the heart of Iranian cuisine.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>Iranian-first content:</strong> Every item is drawn from authentic Persian and Iranian culinary tradition.</li>
+                        <li><strong>Category presets:</strong> Persian Classics, Kabab Night, Rice Dishes, and Iranian Snacks.</li>
+                        <li><strong>Instant decision:</strong> No more standing in front of the fridge debating between tahdig and ash reshteh.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-yousef-food-wheel">What is the What Yousef Should Eat wheel?</a></li>
+                    <li><a href="#who-should-use-yousef-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-yousef-food-wheel-works">How it works</a></li>
+                    <li><a href="#yousef-food-wheel-features">Features</a></li>
+                    <li><a href="#yousef-food-wheel-categories">Iranian food categories</a></li>
+                    <li><a href="#yousef-food-wheel-tips">Tips</a></li>
+                    <li><a href="#yousef-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-yousef-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-yousef-food-wheel">
+                <h3>1. What is the What Yousef Should Eat wheel?</h3>
+                <p>What Yousef Should Eat is a personalised Iranian food spinner built for anyone who loves Persian cuisine and wants a quick, playful way to decide what to eat. It covers everything from hearty khoresh stews and saffron-perfumed rice dishes to street-side kababs and beloved Iranian sweets.</p>
+            </section>
+
+            <section id="who-should-use-yousef-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>This wheel is made for fans of Iranian food who find themselves lost between too many delicious options. Whether you are cooking at home, browsing a Persian restaurant menu, or planning a grocery run for the week, the wheel makes the choice for you — fast and fair.</p>
+            </section>
+
+            <section id="how-yousef-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Select one of the four Iranian food category presets, then hit the spin button. The wheel lands on a dish and displays it with a نوش جان! — Persian for "bon appétit". You can spin as many times as you like until you find something that feels right.</p>
+            </section>
+
+            <section id="yousef-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four Persian presets:</strong> Persian Classics, Kabab Night, Rice Dishes, and Iranian Snacks.</li>
+                    <li><strong>Authentic dish names:</strong> Items are real, well-known Iranian dishes used in everyday cooking.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>نوش جان result display:</strong> Winner is shown with Persian enthusiasm after every spin.</li>
+                </ul>
+            </section>
+
+            <section id="yousef-food-wheel-categories">
+                <h3>5. Iranian food categories</h3>
+                <p><strong>Persian Classics</strong> covers iconic khoresh stews and soups — Ghormeh Sabzi, Fesenjan, Ash Reshteh, and Abgoosht. <strong>Kabab Night</strong> includes Koobideh, Joojeh, Barg, and Shishlik. <strong>Rice Dishes</strong> features saffron-infused polo combinations like Zereshk Polo, Baghali Polo, and the beloved Tahdig. <strong>Iranian Snacks</strong> rounds out the experience with Lavashak, Ajil, Sohan, Gaz, and Bastani Sonnati.</p>
+            </section>
+
+            <section id="yousef-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Use Persian Classics for a full weeknight dinner, Kabab Night when hosting guests, and Iranian Snacks for an afternoon treat. Mix the custom wheel feature with your local Persian restaurant's menu items for the most practical daily use.</p>
+            </section>
+
+            <section id="yousef-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>If you want a broader meal category wheel, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a> for global cuisine options. For a drink to pair with your Persian meal, <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a> is a great companion.</p>
+            </section>
+
+            <section id="why-yousef-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Decision fatigue is real — especially with a cuisine as rich and varied as Iranian food. This wheel turns an overwhelming choice into a fast, fun ritual. One spin, one dish, نوش جان.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Ghormeh Sabzi', 'Fesenjan', 'Chelo Kabab', 'Ash Reshteh', 'Baghali Polo', 'Abgoosht', 'Dolmeh', 'Mirza Ghasemi'];
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = `hsl(${(i * 360) / items.length}, 68%, 55%)`;
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🫕 نوش جان یوسف! You should eat: <span style="color: var(--persian-saffron); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        drawWheel(foodItems, 0);
+    </script>

@@ -259,8 +259,15 @@ module.exports = [
     footerGroup: "Games",
     emoji: "🍕",
     description: "Can’t decide on dinner? Spin the wheel to pick between pizza, sushi, tacos, and more!"
-  },
-  {
+  },  {
+    id: "what-yousef-should-eat",
+    name: "What Yousef Should Eat",
+    path: "/apps/what-yousef-should-eat/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🫕",
+    description: "Spin the Persian food wheel for authentic Iranian dishes, kababs, rice plates, and traditional snacks. نوش جان!"
+  },  {
     id: "cook-or-order-in",
     name: "Cook or Order In",
     path: "/apps/cook-or-order-in/",
