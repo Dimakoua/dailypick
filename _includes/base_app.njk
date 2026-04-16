@@ -61,11 +61,11 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" />
 
     <link rel="stylesheet" href="/assets/css/theme.css" />
-    <link rel="stylesheet" href="/assets/css/glass.css" />
-    <link rel="stylesheet" href="/assets/css/seo-card.css" />
     <link rel="stylesheet" href="/assets/css/pwa-install.css" />
-    <link rel="stylesheet" href="/assets/css/standup-panel.css" />
-    <link rel="stylesheet" href="/assets/css/local-brand-studio.css" />
+    <link rel="stylesheet" href="/assets/css/glass.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="/assets/css/seo-card.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="/assets/css/standup-panel.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="/assets/css/local-brand-studio.css" media="print" onload="this.media='all'" />
     {% if appStyles %}{{ appStyles | safe }}{% endif %}
 
     <script defer src="/assets/js/brand-theme-engine.js"></script>
@@ -90,7 +90,7 @@
     }
     </script>
     {% if headExtra %}{{ headExtra | safe }}{% endif %}
-    <link rel="stylesheet" href="/assets/css/embed.css" />
+    <link rel="stylesheet" href="/assets/css/embed.css" media="print" onload="this.media='all'" />
     <!-- Detect PWA standalone early to avoid FOUC -->
     <script>
       (function () {

@@ -64,15 +64,15 @@
     <meta name="theme-color" content="#ffffff">
 
     {# Use Eleventy `url` filter so paths adjust if the site is deployed under a sub‑path or when opening files directly. #}
-    <link rel="stylesheet" href="{{ '/assets/css/theme.css' | url }}">
     {# `home.css` is needed on the homepage, blog index, and suite pages that use game cards #}
     <link rel="stylesheet" href="{{ '/css/style.css' | url }}">
-    <link rel="stylesheet" href="{{ '/assets/css/glass.css' | url }}">
-    <link rel="stylesheet" href="{{ '/assets/css/seo-card.css' | url }}">
-    <link rel="stylesheet" href="{{ '/assets/css/pwa-install.css' | url }}">
-        {% if page.url == '/' or (page.url and (page.url == '/blog/' or page.url.startsWith('/blog/page') or page.url == '/agile/' or page.url == '/randomizers/' or page.url == '/standups/' or page.url == '/games/')) %}
+    <link rel="stylesheet" href="{{ '/assets/css/theme.css' | url }}">
+    {% if page.url == '/' or (page.url and (page.url == '/blog/' or page.url.startsWith('/blog/page') or page.url == '/agile/' or page.url == '/randomizers/' or page.url == '/standups/' or page.url == '/games/')) %}
         <link rel="stylesheet" href="{{ '/assets/css/home.css' | url }}">
     {% endif %}
+    <link rel="stylesheet" href="{{ '/assets/css/pwa-install.css' | url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/glass.css' | url }}" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="{{ '/assets/css/seo-card.css' | url }}" media="print" onload="this.media='all'">
     <script src="/assets/js/brand-theme-engine.js" defer></script>
     <script src="/assets/js/brand-config.js" defer></script>
     <!-- Google tag (gtag.js) -->

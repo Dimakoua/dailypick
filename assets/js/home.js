@@ -164,36 +164,10 @@ function triggerPixelEffect(theme, origin) {
   }, 2200); // allow full duration + delay
 }
 
-/**
- * Adds a fade-out animation to all game cards before navigating.
- */
-function initPageTransitions() {
-  const gameCards = document.querySelectorAll('.game-card');
-  if (gameCards.length === 0) return;
-
-  gameCards.forEach(card => {
-    card.addEventListener('click', (event) => {
-      // Only run for primary clicks, allowing middle-click/ctrl-click to open in new tabs.
-      if (event.button !== 0 || event.ctrlKey || event.metaKey) {
-        return;
-      }
-      event.preventDefault();
-      const destination = card.href;
-
-      document.body.classList.add('is-navigating');
-
-      setTimeout(() => {
-        window.location.href = destination;
-      }, 600); // Matches the fade-out animation duration
-    });
-  });
-}
-
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
   applyBackdropClass();
   initRandomGameButton();
-  initPageTransitions();
 });
 
 /**
