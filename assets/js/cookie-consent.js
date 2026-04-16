@@ -88,7 +88,7 @@ function getStoredConsent() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function initCookieConsent() {
   const banner = document.querySelector("[data-cookie-consent]");
   if (!banner) {
     if (getStoredConsent() === "granted") {
@@ -128,4 +128,22 @@ document.addEventListener("DOMContentLoaded", () => {
       hideBanner(banner);
     });
   }
-});
+}
+
+function scheduleCookieConsentInit() {
+  const run = () => {
+    if (typeof window.requestIdleCallback === "function") {
+      window.requestIdleCallback(initCookieConsent, { timeout: 200 });
+    } else {
+      setTimeout(initCookieConsent, 300);
+    }
+  };
+
+  if (document.readyState === "complete") {
+    run();
+  } else {
+    window.addEventListener("load", run, { once: true });
+  }
+}
+
+scheduleCookieConsentInit();
