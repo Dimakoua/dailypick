@@ -77,16 +77,28 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": "{{ pageTitle }}",
-      "description": "{{ pageDescription }}",
-      "url": "{{ canonicalUrl }}",
-      "author": {
-        "@type": "Organization",
-        "name": "DailyPick",
-        "url": "{{ metadata.url }}"
-      },
-      "image": "{{ ogImageAbsolute }}"
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "name": "{{ pageTitle }}",
+          "description": "{{ pageDescription }}",
+          "url": "{{ canonicalUrl }}",
+          "author": {
+            "@id": "{{ metadata.url }}/#organization"
+          },
+          "primaryImageOfPage": {
+            "@type": "ImageObject",
+            "url": "{{ ogImageAbsolute }}"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "{{ metadata.url }}/#organization",
+          "name": "{{ metadata.authorName or metadata.siteTitle }}",
+          "url": "{{ metadata.url }}",
+          "logo": "{{ metadata.url }}/assets/favicon/android-chrome-512x512.png"
+        }
+      ]
     }
     </script>
     {% if headExtra %}{{ headExtra | safe }}{% endif %}

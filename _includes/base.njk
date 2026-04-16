@@ -53,6 +53,30 @@
     {% if twitterImageAbsolute and twitterImageAltText %}<meta name="twitter:image:alt" content="{{ twitterImageAltText }}">{% endif %}
 
     <link rel="canonical" href="{{ canonicalUrl }}">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "name": "{{ pageTitle }}",
+          "description": "{{ pageDescription }}",
+          "url": "{{ canonicalUrl }}",
+          "author": {
+            "@id": "{{ metadata.url }}/#organization"
+          },
+          "image": "{{ ogImageAbsolute }}"
+        },
+        {
+          "@type": "Organization",
+          "@id": "{{ metadata.url }}/#organization",
+          "name": "{{ metadata.authorName or metadata.siteTitle }}",
+          "url": "{{ metadata.url }}",
+          "logo": "{{ metadata.url }}/assets/favicon/android-chrome-512x512.png"
+        }
+      ]
+    }
+    </script>
     
     <!-- Favicon Links -->
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
