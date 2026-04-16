@@ -76,9 +76,14 @@ async function walk(directory) {
         removeComments: true,
         removeEmptyAttributes: true,
         removeRedundantAttributes: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        collapseBooleanAttributes: true,
         sortAttributes: true,
         sortClassName: true,
         useShortDoctype: true,
+        minifyURLs: true,
+        keepClosingSlash: false,
       });
 
       await fs.writeFile(entryPath, result);
@@ -101,13 +106,15 @@ async function walk(directory) {
       continue;
     }
 
-    if (entry.name.endsWith(".png") || entry.name.endsWith(".jpg") || entry.name.endsWith(".jpeg")) {
+    if (entry.name.endsWith(".png") || entry.name.endsWith(".jpg") || entry.name.endsWith(".jpeg") || entry.name.endsWith(".gif")) {
       const input = await fs.readFile(entryPath);
       const beforeBytes = input.length;
       const image = sharp(input).rotate();
       const output = entry.name.endsWith(".png")
         ? await image.png({ compressionLevel: 9, adaptiveFiltering: true, effort: 10, palette: true, colors: 256 }).toBuffer()
-        : await image.jpeg({ quality: 76, mozjpeg: true, progressive: true }).toBuffer();
+        : entry.name.endsWith(".gif")
+        ? await image.gif({ effort: 10 }).toBuffer()
+        : await image.jpeg({ quality: 75, mozjpeg: true, progressive: true }).toBuffer();
 
       await fs.writeFile(entryPath, output);
       recordStat(stats, "image", beforeBytes, output.length);
@@ -119,7 +126,7 @@ async function walk(directory) {
       const beforeBytes = input.length;
       const output = await sharp(input)
         .rotate()
-        .webp({ quality: 75, effort: 6 })
+        .webp({ quality: 70, effort: 6, alphaQuality: 80 })
         .toBuffer();
 
       await fs.writeFile(entryPath, output);
@@ -127,12 +134,32 @@ async function walk(directory) {
       continue;
     }
 
+    if (entry.name.endsWith(".svg")) {
+      const content = await fs.readFile(entryPath, "utf8");
+      const beforeBytes = Buffer.byteLength(content);
+      const optimized = content
+        .replace(/<!--([\s\S]*?)-->/g, "")
+        .replace(/>\s+</g, "><")
+        .replace(/\s{2,}/g, " ")
+        .replace(/\n+/g, "")
+        .trim();
+
+      await fs.writeFile(entryPath, optimized);
+      recordStat(stats, "image", beforeBytes, Buffer.byteLength(optimized));
+      continue;
+    }
+
     if (entry.name.endsWith(".js") && !entry.name.endsWith(".min.js")) {
       const content = await fs.readFile(entryPath, "utf8");
       const beforeBytes = Buffer.byteLength(content);
       const result = await minify(content, {
+        ecma: 2020,
         compress: {
-          passes: 2,
+          ecma: 2020,
+          passes: 3,
+          pure_getters: true,
+          keep_fargs: false,
+          unsafe_math: true,
         },
         format: {
           comments: false,
