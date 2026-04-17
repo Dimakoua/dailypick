@@ -19,6 +19,13 @@ headExtra: |
         <button class="gender-btn" data-gender="man">👨 Man</button>
     </div>
 
+    <div class="season-toggle" role="group" aria-label="Select season">
+        <button class="season-btn" data-season="spring">🌸 Spring</button>
+        <button class="season-btn" data-season="summer">☀️ Summer</button>
+        <button class="season-btn" data-season="fall">🍂 Fall</button>
+        <button class="season-btn" data-season="winter">❄️ Winter</button>
+    </div>
+
     <div class="preset-btns">
         <button class="preset-btn active" data-preset="casual">😎 Casual</button>
         <button class="preset-btn" data-preset="work">💼 Work</button>
@@ -297,7 +304,7 @@ headExtra: |
             ],
             accessory: [
                 { label: 'Gym Bag',             emoji: '🎒' },
-                { label: 'Headband',            emoji: '🎀' },
+                { label: 'Sweatband',           emoji: '🩱' },
                 { label: 'Wristbands',          emoji: '⌚' },
                 { label: 'Cap',                 emoji: '🧢' },
                 { label: 'Gym Gloves',          emoji: '🥊' },
@@ -615,11 +622,156 @@ headExtra: |
       },
     };
 
+    // ── Season filter ───────────────────────────────────────────────────────
+    // Keys: 'hide' = item labels to remove from the base pool for this season
+    //       'add'  = extra items injected per gender/preset/category
+    const SEASON_FILTER = {
+        summer: {
+            hide: new Set([
+                'Wool Coat','Wool Overcoat','Shearling Coat','Puffer Jacket','Puffer Coat','Down Puffer',
+                'Longline Coat','Trench Coat',
+                'Beanie','Knit Scarf','Wool Scarf','Cashmere Scarf','Knit Beanie',
+                'Leather Gloves','Velvet Gloves',
+                'Long-sleeve Base','Long-sleeve Base Layer','Thermal Base Layer','Thermal Henley',
+                'Wool Turtleneck','Merino Turtleneck',
+                'Compression Tights','Track Pants','Sweatpants','Fleece Joggers','Thermal Tights','Fleece-lined Tights',
+            ]),
+            add: {
+                man: {
+                    casual:      { bottom:    [{ label:'Linen Shorts',    emoji:'🩲' }],
+                                   shoes:     [{ label:'Flip-flops',      emoji:'🩴' }],
+                                   accessory: [{ label:'Sun Hat',         emoji:'🧢' }] },
+                    work:        { top:       [{ label:'Short-sleeve Linen Shirt', emoji:'👔' }] },
+                    'going-out': { accessory: [{ label:'Sunglasses',      emoji:'🕶️' }] },
+                },
+                woman: {
+                    casual:      { top:       [{ label:'Sundress',        emoji:'👗' }, { label:'Cami Top',       emoji:'🎽' }],
+                                   bottom:    [{ label:'Denim Shorts',    emoji:'🩲' }, { label:'Floral Skirt',  emoji:'👗' }],
+                                   shoes:     [{ label:'Flip-flops',      emoji:'🩴' }],
+                                   accessory: [{ label:'Straw Hat',       emoji:'👒' }] },
+                    work:        { top:       [{ label:'Sleeveless Blouse',emoji:'👔' }],
+                                   bottom:    [{ label:'Linen Trousers',  emoji:'👖' }] },
+                    'going-out': { top:       [{ label:'Strappy Dress',   emoji:'👗' }],
+                                   shoes:     [{ label:'Block Heels',     emoji:'👠' }] },
+                    'date-night':{ top:       [{ label:'Floral Sundress', emoji:'👗' }],
+                                   shoes:     [{ label:'Espadrilles',     emoji:'🥿' }] },
+                },
+            },
+        },
+        fall: {
+            hide: new Set([
+                'Sandals','Slides','Flip-flops',
+                'Chino Shorts','Bermuda Shorts','Linen Shorts','Denim Shorts',
+                'Gym Shorts','Sweat Shorts','Training Shorts','Bike Shorts','Tailored Shorts',
+                'Tank Top','Muscle Tee','Sleeveless Tee','Mesh Top','Sports Bra','Cami Top',
+                'Sundress','Floral Sundress','Strappy Dress',
+            ]),
+            add: {
+                man: {
+                    casual:      { outerwear: [{ label:'Puffer Vest',     emoji:'🧥' }],
+                                   accessory: [{ label:'Knit Beanie',     emoji:'🧢' }] },
+                    'going-out': { outerwear: [{ label:'Wool Blazer',     emoji:'🥼' }] },
+                },
+                woman: {
+                    casual:      { top:       [{ label:'Oversized Sweater',emoji:'🧥' }],
+                                   outerwear: [{ label:'Trench Coat',     emoji:'🧥' }],
+                                   accessory: [{ label:'Knit Scarf',      emoji:'🧣' }] },
+                    work:        { outerwear: [{ label:'Belted Trench',   emoji:'🧥' }] },
+                },
+            },
+        },
+        winter: {
+            hide: new Set([
+                'Sandals','Slides','Flip-flops',
+                'Chino Shorts','Bermuda Shorts','Linen Shorts','Denim Shorts',
+                'Gym Shorts','Sweat Shorts','Training Shorts','Bike Shorts','Tailored Shorts',
+                'Tank Top','Muscle Tee','Sleeveless Tee','Mesh Top','Sports Bra','Cami Top',
+                'Linen Shirt','Linen Button-Down','Linen Trousers',
+                'Sundress','Floral Sundress','Strappy Dress','Floral Skirt',
+                'Heeled Sandals','Strappy Heels','Strappy Flats','Espadrilles',
+            ]),
+            add: {
+                man: {
+                    casual:      { top:       [{ label:'Thermal Henley',  emoji:'👕' }, { label:'Chunky Knit Sweater', emoji:'🧥' }],
+                                   outerwear: [{ label:'Puffer Jacket',   emoji:'🧥' }, { label:'Shearling Coat',    emoji:'🧥' }],
+                                   accessory: [{ label:'Knit Scarf',      emoji:'🧣' }, { label:'Leather Gloves',   emoji:'🧤' }] },
+                    work:        { top:       [{ label:'Merino Turtleneck',emoji:'👕' }],
+                                   outerwear: [{ label:'Wool Overcoat',   emoji:'🧥' }, { label:'Down Puffer',      emoji:'🧥' }],
+                                   accessory: [{ label:'Wool Scarf',      emoji:'🧣' }] },
+                    gym:         { top:       [{ label:'Thermal Base Layer',emoji:'👕'}, { label:'Fleece Top',      emoji:'🧥' }],
+                                   bottom:    [{ label:'Thermal Tights',  emoji:'👖' }, { label:'Fleece Joggers',  emoji:'👖' }] },
+                    'going-out': { outerwear: [{ label:'Wool Coat',       emoji:'🧥' }],
+                                   accessory: [{ label:'Knit Scarf',      emoji:'🧣' }] },
+                    'date-night':{ top:       [{ label:'Cashmere Sweater',emoji:'🧥' }],
+                                   outerwear: [{ label:'Wool Overcoat',   emoji:'🧥' }],
+                                   accessory: [{ label:'Leather Gloves',  emoji:'🧤' }] },
+                },
+                woman: {
+                    casual:      { top:       [{ label:'Turtleneck',      emoji:'👕' }, { label:'Chunky Knit Sweater', emoji:'🧥' }],
+                                   bottom:    [{ label:'Thermal Leggings',emoji:'👖' }, { label:'Corduroy Pants',  emoji:'👖' }],
+                                   shoes:     [{ label:'Knee-high Boots', emoji:'👢' }],
+                                   outerwear: [{ label:'Puffer Coat',     emoji:'🧥' }, { label:'Wool Coat',       emoji:'🧥' }],
+                                   accessory: [{ label:'Knit Scarf',      emoji:'🧣' }, { label:'Leather Gloves', emoji:'🧤' }] },
+                    work:        { top:       [{ label:'Merino Turtleneck',emoji:'👕' }],
+                                   outerwear: [{ label:'Wool Overcoat',   emoji:'🧥' }, { label:'Puffer Coat',    emoji:'🧥' }],
+                                   accessory: [{ label:'Wool Scarf',      emoji:'🧣' }] },
+                    gym:         { top:       [{ label:'Thermal Top',     emoji:'👕' }, { label:'Fleece Pullover',emoji:'🧥' }],
+                                   bottom:    [{ label:'Thermal Leggings',emoji:'👖' }, { label:'Fleece-lined Tights',emoji:'👖' }],
+                                   outerwear: [{ label:'Running Coat',    emoji:'🧥' }] },
+                    'going-out': { top:       [{ label:'Velvet Bodysuit', emoji:'🎽' }],
+                                   bottom:    [{ label:'Velvet Trousers', emoji:'👖' }],
+                                   shoes:     [{ label:'Knee-high Boots', emoji:'👢' }],
+                                   outerwear: [{ label:'Faux Fur Coat',   emoji:'🧥' }],
+                                   accessory: [{ label:'Knit Scarf',      emoji:'🧣' }] },
+                    'date-night':{ shoes:     [{ label:'Knee-high Boots', emoji:'👢' }],
+                                   outerwear: [{ label:'Wool Coat',       emoji:'🧥' }, { label:'Faux Fur Stole', emoji:'🧥' }],
+                                   accessory: [{ label:'Cashmere Scarf',  emoji:'🧣' }, { label:'Velvet Gloves', emoji:'🧤' }] },
+                },
+            },
+        },
+        spring: {
+            hide: new Set([
+                'Wool Coat','Wool Overcoat','Shearling Coat','Puffer Jacket','Puffer Coat','Down Puffer',
+                'Thermal Henley','Merino Turtleneck','Wool Turtleneck','Thermal Base Layer',
+                'Thermal Tights','Fleece Joggers','Thermal Leggings','Fleece-lined Tights',
+                'Leather Gloves','Velvet Gloves',
+                'Flip-flops',
+            ]),
+            add: {
+                woman: {
+                    casual: { top:    [{ label:'Floral Blouse',  emoji:'🌸' }],
+                              bottom: [{ label:'Floral Skirt',   emoji:'👗' }] },
+                },
+            },
+        },
+    };
+
+    // Auto-detect season from current month
+    function detectSeason() {
+        const m = new Date().getMonth() + 1; // 1-12
+        if (m >= 3 && m <= 5)  return 'spring';
+        if (m >= 6 && m <= 8)  return 'summer';
+        if (m >= 9 && m <= 11) return 'fall';
+        return 'winter';
+    }
+
     let activePreset = 'casual';
     let activeGender = 'woman';
+    let activeSeason  = detectSeason();
 
     function currentPool() {
-        return OUTFIT_DATA[activeGender][activePreset];
+        const base   = OUTFIT_DATA[activeGender][activePreset];
+        const rules  = SEASON_FILTER[activeSeason] || {};
+        const hide   = rules.hide || new Set();
+        const extras = rules.add?.[activeGender]?.[activePreset] || {};
+        const result = {};
+        for (const cat of Object.keys(base)) {
+            const filtered = base[cat].filter(item => !hide.has(item.label));
+            result[cat]    = filtered.concat(extras[cat] || []);
+            // Safety net: if filter removed everything, fall back to full list
+            if (result[cat].length === 0) result[cat] = base[cat];
+        }
+        return result;
     }
 
     function pickRandom(arr) {
@@ -687,6 +839,18 @@ headExtra: |
         });
         document.getElementById('lockHint').style.display = 'block';
     }
+
+    // Season toggle — mark the active season button on load
+    document.querySelectorAll('.season-btn').forEach(btn => {
+        if (btn.dataset.season === activeSeason) btn.classList.add('active');
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.season-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeSeason = btn.dataset.season;
+            unlockAll();
+            randomizeOutfit();
+        });
+    });
 
     // Gender toggle
     document.querySelectorAll('.gender-btn').forEach(btn => {

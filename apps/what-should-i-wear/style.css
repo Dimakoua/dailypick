@@ -93,6 +93,45 @@ body {
     box-shadow: var(--brand-focus-ring);
 }
 
+/* Season Toggle */
+.season-toggle {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 10px 0 0;
+}
+
+.season-btn {
+    padding: 7px 18px;
+    border-radius: 20px;
+    border: 1px solid var(--brand-border);
+    background: var(--brand-surface);
+    color: var(--brand-heading);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-family: var(--brand-font-family);
+    transition: all 0.2s ease;
+}
+
+.season-btn:hover {
+    background: var(--brand-accent-muted);
+    border-color: var(--brand-accent);
+    color: var(--brand-accent-strong);
+}
+
+.season-btn.active {
+    background: var(--brand-accent);
+    border-color: var(--brand-accent-strong);
+    color: var(--brand-accent-contrast-text, #fff);
+}
+
+.season-btn:focus-visible {
+    outline: none;
+    box-shadow: var(--brand-focus-ring);
+}
+
 /* Preset Buttons */
 .preset-btns {
     display: flex;
