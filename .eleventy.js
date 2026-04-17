@@ -75,6 +75,12 @@ module.exports = async function(eleventyConfig) {
 
   eleventyConfig.addShortcode("year", () => `${new Date().getFullYear()}`);
 
+  // Filter apps by footerGroup and optionally limit count
+  eleventyConfig.addFilter("filterGroup", (apps, group, limit) => {
+    const filtered = (apps || []).filter(app => app.footerGroup === group);
+    return limit ? filtered.slice(0, limit) : filtered;
+  });
+
   // Collections: Create a 'post' collection from all markdown files in 'blog/posts'
   eleventyConfig.addCollection("post", function(collectionApi) {
     // The input directory is already set to "./blog", so "posts/*.md" is relative to that.

@@ -9,45 +9,46 @@
       </div>
       
       {% from "_includes/app-links.njk" import appLinks %}
+
       <div class="site-footer__group">
         <h2 class="footer-heading">Stand-up</h2>
         <ul class="site-footer__links">
-          {{ appLinks(apps, "Stand-up") }}
+          {{ appLinks(apps, "Stand-up", 0) }}
         </ul>
       </div>
 
       <div class="site-footer__group">
         <h2 class="footer-heading">Tools</h2>
         <ul class="site-footer__links">
-          {{ appLinks(apps, "Tools") }}
+          {{ appLinks(apps, "Tools", 0) }}
         </ul>
       </div>
 
       <div class="site-footer__group">
         <h2 class="footer-heading">Randomizers</h2>
         <ul class="site-footer__links">
-          {{ appLinks(apps, "Randomizers") }}
+          {{ appLinks(apps, "Randomizers", 7, "/randomizers/") }}
         </ul>
       </div>
 
       <div class="site-footer__group">
         <h2 class="footer-heading">Lottery</h2>
         <ul class="site-footer__links">
-          {{ appLinks(apps, "Lottery") }}
+          {{ appLinks(apps, "Lottery", 0, "/lottery/") }}
         </ul>
       </div>
 
       <div class="site-footer__group">
         <h2 class="footer-heading">Games</h2>
         <ul class="site-footer__links">
-          {{ appLinks(apps, "Games") }}
+          {{ appLinks(apps, "Games", 7, "/games/") }}
         </ul>
       </div>
 
       <div class="site-footer__group">
         <h2 class="footer-heading">Resources</h2>
         <ul class="site-footer__links">
-          {{ appLinks(apps, "Resources") }}
+          {{ appLinks(apps, "Resources", 0) }}
         </ul>
       </div>
     </div>

@@ -1,7 +1,8 @@
-{% macro appLinks(apps, footerGroup) %}
-  {% for app in apps %}
-    {% if app.footerGroup == footerGroup %}
-      <li><a href="{{ app.path }}">{{ app.name }}</a></li>
-    {% endif %}
+{% macro appLinks(apps, footerGroup, limit, hubPath) %}
+  {% for app in (apps | filterGroup(footerGroup, limit)) %}
+    <li><a href="{{ app.path }}">{{ app.name }}</a></li>
   {% endfor %}
+  {% if hubPath %}
+    <li class="footer-view-all"><a href="{{ hubPath }}">View all →</a></li>
+  {% endif %}
 {% endmacro %}
