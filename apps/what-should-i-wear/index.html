@@ -1,0 +1,741 @@
+---
+layout: base_app.njk
+title: "What Should I Wear? – Random Outfit Generator | Daily Pick"
+description: "Can't decide on an outfit? Pick a vibe, randomize each clothing piece, lock what you love, and re-roll the rest. Your daily look in seconds."
+keywords: "what should i wear, random outfit generator, outfit picker, clothing randomizer, daily outfit idea, fashion decision maker"
+canonical: "https://dailypick.dev/apps/what-should-i-wear/"
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container" id="main">
+    <header class="page-hero glass-card">
+        <p class="hero-eyebrow">Style Undecided?</p>
+        <h1>👗 What Should I Wear?</h1>
+        <p>Pick a vibe, hit randomize, then lock the pieces you love and re-roll the rest until your outfit is perfect.</p>
+    </header>
+
+    <div class="gender-toggle" role="group" aria-label="Select gender">
+        <button class="gender-btn active" data-gender="woman">👩 Woman</button>
+        <button class="gender-btn" data-gender="man">👨 Man</button>
+    </div>
+
+    <div class="preset-btns">
+        <button class="preset-btn active" data-preset="casual">😎 Casual</button>
+        <button class="preset-btn" data-preset="work">💼 Work</button>
+        <button class="preset-btn" data-preset="gym">🏋️ Gym</button>
+        <button class="preset-btn" data-preset="going-out">🎉 Going Out</button>
+        <button class="preset-btn" data-preset="date-night">🌹 Date Night</button>
+    </div>
+
+    <div class="outfit-grid" id="outfitGrid">
+        <div class="outfit-card" data-category="top" data-locked="false">
+            <div class="card-header">
+                <span class="card-emoji">👕</span>
+                <span class="card-label">Top</span>
+                <button class="lock-btn" aria-label="Lock Top" title="Lock this piece">🔓</button>
+            </div>
+            <div class="slot-viewport">
+                <div class="slot-static"><span class="slot-emoji">🎰</span><span class="slot-label">Spin to reveal</span></div>
+            </div>
+            <button class="reroll-btn" aria-label="Re-roll Top">🎲 Re-roll</button>
+        </div>
+        <div class="outfit-card" data-category="bottom" data-locked="false">
+            <div class="card-header">
+                <span class="card-emoji">👖</span>
+                <span class="card-label">Bottom</span>
+                <button class="lock-btn" aria-label="Lock Bottom" title="Lock this piece">🔓</button>
+            </div>
+            <div class="slot-viewport">
+                <div class="slot-static"><span class="slot-emoji">🎰</span><span class="slot-label">Spin to reveal</span></div>
+            </div>
+            <button class="reroll-btn" aria-label="Re-roll Bottom">🎲 Re-roll</button>
+        </div>
+        <div class="outfit-card" data-category="shoes" data-locked="false">
+            <div class="card-header">
+                <span class="card-emoji">👟</span>
+                <span class="card-label">Shoes</span>
+                <button class="lock-btn" aria-label="Lock Shoes" title="Lock this piece">🔓</button>
+            </div>
+            <div class="slot-viewport">
+                <div class="slot-static"><span class="slot-emoji">🎰</span><span class="slot-label">Spin to reveal</span></div>
+            </div>
+            <button class="reroll-btn" aria-label="Re-roll Shoes">🎲 Re-roll</button>
+        </div>
+        <div class="outfit-card" data-category="outerwear" data-locked="false">
+            <div class="card-header">
+                <span class="card-emoji">🧥</span>
+                <span class="card-label">Outerwear</span>
+                <button class="lock-btn" aria-label="Lock Outerwear" title="Lock this piece">🔓</button>
+            </div>
+            <div class="slot-viewport">
+                <div class="slot-static"><span class="slot-emoji">🎰</span><span class="slot-label">Spin to reveal</span></div>
+            </div>
+            <button class="reroll-btn" aria-label="Re-roll Outerwear">🎲 Re-roll</button>
+        </div>
+        <div class="outfit-card" data-category="accessory" data-locked="false">
+            <div class="card-header">
+                <span class="card-emoji">💍</span>
+                <span class="card-label">Accessory</span>
+                <button class="lock-btn" aria-label="Lock Accessory" title="Lock this piece">🔓</button>
+            </div>
+            <div class="slot-viewport">
+                <div class="slot-static"><span class="slot-emoji">🎰</span><span class="slot-label">Spin to reveal</span></div>
+            </div>
+            <button class="reroll-btn" aria-label="Re-roll Accessory">🎲 Re-roll</button>
+        </div>
+    </div>
+
+    <button id="randomizeBtn">✨ Randomize Outfit</button>
+    <p class="lock-hint" id="lockHint">Tip: lock a piece you love, then re-roll the rest 🔒</p>
+
+    <section class="seo-content-area">
+        <h2>What Should I Wear? Random Outfit Generator for Effortless Daily Style</h2>
+        <div class="seo-grid">
+            <div>
+                <p>What Should I Wear? is a random outfit generator that picks clothing pieces by category — top, bottom, shoes, outerwear, and accessory — using occasion-based presets. Lock the pieces you like and re-roll the ones you don't until your look is complete.</p>
+            </div>
+            <div>
+                <h3>Why this outfit picker helps</h3>
+                <ul>
+                    <li><strong>Category-by-category picks:</strong> Each clothing piece is randomized independently so you can mix and match.</li>
+                    <li><strong>Lock and re-roll:</strong> Keep what works, swap what doesn't — no need to start over.</li>
+                    <li><strong>Occasion presets:</strong> Switch between Casual, Work, Gym, Going Out, and Date Night pools instantly.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="seo-toc">
+            <h3>Table of Contents</h3>
+            <ol>
+                <li><a href="#what-is-what-should-i-wear">What is What Should I Wear?</a></li>
+                <li><a href="#who-should-use-what-should-i-wear">Who should use What Should I Wear?</a></li>
+                <li><a href="#how-what-should-i-wear-works">How What Should I Wear? works</a></li>
+                <li><a href="#what-should-i-wear-features">What Should I Wear? features</a></li>
+                <li><a href="#what-should-i-wear-use-cases">What Should I Wear? use cases</a></li>
+                <li><a href="#what-should-i-wear-tips">What Should I Wear? tips</a></li>
+                <li><a href="#what-should-i-wear-alternatives">Alternatives to What Should I Wear?</a></li>
+                <li><a href="#why-what-should-i-wear-works">Why What Should I Wear? works</a></li>
+            </ol>
+        </div>
+
+        <section id="what-is-what-should-i-wear">
+            <h3>1. What is What Should I Wear?</h3>
+            <p>What Should I Wear? is a random outfit generator that removes the daily decision of getting dressed. Choose an occasion preset, randomize all five clothing categories at once, then lock individual pieces and re-roll the rest until your outfit feels right.</p>
+        </section>
+
+        <section id="who-should-use-what-should-i-wear">
+            <h3>2. Who should use What Should I Wear?</h3>
+            <p>Use this tool when you're standing in front of your wardrobe with no inspiration. It's great for mornings when you're short on time, when you want to try new combinations, or when you just want a playful way to get dressed.</p>
+        </section>
+
+        <section id="how-what-should-i-wear-works">
+            <h3>3. How What Should I Wear? works</h3>
+            <p>Select an occasion preset to load the relevant clothing pool, then click Randomize Outfit. Each of the five cards flips to reveal a suggestion. Lock any card you want to keep, then re-roll the remaining pieces using the individual buttons or the main randomize button.</p>
+        </section>
+
+        <section id="what-should-i-wear-features">
+            <h3>4. What Should I Wear? features</h3>
+            <ul>
+                <li><strong>Five clothing categories:</strong> Top, Bottom, Shoes, Outerwear, and Accessory are each picked independently.</li>
+                <li><strong>Lock and re-roll:</strong> Lock any piece to protect it while re-rolling the others.</li>
+                <li><strong>Occasion presets:</strong> Casual, Work, Gym, Going Out, and Date Night each load a different clothing pool.</li>
+                <li><strong>Mobile-friendly grid:</strong> Cards stack cleanly on phones, tablets, and desktops.</li>
+            </ul>
+        </section>
+
+        <section id="what-should-i-wear-use-cases">
+            <h3>5. What Should I Wear? use cases</h3>
+            <p>This outfit generator is ideal for breaking morning decision fatigue, building new combinations from clothes you already own, packing for trips, or simply making getting dressed more fun.</p>
+        </section>
+
+        <section id="what-should-i-wear-tips">
+            <h3>6. What Should I Wear? tips</h3>
+            <p>Start with a preset that matches your day, randomize the full outfit first, then lock the one piece you're most drawn to and re-roll until the rest clicks into place. Try switching presets mid-session for unexpected combinations.</p>
+        </section>
+
+        <section id="what-should-i-wear-alternatives">
+            <h3>7. Alternatives to What Should I Wear?</h3>
+            <p>If you want a simpler binary choice, try the <a href="/apps/yes-or-no-wheel/">Yes or No Wheel</a> to decide between two outfits. For a broader daily decision, the <a href="/apps/what-should-i-eat/">What Should I Eat</a> wheel can help you plan your full day.</p>
+        </section>
+
+        <section id="why-what-should-i-wear-works">
+            <h3>8. Why What Should I Wear? works</h3>
+            <p>It works because it externalizes the decision. Instead of scanning your wardrobe and second-guessing every option, you get a concrete starting point to react to. Locking and re-rolling lets you close in on the right look quickly.</p>
+        </section>
+    </section>
+</main>
+
+<script>
+    const OUTFIT_DATA = {
+      man: {
+        casual: {
+            top:       [
+                { label: 'Graphic Tee',      emoji: '👕' },
+                { label: 'Linen Shirt',      emoji: '👔' },
+                { label: 'Polo Shirt',       emoji: '👔' },
+                { label: 'Henley Shirt',     emoji: '👕' },
+                { label: 'Striped Tee',      emoji: '👕' },
+                { label: 'Oversized Tee',    emoji: '👕' },
+                { label: 'Flannel Shirt',    emoji: '👔' },
+            ],
+            bottom:    [
+                { label: 'Slim Jeans',       emoji: '👖' },
+                { label: 'Cargo Pants',      emoji: '👖' },
+                { label: 'Chino Shorts',     emoji: '🩲' },
+                { label: 'Joggers',          emoji: '👖' },
+                { label: 'Wide-leg Jeans',   emoji: '👖' },
+                { label: 'Sweatpants',       emoji: '👖' },
+                { label: 'Bermuda Shorts',   emoji: '🩲' },
+            ],
+            shoes:     [
+                { label: 'Sneakers',         emoji: '👟' },
+                { label: 'Canvas Shoes',     emoji: '👟' },
+                { label: 'Sandals',          emoji: '🩴' },
+                { label: 'Slip-ons',         emoji: '🥿' },
+                { label: 'Chelsea Boots',    emoji: '👢' },
+                { label: 'Chunky Sneakers',  emoji: '👟' },
+                { label: 'Slides',           emoji: '🩴' },
+            ],
+            outerwear: [
+                { label: 'Denim Jacket',     emoji: '🧥' },
+                { label: 'Zip Hoodie',       emoji: '🧥' },
+                { label: 'Windbreaker',      emoji: '🧥' },
+                { label: 'Bomber Jacket',    emoji: '🧥' },
+                { label: 'Varsity Jacket',   emoji: '🧥' },
+                { label: 'Overshirt',        emoji: '👔' },
+            ],
+            accessory: [
+                { label: 'Baseball Cap',     emoji: '🧢' },
+                { label: 'Crossbody Bag',    emoji: '🎒' },
+                { label: 'Beanie',           emoji: '🧢' },
+                { label: 'Sunglasses',       emoji: '🕶️' },
+                { label: 'Canvas Tote',      emoji: '🎒' },
+                { label: 'Backpack',         emoji: '🎒' },
+                { label: 'Watch',            emoji: '⌚' },
+            ],
+        },
+        work: {
+            top:       [
+                { label: 'White Dress Shirt',   emoji: '👔' },
+                { label: 'Black Turtleneck',    emoji: '👕' },
+                { label: 'Navy Dress Shirt',    emoji: '👔' },
+                { label: 'Striped Button-Up',   emoji: '👔' },
+                { label: 'Crew-neck Sweater',   emoji: '🧥' },
+                { label: 'Oxford Shirt',        emoji: '👔' },
+                { label: 'Knit Polo',           emoji: '👔' },
+            ],
+            bottom:    [
+                { label: 'Black Trousers',      emoji: '👖' },
+                { label: 'Charcoal Chinos',     emoji: '👖' },
+                { label: 'Slim Dress Pants',    emoji: '👖' },
+                { label: 'Straight-leg Jeans',  emoji: '👖' },
+                { label: 'Pleated Trousers',    emoji: '👖' },
+                { label: 'Navy Chinos',         emoji: '👖' },
+                { label: 'Dress Pants',         emoji: '👖' },
+            ],
+            shoes:     [
+                { label: 'Oxford Shoes',        emoji: '👞' },
+                { label: 'Derby Shoes',         emoji: '👞' },
+                { label: 'Loafers',             emoji: '🥿' },
+                { label: 'Brogues',             emoji: '👞' },
+                { label: 'Chukka Boots',        emoji: '👢' },
+                { label: 'Chelsea Boots',       emoji: '👢' },
+                { label: 'Monk Straps',         emoji: '👞' },
+            ],
+            outerwear: [
+                { label: 'Trench Coat',         emoji: '🧥' },
+                { label: 'Blazer',              emoji: '🥼' },
+                { label: 'Wool Coat',           emoji: '🧥' },
+                { label: 'Suit Jacket',         emoji: '🥼' },
+                { label: 'Smart Bomber',        emoji: '🧥' },
+                { label: 'Structured Cardigan', emoji: '🧥' },
+            ],
+            accessory: [
+                { label: 'Leather Watch',       emoji: '⌚' },
+                { label: 'Tie',                 emoji: '👔' },
+                { label: 'Leather Belt',        emoji: '🪢' },
+                { label: 'Briefcase',           emoji: '💼' },
+                { label: 'Pocket Square',       emoji: '🟦' },
+                { label: 'Leather Wallet',      emoji: '👛' },
+                { label: 'Cufflinks',           emoji: '💎' },
+            ],
+        },
+        gym: {
+            top:       [
+                { label: 'Compression Tee',     emoji: '👕' },
+                { label: 'Tank Top',            emoji: '🎽' },
+                { label: 'Long-sleeve Base',    emoji: '👕' },
+                { label: 'Dry-fit Tee',         emoji: '👕' },
+                { label: 'Muscle Tee',          emoji: '🎽' },
+                { label: 'Sleeveless Tee',      emoji: '🎽' },
+                { label: 'Rashguard',           emoji: '👕' },
+            ],
+            bottom:    [
+                { label: 'Gym Shorts',          emoji: '🩲' },
+                { label: 'Compression Tights',  emoji: '👖' },
+                { label: 'Joggers',             emoji: '👖' },
+                { label: 'Track Pants',         emoji: '👖' },
+                { label: 'Sweat Shorts',        emoji: '🩲' },
+                { label: 'Training Shorts',     emoji: '🩲' },
+                { label: 'Sweatpants',          emoji: '👖' },
+            ],
+            shoes:     [
+                { label: 'Running Shoes',       emoji: '👟' },
+                { label: 'Cross-trainers',      emoji: '👟' },
+                { label: 'Lifting Shoes',       emoji: '👟' },
+                { label: 'Court Shoes',         emoji: '👟' },
+                { label: 'Trail Runners',       emoji: '👟' },
+                { label: 'High-top Sneakers',   emoji: '👟' },
+            ],
+            outerwear: [
+                { label: 'Track Jacket',        emoji: '🧥' },
+                { label: 'Zip-up Hoodie',       emoji: '🧥' },
+                { label: 'Windbreaker',         emoji: '🧥' },
+                { label: 'Fleece Vest',         emoji: '🧥' },
+                { label: 'Running Jacket',      emoji: '🧥' },
+                { label: 'Pullover Hoodie',     emoji: '🧥' },
+            ],
+            accessory: [
+                { label: 'Gym Bag',             emoji: '🎒' },
+                { label: 'Headband',            emoji: '🎀' },
+                { label: 'Wristbands',          emoji: '⌚' },
+                { label: 'Cap',                 emoji: '🧢' },
+                { label: 'Gym Gloves',          emoji: '🥊' },
+                { label: 'Drawstring Bag',      emoji: '🎒' },
+            ],
+        },
+        'going-out': {
+            top:       [
+                { label: 'Fitted Blouse',       emoji: '👕' },
+                { label: 'Satin Shirt',         emoji: '👔' },
+                { label: 'Linen Shirt',         emoji: '👔' },
+                { label: 'Henley Top',          emoji: '👕' },
+                { label: 'Textured Polo',       emoji: '👔' },
+                { label: 'Embroidered Shirt',   emoji: '👔' },
+                { label: 'Knit Top',            emoji: '👕' },
+            ],
+            bottom:    [
+                { label: 'Dark Slim Jeans',     emoji: '👖' },
+                { label: 'Tailored Trousers',   emoji: '👖' },
+                { label: 'Chinos',              emoji: '👖' },
+                { label: 'Wide-leg Pants',      emoji: '👖' },
+                { label: 'Black Jeans',         emoji: '👖' },
+                { label: 'Smart Joggers',       emoji: '👖' },
+            ],
+            shoes:     [
+                { label: 'White Sneakers',      emoji: '👟' },
+                { label: 'Loafers',             emoji: '🥿' },
+                { label: 'Chelsea Boots',       emoji: '👢' },
+                { label: 'Derby Shoes',         emoji: '👞' },
+                { label: 'Platform Sneakers',   emoji: '👟' },
+                { label: 'Suede Boots',         emoji: '👢' },
+            ],
+            outerwear: [
+                { label: 'Leather Jacket',      emoji: '🧥' },
+                { label: 'Longline Coat',       emoji: '🧥' },
+                { label: 'Blazer',              emoji: '🥼' },
+                { label: 'Satin Bomber',        emoji: '🧥' },
+                { label: 'Denim Jacket',        emoji: '🧥' },
+                { label: 'Overshirt',           emoji: '👔' },
+            ],
+            accessory: [
+                { label: 'Silver Chain',        emoji: '📿' },
+                { label: 'Watch',               emoji: '⌚' },
+                { label: 'Cap',                 emoji: '🧢' },
+                { label: 'Crossbody Bag',       emoji: '🎒' },
+                { label: 'Sunglasses',          emoji: '🕶️' },
+                { label: 'Braided Belt',        emoji: '🪢' },
+            ],
+        },
+        'date-night': {
+            top:       [
+                { label: 'Fitted Shirt',        emoji: '👔' },
+                { label: 'Linen Button-Down',   emoji: '👔' },
+                { label: 'Ribbed Turtleneck',   emoji: '👕' },
+                { label: 'Satin Shirt',         emoji: '👔' },
+                { label: 'Fine Knit Sweater',   emoji: '🧥' },
+                { label: 'Open-collar Shirt',   emoji: '👔' },
+            ],
+            bottom:    [
+                { label: 'Tailored Trousers',   emoji: '👖' },
+                { label: 'Dark Slim Jeans',     emoji: '👖' },
+                { label: 'Black Chinos',        emoji: '👖' },
+                { label: 'Straight Jeans',      emoji: '👖' },
+                { label: 'Linen Trousers',      emoji: '👖' },
+                { label: 'Pleated Trousers',    emoji: '👖' },
+            ],
+            shoes:     [
+                { label: 'Chelsea Boots',       emoji: '👢' },
+                { label: 'Loafers',             emoji: '🥿' },
+                { label: 'Derby Shoes',         emoji: '👞' },
+                { label: 'Clean White Sneakers',emoji: '👟' },
+                { label: 'Suede Oxfords',       emoji: '👞' },
+                { label: 'Monk Straps',         emoji: '👞' },
+            ],
+            outerwear: [
+                { label: 'Longline Coat',       emoji: '🧥' },
+                { label: 'Blazer',              emoji: '🥼' },
+                { label: 'Leather Jacket',      emoji: '🧥' },
+                { label: 'Knit Cardigan',       emoji: '🧥' },
+                { label: 'Lightweight Coat',    emoji: '🧥' },
+                { label: 'Smart Bomber',        emoji: '🧥' },
+            ],
+            accessory: [
+                { label: 'Minimalist Watch',    emoji: '⌚' },
+                { label: 'Silver Chain',        emoji: '📿' },
+                { label: 'Leather Wallet',      emoji: '👛' },
+                { label: 'Subtle Cologne',      emoji: '🌹' },
+                { label: 'Leather Belt',        emoji: '🪢' },
+                { label: 'Cufflinks',           emoji: '💎' },
+            ],
+        },
+      },
+      woman: {
+        casual: {
+            top:       [
+                { label: 'Graphic Tee',      emoji: '👕' },
+                { label: 'Linen Shirt',      emoji: '👔' },
+                { label: 'Oversized Hoodie', emoji: '🧥' },
+                { label: 'Polo Shirt',       emoji: '👔' },
+                { label: 'Tank Top',         emoji: '🎽' },
+                { label: 'Striped Tee',      emoji: '👕' },
+                { label: 'Henley Shirt',     emoji: '👕' },
+            ],
+            bottom:    [
+                { label: 'Slim Jeans',       emoji: '👖' },
+                { label: 'Cargo Pants',      emoji: '👖' },
+                { label: 'Chino Shorts',     emoji: '🩲' },
+                { label: 'Joggers',          emoji: '👖' },
+                { label: 'Mini Skirt',       emoji: '👗' },
+                { label: 'Wide-leg Jeans',   emoji: '👖' },
+                { label: 'Sweatpants',       emoji: '👖' },
+            ],
+            shoes:     [
+                { label: 'Sneakers',         emoji: '👟' },
+                { label: 'Canvas Shoes',     emoji: '👟' },
+                { label: 'Sandals',          emoji: '🩴' },
+                { label: 'Slip-ons',         emoji: '🥿' },
+                { label: 'Chelsea Boots',    emoji: '👢' },
+                { label: 'Chunky Sneakers',  emoji: '👟' },
+                { label: 'Slides',           emoji: '🩴' },
+            ],
+            outerwear: [
+                { label: 'Denim Jacket',     emoji: '🧥' },
+                { label: 'Zip Hoodie',       emoji: '🧥' },
+                { label: 'Windbreaker',      emoji: '🧥' },
+                { label: 'Flannel Shirt',    emoji: '👔' },
+                { label: 'Bomber Jacket',    emoji: '🧥' },
+                { label: 'Varsity Jacket',   emoji: '🧥' },
+            ],
+            accessory: [
+                { label: 'Baseball Cap',     emoji: '🧢' },
+                { label: 'Crossbody Bag',    emoji: '👜' },
+                { label: 'Beanie',           emoji: '🧢' },
+                { label: 'Sunglasses',       emoji: '🕶️' },
+                { label: 'Canvas Tote',      emoji: '🎒' },
+                { label: 'Backpack',         emoji: '🎒' },
+                { label: 'Scrunchie',        emoji: '🌸' },
+            ],
+        },
+        work: {
+            top:       [
+                { label: 'White Dress Shirt',   emoji: '👔' },
+                { label: 'Black Turtleneck',    emoji: '👕' },
+                { label: 'Navy Blouse',         emoji: '👔' },
+                { label: 'Striped Button-Up',   emoji: '👔' },
+                { label: 'Crew-neck Sweater',   emoji: '🧥' },
+                { label: 'Silk Blouse',         emoji: '👔' },
+                { label: 'Knit Top',            emoji: '👕' },
+            ],
+            bottom:    [
+                { label: 'Black Trousers',      emoji: '👖' },
+                { label: 'Charcoal Chinos',     emoji: '👖' },
+                { label: 'Pencil Skirt',        emoji: '👗' },
+                { label: 'Straight-leg Jeans',  emoji: '👖' },
+                { label: 'Tailored Shorts',     emoji: '🩲' },
+                { label: 'Midi Skirt',          emoji: '👗' },
+                { label: 'Dress Pants',         emoji: '👖' },
+            ],
+            shoes:     [
+                { label: 'Oxford Shoes',        emoji: '👞' },
+                { label: 'Block Heels',         emoji: '👠' },
+                { label: 'Loafers',             emoji: '🥿' },
+                { label: 'Derby Shoes',         emoji: '👞' },
+                { label: 'Ballet Flats',        emoji: '🥿' },
+                { label: 'Pointed-toe Flats',   emoji: '🥿' },
+                { label: 'Low Heels',           emoji: '👠' },
+            ],
+            outerwear: [
+                { label: 'Trench Coat',         emoji: '🧥' },
+                { label: 'Blazer',              emoji: '🥼' },
+                { label: 'Wool Coat',           emoji: '🧥' },
+                { label: 'Structured Cardigan', emoji: '🧥' },
+                { label: 'Smart Bomber',        emoji: '🧥' },
+                { label: 'Longline Jacket',     emoji: '🧥' },
+            ],
+            accessory: [
+                { label: 'Leather Watch',       emoji: '⌚' },
+                { label: 'Simple Necklace',     emoji: '📿' },
+                { label: 'Tote Bag',            emoji: '👜' },
+                { label: 'Silk Scarf',          emoji: '🧣' },
+                { label: 'Belt',                emoji: '🪢' },
+                { label: 'Structured Handbag',  emoji: '👜' },
+                { label: 'Stud Earrings',       emoji: '💎' },
+            ],
+        },
+        gym: {
+            top:       [
+                { label: 'Sports Bra',          emoji: '🎽' },
+                { label: 'Compression Tee',     emoji: '👕' },
+                { label: 'Tank Top',            emoji: '🎽' },
+                { label: 'Long-sleeve Base',    emoji: '👕' },
+                { label: 'Crop Top',            emoji: '🎽' },
+                { label: 'Mesh Top',            emoji: '🎽' },
+                { label: 'Sleeveless Tee',      emoji: '🎽' },
+            ],
+            bottom:    [
+                { label: 'Leggings',            emoji: '👖' },
+                { label: 'Gym Shorts',          emoji: '🩲' },
+                { label: 'Compression Tights',  emoji: '👖' },
+                { label: 'Joggers',             emoji: '👖' },
+                { label: 'Track Pants',         emoji: '👖' },
+                { label: 'Bike Shorts',         emoji: '🩲' },
+                { label: 'Sweatpants',          emoji: '👖' },
+            ],
+            shoes:     [
+                { label: 'Running Shoes',       emoji: '👟' },
+                { label: 'Cross-trainers',      emoji: '👟' },
+                { label: 'Lifting Shoes',       emoji: '👟' },
+                { label: 'Court Shoes',         emoji: '👟' },
+                { label: 'Trail Runners',       emoji: '👟' },
+                { label: 'High-top Sneakers',   emoji: '👟' },
+            ],
+            outerwear: [
+                { label: 'Track Jacket',        emoji: '🧥' },
+                { label: 'Zip-up Hoodie',       emoji: '🧥' },
+                { label: 'Windbreaker',         emoji: '🧥' },
+                { label: 'Fleece Vest',         emoji: '🧥' },
+                { label: 'Running Jacket',      emoji: '🧥' },
+                { label: 'Lightweight Pullover',emoji: '🧥' },
+            ],
+            accessory: [
+                { label: 'Gym Bag',             emoji: '🎒' },
+                { label: 'Headband',            emoji: '🎀' },
+                { label: 'Wristbands',          emoji: '⌚' },
+                { label: 'Cap',                 emoji: '🧢' },
+                { label: 'Gym Gloves',          emoji: '🥊' },
+                { label: 'Drawstring Bag',      emoji: '🎒' },
+            ],
+        },
+        'going-out': {
+            top:       [
+                { label: 'Satin Blouse',        emoji: '👔' },
+                { label: 'Fitted Bodysuit',     emoji: '🎽' },
+                { label: 'Sequin Top',          emoji: '✨' },
+                { label: 'Off-shoulder Top',    emoji: '👕' },
+                { label: 'Wrap Top',            emoji: '👔' },
+                { label: 'Cropped Blazer',      emoji: '🥼' },
+                { label: 'Sheer Shirt',         emoji: '👔' },
+            ],
+            bottom:    [
+                { label: 'Tailored Trousers',   emoji: '👖' },
+                { label: 'Midi Skirt',          emoji: '👗' },
+                { label: 'Wide-leg Pants',      emoji: '👖' },
+                { label: 'Mini Skirt',          emoji: '👗' },
+                { label: 'Dark Slim Jeans',     emoji: '👖' },
+                { label: 'Leather Pants',       emoji: '👖' },
+            ],
+            shoes:     [
+                { label: 'Strappy Heels',       emoji: '👠' },
+                { label: 'Ankle Boots',         emoji: '👢' },
+                { label: 'Platform Sneakers',   emoji: '👟' },
+                { label: 'Block Heel Mules',    emoji: '👠' },
+                { label: 'Pointed Flats',       emoji: '🥿' },
+                { label: 'Kitten Heels',        emoji: '👠' },
+            ],
+            outerwear: [
+                { label: 'Faux Leather Jacket', emoji: '🧥' },
+                { label: 'Longline Coat',       emoji: '🧥' },
+                { label: 'Cape',                emoji: '🧥' },
+                { label: 'Cropped Jacket',      emoji: '🧥' },
+                { label: 'Blazer',              emoji: '🥼' },
+                { label: 'Feather Trim Jacket', emoji: '🪶' },
+            ],
+            accessory: [
+                { label: 'Clutch Bag',          emoji: '👛' },
+                { label: 'Statement Earrings',  emoji: '💎' },
+                { label: 'Bold Necklace',       emoji: '📿' },
+                { label: 'Chain Belt',          emoji: '⛓️' },
+                { label: 'Mini Bag',            emoji: '👜' },
+                { label: 'Sparkly Hair Clip',   emoji: '💫' },
+            ],
+        },
+        'date-night': {
+            top:       [
+                { label: 'Silk Blouse',         emoji: '👔' },
+                { label: 'Knit Crop Top',       emoji: '👕' },
+                { label: 'Wrap Top',            emoji: '👔' },
+                { label: 'Linen Button-Down',   emoji: '👔' },
+                { label: 'Ribbed Turtleneck',   emoji: '👕' },
+                { label: 'Delicate Lace Top',   emoji: '🌸' },
+            ],
+            bottom:    [
+                { label: 'Tailored Trousers',   emoji: '👖' },
+                { label: 'Flowy Midi Skirt',    emoji: '👗' },
+                { label: 'Dark Slim Jeans',     emoji: '👖' },
+                { label: 'Satin Slip Skirt',    emoji: '👗' },
+                { label: 'Linen Trousers',      emoji: '👖' },
+                { label: 'Flared Trousers',     emoji: '👖' },
+            ],
+            shoes:     [
+                { label: 'Heeled Sandals',      emoji: '👠' },
+                { label: 'Chelsea Boots',       emoji: '👢' },
+                { label: 'Loafers',             emoji: '🥿' },
+                { label: 'Pumps',               emoji: '👠' },
+                { label: 'Mules',               emoji: '🥿' },
+                { label: 'Strappy Flats',       emoji: '🥿' },
+            ],
+            outerwear: [
+                { label: 'Longline Coat',       emoji: '🧥' },
+                { label: 'Blazer',              emoji: '🥼' },
+                { label: 'Wrap Cardigan',       emoji: '🧥' },
+                { label: 'Leather Jacket',      emoji: '🧥' },
+                { label: 'Sheer Overlay',       emoji: '🧥' },
+                { label: 'Cashmere Cardigan',   emoji: '🧥' },
+            ],
+            accessory: [
+                { label: 'Delicate Necklace',   emoji: '📿' },
+                { label: 'Clutch',              emoji: '👛' },
+                { label: 'Watch',               emoji: '⌚' },
+                { label: 'Hoop Earrings',       emoji: '💍' },
+                { label: 'Silk Scrunchie',      emoji: '🌸' },
+                { label: 'Mini Perfume',        emoji: '🌹' },
+            ],
+        },
+      },
+    };
+
+    let activePreset = 'casual';
+    let activeGender = 'woman';
+
+    function currentPool() {
+        return OUTFIT_DATA[activeGender][activePreset];
+    }
+
+    function pickRandom(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function rollSlot(card, items) {
+        if (card.dataset.locked === 'true') return;
+        const viewport = card.querySelector('.slot-viewport');
+        const target = items[Math.floor(Math.random() * items.length)];
+        const FRAME_H = 100; // must match .slot-frame height in CSS
+        const spinFrames = 22 + Math.floor(Math.random() * 8);
+
+        // Build reel: target at TOP, then random frames below it.
+        // We start with the reel scrolled all the way down (last frame visible)
+        // and animate back to translateY(0) so the target scrolls INTO view from above.
+        const reel = document.createElement('div');
+        reel.className = 'slot-reel';
+        // target is frame 0 (top)
+        reel.innerHTML = `<div class="slot-frame"><span class="slot-emoji">${target.emoji}</span><span class="slot-label">${target.label}</span></div>`;
+        for (let i = 0; i < spinFrames; i++) {
+            const r = pickRandom(items);
+            reel.innerHTML += `<div class="slot-frame"><span class="slot-emoji">${r.emoji}</span><span class="slot-label">${r.label}</span></div>`;
+        }
+
+        // Start: reel offset so the LAST (bottom) frame sits in the viewport
+        const startY = -(spinFrames * FRAME_H);
+        reel.style.transform = `translateY(${startY}px)`;
+        viewport.innerHTML = '';
+        viewport.appendChild(reel);
+
+        // Force reflow so the start transform is applied before the transition kicks in
+        void reel.offsetHeight;
+
+        // Animate to translateY(0) → target frame (index 0) scrolls into view from the top
+        reel.style.transition = 'transform 2s cubic-bezier(0.12, 0.8, 0.2, 1)';
+        reel.style.transform = 'translateY(0)';
+
+        // After animation ends, replace reel with static display and bounce
+        const onEnd = () => {
+            reel.removeEventListener('transitionend', onEnd);
+            viewport.innerHTML = `<div class="slot-static"><span class="slot-emoji">${target.emoji}</span><span class="slot-label">${target.label}</span></div>`;
+            card.classList.add('landed');
+            setTimeout(() => card.classList.remove('landed'), 450);
+        };
+        reel.addEventListener('transitionend', onEnd);
+    }
+
+    function unlockAll() {
+        document.querySelectorAll('.outfit-card').forEach(card => {
+            card.dataset.locked = 'false';
+            card.classList.remove('locked');
+            card.querySelector('.lock-btn').textContent = '🔓';
+        });
+    }
+
+    function randomizeOutfit() {
+        const pool = currentPool();
+        const order = ['top', 'bottom', 'shoes', 'outerwear', 'accessory'];
+        document.querySelectorAll('.outfit-card').forEach(card => {
+            if (card.dataset.locked === 'true') return;
+            const category = card.dataset.category;
+            const stagger = order.indexOf(category) * 90;
+            setTimeout(() => rollSlot(card, pool[category]), stagger);
+        });
+        document.getElementById('lockHint').style.display = 'block';
+    }
+
+    // Gender toggle
+    document.querySelectorAll('.gender-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeGender = btn.dataset.gender;
+            unlockAll();
+            randomizeOutfit();
+        });
+    });
+
+    // Preset buttons
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activePreset = btn.dataset.preset;
+            unlockAll();
+            randomizeOutfit();
+        });
+    });
+
+    // Randomize button
+    document.getElementById('randomizeBtn').addEventListener('click', randomizeOutfit);
+
+    // Lock buttons
+    document.querySelectorAll('.lock-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const card = btn.closest('.outfit-card');
+            const isLocked = card.dataset.locked === 'true';
+            card.dataset.locked = isLocked ? 'false' : 'true';
+            card.classList.toggle('locked', !isLocked);
+            btn.textContent = isLocked ? '🔓' : '🔒';
+            btn.setAttribute('aria-label', (isLocked ? 'Lock ' : 'Unlock ') + card.dataset.category);
+        });
+    });
+
+    // Re-roll individual cards
+    document.querySelectorAll('.reroll-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const card = btn.closest('.outfit-card');
+            const pool = currentPool();
+            const category = card.dataset.category;
+            rollSlot(card, pool[category]);
+        });
+    });
+
+    // Init
+    randomizeOutfit();
+</script>

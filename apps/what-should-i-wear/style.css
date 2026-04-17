@@ -1,0 +1,400 @@
+/* ==========================================================================
+   What Should I Wear? — App Styles
+   - Outfit card grid with lock/re-roll interactions
+   - Theme-aware glass cards, responsive layout
+   ========================================================================== */
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    flex-grow: 1;
+}
+
+/* Page Hero */
+.page-hero {
+    text-align: center;
+    max-width: 800px;
+    width: 92%;
+    padding: 30px;
+    background: var(--glass-bg, rgba(255, 255, 255, 0.12));
+    border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(14px);
+    box-shadow: var(--glass-shadow);
+}
+
+.page-hero h1 {
+    margin: 0.5rem 0;
+    font-size: clamp(1.6rem, 2rem, 2.2rem);
+    color: var(--brand-heading);
+    font-weight: 700;
+}
+
+.page-hero p {
+    margin: 0.75rem 0 0;
+    font-size: 1rem;
+    color: var(--brand-text);
+    line-height: 1.6;
+}
+
+.hero-eyebrow {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--brand-subtle-text);
+}
+
+/* Gender Toggle */
+.gender-toggle {
+    display: flex;
+    gap: 0;
+    justify-content: center;
+    margin: 24px 0 0;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid var(--brand-border);
+    width: fit-content;
+    align-self: center;
+}
+
+.gender-btn {
+    padding: 9px 24px;
+    border: none;
+    background: var(--brand-surface);
+    color: var(--brand-heading);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-family: var(--brand-font-family);
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.gender-btn:first-child {
+    border-right: 1px solid var(--brand-border);
+}
+
+.gender-btn.active {
+    background: var(--brand-accent);
+    color: var(--brand-accent-contrast-text, #fff);
+}
+
+.gender-btn:focus-visible {
+    outline: none;
+    box-shadow: var(--brand-focus-ring);
+}
+
+/* Preset Buttons */
+.preset-btns {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 24px 0 8px;
+    flex-wrap: wrap;
+    width: 92%;
+    max-width: 800px;
+}
+
+.preset-btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--brand-border);
+    background: var(--brand-surface);
+    color: var(--brand-heading);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    font-family: var(--brand-font-family);
+}
+
+.preset-btn:hover {
+    background: var(--brand-accent-muted);
+    border-color: var(--brand-accent);
+    color: var(--brand-accent-strong);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.15);
+}
+
+.preset-btn.active {
+    background: var(--brand-accent);
+    border-color: var(--brand-accent-strong);
+    color: var(--brand-accent-contrast-text, #fff);
+}
+
+.preset-btn:focus-visible {
+    outline: none;
+    box-shadow: var(--brand-focus-ring);
+}
+
+/* Outfit Card Grid */
+.outfit-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    width: 92%;
+    max-width: 860px;
+    margin: 20px 0;
+}
+
+/* Individual Outfit Card */
+.outfit-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 12px 14px;
+    background: var(--glass-bg, rgba(255, 255, 255, 0.12));
+    border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(14px);
+    box-shadow: var(--glass-shadow);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+    min-height: 160px;
+}
+
+.outfit-card.locked {
+    border-color: var(--brand-accent);
+    box-shadow: 0 0 0 2px var(--brand-accent-muted), var(--glass-shadow);
+}
+
+/* Slot machine animations */
+@keyframes slotLand {
+    0%   { transform: scale(0.85); opacity: 0.5; }
+    60%  { transform: scale(1.12); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+.outfit-card.landed .slot-emoji {
+    animation: slotLand 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Reel (built in JS during spin) */
+.slot-reel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    will-change: transform;
+}
+
+.slot-frame {
+    height: 100px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+/* Card Header */
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    justify-content: center;
+    position: relative;
+}
+
+.card-emoji {
+    font-size: 1.4rem;
+    line-height: 1;
+}
+
+.card-label {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--brand-subtle-text);
+}
+
+.lock-btn {
+    position: absolute;
+    right: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 2px;
+    line-height: 1;
+    opacity: 0.6;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.lock-btn:hover {
+    opacity: 1;
+    transform: scale(1.15);
+}
+
+.outfit-card.locked .lock-btn {
+    opacity: 1;
+}
+
+/* Slot Viewport */
+.slot-viewport {
+    height: 100px;
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+}
+
+/* Static state (before/after spin) */
+.slot-viewport > .slot-emoji {
+    font-size: 3rem;
+    line-height: 1;
+    display: block;
+    text-align: center;
+}
+
+.slot-viewport > .slot-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--brand-heading);
+    text-align: center;
+    line-height: 1.3;
+    padding: 0 4px;
+}
+
+/* Static wrapper (before/after spin) */
+.slot-static {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    gap: 6px;
+    width: 100%;
+}
+
+.slot-static .slot-emoji {
+    font-size: 3rem;
+    line-height: 1;
+}
+
+.slot-static .slot-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--brand-heading);
+    text-align: center;
+    line-height: 1.3;
+    padding: 0 4px;
+}
+
+/* Re-roll Button */
+.reroll-btn {
+    background: none;
+    border: 1px solid var(--brand-border);
+    border-radius: 12px;
+    color: var(--brand-subtle-text);
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: var(--brand-font-family);
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.reroll-btn:hover {
+    border-color: var(--brand-accent);
+    color: var(--brand-accent-strong);
+    background: var(--brand-accent-muted);
+}
+
+.outfit-card.locked .reroll-btn {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.reroll-btn:focus-visible {
+    outline: none;
+    box-shadow: var(--brand-focus-ring);
+}
+
+/* Randomize Button */
+#randomizeBtn {
+    padding: 14px 40px;
+    border: none;
+    border-radius: var(--radius-md);
+    background: linear-gradient(to bottom right, var(--brand-accent), var(--brand-accent-strong));
+    color: white;
+    font-size: 1.15rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: var(--brand-font-family);
+    margin: 6px auto 0;
+    display: block;
+}
+
+#randomizeBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(52, 152, 219, 0.35);
+}
+
+#randomizeBtn:focus-visible {
+    outline: none;
+    box-shadow: var(--brand-focus-ring);
+}
+
+/* Lock hint */
+.lock-hint {
+    font-size: 0.85rem;
+    color: var(--brand-subtle-text);
+    margin: 10px 0 20px;
+    text-align: center;
+}
+
+/* SEO visuals moved to assets/css/seo-card.css */
+
+/* Responsive */
+@media (max-width: 860px) {
+    .outfit-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 560px) {
+    .outfit-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .outfit-card {
+        padding: 14px 10px 12px;
+        min-height: 140px;
+    }
+
+    .card-pick {
+        font-size: 0.85rem;
+    }
+
+    #randomizeBtn {
+        padding: 12px 28px;
+        font-size: 1rem;
+    }
+
+    .page-hero {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .page-hero h1 {
+        font-size: 1.5rem;
+    }
+}

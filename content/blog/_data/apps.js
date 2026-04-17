@@ -439,6 +439,15 @@ module.exports = [
     description: "Spin for snack ideas from sweet treats and crunchy bites to healthy nibbles."
   },
   {
+    id: "what-should-i-wear",
+    name: "What Should I Wear?",
+    path: "/apps/what-should-i-wear/",
+    category: "randomizer",
+    footerGroup: "Randomizers",
+    emoji: "👗",
+    description: "Can't decide on an outfit? Pick a vibe, randomize each clothing piece, lock what you love, and re-roll the rest."
+  },
+  {
     id: "what-drink-should-i-choose",
     name: "What Drink Should I Choose?",
     path: "/apps/what-drink-should-i-choose/",
