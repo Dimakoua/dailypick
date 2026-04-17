@@ -1,0 +1,339 @@
+---
+layout: base_app.njk
+title: "Lotto 6/49 Number Generator – Random Quick Pick | Daily Pick"
+description: "Generate random Lotto 6/49 quick pick numbers instantly. Pick 6 numbers from 1–49 plus a bonus ball with cryptographically fair randomness. Canada's classic lottery."
+keywords: "lotto 6/49 number generator, lotto 649 quick pick, random lotto 6/49 numbers, lotto 649 number picker, canadian lottery generator"
+canonical: "https://dailypick.dev/apps/lotto-649-number-generator/"
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="lottery" class="lottery-page" id="main">
+
+  <header class="page-hero glass-card">
+    <p class="hero-eyebrow">🇨🇦 Canadian Lottery</p>
+    <h1>🍁 Lotto 6/49 Number Generator</h1>
+    <p>Generate fair Lotto 6/49 quick picks instantly. 6 numbers from 1–49 plus a bonus ball from the remaining pool.</p>
+  </header>
+
+  <section class="lottery-card glass-card">
+    <div class="lottery-rules">
+      <span class="rules-badge">Pick 6 from 1–49</span>
+      <span class="rules-sep">+</span>
+      <span class="rules-badge rules-badge--bonus" style="--bonus-color: #c0392b;">Bonus Ball 1–49</span>
+    </div>
+
+    <div class="balls-area" id="ballsArea" aria-live="polite" aria-label="Generated Lotto 6/49 numbers">
+      <div class="balls-main" id="mainBalls">
+        <div class="ball ball--empty" aria-hidden="true"><span>?</span></div>
+        <div class="ball ball--empty" aria-hidden="true"><span>?</span></div>
+        <div class="ball ball--empty" aria-hidden="true"><span>?</span></div>
+        <div class="ball ball--empty" aria-hidden="true"><span>?</span></div>
+        <div class="ball ball--empty" aria-hidden="true"><span>?</span></div>
+        <div class="ball ball--empty" aria-hidden="true"><span>?</span></div>
+      </div>
+      <div class="balls-sep" aria-hidden="true">+</div>
+      <div class="balls-bonus" id="bonusBall">
+        <div class="ball ball--bonus ball--empty" style="--bonus-color: #c0392b;" aria-hidden="true"><span>?</span></div>
+      </div>
+    </div>
+
+    <div class="lottery-controls">
+      <div class="lines-control">
+        <label for="linesCount">Lines</label>
+        <select id="linesCount">
+          <option value="1" selected>1 line</option>
+          <option value="2">2 lines</option>
+          <option value="3">3 lines</option>
+          <option value="4">4 lines</option>
+          <option value="5">5 lines</option>
+        </select>
+      </div>
+      <button id="generateBtn" class="btn btn--accent" type="button">🎱 Generate Quick Pick</button>
+      <button id="resetBtn" class="btn btn--secondary" type="button">↺ Reset</button>
+    </div>
+
+    <div class="multi-lines" id="multiLines" hidden></div>
+
+    <div class="copy-row" id="copyRow" hidden>
+      <button id="copyBtn" class="btn btn--secondary" type="button">📋 Copy Numbers</button>
+      <span class="copy-confirm" id="copyConfirm" aria-live="polite"></span>
+    </div>
+  </section>
+
+  <section class="history-card glass-card" id="historySection" hidden>
+    <h2 class="history-title">Recent Picks</h2>
+    <ul class="history-list" id="historyList" aria-label="Recent Lotto 6/49 picks"></ul>
+    <button id="clearHistoryBtn" class="btn btn--secondary btn--sm" type="button">Clear History</button>
+  </section>
+
+  <section class="seo-content-area glass-card">
+    <h2>Lotto 6/49 Number Generator – random quick pick for Canada's classic lottery</h2>
+    <p>Lotto 6/49 Number Generator creates a fair, random quick pick that matches the official draw format. It picks 6 unique main numbers from the 1–49 pool, then draws a bonus ball from the remaining numbers in that same pool — exactly how the real game works.</p>
+    <p>The generator uses <code>crypto.getRandomValues()</code> instead of <code>Math.random()</code>, making every pick cryptographically sound and unbiased.</p>
+    <p>Generate one line or up to five lines at once, copy to clipboard, and bring your numbers to any OLG or Atlantic Lottery retailer.</p>
+
+    <h2>Table of Contents</h2>
+    <ul>
+      <li><a href="#what-is-lotto-649-generator">1. What Is the Lotto 6/49 Number Generator?</a></li>
+      <li><a href="#how-to-use-it">2. How to Use It?</a></li>
+      <li><a href="#key-features">3. Key Features</a></li>
+      <li><a href="#how-lotto-649-works">4. How Lotto 6/49 Works</a></li>
+      <li><a href="#sharing-and-exporting">5. Copying Your Numbers</a></li>
+      <li><a href="#when-to-use">6. When to Use This Generator?</a></li>
+      <li><a href="#feedback">7. We Want to Hear Your Feedback</a></li>
+      <li><a href="#alternative-tool">8. Need an Alternative Tool?</a></li>
+    </ul>
+
+    <h2 id="what-is-lotto-649-generator">1. What Is the Lotto 6/49 Number Generator?</h2>
+    <p>Lotto 6/49 Number Generator is a free online tool that produces random quick picks for Canada's Lotto 6/49 lottery. The primary keyword is Lotto 6/49 number generator, and the tool follows the official format: 6 numbers from 1–49 and one bonus ball drawn from the same remaining pool.</p>
+    <p>Because the bonus ball comes from the leftover numbers after the 6 main draws, it is guaranteed to be different from all your main numbers — just like in the real draw.</p>
+    <p>No sign-up needed. Generate, copy, and play.</p>
+
+    <h2 id="how-to-use-it">2. How to Use It?</h2>
+    <ol>
+      <li>Choose the number of lines from the <strong>Lines</strong> selector (1 to 5).</li>
+      <li>Click <strong>Generate Quick Pick</strong> to see your numbers reveal one by one with a staggered animation.</li>
+      <li>Click <strong>Copy Numbers</strong> to copy all lines to your clipboard.</li>
+      <li>Click <strong>Reset</strong> to clear the board and start again.</li>
+    </ol>
+
+    <h2 id="key-features">3. Key Features</h2>
+    <ul>
+      <li><strong>Official format:</strong> 6 main numbers (1–49) + 1 bonus ball from the remaining pool, matching the real Lotto 6/49 draw.</li>
+      <li><strong>Cryptographically fair:</strong> uses <code>crypto.getRandomValues()</code> for genuinely unbiased picks.</li>
+      <li><strong>Multi-line support:</strong> generate up to 5 independent lines in one click.</li>
+      <li><strong>Copy to clipboard:</strong> grab your numbers in one click for use at any retailer.</li>
+      <li><strong>Pick history:</strong> your last 5 sessions are saved locally in the browser.</li>
+      <li><strong>Ball animation:</strong> staggered reveal with a pop-in effect for each number.</li>
+    </ul>
+
+    <h2 id="how-lotto-649-works">4. How Lotto 6/49 Works</h2>
+    <p>Lotto 6/49 is Canada's original national lottery, administered by the Interprovincial Lottery Corporation and sold through OLG, BCLC, Loto-Québec, Atlantic Lottery, and Western Canada Lottery. Draws are held every Wednesday and Saturday.</p>
+    <p>Six balls are drawn from a pool of 1–49, followed by one bonus ball from the remaining 43 numbers. Matching all 6 main numbers wins the Classic Jackpot (guaranteed at $5 million). Matching 5 main numbers plus the bonus ball wins the second prize. There are 6 prize tiers in total.</p>
+    <p>A Gold Ball jackpot is also drawn separately each week, starting at $1 million and growing until won. This generator covers the main 6/49 draw format.</p>
+
+    <h2 id="sharing-and-exporting">5. Copying Your Numbers</h2>
+    <p>After generating, click <strong>Copy Numbers</strong> to copy all lines in a clean format (e.g., <em>03 12 25 34 41 47 + B 08</em>). Paste into notes, a message, or carry them to the store.</p>
+    <p>Your last 5 sessions are stored in the browser's localStorage so you can review previous picks without regenerating.</p>
+
+    <h2 id="when-to-use">6. When to Use This Generator?</h2>
+    <p>Use this tool any time you want a fair Lotto 6/49 quick pick without relying on the retailer's machine or app.</p>
+    <ul>
+      <li>Buying tickets ahead of Wednesday or Saturday draws.</li>
+      <li>Organising a lottery pool with coworkers or family.</li>
+      <li>Generating several lines quickly for a full play slip.</li>
+      <li>Trying quick picks instead of always using the same personal numbers.</li>
+      <li>Exploring Lotto 6/49 for the first time and wanting to understand the format.</li>
+    </ul>
+
+    <h2 id="feedback">7. We Want to Hear Your Feedback</h2>
+    <p>Spotted a bug or have a feature idea? Visit the <a href="/feedback/">Feedback page</a> and tell us. Every message is read and helps shape future updates.</p>
+
+    <h2 id="alternative-tool">8. Need an Alternative Tool?</h2>
+    <p>For Canada's big jackpot lottery, try the <a href="/apps/lotto-max-number-generator/">Lotto Max Number Generator</a>. For a daily Canadian draw, see the <a href="/apps/daily-grand-number-generator/">Daily Grand Number Generator</a>. For US lotteries, visit the <a href="/lottery/">Lottery Hub</a>. Bonne chance!</p>
+  </section>
+
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  const LOTTERY = {
+    mainCount: 6,
+    mainMax: 49,
+    bonusLabel: 'B',
+    bonusColor: '#c0392b',
+    storageKey: 'dailypick_lotto649_history',
+  };
+
+  const generateBtn = document.getElementById('generateBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const copyBtn = document.getElementById('copyBtn');
+  const copyConfirm = document.getElementById('copyConfirm');
+  const copyRow = document.getElementById('copyRow');
+  const linesCount = document.getElementById('linesCount');
+  const multiLines = document.getElementById('multiLines');
+  const historySection = document.getElementById('historySection');
+  const historyList = document.getElementById('historyList');
+  const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+
+  function secureRandInt(min, max) {
+    const range = max - min + 1;
+    const bytesNeeded = Math.ceil(Math.log2(range) / 8) + 1;
+    const maxValid = Math.floor(256 ** bytesNeeded / range) * range;
+    const arr = new Uint8Array(bytesNeeded);
+    let val;
+    do {
+      crypto.getRandomValues(arr);
+      val = arr.reduce((acc, b, i) => acc + b * 256 ** i, 0);
+    } while (val >= maxValid);
+    return min + (val % range);
+  }
+
+  function pickUnique(count, max) {
+    const pool = Array.from({ length: max }, (_, i) => i + 1);
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = secureRandInt(0, i);
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    return pool.slice(0, count).sort((a, b) => a - b);
+  }
+
+  function generateLine() {
+    // Draw 7 unique numbers from 1–49; first 6 are main, 7th is bonus
+    const drawn = pickUnique(LOTTERY.mainCount + 1, LOTTERY.mainMax);
+    const main = drawn.slice(0, LOTTERY.mainCount).sort((a, b) => a - b);
+    const bonus = drawn[LOTTERY.mainCount];
+    return { main, bonus };
+  }
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function buildMainBallEls() {
+    const container = document.getElementById('mainBalls');
+    container.innerHTML = '';
+    for (let i = 0; i < LOTTERY.mainCount; i++) {
+      const div = document.createElement('div');
+      div.className = 'ball ball--empty';
+      div.setAttribute('aria-hidden', 'true');
+      div.innerHTML = '<span>?</span>';
+      container.appendChild(div);
+    }
+  }
+
+  function buildBonusBallEl() {
+    const container = document.getElementById('bonusBall');
+    container.innerHTML = `<div class="ball ball--bonus ball--empty" style="--bonus-color: ${LOTTERY.bonusColor};" aria-hidden="true"><span>?</span></div>`;
+  }
+
+  function revealBall(el, number, delay) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        el.classList.remove('ball--empty');
+        el.classList.add('ball--reveal');
+        el.querySelector('span').textContent = pad(number);
+        el.setAttribute('aria-label', String(number));
+        setTimeout(resolve, 300);
+      }, delay);
+    });
+  }
+
+  async function animateSingleLine(line) {
+    buildMainBallEls();
+    buildBonusBallEl();
+    const mainEls = document.querySelectorAll('#mainBalls .ball');
+    const bonusEl = document.querySelector('#bonusBall .ball');
+    const promises = line.main.map((n, i) => revealBall(mainEls[i], n, i * 180));
+    await Promise.all(promises);
+    await revealBall(bonusEl, line.bonus, 100);
+  }
+
+  function renderMultiLines(lines) {
+    multiLines.hidden = false;
+    multiLines.innerHTML = lines.map((line, idx) =>
+      `<div class="multi-line">
+        <span class="multi-line__label">Line ${idx + 1}</span>
+        <span class="multi-line__numbers">
+          ${line.main.map(n => `<span class="mini-ball">${pad(n)}</span>`).join('')}
+          <span class="mini-ball mini-ball--sep">+</span>
+          <span class="mini-ball mini-ball--bonus" style="--bonus-color:${LOTTERY.bonusColor}">${pad(line.bonus)}</span>
+        </span>
+        <button class="copy-line-btn btn btn--secondary btn--xs" data-line="${idx}" type="button" aria-label="Copy line ${idx + 1}">📋</button>
+      </div>`
+    ).join('');
+
+    multiLines.querySelectorAll('.copy-line-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = Number(btn.dataset.line);
+        copyToClipboard(formatLine(lines[idx]));
+      });
+    });
+  }
+
+  function formatLine(line) {
+    return line.main.map(pad).join(' ') + ` + ${LOTTERY.bonusLabel} ${pad(line.bonus)}`;
+  }
+
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      copyConfirm.textContent = '✓ Copied!';
+      setTimeout(() => { copyConfirm.textContent = ''; }, 2000);
+    }).catch(() => {
+      copyConfirm.textContent = 'Copy failed — please select and copy manually.';
+    });
+  }
+
+  function loadHistory() {
+    try {
+      return JSON.parse(localStorage.getItem(LOTTERY.storageKey)) || [];
+    } catch { return []; }
+  }
+
+  function saveHistory(lines) {
+    const history = loadHistory();
+    history.unshift({ lines, ts: Date.now() });
+    const trimmed = history.slice(0, 5);
+    localStorage.setItem(LOTTERY.storageKey, JSON.stringify(trimmed));
+    renderHistory(trimmed);
+  }
+
+  function renderHistory(history) {
+    if (!history.length) { historySection.hidden = true; return; }
+    historySection.hidden = false;
+    historyList.innerHTML = history.map(entry =>
+      `<li class="history-entry">
+        <span class="history-ts">${new Date(entry.ts).toLocaleString()}</span>
+        ${entry.lines.map(line =>
+          `<span class="history-line">${line.main.map(pad).join(' – ')} <strong>+ ${LOTTERY.bonusLabel} ${pad(line.bonus)}</strong></span>`
+        ).join('')}
+      </li>`
+    ).join('');
+  }
+
+  let currentLines = [];
+
+  generateBtn.addEventListener('click', async () => {
+    generateBtn.disabled = true;
+    const count = Number(linesCount.value);
+    currentLines = Array.from({ length: count }, generateLine);
+
+    await animateSingleLine(currentLines[0]);
+
+    if (count > 1) {
+      renderMultiLines(currentLines);
+    } else {
+      multiLines.hidden = true;
+      multiLines.innerHTML = '';
+    }
+
+    copyRow.hidden = false;
+    saveHistory(currentLines);
+    generateBtn.disabled = false;
+  });
+
+  resetBtn.addEventListener('click', () => {
+    buildMainBallEls();
+    buildBonusBallEl();
+    multiLines.hidden = true;
+    multiLines.innerHTML = '';
+    copyRow.hidden = true;
+    currentLines = [];
+    copyConfirm.textContent = '';
+  });
+
+  copyBtn.addEventListener('click', () => {
+    if (!currentLines.length) return;
+    copyToClipboard(currentLines.map(formatLine).join('\n'));
+  });
+
+  clearHistoryBtn.addEventListener('click', () => {
+    localStorage.removeItem(LOTTERY.storageKey);
+    historySection.hidden = true;
+  });
+
+  buildMainBallEls();
+  buildBonusBallEl();
+  renderHistory(loadHistory());
+}());
+</script>
