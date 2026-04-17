@@ -1,0 +1,245 @@
+---
+layout: base_app.njk
+title: "Mini Workout Generator – Quick Exercise Ideas | Daily Pick"
+description: "Generate a quick mini workout instantly with options for intensity and focus. Perfect for short fitness bursts, stretch breaks, or fast exercise ideas."
+keywords: "mini workout generator, quick workout, exercise ideas, fitness break, short workout, workout generator"
+canonical: "https://dailypick.dev/apps/mini-workout-generator/"
+ogImageAlt: "Fast mini workout generator display"
+appStyles: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="workout-page" id="main">
+  <header class="page-hero glass-card">
+    <div>
+      <p class="hero-eyebrow">Fitness in Minutes</p>
+      <h1>🏋️ Mini Workout Generator</h1>
+      <p>Get a quick workout recommendation based on intensity and focus. Great for breaks, warm-ups, and short fitness sessions.</p>
+    </div>
+  </header>
+
+  <section class="workout-controls glass-card">
+    <div class="control-group">
+      <p class="control-label">Intensity</p>
+      <div class="toggle-row" role="tablist" aria-label="Workout intensity">
+        <button class="toggle-btn active" data-setting="intensity" data-value="low" type="button">Low</button>
+        <button class="toggle-btn" data-setting="intensity" data-value="medium" type="button">Medium</button>
+        <button class="toggle-btn" data-setting="intensity" data-value="high" type="button">High</button>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <p class="control-label">Focus</p>
+      <div class="toggle-row" role="tablist" aria-label="Workout focus">
+        <button class="toggle-btn active" data-setting="focus" data-value="cardio" type="button">Cardio</button>
+        <button class="toggle-btn" data-setting="focus" data-value="strength" type="button">Strength</button>
+        <button class="toggle-btn" data-setting="focus" data-value="mobility" type="button">Mobility</button>
+        <button class="toggle-btn" data-setting="focus" data-value="stretch" type="button">Stretch</button>
+      </div>
+    </div>
+
+    <div class="action-row">
+      <button id="generateBtn" class="btn btn--accent" type="button">🏃 Generate Workout</button>
+      <button id="copyBtn" class="btn btn--secondary" type="button">📋 Copy Workout</button>
+    </div>
+  </section>
+
+  <section class="workout-card glass-card">
+    <div class="workout-header">
+      <p class="workout-emoji">💪</p>
+      <p class="workout-label">Your workout plan</p>
+    </div>
+    <div id="workoutResult" class="workout-result">
+      Pick intensity and focus, then click Generate Workout to reveal a short routine.
+    </div>
+    <p class="workout-note">Use this for a quick fitness boost, warm-up, or mini break.</p>
+  </section>
+
+  <section class="seo-content-area glass-card">
+    <h2>Mini Workout Generator — quick exercise ideas for short fitness sessions</h2>
+    <p>Mini Workout Generator creates fast, personalized workout suggestions based on your intensity level and workout focus. Generate an exercise routine in seconds and get moving, whether you have 2 minutes or 10.</p>
+    <p>It is built for busy people, office workers, students, and anyone seeking quick fitness inspiration without long planning. Pick your intensity and focus, press generate, and start your routine immediately.</p>
+    <p>No signup, no equipment requirements — just fast workouts tailored to your current energy and what your body needs in that moment.</p>
+
+    <h2>Table of Contents</h2>
+    <ul>
+      <li><a href="#what-is-mini-workout-generator">1. What Is Mini Workout Generator?</a></li>
+      <li><a href="#how-to-use-it">2. How to Use It?</a></li>
+      <li><a href="#intensity-and-focus-options">3. Intensity and Focus Options</a></li>
+      <li><a href="#key-features">4. Key Features</a></li>
+      <li><a href="#when-to-use-workout-generator">5. When to Use Mini Workout Generator</a></li>
+      <li><a href="#sharing-workouts">6. Copying &amp; Sharing Workouts</a></li>
+      <li><a href="#feedback">7. Feedback</a></li>
+      <li><a href="#alternative-fitness-tools">8. Alternative Fitness Tools</a></li>
+    </ul>
+
+    <h2 id="what-is-mini-workout-generator">1. What Is Mini Workout Generator?</h2>
+    <p>Mini Workout Generator is a fast fitness tool that creates workout suggestions based on your chosen intensity and focus area. It is designed for quick exercise sessions, work breaks, warm-ups, and anyone who needs workout ideas in seconds.</p>
+    <p>The primary keyword is mini workout generator, and the app serves people seeking fast, actionable exercise inspiration without overthinking or long planning.</p>
+
+    <h2 id="how-to-use-it">2. How to Use It?</h2>
+    <ol>
+      <li>Select your intensity level: Low, Medium, or High.</li>
+      <li>Choose your workout focus: Cardio, Strength, Mobility, or Stretch.</li>
+      <li>Click <strong>Generate Workout</strong> to reveal a quick routine.</li>
+      <li>Read the exercise name and details — they appear instantly in the result card.</li>
+      <li>Click <strong>Copy Workout</strong> to save or share with friends.</li>
+      <li>Generate again for a different routine anytime.</li>
+    </ol>
+
+    <h2 id="intensity-and-focus-options">3. Intensity and Focus Options</h2>
+    <p><strong>Low intensity</strong> workouts use gentle movements, bodyweight exercises, and recovery-focused routines — perfect for beginners, recovery days, or minimal-effort breaks. <strong>Medium intensity</strong> adds more reps, faster pace, and moderate challenge for sustainable fitness. <strong>High intensity</strong> pushes your limits with challenging moves and higher volume.</p>
+    <p><strong>Cardio</strong> gets your heart rate up, <strong>Strength</strong> builds muscle with resistance, <strong>Mobility</strong> improves flexibility and range of motion, and <strong>Stretch</strong> aids recovery and relaxation.</p>
+
+    <h2 id="key-features">4. Key Features</h2>
+    <ul>
+      <li><strong>Three intensity levels:</strong> Low, Medium, and High to match your energy and fitness level.</li>
+      <li><strong>Four focus areas:</strong> Cardio, Strength, Mobility, and Stretch for different workout goals.</li>
+      <li><strong>Instant generation:</strong> One click produces a complete mini workout with clear instructions.</li>
+      <li><strong>Copy to clipboard:</strong> Save workouts or share them with teammates and friends.</li>
+      <li><strong>No equipment needed:</strong> Most workouts use bodyweight — start anytime, anywhere.</li>
+      <li><strong>Mobile-friendly:</strong> Works seamlessly on phones, tablets, and desktops.</li>
+    </ul>
+
+    <h2 id="when-to-use-workout-generator">5. When to Use Mini Workout Generator</h2>
+    <p>Use Mini Workout Generator whenever you need a quick fitness boost, energizing break, or workout inspiration. It is perfect for office workers, students, remote teams, and anyone with limited time.</p>
+    <ul>
+      <li>Take a quick 5–10 minute movement break during work.</li>
+      <li>Warm up before a longer exercise session or sport.</li>
+      <li>Find a fast mobility or stretch routine for recovery.</li>
+      <li>Get cardio activity when you have only 10 minutes free.</li>
+      <li>Share team workout challenges with colleagues for group fitness fun.</li>
+    </ul>
+
+    <h2 id="sharing-workouts">6. Copying &amp; Sharing Workouts</h2>
+    <p>Every generated workout can be copied to your clipboard with one click. Share via chat, email, notes, or social apps by pasting the workout text and details.</p>
+    <p>Send teammates the page link so they can generate their own mini workouts — great for team fitness challenges, remote work breaks, or casual wellness initiatives.</p>
+
+    <h2 id="feedback">7. Feedback</h2>
+    <p>If you have ideas for new workout types, focus areas, or features, please share them on the <a href="/feedback/">Feedback page</a>. Your input helps us make the tool better for everyone.</p>
+
+    <h2 id="alternative-fitness-tools">8. Alternative Fitness Tools</h2>
+    <p>For yoga or mindfulness, try the <a href="/apps/self-care-wheel/">Self-Care Wheel</a> for wellness prompts. For timing-based workouts, the <a href="/apps/timer/">Timer tool</a> helps structure multi-stage sessions. For motivation to go to the gym, check the <a href="/apps/when-should-i-go-to-the-gym/">When Should I Go to the Gym?</a> wheel.</p>
+  </section>
+</main>
+
+<script>
+  const WORKOUTS = {
+    low: {
+      cardio: [
+        { title: 'March in place', details: '3 minutes of marching, lifting knees and pumping your arms.' },
+        { title: 'Gentle step touch', details: '2 minutes of side step touches with a light arm reach.' },
+        { title: 'Slow knee lifts', details: '2 sets of 30 seconds alternating knee lifts.' }
+      ],
+      strength: [
+        { title: 'Wall sit', details: 'Hold a wall sit for 30 seconds, rest, then repeat once.' },
+        { title: 'Half push-ups', details: '8 slow push-ups from the knees or low plank position.' },
+        { title: 'Chair squats', details: '10 slow squats using a chair for support as needed.' }
+      ],
+      mobility: [
+        { title: 'Shoulder circles', details: '1 minute of slow forward and backward shoulder circles.' },
+        { title: 'Neck stretches', details: '30 seconds each side of gentle neck tilts.' },
+        { title: 'Spinal twist', details: 'Seated twist on each side for 30 seconds.' }
+      ],
+      stretch: [
+        { title: 'Standing quad stretch', details: '30 seconds per leg, keeping hips level and breath steady.' },
+        { title: 'Hamstring reach', details: '30 seconds per leg, reaching toward your toes gently.' },
+        { title: 'Upper back stretch', details: 'Hold arms forward and round your upper back for 45 seconds.' }
+      ]
+    },
+    medium: {
+      cardio: [
+        { title: 'Fast feet', details: '30 seconds of quick foot taps, repeat twice with rest.' },
+        { title: 'Jumping jacks', details: '2 sets of 20 reps at a steady pace.' },
+        { title: 'High knee march', details: '1 minute of high knees with active arm swings.' }
+      ],
+      strength: [
+        { title: 'Reverse lunges', details: '10 reps per side, alternating legs with control.' },
+        { title: 'Plank hold', details: 'Hold a full plank for 30 seconds with a straight spine.' },
+        { title: 'Glute bridges', details: '15 reps, squeezing the glutes at the top.' }
+      ],
+      mobility: [
+        { title: 'World\'s greatest stretch', details: '5 reps per side, moving through lunge and side reach.' },
+        { title: 'Hip openers', details: '30 seconds per side, stepping into a deep lunge and rotating.' },
+        { title: 'Thoracic rotation', details: '10 reps per side from a half-kneeling position.' }
+      ],
+      stretch: [
+        { title: 'Calf stretch', details: '30 seconds per side against a wall or step.' },
+        { title: 'Chest opener', details: 'Hold arms open and lift gently for 45 seconds.' },
+        { title: 'Seated forward fold', details: '1 minute reaching toward your toes with soft knees.' }
+      ]
+    },
+    high: {
+      cardio: [
+        { title: 'Burpee bursts', details: '8 burpees, rest 30 seconds, repeat once.' },
+        { title: 'Mountain climbers', details: '40 seconds of fast mountain climbers, rest, then repeat.' },
+        { title: 'Skater hops', details: '30 seconds per side, moving with power and balance.' }
+      ],
+      strength: [
+        { title: 'Bodyweight squats', details: '15 reps with a strong chest and full depth.' },
+        { title: 'Push-up set', details: '12 push-ups, or as many as possible with good form.' },
+        { title: 'Walking lunges', details: '12 steps per leg with steady control and posture.' }
+      ],
+      mobility: [
+        { title: 'Dynamic hip swings', details: '10 reps per leg with controlled movement.' },
+        { title: 'Lunge with reach', details: '5 reps per side, reaching overhead as you lunge.' },
+        { title: 'Arm swings', details: '1 minute of rapid arm swings to open the shoulders.' }
+      ],
+      stretch: [
+        { title: 'Pigeon pose', details: '30 seconds per side, opening the hips gently.' },
+        { title: 'Standing quad and hip flexor stretch', details: '30 seconds per side.' },
+        { title: 'Cross-body shoulder stretch', details: '30 seconds per arm, keeping the spine tall.' }
+      ]
+    }
+  };
+
+  const resultEl = document.getElementById('workoutResult');
+  const generateBtn = document.getElementById('generateBtn');
+  const copyBtn = document.getElementById('copyBtn');
+  const toggleButtons = document.querySelectorAll('.toggle-btn');
+
+  function chooseRandom(list) {
+    return list[Math.floor(Math.random() * list.length)];
+  }
+
+  function activeSetting(name) {
+    return document.querySelector(`.toggle-btn[data-setting="${name}"].active`).dataset.value;
+  }
+
+  function renderWorkout(workout) {
+    resultEl.innerHTML = `
+      <p class="result-title">${workout.title}</p>
+      <p class="result-details">${workout.details}</p>
+    `;
+  }
+
+  function generateWorkout() {
+    const intensity = activeSetting('intensity');
+    const focus = activeSetting('focus');
+    const workout = chooseRandom(WORKOUTS[intensity][focus]);
+    renderWorkout(workout);
+  }
+
+  function copyWorkout() {
+    const text = resultEl.textContent.trim();
+    if (!text || text.startsWith('Pick intensity')) return;
+
+    navigator.clipboard.writeText(text).then(() => {
+      copyBtn.textContent = '✅ Copied';
+      setTimeout(() => { copyBtn.textContent = '📋 Copy Workout'; }, 1500);
+    }).catch(() => {
+      copyBtn.textContent = '⚠️ Copy failed';
+      setTimeout(() => { copyBtn.textContent = '📋 Copy Workout'; }, 1500);
+    });
+  }
+
+  toggleButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const setting = button.dataset.setting;
+      document.querySelectorAll(`.toggle-btn[data-setting="${setting}"]`).forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+    });
+  });
+
+  generateBtn.addEventListener('click', generateWorkout);
+  copyBtn.addEventListener('click', copyWorkout);
+</script>

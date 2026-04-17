@@ -459,6 +459,24 @@
     "description": "Spin for snack ideas from sweet treats and crunchy bites to healthy nibbles."
   },
   {
+    "id": "mini-workout-generator",
+    "name": "Mini Workout Generator",
+    "path": "/apps/mini-workout-generator/",
+    "category": "games",
+    "footerGroup": "Games",
+    "emoji": "🏋️",
+    "description": "Generate a quick mini workout by intensity and focus for fast, easy exercise sessions."
+  },
+  {
+    "id": "fortune-cookie-generator",
+    "name": "Fortune Cookie Generator",
+    "path": "/apps/fortune-cookie-generator/",
+    "category": "games",
+    "footerGroup": "Games",
+    "emoji": "🥠",
+    "description": "Open a digital fortune cookie for a short luck, motivation, advice, or daily insight message."
+  },
+  {
     "id": "what-should-i-wear",
     "name": "What Should I Wear?",
     "path": "/apps/what-should-i-wear/",

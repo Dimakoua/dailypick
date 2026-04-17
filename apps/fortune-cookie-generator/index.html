@@ -1,0 +1,186 @@
+---
+layout: base_app.njk
+title: "Fortune Cookie Generator – Instant Fortune Messages | Daily Pick"
+description: "Open a fortune cookie anytime for a quick fortune, motivation, luck, or advice message. Perfect for daily inspiration and playful creativity."
+keywords: "fortune cookie generator, fortune cookie, fortune message, daily fortune, luck quote, motivation quote, advice generator"
+canonical: "https://dailypick.dev/apps/fortune-cookie-generator/"
+ogImageAlt: "Fortune cookie on a plate with a fortune message"
+appStyles: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="fortune-page" id="main">
+  <header class="page-hero glass-card">
+    <div>
+      <p class="hero-eyebrow">Fortune Cookie</p>
+      <h1>🥠 Fortune Cookie Generator</h1>
+      <p>Open a digital fortune cookie for a quick message of luck, motivation, advice, or daily insight.</p>
+    </div>
+  </header>
+
+  <section class="fortune-controls glass-card">
+    <div class="category-row" role="tablist" aria-label="Fortune category">
+      <button class="category-btn active" data-category="daily" type="button">Daily</button>
+      <button class="category-btn" data-category="motivation" type="button">Motivation</button>
+      <button class="category-btn" data-category="luck" type="button">Luck</button>
+      <button class="category-btn" data-category="advice" type="button">Advice</button>
+    </div>
+
+    <div class="fortune-actions">
+      <button id="generateBtn" class="btn btn--accent" type="button">🥠 Generate Fortune</button>
+      <button id="copyBtn" class="btn btn--secondary" type="button">📋 Copy Message</button>
+    </div>
+  </section>
+
+  <section class="fortune-card glass-card">
+    <div class="fortune-header">
+      <p class="fortune-emoji">✨</p>
+      <p class="fortune-label">Your fortune awaits</p>
+    </div>
+    <div id="fortuneText" class="fortune-text">Click Generate Fortune to open your cookie.</div>
+    <p class="fortune-subtext">Change the category above for a different kind of message.</p>
+  </section>
+
+  <section class="seo-content-area glass-card">
+    <h2>Fortune Cookie Generator — quick fortune messages for daily inspiration</h2>
+    <p>Fortune Cookie Generator is a simple online tool that delivers short, friendly fortune messages. Open a digital cookie anytime to get a playful fortune, motivational line, luck prediction, or piece of advice with one click.</p>
+    <p>Choose the category that fits your mood, then press Generate Fortune to reveal a fresh message. The app works well for morning routine boosts, meeting icebreakers, energy shifts, and everyday moments of inspiration.</p>
+    <p>It removes friction from seeking a bit of daily motivation — no signup, no clutter, just a quick fortune whenever you need it.</p>
+
+    <h2>Table of Contents</h2>
+    <ul>
+      <li><a href="#what-is-fortune-cookie-generator">1. What Is Fortune Cookie Generator?</a></li>
+      <li><a href="#how-to-use-it">2. How to Use It?</a></li>
+      <li><a href="#fortune-categories">3. Fortune Categories</a></li>
+      <li><a href="#key-features">4. Key Features</a></li>
+      <li><a href="#when-to-use-fortune-cookie">5. When to Use Fortune Cookie Generator</a></li>
+      <li><a href="#sharing-fortunes">6. Sharing &amp; Copying Fortunes</a></li>
+      <li><a href="#feedback">7. Feedback</a></li>
+      <li><a href="#alternative-tools">8. Alternative Tools</a></li>
+    </ul>
+
+    <h2 id="what-is-fortune-cookie-generator">1. What Is Fortune Cookie Generator?</h2>
+    <p>Fortune Cookie Generator is a playful online tool designed to give you quick messages of luck, motivation, advice, or daily inspiration. It is built for mood boosts, creative prompts, and tiny moments of pause during busy days.</p>
+    <p>The primary keyword is fortune cookie generator, and it serves anyone seeking a quick dose of encouragement or perspective shift without overthinking.</p>
+
+    <h2 id="how-to-use-it">2. How to Use It?</h2>
+    <ol>
+      <li>Choose a category: Daily, Motivation, Luck, or Advice.</li>
+      <li>Click <strong>Generate Fortune</strong> to open your digital cookie.</li>
+      <li>Read your fortune — it appears instantly in the result card.</li>
+      <li>Click <strong>Copy Message</strong> to save or share the fortune with friends or teammates.</li>
+      <li>Generate again anytime for a new message.</li>
+    </ol>
+
+    <h2 id="fortune-categories">3. Fortune Categories</h2>
+    <p><strong>Daily</strong> offers simple, uplifting messages for the day ahead. <strong>Motivation</strong> delivers encouraging words when you need a confidence boost. <strong>Luck</strong> provides playful, optimistic predictions, and <strong>Advice</strong> gives small, practical guidance for moments of decision.</p>
+    <p>Each category has its own pool of messages, so you can switch between them to match your mood or energy level at any moment.</p>
+
+    <h2 id="key-features">4. Key Features</h2>
+    <ul>
+      <li><strong>Four fortune categories:</strong> Daily, Motivation, Luck, and Advice messages each designed for different moments.</li>
+      <li><strong>Instant generation:</strong> One click reveals a fresh fortune immediately.</li>
+      <li><strong>Copy to clipboard:</strong> Share your fortune easily with teammates or friends.</li>
+      <li><strong>No signup required:</strong> Start opening cookies immediately — no account needed.</li>
+      <li><strong>Mobile-friendly:</strong> Works seamlessly on phones, tablets, and desktops.</li>
+    </ul>
+
+    <h2 id="when-to-use-fortune-cookie">5. When to Use Fortune Cookie Generator</h2>
+    <p>Use Fortune Cookie Generator whenever you need a quick mood lift, creative spark, or moment of reflection. It pairs well with work breaks, morning routines, and team meetings.</p>
+    <ul>
+      <li>Start your morning with a positive message.</li>
+      <li>Share a fun fortune with a friend or coworker.</li>
+      <li>Use it as an icebreaker or fun question starter in meetings.</li>
+      <li>Take a quick pause during a stressful day for a moment of encouragement.</li>
+      <li>Generate group fortunes for team building or casual hangouts.</li>
+    </ul>
+
+    <h2 id="sharing-fortunes">6. Sharing &amp; Copying Fortunes</h2>
+    <p>Every fortune generated can be copied directly to your clipboard with one click. Share it via chat, email, notes, or any social app by pasting the fortune text.</p>
+    <p>Send teammates the page link and let them generate their own fortunes — perfect for remote work icebreakers or team morale boosts.</p>
+
+    <h2 id="feedback">7. Feedback</h2>
+    <p>If you have ideas for new fortune categories, additional features, or improvements, please share them on the <a href="/feedback/">Feedback page</a>. Your input helps us make the tool better for everyone.</p>
+
+    <h2 id="alternative-tools">8. Alternative Tools</h2>
+    <p>If you want a decision-maker instead of inspiration, try the <a href="/apps/yes-or-no-wheel/">Yes or No Wheel</a>. For broader randomness with custom lists, check out the <a href="/apps/the-wheel-spinner/">Choices Spinner</a>. For team mood and energy checks, the <a href="/apps/positive-wheel/">Positive Wheel</a> offers curated encouraging outcomes.</p>
+  </section>
+</main>
+
+<script>
+  const FORTUNES = {
+    daily: [
+      'A small positive change today will feel bigger tomorrow.',
+      'Your kindness is your best fortune; share it generously.',
+      'Good energy follows those who keep moving forward.',
+      'Today is a day to notice the little opportunities around you.',
+      'A fresh perspective is closer than you think.'
+    ],
+    motivation: [
+      'Take one step now and the rest will follow more easily.',
+      'The effort you make today builds the momentum for tomorrow.',
+      'You are capable of more than you believe in this moment.',
+      'Keep your goals simple and your progress steady.',
+      'A small win today creates the confidence for the next challenge.'
+    ],
+    luck: [
+      'A pleasant surprise is heading your way soon.',
+      'Lucky moments often come when you least expect them.',
+      'Today may bring an unexpected chance to smile.',
+      'A little optimism opens the door to better luck.',
+      'The right moment may arrive when you stay ready.'
+    ],
+    advice: [
+      'Pause before you answer and listen to what feels true.',
+      'A clearer mind comes after one deep breath.',
+      'Make space for the idea that feels calm and right.',
+      'Small, consistent steps are stronger than big, rushed plans.',
+      'Ask one honest question before making your next move.'
+    ]
+  };
+
+  const categoryButtons = document.querySelectorAll('.category-btn');
+  const generateBtn = document.getElementById('generateBtn');
+  const copyBtn = document.getElementById('copyBtn');
+  const fortuneText = document.getElementById('fortuneText');
+
+  function chooseRandom(items) {
+    return items[Math.floor(Math.random() * items.length)];
+  }
+
+  function activeCategory() {
+    return document.querySelector('.category-btn.active').dataset.category;
+  }
+
+  function renderFortune(message) {
+    fortuneText.textContent = `"${message}"`;
+  }
+
+  function generateFortune() {
+    const category = activeCategory();
+    const message = chooseRandom(FORTUNES[category]);
+    renderFortune(message);
+  }
+
+  function copyFortune() {
+    const text = fortuneText.textContent;
+    if (!text || text === 'Click Generate Fortune to open your cookie.') return;
+
+    navigator.clipboard.writeText(text).then(() => {
+      copyBtn.textContent = '✅ Copied';
+      setTimeout(() => { copyBtn.textContent = '📋 Copy Message'; }, 1500);
+    }).catch(() => {
+      copyBtn.textContent = '⚠️ Copy failed';
+      setTimeout(() => { copyBtn.textContent = '📋 Copy Message'; }, 1500);
+    });
+  }
+
+  categoryButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      categoryButtons.forEach(item => item.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  generateBtn.addEventListener('click', generateFortune);
+  copyBtn.addEventListener('click', copyFortune);
+</script>
