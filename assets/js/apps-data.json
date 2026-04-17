@@ -540,12 +540,39 @@
     "description": "Generate Daily Grand quick picks — 5 main numbers from 1–49 and a Grand Number from 1–7."
   },
   {
+    "id": "euromillions-number-generator",
+    "name": "EuroMillions Number Generator",
+    "path": "/apps/euromillions-number-generator/",
+    "category": "lottery",
+    "footerGroup": "Lottery",
+    "emoji": "🇪🇺",
+    "description": "Generate random EuroMillions quick picks — 5 main numbers from 1–50 and 2 Lucky Stars from 1–12."
+  },
+  {
+    "id": "uk-national-lottery-number-generator",
+    "name": "UK National Lottery Generator",
+    "path": "/apps/uk-national-lottery-number-generator/",
+    "category": "lottery",
+    "footerGroup": "Lottery",
+    "emoji": "🇬🇧",
+    "description": "Generate random UK National Lottery quick picks — 6 numbers from 1–59 plus a bonus ball."
+  },
+  {
+    "id": "australian-powerball-number-generator",
+    "name": "Australian Powerball Generator",
+    "path": "/apps/australian-powerball-number-generator/",
+    "category": "lottery",
+    "footerGroup": "Lottery",
+    "emoji": "🇦🇺",
+    "description": "Generate random Australian Powerball quick picks — 7 numbers from 1–35 and a Powerball from 1–20."
+  },
+  {
     "id": "lottery",
     "name": "Lottery Hub",
     "path": "/lottery/",
     "category": "nav",
     "emoji": "🎰",
-    "description": "Generate quick picks for Powerball, Mega Millions, Lotto 6/49, Lotto Max, Daily Grand, and Lucky for Life."
+    "description": "Generate quick picks for Powerball, Mega Millions, EuroMillions, UK Lotto, Australian Powerball, Lotto 6/49, Lotto Max, Daily Grand, and Lucky for Life."
   },
   {
     "id": "settings",

@@ -1,0 +1,413 @@
+/* ==========================================================================
+   EuroMillions Number Generator — App Styles
+   - Lottery ball display with stagger-reveal animation
+   - 5 main balls + 2 blue Lucky Star bonus balls
+   ========================================================================== */
+
+.lottery-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem var(--layout-gutter);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.page-hero {
+  padding: 2rem 2.5rem;
+}
+
+.page-hero h1 {
+  margin: 0.4rem 0 0;
+  font-size: clamp(1.7rem, 2.2rem, 2.4rem);
+  color: var(--brand-heading);
+  font-weight: 700;
+}
+
+.page-hero p {
+  margin: 0.5rem 0 0;
+  font-size: 1rem;
+  color: var(--brand-text);
+  line-height: 1.6;
+}
+
+.hero-eyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--brand-subtle-text);
+}
+
+.lottery-card {
+  padding: 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.lottery-rules {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.rules-badge {
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background: var(--brand-accent-muted);
+  color: var(--brand-accent-strong);
+  border: 1px solid var(--brand-accent);
+  letter-spacing: 0.02em;
+}
+
+.rules-badge--bonus {
+  background: color-mix(in srgb, var(--bonus-color, #003fa3) 12%, transparent);
+  color: var(--bonus-color, #003fa3);
+  border-color: var(--bonus-color, #003fa3);
+}
+
+.rules-sep {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--brand-subtle-text);
+}
+
+.balls-area {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.balls-main {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.balls-sep {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--brand-subtle-text);
+}
+
+.balls-bonus {
+  display: flex;
+  gap: 0.55rem;
+}
+
+.ball {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 800;
+  transition: transform 0.2s ease;
+  position: relative;
+  user-select: none;
+}
+
+.ball span {
+  position: relative;
+  z-index: 1;
+}
+
+.ball--empty {
+  background: var(--brand-surface);
+  border: 2px dashed var(--brand-border);
+  color: var(--brand-subtle-text);
+}
+
+.ball--reveal:not(.ball--bonus) {
+  background: var(--brand-surface);
+  border: 3px solid var(--brand-accent);
+  color: var(--brand-heading);
+  box-shadow: 0 4px 16px var(--brand-accent-muted);
+  animation: ballPop 0.3s ease;
+}
+
+.ball--bonus.ball--reveal {
+  background: var(--bonus-color, #003fa3);
+  border: 3px solid var(--bonus-color, #003fa3);
+  color: #fff;
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--bonus-color, #003fa3) 45%, transparent);
+  animation: ballPop 0.3s ease, bonusGlow 0.8s ease 0.15s;
+}
+
+@keyframes ballPop {
+  0%   { transform: scale(0.7); opacity: 0; }
+  70%  { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes bonusGlow {
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--bonus-color, #003fa3) 60%, transparent); }
+  50%  { box-shadow: 0 0 0 12px color-mix(in srgb, var(--bonus-color, #003fa3) 0%, transparent); }
+  100% { box-shadow: 0 4px 20px color-mix(in srgb, var(--bonus-color, #003fa3) 45%, transparent); }
+}
+
+.lottery-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.lines-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lines-control label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--brand-heading);
+}
+
+.lines-control select {
+  font-family: var(--brand-font-family);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 8px 12px;
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-md);
+  background: var(--brand-surface);
+  color: var(--brand-text);
+  cursor: pointer;
+}
+
+.lines-control select:focus {
+  outline: none;
+  border-color: var(--brand-accent);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.btn {
+  font: inherit;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: var(--brand-focus-ring);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn--accent {
+  background-color: var(--brand-accent);
+  color: var(--brand-accent-contrast-text);
+  border-color: var(--brand-accent);
+}
+
+.btn--accent:hover:not(:disabled) {
+  background-color: var(--brand-accent-strong);
+  transform: translateY(-2px);
+}
+
+.btn--secondary {
+  background-color: var(--brand-surface);
+  color: var(--brand-heading);
+  border-color: var(--brand-border);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background-color: var(--brand-background);
+  transform: translateY(-2px);
+}
+
+.btn--sm {
+  padding: 7px 14px;
+  font-size: 0.85rem;
+}
+
+.btn--xs {
+  padding: 4px 10px;
+  font-size: 0.8rem;
+}
+
+.multi-lines {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.multi-line {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1rem;
+  background: var(--brand-background);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-md);
+  flex-wrap: wrap;
+}
+
+.multi-line__label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--brand-subtle-text);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  min-width: 46px;
+}
+
+.multi-line__numbers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+  flex: 1;
+}
+
+.mini-ball {
+  min-width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: var(--brand-surface);
+  border: 2px solid var(--brand-accent);
+  color: var(--brand-heading);
+}
+
+.mini-ball--sep {
+  background: transparent;
+  border: none;
+  color: var(--brand-subtle-text);
+  font-size: 1rem;
+  min-width: 14px;
+}
+
+.mini-ball--bonus {
+  background: var(--bonus-color, #003fa3);
+  border-color: var(--bonus-color, #003fa3);
+  color: #fff;
+}
+
+.copy-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.copy-confirm {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--brand-accent-strong);
+  min-height: 1.2em;
+}
+
+.history-card {
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.history-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--brand-heading);
+}
+
+.history-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.history-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.6rem 0.9rem;
+  background: var(--brand-background);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-sm);
+}
+
+.history-ts {
+  font-size: 0.75rem;
+  color: var(--brand-subtle-text);
+}
+
+.history-line {
+  font-size: 0.9rem;
+  color: var(--brand-text);
+}
+
+.history-line strong {
+  color: var(--brand-heading);
+}
+
+@media (max-width: 680px) {
+  .lottery-page {
+    padding: 1rem var(--layout-gutter);
+  }
+
+  .lottery-card,
+  .page-hero,
+  .history-card,
+  .seo-content-area {
+    padding: 1.25rem 1.25rem;
+  }
+
+  .ball {
+    width: 50px;
+    height: 50px;
+    font-size: 1rem;
+  }
+
+  .balls-sep {
+    font-size: 1.1rem;
+  }
+
+  .lottery-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .lottery-controls .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .lines-control {
+    justify-content: center;
+  }
+}

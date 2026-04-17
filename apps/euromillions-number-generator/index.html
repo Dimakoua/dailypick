@@ -1,0 +1,359 @@
+---
+layout: base_app.njk
+title: "EuroMillions Number Generator – Random Quick Pick | Daily Pick"
+description: "Generate random EuroMillions quick pick numbers instantly. Pick 5 numbers from 1–50 and 2 Lucky Stars from 1–12 with cryptographically fair randomness."
+keywords: "euromillions number generator, euromillions quick pick, random euromillions numbers, euromillions number picker, euromillions lucky stars generator, lottery number generator"
+canonical: "https://dailypick.dev/apps/euromillions-number-generator/"
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="lottery" class="lottery-page" id="main">
+
+  <header class="page-hero glass-card">
+    <p class="hero-eyebrow">🌍 International Lottery</p>
+    <h1>🇪🇺 EuroMillions Number Generator</h1>
+    <p>Generate fair EuroMillions quick picks instantly. 5 numbers from 1–50 and 2 Lucky Stars from 1–12.</p>
+  </header>
+
+  <section class="lottery-card glass-card">
+    <div class="lottery-rules">
+      <span class="rules-badge">Pick 5 from 1–50</span>
+      <span class="rules-sep">+</span>
+      <span class="rules-badge rules-badge--bonus" style="--bonus-color: #003fa3;">2 Lucky Stars 1–12</span>
+    </div>
+
+    <div class="balls-area" id="ballsArea" aria-live="polite" aria-label="Generated EuroMillions numbers">
+      <div class="balls-main" id="mainBalls">
+        <div class="ball ball--empty" aria-hidden="true"><span>?</span></div>
+        <div class="ball ball--empty" aria-hidden="true"><span>?</span></div>
+        <div class="ball ball--empty" aria-hidden="true"><span>?</span></div>
+        <div class="ball ball--empty" aria-hidden="true"><span>?</span></div>
+        <div class="ball ball--empty" aria-hidden="true"><span>?</span></div>
+      </div>
+      <div class="balls-sep" aria-hidden="true">+</div>
+      <div class="balls-bonus" id="bonusBalls">
+        <div class="ball ball--bonus ball--empty" style="--bonus-color: #003fa3;" aria-hidden="true"><span>?</span></div>
+        <div class="ball ball--bonus ball--empty" style="--bonus-color: #003fa3;" aria-hidden="true"><span>?</span></div>
+      </div>
+    </div>
+
+    <div class="lottery-controls">
+      <div class="lines-control">
+        <label for="linesCount">Lines</label>
+        <select id="linesCount">
+          <option value="1" selected>1 line</option>
+          <option value="2">2 lines</option>
+          <option value="3">3 lines</option>
+          <option value="4">4 lines</option>
+          <option value="5">5 lines</option>
+        </select>
+      </div>
+      <button id="generateBtn" class="btn btn--accent" type="button">⭐ Generate Quick Pick</button>
+      <button id="resetBtn" class="btn btn--secondary" type="button">↺ Reset</button>
+    </div>
+
+    <div class="multi-lines" id="multiLines" hidden></div>
+
+    <div class="copy-row" id="copyRow" hidden>
+      <button id="copyBtn" class="btn btn--secondary" type="button">📋 Copy Numbers</button>
+      <span class="copy-confirm" id="copyConfirm" aria-live="polite"></span>
+    </div>
+  </section>
+
+  <section class="history-card glass-card" id="historySection" hidden>
+    <h2 class="history-title">Recent Picks</h2>
+    <ul class="history-list" id="historyList" aria-label="Recent EuroMillions picks"></ul>
+    <button id="clearHistoryBtn" class="btn btn--secondary btn--sm" type="button">Clear History</button>
+  </section>
+
+  <section class="seo-content-area glass-card">
+    <h2>EuroMillions Number Generator – random quick pick for Europe's biggest jackpot</h2>
+    <p>EuroMillions Number Generator creates a fair, random quick pick that matches the official EuroMillions draw format. It picks 5 unique main numbers from the 1–50 pool and 2 unique Lucky Stars from the separate 1–12 pool — exactly as the game requires.</p>
+    <p>The generator uses <code>crypto.getRandomValues()</code> instead of <code>Math.random()</code>, so every pick is cryptographically random and unbiased.</p>
+    <p>Use it to generate one line or up to five lines at once, copy the results to your clipboard, and head to an authorised retailer or the official app.</p>
+
+    <h2>Table of Contents</h2>
+    <ul>
+      <li><a href="#what-is-euromillions-generator">1. What Is the EuroMillions Number Generator?</a></li>
+      <li><a href="#how-to-use-it">2. How to Use It?</a></li>
+      <li><a href="#key-features">3. Key Features</a></li>
+      <li><a href="#how-euromillions-works">4. How EuroMillions Works</a></li>
+      <li><a href="#sharing-and-exporting">5. Copying Your Numbers</a></li>
+      <li><a href="#when-to-use">6. When to Use This Generator?</a></li>
+      <li><a href="#feedback">7. We Want to Hear Your Feedback</a></li>
+      <li><a href="#alternative-tool">8. Need an Alternative Tool?</a></li>
+    </ul>
+
+    <h2 id="what-is-euromillions-generator">1. What Is the EuroMillions Number Generator?</h2>
+    <p>EuroMillions Number Generator is a free online tool that produces random quick picks for the EuroMillions lottery. The primary keyword is EuroMillions number generator, and the tool is built around the official game rules: 5 numbers from 1–50 and 2 Lucky Stars from 1–12.</p>
+    <p>It uses Fisher-Yates shuffling on a full number pool seeded by <code>crypto.getRandomValues()</code>, giving you a statistically fair pick every single time. The 2 Lucky Stars are drawn from their own independent pool and are guaranteed to be unique.</p>
+    <p>No sign-up is required. Generate your numbers, copy them, and play — it takes under five seconds.</p>
+
+    <h2 id="how-to-use-it">2. How to Use It?</h2>
+    <ol>
+      <li>Choose the number of lines you want from the <strong>Lines</strong> selector (1 to 5).</li>
+      <li>Click <strong>Generate Quick Pick</strong> to reveal your numbers with a staggered ball animation.</li>
+      <li>Click <strong>Copy Numbers</strong> to copy all lines to your clipboard.</li>
+      <li>Click <strong>Reset</strong> to clear the display and start fresh.</li>
+    </ol>
+
+    <h2 id="key-features">3. Key Features</h2>
+    <ul>
+      <li><strong>Official format:</strong> 5 main balls (1–50) + 2 Lucky Stars (1–12), matching the real EuroMillions draw exactly.</li>
+      <li><strong>Cryptographically fair:</strong> uses <code>crypto.getRandomValues()</code> for unbiased randomness.</li>
+      <li><strong>Unique Lucky Stars:</strong> both stars are always different numbers, just like the real draw.</li>
+      <li><strong>Multi-line support:</strong> generate up to 5 independent lines in one click.</li>
+      <li><strong>Copy to clipboard:</strong> grab all your numbers instantly for use anywhere.</li>
+      <li><strong>Pick history:</strong> your last 5 sessions are saved locally for reference.</li>
+    </ul>
+
+    <h2 id="how-euromillions-works">4. How EuroMillions Works</h2>
+    <p>EuroMillions is drawn every Tuesday and Friday across 17 participating European countries including the UK, France, Spain, Germany, Italy, and others. Players pick 5 main numbers from 1–50 and 2 Lucky Stars from a separate pool of 1–12. A jackpot winner must match all 5 main numbers plus both Lucky Stars.</p>
+    <p>The jackpot starts at €17 million and can grow to a capped maximum of €250 million. There are 13 prize tiers in total — matching just 1 main number and 2 Lucky Stars wins the lowest prize. Tickets are sold through national lottery operators in each participating country.</p>
+    <p>This generator replicates the exact pool sizes so your quick pick is formatted correctly for any retailer or official app entry.</p>
+
+    <h2 id="sharing-and-exporting">5. Copying Your Numbers</h2>
+    <p>After generating, click <strong>Copy Numbers</strong> to copy all lines to your clipboard in a clean, readable format (e.g., <em>07 14 22 38 48 + LS 03 11</em>). Paste directly into notes, a text message, or your lottery app.</p>
+    <p>Your last 5 sessions are also stored in browser localStorage so you can scroll back to previous picks without regenerating.</p>
+
+    <h2 id="when-to-use">6. When to Use This Generator?</h2>
+    <p>Use this tool whenever you want a random, unbiased EuroMillions quick pick without relying on retailer machines or app generators whose randomness you cannot verify.</p>
+    <ul>
+      <li>Buying tickets before a big Tuesday or Friday draw.</li>
+      <li>Generating picks for a lottery syndicate with colleagues.</li>
+      <li>Creating multiple lines quickly without writing numbers by hand.</li>
+      <li>Playing from a country where EuroMillions is available.</li>
+      <li>Having fun dreaming about the €250 million jackpot.</li>
+    </ul>
+
+    <h2 id="feedback">7. We Want to Hear Your Feedback</h2>
+    <p>Have a feature request or found a bug? Visit the <a href="/feedback/">Feedback page</a> and let us know. We read every submission and use your ideas to improve the tool.</p>
+
+    <h2 id="alternative-tool">8. Need an Alternative Tool?</h2>
+    <p>For UK lottery picks, try the <a href="/apps/uk-national-lottery-number-generator/">UK National Lottery Generator</a>. For US lotteries, see <a href="/apps/powerball-number-generator/">Powerball</a> or <a href="/apps/mega-millions-number-generator/">Mega Millions</a>. Browse all lottery generators at the <a href="/lottery/">Lottery Hub</a>. Good luck!</p>
+  </section>
+
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  const LOTTERY = {
+    mainCount: 5,
+    mainMax: 50,
+    bonusCount: 2,
+    bonusMax: 12,
+    bonusLabel: 'LS',
+    bonusColor: '#003fa3',
+    storageKey: 'dailypick_euromillions_history',
+  };
+
+  const generateBtn = document.getElementById('generateBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const copyBtn = document.getElementById('copyBtn');
+  const copyConfirm = document.getElementById('copyConfirm');
+  const copyRow = document.getElementById('copyRow');
+  const linesCount = document.getElementById('linesCount');
+  const multiLines = document.getElementById('multiLines');
+  const historySection = document.getElementById('historySection');
+  const historyList = document.getElementById('historyList');
+  const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+
+  // --- Cryptographically fair randomness ---
+  function secureRandInt(min, max) {
+    const range = max - min + 1;
+    const bytesNeeded = Math.ceil(Math.log2(range) / 8) + 1;
+    const maxValid = Math.floor(256 ** bytesNeeded / range) * range;
+    const arr = new Uint8Array(bytesNeeded);
+    let val;
+    do {
+      crypto.getRandomValues(arr);
+      val = arr.reduce((acc, b, i) => acc + b * 256 ** i, 0);
+    } while (val >= maxValid);
+    return min + (val % range);
+  }
+
+  function pickUnique(count, max) {
+    const pool = Array.from({ length: max }, (_, i) => i + 1);
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = secureRandInt(0, i);
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    return pool.slice(0, count).sort((a, b) => a - b);
+  }
+
+  function generateLine() {
+    const main = pickUnique(LOTTERY.mainCount, LOTTERY.mainMax);
+    const bonus = pickUnique(LOTTERY.bonusCount, LOTTERY.bonusMax);
+    return { main, bonus };
+  }
+
+  // --- Ball DOM helpers ---
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function buildMainBallEls() {
+    const container = document.getElementById('mainBalls');
+    container.innerHTML = '';
+    for (let i = 0; i < LOTTERY.mainCount; i++) {
+      const div = document.createElement('div');
+      div.className = 'ball ball--empty';
+      div.setAttribute('aria-hidden', 'true');
+      div.innerHTML = '<span>?</span>';
+      container.appendChild(div);
+    }
+  }
+
+  function buildBonusBallEls() {
+    const container = document.getElementById('bonusBalls');
+    container.innerHTML = '';
+    for (let i = 0; i < LOTTERY.bonusCount; i++) {
+      const div = document.createElement('div');
+      div.className = 'ball ball--bonus ball--empty';
+      div.style.setProperty('--bonus-color', LOTTERY.bonusColor);
+      div.setAttribute('aria-hidden', 'true');
+      div.innerHTML = '<span>?</span>';
+      container.appendChild(div);
+    }
+  }
+
+  function revealBall(el, number, delay) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        el.classList.remove('ball--empty');
+        el.classList.add('ball--reveal');
+        el.querySelector('span').textContent = pad(number);
+        el.setAttribute('aria-label', String(number));
+        setTimeout(resolve, 300);
+      }, delay);
+    });
+  }
+
+  async function animateSingleLine(line) {
+    buildMainBallEls();
+    buildBonusBallEls();
+    const mainEls = document.querySelectorAll('#mainBalls .ball');
+    const bonusEls = document.querySelectorAll('#bonusBalls .ball');
+    const promises = line.main.map((n, i) => revealBall(mainEls[i], n, i * 180));
+    await Promise.all(promises);
+    await revealBall(bonusEls[0], line.bonus[0], 100);
+    await revealBall(bonusEls[1], line.bonus[1], 250);
+  }
+
+  // --- Multi-line rendering ---
+  function renderMultiLines(lines) {
+    multiLines.hidden = false;
+    multiLines.innerHTML = lines.map((line, idx) =>
+      `<div class="multi-line">
+        <span class="multi-line__label">Line ${idx + 1}</span>
+        <span class="multi-line__numbers">
+          ${line.main.map(n => `<span class="mini-ball">${pad(n)}</span>`).join('')}
+          <span class="mini-ball mini-ball--sep">+</span>
+          ${line.bonus.map(n => `<span class="mini-ball mini-ball--bonus" style="--bonus-color:${LOTTERY.bonusColor}">${pad(n)}</span>`).join('')}
+        </span>
+        <button class="copy-line-btn btn btn--secondary btn--xs" data-line="${idx}" type="button" aria-label="Copy line ${idx + 1}">📋</button>
+      </div>`
+    ).join('');
+
+    multiLines.querySelectorAll('.copy-line-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = Number(btn.dataset.line);
+        copyToClipboard(formatLine(lines[idx]));
+      });
+    });
+  }
+
+  // --- Format & copy ---
+  function formatLine(line) {
+    return line.main.map(pad).join(' ') + ` + ${LOTTERY.bonusLabel} ${line.bonus.map(pad).join(' ')}`;
+  }
+
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      copyConfirm.textContent = '✓ Copied!';
+      setTimeout(() => { copyConfirm.textContent = ''; }, 2000);
+    }).catch(() => {
+      copyConfirm.textContent = 'Copy failed — please select and copy manually.';
+    });
+  }
+
+  // --- History ---
+  function loadHistory() {
+    try {
+      return JSON.parse(localStorage.getItem(LOTTERY.storageKey)) || [];
+    } catch { return []; }
+  }
+
+  function saveHistory(lines) {
+    const history = loadHistory();
+    history.unshift({ lines, ts: Date.now() });
+    const trimmed = history.slice(0, 5);
+    localStorage.setItem(LOTTERY.storageKey, JSON.stringify(trimmed));
+    renderHistory(trimmed);
+  }
+
+  function renderHistory(history) {
+    if (!history.length) { historySection.hidden = true; return; }
+    historySection.hidden = false;
+    historyList.innerHTML = history.map(entry =>
+      `<li class="history-entry">
+        <span class="history-ts">${new Date(entry.ts).toLocaleString()}</span>
+        ${entry.lines.map(line =>
+          `<span class="history-line">${line.main.map(pad).join(' – ')} <strong>+ ${LOTTERY.bonusLabel} ${line.bonus.map(pad).join(' ')}</strong></span>`
+        ).join('')}
+      </li>`
+    ).join('');
+  }
+
+  // --- State ---
+  let currentLines = [];
+
+  // --- Generate ---
+  generateBtn.addEventListener('click', async () => {
+    generateBtn.disabled = true;
+    const count = Number(linesCount.value);
+    currentLines = Array.from({ length: count }, generateLine);
+
+    await animateSingleLine(currentLines[0]);
+
+    if (count > 1) {
+      renderMultiLines(currentLines);
+    } else {
+      multiLines.hidden = true;
+      multiLines.innerHTML = '';
+    }
+
+    copyRow.hidden = false;
+    saveHistory(currentLines);
+    generateBtn.disabled = false;
+  });
+
+  // --- Reset ---
+  resetBtn.addEventListener('click', () => {
+    buildMainBallEls();
+    buildBonusBallEls();
+    multiLines.hidden = true;
+    multiLines.innerHTML = '';
+    copyRow.hidden = true;
+    currentLines = [];
+    copyConfirm.textContent = '';
+  });
+
+  // --- Copy all ---
+  copyBtn.addEventListener('click', () => {
+    if (!currentLines.length) return;
+    copyToClipboard(currentLines.map(formatLine).join('\n'));
+  });
+
+  // --- Clear history ---
+  clearHistoryBtn.addEventListener('click', () => {
+    localStorage.removeItem(LOTTERY.storageKey);
+    historySection.hidden = true;
+  });
+
+  // --- Init ---
+  buildMainBallEls();
+  buildBonusBallEls();
+  renderHistory(loadHistory());
+}());
+</script>
