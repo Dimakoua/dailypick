@@ -466,6 +466,68 @@ module.exports = [
     description: "Play a quick choice game with custom prompts or curated icebreakers for teams and gatherings."
   },
   {
+    id: "powerball-number-generator",
+    name: "Powerball Number Generator",
+    path: "/apps/powerball-number-generator/",
+    category: "lottery",
+    footerGroup: "Lottery",
+    emoji: "🔴",
+    description: "Generate random Powerball quick pick numbers instantly — 5 main balls from 1–69 and a Powerball from 1–26."
+  },
+  {
+    id: "mega-millions-number-generator",
+    name: "Mega Millions Number Generator",
+    path: "/apps/mega-millions-number-generator/",
+    category: "lottery",
+    footerGroup: "Lottery",
+    emoji: "💛",
+    description: "Pick random Mega Millions numbers — 5 from 1–70 and a Mega Ball from 1–25. Your lucky quick pick in one click."
+  },
+  {
+    id: "lucky-for-life-number-generator",
+    name: "Lucky for Life Generator",
+    path: "/apps/lucky-for-life-number-generator/",
+    category: "lottery",
+    footerGroup: "Lottery",
+    emoji: "🍀",
+    description: "Generate Lucky for Life quick picks — 5 main numbers from 1–48 and a Lucky Ball from 1–18."
+  },
+  {
+    id: "lotto-649-number-generator",
+    name: "Lotto 6/49 Number Generator",
+    path: "/apps/lotto-649-number-generator/",
+    category: "lottery",
+    footerGroup: "Lottery",
+    emoji: "🍁",
+    description: "Generate random Lotto 6/49 quick picks for Canada's classic lottery — 6 numbers from 1–49 plus a bonus ball."
+  },
+  {
+    id: "lotto-max-number-generator",
+    name: "Lotto Max Number Generator",
+    path: "/apps/lotto-max-number-generator/",
+    category: "lottery",
+    footerGroup: "Lottery",
+    emoji: "🌟",
+    description: "Pick 7 random Lotto Max numbers from 1–50 for Canada's big jackpot lottery. Quick picks made easy."
+  },
+  {
+    id: "daily-grand-number-generator",
+    name: "Daily Grand Number Generator",
+    path: "/apps/daily-grand-number-generator/",
+    category: "lottery",
+    footerGroup: "Lottery",
+    emoji: "👑",
+    description: "Generate Daily Grand quick picks — 5 main numbers from 1–49 and a Grand Number from 1–7."
+  },
+  {
+    id: "lottery",
+    name: "Lottery Hub",
+    path: "/lottery/",
+    category: "nav",
+    emoji: "🎰",
+    description: "Generate quick picks for Powerball, Mega Millions, Lotto 6/49, Lotto Max, Daily Grand, and Lucky for Life."
+  },
+  {
     id: "settings",
     name: "Settings",
     path: "/apps/brand/",
