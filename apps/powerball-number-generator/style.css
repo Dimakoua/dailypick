@@ -1,3 +1,6 @@
+/* Ensure [hidden] always overrides display rules */
+[hidden] { display: none !important; }
+
 /* ==========================================================================
    Lottery Number Generator — Shared App Styles (Powerball)
    - Lottery ball display with stagger-reveal animation
