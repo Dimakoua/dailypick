@@ -64,6 +64,7 @@
     <link rel="stylesheet" href="/assets/css/pwa-install.css" />
     <link rel="stylesheet" href="/assets/css/glass.css" media="print" onload="this.media='all'" />
     <link rel="stylesheet" href="/assets/css/seo-card.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="/assets/css/feedback-popup.css" media="print" onload="this.media='all'" />
     <link rel="stylesheet" href="/assets/css/standup-panel.css" media="print" onload="this.media='all'" />
     <link rel="stylesheet" href="/assets/css/local-brand-studio.css" media="print" onload="this.media='all'" />
     {% if appStyles %}{{ appStyles | safe }}{% endif %}
@@ -138,7 +139,9 @@
     {% include "pwa-install.html" %}
     {% include "pwa-nav.html" %}
     {% include "pwa-search.html" %}
+    {% include "feedback-popup.html" %}
     <script src="/assets/js/cookie-consent.js" defer></script>
     <script src="/assets/js/pwa-install.js" defer></script>
+    <script src="/assets/js/feedback-popup.js" defer></script>
 </body>
 </html>

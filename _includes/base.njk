@@ -97,6 +97,7 @@
     <link rel="stylesheet" href="{{ '/assets/css/pwa-install.css' | url }}">
     <link rel="stylesheet" href="{{ '/assets/css/glass.css' | url }}" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="{{ '/assets/css/seo-card.css' | url }}" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="{{ '/assets/css/feedback-popup.css' | url }}" media="print" onload="this.media='all'">
     <script src="/assets/js/brand-theme-engine.js" defer></script>
     <script src="/assets/js/brand-config.js" defer></script>
     <!-- Google tag (gtag.js) -->
@@ -130,10 +131,12 @@
 {% include "pwa-install.html" %}
 {% include "pwa-nav.html" %}
 {% include "pwa-search.html" %}
+{% include "feedback-popup.html" %}
 
     <!-- Any global scripts can go here -->
     <script src="/assets/js/cookie-consent.js" defer></script>
     <script src="/assets/js/pwa-install.js" defer></script>
+    <script src="/assets/js/feedback-popup.js" defer></script>
 </body>
 {% include "bg-orbs.html" %}
 </html>

@@ -1,0 +1,55 @@
+<div id="feedback-popup" class="feedback-popup" role="dialog" aria-modal="true" aria-labelledby="feedback-popup-title" aria-hidden="true" hidden>
+  <div class="feedback-popup__backdrop"></div>
+  <div class="feedback-popup__card">
+    <button class="feedback-popup__close" id="feedback-popup-close" aria-label="Close feedback popup" type="button">&times;</button>
+
+    <!-- Step 1: Stars -->
+    <div class="feedback-popup__step" id="feedback-popup-step-stars">
+      <p class="feedback-popup__eyebrow">Quick question</p>
+      <h2 class="feedback-popup__title" id="feedback-popup-title">Enjoying Daily Pick?</h2>
+      <p class="feedback-popup__subtitle">Rate your experience — it takes 5 seconds.</p>
+      <div class="feedback-popup__stars" role="group" aria-label="Rating">
+        <button type="button" class="feedback-popup__star" data-value="1" aria-label="1 star">★</button>
+        <button type="button" class="feedback-popup__star" data-value="2" aria-label="2 stars">★</button>
+        <button type="button" class="feedback-popup__star" data-value="3" aria-label="3 stars">★</button>
+        <button type="button" class="feedback-popup__star" data-value="4" aria-label="4 stars">★</button>
+        <button type="button" class="feedback-popup__star" data-value="5" aria-label="5 stars">★</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Optional message -->
+    <div class="feedback-popup__step" id="feedback-popup-step-message" hidden>
+      <p class="feedback-popup__eyebrow">Thank you!</p>
+      <h2 class="feedback-popup__title" id="feedback-popup-title-msg">Anything to add?</h2>
+      <p class="feedback-popup__subtitle">Totally optional — a few words help us improve.</p>
+      <form class="feedback-popup__form" id="feedback-popup-form" novalidate>
+        <input type="hidden" name="access_key" value="48c0d957-b209-4654-8efd-8adfa87e3651">
+        <input type="hidden" name="subject" value="Daily Pick — quick feedback popup">
+        <input type="hidden" name="rating" id="feedback-popup-rating-input" value="">
+        <input type="hidden" name="page" id="feedback-popup-page-input" value="">
+        <textarea
+          class="feedback-popup__textarea"
+          name="message"
+          id="feedback-popup-message"
+          placeholder="What do you love or what could be better?"
+          rows="3"
+          maxlength="500"
+        ></textarea>
+        <div class="feedback-popup__actions">
+          <button type="submit" class="btn btn--accent feedback-popup__submit">Send feedback</button>
+          <button type="button" class="btn btn--secondary feedback-popup__skip" id="feedback-popup-skip">Skip</button>
+        </div>
+        <p class="feedback-popup__form-error" id="feedback-popup-error" aria-live="polite" hidden></p>
+      </form>
+    </div>
+
+    <!-- Step 3: Thank you -->
+    <div class="feedback-popup__step" id="feedback-popup-step-thanks" hidden>
+      <div class="feedback-popup__thanks">
+        <span class="feedback-popup__thanks-icon" aria-hidden="true">🎉</span>
+        <h2 class="feedback-popup__title">Thanks for the feedback!</h2>
+        <p class="feedback-popup__subtitle">It goes straight to the team and helps shape what we build next.</p>
+      </div>
+    </div>
+  </div>
+</div>
