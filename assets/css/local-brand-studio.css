@@ -391,3 +391,14 @@
     background-color: rgba(var(--brand-surface-rgb, 50, 50, 50), 0.95);
   }
 }
+
+/* Keep local brand studio above mobile bottom nav to avoid overlap */
+@media (max-width: 720px) {
+  .local-brand-studio-container {
+    bottom: calc(var(--pwa-nav-height, 72px) + env(safe-area-inset-bottom, 5px) + 2rem);
+  }
+
+  .local-brand-studio-panel {
+    bottom: calc(var(--pwa-nav-height, 72px) + env(safe-area-inset-bottom, 5px) + 1rem);
+  }
+}

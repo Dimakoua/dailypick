@@ -572,3 +572,14 @@ html.pwa-standalone {
     font-size: 0.82rem;
   }
 }
+
+/* Show bottom nav on small screens even when not in standalone PWA */
+@media (max-width: 720px) {
+  .pwa-bottom-nav {
+    display: flex;
+  }
+  /* Make room for bottom nav so content isn't obscured */
+  body {
+    padding-bottom: calc(var(--pwa-nav-height) + env(safe-area-inset-bottom, 5px));
+  }
+}

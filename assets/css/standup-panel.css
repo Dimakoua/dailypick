@@ -798,6 +798,36 @@
   font-weight: 700; cursor: pointer; padding: 0; text-align: left;
 }
 .standup-panel-detail__title-group { display: flex; align-items: baseline; gap: 0.5rem; }
+
+/* Hide the standup dock (toggle + container) on small screens */
+@media (max-width: 720px) {
+  .standup-dock-toggle,
+  .standup-dock {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+}
+
+/* Also hide the dock in PWA standalone mode */
+.pwa-standalone .standup-dock-toggle,
+.pwa-standalone .standup-dock {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Lift standup dock and panel above mobile bottom nav to avoid overlap */
+@media (max-width: 720px) {
+  .standup-dock-toggle {
+    bottom: calc(var(--pwa-nav-height, 72px) + env(safe-area-inset-bottom, 5px) + 2rem);
+  }
+
+  /* When the panel is used as a bottom sheet on mobile, keep it above the nav */
+  .standup-panel {
+    bottom: calc(var(--pwa-nav-height, 72px) + env(safe-area-inset-bottom, 5px) + 1.75rem);
+  }
+}
 .standup-panel-detail__title-group h4 { margin: 0; font-size: 1.1rem; color: var(--brand-heading, #2d3e50); }
 .standup-panel-detail__scroll { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; }
 .standup-panel-detail__section h5 {

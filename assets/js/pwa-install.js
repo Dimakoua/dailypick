@@ -23,6 +23,9 @@
     return;
   }
 
+  // Ensure bottom nav shows active state on mobile even when not in PWA mode
+  setupAppNav();
+
   // Don't show if dismissed recently
   var dismissedAt = localStorage.getItem(DISMISS_KEY);
   if (dismissedAt && Date.now() - parseInt(dismissedAt, 10) < DISMISS_DAYS * 86400000) return;
