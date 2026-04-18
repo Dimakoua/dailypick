@@ -19,7 +19,7 @@
     focusRing: '0 0 0 3px rgba(52, 152, 219, 0.35)',
     hoverShadow: '0 12px 30px rgba(52, 152, 219, 0.22)',
     fontFamily: "'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-    logoUrl: '',
+    logoUrl: '/assets/favicon/apple-touch-icon.png',
     themeIcon: '',
     themeBackground: 'none',
     themeAccentGlow: 'none',

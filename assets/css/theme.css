@@ -162,6 +162,20 @@ h6 {
   justify-content: center;
   color: var(--brand-accent-contrast-text);
   font-size: 1.3rem;
+  overflow: hidden;
+}
+
+.site-title .brand-mark__favicon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Hide the favicon img when a custom logo fills the background */
+.site-title .brand-mark[data-has-logo] .brand-mark__favicon {
+  display: none;
 }
 
 .site-title .brand-theme-emoji {
