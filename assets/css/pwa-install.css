@@ -346,10 +346,10 @@ html.pwa-standalone {
 }
 
 /* ── Float-over-nav offsets ───────────────────────────── */
-/* The bottom nav is 65px + safe-area-inset-bottom.
+/* The bottom nav is 72px + safe-area-inset-bottom.
    Lift fixed FABs so they sit above it. */
 :root {
-  --pwa-nav-height: 65px;
+  --pwa-nav-height: 72px;
 }
 
 .pwa-standalone .standup-dock-toggle {
@@ -372,7 +372,7 @@ html.pwa-standalone {
   left: 0;
   right: 0;
   z-index: 200;
-  padding-bottom: env(safe-area-inset-bottom, 5px);
+  padding-bottom: calc(env(safe-area-inset-bottom, 5px) + 6px);
   background: color-mix(in srgb, var(--brand-surface, #fff) 92%, transparent);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -391,8 +391,8 @@ html.pwa-standalone {
   align-items: center;
   justify-content: center;
   gap: 3px;
-  height: 65px;
-  padding: 10px 4px 8px;
+  height: 72px;
+  padding: 12px 4px 10px;
   text-decoration: none;
   color: var(--brand-subtle-text, #95a5a6);
   -webkit-tap-highlight-color: transparent;
