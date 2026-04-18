@@ -1,27 +1,100 @@
 ---
 layout: base.njk
-title: Agile Planning & Retrospective Tools – Clarity for Teams | Daily Pick
-description: Facilitate estimation sessions, stress-test sprint capacity, and run collaborative retrospectives with our suite of agile planning tools.
-keywords: agile planning tools, online planning poker, sprint retrospective board, meeting timer, capacity planner, scrum tools, remote team collaboration
+title: Free Agile Planning Tools for Scrum Teams | Daily Pick
+description: Free agile tools for Scrum teams — Planning Poker, Retro Board, Capacity Dice, and Meeting Timer. Browser-based, no sign-up needed.
+keywords: agile planning tools, online planning poker, sprint retrospective board, meeting timer, sprint capacity planner, scrum tools online, remote agile ceremonies, free sprint planning tools, fibonacci estimation, scrum master tools
 sitemap:
   priority: 0.9
   changefreq: weekly
+headExtra: |
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://dailypick.dev/" },
+      { "@type": "ListItem", "position": 2, "name": "Agile Planning Tools", "item": "https://dailypick.dev/agile/" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Agile Planning & Retrospective Tools",
+    "url": "https://dailypick.dev/agile/",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Planning Poker", "url": "https://dailypick.dev/apps/planning-poker/", "description": "Real-time Fibonacci estimation rooms with hidden votes, host controls, and Jira-ready summaries." },
+      { "@type": "ListItem", "position": 2, "name": "Retro Board", "url": "https://dailypick.dev/apps/retro-board/", "description": "Run collaborative retrospectives with drag-and-drop cards, voting, and real-time team insights." },
+      { "@type": "ListItem", "position": 3, "name": "Timer", "url": "https://dailypick.dev/apps/timer/", "description": "Build multi-stage meeting timers with shareable presets and audio cues to keep meetings on track." },
+      { "@type": "ListItem", "position": 4, "name": "Capacity Dice", "url": "https://dailypick.dev/apps/capacity-dice/", "description": "Roll PTO, meeting, and wildcard dice to stress-test sprint capacity and copy the summary." },
+      { "@type": "ListItem", "position": 5, "name": "Morale Thermometer", "url": "https://dailypick.dev/apps/morale-thermometer/", "description": "Anonymously rate team energy on a visual scale and see the aggregated results in real-time." }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Planning Poker and how does it work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Planning Poker is a consensus-based estimation technique used in Scrum. Each team member privately selects a card representing their effort estimate using Fibonacci numbers (1, 2, 3, 5, 8…), then everyone reveals at once to surface discussion. Daily Pick's Planning Poker runs entirely in the browser with hidden votes, host controls, and Jira-ready summaries — no downloads or sign-up needed."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I run a sprint retrospective online for free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Open the Retro Board on Daily Pick and share the link with your team. Each person adds cards under What Went Well, What Didn't, and Action Items, then the team dot-votes on the most important improvements. It's completely free, works in any browser, and requires no account."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I check my team's sprint capacity before planning?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use the Capacity Dice tool. Roll PTO, meeting, and wildcard dice to account for real-world team availability, then copy the resulting capacity summary directly into your planning notes or Jira ticket."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use these agile tools for remote Scrum ceremonies?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes — all Daily Pick agile tools are fully browser-based, so they work perfectly for distributed and remote teams. Just share your screen or send a direct link to teammates. No installs, no accounts, and no cost."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I check team morale anonymously during a sprint?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Open the Morale Thermometer and share the link with your team. Each member anonymously rates the team's energy on a visual scale, and the host sees the aggregated results in real-time — no individual responses are ever revealed."
+        }
+      }
+    ]
+  }
+  </script>
 ---
 
 <main class="main-container" id="main" data-page-type="agile">
     <header class="hero">
-        <h1 class="hero__title">Agile Planning & Retrospectives</h1>
+        <h1 class="hero__title">Agile Planning & Retrospective Tools</h1>
         <p class="hero__subtitle">
-            Facilitate estimation, manage capacity, and run retrospectives that stay aligned, 
-            transparent, and action-oriented with the <strong>Agile Suite</strong>.
+            Free browser-based tools for Scrum teams — run <strong>Planning Poker</strong> estimations, collaborate on retrospectives, check sprint capacity, and keep meetings on time. No sign-up, no downloads.
         </p>
     </header>
 
     <section aria-labelledby="planning-heading" class="game-selection">
         <div class="game-section__header">
             <p class="section-eyebrow">Agile Ceremonies</p>
-            <h2 class="section-title" id="planning-heading">Prep Sprints with Clarity</h2>
-            <p class="section-subtitle">Collaborative tools designed for Scrum Masters and Agile teams to streamline every ceremony.</p>
+            <h2 class="section-title" id="planning-heading">Sprint Planning, Made Simple</h2>
+            <p class="section-subtitle">Collaborative tools designed for Scrum Masters and Agile teams to streamline every ceremony — estimation, retros, capacity checks, and more.</p>
         </div>
         {% from "_includes/app-grid.njk" import appCards %}
         <ul class="game-grid" role="list">
@@ -30,15 +103,43 @@ sitemap:
     </section>
 
     <section aria-labelledby="why-heading" class="intro">
-        <h2 class="section-title" id="why-heading">Streamline Your Agile Workflow</h2>
+        <h2 class="section-title" id="why-heading">Streamline Every Sprint Ceremony</h2>
         <div class="intro__content">
-            <p>Successful Agile teams rely on clear communication and fair estimation. Our tools are built to support these goals without the overhead of heavy project management software:</p>
-            <ul>
-                <li><strong>Unbiased Estimation:</strong> Use Planning Poker to prevent "anchoring" and ensure every voice is heard during sizing.</li>
-                <li><strong>Actionable Retros:</strong> Our Retro Board makes it easy to categorize feedback and vote on the most important improvements.</li>
-                <li><strong>Transparent Capacity:</strong> Quickly identify potential sprint risks with the Capacity Planner.</li>
+            <p>Successful Agile teams rely on clear communication, fair estimation, and honest retrospectives. Daily Pick's free agile tools are built to support every sprint ceremony without the overhead of heavy project-management software:</p>
+            <ul class="intro__list">
+                <li><strong>Unbiased Estimation:</strong> <a href="/apps/planning-poker/">Planning Poker</a> prevents anchoring bias and ensures every voice is heard during story sizing — reveal votes simultaneously with Fibonacci cards.</li>
+                <li><strong>Actionable Retros:</strong> <a href="/apps/retro-board/">Retro Board</a> makes it easy to categorize team feedback and dot-vote on the highest-impact improvements.</li>
+                <li><strong>Transparent Capacity:</strong> <a href="/apps/capacity-dice/">Capacity Dice</a> quickly surfaces sprint risks by rolling PTO, meeting load, and wildcard events before you commit to scope.</li>
+                <li><strong>Real-Time Health Checks:</strong> <a href="/apps/morale-thermometer/">Morale Thermometer</a> lets the whole team rate energy anonymously so Scrum Masters can spot burnout early.</li>
+                <li><strong>Timebox Every Session:</strong> <a href="/apps/timer/">Meeting Timer</a> keeps stand-ups, reviews, and retros on schedule with audio cues and shareable presets.</li>
             </ul>
-            <p>Looking for something more lighthearted? Explore our <a href="/standups/">Standup Games Hub</a>. Or discover <a href="/randomizers/">Random Pickers &amp; Decision Tools</a> for teachers, streamers, and everyday choices.</p>
+            <p>Want to energize your stand-ups too? Explore the <a href="/">Stand-up Games Hub</a> for speaker-order games your team will love. Or check out the <a href="/randomizers/">Randomizers Suite</a> for fair picks and decision tools.</p>
+        </div>
+    </section>
+
+    <section aria-labelledby="faq-heading" class="faq">
+        <h2 class="section-title" id="faq-heading">Frequently Asked Questions</h2>
+        <div class="faq__list">
+            <details class="faq__item">
+                <summary class="faq__question">What is Planning Poker and how does it work?</summary>
+                <div class="faq__answer"><p><strong>Planning Poker</strong> is a consensus-based estimation technique used in Scrum. Each team member privately selects a card representing their effort estimate using Fibonacci numbers (1, 2, 3, 5, 8…), then everyone reveals at once to surface discussion. Daily Pick's <a href="/apps/planning-poker/">Planning Poker</a> runs entirely in the browser with hidden votes, host controls, and Jira-ready summaries — no downloads or sign-up needed.</p></div>
+            </details>
+            <details class="faq__item">
+                <summary class="faq__question">How do I run a sprint retrospective online for free?</summary>
+                <div class="faq__answer"><p>Open the <a href="/apps/retro-board/">Retro Board</a> and share the link with your team. Each person adds cards under <em>What Went Well</em>, <em>What Didn't</em>, and <em>Action Items</em>, then the team dot-votes on the most important improvements. It's completely free, works in any browser, and requires no account.</p></div>
+            </details>
+            <details class="faq__item">
+                <summary class="faq__question">How can I check my team's sprint capacity before planning?</summary>
+                <div class="faq__answer"><p>Use the <a href="/apps/capacity-dice/">Capacity Dice</a> tool. Roll PTO, meeting, and wildcard dice to account for real-world team availability, then copy the resulting capacity summary directly into your planning notes or Jira.</p></div>
+            </details>
+            <details class="faq__item">
+                <summary class="faq__question">Can I use these agile tools for remote Scrum ceremonies?</summary>
+                <div class="faq__answer"><p>Yes — all Daily Pick agile tools are fully browser-based, so they work perfectly for distributed and remote teams. Just share your screen or send a direct link to teammates. No installs, no accounts, and no cost.</p></div>
+            </details>
+            <details class="faq__item">
+                <summary class="faq__question">How do I check team morale anonymously during a sprint?</summary>
+                <div class="faq__answer"><p>Open the <a href="/apps/morale-thermometer/">Morale Thermometer</a> and share the link with your team. Each member anonymously rates the team's energy on a visual scale, and the host sees the aggregated results in real-time — no individual responses are ever revealed.</p></div>
+            </details>
         </div>
     </section>
 </main>
