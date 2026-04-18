@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     {% set pageTitle = title or metadata.siteTitle %}
     {% set pageDescription = description or metadata.siteDescription %}
     {% set pageKeywords = keywords %}
@@ -13,7 +14,7 @@
         {% ogImage "./_includes/og-image.og.njk", { title: pageTitle, subtitle: pageDescription } %}
     {%- endsetAsync %}
 
-    {% set ogImagePath = generatedOgImage or ogImage or metadata.defaultOgImage %}
+    {% set ogImagePath = generatedOgImage or ogImage or metadata.defaultOgImage or '/assets/og-image-main.png' %}
     {% set twitterImagePath = twitterImage or ogImagePath or metadata.defaultTwitterImage %}
     {% set ogImageAbsolute = ogImagePath %}
     {% if ogImageAbsolute and not ogImageAbsolute.startsWith("http") %}
@@ -26,33 +27,35 @@
     {% set ogImageAltText = ogImageAlt or pageTitle %}
     {% set twitterImageAltText = twitterImageAlt or ogImageAltText %}
 
-    <!-- SEO Meta Tags from content or global data -->
+    <!-- SEO -->
     <title>{{ pageTitle }}</title>
-    <meta name="description" content="{{ pageDescription }}">
-    {% if pageKeywords %}<meta name="keywords" content="{{ pageKeywords }}">{% endif %}
-    <meta name="author" content="{{ author or metadata.authorName }}">
-    <meta name="robots" content="{{ robotsMeta }}">
+    <meta name="description" content="{{ pageDescription }}" />
+    {% if pageKeywords %}<meta name="keywords" content="{{ pageKeywords }}" />{% endif %}
+    <meta name="author" content="{{ author or metadata.authorName }}" />
+    <meta name="robots" content="{{ robotsMeta }}" />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="{{ ogType or 'website' }}">
-    <meta property="og:url" content="{{ canonicalUrl }}">
-    <meta property="og:title" content="{{ pageTitle }}">
-    <meta property="og:description" content="{{ pageDescription }}">
-    {% if ogImageAbsolute %}<meta property="og:image" content="{{ ogImageAbsolute }}">{% endif %}
-    <meta property="og:site_name" content="{{ metadata.siteTitle }}">
-    {% if ogLocale %}<meta property="og:locale" content="{{ ogLocale }}">{% endif %}
-    {% if ogImageAbsolute and ogImageAltText %}<meta property="og:image:alt" content="{{ ogImageAltText }}">{% endif %}
+    <!-- Open Graph -->
+    <meta property="og:type" content="{{ ogType or 'website' }}" />
+    <meta property="og:url" content="{{ canonicalUrl }}" />
+    <meta property="og:title" content="{{ pageTitle }}" />
+    <meta property="og:description" content="{{ pageDescription }}" />
+    {% if ogImageAbsolute %}<meta property="og:image" content="{{ ogImageAbsolute }}" />{% endif %}
+    <meta property="og:site_name" content="{{ metadata.siteTitle }}" />
+    {% if ogLocale %}<meta property="og:locale" content="{{ ogLocale }}" />{% endif %}
+    {% if ogImageAbsolute and ogImageAltText %}<meta property="og:image:alt" content="{{ ogImageAltText }}" />{% endif %}
 
     <!-- Twitter -->
-    <meta name="twitter:card" content="{{ twitterCard or 'summary_large_image' }}">
-    <meta name="twitter:title" content="{{ pageTitle }}">
-    <meta name="twitter:description" content="{{ pageDescription }}">
-    {% if twitterHandle %}<meta name="twitter:site" content="{{ twitterHandle }}">{% endif %}
-    {% if twitterCreator %}<meta name="twitter:creator" content="{{ twitterCreator }}">{% endif %}
-    {% if twitterImageAbsolute %}<meta name="twitter:image" content="{{ twitterImageAbsolute }}">{% endif %}
-    {% if twitterImageAbsolute and twitterImageAltText %}<meta name="twitter:image:alt" content="{{ twitterImageAltText }}">{% endif %}
+    <meta name="twitter:card" content="{{ twitterCard or 'summary_large_image' }}" />
+    <meta name="twitter:title" content="{{ pageTitle }}" />
+    <meta name="twitter:description" content="{{ pageDescription }}" />
+    {% if twitterHandle %}<meta name="twitter:site" content="{{ twitterHandle }}" />{% endif %}
+    {% if twitterCreator %}<meta name="twitter:creator" content="{{ twitterCreator }}" />{% endif %}
+    {% if twitterImageAbsolute %}<meta name="twitter:image" content="{{ twitterImageAbsolute }}" />{% endif %}
+    {% if twitterImageAbsolute and twitterImageAltText %}<meta name="twitter:image:alt" content="{{ twitterImageAltText }}" />{% endif %}
 
-    <link rel="canonical" href="{{ canonicalUrl }}">
+    <link rel="canonical" href="{{ canonicalUrl }}" />
+
+    <!-- Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -62,10 +65,11 @@
           "name": "{{ pageTitle }}",
           "description": "{{ pageDescription }}",
           "url": "{{ canonicalUrl }}",
-          "author": {
-            "@id": "{{ metadata.url }}/#organization"
-          },
-          "image": "{{ ogImageAbsolute }}"
+          "author": { "@id": "{{ metadata.url }}/#organization" },
+          "primaryImageOfPage": {
+            "@type": "ImageObject",
+            "url": "{{ ogImageAbsolute }}"
+          }
         },
         {
           "@type": "Organization",
@@ -77,36 +81,65 @@
       ]
     }
     </script>
-    
-    <!-- Favicon Links -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/assets/favicon/site.webmanifest">
-    <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
-    <meta name="msapplication-TileColor" content="#2d89ef">
-    <meta name="theme-color" content="#ffffff">
 
-    {# Use Eleventy `url` filter so paths adjust if the site is deployed under a sub‑path or when opening files directly. #}
-    {# `home.css` is needed on the homepage, blog index, and suite pages that use game cards #}
-    <link rel="stylesheet" href="{{ '/css/style.css' | url }}">
-    <link rel="stylesheet" href="{{ '/assets/css/theme.css' | url }}">
-    {% if page.url == '/' or (page.url and (page.url == '/blog/' or page.url.startsWith('/blog/page') or page.url == '/agile/' or page.url == '/randomizers/' or page.url == '/standups/' or page.url == '/games/' or page.url == '/lottery/')) %}
-        <link rel="stylesheet" href="{{ '/assets/css/home.css' | url }}">
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png" />
+    <link rel="manifest" href="/assets/favicon/site.webmanifest" />
+    <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#2d89ef" />
+    <meta name="theme-color" content="#ffffff" />
+
+    {% if isApp %}
+    <!-- Google Fonts (app pages) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" />
     {% endif %}
-    <link rel="stylesheet" href="{{ '/assets/css/pwa-install.css' | url }}">
-    <link rel="stylesheet" href="{{ '/assets/css/glass.css' | url }}" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="{{ '/assets/css/seo-card.css' | url }}" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="{{ '/assets/css/feedback-popup.css' | url }}" media="print" onload="this.media='all'">
-    <script src="/assets/js/brand-theme-engine.js" defer></script>
-    <script src="/assets/js/brand-config.js" defer></script>
-    <!-- Google tag (gtag.js) -->
+
+    <!-- Core styles -->
+    {% if not isApp %}
+    <link rel="stylesheet" href="{{ '/css/style.css' | url }}" />
+    <link rel="stylesheet" href="/assets/css/theme.css" />
+    {# home.css is needed on the homepage, blog index, and suite pages #}
+    {% if page.url == '/' or (page.url and (page.url == '/blog/' or page.url.startsWith('/blog/page') or page.url == '/agile/' or page.url == '/randomizers/' or page.url == '/standups/' or page.url == '/games/' or page.url == '/lottery/')) %}
+        <link rel="stylesheet" href="/assets/css/home.css" />
+    {% endif %}
+    {% else %}
+    <link rel="stylesheet" href="/assets/css/theme.css" />
+    {% endif %}
+
+    <link rel="stylesheet" href="/assets/css/pwa-install.css" />
+    <link rel="stylesheet" href="/assets/css/glass.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="/assets/css/seo-card.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="/assets/css/feedback-popup.css" media="print" onload="this.media='all'" />
+
+    {% if isApp %}
+    <link rel="stylesheet" href="/assets/css/standup-panel.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="/assets/css/local-brand-studio.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="/assets/css/embed.css" media="print" onload="this.media='all'" />
+    {% if appStyles %}{{ appStyles | safe }}{% endif %}
+    {% endif %}
+
+    <!-- Scripts -->
+    <script defer src="/assets/js/brand-theme-engine.js"></script>
+    <script defer src="/assets/js/brand-config.js"></script>
+    {% if isApp %}
+    {% if localBrandConfig %}<script defer src="{{ localBrandConfig }}"></script>{% endif %}
+    <script defer src="/assets/js/local-brand-studio.js"></script>
+    <script defer src="/assets/js/embed.js"></script>
+    {% endif %}
+
+    <!-- Google Analytics -->
     <script data-gtag data-gtag-src="https://www.googletagmanager.com/gtag/js?id=G-N83YF635W2"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
     </script>
+
     {% if headExtra %}{{ headExtra | safe }}{% endif %}
+
     <!-- Detect PWA standalone early to avoid FOUC -->
     <script>
       (function () {
@@ -119,24 +152,39 @@
     </script>
 </head>
 <body>
-{% include "header.html" %}
+    {% include "bg-orbs.html" %}
+    {% include "header.html" %}
 
+    {% if isApp %}
+    {{ content | safe }}
+
+    {% if not hideEmbed %}
+    <section class="embed-section glass-card" id="embedSection">
+        <h2>Embed this page</h2>
+        <p>Share this page on your own site by embedding it in an iframe. Copy the HTML below and paste it into any page.</p>
+        <div class="embed-controls">
+            <textarea id="embedCode" readonly aria-label="Embed code"></textarea>
+            <button id="copyEmbedBtn" type="button">Copy embed code</button>
+        </div>
+        <p class="embed-note">This iframe loads only the embedded game experience without the site header, footer, or SEO content.</p>
+    </section>
+    {% endif %}
+    {% else %}
     <main>
         {{ content | safe }}
     </main>
+    {% endif %}
 
-{% include "footer.html" %}
+    {% include "footer.html" %}
 
-{% include "cookie-consent.html" %}
-{% include "pwa-install.html" %}
-{% include "pwa-nav.html" %}
-{% include "pwa-search.html" %}
-{% include "feedback-popup.html" %}
+    {% include "cookie-consent.html" %}
+    {% include "pwa-install.html" %}
+    {% include "pwa-nav.html" %}
+    {% include "pwa-search.html" %}
+    {% include "feedback-popup.html" %}
 
-    <!-- Any global scripts can go here -->
     <script src="/assets/js/cookie-consent.js" defer></script>
     <script src="/assets/js/pwa-install.js" defer></script>
     <script src="/assets/js/feedback-popup.js" defer></script>
 </body>
-{% include "bg-orbs.html" %}
 </html>

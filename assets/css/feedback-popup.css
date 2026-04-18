@@ -64,13 +64,19 @@
   right: 14px;
   background: none;
   border: none;
-  font-size: 1.5rem;
+  box-shadow: none;
+  font-size: 1.4rem;
   line-height: 1;
   cursor: pointer;
   color: var(--brand-subtle-text, #7f8c8d);
-  padding: 4px 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 8px;
   transition: color 0.15s, background 0.15s;
+  padding: 0;
 }
 .feedback-popup__close:hover {
   color: var(--brand-heading, #2d3e50);
@@ -81,11 +87,14 @@
   box-shadow: var(--brand-focus-ring);
 }
 
-/* Step content */
+/* Step content — [hidden] must override display:flex */
 .feedback-popup__step {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+.feedback-popup__step[hidden] {
+  display: none !important;
 }
 
 .feedback-popup__eyebrow {
@@ -179,13 +188,53 @@
   align-items: center;
 }
 
-.feedback-popup__submit {
-  flex: 1;
+/* Self-contained button styles (btn classes aren't globally defined) */
+.feedback-popup__submit,
+.feedback-popup__skip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  border-radius: var(--brand-radius, 10px);
+  font-size: .9rem;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  border: none;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s, transform 0.1s;
+  white-space: nowrap;
+}
+.feedback-popup__submit:active,
+.feedback-popup__skip:active {
+  transform: scale(0.97);
+}
+.feedback-popup__submit:focus-visible,
+.feedback-popup__skip:focus-visible {
+  outline: none;
+  box-shadow: var(--brand-focus-ring, 0 0 0 3px rgba(52,152,219,.35));
 }
 
+/* Send — accent / primary */
+.feedback-popup__submit {
+  flex: 1;
+  background: var(--brand-accent, #3498db);
+  color: #fff;
+}
+.feedback-popup__submit:hover {
+  background: var(--brand-accent-dark, #2176ae);
+  box-shadow: 0 3px 10px rgba(52,152,219,.35);
+}
+
+/* Skip — ghost / secondary */
 .feedback-popup__skip {
-  font-size: .9rem;
-  padding: 10px 16px;
+  background: transparent;
+  color: var(--brand-subtle-text, #7f8c8d);
+  border: 1.5px solid var(--brand-border, #dde4eb);
+}
+.feedback-popup__skip:hover {
+  background: var(--brand-background, #f4f7f6);
+  color: var(--brand-heading, #2d3e50);
+  border-color: var(--brand-heading, #2d3e50);
 }
 
 .feedback-popup__form-error {
