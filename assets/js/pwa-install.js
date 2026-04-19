@@ -37,6 +37,11 @@
   if (!banner || !dismissBtn) return;
 
   function showBanner() {
+    var nav = document.getElementById('pwa-bottom-nav');
+    if (nav) {
+      var navHeight = nav.getBoundingClientRect().height;
+      if (navHeight > 0) banner.style.bottom = navHeight + 'px';
+    }
     banner.removeAttribute('aria-hidden');
     banner.classList.add('pwa-visible');
   }
@@ -66,7 +71,7 @@
         '<path d="M12 2v13M8 6l4-4 4 4M4 13v8h16v-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
       '</svg>' +
       '&nbsp;then &ldquo;<strong>Add to Home Screen</strong>&rdquo;';
-    setTimeout(showBanner, 2500);
+    setTimeout(showBanner, 30000);
     return;
   }
 
@@ -77,7 +82,7 @@
     e.preventDefault();
     deferredPrompt = e;
     if (installBtn) installBtn.hidden = false;
-    setTimeout(showBanner, 1500);
+    setTimeout(showBanner, 30000);
   });
 
   if (installBtn) {
