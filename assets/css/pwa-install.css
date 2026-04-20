@@ -303,7 +303,7 @@ html.pwa-standalone {
 .pwa-standalone body {
   -webkit-tap-highlight-color: transparent;
   /* room for bottom nav + home bar */
-  padding-bottom: calc(65px + env(safe-area-inset-bottom, 5px));
+  padding-bottom: calc(var(--pwa-nav-height) + env(safe-area-inset-bottom, 5px) + 6px);
 }
 
 /* Re-enable text selection for inputs */
@@ -378,6 +378,19 @@ html.pwa-standalone {
   -webkit-backdrop-filter: blur(20px);
   border-top: 1px solid var(--glass-border, rgba(221, 228, 235, 0.5));
   box-shadow: 0 -1px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* Extend background below the viewport to cover gaps on iPhone during scroll */
+.pwa-bottom-nav::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: inherit;
+  backdrop-filter: inherit;
+  -webkit-backdrop-filter: inherit;
 }
 
 .pwa-standalone .pwa-bottom-nav {
@@ -580,6 +593,6 @@ html.pwa-standalone {
   }
   /* Make room for bottom nav so content isn't obscured */
   body {
-    padding-bottom: calc(var(--pwa-nav-height) + env(safe-area-inset-bottom, 5px));
+    padding-bottom: calc(var(--pwa-nav-height) + env(safe-area-inset-bottom, 5px) + 6px);
   }
 }
