@@ -44,18 +44,31 @@ A Progressive Web App combines the best of web and mobile apps. You access it th
 3. Select "Add to Home screen"
 4. Confirm the installation
 
-![Placeholder for Android install steps](placeholder-android.png)
+<img src="/assets/images/blog/pwa-android.jpg" alt="Android install steps" width="360" style="max-width:100%;border-radius:12px;display:block;margin:1rem auto">
 
 ---
 
 ## How to Install on iOS
 
 1. Open Daily Pick in Safari
-2. Tap the Share button at the bottom
-3. Scroll down and tap "Add to Home Screen"
-4. Confirm the installation
+2. Tap the **Share** button in the top right of the address bar
+3. In the share sheet, tap **View More**
+4. Tap **Add to Home Screen** and confirm
 
-![Placeholder for iOS install steps](placeholder-ios.png)
+<div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin:1rem 0">
+  <figure style="margin:0;text-align:center">
+    <img src="/assets/images/blog/pwa-iphone.jpg" alt="Step 1: Tap the Share button in Safari" width="220" style="max-width:100%;border-radius:12px">
+    <figcaption style="font-size:0.8rem;color:#7f8c8d;margin-top:0.4rem">Step 1 — Tap Share</figcaption>
+  </figure>
+  <figure style="margin:0;text-align:center">
+    <img src="/assets/images/blog/pwa-iphone-2.png" alt="Step 2: Tap View More in the share sheet" width="220" style="max-width:100%;border-radius:12px">
+    <figcaption style="font-size:0.8rem;color:#7f8c8d;margin-top:0.4rem">Step 2 — Tap View More</figcaption>
+  </figure>
+  <figure style="margin:0;text-align:center">
+    <img src="/assets/images/blog/pwa-iphone-3.jpg" alt="Step 3: Tap Add to Home Screen" width="220" style="max-width:100%;border-radius:12px">
+    <figcaption style="font-size:0.8rem;color:#7f8c8d;margin-top:0.4rem">Step 3 — Tap Add to Home Screen</figcaption>
+  </figure>
+</div>
 
 ---
 
