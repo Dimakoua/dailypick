@@ -189,6 +189,24 @@ module.exports = [
     description: "Pick fair winners for contests and social giveaways with a transparent and fun draw."
   },
   {
+    id: "stream-wheel",
+    name: "Stream Wheel",
+    path: "/apps/stream-wheel/",
+    category: "randomizer",
+    footerGroup: "Randomizers",
+    emoji: "📡",
+    description: "A customizable multi-wheel spinner for live streamers. Works as a transparent OBS Browser Source overlay. Shareable via URL."
+  },
+  {
+    id: "obs-wheel-overlay",
+    name: "OBS Wheel Overlay",
+    path: "/apps/obs-wheel-overlay/",
+    category: "randomizer",
+    footerGroup: "Randomizers",
+    emoji: "📺",
+    description: "A transparent spin wheel Browser Source for OBS Studio, Streamlabs, and XSplit. Configure and paste the URL directly into your scene."
+  },
+  {
     id: "raffle-ticket-puller",
     name: "Raffle Ticket Puller",
     path: "/apps/raffle-ticket-puller/",
