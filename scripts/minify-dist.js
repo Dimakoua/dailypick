@@ -178,6 +178,11 @@ async function walk(directory) {
 }
 
 async function main() {
+  if (process.argv.includes('--no-minify') || process.env.NODE_ENV === 'development') {
+    console.log('[minify] skipped (development mode)');
+    return;
+  }
+
   try {
     await fs.access(distDir);
   } catch {

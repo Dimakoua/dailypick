@@ -1,0 +1,769 @@
+/* ==========================================================================
+   Stream Wheel — App Styles
+   - Multi-wheel layout with per-wheel config panels
+   - Streaming-themed color palette picker
+   - Overlay mode: transparent background, UI stripped
+   ========================================================================== */
+
+:root {
+  /* --wheel-segment-N intentionally omitted here so palette selection
+     in JS is the color source. Brand Studio sets these explicitly when
+     the user saves a custom color, and that override takes priority. */
+  --wheel-border: rgba(151, 124, 124, 0.2);
+}
+
+/* ── Overlay mode ─────────────────────────────────────────────────────────── */
+html.overlay-mode,
+html.overlay-mode body {
+  background: transparent !important;
+}
+
+html.overlay-mode .site-header,
+html.overlay-mode .site-footer,
+html.overlay-mode .cookie-consent,
+html.overlay-mode .pwa-bottom-nav,
+html.overlay-mode .pwa-install-banner,
+html.overlay-mode .feedback-popup,
+html.overlay-mode .feedback-btn,
+html.overlay-mode .embed-section,
+html.overlay-mode .bg-orbs {
+  display: none !important;
+}
+
+html.overlay-mode .stream-wheel-page {
+  padding: 0.5rem;
+  gap: 0.75rem;
+}
+
+html.overlay-mode .sw-page-hero,
+html.overlay-mode .sw-toolbar,
+html.overlay-mode .stream-instructions,
+html.overlay-mode .seo-content-area {
+  display: none !important;
+}
+
+html.overlay-mode .wheel-config-panel {
+  display: none !important;
+}
+
+html.overlay-mode .wheel-card {
+  /* background: rgba(0, 0, 0, 0.35) !important; */
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  backdrop-filter: blur(6px);
+}
+
+html.overlay-mode .settings-toggle-btn,
+html.overlay-mode .remove-wheel-btn {
+  display: none !important;
+}
+
+html.overlay-mode .wheel-title-input {
+  pointer-events: none;
+  border-color: transparent !important;
+  background: transparent !important;
+}
+
+html.overlay-mode .sw-result {
+  font-size: 1.4rem;
+}
+
+/* ── Page layout ──────────────────────────────────────────────────────────── */
+.stream-wheel-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem var(--layout-gutter);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Page hero ────────────────────────────────────────────────────────────── */
+.sw-page-hero {
+  padding: 2rem 2.5rem;
+}
+
+.sw-page-hero .hero-eyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--brand-subtle-text);
+}
+
+.sw-page-hero h1 {
+  margin: 0.5rem 0 0;
+  font-size: clamp(1.8rem, 2.2rem, 2.6rem);
+  font-weight: 700;
+  color: var(--brand-heading);
+}
+
+.sw-page-hero p {
+  margin: 0.5rem 0 0;
+  font-size: 1rem;
+  color: var(--brand-text);
+  line-height: 1.6;
+  max-width: 72ch;
+}
+
+/* ── Toolbar ──────────────────────────────────────────────────────────────── */
+.sw-toolbar {
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.sw-toolbar-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.sw-share-output {
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.6rem 1rem;
+  font-size: 0.85rem;
+  color: var(--brand-text);
+  background: var(--brand-surface);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-md);
+  word-break: break-all;
+}
+
+/* ── Wheels container (responsive grid) ──────────────────────────────────── */
+.wheels-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* ── Add wheel row ────────────────────────────────────────────────────────── */
+.sw-add-row {
+  display: flex;
+  justify-content: center;
+  padding: 0.25rem 0;
+}
+
+/* ── Wheel card ───────────────────────────────────────────────────────────── */
+.wheel-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.wheel-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.9rem 1.2rem 0.9rem 1.4rem;
+  border-bottom: 1px solid var(--glass-border, rgba(255, 255, 255, 0.12));
+}
+
+.wheel-title-input {
+  flex: 1;
+  font-family: var(--brand-font-family);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--brand-heading);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 0.3rem 0.5rem;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  min-width: 0;
+}
+
+.wheel-title-input:hover {
+  border-color: var(--brand-border);
+  background: var(--brand-surface);
+}
+
+.wheel-title-input:focus {
+  outline: none;
+  border-color: var(--brand-accent, #9146FF);
+  background: var(--brand-surface);
+  box-shadow: 0 0 0 3px rgba(145, 70, 255, 0.18);
+}
+
+.wheel-card-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+/* ── Config panel ─────────────────────────────────────────────────────────── */
+.wheel-config-panel {
+  /* hidden by default; JS removes the [hidden] attr to show it.
+     display:none here wins over the [hidden] UA-stylesheet rule so
+     .wheel-config-panel:not([hidden]) is needed to restore flex. */
+  display: none;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 1.2rem 1.4rem;
+  border-bottom: 1px solid var(--glass-border, rgba(255, 255, 255, 0.12));
+  background: var(--glass-bg, rgba(255, 255, 255, 0.06));
+}
+
+.wheel-config-panel:not([hidden]) {
+  display: flex;
+}
+
+.config-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--brand-heading);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.config-hint {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--brand-subtle-text);
+}
+
+.items-input {
+  font-family: var(--brand-font-family);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  padding: 10px 12px;
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-md);
+  background: var(--brand-surface);
+  color: var(--brand-text);
+  resize: vertical;
+  min-height: 100px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.items-input:focus {
+  outline: none;
+  border-color: var(--brand-accent, #9146FF);
+  box-shadow: 0 0 0 3px rgba(145, 70, 255, 0.15);
+}
+
+.config-row-btns {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* ── Palette grid ─────────────────────────────────────────────────────────── */
+.palette-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.palette-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  border: 1.5px solid var(--brand-border);
+  border-radius: var(--radius-md);
+  background: var(--brand-surface);
+  color: var(--brand-text);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.palette-btn:hover {
+  border-color: var(--brand-accent, #9146FF);
+  background: var(--glass-bg);
+}
+
+.palette-btn.active {
+  border-color: var(--brand-accent, #9146FF);
+  background: rgba(145, 70, 255, 0.15);
+  box-shadow: 0 0 0 2px rgba(145, 70, 255, 0.2);
+}
+
+.palette-swatches {
+  display: flex;
+  gap: 2px;
+}
+
+.palette-swatches span {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* ── Config options ───────────────────────────────────────────────────────── */
+.config-option-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--brand-text);
+  cursor: pointer;
+  user-select: none;
+}
+
+.config-option-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--brand-accent, #9146FF);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.spin-duration-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.spin-duration-range {
+  width: 100%;
+  accent-color: var(--brand-accent, #9146FF);
+  cursor: pointer;
+}
+
+/* ── Play area ────────────────────────────────────────────────────────────── */
+.wheel-play-area {
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.wheel-wrapper {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+}
+
+.sw-indicator {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 22px solid var(--brand-accent, #9146FF);
+  z-index: 2;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.wheel-canvas {
+  display: block;
+  border-radius: 50%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  max-width: 100%;
+}
+
+.sw-spin-btn {
+  font-size: 1.05rem;
+  font-weight: 800;
+  padding: 0.75rem 2.5rem;
+  border-radius: var(--radius-lg);
+  border: none;
+  cursor: pointer;
+  background: var(--brand-accent, #9146FF);
+  color: #fff;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: opacity 0.2s, transform 0.1s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(145, 70, 255, 0.4);
+}
+
+.sw-spin-btn:hover:not(:disabled) {
+  opacity: 0.92;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(145, 70, 255, 0.5);
+}
+
+.sw-spin-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.sw-spin-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.sw-result {
+  min-height: 2rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--brand-heading);
+  text-align: center;
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  letter-spacing: 0.01em;
+}
+
+.sw-result.sw-result--shown {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ── History pills ────────────────────────────────────────────────────────── */
+.sw-history-wrap {
+  padding: 0.75rem 1.4rem 1.1rem;
+  border-top: 1px solid var(--glass-border, rgba(255, 255, 255, 0.1));
+}
+
+.sw-history-label {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--brand-subtle-text);
+}
+
+.sw-history-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.sw-history-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem 0.25rem 0.65rem;
+  background: rgba(145, 70, 255, 0.15);
+  border: 1px solid rgba(145, 70, 255, 0.3);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--brand-text);
+  max-width: 100%;
+}
+
+.sw-history-pill-item-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 120px;
+}
+
+.sw-history-pill-restore {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--brand-subtle-text);
+  font-size: 0.7rem;
+  line-height: 1;
+  padding: 1px 2px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+
+.sw-history-pill-restore:hover {
+  color: var(--brand-heading);
+}
+
+/* ── Instructions section ─────────────────────────────────────────────────── */
+.stream-instructions {
+  padding: 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.stream-instructions h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--brand-heading);
+}
+
+.instructions-toc {
+  padding: 1rem 1.4rem;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.06));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--radius-md);
+}
+
+.instructions-toc h3 {
+  margin: 0 0 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--brand-subtle-text);
+}
+
+.instructions-toc ul {
+  margin: 0;
+  padding: 0 0 0 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.instructions-toc li {
+  font-size: 0.9rem;
+}
+
+.instructions-toc a {
+  color: var(--brand-accent, #9146FF);
+  text-decoration: none;
+}
+
+.instructions-toc a:hover {
+  text-decoration: underline;
+}
+
+.instruction-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.instruction-block h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--brand-heading);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--glass-border, rgba(255, 255, 255, 0.1));
+}
+
+.instruction-block ol,
+.instruction-block ul {
+  margin: 0;
+  padding-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.instruction-block li {
+  font-size: 0.95rem;
+  color: var(--brand-text);
+  line-height: 1.55;
+}
+
+.instruction-block p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--brand-text);
+  line-height: 1.6;
+}
+
+.instruction-tip {
+  padding: 0.65rem 1rem;
+  background: rgba(145, 70, 255, 0.1);
+  border-left: 3px solid var(--brand-accent, #9146FF);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.88rem !important;
+}
+
+code {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.85em;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* ── SEO section ──────────────────────────────────────────────────────────── */
+.seo-content-area {
+  padding: 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.seo-content-area h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--brand-heading);
+}
+
+.seo-content-area h3 {
+  margin: 0.5rem 0 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--brand-heading);
+}
+
+.seo-content-area p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--brand-text);
+  line-height: 1.7;
+}
+
+.seo-content-area ul,
+.seo-content-area ol {
+  margin: 0;
+  padding-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.seo-content-area li {
+  font-size: 0.95rem;
+  color: var(--brand-text);
+  line-height: 1.6;
+}
+
+.seo-toc {
+  padding: 1rem 1.4rem;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.06));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--radius-md);
+}
+
+.seo-toc h3 {
+  margin: 0 0 0.6rem !important;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--brand-subtle-text) !important;
+}
+
+.seo-toc ol {
+  margin: 0;
+  padding-left: 1.4rem;
+}
+
+.seo-toc a {
+  color: var(--brand-accent, #9146FF);
+  text-decoration: none;
+}
+
+.seo-toc a:hover {
+  text-decoration: underline;
+}
+
+/* ── Buttons (local overrides) ────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1.5px solid transparent;
+  font-family: var(--brand-font-family);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s, background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.btn:hover:not(:disabled) {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn--accent {
+  background: var(--brand-accent, #9146FF);
+  border-color: var(--brand-accent, #9146FF);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(145, 70, 255, 0.3);
+}
+
+.btn--secondary {
+  background: var(--brand-surface);
+  border-color: var(--brand-border);
+  color: var(--brand-text);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  border-color: var(--brand-accent, #9146FF);
+  color: var(--brand-heading);
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: var(--brand-border);
+  color: var(--brand-text);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  background: var(--glass-bg, rgba(255, 255, 255, 0.08));
+  border-color: var(--brand-border);
+  color: var(--brand-heading);
+}
+
+.btn--sm {
+  font-size: 0.8rem;
+  padding: 0.35rem 0.75rem;
+}
+
+.btn--danger {
+  background: transparent;
+  border-color: var(--brand-border);
+  color: var(--brand-subtle-text);
+}
+
+.btn--danger:hover:not(:disabled) {
+  border-color: #ff4444;
+  color: #ff4444;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .wheels-container {
+    grid-template-columns: 1fr;
+  }
+
+  .stream-wheel-page {
+    padding: 1rem var(--layout-gutter);
+  }
+
+  .sw-page-hero {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .stream-instructions,
+  .seo-content-area {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .wheel-play-area {
+    padding: 1rem;
+  }
+
+  .sw-toolbar {
+    padding: 0.75rem 1rem;
+  }
+}

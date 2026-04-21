@@ -1,0 +1,802 @@
+---
+layout: base_app.njk
+title: "Stream Wheel – Customizable Live Stream Spinner for OBS & Streamlabs | Daily Pick"
+description: "A fully customizable spin wheel for live streamers. Add multiple wheels, configure colors and items, remove winners, and share the complete setup via a single URL. Paste as an OBS Browser Source overlay."
+keywords: "stream wheel, twitch wheel spinner, obs browser source wheel, live stream randomizer, streamlabs overlay wheel, twitch giveaway wheel, viewer picker wheel, stream overlay spinner, obs wheel overlay"
+canonical: "https://dailypick.dev/apps/stream-wheel/"
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+localBrandConfig: /apps/stream-wheel/local-brand-config.js
+---
+<main data-page-type="randomizer" class="stream-wheel-page" id="main">
+  <script>if(location.search.includes('overlay=1'))document.documentElement.classList.add('overlay-mode');</script>
+
+  <header class="sw-page-hero glass-card">
+    <p class="hero-eyebrow">Live Streaming Tools</p>
+    <h1>🎡 Stream Wheel</h1>
+    <p>A fully customizable spin wheel built for live streamers. Add multiple wheels on one page, configure each independently, remove winners round by round, and share the complete setup — or paste as an OBS Browser Source overlay.</p>
+  </header>
+
+  <div class="sw-toolbar glass-card">
+    <div class="sw-toolbar-actions">
+      <button id="addWheelBtn" class="btn btn--accent" type="button">＋ Add Wheel</button>
+      <button id="shareBtn" class="btn btn--secondary" type="button">🔗 Share Setup</button>
+      <button id="copyOverlayBtn" class="btn btn--secondary" type="button">📺 OBS Overlay URL</button>
+    </div>
+    <div id="shareOutput" class="sw-share-output" hidden></div>
+  </div>
+
+  <div id="wheelsContainer" class="wheels-container"></div>
+
+  <section class="stream-instructions glass-card" id="streamInstructions">
+    <h2>📺 How to use Stream Wheel with OBS, Streamlabs &amp; more</h2>
+    <p>Stream Wheel runs entirely in the browser, no account required. Use it directly on this page, or paste as a transparent Browser Source overlay in any streaming software.</p>
+
+    <div class="instructions-toc">
+      <h3>Quick links</h3>
+      <ul>
+        <li><a href="#inst-setup">Getting started</a></li>
+        <li><a href="#inst-obs">OBS Studio setup</a></li>
+        <li><a href="#inst-streamlabs">Streamlabs / SLOBS setup</a></li>
+        <li><a href="#inst-xsplit">XSplit Broadcaster</a></li>
+        <li><a href="#inst-platforms">Twitch, YouTube &amp; other platforms</a></li>
+        <li><a href="#inst-sharing">Sharing your configuration</a></li>
+        <li><a href="#inst-multi">Using multiple wheels</a></li>
+      </ul>
+    </div>
+
+    <div id="inst-setup" class="instruction-block">
+      <h3>🚀 Getting started</h3>
+      <ol>
+        <li>The wheel loads with example viewer names. Open <strong>⚙️ Settings</strong> on any wheel card to change the items.</li>
+        <li>Paste one name per line in the items box, then click <strong>🔄 Update Wheel</strong>.</li>
+        <li>Choose a color theme from the <strong>Color Theme</strong> palette row.</li>
+        <li>Enable <strong>Remove winner from wheel after spin</strong> if you want each result removed automatically — ideal for giveaways.</li>
+        <li>Click <strong>🎡 SPIN!</strong> to spin. The result appears below the wheel.</li>
+        <li>Removed winners appear as chips below the wheel. Click <strong>✕</strong> on any chip to restore that individual item, or use <strong>↩ Restore All</strong>.</li>
+        <li>Your full configuration (all wheels, results, history) is always encoded in the URL. Bookmark it or use the <strong>🔗 Share Setup</strong> button.</li>
+      </ol>
+    </div>
+
+    <div id="inst-obs" class="instruction-block">
+      <h3>🟣 OBS Studio</h3>
+      <ol>
+        <li>Configure your wheels as desired — items, colors, titles.</li>
+        <li>Click <strong>📺 OBS Overlay URL</strong> above. This copies a URL with <code>?overlay=1</code> appended, which strips all menus and makes the background fully transparent.</li>
+        <li>In OBS Studio, go to a Scene and click <strong>＋</strong> in the <strong>Sources</strong> panel.</li>
+        <li>Select <strong>Browser Source</strong> and give it a name like "Stream Wheel".</li>
+        <li>Paste the overlay URL into the <strong>URL</strong> field.</li>
+        <li>Set <strong>Width</strong> to 450 and <strong>Height</strong> to 530 per wheel (scale up proportionally for multiple wheels).</li>
+        <li>Enable <strong>Shutdown source when not visible</strong> to save resources.</li>
+        <li>Click <strong>OK</strong>. Right-click the source and choose <strong>Interact</strong> to click the SPIN button directly from OBS without switching windows.</li>
+      </ol>
+      <p class="instruction-tip">💡 <strong>Tip:</strong> Resize and reposition the Browser Source in your scene using the red handles. Hold <strong>Shift</strong> while resizing to scale freely.</p>
+    </div>
+
+    <div id="inst-streamlabs" class="instruction-block">
+      <h3>🟦 Streamlabs / Streamlabs OBS</h3>
+      <ol>
+        <li>Click <strong>📺 OBS Overlay URL</strong> to copy your transparent overlay URL.</li>
+        <li>In Streamlabs, go to your active Scene and click <strong>＋</strong> in the Sources section.</li>
+        <li>Select <strong>Browser Source</strong>.</li>
+        <li>Paste the overlay URL into the <strong>URL</strong> field.</li>
+        <li>Set width to 450 and height to 530 (adjust for multiple wheels).</li>
+        <li>Enable <strong>Shutdown source when not visible</strong>.</li>
+        <li>Click <strong>Add Source</strong>. Use the <strong>Interact</strong> option in the source context menu to spin directly from Streamlabs.</li>
+      </ol>
+    </div>
+
+    <div id="inst-xsplit" class="instruction-block">
+      <h3>🎬 XSplit Broadcaster</h3>
+      <ol>
+        <li>Copy your overlay URL via the <strong>📺 OBS Overlay URL</strong> button.</li>
+        <li>In XSplit, go to your scene and click <strong>Add Source → Webpage</strong>.</li>
+        <li>Paste the overlay URL and set the source dimensions to match your intended layout.</li>
+        <li>The wheel loads with a transparent background and no extra UI.</li>
+      </ol>
+    </div>
+
+    <div id="inst-platforms" class="instruction-block">
+      <h3>📺 Twitch, YouTube Live &amp; other platforms</h3>
+      <p>Streaming platforms like Twitch and YouTube do not manage overlays — you add them in your broadcasting software (OBS, Streamlabs, XSplit). Follow the steps above to add Stream Wheel as a Browser Source, then stream to any platform as normal.</p>
+      <ul>
+        <li><strong>Twitch giveaways:</strong> enable "Remove winner after spin", add viewer usernames, and spin each round. Removed winners appear in the history chips.</li>
+        <li><strong>YouTube milestones:</strong> create a reward wheel with prize names and spin live on screen for your viewers.</li>
+        <li><strong>Discord communities:</strong> share the setup URL so community members see the exact same wheel configuration.</li>
+        <li><strong>vMix, Wirecast, Ecamm Live:</strong> all support Browser Sources — follow the same URL + dimensions approach.</li>
+      </ul>
+    </div>
+
+    <div id="inst-sharing" class="instruction-block">
+      <h3>🔗 Sharing your configuration</h3>
+      <p>Every wheel setting — titles, items, color themes, removed winners, spin duration — is encoded into the URL as you make changes. No account or save button required.</p>
+      <ul>
+        <li><strong>🔗 Share Setup:</strong> copies a URL that opens this page with all your wheels pre-configured. Send it to a co-streamer or bookmark it.</li>
+        <li><strong>📺 OBS Overlay URL:</strong> same config but adds <code>?overlay=1</code>. Paste directly into OBS / Streamlabs Browser Source. The page background becomes transparent and all menus hide automatically.</li>
+        <li><strong>Auto-save:</strong> the URL updates silently as you configure without reloading the page. Your last configuration is always restorable from your browser history.</li>
+        <li><strong>Sharing results:</strong> after a spin, removed winners are included in the URL, so sharing mid-giveaway lets your co-streamer resume exactly where you left off.</li>
+      </ul>
+    </div>
+
+    <div id="inst-multi" class="instruction-block">
+      <h3>🔢 Using multiple wheels</h3>
+      <p>Click <strong>＋ Add Wheel</strong> to add more wheels to the page. All wheels are visible simultaneously — useful for showing a game wheel and a viewer wheel side by side on stream.</p>
+      <ul>
+        <li>Each wheel has an independent items list, color theme, and remove-winner setting.</li>
+        <li>All wheels are included in the shared URL, so your entire multi-wheel layout is shareable as one link.</li>
+        <li>In overlay mode, all wheels render side by side with a transparent background.</li>
+        <li>Remove a wheel by opening its settings and clicking the <strong>✕</strong> button in the card header.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="seo-content-area glass-card">
+    <h2>Stream Wheel — live stream spinner for Twitch, YouTube &amp; OBS</h2>
+    <p>Stream Wheel is a customizable spin wheel built specifically for live streamers. Unlike generic decision wheels, it supports multiple wheels on one page, removes winners round by round for fair giveaways, and outputs a transparent overlay URL you can paste directly into OBS Studio, Streamlabs, XSplit, or any Browser Source-compatible tool.</p>
+
+    <div class="seo-toc">
+      <h3>Table of Contents</h3>
+      <ol>
+        <li><a href="#seo-what">What is Stream Wheel?</a></li>
+        <li><a href="#seo-how">How it works</a></li>
+        <li><a href="#seo-features">Key features</a></li>
+        <li><a href="#seo-palettes">Color themes</a></li>
+        <li><a href="#seo-giveaway">Using it for giveaways</a></li>
+        <li><a href="#seo-overlay">OBS overlay mode</a></li>
+        <li><a href="#seo-sharing">Sharing and URL state</a></li>
+        <li><a href="#seo-when">When to use Stream Wheel</a></li>
+        <li><a href="#seo-alternatives">Alternatives</a></li>
+      </ol>
+    </div>
+
+    <section id="seo-what">
+      <h3>1. What is Stream Wheel?</h3>
+      <p>Stream Wheel is a browser-based spin wheel designed for live content creators. It runs entirely client-side with no login, no ads blocking interaction, and no subscription. Configure one or more wheels, spin them on stream, and share the full setup through a single URL.</p>
+    </section>
+
+    <section id="seo-how">
+      <h3>2. How it works</h3>
+      <p>Open Stream Wheel, click the Settings icon on any wheel card, and paste your list of items — viewer names, game titles, challenge options, or prizes — one per line. Choose a color palette, set the spin duration, and hit SPIN. The wheel spins with a smooth ease-out animation and lands on a random item. If "remove winner" is enabled, the winner is removed from the wheel and shown in the history chips below. All this state is encoded in the URL automatically so nothing is lost between sessions.</p>
+    </section>
+
+    <section id="seo-features">
+      <h3>3. Key features</h3>
+      <ul>
+        <li><strong>Multiple wheels:</strong> Add as many wheels as needed. Each is fully independent with its own items, palette, and settings.</li>
+        <li><strong>Remove winner mode:</strong> Each wheel can auto-remove the drawn item and track history. Restore any item individually or all at once.</li>
+        <li><strong>OBS overlay mode:</strong> A single URL parameter strips all UI and makes the background transparent for use as an OBS Browser Source.</li>
+        <li><strong>Shareable URL state:</strong> The complete configuration (titles, items, colors, history) is always in the URL — bookmark, share, or hand off mid-giveaway.</li>
+        <li><strong>Six streaming-themed palettes:</strong> Neon, Twitch, YouTube, Sunset, Ocean, and Forest — or override with Brand Studio colors.</li>
+        <li><strong>Adjustable spin duration:</strong> 2 to 12 seconds per wheel, independent per card.</li>
+        <li><strong>Up to 200 items per wheel:</strong> For large viewer lists or competitions with many entries.</li>
+      </ul>
+    </section>
+
+    <section id="seo-palettes">
+      <h3>4. Color themes</h3>
+      <p>Six pre-built palettes target common streaming aesthetics. <strong>Neon</strong> uses bright electric colors popular in gaming streams. <strong>Twitch</strong> uses the official Twitch purple and blue family. <strong>YouTube</strong> uses red, white, and the platform's accent colors. <strong>Sunset</strong> uses warm pinks and oranges for cozy or lifestyle streams. <strong>Ocean</strong> uses cool blues for a calm, professional look. <strong>Forest</strong> uses greens and earthy tones for nature or outdoor content.</p>
+    </section>
+
+    <section id="seo-giveaway">
+      <h3>5. Using it for giveaways</h3>
+      <p>For a Twitch or YouTube giveaway, paste eligible viewer usernames into the items box. Enable "Remove winner after spin" so each drawn viewer is automatically removed from future spins. The winner list appears below the wheel in chips that your audience can see on screen. Share the overlay URL on Discord or with a co-streamer so they have live access to the same configuration.</p>
+    </section>
+
+    <section id="seo-overlay">
+      <h3>6. OBS overlay mode</h3>
+      <p>Adding <code>?overlay=1</code> to the URL activates overlay mode: header, footer, instructions, and configuration panels all disappear, and the page background becomes fully transparent. This lets the wheel render directly over your game capture or webcam in OBS without any white box or frame. You can interact with it using OBS's built-in "Interact" feature on the Browser Source, which opens a clickable preview — no alt-tabbing required.</p>
+    </section>
+
+    <section id="seo-sharing">
+      <h3>7. Sharing and URL state</h3>
+      <p>Stream Wheel uses base64-encoded JSON in the URL to store all state. No server, no database, no cookies. Every wheel title, every item, every removed winner, and every color choice is encoded and updated silently as you make changes. The URL is always shareable. If you want to send someone your exact giveaway setup mid-stream, click Share Setup and paste the link into Discord. They open it and see your wheels in exactly the same state.</p>
+    </section>
+
+    <section id="seo-when">
+      <h3>8. When to use Stream Wheel</h3>
+      <ul>
+        <li>Viewer giveaways and prize draws on Twitch or YouTube Live</li>
+        <li>Randomizing which game to play next on stream</li>
+        <li>Challenge wheels, truth-or-dare prompts, or viewer-submitted ideas</li>
+        <li>Team splits and random matchup generators for community tournaments</li>
+        <li>Viewer-engagement moments: "spin the wheel" segments that keep chat engaged</li>
+        <li>Subscription milestone rewards and channel point redemptions</li>
+      </ul>
+    </section>
+
+    <section id="seo-alternatives">
+      <h3>9. Alternatives</h3>
+      <p>If you need a general-purpose decision wheel without streaming features, try the <a href="/apps/the-wheel-spinner/">Choices Spinner</a>. For a standalone giveaway tool with multiple rounds and ticket support, see the <a href="/apps/stream-giveaway-picker/">Stream Giveaway Picker</a>. For a minimal transparent overlay without configuration UI, the <a href="/apps/obs-wheel-overlay/">OBS Wheel Overlay</a> is purpose-built for Browser Sources.</p>
+    </section>
+  </section>
+
+</main>
+
+<script>
+  (() => {
+    'use strict';
+
+    // ── Constants ──────────────────────────────────────────────────────────────
+    const DEFAULT_ITEMS = [
+      'TwitchFan42', 'GamingGuru', 'StreamQueen', 'ProPlayer99',
+      'ChaoticGood', 'NightOwl88', 'SpeedRunner', 'CasualViewer',
+    ];
+
+    const PALETTES = {
+      neon:    { name: 'Neon',     colors: ['#00FF87','#60EFFF','#FF00C1','#FF9500','#00D4FF','#7FFF00','#FF073A','#FFD700'] },
+      twitch:  { name: 'Twitch',   colors: ['#9146FF','#BF94FF','#772CE8','#6441A5','#00AEEF','#1F69FF','#7B5EA7','#C4A4E1'] },
+      youtube: { name: 'YouTube',  colors: ['#FF0000','#CC0000','#FF6060','#FF9800','#4CAF50','#2196F3','#9C27B0','#FF5722'] },
+      sunset:  { name: 'Sunset',   colors: ['#FF6B6B','#FFA502','#FF7675','#FDCB6E','#E17055','#FD79A8','#A29BFE','#6C5CE7'] },
+      ocean:   { name: 'Ocean',    colors: ['#0099FF','#33BBFF','#0066CC','#66CCFF','#004499','#00C9FF','#48DBFB','#0ABDE3'] },
+      forest:  { name: 'Forest',   colors: ['#6AB04C','#BADC58','#F9CA24','#22A6B3','#218C74','#B8E994','#25CCF7','#82589F'] },
+    };
+
+    // ── State ──────────────────────────────────────────────────────────────────
+    const wheelsMap = new Map();
+    let wheelIdCounter = 0;
+    let syncTimer = null;
+
+    // ── Utilities ──────────────────────────────────────────────────────────────
+    function escAttr(s) {
+      return String(s)
+        .replace(/&/g, '&amp;').replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function escHtml(s) {
+      return String(s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function parseItems(raw) {
+      return [...new Set(
+        raw.split(/[\n,]+/)
+          .map(s => s.trim())
+          .filter(s => s.length > 0 && s.length <= 80)
+      )].slice(0, 200);
+    }
+
+    function truncateText(ctx, text, maxWidth) {
+      if (ctx.measureText(text).width <= maxWidth) return text;
+      let t = text;
+      while (t.length > 1) {
+        t = t.slice(0, -1);
+        if (ctx.measureText(t + '\u2026').width <= maxWidth) return t + '\u2026';
+      }
+      return '\u2026';
+    }
+
+    // ── URL encoding ──────────────────────────────────────────────────────────
+    function encodeConfig() {
+      const data = [];
+      wheelsMap.forEach(s => {
+        data.push({
+          t: s.title,
+          i: s.items,
+          rm: s.removed,
+          p: s.palette,
+          rw: s.removeWinner,
+          sd: s.spinDuration,
+          lr: s.lastResult,
+        });
+      });
+      try {
+        const json = JSON.stringify(data);
+        const b64 = btoa(unescape(encodeURIComponent(json)));
+        return b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+      } catch (_e) { return ''; }
+    }
+
+    function decodeConfig(str) {
+      try {
+        const padded = str + '==='.slice((str.length + 3) % 4);
+        const b64 = padded.replace(/-/g, '+').replace(/_/g, '/');
+        const json = decodeURIComponent(escape(atob(b64)));
+        const arr = JSON.parse(json);
+        if (!Array.isArray(arr)) return null;
+        return arr.map(w => ({
+          title: (typeof w.t === 'string' && w.t.trim()) ? w.t.trim().slice(0, 80) : 'Stream Wheel',
+          items: Array.isArray(w.i)
+            ? w.i.map(x => String(x).slice(0, 80)).filter(Boolean).slice(0, 200)
+            : DEFAULT_ITEMS.slice(),
+          removed: Array.isArray(w.rm)
+            ? w.rm.map(x => String(x).slice(0, 80)).filter(Boolean)
+            : [],
+          palette: (typeof w.p === 'string' && PALETTES[w.p]) ? w.p : 'neon',
+          removeWinner: w.rw !== false,
+          spinDuration: (typeof w.sd === 'number' && w.sd >= 2000 && w.sd <= 12000) ? w.sd : 5000,
+          lastResult: (typeof w.lr === 'string') ? w.lr.slice(0, 80) : null,
+        }));
+      } catch (_e) { return null; }
+    }
+
+    function syncUrl() {
+      clearTimeout(syncTimer);
+      syncTimer = setTimeout(() => {
+        const url = new URL(location.href);
+        const encoded = encodeConfig();
+        if (encoded) url.searchParams.set('c', encoded);
+        else url.searchParams.delete('c');
+        history.replaceState(null, '', url.toString());
+      }, 600);
+    }
+
+    // ── Share actions ─────────────────────────────────────────────────────────
+    function getShareUrl(overlay) {
+      const url = new URL(location.href);
+      url.search = '';
+      const encoded = encodeConfig();
+      if (encoded) url.searchParams.set('c', encoded);
+      if (overlay) url.searchParams.set('overlay', '1');
+      return url.toString();
+    }
+
+    function copyToClipboard(text, btn) {
+      const origText = btn.textContent;
+      const done = () => {
+        btn.textContent = '\u2705 Copied!';
+        setTimeout(() => { btn.textContent = origText; }, 2500);
+      };
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+      } else {
+        fallbackCopy(text, done);
+      }
+    }
+
+    function fallbackCopy(text, cb) {
+      const el = document.createElement('textarea');
+      el.value = text;
+      el.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
+      document.body.appendChild(el);
+      el.select();
+      try { document.execCommand('copy'); } catch (_e) { /* silent */ }
+      document.body.removeChild(el);
+      cb();
+    }
+
+    // ── Canvas drawing ────────────────────────────────────────────────────────
+    function getPaletteColors(paletteKey) {
+      const p = PALETTES[paletteKey] || PALETTES.neon;
+      // Only use CSS var overrides if Brand Studio has explicitly set them
+      // via element.style (inline style), not `:root` stylesheet defaults.
+      // This ensures palette selection always works as expected.
+      const inlineStyle = document.documentElement.style;
+      return p.colors.map(function(c, i) {
+        const override = inlineStyle.getPropertyValue('--wheel-segment-' + (i + 1)).trim();
+        return override || c;
+      });
+    }
+
+    function drawWheelCanvas(canvas, activeItems, rotation, paletteKey) {
+      const ctx = canvas.getContext('2d');
+      const radius = canvas.width / 2;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (!activeItems.length) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(radius, radius, radius - 4, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(100, 100, 130, 0.35)';
+        ctx.fill();
+        ctx.fillStyle = 'rgba(255,255,255,0.7)';
+        ctx.font = 'bold 15px Arial, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('Add items above', radius, radius);
+        ctx.restore();
+        return;
+      }
+
+      const colors = getPaletteColors(paletteKey);
+      const borderColor = getComputedStyle(document.documentElement)
+        .getPropertyValue('--wheel-border').trim() || 'rgba(255,255,255,0.2)';
+      const angleStep = (2 * Math.PI) / activeItems.length;
+      const fontSize = Math.max(9, Math.min(13, Math.floor(80 / activeItems.length) + 7));
+      const maxTextWidth = radius * 0.68;
+
+      ctx.save();
+      ctx.translate(radius, radius);
+      ctx.rotate(rotation);
+      ctx.translate(-radius, -radius);
+
+      // Segments
+      activeItems.forEach((item, i) => {
+        const angle = i * angleStep;
+        ctx.beginPath();
+        ctx.moveTo(radius, radius);
+        ctx.arc(radius, radius, radius - 4, angle, angle + angleStep);
+        ctx.closePath();
+        ctx.fillStyle = colors[i % colors.length];
+        ctx.fill();
+        ctx.strokeStyle = borderColor;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      });
+
+      // Text labels
+      ctx.font = `bold ${fontSize}px Arial, sans-serif`;
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      activeItems.forEach((item, i) => {
+        const midAngle = i * angleStep + angleStep / 2;
+        ctx.save();
+        ctx.translate(radius, radius);
+        ctx.rotate(midAngle);
+        ctx.fillStyle = '#fff';
+        ctx.shadowColor = 'rgba(0,0,0,0.65)';
+        ctx.shadowBlur = 3;
+        const label = truncateText(ctx, item, maxTextWidth);
+        ctx.fillText(label, radius - 18, 0);
+        ctx.restore();
+      });
+
+      ctx.restore();
+
+      // Center hub
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(radius, radius, 13, 0, Math.PI * 2);
+      ctx.fillStyle = getComputedStyle(document.documentElement)
+        .getPropertyValue('--brand-surface').trim() || '#1a1a2e';
+      ctx.fill();
+      ctx.strokeStyle = borderColor;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // ── Spin logic ────────────────────────────────────────────────────────────
+    function spinWheel(state) {
+      const activeItems = state.items.filter(x => !state.removed.includes(x));
+      if (state.isSpinning || activeItems.length === 0) return;
+
+      state.isSpinning = true;
+      state.spinBtnEl.disabled = true;
+      state.resultEl.textContent = '';
+      state.resultEl.className = 'sw-result';
+
+      const chosenIndex = Math.floor(Math.random() * activeItems.length);
+      const angleStep = (2 * Math.PI) / activeItems.length;
+      const indicatorAngle = 3 * Math.PI / 2;
+      const sliceCenter = (chosenIndex + 0.5) * angleStep;
+      const spins = 6 + Math.floor(Math.random() * 4);
+      const targetRotation = spins * 2 * Math.PI + (indicatorAngle - sliceCenter);
+      const duration = state.spinDuration;
+      const startTime = performance.now();
+
+      function frame(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        drawWheelCanvas(state.canvas, activeItems, targetRotation * easeOut, state.palette);
+
+        if (progress < 1) {
+          state.animationId = requestAnimationFrame(frame);
+        } else {
+          state.isSpinning = false;
+          state.spinBtnEl.disabled = false;
+          state.lastResult = activeItems[chosenIndex];
+          state.resultEl.textContent = '\uD83C\uDF89 ' + state.lastResult;
+          state.resultEl.className = 'sw-result sw-result--shown';
+
+          if (state.removeWinner) {
+            state.removed.push(state.lastResult);
+            updateHistoryPills(state);
+            const remaining = state.items.filter(x => !state.removed.includes(x));
+            if (remaining.length === 0) {
+              state.resultEl.textContent += ' \uD83C\uDFC6 All items drawn!';
+            }
+          }
+          syncUrl();
+        }
+      }
+
+      state.animationId = requestAnimationFrame(frame);
+    }
+
+    // ── History pills ─────────────────────────────────────────────────────────
+    function updateHistoryPills(state) {
+      if (!state.historyEl) return;
+      state.historyEl.innerHTML = '';
+
+      if (!state.removed.length) {
+        state.historyWrapEl.hidden = true;
+        if (state.restoreSectionEl) state.restoreSectionEl.hidden = true;
+        return;
+      }
+
+      state.historyWrapEl.hidden = false;
+      if (state.restoreSectionEl) {
+        state.restoreSectionEl.hidden = false;
+        const btn = state.restoreSectionEl.querySelector('.restore-all-btn');
+        if (btn) btn.textContent = '\u21A9 Restore All (' + state.removed.length + ')';
+      }
+
+      state.removed.forEach(item => {
+        const pill = document.createElement('span');
+        pill.className = 'sw-history-pill';
+
+        const textSpan = document.createElement('span');
+        textSpan.className = 'sw-history-pill-item-text';
+        textSpan.textContent = item;
+
+        const restoreBtn = document.createElement('button');
+        restoreBtn.type = 'button';
+        restoreBtn.className = 'sw-history-pill-restore';
+        restoreBtn.textContent = '\u2715';
+        restoreBtn.title = 'Restore "' + item + '"';
+        restoreBtn.addEventListener('click', () => {
+          state.removed = state.removed.filter(r => r !== item);
+          updateHistoryPills(state);
+          const active = state.items.filter(x => !state.removed.includes(x));
+          drawWheelCanvas(state.canvas, active, 0, state.palette);
+          syncUrl();
+        });
+
+        pill.appendChild(textSpan);
+        pill.appendChild(restoreBtn);
+        state.historyEl.appendChild(pill);
+      });
+    }
+
+    // ── Wheel card creation ───────────────────────────────────────────────────
+    function createWheelCard(config) {
+      config = config || {};
+      const id = 'w_' + (++wheelIdCounter) + '_' + Date.now();
+
+      const state = {
+        id,
+        title: (typeof config.title === 'string' && config.title.trim()) ? config.title.trim() : 'Stream Wheel',
+        items: (Array.isArray(config.items) && config.items.length) ? config.items.slice() : DEFAULT_ITEMS.slice(),
+        removed: (Array.isArray(config.removed) && config.removed.length) ? config.removed.slice() : [],
+        palette: (typeof config.palette === 'string' && PALETTES[config.palette]) ? config.palette : 'neon',
+        removeWinner: config.removeWinner !== false,
+        spinDuration: (typeof config.spinDuration === 'number' && config.spinDuration >= 2000) ? config.spinDuration : 5000,
+        lastResult: (typeof config.lastResult === 'string') ? config.lastResult : null,
+        isSpinning: false,
+        animationId: null,
+        canvas: null, spinBtnEl: null, resultEl: null,
+        historyEl: null, historyWrapEl: null,
+        configPanelEl: null, restoreSectionEl: null,
+      };
+
+      wheelsMap.set(id, state);
+
+      const paletteBtns = Object.entries(PALETTES).map(([pKey, pVal]) => {
+        const swatches = pVal.colors.slice(0, 4).map(function(col) {
+          return '<span style="background:' + col + '"></span>';
+        }).join('');
+        const isActive = state.palette === pKey ? ' active' : '';
+        return '<button class="palette-btn' + isActive + '" data-action="set-palette" data-palette="' + pKey + '" type="button">' +
+          '<span class="palette-swatches">' + swatches + '</span>' +
+          '<span>' + pVal.name + '</span>' +
+          '</button>';
+      }).join('');
+
+      const card = document.createElement('div');
+      card.className = 'wheel-card glass-card';
+      card.dataset.wheelId = id;
+
+      card.innerHTML =
+        '<div class="wheel-card-header">' +
+          '<input class="wheel-title-input" value="' + escAttr(state.title) + '" maxlength="60" placeholder="Wheel title" />' +
+          '<div class="wheel-card-header-actions">' +
+            '<button class="btn btn--ghost btn--sm settings-toggle-btn" type="button" data-action="toggle-settings" aria-expanded="false">\u2699\uFE0F Settings</button>' +
+            '<button class="btn btn--danger btn--sm remove-wheel-btn" type="button" data-action="remove-wheel" title="Remove this wheel" aria-label="Remove wheel">\u2715</button>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="wheel-config-panel" hidden>' +
+          '<div class="config-section">' +
+            '<label class="config-label">Items <span class="config-hint">(one per line, max 200)</span></label>' +
+            '<textarea class="items-input" rows="6" placeholder="One item per line\u2026">' + escHtml(state.items.join('\n')) + '</textarea>' +
+            '<div class="config-row-btns">' +
+              '<button class="btn btn--accent btn--sm" type="button" data-action="update-items">\uD83D\uDD04 Update Wheel</button>' +
+              '<button class="btn btn--ghost btn--sm" type="button" data-action="reset-items">\u21BA Reset</button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="config-section">' +
+            '<label class="config-label">Color Theme</label>' +
+            '<div class="palette-grid">' + paletteBtns + '</div>' +
+          '</div>' +
+          '<div class="config-section">' +
+            '<label class="config-option-label">' +
+              '<input type="checkbox" class="remove-winner-toggle"' + (state.removeWinner ? ' checked' : '') + ' />' +
+              'Remove winner from wheel after spin' +
+            '</label>' +
+          '</div>' +
+          '<div class="config-section spin-duration-row">' +
+            '<label class="config-label">Spin Duration: <span class="spin-duration-label">' + (state.spinDuration / 1000) + 's</span></label>' +
+            '<input type="range" class="spin-duration-range" min="2000" max="12000" step="500" value="' + state.spinDuration + '" />' +
+          '</div>' +
+          '<div class="config-section restore-section"' + (state.removed.length ? '' : ' hidden') + '>' +
+            '<button class="btn btn--ghost btn--sm restore-all-btn" type="button" data-action="restore-all">\u21A9 Restore All (' + state.removed.length + ')</button>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="wheel-play-area">' +
+          '<div class="wheel-wrapper">' +
+            '<div class="sw-indicator"></div>' +
+            '<canvas class="wheel-canvas" width="380" height="380"></canvas>' +
+          '</div>' +
+          '<button class="btn sw-spin-btn" type="button" data-action="spin">\uD83C\uDF61 SPIN!</button>' +
+          '<div class="sw-result"></div>' +
+        '</div>' +
+
+        '<div class="sw-history-wrap"' + (state.removed.length ? '' : ' hidden') + '>' +
+          '<p class="sw-history-label">Already drawn:</p>' +
+          '<div class="sw-history-pills"></div>' +
+        '</div>';
+
+      // Cache DOM refs
+      state.canvas           = card.querySelector('.wheel-canvas');
+      state.spinBtnEl        = card.querySelector('.sw-spin-btn');
+      state.resultEl         = card.querySelector('.sw-result');
+      state.historyEl        = card.querySelector('.sw-history-pills');
+      state.historyWrapEl    = card.querySelector('.sw-history-wrap');
+      state.configPanelEl    = card.querySelector('.wheel-config-panel');
+      state.restoreSectionEl = card.querySelector('.restore-section');
+
+      // ── Event delegation — one click listener handles all buttons ──────────
+      card.addEventListener('click', function(ev) {
+        var target = ev.target.closest('[data-action]');
+        if (!target) return;
+        var action = target.getAttribute('data-action');
+
+        if (action === 'toggle-settings') {
+          var nowHidden = state.configPanelEl.hidden;
+          state.configPanelEl.hidden = !nowHidden;
+          target.setAttribute('aria-expanded', nowHidden ? 'true' : 'false');
+          target.textContent = nowHidden ? '\u2699\uFE0F Close' : '\u2699\uFE0F Settings';
+          return;
+        }
+
+        if (action === 'remove-wheel') {
+          if (wheelsMap.size <= 1) return;
+          if (state.animationId) cancelAnimationFrame(state.animationId);
+          card.remove();
+          wheelsMap.delete(id);
+          syncUrl();
+          return;
+        }
+
+        if (action === 'update-items') {
+          var textarea = card.querySelector('.items-input');
+          var newItems = parseItems(textarea.value);
+          if (!newItems.length) return;
+          state.items = newItems;
+          state.removed = state.removed.filter(function(r) { return newItems.indexOf(r) !== -1; });
+          textarea.value = newItems.join('\n');
+          updateHistoryPills(state);
+          var activeAfterUpdate = state.items.filter(function(x) { return state.removed.indexOf(x) === -1; });
+          drawWheelCanvas(state.canvas, activeAfterUpdate, 0, state.palette);
+          syncUrl();
+          return;
+        }
+
+        if (action === 'reset-items') {
+          state.items = DEFAULT_ITEMS.slice();
+          state.removed = [];
+          card.querySelector('.items-input').value = state.items.join('\n');
+          updateHistoryPills(state);
+          drawWheelCanvas(state.canvas, state.items, 0, state.palette);
+          syncUrl();
+          return;
+        }
+
+        if (action === 'set-palette') {
+          var paletteKey = target.getAttribute('data-palette');
+          if (!paletteKey) return;
+          state.palette = paletteKey;
+          var allPaletteBtns = card.querySelectorAll('.palette-btn');
+          for (var pi = 0; pi < allPaletteBtns.length; pi++) {
+            allPaletteBtns[pi].classList.remove('active');
+          }
+          target.classList.add('active');
+          var activeAfterPalette = state.items.filter(function(x) { return state.removed.indexOf(x) === -1; });
+          drawWheelCanvas(state.canvas, activeAfterPalette, 0, state.palette);
+          syncUrl();
+          return;
+        }
+
+        if (action === 'restore-all') {
+          state.removed = [];
+          updateHistoryPills(state);
+          drawWheelCanvas(state.canvas, state.items, 0, state.palette);
+          syncUrl();
+          return;
+        }
+
+        if (action === 'spin') {
+          spinWheel(state);
+          return;
+        }
+      });
+
+      // Title input
+      card.querySelector('.wheel-title-input').addEventListener('input', function(ev) {
+        state.title = ev.target.value;
+        syncUrl();
+      });
+
+      // Remove winner toggle
+      card.querySelector('.remove-winner-toggle').addEventListener('change', function(ev) {
+        state.removeWinner = ev.target.checked;
+        syncUrl();
+      });
+
+      // Spin duration slider
+      var rangeInput   = card.querySelector('.spin-duration-range');
+      var durationLabel = card.querySelector('.spin-duration-label');
+      rangeInput.addEventListener('input', function(ev) {
+        state.spinDuration = parseInt(ev.target.value, 10);
+        durationLabel.textContent = (state.spinDuration / 1000) + 's';
+        syncUrl();
+      });
+
+      // Initial draw
+      updateHistoryPills(state);
+      const active = state.items.filter(x => !state.removed.includes(x));
+      drawWheelCanvas(state.canvas, active, 0, state.palette);
+
+      return card;
+    }
+
+    // ── Brand Studio integration ──────────────────────────────────────────────
+    window.addEventListener('localBrandConfigUpdated', () => {
+      wheelsMap.forEach(state => {
+        if (!state.isSpinning) {
+          const active = state.items.filter(x => !state.removed.includes(x));
+          drawWheelCanvas(state.canvas, active, 0, state.palette);
+        }
+      });
+    });
+
+    // ── Init ──────────────────────────────────────────────────────────────────
+    function init() {
+      const container      = document.getElementById('wheelsContainer');
+      const addWheelBtn    = document.getElementById('addWheelBtn');
+      const shareBtn       = document.getElementById('shareBtn');
+      const copyOverlayBtn = document.getElementById('copyOverlayBtn');
+      const shareOutput    = document.getElementById('shareOutput');
+
+      // Load from URL
+      const params = new URLSearchParams(location.search);
+      const configParam = params.get('c');
+      const decoded = configParam ? decodeConfig(configParam) : null;
+
+      if (decoded && decoded.length) {
+        decoded.forEach(cfg => container.appendChild(createWheelCard(cfg)));
+      } else {
+        container.appendChild(createWheelCard());
+      }
+
+      // Add wheel
+      addWheelBtn.addEventListener('click', () => {
+        const card = createWheelCard({ title: 'Wheel ' + (wheelsMap.size + 1) });
+        container.appendChild(card);
+        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        syncUrl();
+      });
+
+      // Share setup
+      shareBtn.addEventListener('click', () => {
+        const url = getShareUrl(false);
+        shareOutput.textContent = url;
+        shareOutput.hidden = false;
+        copyToClipboard(url, shareBtn);
+      });
+
+      // Copy overlay URL
+      copyOverlayBtn.addEventListener('click', () => {
+        const url = getShareUrl(true);
+        shareOutput.textContent = url;
+        shareOutput.hidden = false;
+        copyToClipboard(url, copyOverlayBtn);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  })();
+</script>
