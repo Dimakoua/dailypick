@@ -1,0 +1,529 @@
+/* ==========================================================================
+   OBS Wheel Overlay — App Styles
+   - Transparent background by default (this IS the overlay)
+   - Two modes: ?mode=overlay (pure transparent, OBS use) and
+                ?mode=setup   (config panel visible, browser use)
+   ========================================================================== */
+
+:root {
+  --wheel-border: rgba(255, 255, 255, 0.2);
+}
+
+/* ── Global: page is always transparent in overlay mode ─────────────────── */
+html.owo-overlay,
+html.owo-overlay body {
+  background: transparent !important;
+}
+
+/* ── Setup mode page shell ────────────────────────────────────────────────── */
+.owo-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem var(--layout-gutter);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Page hero ────────────────────────────────────────────────────────────── */
+.owo-hero {
+  padding: 2rem 2.5rem;
+}
+
+.owo-hero .hero-eyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--brand-subtle-text);
+}
+
+.owo-hero h1 {
+  margin: 0.5rem 0 0;
+  font-size: clamp(1.8rem, 2.2rem, 2.6rem);
+  font-weight: 700;
+  color: var(--brand-heading);
+}
+
+.owo-hero p {
+  margin: 0.5rem 0 0;
+  font-size: 1rem;
+  color: var(--brand-text);
+  line-height: 1.6;
+  max-width: 72ch;
+}
+
+/* ── Setup panel ──────────────────────────────────────────────────────────── */
+.owo-setup-panel {
+  padding: 1.75rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.owo-setup-panel h2 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--brand-heading);
+}
+
+.owo-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.owo-label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--brand-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.owo-hint {
+  font-size: 0.82rem;
+  color: var(--brand-subtle-text);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-left: 0.5rem;
+}
+
+.owo-input,
+.owo-textarea {
+  font-family: var(--brand-font-family);
+  font-size: 0.95rem;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-md);
+  background: var(--brand-surface);
+  color: var(--brand-text);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.owo-input:focus,
+.owo-textarea:focus {
+  outline: none;
+  border-color: var(--brand-accent, #9146FF);
+  box-shadow: 0 0 0 3px rgba(145, 70, 255, 0.15);
+}
+
+.owo-textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.5;
+}
+
+/* ── Palette grid ─────────────────────────────────────────────────────────── */
+.owo-palette-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.owo-palette-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  border: 1.5px solid var(--brand-border);
+  border-radius: var(--radius-md);
+  background: var(--brand-surface);
+  color: var(--brand-text);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.owo-palette-btn:hover {
+  border-color: var(--brand-accent, #9146FF);
+}
+
+.owo-palette-btn.active {
+  border-color: var(--brand-accent, #9146FF);
+  background: rgba(145, 70, 255, 0.15);
+  box-shadow: 0 0 0 2px rgba(145, 70, 255, 0.2);
+}
+
+.owo-swatches {
+  display: flex;
+  gap: 2px;
+}
+
+.owo-swatches span {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+/* ── Dimensions row ───────────────────────────────────────────────────────── */
+.owo-dims-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.owo-dims-row .owo-field {
+  width: 110px;
+}
+
+/* ── Generate button & URL output ─────────────────────────────────────────── */
+.owo-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.owo-url-output {
+  margin-top: 0.25rem;
+  padding: 0.65rem 1rem;
+  font-size: 0.82rem;
+  color: var(--brand-text);
+  background: var(--brand-surface);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-md);
+  word-break: break-all;
+  line-height: 1.5;
+}
+
+.owo-url-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--brand-subtle-text);
+  margin-bottom: 0.3rem;
+}
+
+/* ── Preview tile ─────────────────────────────────────────────────────────── */
+.owo-preview-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.owo-preview-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--brand-subtle-text);
+}
+
+.owo-preview-tile {
+  background: repeating-conic-gradient(#888 0% 25%, #aaa 0% 50%) 0 0 / 14px 14px;
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.owo-preview-tile .owo-canvas-wrap {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+}
+
+/* ── Canvases (overlay mode) ─────────────────────────────────────────────── */
+.owo-wheels-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+/* In overlay mode this IS the whole page body */
+html.owo-overlay body {
+  margin: 0;
+  padding: 0;
+}
+
+html.owo-overlay .owo-page {
+  padding: 0.5rem;
+}
+
+html.owo-overlay .owo-hero,
+html.owo-overlay .owo-setup-panel,
+html.owo-overlay .owo-instructions,
+html.owo-overlay .seo-content-area {
+  display: none !important;
+}
+
+html.owo-overlay .site-header,
+html.owo-overlay .site-footer,
+html.owo-overlay .cookie-consent,
+html.owo-overlay .pwa-bottom-nav,
+html.owo-overlay .pwa-install-banner,
+html.owo-overlay .feedback-popup,
+html.owo-overlay .feedback-btn,
+html.owo-overlay .embed-section,
+html.owo-overlay .bg-orbs {
+  display: none !important;
+}
+
+/* ── Wheel wrapper ────────────────────────────────────────────────────────── */
+.owo-wheel-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.owo-canvas-wrap {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+}
+
+.owo-indicator {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 20px solid var(--brand-accent, #9146FF);
+  z-index: 2;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.6));
+}
+
+.owo-canvas {
+  display: block;
+  border-radius: 50%;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+}
+
+.owo-wheel-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.03em;
+}
+
+.owo-spin-btn {
+  font-family: var(--brand-font-family);
+  font-size: 0.95rem;
+  font-weight: 800;
+  padding: 0.55rem 1.8rem;
+  border: none;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  background: var(--brand-accent, #9146FF);
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: opacity 0.2s, transform 0.1s;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+}
+
+.owo-spin-btn:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.owo-spin-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.owo-result {
+  min-height: 1.6rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
+  text-align: center;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.owo-result.shown {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ── Buttons ──────────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1.5px solid transparent;
+  font-family: var(--brand-font-family);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s, background 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+.btn:hover:not(:disabled) {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn--accent {
+  background: var(--brand-accent, #9146FF);
+  border-color: var(--brand-accent, #9146FF);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(145, 70, 255, 0.3);
+}
+
+.btn--secondary {
+  background: var(--brand-surface);
+  border-color: var(--brand-border);
+  color: var(--brand-text);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  border-color: var(--brand-accent, #9146FF);
+  color: var(--brand-heading);
+}
+
+/* ── Instructions ─────────────────────────────────────────────────────────── */
+.owo-instructions {
+  padding: 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.owo-instructions h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--brand-heading);
+}
+
+.owo-instructions h3 {
+  margin: 0.5rem 0 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--brand-heading);
+}
+
+.owo-instructions p,
+.owo-instructions li {
+  font-size: 0.95rem;
+  color: var(--brand-text);
+  line-height: 1.65;
+}
+
+.owo-instructions ol,
+.owo-instructions ul {
+  margin: 0;
+  padding-left: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.owo-tip {
+  padding: 0.6rem 1rem;
+  background: rgba(145, 70, 255, 0.1);
+  border-left: 3px solid var(--brand-accent, #9146FF);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.88rem;
+  color: var(--brand-text);
+  line-height: 1.55;
+}
+
+code {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.85em;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* ── SEO section ──────────────────────────────────────────────────────────── */
+.seo-content-area {
+  padding: 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.seo-content-area h2,
+.seo-content-area h3 {
+  margin: 0;
+  color: var(--brand-heading);
+}
+
+.seo-content-area h2 { font-size: 1.25rem; font-weight: 700; }
+.seo-content-area h3 { font-size: 1rem;    font-weight: 700; }
+
+.seo-content-area p,
+.seo-content-area li {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--brand-text);
+  line-height: 1.7;
+}
+
+.seo-content-area ul,
+.seo-content-area ol {
+  margin: 0;
+  padding-left: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.seo-toc {
+  padding: 1rem 1.4rem;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.06));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--radius-md);
+}
+
+.seo-toc h3 {
+  margin: 0 0 0.5rem !important;
+  font-size: 0.82rem !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--brand-subtle-text) !important;
+}
+
+.seo-toc ol { margin: 0; padding-left: 1.3rem; }
+
+.seo-toc a,
+.owo-instructions a {
+  color: var(--brand-accent, #9146FF);
+  text-decoration: none;
+}
+
+.seo-toc a:hover,
+.owo-instructions a:hover {
+  text-decoration: underline;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .owo-page { padding: 1rem var(--layout-gutter); }
+  .owo-hero,
+  .owo-instructions,
+  .seo-content-area { padding: 1.5rem 1.25rem; }
+  .owo-setup-panel { padding: 1.25rem 1.25rem; }
+}
