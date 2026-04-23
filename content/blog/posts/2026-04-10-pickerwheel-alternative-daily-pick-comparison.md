@@ -138,4 +138,4 @@ But for the vast majority of teams, classrooms, and casual decision-making? That
 
 If you're an individual who just wants to spin a wheel once in a while, both tools work. But if you're part of a team, running meetings, facilitating workshops, or teaching a classroom—**Daily Pick is the clear choice**.
 
-Ready to try it? Start with the [Wheel](/apps/wheel/), run a [Planning Poker session](/apps/planning-poker/) with your team, or browse all [Daily Pick apps](/apps/) to find the right tool for every moment.
+Ready to try it? Start with the [Wheel](/apps/wheel/), run a [Planning Poker session](/apps/planning-poker/) with your team, or browse all [Daily Pick tools](/) to find the right tool for every moment.

@@ -136,4 +136,4 @@ But the moment you need reliability, privacy, team features, or anything beyond 
 
 If you just need a quick spin and don't mind the ads and tracking, Wheel Decide exists. But if you want a tool that respects your privacy, works without an account, looks good on a shared screen, and grows with your team's needs—**Daily Pick is the obvious choice**.
 
-Start now: [spin the Wheel](/apps/wheel/), [run a Planning Poker session](/apps/planning-poker/), or [browse all 30+ Daily Pick apps](/apps/).
+Start now: [spin the Wheel](/apps/wheel/), [run a Planning Poker session](/apps/planning-poker/), or [browse all 30+ Daily Pick tools](/).
