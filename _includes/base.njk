@@ -238,6 +238,75 @@
     {% include "header.html" %}
 
     {% if isApp %}
+    <!-- Visible breadcrumb for app pages (keeps in sync with JSON-LD) -->
+    <nav aria-label="Breadcrumb" class="visible-breadcrumb" id="visible-breadcrumb" hidden>
+        <ol>
+            <li><a href="/">Home</a></li>
+            <li id="breadcrumb-category"></li>
+            <li id="breadcrumb-current"></li>
+        </ol>
+    </nav>
+    <script>
+    (function () {
+      var apps = {{ apps | dump | safe }};
+      var appMap = {};
+      apps.forEach(function (a) { appMap[a.path] = a; });
+      var categoryPages = {
+        standup: { name: 'Stand-up Games', url: '/standups/' },
+        randomizer: { name: 'Random Pickers & Decision Tools', url: '/randomizers/' },
+        agile: { name: 'Agile Planning Tools', url: '/agile/' },
+        games: { name: 'Games & Group Activities', url: '/games/' },
+        lottery: { name: 'Lottery Hub', url: '/lottery/' }
+      };
+
+      var currentPath = window.location.pathname;
+      var normalized = currentPath.replace(/\/$/, '') + '/';
+      var app = appMap[currentPath] || appMap[normalized] || appMap[currentPath.replace(/\/$/, '')];
+      var pageTitle = document.querySelector('main h1')?.textContent?.trim() || document.title.split('–')[0] || '';
+
+      var nav = document.getElementById('visible-breadcrumb');
+      var catEl = document.getElementById('breadcrumb-category');
+      var curEl = document.getElementById('breadcrumb-current');
+
+      if (!nav || !catEl || !curEl) return;
+
+      if (app && categoryPages[app.category]) {
+        catEl.innerHTML = '<a href="' + categoryPages[app.category].url + '">' + categoryPages[app.category].name + '</a>';
+        curEl.textContent = pageTitle.trim();
+      } else {
+        // no category: collapse the middle item and show only Home → Current
+        catEl.remove();
+        curEl.textContent = pageTitle.trim();
+      }
+
+      nav.hidden = false;
+    })();
+    </script>
+    <style>
+    .visible-breadcrumb{
+      font-size:0.9rem;
+      margin:0.5rem auto;
+      max-width:1200px;
+      padding:0 1rem;
+      text-align:center;
+    }
+    .visible-breadcrumb ol{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:flex;
+      gap:.5rem;
+      align-items:center;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+    .visible-breadcrumb li{white-space:nowrap}
+    .visible-breadcrumb a{color:inherit;text-decoration:underline}
+    .visible-breadcrumb li+li:before{content:'›';margin:0 0.4rem;color:#888}
+    </style>
+    {% endif %}
+
+    {% if isApp %}
     {{ content | safe }}
 
     {% if not hideEmbed %}
