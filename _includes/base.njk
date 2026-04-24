@@ -129,6 +129,88 @@
     {% if localBrandConfig %}<script defer src="{{ localBrandConfig }}"></script>{% endif %}
     <script defer src="/assets/js/local-brand-studio.js"></script>
     <script defer src="/assets/js/embed.js"></script>
+    <script>
+      (function () {
+        var homeUrl = 'https://dailypick.dev/';
+        var currentUrl = window.location.origin + window.location.pathname;
+        var pageHeading = document.querySelector('main h1')?.textContent?.trim();
+        var pageTitle = (pageHeading || document.title || 'Tool').replace(/\s*–.*$/, '').trim();
+        var appCategoryMap = {
+          {% for app in apps %}
+          "{{ app.path }}": "{{ app.category }}",
+          {% endfor %}
+        };
+
+        var categoryPages = {
+          standup: { name: 'Stand-up Games', url: 'https://dailypick.dev/standups/' },
+          randomizer: { name: 'Random Pickers & Decision Tools', url: 'https://dailypick.dev/randomizers/' },
+          agile: { name: 'Agile Planning Tools', url: 'https://dailypick.dev/agile/' },
+          games: { name: 'Games & Group Activities', url: 'https://dailypick.dev/games/' },
+          lottery: { name: 'Lottery Hub', url: 'https://dailypick.dev/lottery/' }
+        };
+
+        var breadcrumb = {
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            {
+              '@type': 'ListItem',
+              position: 1,
+              name: 'Home',
+              item: {
+                '@type': 'WebPage',
+                '@id': homeUrl,
+                name: 'Home'
+              }
+            }
+          ]
+        };
+
+        var currentPath = window.location.pathname;
+        var normalizedPath = currentPath.replace(/\/$/, '');
+        var categoryKey = appCategoryMap[currentPath] || appCategoryMap[currentPath + '/'] || appCategoryMap[normalizedPath] || appCategoryMap[normalizedPath + '/'];
+        var category = categoryPages[categoryKey];
+
+        if (category) {
+          breadcrumb.itemListElement.push({
+            '@type': 'ListItem',
+            position: 2,
+            name: category.name,
+            item: {
+              '@type': 'WebPage',
+              '@id': category.url,
+              name: category.name
+            }
+          });
+          breadcrumb.itemListElement.push({
+            '@type': 'ListItem',
+            position: 3,
+            name: pageTitle,
+            item: {
+              '@type': 'WebPage',
+              '@id': currentUrl,
+              name: pageTitle
+            }
+          });
+        } else {
+          breadcrumb.itemListElement.push({
+            '@type': 'ListItem',
+            position: 2,
+            name: pageTitle,
+            item: {
+              '@type': 'WebPage',
+              '@id': currentUrl,
+              name: pageTitle
+            }
+          });
+        }
+
+        var script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.textContent = JSON.stringify(breadcrumb);
+        document.head.appendChild(script);
+      })();
+    </script>
     {% endif %}
 
     <!-- Google Analytics -->
