@@ -34,6 +34,12 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
             <button id="resetBtn" class="btn btn--secondary" type="button">↺ Reset</button>
           </div>
 
+          <div class="form-group checkbox-group">
+            <label for="removeAfterSelection">
+              <input id="removeAfterSelection" type="checkbox" /> Remove option after selection
+            </label>
+          </div>
+
           <p class="form-tip">Use for team lunch, meeting topics, sprint priorities, or any group choice.</p>
         </div>
 
@@ -157,10 +163,12 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
 
     const DEFAULT_OPTIONS = ['Pizza', 'Tacos', 'Sushi', 'Burger', 'Salad'];
     const STORAGE_KEY = 'dailypick_choices_spinner_options';
+    const REMOVE_AFTER_KEY = 'dailypick_choices_spinner_remove_after_selection';
     let options = [...DEFAULT_OPTIONS];
     let isSpinning = false;
 
     const radius = canvas.width / 2;
+    const removeAfterCheckbox = document.getElementById('removeAfterSelection');
 
     function loadOptions() {
       try {
@@ -173,12 +181,21 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
       } catch (e) {
         options = [...DEFAULT_OPTIONS];
       }
+
+      const savedRemoveAfter = localStorage.getItem(REMOVE_AFTER_KEY);
+      removeAfterCheckbox.checked = savedRemoveAfter === 'true';
+
       optionsInput.value = options.join('\n');
       drawWheel();
+      updateInteractionState();
     }
 
     function saveOptions() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(options));
+    }
+
+    function saveRemoveAfterSelection() {
+      localStorage.setItem(REMOVE_AFTER_KEY, String(removeAfterCheckbox.checked));
     }
 
     function parseOptions() {
@@ -280,9 +297,18 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
         if (progress < 1) {
           requestAnimationFrame(animateSpin);
         } else {
+          const selectedOption = options[chosenIndex];
+          if (removeAfterCheckbox.checked) {
+            options.splice(chosenIndex, 1);
+            optionsInput.value = options.join('\n');
+            saveOptions();
+          }
+
           isSpinning = false;
           spinBtn.disabled = false;
-          resultText.textContent = `✨ ${options[chosenIndex]}`;
+          resultText.textContent = `✨ ${selectedOption}`;
+          drawWheel();
+          updateInteractionState();
         }
       }
 
@@ -300,6 +326,7 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
       resultText.textContent = '';
       saveOptions();
       drawWheel();
+      updateInteractionState();
     });
 
     resetBtn.addEventListener('click', () => {
@@ -308,9 +335,16 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
       resultText.textContent = '';
       saveOptions();
       drawWheel();
+      updateInteractionState();
     });
 
+    removeAfterCheckbox.addEventListener('change', saveRemoveAfterSelection);
+
     spinBtn.addEventListener('click', spinWheel);
+
+    function updateInteractionState() {
+      spinBtn.disabled = isSpinning || options.length === 0;
+    }
 
     window.addEventListener('localBrandConfigUpdated', () => {
       if (!isSpinning) drawWheel();
