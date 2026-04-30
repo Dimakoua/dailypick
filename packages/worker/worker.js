@@ -11,6 +11,7 @@ import { TwoTruthsAndALieSession } from '../../apps/two-truths-and-a-lie/two-tru
 import { PollSession as MoraleThermometerSession } from '../../apps/morale-thermometer/morale-thermometer-do.js';
 import { RetroBoardSession } from '../../apps/retro-board/retro-board-do.js';
 import { SnowballFightSession } from '../../apps/snowball-fight/snowball-fight-session.js';
+import { handleGzipRequest } from './gzip-handler.js';
 import manifest from '__STATIC_CONTENT_MANIFEST';
 
 const assetManifest = JSON.parse(manifest);
@@ -296,6 +297,13 @@ export default {
 
         // If the router didn't handle it, proceed with static asset serving.
         try {
+            // Try gzip compression first if client supports it
+            const gzipResponse = await handleGzipRequest(request, env, assetManifest);
+            if (gzipResponse) {
+                return gzipResponse;
+            }
+
+            // Fall back to uncompressed assets
             const options = {
                 mapRequestToAsset: req => {
                     const url = new URL(req.url);

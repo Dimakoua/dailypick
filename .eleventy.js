@@ -120,7 +120,8 @@ module.exports = async function(eleventyConfig) {
       './content/feedback/index.njk',
       './content/feedback/thank-you.njk',
       './seo-instructions.md',
-      './apps/whats-new/screenshots/README.md'
+      './apps/whats-new/screenshots/README.md',
+      './GZIP-COMPRESSION.md'
     ];
 
     const items = collectionApi.getAll().filter(item => {
