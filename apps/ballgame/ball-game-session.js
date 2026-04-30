@@ -34,17 +34,13 @@ export class BallGameSession extends BaseEphemeralDO {
 
       if (storedGameState) {
         this.gameState = storedGameState;
-        console.log(`[DO Debug] Loaded existing game state for DO ID: ${this.state.id}. GameActive: ${this.gameState.gameActive}, Ball X: ${this.gameState.ballState.x?.toFixed(2)}, Y: ${this.gameState.ballState.y?.toFixed(2)}`);
+        console.log(`[DO Debug] Loaded existing game state for DO ID: ${this.state.id}. GameStatus: ${this.gameState.gameStatus}, GameActive: ${this.gameState.gameActive}, Ball X: ${this.gameState.ballState.x?.toFixed(2)}, Y: ${this.gameState.ballState.y?.toFixed(2)}`);
 
-        // Ensure gameActive is true if it was persisted as such.
-        // If the game ended previously, it might be false.
-        // Decide if you want a reloaded DO to resume a 'game over' state or reset it.
-        // For now, let's assume if it loads, it resumes its active status.
-        if (this.gameState.gameActive) {
-          this.startGameLoop(); // Attempt to start the loop
+        // Resume the loop for countdown or running sessions so the game can progress.
+        if (this.gameState.gameStatus !== 'game-over') {
+          this.startGameLoop();
         } else {
-          console.log(`[DO Debug] Game state loaded but game is not active for DO ID ${this.state.id}.`);
-          // If game is not active, clients will only see the final state unless reset.
+          console.log(`[DO Debug] Game state loaded as game-over for DO ID ${this.state.id}; not restarting loop.`);
         }
 
       } else {
