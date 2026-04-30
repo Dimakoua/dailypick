@@ -176,6 +176,7 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
     const REMOVE_AFTER_KEY = 'dailypick_choices_spinner_remove_after_selection';
     let options = DEFAULT_OPTIONS.map(label => ({ label }));
     let isSpinning = false;
+    let lastRotation = 0;
     const imageCache = new Map();
 
     const radius = canvas.width / 2;
@@ -487,6 +488,7 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
     function spinWheel() {
       if (isSpinning || options.length === 0) return;
 
+      lastRotation = 0;
       isSpinning = true;
       spinBtn.disabled = true;
       resultText.textContent = '';
@@ -522,6 +524,8 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
           const selectedOption = options[chosenIndex];
           const selectedImage = selectedOption.imageUrl ? getLoadedImage(selectedOption.imageUrl) : null;
 
+          lastRotation = currentRotation;
+
           if (removeAfterCheckbox.checked) {
             options.splice(chosenIndex, 1);
             optionsInput.value = options.map(formatOptionEntry).join('\n');
@@ -537,7 +541,7 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
             resultText.textContent = `✨ ${selectedOption.label}`;
           }
 
-          drawWheel();
+          drawWheel(lastRotation);
           updateInteractionState();
         }
       }
@@ -558,6 +562,7 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
       saveOptions();
       options.forEach(preloadOptionImage);
       updateUploadedOptionsList();
+      lastRotation = 0;
       drawWheel();
       updateInteractionState();
     });
@@ -568,6 +573,7 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
       resultText.textContent = '';
       saveOptions();
       updateUploadedOptionsList();
+      lastRotation = 0;
       drawWheel();
       updateInteractionState();
     });
@@ -592,7 +598,7 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
     }
 
     window.addEventListener('localBrandConfigUpdated', () => {
-      if (!isSpinning) drawWheel();
+      if (!isSpinning) drawWheel(lastRotation);
     });
 
     loadOptions();
