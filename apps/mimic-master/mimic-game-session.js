@@ -102,6 +102,7 @@ export class MimicGameSession extends BaseEphemeralDO {
         if (clientId === this.hostId) {
           this.playersWhoPlayed.clear();
           this.broadcast({ type: 'session-reset' });
+          this.broadcastUserList();
         }
         break;
       case 'clear-leaderboard':
@@ -181,6 +182,7 @@ export class MimicGameSession extends BaseEphemeralDO {
     }
 
     this.broadcast({ type: 'leaderboard', entries: this.leaderboard });
+    this.broadcastUserList();
     this.state.storage.put('leaderboard', this.leaderboard).catch((err) => {
       console.error('[MimicGameSession] Failed to persist leaderboard', err);
     });
