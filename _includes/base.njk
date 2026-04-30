@@ -90,6 +90,8 @@
     <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
     <meta name="msapplication-TileColor" content="#2d89ef" />
     <meta name="theme-color" content="#ffffff" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
     {% if isApp %}
     <!-- Google Fonts (app pages) -->
@@ -114,6 +116,24 @@
     <link rel="stylesheet" href="/assets/css/glass.css" media="print" onload="this.media='all'" />
     <link rel="stylesheet" href="/assets/css/seo-card.css" media="print" onload="this.media='all'" />
     <link rel="stylesheet" href="/assets/css/feedback-popup.css" media="print" onload="this.media='all'" />
+    <script>
+      (function () {
+        var deferredStyles = document.querySelectorAll('link[rel="stylesheet"][media="print"]');
+        if (!deferredStyles.length) return;
+        function enableDeferredStyles() {
+          deferredStyles.forEach(function (link) {
+            if (link.media !== 'all') link.media = 'all';
+          });
+        }
+        if (document.readyState !== 'loading') {
+          enableDeferredStyles();
+        } else {
+          window.addEventListener('DOMContentLoaded', enableDeferredStyles, { once: true });
+          window.addEventListener('load', enableDeferredStyles, { once: true });
+          window.addEventListener('pageshow', enableDeferredStyles);
+        }
+      })();
+    </script>
 
     {% if isApp %}
     <link rel="stylesheet" href="/assets/css/standup-panel.css" media="print" onload="this.media='all'" />
@@ -225,11 +245,15 @@
     <!-- Detect PWA standalone early to avoid FOUC -->
     <script>
       (function () {
-        var standalone =
-          window.matchMedia('(display-mode: standalone)').matches ||
-          (navigator.standalone === true) ||
-          new URLSearchParams(window.location.search).has('pwa');
-        if (standalone) document.documentElement.classList.add('pwa-standalone');
+        function setStandaloneClass() {
+          var standalone =
+            window.matchMedia('(display-mode: standalone)').matches ||
+            (navigator.standalone === true) ||
+            new URLSearchParams(window.location.search).has('pwa');
+          if (standalone) document.documentElement.classList.add('pwa-standalone');
+        }
+        setStandaloneClass();
+        window.addEventListener('pageshow', setStandaloneClass);
       })();
     </script>
 </head>
