@@ -5,13 +5,24 @@ export class MimicGameSession extends BaseEphemeralDO {
     super(state, env, { deleteAllOnCleanup: false }); // Keep leaderboard persistent
     this.clients = new Map();
     this.leaderboard = [];
-    this.playersWhoPlayed = new Set(); // Track who has played in current session
+    this.persistentPlayers = new Map(); // Keep score results even if the player disconnects
+    this.playersWhoPlayed = new Set(); // Track who has played in current session by clientId
+    this.playersWhoPlayedByName = new Set(); // Persist played state for returning names
     this.hostId = null;
 
     this.state.blockConcurrencyWhile(async () => {
       const stored = await this.state.storage.get('leaderboard');
       if (Array.isArray(stored)) {
         this.leaderboard = stored;
+        for (const entry of stored) {
+          if (entry && entry.name) {
+            this.persistentPlayers.set(entry.name, {
+              name: entry.name,
+              bestTime: entry.bestTime,
+              hasPlayed: true
+            });
+          }
+        }
       }
     });
   }
@@ -32,7 +43,8 @@ export class MimicGameSession extends BaseEphemeralDO {
     server.accept();
 
     const clientId = crypto.randomUUID();
-    this.clients.set(clientId, { ws: server, name: null });
+    const placeholderName = `Player ${clientId.slice(-4)}`;
+    this.clients.set(clientId, { ws: server, name: placeholderName, bestTime: null, hasPlayed: false, hasCamera: false });
     this.markActive().catch((error) => console.error('[MimicGameSession] markActive failed', error));
 
     if (this.hostId === null) {
@@ -101,6 +113,7 @@ export class MimicGameSession extends BaseEphemeralDO {
         // Allow host to reset who has played (for new round with everyone)
         if (clientId === this.hostId) {
           this.playersWhoPlayed.clear();
+          this.playersWhoPlayedByName.clear();
           this.broadcast({ type: 'session-reset' });
           this.broadcastUserList();
         }
@@ -110,7 +123,14 @@ export class MimicGameSession extends BaseEphemeralDO {
         if (clientId === this.hostId) {
           this.leaderboard = [];
           this.playersWhoPlayed.clear();
+          this.playersWhoPlayedByName.clear();
+          this.persistentPlayers.clear();
+          for (const client of this.clients.values()) {
+            client.hasPlayed = false;
+            client.bestTime = null;
+          }
           this.broadcast({ type: 'leaderboard', entries: [] });
+          this.broadcastUserList();
           this.state.storage.put('leaderboard', []).catch((err) => {
             console.error('[MimicGameSession] Failed to clear leaderboard', err);
           });
@@ -129,8 +149,19 @@ export class MimicGameSession extends BaseEphemeralDO {
   updateClientName(clientId, rawName, isHost = false) {
     const client = this.clients.get(clientId);
     if (!client) return;
-    const name = this.sanitizeName(rawName);
+    const name = this.sanitizeName(rawName) || client.name;
     client.name = name;
+
+    const bestEntry = this.leaderboard.find(e => e.name === name);
+    const persistent = this.persistentPlayers.get(name);
+    if (bestEntry) {
+      client.bestTime = bestEntry.bestTime;
+      client.hasPlayed = this.playersWhoPlayedByName.has(name) || client.hasPlayed;
+    } else if (persistent) {
+      client.bestTime = persistent.bestTime;
+      client.hasPlayed = client.hasPlayed;
+    }
+
     if (isHost) {
       this.hostId = clientId;
       this.broadcastHostStatus();
@@ -146,12 +177,20 @@ export class MimicGameSession extends BaseEphemeralDO {
     // Mark this player as having played
     this.playersWhoPlayed.add(clientId);
 
+    const reactionTime = Math.round(payload.reactionTime);
     const client = this.clients.get(clientId);
     const fallbackName = client?.name || this.sanitizeName(payload.name) || 'Player';
     const name = this.sanitizeName(fallbackName);
     if (!name) return;
 
-    const reactionTime = Math.round(payload.reactionTime);
+    this.playersWhoPlayedByName.add(name);
+    this.persistentPlayers.set(name, { name, bestTime: reactionTime, hasPlayed: true });
+    if (client) {
+      client.name = name;
+      client.bestTime = reactionTime;
+      client.hasPlayed = true;
+    }
+
     const promptLabel = typeof payload.promptLabel === 'string' ? payload.promptLabel.slice(0, 16) : '';
 
     let entry = this.leaderboard.find((item) => item.name === name);
@@ -198,17 +237,33 @@ export class MimicGameSession extends BaseEphemeralDO {
   }
 
   broadcastUserList() {
-    const users = Array.from(this.clients.entries()).map(([id, data]) => {
-      // Find historical best score for this user by name
-      const bestEntry = this.leaderboard.find(e => e.name === data.name);
-      return { 
-        id, 
-        name: data.name || 'Player',
-        hasPlayed: this.playersWhoPlayed.has(id),
-        bestTime: bestEntry?.bestTime,
+    const usersByName = new Map();
+
+    for (const [name, entry] of this.persistentPlayers.entries()) {
+      usersByName.set(name, {
+        id: null,
+        name,
+        connected: false,
+        hasPlayed: entry.hasPlayed,
+        bestTime: entry.bestTime,
+        hasCamera: false
+      });
+    }
+
+    for (const [id, data] of this.clients.entries()) {
+      const name = data.name || `Player ${id.slice(-4)}`;
+      const existing = usersByName.get(name);
+      usersByName.set(name, {
+        id,
+        name,
+        connected: true,
+        hasPlayed: data.hasPlayed,
+        bestTime: data.bestTime ?? existing?.bestTime,
         hasCamera: !!data.hasCamera
-      };
-    });
+      });
+    }
+
+    const users = Array.from(usersByName.values());
     this.broadcast({ type: 'user-list', users });
   }
 
