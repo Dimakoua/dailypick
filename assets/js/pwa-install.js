@@ -49,6 +49,7 @@
   function hideBanner() {
     banner.classList.remove('pwa-visible');
     banner.setAttribute('aria-hidden', 'true');
+    banner.style.bottom = '';
     localStorage.setItem(DISMISS_KEY, String(Date.now()));
   }
 

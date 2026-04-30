@@ -348,7 +348,4 @@ video,
     flex-direction: column;
     align-items: stretch;
   }
-  button {
-    width: 100%;
-  }
 }

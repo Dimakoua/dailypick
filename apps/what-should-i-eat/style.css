@@ -148,16 +148,6 @@ body {
   color: var(--brand-heading);
 }
 
-.embed-section {
-  max-width: 700px;
-  width: 92%;
-  background: var(--glass-bg, rgba(255, 255, 255, 0.12));
-  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
-  border-radius: var(--radius-lg);
-  padding: 24px;
-  margin: 20px 0;
-  backdrop-filter: blur(14px);
-}
 
 .embed-section h2 {
   margin-top: 0;

@@ -43,8 +43,8 @@
             'z-index:20;padding:5px 12px!important;font-size:0.78rem!important;',
             'gap:5px!important;opacity:0.72;transition:opacity .2s,transform .2s,box-shadow .2s;}',
             '.game-pip-fab:hover,.game-pip-fab:focus-visible{opacity:1;}',
-            // Hide in PWA standalone mode
-            '@media(display-mode:standalone){.game-pip-trigger{display:none!important;}}',
+            // Hide pop-out buttons in PWA standalone mode and on mobile
+            '@media(display-mode:standalone),(max-width:720px){.game-pip-trigger,.pip-trigger{display:none!important;}}',
         ].join('');
         document.head.appendChild(s);
     }
