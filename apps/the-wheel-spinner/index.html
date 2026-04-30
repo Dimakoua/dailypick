@@ -26,8 +26,16 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
           <div class="form-group">
             <label for="optionsInput">Options (one per line or comma-separated):</label>
             <textarea id="optionsInput" rows="8"
-              placeholder="Pizza&#10;Tacos&#10;Sushi&#10;Burger&#10;Salad"></textarea>
+              placeholder="Pizza&#10;Tacos&#10;Sushi&#10;Burger&#10;Salad&#10;&#10;Coffee|/assets/images/choices-spinner/coffee.png"></textarea>
           </div>
+
+          <div class="form-group">
+            <label for="uploadImageInput" class="upload-label">📸 Upload Photos</label>
+            <input id="uploadImageInput" type="file" accept="image/*" multiple class="upload-input" />
+            <p class="help-text">Pick images from your computer. Each becomes a spinner option using its filename as the label.</p>
+          </div>
+
+          <div id="uploadedOptionsList" class="uploaded-options"></div>
 
           <div class="form-actions">
             <button id="updateBtn" class="btn btn--accent" type="button">🔄 Update</button>
@@ -40,7 +48,7 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
             </label>
           </div>
 
-          <p class="form-tip">Use for team lunch, meeting topics, sprint priorities, or any group choice.</p>
+          <p class="form-tip">Use <code>Label|image-url</code> to attach a remote icon, or upload your own photo options from your computer.</p>
         </div>
 
         <!-- Right: Wheel & Result -->
@@ -154,6 +162,8 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
   </main>
   <script>
     const optionsInput = document.getElementById('optionsInput');
+    const uploadImageInput = document.getElementById('uploadImageInput');
+    const uploadedOptionsList = document.getElementById('uploadedOptionsList');
     const updateBtn = document.getElementById('updateBtn');
     const resetBtn = document.getElementById('resetBtn');
     const spinBtn = document.getElementById('spinBtn');
@@ -164,34 +174,222 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
     const DEFAULT_OPTIONS = ['Pizza', 'Tacos', 'Sushi', 'Burger', 'Salad'];
     const STORAGE_KEY = 'dailypick_choices_spinner_options';
     const REMOVE_AFTER_KEY = 'dailypick_choices_spinner_remove_after_selection';
-    let options = [...DEFAULT_OPTIONS];
+    let options = DEFAULT_OPTIONS.map(label => ({ label }));
     let isSpinning = false;
+    const imageCache = new Map();
 
     const radius = canvas.width / 2;
     const removeAfterCheckbox = document.getElementById('removeAfterSelection');
 
+    function isUploadedDataImage(option) {
+      return Boolean(option.imageUrl && option.imageUrl.startsWith('data:'));
+    }
+
+    function formatOptionEntry(option) {
+      return option.imageUrl ? `${option.label}|${option.imageUrl}` : option.label;
+    }
+
+    function formatOptionForTextarea(option) {
+      return isUploadedDataImage(option) ? option.label : formatOptionEntry(option);
+    }
+
+    function parseOptionEntry(entry) {
+      const parts = entry.split('|').map(part => part.trim()).filter(Boolean);
+      if (!parts[0]) return null;
+      if (parts.length === 1) {
+        return { label: parts[0] };
+      }
+      return {
+        label: parts[0],
+        imageUrl: parts[1],
+      };
+    }
+
+    function normalizeSavedOptions(saved) {
+      if (!Array.isArray(saved)) return null;
+      return saved.map(item => {
+        if (typeof item === 'string') return parseOptionEntry(item);
+        if (item && typeof item === 'object' && item.label) return {
+          label: String(item.label),
+          imageUrl: item.imageUrl ? String(item.imageUrl) : undefined,
+        };
+        return null;
+      }).filter(Boolean);
+    }
+
+    function getOptionsTextValue() {
+      return options
+        .filter(option => !isUploadedDataImage(option))
+        .map(formatOptionForTextarea)
+        .join('\n');
+    }
+
+    function updateUploadedOptionsList() {
+      const imageOptions = options.filter(option => option.imageUrl);
+      if (!uploadedOptionsList) return;
+
+      if (imageOptions.length === 0) {
+        uploadedOptionsList.innerHTML = '';
+        return;
+      }
+
+      uploadedOptionsList.innerHTML = imageOptions.map((option, index) => {
+        const safeLabel = option.label ? option.label.replace(/</g, '&lt;').replace(/>/g, '&gt;') : 'Image';
+        const imageUrl = option.imageUrl ? option.imageUrl.replace(/\"/g, '&quot;') : '';
+        return `
+          <div class="uploaded-option-item" data-index="${index}">
+            <div class="uploaded-option-thumb" style="background-image: url('${imageUrl}')"></div>
+            <div class="uploaded-option-meta">
+              <div class="uploaded-option-label">${safeLabel}</div>
+              <button type="button" class="btn btn--danger btn--small" data-remove-index="${index}">Remove</button>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    function removeImageOption(index) {
+      const imageOptions = options.filter(option => option.imageUrl);
+      const removed = imageOptions[index];
+      if (!removed) return;
+      options = options.filter(option => option !== removed);
+      optionsInput.value = getOptionsTextValue();
+      saveOptions();
+      updateUploadedOptionsList();
+      drawWheel();
+      updateInteractionState();
+    }
+
+    function preloadOptionImage(option) {
+      if (!option.imageUrl || imageCache.has(option.imageUrl)) return;
+      const image = new Image();
+      image.crossOrigin = 'anonymous';
+      imageCache.set(option.imageUrl, { status: 'loading', image: image });
+
+      image.onload = () => {
+        imageCache.set(option.imageUrl, { status: 'loaded', image });
+        if (!isSpinning) drawWheel();
+      };
+      image.onerror = () => {
+        imageCache.set(option.imageUrl, { status: 'error', image: null });
+      };
+      image.src = option.imageUrl;
+    }
+
+    function getLoadedImage(url) {
+      const cached = imageCache.get(url);
+      return cached && cached.status === 'loaded' ? cached.image : null;
+    }
+
+    function addUploadedImages(files) {
+      const validFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
+      if (!validFiles.length) return;
+
+      validFiles.forEach(file => {
+        const maxBytes = 5 * 1024 * 1024;
+        if (file.size > maxBytes) {
+          resultText.textContent = `Image ${file.name} is too large; max file size is 5 MB.`;
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const imageUrl = event.target.result;
+          const label = file.name.replace(/\.[^.]+$/, '').trim() || 'Uploaded Image';
+          const newOption = { label, imageUrl };
+          const key = `${label.toLowerCase()}|${imageUrl}`;
+          const exists = options.some(option => `${option.label.toLowerCase()}|${option.imageUrl || ''}` === key);
+          if (!exists) {
+            options.push(newOption);
+            saveOptions();
+            optionsInput.value = getOptionsTextValue();
+            preloadOptionImage(newOption);
+            updateUploadedOptionsList();
+            drawWheel();
+            updateInteractionState();
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+
+      uploadImageInput.value = '';
+    }
+
+
+    function formatOptionEntry(option) {
+      return option.imageUrl ? `${option.label}|${option.imageUrl}` : option.label;
+    }
+
+    function parseOptionEntry(entry) {
+      const parts = entry.split('|').map(part => part.trim()).filter(Boolean);
+      if (!parts[0]) return null;
+      if (parts.length === 1) {
+        return { label: parts[0] };
+      }
+      return {
+        label: parts[0],
+        imageUrl: parts[1],
+      };
+    }
+
+    function normalizeSavedOptions(saved) {
+      if (!Array.isArray(saved)) return null;
+      return saved.map(item => {
+        if (typeof item === 'string') return parseOptionEntry(item);
+        if (item && typeof item === 'object' && item.label) return {
+          label: String(item.label),
+          imageUrl: item.imageUrl ? String(item.imageUrl) : undefined,
+        };
+        return null;
+      }).filter(Boolean);
+    }
+
+    function preloadOptionImage(option) {
+      if (!option.imageUrl || imageCache.has(option.imageUrl)) return;
+      const image = new Image();
+      image.crossOrigin = 'anonymous';
+      imageCache.set(option.imageUrl, { status: 'loading', image: image });
+
+      image.onload = () => {
+        imageCache.set(option.imageUrl, { status: 'loaded', image });
+        if (!isSpinning) drawWheel();
+      };
+      image.onerror = () => {
+        imageCache.set(option.imageUrl, { status: 'error', image: null });
+      };
+      image.src = option.imageUrl;
+    }
+
+    function getLoadedImage(url) {
+      const cached = imageCache.get(url);
+      return cached && cached.status === 'loaded' ? cached.image : null;
+    }
+
+
     function loadOptions() {
       try {
         const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-        if (saved && Array.isArray(saved) && saved.length > 0) {
-          options = saved;
+        const normalized = normalizeSavedOptions(saved);
+        if (normalized && normalized.length > 0) {
+          options = normalized;
         } else {
-          options = [...DEFAULT_OPTIONS];
+          options = DEFAULT_OPTIONS.map(label => ({ label }));
         }
       } catch (e) {
-        options = [...DEFAULT_OPTIONS];
+        options = DEFAULT_OPTIONS.map(label => ({ label }));
       }
 
       const savedRemoveAfter = localStorage.getItem(REMOVE_AFTER_KEY);
       removeAfterCheckbox.checked = savedRemoveAfter === 'true';
 
-      optionsInput.value = options.join('\n');
+      optionsInput.value = getOptionsTextValue();
+      options.forEach(preloadOptionImage);
+      updateUploadedOptionsList();
       drawWheel();
       updateInteractionState();
     }
 
     function saveOptions() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(options));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(options.map(formatOptionEntry)));
     }
 
     function saveRemoveAfterSelection() {
@@ -201,7 +399,20 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
     function parseOptions() {
       const raw = optionsInput.value.trim();
       if (!raw) return [];
-      return Array.from(new Set(raw.split(/[\n,]+/).map(o => o.trim()).filter(Boolean)));
+
+      const entries = raw.split(/\n+/).flatMap(line => {
+        const trimmed = line.trim();
+        if (!trimmed) return [];
+        return trimmed.includes('|') ? [trimmed] : trimmed.split(',').map(item => item.trim()).filter(Boolean);
+      });
+
+      const parsedOptions = entries.map(parseOptionEntry).filter(Boolean);
+      const unique = new Map();
+      parsedOptions.forEach(option => {
+        const key = `${option.label.toLowerCase()}|${option.imageUrl || ''}`;
+        if (!unique.has(key)) unique.set(key, option);
+      });
+      return Array.from(unique.values());
     }
 
     function getSegmentColors(count) {
@@ -247,15 +458,26 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
         ctx.lineWidth = 2;
         ctx.stroke();
 
-        // Draw text
+        const displayLabel = option.label || '';
+        const loadedImage = option.imageUrl ? getLoadedImage(option.imageUrl) : null;
+
         ctx.save();
         ctx.rotate(angle + angleStep / 2);
-        ctx.textAlign = 'right';
         ctx.fillStyle = '#fff';
         ctx.font = 'bold 14px Arial';
         ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
         ctx.shadowBlur = 3;
-        ctx.fillText(option, radius - 20, 6);
+
+        if (loadedImage) {
+          const iconSize = Math.min(70, radius * 0.28);
+          const imageDist = radius * 0.50;
+          ctx.drawImage(loadedImage, imageDist - iconSize / 2, -iconSize / 2, iconSize, iconSize);
+        } else {
+          ctx.textAlign = 'right';
+          ctx.fillText(displayLabel, radius - 20, 6);
+          if (option.imageUrl) preloadOptionImage(option);
+        }
+
         ctx.restore();
       });
 
@@ -298,15 +520,23 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
           requestAnimationFrame(animateSpin);
         } else {
           const selectedOption = options[chosenIndex];
+          const selectedImage = selectedOption.imageUrl ? getLoadedImage(selectedOption.imageUrl) : null;
+
           if (removeAfterCheckbox.checked) {
             options.splice(chosenIndex, 1);
-            optionsInput.value = options.join('\n');
+            optionsInput.value = options.map(formatOptionEntry).join('\n');
             saveOptions();
           }
 
           isSpinning = false;
           spinBtn.disabled = false;
-          resultText.textContent = `✨ ${selectedOption}`;
+
+          if (selectedImage) {
+            resultText.innerHTML = `<img src="${selectedOption.imageUrl}" alt="${selectedOption.label}" class="result-image" />`;
+          } else {
+            resultText.textContent = `✨ ${selectedOption.label}`;
+          }
+
           drawWheel();
           updateInteractionState();
         }
@@ -317,25 +547,40 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
 
     updateBtn.addEventListener('click', () => {
       const parsed = parseOptions();
-      if (!parsed.length) {
+      const uploadedImageOptions = options.filter(option => isUploadedDataImage(option));
+      if (!parsed.length && !uploadedImageOptions.length) {
         resultText.textContent = 'Add at least one option first.';
         return;
       }
-      options = parsed;
-      optionsInput.value = options.join('\n');
+      options = [...parsed, ...uploadedImageOptions];
+      optionsInput.value = getOptionsTextValue();
       resultText.textContent = '';
       saveOptions();
+      options.forEach(preloadOptionImage);
+      updateUploadedOptionsList();
       drawWheel();
       updateInteractionState();
     });
 
     resetBtn.addEventListener('click', () => {
-      options = [...DEFAULT_OPTIONS];
-      optionsInput.value = options.join('\n');
+      options = DEFAULT_OPTIONS.map(label => ({ label }));
+      optionsInput.value = getOptionsTextValue();
       resultText.textContent = '';
       saveOptions();
+      updateUploadedOptionsList();
       drawWheel();
       updateInteractionState();
+    });
+
+    uploadImageInput.addEventListener('change', (event) => {
+      addUploadedImages(event.target.files);
+    });
+
+    uploadedOptionsList.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-remove-index]');
+      if (!button) return;
+      const index = Number(button.dataset.removeIndex);
+      removeImageOption(index);
     });
 
     removeAfterCheckbox.addEventListener('change', saveRemoveAfterSelection);
