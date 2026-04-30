@@ -21,7 +21,12 @@ export class BallGameSession extends BaseEphemeralDO {
     this.SPECIAL_EFFECT_DURATION = 3000;
 
     this.gameState = null; // Will be loaded or initialized
-    this.gameLoopInterval = null; // Controls the setInterval for the game loop
+    this.gameLoopInterval = null; // Controls the scheduled game loop timer
+    this.isLoopRunning = false;
+    this.lastBroadcastTime = 0;
+    this.BROADCAST_TICK_RATE = 1000 / 20; // 20 network updates per second
+    this.STATE_PERSIST_INTERVAL_MS = 5000; // Backup save interval
+    this.lastStatePersist = Date.now();
 
     // Use blockConcurrencyWhile to ensure state is loaded/initialized before any messages are processed.
     this.state.blockConcurrencyWhile(async () => {
@@ -53,19 +58,42 @@ export class BallGameSession extends BaseEphemeralDO {
 
   // Helper to manage the game loop interval
   startGameLoop() {
-    if (!this.gameLoopInterval) {
-      this.gameLoopInterval = setInterval(() => this.gameLoop(), this.SERVER_TICK_RATE);
+    if (!this.isLoopRunning) {
+      this.isLoopRunning = true;
       console.log(`[DO Debug] Game loop started for DO ID ${this.state.id}.`);
+      this.runLoop();
     } else {
       console.log(`[DO Debug] Game loop already running for DO ID ${this.state.id}.`);
     }
   }
 
+  async runLoop() {
+    if (!this.isLoopRunning) return;
+
+    const startTime = Date.now();
+    await this.gameLoop();
+
+    if (!this.isLoopRunning) return;
+    const executionTime = Date.now() - startTime;
+    const timeToNextTick = Math.max(0, this.SERVER_TICK_RATE - executionTime);
+    this.gameLoopInterval = setTimeout(() => this.runLoop(), timeToNextTick);
+  }
+
   stopGameLoop() {
+    this.isLoopRunning = false;
     if (this.gameLoopInterval) {
-      clearInterval(this.gameLoopInterval);
+      clearTimeout(this.gameLoopInterval);
       this.gameLoopInterval = null;
       console.log(`[DO Debug] Game loop stopped for DO ID ${this.state.id}.`);
+    }
+  }
+
+  async persistGameState(force = false) {
+    const now = Date.now();
+    if (force || now - this.lastStatePersist >= this.STATE_PERSIST_INTERVAL_MS) {
+      this.lastStatePersist = now;
+      await this.state.storage.put('gameState', this.gameState);
+      console.log(`[DO Debug] Persisted game state for DO ID ${this.state.id}. force=${force}`);
     }
   }
 
@@ -114,7 +142,7 @@ export class BallGameSession extends BaseEphemeralDO {
       vy: (Math.random() - 0.5) * 1.5, // Initial random velocity
     }));
 
-    await this.state.storage.put('gameState', this.gameState);
+    await this.persistGameState(true);
     console.log(`[DO Debug] NEW game state persisted for DO ID ${this.state.id}. Ball Initial:`, this.gameState.ballState);
 
     // Always start the game loop when a new game state is initialized and set to active
@@ -144,7 +172,7 @@ export class BallGameSession extends BaseEphemeralDO {
 
     // Immediately send the current game state to the newly joined client
     if (this.gameState) {
-      if (this.gameState.gameActive && !this.gameLoopInterval) {
+      if (this.gameState.gameActive && !this.isLoopRunning) {
         console.log(`[DO Debug] User ${userId} connected to active game in DO ID ${this.state.id}. Restarting game loop.`);
         this.startGameLoop();
       } else if (this.gameState.gameStatus === 'game-over') {
@@ -244,12 +272,15 @@ export class BallGameSession extends BaseEphemeralDO {
         this.gameState.gameStatus = 'running';
         this.gameState.gameActive = true;
       } else {
-        // broadcast countdown time
-        this.broadcast(JSON.stringify({
-          type: 'countdown',
-          startTime: this.gameState.startTime,
-          sessionId: this.state.id
-        }));
+        const now = Date.now();
+        if (now - this.lastBroadcastTime >= this.BROADCAST_TICK_RATE) {
+          this.lastBroadcastTime = now;
+          this.broadcast(JSON.stringify({
+            type: 'countdown',
+            startTime: this.gameState.startTime,
+            sessionId: this.state.id
+          }));
+        }
         return;
       }
     }
@@ -264,6 +295,7 @@ export class BallGameSession extends BaseEphemeralDO {
     }
 
     const { ballState, traps, capturedUserNames, activeEffects } = this.gameState;
+    let stateChanged = false;
 
     // Apply friction to ball
     ballState.vx *= this.BALL_FRICTION;
@@ -347,6 +379,7 @@ export class BallGameSession extends BaseEphemeralDO {
           const effect = this.triggerRandomEffect();
           this.broadcast(JSON.stringify({ type: 'trap-captured', trapId: trap.id, userName: trap.userName, effect: effect, sessionId: this.state.id }));
           capturedThisTick = true;
+          stateChanged = true;
         }
       }
     }
@@ -360,16 +393,19 @@ export class BallGameSession extends BaseEphemeralDO {
         this.gameState.gameStatus = 'game-over';
         this.stopGameLoop(); // Stop the game loop on game over
         this.broadcast(JSON.stringify({ type: 'game-over', capturedUserNames, sessionId: this.state.id }));
+        await this.persistGameState(true);
       }
     }
 
 
-    // Persist game state changes every tick
-    await this.state.storage.put('gameState', this.gameState);
+    // Persist game state changes only on milestones or periodic backup.
+    await this.persistGameState(stateChanged);
 
-    // Broadcast the updated game state to all connected clients in this session
-    // Only broadcast if there are connected users and game is active
-    if (this.users.size > 0 && this.gameState.gameActive) { // Only broadcast if active and users
+    // Broadcast the updated game state to connected clients on a slower network cadence.
+    // Only broadcast if there are connected users and game is active.
+    const now = Date.now();
+    if (this.users.size > 0 && this.gameState.gameActive && now - this.lastBroadcastTime >= this.BROADCAST_TICK_RATE) {
+      this.lastBroadcastTime = now;
       const messageToSend = {
         type: 'game-state-update',
         ball: ballState,
