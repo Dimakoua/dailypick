@@ -1,6 +1,8 @@
 const GTAG_ID = "G-N83YF635W2";
 const AHREFS_SRC = "https://analytics.ahrefs.com/analytics.js";
 const AHREFS_KEY = "czkmt2L/4SkKBtfNg+BqIQ";
+const CONTENTSQUARE_SRC = "https://t.contentsquare.net/uxa/74d1b6e548f9a.js";
+const CONTENTSQUARE_KEY = "74d1b6e548f9a";
 const CONSENT_KEY = "dailyPickCookieConsent";
 
 function loadAhrefsAnalytics() {
@@ -56,7 +58,28 @@ function loadGoogleTag() {
   window.gtag("js", new Date());
   window.gtag("config", GTAG_ID);
   loadAhrefsAnalytics();
+  loadContentsquare();
   window.gtagInitialized = true;
+}
+
+function loadContentsquare() {
+  if (window.contentsquareInitialized) {
+    return;
+  }
+
+  const existingScript = document.querySelector(`script[src="${CONTENTSQUARE_SRC}"][data-key="${CONTENTSQUARE_KEY}"]`);
+  if (existingScript) {
+    window.contentsquareInitialized = true;
+    return;
+  }
+
+  const script = document.createElement("script");
+  script.src = CONTENTSQUARE_SRC;
+  script.setAttribute("data-key", CONTENTSQUARE_KEY);
+  script.async = true;
+  document.head.appendChild(script);
+
+  window.contentsquareInitialized = true;
 }
 
 function hideBanner(banner) {
