@@ -1,0 +1,131 @@
+---
+layout: base_app.njk
+title: "Roulette Food de Vancouver – Sélecteur de restaurant et plat aléatoire | Daily Pick"
+description: "Vous hésitez à manger à Vancouver ? Faites tourner la roue pour une sélection de fruits de mer, sushi, food trucks et cuisine de la côte Ouest."
+keywords: "roulette food Vancouver, sélecteur restaurant Vancouver, quoi manger à Vancouver, guide food Vancouver, Vancouver food wheel"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-vancouver/french/"
+localBrandConfig: /apps/wheel/local-brand-config.js
+headExtra: |
+  <link href="/apps/what-should-i-eat-vancouver/style.css" rel="stylesheet" />
+  <meta http-equiv="Content-Language" content="fr" />
+  <link rel="alternate" hreflang="en" href="https://dailypick.dev/apps/what-should-i-eat-vancouver/" />
+  <link rel="alternate" hreflang="hi" href="https://dailypick.dev/apps/what-should-i-eat-vancouver/hindi/" />
+  <link rel="alternate" hreflang="es" href="https://dailypick.dev/apps/what-should-i-eat-vancouver/spanish/" />
+  <link rel="alternate" hreflang="zh-HAns" href="https://dailypick.dev/apps/what-should-i-eat-vancouver/mandarin/" />
+  <link rel="alternate" hreflang="zh-Hant" href="https://dailypick.dev/apps/what-should-i-eat-vancouver/chinese/" />
+  <link rel="alternate" hreflang="fr" href="https://dailypick.dev/apps/what-should-i-eat-vancouver/french/" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Envies du Pacifique Nord-Ouest — que mangez-vous ce soir ?</p>
+            <h1>🍣 Roulette Food de Vancouver</h1>
+            <p>Des sushis et fruits de mer aux food trucks et aux plats réconfortants, faites tourner la roue et laissez Vancouver choisir votre prochain repas.</p>
+            <p>Cette page est disponible en français. Voir aussi la version <a href="/apps/what-should-i-eat-vancouver/mandarin/">中文简体</a>, la version <a href="/apps/what-should-i-eat-vancouver/chinese/">中文繁體</a> ou revenir à l'<a href="/apps/what-should-i-eat-vancouver/">anglais</a>.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Sushi Bento,Spot Prawn Roll,Seafood Chowder,Salmon Burger,Granville Island Tacos,Japanese Curry,Tempura Bowl,Matcha Dessert">🌊 Classiques côtiers</button>
+            <button class="preset-btn" data-items="Japadog,Gastown Brunch,Dimsum in Richmond,Vietnamese Pho,Portobello Bao,Asian Fusion Bowl,Dessert Bar,Oyster Bar">🍜 Saveurs internationales</button>
+            <button class="preset-btn" data-items="Food Truck Poutine,Street Tacos,Loaded Fries,Gourmet Hot Dog,Artisan Sandwich,Daily Soup,Spicy Noodle Bowl,Crepe Wrap">🚚 Food trucks favoris</button>
+            <button class="preset-btn" data-items="Yaletown Steakhouse,Kitsilano Café,Granville Island Market,Commercial Drive Pizza,West End Vegan,North Shore Seafood,Downtown Tapas,Coal Harbour Italian">🏙️ Choix de quartiers</button>
+        </div>
+
+        <button id="spinBtn">🍣 TOURNEZ POUR MANGER !</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Roulette Food de Vancouver : Sélecteur aléatoire de restaurant et plat pour la côte Ouest</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>La Roulette Food de Vancouver facilite le choix d’un repas en ville. Des fruits de mer frais et sushi aux repas de marché, food trucks, et restaurants de quartiers, faites tourner une fois et laissez la ville décider.</p>
+                </div>
+                <div>
+                    <h3>Pourquoi cette roue est utile</h3>
+                    <ul>
+                        <li><strong>Variété urbaine :</strong> quatre présélections entre Classiques côtiers, Saveurs internationales, Food trucks favoris et Choix de quartiers.</li>
+                        <li><strong>Vraies suggestions de Vancouver :</strong> chaque élément reflète un plat, un repas de marché ou une ambiance de restaurant locale.</li>
+                        <li><strong>Choix instantané :</strong> une seule rotation suffit pour obtenir une direction appétissante sans faire défiler.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table des matières</h3>
+                <ol>
+                    <li><a href="#what-is-vancouver-food-wheel">Qu’est-ce que la Roulette Food de Vancouver ?</a></li>
+                    <li><a href="#who-should-use-vancouver-food-wheel">Pour qui est cette roue ?</a></li>
+                    <li><a href="#how-vancouver-food-wheel-works">Comment ça marche</a></li>
+                    <li><a href="#vancouver-food-wheel-features">Fonctionnalités</a></li>
+                    <li><a href="#vancouver-food-wheel-categories">Catégories food de Vancouver</a></li>
+                    <li><a href="#vancouver-food-wheel-tips">Conseils</a></li>
+                    <li><a href="#vancouver-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-vancouver-food-wheel-works">Pourquoi ça marche</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-vancouver-food-wheel">
+                <h3>1. Qu’est-ce que la Roulette Food de Vancouver ?</h3>
+                <p>La Roulette Food de Vancouver est un sélecteur aléatoire de restaurants et plats conçu pour la côte Ouest. Elle met en avant les fruits de mer, sushis, food trucks et restaurants multiculturels de la ville.</p>
+            </section>
+
+            <section id="who-should-use-vancouver-food-wheel">
+                <h3>2. Pour qui est cette roue ?</h3>
+                <p>Les résidents de Vancouver qui veulent un choix rapide, les visiteurs en exploration, et toute personne perdue dans la multitude d’options culinaires. Faites tourner et laissez Vancouver proposer la prochaine idée gourmande.</p>
+            </section>
+
+            <section id="how-vancouver-food-wheel-works">
+                <h3>3. Comment ça marche</h3>
+                <p>Sélectionnez un ensemble, puis appuyez sur Tourner. La roue s’arrête sur un choix et l’affiche. Utilisez-le comme idée de repas, puis rendez-vous sur place ou commandez. Recommencez si vous souhaitez une autre option.</p>
+            </section>
+
+            <section id="vancouver-food-wheel-features">
+                <h3>4. Fonctionnalités</h3>
+                <ul>
+                    <li><strong>Quatre présélections :</strong> Classiques côtiers, Saveurs internationales, Food trucks favoris et Choix de quartiers.</li>
+                    <li><strong>Suggestions concrètes :</strong> chaque élément est ancré dans la scène culinaire de Vancouver.</li>
+                    <li><strong>Roue canvas adaptée mobile :</strong> rotation fluide sur téléphone, tablette et bureau.</li>
+                    <li><strong>Résultat instantané :</strong> le gagnant s’affiche clairement après chaque rotation.</li>
+                    <li><strong>Couleurs personnalisables :</strong> utilisez Local Brand Studio pour thématiser la roue aux palettes PNW.</li>
+                </ul>
+            </section>
+
+            <section id="vancouver-food-wheel-categories">
+                <h3>5. Catégories food de Vancouver</h3>
+                <p><strong>Classiques côtiers</strong> couvre les plats qui définissent Vancouver — sushi bento, spot prawn roll, seafood chowder, salmon burger, Granville Island tacos, Japanese curry, tempura bowl et matcha dessert. <strong>Saveurs internationales</strong> reflète la cuisine mondiale de la ville — Japadog, brunch à Gastown, dim sum à Richmond, pho vietnamien, Asian fusion bowl, dessert bar et oyster bar. <strong>Food trucks favoris</strong> met en avant les marchés et camions — poutine, loaded fries, gourmet hot dog, artisan sandwich, daily soup, spicy noodle bowl et crepe wrap. <strong>Choix de quartiers</strong> dirige vers les quartiers — Yaletown steakhouse, Kitsilano café, Granville Island Market, Commercial Drive pizza, West End vegan, North Shore seafood, Downtown tapas et Coal Harbour Italian.</p>
+            </section>
+
+            <section id="vancouver-food-wheel-tips">
+                <h3>6. Conseils</h3>
+                <p>Utilisez Classiques côtiers pour les fruits de mer et sushis, Saveurs internationales pour les saveurs du monde, Food trucks favoris pour un repas de marché décontracté, et Choix de quartiers pour explorer un secteur local. Ajoutez vos adresses préférées pour une roue personnalisée.</p>
+            </section>
+
+            <section id="vancouver-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>Pour un choix culinaire global plus large, essayez <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. Si vous souhaitez une roue de cuisine spécifique, utilisez les applications Indian, Chinese ou Japanese food wheels. Besoin d’une boisson pour accompagner ? Essayez <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-vancouver-food-wheel-works">
+                <h3>8. Pourquoi ça marche</h3>
+                <p>La scène culinaire de Vancouver marie des ingrédients frais de la côte Ouest avec une culture de restaurants mondiale. Cette abondance rend le choix difficile, et cette roue transforme la décision en une option rapide et amusante.</p>
+            </section>
+        </section>
+    </main>
+
+    <script src="/assets/js/wheel-engine.js"></script>
+    <script>
+  FoodWheelEngine.init({
+    canvasSelector: "#wheel",
+    spinButtonSelector: "#spinBtn",
+    winnerSelector: "#winner",
+    presetButtonSelector: ".preset-btn",
+    defaultItems: ['Sushi Bento', 'Spot Prawn Roll', 'Seafood Chowder', 'Salmon Burger', 'Granville Island Tacos', 'Japanese Curry', 'Tempura Bowl', 'Matcha Dessert'],
+    resultFormatter: function (selectedItem) {
+      return `🍣 Vancouver dit : <span style="color: var(--vancouver-blue); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+    }
+  });
+</script>

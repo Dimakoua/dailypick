@@ -1,0 +1,131 @@
+---
+layout: base_app.njk
+title: "温哥华美食转盘 – 随机温哥华餐厅与菜品选择器 | Daily Pick"
+description: "还在犹豫温哥华吃什么？旋转转盘，挑选海鲜、寿司、街头美食和西海岸餐饮推荐。"
+keywords: "温哥华美食转盘, 温哥华餐厅选择器, 在温哥华吃什么, 温哥华美食指南, Vancouver food wheel"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-vancouver/mandarin/"
+localBrandConfig: /apps/wheel/local-brand-config.js
+headExtra: |
+  <link href="/apps/what-should-i-eat-vancouver/style.css" rel="stylesheet" />
+  <meta http-equiv="Content-Language" content="zh-Hans" />
+  <link rel="alternate" hreflang="fr" href="https://dailypick.dev/apps/what-should-i-eat-vancouver/french/" />
+  <link rel="alternate" hreflang="hi" href="https://dailypick.dev/apps/what-should-i-eat-vancouver/hindi/" />
+  <link rel="alternate" hreflang="es" href="https://dailypick.dev/apps/what-should-i-eat-vancouver/spanish/" />
+  <link rel="alternate" hreflang="en" href="https://dailypick.dev/apps/what-should-i-eat-vancouver/" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://dailypick.dev/apps/what-should-i-eat-vancouver/mandarin/" />
+  <link rel="alternate" hreflang="zh-Hant" href="https://dailypick.dev/apps/what-should-i-eat-vancouver/chinese/" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">太平洋西北风味——你今晚想吃什么？</p>
+            <h1>🍣 温哥华美食转盘</h1>
+            <p>从寿司和海鲜到街头小吃和山边舒适餐，旋转转盘，让温哥华帮你选择下一份美味。</p>
+            <p>此页面提供中文简体版本。也有繁體中文版本：<a href="/apps/what-should-i-eat-vancouver/chinese/">中文版本</a>，和法語版本：<a href="/apps/what-should-i-eat-vancouver/french/">version française</a>。返回英文版：<a href="/apps/what-should-i-eat-vancouver/">Vancouver Food Wheel</a>。</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Sushi Bento,Spot Prawn Roll,Seafood Chowder,Salmon Burger,Granville Island Tacos,Japanese Curry,Tempura Bowl,Matcha Dessert">🌊 海岸经典</button>
+            <button class="preset-btn" data-items="Japadog,Gastown Brunch,Dimsum in Richmond,Vietnamese Pho,Portobello Bao,Asian Fusion Bowl,Dessert Bar,Oyster Bar">🍜 国际风味</button>
+            <button class="preset-btn" data-items="Food Truck Poutine,Street Tacos,Loaded Fries,Gourmet Hot Dog,Artisan Sandwich,Daily Soup,Spicy Noodle Bowl,Crepe Wrap">🚚 美食车热门</button>
+            <button class="preset-btn" data-items="Yaletown Steakhouse,Kitsilano Café,Granville Island Market,Commercial Drive Pizza,West End Vegan,North Shore Seafood,Downtown Tapas,Coal Harbour Italian">🏙️ 社区精选</button>
+        </div>
+
+        <button id="spinBtn">🍣 旋转开始吃！</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>温哥华美食转盘：为西海岸提供的随机餐厅与菜品选择器</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>温哥华美食转盘让城市的点餐选择变得轻松。从新鲜的海鲜和寿司，到市场小吃、街头美食和社区餐馆，只需旋转一下，就能找到下一处好味道。</p>
+                </div>
+                <div>
+                    <h3>为什么这个转盘有用</h3>
+                    <ul>
+                        <li><strong>全城多样：</strong>四个预设涵盖海岸经典、国际风味、美食车热门和社区精选。</li>
+                        <li><strong>真实温哥华口味：</strong>每个选项都代表实际的菜品、市场餐点或本地餐厅场景。</li>
+                        <li><strong>即时选择：</strong>一次旋转就给你一个美味方向，不再左右为难。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>目录</h3>
+                <ol>
+                    <li><a href="#what-is-vancouver-food-wheel">什么是温哥华美食转盘？</a></li>
+                    <li><a href="#who-should-use-vancouver-food-wheel">谁应该使用？</a></li>
+                    <li><a href="#how-vancouver-food-wheel-works">它如何运作？</a></li>
+                    <li><a href="#vancouver-food-wheel-features">特点</a></li>
+                    <li><a href="#vancouver-food-wheel-categories">温哥华美食类别</a></li>
+                    <li><a href="#vancouver-food-wheel-tips">提示</a></li>
+                    <li><a href="#vancouver-food-wheel-alternatives">其他选择</a></li>
+                    <li><a href="#why-vancouver-food-wheel-works">为什么它有效？</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-vancouver-food-wheel">
+                <h3>1. 什么是温哥华美食转盘？</h3>
+                <p>温哥华美食转盘是一个基于这座西海岸城市构建的随机餐厅与菜品选择工具。它呈现了温哥华的海鲜、寿司、街头小吃和多元社区餐饮。</p>
+            </section>
+
+            <section id="who-should-use-vancouver-food-wheel">
+                <h3>2. 谁应该使用？</h3>
+                <p>适合想快速决定用餐的温哥华本地人、探索城市的游客，以及被无数美食选择搞糊涂的人。旋转一下，让温哥华决定下一站美食。</p>
+            </section>
+
+            <section id="how-vancouver-food-wheel-works">
+                <h3>3. 它如何运作？</h3>
+                <p>选择一个预设然后点击“旋转”。转盘停在一个选项并显示结果。把结果作为美食提示，然后前往最近的地点或外卖。想要第二个选项就再旋转一次。</p>
+            </section>
+
+            <section id="vancouver-food-wheel-features">
+                <h3>4. 特点</h3>
+                <ul>
+                    <li><strong>四个城市预设：</strong>海岸经典、国际风味、美食车热门、社区精选。</li>
+                    <li><strong>真实温哥华选择：</strong>每个选项都根植于温哥华真实的餐饮场景。</li>
+                    <li><strong>移动友好转盘：</strong>在手机、平板和桌面上都能顺畅旋转。</li>
+                    <li><strong>结果立即可见：</strong>每次旋转后清晰显示结果。</li>
+                    <li><strong>颜色可定制：</strong>使用 Local Brand Studio 让转盘呈现西海岸配色。</li>
+                </ul>
+            </section>
+
+            <section id="vancouver-food-wheel-categories">
+                <h3>5. 温哥华美食类别</h3>
+                <p><strong>海岸经典</strong>覆盖定义温哥华的菜品——寿司便当、对虾卷、海鲜浓汤、三文鱼汉堡、格兰维尔岛玉米饼、日本咖喱、天妇罗碗与抹茶甜点。<strong>国际风味</strong>反映城市的全球厨房——Japadog、Gastown 早午餐、列治文点心、越南河粉、Portobello 包、亚洲融合碗、甜品吧与生蚝吧。<strong>美食车热门</strong>强调市场街头美食——美食车肉汁薯条、街头玉米饼、波波尾、辣味热狗、手工三明治、每日汤、辛辣面碗与可丽饼卷。<strong>社区精选</strong>指向本地餐饮区——耶鲁镇牛排馆、基斯兰奴咖啡馆、格兰维尔岛市场、商业大道比萨、西区纯素、北岸海鲜、闹市区小吃与煤港意大利餐厅。</p>
+            </section>
+
+            <section id="vancouver-food-wheel-tips">
+                <h3>6. 提示</h3>
+                <p>想吃海鲜与寿司就选海岸经典，想要环球风味选国际风味，想要市场街头小吃选美食车热门，想探索社区美食就选社区精选。添加你自己的温哥华最爱，让转盘更个性化。</p>
+            </section>
+
+            <section id="vancouver-food-wheel-alternatives">
+                <h3>7. 其他选择</h3>
+                <p>想要更广泛的全球美食，请试试 <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>。如果你想按菜系选择，可使用 Indian、Chinese 或 Japanese 美食转盘。需要配饮品？试试 <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>。</p>
+            </section>
+
+            <section id="why-vancouver-food-wheel-works">
+                <h3>8. 为什么它有效？</h3>
+                <p>温哥华的美食融合了新鲜西海岸食材与全球饮食文化。这种丰富性让选择变难，而这款转盘把它变成一个快速、有趣的决定。</p>
+            </section>
+        </section>
+    </main>
+
+    <script src="/assets/js/wheel-engine.js"></script>
+    <script>
+  FoodWheelEngine.init({
+    canvasSelector: "#wheel",
+    spinButtonSelector: "#spinBtn",
+    winnerSelector: "#winner",
+    presetButtonSelector: ".preset-btn",
+    defaultItems: ['Sushi Bento', 'Spot Prawn Roll', 'Seafood Chowder', 'Salmon Burger', 'Granville Island Tacos', 'Japanese Curry', 'Tempura Bowl', 'Matcha Dessert'],
+    resultFormatter: function (selectedItem) {
+      return `🍣 Vancouver says: <span style="color: var(--vancouver-blue); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+    }
+  });
+</script>

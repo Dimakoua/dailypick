@@ -1,0 +1,131 @@
+---
+layout: base_app.njk
+title: "वैंकूवर फ़ूड व्हील – रैंडम वैंकूवर रेस्टोरेंट और डिश पिकर | Daily Pick"
+description: "वैंकूवर में क्या खाना है तय नहीं कर पा रहे? सीधी रैंडम व्हील घुमाएँ और समुद्री भोजन, सुशी, फ़ूड ट्रक और वेस्ट कोस्ट डिश चुनें।"
+keywords: "वैंकूवर फूड व्हील, वैंकूवर रेस्टोरेंट पिकर, वैंकूवर में क्या खाएं, Vancouver food wheel, Vancouver restaurant picker"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-vancouver/hindi/"
+localBrandConfig: /apps/wheel/local-brand-config.js
+headExtra: |
+  <link href="/apps/what-should-i-eat-vancouver/style.css" rel="stylesheet" />
+  <meta http-equiv="Content-Language" content="hi" />
+  <link rel="alternate" hreflang="en" href="https://dailypick.dev/apps/what-should-i-eat-vancouver/" />
+  <link rel="alternate" hreflang="fr" href="https://dailypick.dev/apps/what-should-i-eat-vancouver/french/" />
+  <link rel="alternate" hreflang="es" href="https://dailypick.dev/apps/what-should-i-eat-vancouver/spanish/" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://dailypick.dev/apps/what-should-i-eat-vancouver/mandarin/" />
+  <link rel="alternate" hreflang="zh-Hant" href="https://dailypick.dev/apps/what-should-i-eat-vancouver/chinese/" />
+  <link rel="alternate" hreflang="hi" href="https://dailypick.dev/apps/what-should-i-eat-vancouver/hindi/" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">पैसिफिक नॉर्थवेस्ट का स्वाद — आज आप क्या खाएंगे?</p>
+            <h1>🍣 वैंकूवर फ़ूड व्हील</h1>
+            <p>सुशी और समुद्री भोजन से लेकर फ़ूड ट्रक और कोस्टल कॉम्फ़र्ट तक, व्हील घुमाएँ और वैंकूवर से अपना अगला भोजन चुनवाएँ।</p>
+            <p>यह पेज हिंदी में उपलब्ध है। अंग्रेज़ी के लिए <a href="/apps/what-should-i-eat-vancouver/">Vancouver Food Wheel</a> देखें, या अन्य भाषाओं में <a href="/apps/what-should-i-eat-vancouver/mandarin/">中文简体</a>, <a href="/apps/what-should-i-eat-vancouver/chinese/">中文繁體</a>, और <a href="/apps/what-should-i-eat-vancouver/french/">français</a> देखें।</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Sushi Bento,Spot Prawn Roll,Seafood Chowder,Salmon Burger,Granville Island Tacos,Japanese Curry,Tempura Bowl,Matcha Dessert">🌊 कोस्टल क्लासिक्स</button>
+            <button class="preset-btn" data-items="Japadog,Gastown Brunch,Dimsum in Richmond,Vietnamese Pho,Portobello Bao,Asian Fusion Bowl,Dessert Bar,Oyster Bar">🍜 अंतरराष्ट्रीय स्वाद</button>
+            <button class="preset-btn" data-items="Food Truck Poutine,Street Tacos,Loaded Fries,Gourmet Hot Dog,Artisan Sandwich,Daily Soup,Spicy Noodle Bowl,Crepe Wrap">🚚 फ़ूड ट्रक फेवरेट</button>
+            <button class="preset-btn" data-items="Yaletown Steakhouse,Kitsilano Café,Granville Island Market,Commercial Drive Pizza,West End Vegan,North Shore Seafood,Downtown Tapas,Coal Harbour Italian">🏙️ मोहल्ले की पसंद</button>
+        </div>
+
+        <button id="spinBtn">🍣 घुमाएँ और खाएँ!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>वैंकूवर फ़ूड व्हील: वेस्ट कोस्ट के लिए रैंडम रेस्टोरेंट और डिश पिकर</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>वैंकूवर फ़ूड व्हील शहर में खाने का चयन आसान बनाता है। ताज़ा समुद्री भोजन और सुशी से लेकर मार्केट भोजन, फ़ूड ट्रक और पड़ोस के भोजन स्थलों तक, एक बार घुमाएँ और शहर को निर्णय लेने दें।</p>
+                </div>
+                <div>
+                    <h3>यह व्हील क्यों मददगार है</h3>
+                    <ul>
+                        <li><strong>शहर भर की विविधता:</strong> कोस्टल क्लासिक्स, अंतरराष्ट्रीय स्वाद, फ़ूड ट्रक फ़ेवरेट और मोहल्ले की पसंद।</li>
+                        <li><strong>वास्तविक वैंकूवर भोजन:</strong> हर आइटम स्थानीय डिश, मार्केट भोजन या रेस्टोरेंट अनुभव पर आधारित है।</li>
+                        <li><strong>तुरंत चयन:</strong> एक घुमाव से आपको बिना खोज के स्वादिष्ट दिशा मिलती है।</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>सामग्री सूची</h3>
+                <ol>
+                    <li><a href="#what-is-vancouver-food-wheel">वैंकूवर फ़ूड व्हील क्या है?</a></li>
+                    <li><a href="#who-should-use-vancouver-food-wheel">यह व्हील किसके लिए है?</a></li>
+                    <li><a href="#how-vancouver-food-wheel-works">यह कैसे काम करता है</a></li>
+                    <li><a href="#vancouver-food-wheel-features">विशेषताएँ</a></li>
+                    <li><a href="#vancouver-food-wheel-categories">वैंकूवर फूड श्रेणियाँ</a></li>
+                    <li><a href="#vancouver-food-wheel-tips">टिप्स</a></li>
+                    <li><a href="#vancouver-food-wheel-alternatives">विकल्प</a></li>
+                    <li><a href="#why-vancouver-food-wheel-works">यह क्यों काम करता है</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-vancouver-food-wheel">
+                <h3>1. वैंकूवर फ़ूड व्हील क्या है?</h3>
+                <p>वैंकूवर फ़ूड व्हील वेस्ट कोस्ट शहर के लिए रैंडम रेस्टोरेंट और डिश पिकर है। यह वैंकूवर के समुद्री भोजन, सुशी, फ़ूड ट्रक और विविध पड़ोसी भोजन को उजागर करता है।</p>
+            </section>
+
+            <section id="who-should-use-vancouver-food-wheel">
+                <h3>2. यह व्हील किसके लिए है?</h3>
+                <p>वैंकूवर के स्थानीय लोग जो जल्दी भोजन चयन चाहते हैं, शहर घूमने वाले आगंतुक, और वे जो विकल्पों से अभिभूत हैं। घुमाएँ और वैंकूवर को अगली स्वादिष्ट जगह चुनने दें।</p>
+            </section>
+
+            <section id="how-vancouver-food-wheel-works">
+                <h3>3. यह कैसे काम करता है</h3>
+                <p>एक प्रीसेट चुनें और फिर स्पिन करें। व्हील एक चयन पर रुकती है और उसे दिखाती है। परिणाम को भोजन के सुझाव के रूप में उपयोग करें, फिर नज़दीकी जगह पर जाएँ या ऑर्डर करें। दोबारा घुमाएँ यदि दूसरा विकल्प चाहिए।</p>
+            </section>
+
+            <section id="vancouver-food-wheel-features">
+                <h3>4. विशेषताएँ</h3>
+                <ul>
+                    <li><strong>चार प्रीसेट:</strong> कोस्टल क्लासिक्स, अंतरराष्ट्रीय स्वाद, फ़ूड ट्रक फ़ेवरेट और मोहल्ले की पसंद।</li>
+                    <li><strong>असल सुझाव:</strong> हर चयन वैंकूवर की भोजन संस्कृति पर आधारित है।</li>
+                    <li><strong>मोबाइल-अनुकूल कैनवास व्हील:</strong> फोन, टैबलेट और डेस्कटॉप पर स्मूद स्पिन।</li>
+                    <li><strong>तुरंत परिणाम:</strong> हर स्पिन के बाद विजेता साफ तरीके से दिखता है।</li>
+                    <li><strong>कस्टम रंग:</strong> Local Brand Studio से व्हील को PNW रंगों में थीम करें।</li>
+                </ul>
+            </section>
+
+            <section id="vancouver-food-wheel-categories">
+                <h3>5. वैंकूवर फूड श्रेणियाँ</h3>
+                <p><strong>कोस्टल क्लासिक्स</strong> में वैंकूवर की परिभाषित डिशें शामिल हैं — सुशी बेंटो, स्पॉट प्रॉन रोल, सीफ़ूड चाउडर, सैल्मन बर्गर, ग्रैनविल आइलैंड टैकोस, जापानी करी, टेम्पुरा बाउल, और माचा डेज़र्ट। <strong>अंतरराष्ट्रीय स्वाद</strong> शहर की वैश्विक रसोई को दर्शाता है — जापाडॉग, गैस्टाउन ब्रंच, रिचमंड डिमसम, वियतनामी फ़ो, एशियन फ्यूज़न बाउल, डिसर्ट बार, और ऑयस्टर बार। <strong>फ़ूड ट्रक फ़ेवरेट</strong> मार्केट फ़ूड सीन को उजागर करता है — पुटिन, लोडेड फ्राइज, गोरमेट हॉट डॉग, आर्टिसन सैंडविच, डेली सूप, स्पाइसी नूडल बाउल, और क्रीप रैप। <strong>मोहल्ले की पसंद</strong> पड़ोस पर निर्देशित करता है — यालेटाउन स्टीकहाउस, किट्सिलानो कैफ़े, ग्रैनविल आइलैंड मार्केट, कमर्शियल ड्राइव पिज़्ज़ा, वेस्ट एंड वेगन, नॉर्थ शोर सीफ़ूड, डाउनटाउन टैपस, और कोल हार्बर इटालियन।</p>
+            </section>
+
+            <section id="vancouver-food-wheel-tips">
+                <h3>6. टिप्स</h3>
+                <p>सीफ़ूड और सुशी के लिए कोस्टल क्लासिक्स चुनें, दुनिया भर के स्वादों के लिए अंतरराष्ट्रीय स्वाद, कैज़ुअल मार्केट खाने के लिए फ़ूड ट्रक फ़ेवरेट, और स्थानीय इलाके खोजने के लिए मोहल्ले की पसंद। अपने पसंदीदा वैंकूवर स्पॉट जोड़कर व्हील को निजी बनाएं।</p>
+            </section>
+
+            <section id="vancouver-food-wheel-alternatives">
+                <h3>7. विकल्प</h3>
+                <p>चौड़ी वैश्विक पसंद के लिए <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a> आज़माएं। यदि आप विशिष्ट cuisine चाहते हैं, तो Indian, Chinese, या Japanese food wheels का उपयोग करें। पेय के लिए <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a> देखें।</p>
+            </section>
+
+            <section id="why-vancouver-food-wheel-works">
+                <h3>8. यह क्यों काम करता है</h3>
+                <p>वैंकूवर का खाना ताज़े वेस्ट कोस्ट सामग्री और वैश्विक रेस्तरां संस्कृति को मिलाता है। यह समृद्धि विकल्प को कठिन बना देती है, और यह व्हील निर्णय को तेज़ और मज़ेदार बनाता है।</p>
+            </section>
+        </section>
+    </main>
+
+    <script src="/assets/js/wheel-engine.js"></script>
+    <script>
+  FoodWheelEngine.init({
+    canvasSelector: "#wheel",
+    spinButtonSelector: "#spinBtn",
+    winnerSelector: "#winner",
+    presetButtonSelector: ".preset-btn",
+    defaultItems: ['Sushi Bento', 'Spot Prawn Roll', 'Seafood Chowder', 'Salmon Burger', 'Granville Island Tacos', 'Japanese Curry', 'Tempura Bowl', 'Matcha Dessert'],
+    resultFormatter: function (selectedItem) {
+      return `🍣 वैंकूवर कहता है: <span style="color: var(--vancouver-blue); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+    }
+  });
+</script>
