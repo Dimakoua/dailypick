@@ -1,0 +1,210 @@
+---
+layout: base_app.njk
+title: "Chongqing Food Wheel – Random Chongqing Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide what to eat in Chongqing? Spin the wheel for spicy Sichuan favorites, street food, and Chongqing dining ideas."
+keywords: "Chongqing food wheel, Chongqing restaurant picker, what to eat in Chongqing, Chongqing cuisine spinner, Sichuan food guide, where to eat Chongqing"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-chongqing/"
+localBrandConfig: /apps/what-should-i-eat-chongqing/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Spicy hot pot and bold flavors — what are you eating?</p>
+            <h1>🔥 Chongqing Food Wheel</h1>
+            <p>From fiery hot pot and mala noodles to street skewers and rice dishes, spin the wheel and let Chongqing choose your next meal.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Chongqing Hot Pot,Mala Noodles,Spicy Skewers,Dan Dan Noodles,Succulent Fish,Spicy Rabbit,Mapo Tofu,Street Bao">🌶️ Spicy Classics</button>
+            <button class="preset-btn" data-items="Sichuan Fish,Braised Pork,Rice Noodles,Sweet Sticky Rice,Fried Dumplings,Kung Pao Chicken,Cold Noodles,Tangyuan">🍜 Local Comfort</button>
+            <button class="preset-btn" data-items="Chongqing Noodles,Clove Sauce Chicken,Hot Dry Noodles,Boiled Fish,Spicy Tofu,Chili Oil Dumplings,Steamed Buns,Pickled Veg Salad">🏙️ City Favorites</button>
+            <button class="preset-btn" data-items="Rice Bowl,Szechuan Stir Fry,Chinese BBQ,Tea House Snacks,Street Food Wrap,Fried Rice,Salted Duck,Egg Custard">🌍 Global-Style Choices</button>
+        </div>
+
+        <button id="spinBtn">🔥 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Chongqing Food Wheel: Random Restaurant & Dish Picker for the Mountain City</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Chongqing Food Wheel turns the city’s bold food scene into one quick choice. From hot pot and mala noodles to street snacks and savory rice dishes, spin once and discover your next Chongqing meal.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>City-wide variety:</strong> Four presets covering Spicy Classics, Local Comfort, City Favorites, and Global-Style Choices.</li>
+                        <li><strong>Real Chongqing picks:</strong> Every item reflects the city’s bold, spicy, and street-focused cuisine.</li>
+                        <li><strong>Instant decision:</strong> One spin gives you a food direction without overthinking.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-chongqing-food-wheel">What is the Chongqing Food Wheel?</a></li>
+                    <li><a href="#who-should-use-chongqing-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-chongqing-food-wheel-works">How it works</a></li>
+                    <li><a href="#chongqing-food-wheel-features">Features</a></li>
+                    <li><a href="#chongqing-food-wheel-categories">Chongqing food categories</a></li>
+                    <li><a href="#chongqing-food-wheel-tips">Tips</a></li>
+                    <li><a href="#chongqing-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-chongqing-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-chongqing-food-wheel">
+                <h3>1. What is the Chongqing Food Wheel?</h3>
+                <p>Chongqing Food Wheel is a random meal picker built for the city’s intense and flavorful cuisine. It blends hot pot, street food, and local favorites into one fun decision tool.</p>
+            </section>
+
+            <section id="who-should-use-chongqing-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Chongqing locals choosing lunch or dinner, travelers wanting to explore regional food, and anyone craving a bold meal idea. Spin for a fresh Chongqing food suggestion.</p>
+            </section>
+
+            <section id="how-chongqing-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Pick a preset then press Spin. The wheel lands on a suggestion and reveals it clearly. Use the result as a meal prompt, then enjoy. Spin again for another choice.</p>
+            </section>
+
+            <section id="chongqing-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> Spicy Classics, Local Comfort, City Favorites, and Global-Style Choices.</li>
+                    <li><strong>Real Chongqing picks:</strong> Every item reflects local cuisine, street food, and bold flavors.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>Instant result:</strong> Winner appears clearly after each spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel with Chongqing-inspired tones.</li>
+                </ul>
+            </section>
+
+            <section id="chongqing-food-wheel-categories">
+                <h3>5. Chongqing food categories</h3>
+                <p><strong>Spicy Classics</strong> covers the city’s signature hot pot, mala noodles, skewers, dan dan noodles, and mapo tofu. <strong>Local Comfort</strong> includes Chongqing-style fish, braised pork, rice noodles, sticky rice sweets, dumplings, and tangyuan. <strong>City Favorites</strong> highlights the most popular street foods and local meals. <strong>Global-Style Choices</strong> brings broader cuisine into the city’s dining landscape.</p>
+            </section>
+
+            <section id="chongqing-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Choose Spicy Classics for a bold meal, Local Comfort for regional favorites, City Favorites for crowd-pleasing street food, and Global-Style Choices for international variety. Personalize the wheel with your favorite Chongqing restaurants.</p>
+            </section>
+
+            <section id="chongqing-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader meal picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. To focus on a specific cuisine, use the Chinese or street food wheels. Need a drink pairing? Try <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-chongqing-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Chongqing combines fiery spice, bold flavors, and unforgettable street food. This wheel turns those options into one quick, fun dining decision.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Chongqing Hot Pot', 'Mala Noodles', 'Spicy Skewers', 'Dan Dan Noodles', 'Succulent Fish', 'Spicy Rabbit', 'Mapo Tofu', 'Street Bao'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#d35400',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#c0392b',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#8e44ad',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#f39c12',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#2980b9',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#2c3e50',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#e74c3c',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#d35400',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🔥 Chongqing says: <span style="color: var(--chongqing-red); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
