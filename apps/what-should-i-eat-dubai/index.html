@@ -1,0 +1,210 @@
+---
+layout: base_app.njk
+title: "Dubai Food Wheel – Random Dubai Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide what to eat in Dubai? Spin the wheel for Emirati favorites, international cuisine, and Dubai dining ideas."
+keywords: "Dubai food wheel, Dubai restaurant picker, what to eat in Dubai, Dubai dining, Emirati cuisine spinner, where to eat Dubai"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-dubai/"
+localBrandConfig: /apps/what-should-i-eat-dubai/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Desert dining decisions — what are you eating?</p>
+            <h1>🍽️ Dubai Food Wheel</h1>
+            <p>From shawarma and mezze to luxury dining and global flavors, spin the wheel and let Dubai guide your next meal.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Shawarma,Arabic Mezze,Lamb Ouzi,Chicken Machboos,Stuffed Camel,Dessert Kunafa,Falafel Wrap,Seafood Buffet">🌴 Emirati Favorites</button>
+            <button class="preset-btn" data-items="Indian Biryani,Pakistani Karahi,Persian Kebabs,Turkish Meze,Lebanese Grill,Thai Green Curry,Sushi Platter,Moroccan Tagine">🌍 Global Eats</button>
+            <button class="preset-btn" data-items="Dubai Mall Brunch,Marina Seafood,Desert BBQ,Skyline Steakhouse,Beachside Salad,Luxury Afternoon Tea,Street Food Market,Souk Sweets">🏙️ Dubai Experiences</button>
+            <button class="preset-btn" data-items="Gold Souk Biryani,JBR Fish & Chips,Downtown Pasta,Deira Kebab,Al Fahidi Flatbread,JBR Burger,Global Street Taco,Arabian Coffee">🕌 Local Flavors</button>
+        </div>
+
+        <button id="spinBtn">🍽️ SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Dubai Food Wheel: Random Restaurant & Dish Picker for the City of Gold</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Dubai Food Wheel turns the city’s incredible dining scene into one fast decision. From Emirati classics and street-food shawarma to world-class international restaurants and luxury hotel dining, spin once and discover a Dubai meal idea.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>City-wide variety:</strong> Four presets covering Emirati Favorites, Global Eats, Dubai Experiences, and Local Flavors.</li>
+                        <li><strong>Real Dubai picks:</strong> Every item reflects the city’s mix of local tradition, luxury dining, and multicultural cuisine.</li>
+                        <li><strong>Instant decision:</strong> One spin gives you a tasty direction without overthinking your meal.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-dubai-food-wheel">What is the Dubai Food Wheel?</a></li>
+                    <li><a href="#who-should-use-dubai-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-dubai-food-wheel-works">How it works</a></li>
+                    <li><a href="#dubai-food-wheel-features">Features</a></li>
+                    <li><a href="#dubai-food-wheel-categories">Dubai food categories</a></li>
+                    <li><a href="#dubai-food-wheel-tips">Tips</a></li>
+                    <li><a href="#dubai-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-dubai-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-dubai-food-wheel">
+                <h3>1. What is the Dubai Food Wheel?</h3>
+                <p>Dubai Food Wheel is a random meal picker built for Dubai’s vibrant food scene. It blends Emirati staples, street food, luxury dining, and international cuisine into one playful decision tool.</p>
+            </section>
+
+            <section id="who-should-use-dubai-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Dubai visitors planning their next meal, locals choosing a dinner destination, and anyone who wants an easy way to explore Dubai’s dining landscape. Spin to get a fresh idea, then head to the closest restaurant or order in.</p>
+            </section>
+
+            <section id="how-dubai-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Select one of the four presets, then press Spin. The wheel lands on a suggestion and reveals it clearly. Use the result as a dining prompt, then enjoy a new Dubai meal idea.</p>
+            </section>
+
+            <section id="dubai-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> Emirati Favorites, Global Eats, Dubai Experiences, and Local Flavors.</li>
+                    <li><strong>Real Dubai picks:</strong> Every item reflects the city’s real dining culture.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>Instant result:</strong> Winner appears clearly after each spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel with Dubai-inspired tones.</li>
+                </ul>
+            </section>
+
+            <section id="dubai-food-wheel-categories">
+                <h3>5. Dubai food categories</h3>
+                <p><strong>Emirati Favorites</strong> includes shawarma, mezze, lamb ouzi, machboos, stuffed camel, kunafa, falafel, and seafood buffets. <strong>Global Eats</strong> reflects Dubai’s international dining scene with biryani, kebabs, sushi, curry, Moroccan tagine, and more. <strong>Dubai Experiences</strong> covers the city’s destination dining options — marina seafood, desert BBQ, sky-high steakhouses, beach cafés, and luxury brunches. <strong>Local Flavors</strong> points to iconic neighbourhood food moments, from souks and beaches to Dubai Creek and JBR.</p>
+            </section>
+
+            <section id="dubai-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Choose Emirati Favorites for local classics, Global Eats for international variety, Dubai Experiences for destination dining, and Local Flavors to explore city neighborhoods. Swap in your favorite Dubai restaurants to personalize the wheel even more.</p>
+            </section>
+
+            <section id="dubai-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader meal picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. If you want a cuisine-specific route, try the Indian or Middle Eastern food wheel. Need a drink pairing? Try <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-dubai-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Dubai blends luxury dining with street food and global cuisine, making meal choices overwhelming. This wheel simplifies the decision by turning the city’s best food options into one fun spin.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Shawarma', 'Arabic Mezze', 'Lamb Ouzi', 'Chicken Machboos', 'Stuffed Camel', 'Dessert Kunafa', 'Falafel Wrap', 'Seafood Buffet'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#c48b30',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#a63f00',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#0a5f8e',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#f28b20',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#7f4b0e',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#d9b382',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#2d2d2d',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#ec9f05',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🍽️ Dubai says: <span style="color: var(--dubai-gold); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
