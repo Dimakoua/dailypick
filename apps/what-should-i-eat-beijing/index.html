@@ -1,0 +1,210 @@
+---
+layout: base_app.njk
+title: "Beijing Food Wheel – Random Beijing Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide where to eat in Beijing? Spin the wheel for Peking duck, hot pot, street food, and Hutong dining picks."
+keywords: "Beijing food wheel, Beijing restaurant picker, what to eat in Beijing, Beijing cuisine spinner, Beijing food guide, where to eat Beijing"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-beijing/"
+localBrandConfig: /apps/what-should-i-eat-beijing/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Forbidden City flavors — what are you eating?</p>
+            <h1>🏮 Beijing Food Wheel</h1>
+            <p>From Peking duck and hot pot to street-side bao and night market snacks, spin the wheel and let Beijing choose your next meal.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Peking Duck,Hot Pot,Beef Noodle Soup,Winter Melon Soup,Steamed Buns,Sesame Pancake,Mongolian Lamb,Tea Eggs">🇨🇳 Beijing Classics</button>
+            <button class="preset-btn" data-items="Jianbing,Dumplings,Gong Bao Chicken,Sichuan Hotpot,Spicy Noodles,Scallion Pancakes,Mapo Tofu,Sweet Soy Tofu">🌶 Street Favorites</button>
+            <button class="preset-btn" data-items="Korean BBQ,Japanese Sushi,Italian Pasta,Indian Curry,Vietnamese Pho,Thai Green Curry,Malaysian Laksa,Middle Eastern Shawarma">🌍 International Eats</button>
+            <button class="preset-btn" data-items="Wangfujing Snack,Sanlitun Brunch,Hutong Café,Beijing Steakhouse,798 Art District Salad,Shichahai Seafood,Chaoyang Burger,Dongzhimen Noodles">🏙️ Neighbourhood Picks</button>
+        </div>
+
+        <button id="spinBtn">🏮 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Beijing Food Wheel: Random Restaurant & Dish Picker for China’s Capital</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Beijing Food Wheel turns the city’s historic dining scene into one easy decision. From iconic imperial dishes and spicy street food to modern fusion meals, spin once and discover your next Beijing bite.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>City-wide variety:</strong> Four presets covering Beijing Classics, Street Favorites, International Eats, and Neighbourhood Picks.</li>
+                        <li><strong>Real Beijing food:</strong> Every item reflects the city’s authentic flavors and neighborhoods.</li>
+                        <li><strong>Instant choice:</strong> One spin gives you a delicious direction without overthinking.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-beijing-food-wheel">What is the Beijing Food Wheel?</a></li>
+                    <li><a href="#who-should-use-beijing-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-beijing-food-wheel-works">How it works</a></li>
+                    <li><a href="#beijing-food-wheel-features">Features</a></li>
+                    <li><a href="#beijing-food-wheel-categories">Beijing food categories</a></li>
+                    <li><a href="#beijing-food-wheel-tips">Tips</a></li>
+                    <li><a href="#beijing-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-beijing-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-beijing-food-wheel">
+                <h3>1. What is the Beijing Food Wheel?</h3>
+                <p>Beijing Food Wheel is a random restaurant and dish picker built for the capital’s world-famous culinary scene. It highlights imperial classics, street market favorites, and modern Beijing dining.</p>
+            </section>
+
+            <section id="who-should-use-beijing-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Beijing locals who want a fast meal decision, visitors exploring the city, and anyone overwhelmed by the many dining choices. Spin and let Beijing choose the next delicious stop.</p>
+            </section>
+
+            <section id="how-beijing-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Pick a preset then hit Spin. The wheel lands on a suggestion and announces it. Use the result as a meal prompt, then head out or order in. Spin again if you want another option.</p>
+            </section>
+
+            <section id="beijing-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> Beijing Classics, Street Favorites, International Eats, and Neighbourhood Picks.</li>
+                    <li><strong>Real Beijing picks:</strong> Every item reflects the city’s authentic food culture.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>Instant result:</strong> Winner appears clearly after each spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel in Beijing-inspired colors.</li>
+                </ul>
+            </section>
+
+            <section id="beijing-food-wheel-categories">
+                <h3>5. Beijing food categories</h3>
+                <p><strong>Beijing Classics</strong> covers the city’s iconic dishes — Peking duck, hot pot, beef noodle soup, winter melon soup, steamed buns, sesame pancakes, Mongolian lamb, and tea eggs. <strong>Street Favorites</strong> highlights market snacks — jianbing, dumplings, gong bao chicken, spicy noodles, scallion pancakes, mapo tofu, and sweet soy tofu. <strong>International Eats</strong> reflects Beijing’s global dining scene — Korean BBQ, sushi, Italian pasta, Indian curry, Vietnamese pho, Thai curry, Malaysian laksa, and Middle Eastern shawarma. <strong>Neighbourhood Picks</strong> points to local districts — Wangfujing snacks, Sanlitun brunch, Hutong cafés, Beijing steakhouses, 798 Art District salads, Shichahai seafood, Chaoyang burgers, and Dongzhimen noodles.</p>
+            </section>
+
+            <section id="beijing-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Choose Beijing Classics for local comfort food, Street Favorites for market snacks, International Eats for global flavors, and Neighbourhood Picks when you want to explore a district. Personalize the wheel with your favorite Beijing spots.</p>
+            </section>
+
+            <section id="beijing-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader meal picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. If you want a cuisine-specific choice, try the Indian, Chinese, or Japanese food wheels. Need a drink pairing? Try <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-beijing-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Beijing’s food scene blends centuries of culinary tradition with modern global influences. This wheel turns that abundance into one fast, fun decision.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Peking Duck', 'Hot Pot', 'Beef Noodle Soup', 'Winter Melon Soup', 'Steamed Buns', 'Sesame Pancake', 'Mongolian Lamb', 'Tea Eggs'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#c8102e',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#0066cc',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#f57c00',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#388e3c',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#8c1d40',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#ffc72c',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#6b2e77',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#73503c',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🥘 Beijing says: <span style="color: var(--beijing-red); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
