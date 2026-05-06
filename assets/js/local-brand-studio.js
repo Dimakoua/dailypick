@@ -203,6 +203,47 @@
     return 'inherited';
   }
 
+  function createAccordionSection(title, id, open) {
+    const section = document.createElement('details');
+    section.className = 'local-brand-studio-section';
+    section.id = `local-brand-studio-section-${id}`;
+    if (open) {
+      section.open = true;
+    }
+
+    const summary = document.createElement('summary');
+    summary.className = 'local-brand-studio-section-summary';
+    summary.textContent = title;
+
+    const body = document.createElement('div');
+    body.className = 'local-brand-studio-section-body';
+
+    section.appendChild(summary);
+    section.appendChild(body);
+
+    return { section, body };
+  }
+
+  function getSectionKey(propertyKey) {
+    const pageKeys = ['accentColor', 'accentStrong', 'backgroundColor', 'surfaceColor', 'textColor'];
+    const wheelKeys = ['wheelBorderColor', 'spinButtonColor', 'resultTextColor'];
+    const behaviorKeys = ['spinSpeed', 'spinRounds', 'showPopupResult', 'enableConfetti'];
+
+    if (pageKeys.includes(propertyKey)) {
+      return 'page';
+    }
+
+    if (propertyKey.startsWith('wheelSegment') || wheelKeys.includes(propertyKey)) {
+      return 'wheel';
+    }
+
+    if (behaviorKeys.includes(propertyKey)) {
+      return 'behavior';
+    }
+
+    return 'other';
+  }
+
   /**
    * Create and inject the local brand studio UI
    */
@@ -249,24 +290,46 @@
     header.appendChild(title);
     header.appendChild(closeBtn);
 
-    // Create customization controls
-    const controlsContainer = document.createElement('div');
-    controlsContainer.className = 'local-brand-studio-controls';
-
+    // Create description
     const description = document.createElement('p');
     description.className = 'local-brand-studio-description';
-    description.textContent = 'Customize colors for this page. Resets when you leave. ';
+    description.textContent = 'Customize colors and wheel behavior for this page. Resets when you leave. ';
     const brandLink = document.createElement('a');
     brandLink.href = '/apps/brand/';
     brandLink.textContent = 'More options in Brand Studio →';
     brandLink.className = 'local-brand-studio-brand-link';
     description.appendChild(brandLink);
-    controlsContainer.appendChild(description);
 
-    // Create controls for each customizable property
+    // Create accordion sections
+    const sectionsContainer = document.createElement('div');
+    sectionsContainer.className = 'local-brand-studio-sections';
+
+    const sectionDefinitions = [
+      { id: 'page', title: 'Page Colors', open: true },
+      { id: 'wheel', title: 'Wheel Colors', open: false },
+      { id: 'behavior', title: 'Wheel Behavior', open: false },
+      { id: 'other', title: 'Other Settings', open: false },
+    ];
+
+    const sectionBodies = sectionDefinitions.reduce((acc, sectionDef) => {
+      const { section, body } = createAccordionSection(sectionDef.title, sectionDef.id, sectionDef.open);
+      sectionsContainer.appendChild(section);
+      acc[sectionDef.id] = body;
+      return acc;
+    }, {});
+
     Object.entries(customizableProperties).forEach(([key, config]) => {
       const control = createPropertyControl(key, config);
-      controlsContainer.appendChild(control);
+      const sectionKey = getSectionKey(key);
+      const sectionBody = sectionBodies[sectionKey] || sectionBodies.other;
+      sectionBody.appendChild(control);
+    });
+
+    Object.entries(sectionBodies).forEach(([sectionKey, body]) => {
+      const sectionElement = body.closest('details');
+      if (sectionElement && body.children.length === 0) {
+        sectionElement.remove();
+      }
     });
 
     // Create action buttons
@@ -290,7 +353,8 @@
 
     // Assemble panel
     panel.appendChild(header);
-    panel.appendChild(controlsContainer);
+    panel.appendChild(description);
+    panel.appendChild(sectionsContainer);
     panel.appendChild(actions);
 
     // Assemble container
