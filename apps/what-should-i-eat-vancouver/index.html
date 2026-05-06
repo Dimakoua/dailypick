@@ -1,0 +1,210 @@
+---
+layout: base_app.njk
+title: "Vancouver Food Wheel – Random Vancouver Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide where to eat in Vancouver? Spin the wheel for seafood, sushi, food trucks, and West Coast dining picks."
+keywords: "Vancouver food wheel, Vancouver restaurant picker, what to eat in Vancouver, Vancouver cuisine spinner, Vancouver food guide, where to eat Vancouver"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-vancouver/"
+localBrandConfig: /apps/what-should-i-eat-vancouver/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Pacific Northwest cravings — what are you eating?</p>
+            <h1>🍣 Vancouver Food Wheel</h1>
+            <p>From sushi and seafood to food trucks and mountain-side comfort, spin the wheel and let Vancouver choose your next meal.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Sushi Bento,Spot Prawn Roll,Seafood Chowder,Salmon Burger,Granville Island Tacos,Japanese Curry,Tempura Bowl,Matcha Dessert">🌊 Coastal Classics</button>
+            <button class="preset-btn" data-items="Japadog,Gastown Brunch,Dimsum in Richmond,Vietnamese Pho,Portobello Bao,Asian Fusion Bowl,Dessert Bar,Oyster Bar">🍜 International Eats</button>
+            <button class="preset-btn" data-items="Food Truck Poutine,Street Tacos,Loaded Fries,Gourmet Hot Dog,Artisan Sandwich,Daily Soup,Spicy Noodle Bowl,Crepe Wrap">🚚 Food Truck Favorites</button>
+            <button class="preset-btn" data-items="Yaletown Steakhouse,Kitsilano Café,Granville Island Market,Commercial Drive Pizza,West End Vegan,North Shore Seafood,Downtown Tapas,Coal Harbour Italian">🏙️ Neighbourhood Picks</button>
+        </div>
+
+        <button id="spinBtn">🍣 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Vancouver Food Wheel: Random Restaurant & Dish Picker for the West Coast</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Vancouver Food Wheel makes choosing a meal in the city easy. From fresh Pacific Northwest seafood and sushi to market eats, food trucks, and neighbourhood dining gems, spin once and let the city decide.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>City-wide variety:</strong> Four presets across Coastal Classics, International Eats, Food Truck Favorites, and Neighbourhood Picks.</li>
+                        <li><strong>Real Vancouver food:</strong> Every item reflects an actual dish, market meal, or local restaurant scene.</li>
+                        <li><strong>Instant pick:</strong> One spin gives you a delicious direction without the scrolling.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-vancouver-food-wheel">What is the Vancouver Food Wheel?</a></li>
+                    <li><a href="#who-should-use-vancouver-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-vancouver-food-wheel-works">How it works</a></li>
+                    <li><a href="#vancouver-food-wheel-features">Features</a></li>
+                    <li><a href="#vancouver-food-wheel-categories">Vancouver food categories</a></li>
+                    <li><a href="#vancouver-food-wheel-tips">Tips</a></li>
+                    <li><a href="#vancouver-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-vancouver-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-vancouver-food-wheel">
+                <h3>1. What is the Vancouver Food Wheel?</h3>
+                <p>Vancouver Food Wheel is a random restaurant and dish picker built for the West Coast city. It highlights Vancouver’s seafood, sushi, food trucks, and multicultural neighbourhood dining.</p>
+            </section>
+
+            <section id="who-should-use-vancouver-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Vancouver locals who want a fast meal choice, visitors exploring the city, and anyone overwhelmed by the endless dining options. Spin and let Vancouver choose the next tasty stop.</p>
+            </section>
+
+            <section id="how-vancouver-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Choose a preset then hit Spin. The wheel lands on a pick and announces it. Use the result as a meal prompt, then head to the nearest spot or order in. Spin again if you want a second idea.</p>
+            </section>
+
+            <section id="vancouver-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> Coastal Classics, International Eats, Food Truck Favorites, and Neighbourhood Picks.</li>
+                    <li><strong>Real Vancouver picks:</strong> Every item is grounded in Vancouver’s real food scene.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Smooth spinning for phones, tablets, and desktops.</li>
+                    <li><strong>Instant result:</strong> Winner appears clearly after each spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel in PNW palettes.</li>
+                </ul>
+            </section>
+
+            <section id="vancouver-food-wheel-categories">
+                <h3>5. Vancouver food categories</h3>
+                <p><strong>Coastal Classics</strong> covers dishes that define Vancouver — sushi bentos, spot prawn rolls, seafood chowder, salmon burgers, Granville Island tacos, Japanese curry, tempura bowls, and matcha desserts. <strong>International Eats</strong> reflects the city’s global kitchens — Japadogs, Gastown brunch, Richmond dim sum, Vietnamese pho, Asian fusion bowls, sushi in Kitsilano, Italian coffee shops, and oyster bars. <strong>Food Truck Favorites</strong> highlights Vancouver’s market food scene — poutine, loaded fries, gourmet hot dogs, artisan sandwiches, spicy noodle bowls, grilled cheese, and crepe wraps. <strong>Neighbourhood Picks</strong> points to dining districts — Yaletown steakhouse, Kitsilano café, Granville Island market meals, Commercial Drive pizza, West End vegan, North Shore seafood, Downtown tapas, and Coal Harbour Italian.</p>
+            </section>
+
+            <section id="vancouver-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Use Coastal Classics for seafood and sushi, International Eats for global flavours, Food Truck Favorites for casual market eats, and Neighbourhood Picks when you want to explore a local district. Add your own favourite Vancouver spots for a personalised wheel.</p>
+            </section>
+
+            <section id="vancouver-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader global food choice, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. If you want a cuisine-specific pick, use the Indian, Chinese, or Japanese food wheels. Need a drink to pair? Try <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-vancouver-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Vancouver’s food scene blends fresh West Coast ingredients with a global restaurant culture. That abundance makes choice hard, and this wheel turns it into one fast, fun decision.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Sushi Bento', 'Spot Prawn Roll', 'Seafood Chowder', 'Salmon Burger', 'Granville Island Tacos', 'Japanese Curry', 'Tempura Bowl', 'Matcha Dessert'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#0077c8',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#0f3d45',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#f2b705',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#8a1538',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#1c5d8c',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#4f7942',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#6b2e77',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#73503c',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🍣 Vancouver says: <span style="color: var(--vancouver-blue); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
