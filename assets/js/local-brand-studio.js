@@ -412,6 +412,7 @@
       input.checked = Boolean(getCurrentValue(propertyKey, config));
       input.setAttribute('title', config.description || config.label);
       input.addEventListener('change', (e) => handlePropertyChange(propertyKey, e.target.checked));
+      control.className = 'local-brand-studio-control local-brand-studio-control--checkbox';
     } else {
       input = document.createElement('input');
       input.id = `local-brand-${propertyKey}`;
