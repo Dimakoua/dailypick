@@ -148,6 +148,8 @@
     var idleRotationSpeed = typeof options.idleRotationSpeed === 'number' ? options.idleRotationSpeed : 0.0035;
     var enableIdleRotation = options.enableIdleRotation !== false;
     var enableCanvasClick = options.enableCanvasClick !== false;
+    var removeAfterSelection = options.removeAfterSelection === true;
+    var pendingRemovalItem = null;
 
     function renderWheel(rotation) {
       drawWheel(canvas, foodItems, rotation, options, enableCanvasClick && !isSpinning && foodItems.length > 0);
@@ -187,8 +189,24 @@
       }
     }
 
+    function removePendingItem() {
+      if (!removeAfterSelection || pendingRemovalItem === null) {
+        return;
+      }
+
+      var index = foodItems.indexOf(pendingRemovalItem);
+      if (index !== -1) {
+        foodItems.splice(index, 1);
+      }
+      pendingRemovalItem = null;
+    }
+
     function spinWheel() {
-      if (isSpinning || foodItems.length === 0) return;
+      if (isSpinning) return;
+      if (removeAfterSelection) {
+        removePendingItem();
+      }
+      if (foodItems.length === 0) return;
       isSpinning = true;
       hasSpun = true;
       stopIdleRotation();
@@ -211,6 +229,9 @@
           requestAnimationFrame(animate);
         } else {
           winnerElement.innerHTML = resultFormatter(selectedItem);
+          if (removeAfterSelection) {
+            pendingRemovalItem = selectedItem;
+          }
           isSpinning = false;
           renderWheel(currentRotation);
           startIdleRotation();
