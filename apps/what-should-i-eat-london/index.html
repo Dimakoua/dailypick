@@ -1,0 +1,210 @@
+---
+layout: base_app.njk
+title: "London Food Wheel – Random London Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide where to eat in London? Spin the wheel for London classics, neighbourhood favourites, street food, and West End dining picks."
+keywords: "London food wheel, London restaurant picker, what to eat in London, London cuisine spinner, London food guide, where to eat London"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-london/"
+localBrandConfig: /apps/what-should-i-eat-london/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Big ben is hungry — what are you having?</p>
+            <h1>🍽️ London Food Wheel</h1>
+            <p>From fish and chips to curry on Brick Lane, spin the wheel and let London choose your next meal.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Fish and Chips,Sunday Roast,Pie and Mash,Full English Breakfast,Afternoon Tea,Sticky Toffee Pudding,Steak and Kidney Pie,Bangers and Mash">🇬🇧 London Classics</button>
+            <button class="preset-btn" data-items="Brick Lane Curry,Southall Biryani,Chinatown Dim Sum,Pho in Shoreditch,Ramen in Camden,Greek Street Souvlaki,Italian in Soho,Sushi in Mayfair">🌍 International Eats</button>
+            <button class="preset-btn" data-items="Borough Market Tacos,Street Food Southbank,Camden Market Bao,Portobello Falafel,Greenwich Pie,Spitalfields Wrap,Notting Hill Mash,Uber Eats On The Go">🚶 Trending Street Food</button>
+            <button class="preset-btn" data-items="Covent Garden Pasta,Kensington Brunch,Shoreditch Burgers,Soho Tapas,Mayfair Seafood,Peckham Jerk Chicken,Islington Pizza,West End Steakhouse">🏙️ Neighbourhood Picks</button>
+        </div>
+
+        <button id="spinBtn">🇬🇧 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>London Food Wheel: Random Restaurant & Dish Picker for the UK Capital</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>London Food Wheel turns the city's famously overwhelming dining scene into one quick decision. From classic pub meals and market street food to West End dinners and multicultural family favourites, spin once and eat somewhere great.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>City-wide variety:</strong> Four presets spanning London Classics, International Eats, Trending Street Food, and Neighbourhood Picks.</li>
+                        <li><strong>Real London food:</strong> Every item reflects an actual dish, district, or dining style you can find across London.</li>
+                        <li><strong>Instant pick:</strong> No waiting through reviews — one spin, one decision, one meal.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-london-food-wheel">What is the London Food Wheel?</a></li>
+                    <li><a href="#who-should-use-london-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-london-food-wheel-works">How it works</a></li>
+                    <li><a href="#london-food-wheel-features">Features</a></li>
+                    <li><a href="#london-food-wheel-categories">London food categories</a></li>
+                    <li><a href="#london-food-wheel-tips">Tips</a></li>
+                    <li><a href="#london-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-london-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-london-food-wheel">
+                <h3>1. What is the London Food Wheel?</h3>
+                <p>London Food Wheel is a random restaurant and dish picker built for the UK capital. It highlights the city's defining meals — from fish and chips and pie and mash to curries on Brick Lane, market meals by the Thames, and dining districts across the city.</p>
+            </section>
+
+            <section id="who-should-use-london-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Londoners who need a fast meal choice, visitors exploring the city, and anyone tired of endless restaurant browsing. Spin and let the capital's food scene make the decision for you.</p>
+            </section>
+
+            <section id="how-london-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Pick a preset then hit Spin. The wheel lands on a suggestion and announces it. Use it as a category prompt to choose a dish, restaurant style, or neighbourhood, then head out or order in. Spin again if it lands somewhere inconvenient.</p>
+            </section>
+
+            <section id="london-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> London Classics, International Eats, Trending Street Food, and Neighbourhood Picks.</li>
+                    <li><strong>Real London picks:</strong> Every item is grounded in an actual London dish, neighbourhood, or cuisine trend.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops — perfect for deciding on the go.</li>
+                    <li><strong>Instant result:</strong> Winner appears clearly after every spin, so you can act fast.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel in London red and navy.</li>
+                </ul>
+            </section>
+
+            <section id="london-food-wheel-categories">
+                <h3>5. London food categories</h3>
+                <p><strong>London Classics</strong> covers the dishes the city is famous for — fish and chips, roast dinner, pie and mash, full English breakfast, afternoon tea, sticky toffee pudding, steak and kidney pie, and bangers and mash. <strong>International Eats</strong> reflects London’s global food scene — Brick Lane curry, Southall biryani, Chinatown dim sum, ramen in Shoreditch, sushi in Mayfair, Greek Street souvlaki, and Italian in Soho. <strong>Trending Street Food</strong> is perfect for market meals — Borough Market tacos, Southbank street food, Camden bao, Portobello falafel, Greenwich pie, Spitalfields wraps, Notting Hill mash, and on-the-go delivery picks. <strong>Neighbourhood Picks</strong> maps dining districts — Covent Garden pasta, Kensington brunch, Shoreditch burgers, Soho tapas, Mayfair seafood, Peckham jerk chicken, Islington pizza, and West End steakhouse.</p>
+            </section>
+
+            <section id="london-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Use London Classics when you want a British comfort meal, International Eats for global cuisine, Trending Street Food for market-style dining, and Neighbourhood Picks when you want to pick a neighbourhood and explore it. Add your own favourite London restaurants to personalize the wheel further.</p>
+            </section>
+
+            <section id="london-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader global food choice, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. If you want a cuisine-specific suggestion, use the Indian, Chinese, or Persian food wheels. To pick a drink for your meal, try <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-london-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>London's food scene is enormous and varied, which makes choosing hard. This wheel turns that variety into a quick, fun decision with a practical local angle — one spin, one delicious direction.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Fish and Chips', 'Sunday Roast', 'Pie and Mash', 'Full English Breakfast', 'Afternoon Tea', 'Sticky Toffee Pudding', 'Steak and Kidney Pie', 'Bangers and Mash'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#c8102e',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#1d2951',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#ffc72c',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#8a1538',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#0c2d48',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#f2b705',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#4b2e83',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#73503c',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🇬🇧 London says: <span style="color: var(--london-red); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
