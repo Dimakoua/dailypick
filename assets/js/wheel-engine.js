@@ -109,22 +109,55 @@
 
     var foodItems = normalizeItems(options.defaultItems || []);
     var isSpinning = false;
+    var hasSpun = false;
+    var idleRotation = 0;
+    var idleAnimationFrame = null;
+    var idleRotationSpeed = typeof options.idleRotationSpeed === 'number' ? options.idleRotationSpeed : 0.0035;
+    var enableIdleRotation = options.enableIdleRotation !== false;
 
     function renderWheel(rotation) {
       drawWheel(canvas, foodItems, rotation, options);
+    }
+
+    function startIdleRotation() {
+      if (!enableIdleRotation || hasSpun || isSpinning || idleAnimationFrame) {
+        return;
+      }
+
+      function step() {
+        if (isSpinning || hasSpun) {
+          idleAnimationFrame = null;
+          return;
+        }
+
+        idleRotation += idleRotationSpeed;
+        renderWheel(idleRotation);
+        idleAnimationFrame = requestAnimationFrame(step);
+      }
+
+      idleAnimationFrame = requestAnimationFrame(step);
+    }
+
+    function stopIdleRotation() {
+      if (idleAnimationFrame) {
+        cancelAnimationFrame(idleAnimationFrame);
+        idleAnimationFrame = null;
+      }
     }
 
     function setItems(items) {
       foodItems = normalizeItems(items);
       winnerElement.innerText = '';
       if (!isSpinning) {
-        renderWheel(0);
+        renderWheel(idleRotation);
       }
     }
 
     function spinWheel() {
       if (isSpinning || foodItems.length === 0) return;
       isSpinning = true;
+      hasSpun = true;
+      stopIdleRotation();
       winnerElement.innerText = '';
 
       var angleStep = (2 * Math.PI) / foodItems.length;
@@ -145,6 +178,7 @@
         } else {
           winnerElement.innerHTML = resultFormatter(selectedItem);
           isSpinning = false;
+          startIdleRotation();
         }
       }
 
@@ -163,12 +197,13 @@
     if (redrawOnBrandUpdate) {
       window.addEventListener('localBrandConfigUpdated', function () {
         if (!isSpinning) {
-          renderWheel(0);
+          renderWheel(hasSpun ? 0 : idleRotation);
         }
       });
     }
 
     renderWheel(0);
+    startIdleRotation();
 
     return {
       spinWheel: spinWheel,
