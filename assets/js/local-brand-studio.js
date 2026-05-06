@@ -193,12 +193,15 @@
     if (localBrandConfig[propertyKey] !== undefined) {
       return localBrandConfig[propertyKey];
     }
-    if (config.default !== undefined) {
-      return config.default;
-    }
     const cssVar = cssVarMap[propertyKey];
     if (cssVar) {
-      return getComputedStyle(document.documentElement).getPropertyValue(cssVar).trim() || 'inherited';
+      const cssValue = getComputedStyle(document.documentElement).getPropertyValue(cssVar).trim();
+      if (cssValue) {
+        return cssValue;
+      }
+    }
+    if (config.default !== undefined) {
+      return config.default;
     }
     return 'inherited';
   }
