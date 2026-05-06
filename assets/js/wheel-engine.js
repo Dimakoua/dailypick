@@ -368,6 +368,22 @@ var defaultSegmentColors = [
       document.body.appendChild(overlay);
     }
 
+    function isElementVisible(el) {
+      if (!el || typeof el.getBoundingClientRect !== 'function') return false;
+      var rect = el.getBoundingClientRect();
+      var viewHeight = window.innerHeight || document.documentElement.clientHeight;
+      return rect.top >= 0 && rect.bottom <= viewHeight;
+    }
+
+    function scrollResultIfNeeded() {
+      if (isElementVisible(winnerElement)) return;
+      var container = canvas.closest('#wheel-container') || canvas.parentElement || canvas;
+      var rect = container.getBoundingClientRect();
+      var offset = Math.min(80, Math.max(16, window.innerHeight * 0.08));
+      var target = window.scrollY + rect.top - offset;
+      window.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
+    }
+
     function spinWheel() {
       if (isSpinning) return;
       removeResultPopup();
@@ -407,6 +423,8 @@ var defaultSegmentColors = [
           winnerElement.innerHTML = resultHtml;
           if (showPopupResult) {
             showResultPopup(resultHtml);
+          } else {
+            scrollResultIfNeeded();
           }
           if (removeAfterSelection) {
             pendingRemovalItem = selectedItem;
