@@ -1,0 +1,210 @@
+---
+layout: base_app.njk
+title: "Chengdu Food Wheel – Random Chengdu Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide what to eat in Chengdu? Spin the wheel for spicy Sichuan favorites, street food, and Chengdu dining ideas."
+keywords: "Chengdu food wheel, Chengdu restaurant picker, what to eat in Chengdu, Chengdu cuisine spinner, Sichuan food guide, where to eat Chengdu"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-chengdu/"
+localBrandConfig: /apps/what-should-i-eat-chengdu/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Bold Chengdu spice and street snacks — what are you eating?</p>
+            <h1>🌶️ Chengdu Food Wheel</h1>
+            <p>From hot pot and mala noodles to spicy skewers and mapo tofu, spin the wheel and let Chengdu choose your next meal.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Chengdu Hot Pot,Mala Noodles,Mapo Tofu,Spicy Rabbit,Dan Dan Noodles,Hot Dry Noodles,Street Skewers,Kung Pao Chicken">🌶️ Spicy Sichuan Classics</button>
+            <button class="preset-btn" data-items="Sichuan Fish,Braised Pork,Cold Noodles,Pickled Vegetables,Hong You Chao Shou,Tea Smoked Duck,Tofu Puff,Sour Soup" >🍲 Local Favorites</button>
+            <button class="preset-btn" data-items="Spring Rolls,Street Dumplings,Steamed Buns,Chili Oil Wontons,Spicy Tofu,Sesame Salad,Tea House Snacks,Sticky Rice Rolls">🥟 Street & Snack Eats</button>
+            <button class="preset-btn" data-items="Rice Bowl,Szechuan Stir Fry,Japanese Sushi,Thai Curry,Indian Biryani,Korean BBQ,Italian Pasta,Modern Bistro Salad">🌍 Global Choices</button>
+        </div>
+
+        <button id="spinBtn">🌶️ SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Chengdu Food Wheel: Random Restaurant & Dish Picker for the Spice Capital</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Chengdu Food Wheel turns the city’s legendary spicy cuisine into one quick decision. From Sichuan hot pot and mala noodles to street snacks and local favorites, spin once and discover your next Chengdu meal.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>City-wide variety:</strong> Four presets covering Spicy Sichuan Classics, Local Favorites, Street & Snack Eats, and Global Choices.</li>
+                        <li><strong>Real Chengdu picks:</strong> Every item reflects the city’s bold, numbing, and savory food culture.</li>
+                        <li><strong>Instant decision:</strong> One spin gives you a tasty direction without overthinking your meal.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-chengdu-food-wheel">What is the Chengdu Food Wheel?</a></li>
+                    <li><a href="#who-should-use-chengdu-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-chengdu-food-wheel-works">How it works</a></li>
+                    <li><a href="#chengdu-food-wheel-features">Features</a></li>
+                    <li><a href="#chengdu-food-wheel-categories">Chengdu food categories</a></li>
+                    <li><a href="#chengdu-food-wheel-tips">Tips</a></li>
+                    <li><a href="#chengdu-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-chengdu-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-chengdu-food-wheel">
+                <h3>1. What is the Chengdu Food Wheel?</h3>
+                <p>Chengdu Food Wheel is a random meal picker built for the city’s famous Sichuan cuisine. It blends spicy hot pot, street food, and local favorites into one playful decision tool.</p>
+            </section>
+
+            <section id="who-should-use-chengdu-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Chengdu locals choosing dinner, visitors exploring the city’s food culture, and anyone who wants a bold meal idea. Spin for a fresh Chengdu food suggestion.</p>
+            </section>
+
+            <section id="how-chengdu-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Pick a preset then press Spin. The wheel lands on a suggestion and reveals it clearly. Use the result as a meal prompt, then enjoy. Spin again if you want another option.</p>
+            </section>
+
+            <section id="chengdu-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> Spicy Sichuan Classics, Local Favorites, Street & Snack Eats, and Global Choices.</li>
+                    <li><strong>Real Chengdu picks:</strong> Every item reflects the city’s bold and numbing flavors.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>Instant result:</strong> Winner appears clearly after each spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel with Chengdu-inspired tones.</li>
+                </ul>
+            </section>
+
+            <section id="chengdu-food-wheel-categories">
+                <h3>5. Chengdu food categories</h3>
+                <p><strong>Spicy Sichuan Classics</strong> covers Chengdu hot pot, mala noodles, mapo tofu, spicy rabbit, dan dan noodles, and kung pao chicken. <strong>Local Favorites</strong> includes Sichuan fish, braised pork, cold noodles, pickled vegetables, and tea-smoked duck. <strong>Street & Snack Eats</strong> highlights Chengdu’s street food scene. <strong>Global Choices</strong> brings international dining into the city.</p>
+            </section>
+
+            <section id="chengdu-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Choose Spicy Sichuan Classics for bold flavor, Local Favorites for regional specialties, Street & Snack Eats for quick bites, and Global Choices for variety. Personalize the wheel with your favorite Chengdu spots if you want.</p>
+            </section>
+
+            <section id="chengdu-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader meal picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. If you want a cuisine-specific route, try the Chinese or street-food wheels. Need a drink pairing? Try <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-chengdu-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Chengdu blends bold spice, numbing Sichuan flavors, and rich street food. This wheel simplifies that abundance into one fast, fun dining decision.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Chengdu Hot Pot', 'Mala Noodles', 'Mapo Tofu', 'Spicy Rabbit', 'Dan Dan Noodles', 'Hot Dry Noodles', 'Street Skewers', 'Kung Pao Chicken'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#c0392b',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#d35400',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#8e44ad',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#f39c12',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#27ae60',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#2c3e50',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#ecf0f1',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#d35400',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🌶️ Chengdu says: <span style="color: var(--chengdu-red); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
