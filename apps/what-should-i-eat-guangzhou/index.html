@@ -108,103 +108,16 @@ headExtra: |
         </section>
     </main>
 
+    <script src="/assets/js/food-wheel-engine.js"></script>
     <script>
-        const canvas = document.getElementById("wheel");
-        const ctx = canvas.getContext("2d");
-        const spinBtn = document.getElementById("spinBtn");
-        const winnerDiv = document.getElementById("winner");
-        const radius = canvas.width / 2;
-
-        let foodItems = ['Dim Sum', 'Roast Goose', 'Char Siu', 'Baked Pork Bun', 'Steamed Fish', 'Congee', 'Rice Noodles', 'Claypot Rice'];
-
-        function getSegmentColors() {
-            const style = getComputedStyle(document.documentElement);
-            return [
-                style.getPropertyValue('--wheel-segment-1').trim() || '#f39c12',
-                style.getPropertyValue('--wheel-segment-2').trim() || '#d35400',
-                style.getPropertyValue('--wheel-segment-3').trim() || '#c0392b',
-                style.getPropertyValue('--wheel-segment-4').trim() || '#2980b9',
-                style.getPropertyValue('--wheel-segment-5').trim() || '#27ae60',
-                style.getPropertyValue('--wheel-segment-6').trim() || '#8e44ad',
-                style.getPropertyValue('--wheel-segment-7').trim() || '#2c3e50',
-                style.getPropertyValue('--wheel-segment-8').trim() || '#ecf0f1',
-            ];
-        }
-
-        function drawWheel(items, rotationAngle = 0) {
-            const angleStep = (2 * Math.PI) / items.length;
-            const segmentColors = getSegmentColors();
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.save();
-            ctx.translate(radius, radius);
-            ctx.rotate(rotationAngle);
-            ctx.translate(-radius, -radius);
-
-            items.forEach((item, i) => {
-                const angle = i * angleStep;
-                ctx.beginPath();
-                ctx.moveTo(radius, radius);
-                ctx.arc(radius, radius, radius, angle, angle + angleStep);
-                ctx.fillStyle = segmentColors[i % segmentColors.length];
-                ctx.fill();
-
-                ctx.save();
-                ctx.translate(radius, radius);
-                ctx.rotate(angle + angleStep / 2);
-                ctx.textAlign = "right";
-                ctx.fillStyle = "#fff";
-                ctx.font = "bold 16px Nunito, Arial";
-                ctx.shadowColor = "rgba(0,0,0,0.5)";
-                ctx.shadowBlur = 4;
-                ctx.fillText(item, radius - 16, 6);
-                ctx.restore();
-            });
-            ctx.restore();
-        }
-
-        let isSpinning = false;
-        function spinWheel() {
-            if (isSpinning) return;
-            isSpinning = true;
-            winnerDiv.innerText = "";
-
-            const angleStep = (2 * Math.PI) / foodItems.length;
-            const selectedIndex = Math.floor(Math.random() * foodItems.length);
-            const selectedItem = foodItems[selectedIndex];
-
-            const fullSpins = 5;
-            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
-            let currentRotation = 0;
-
-            function animate() {
-                const progress = currentRotation / targetRotation;
-                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
-                currentRotation += easeOutSpeed;
-                drawWheel(foodItems, currentRotation);
-
-                if (currentRotation < targetRotation) {
-                    requestAnimationFrame(animate);
-                } else {
-                    winnerDiv.innerHTML = `🥟 Guangzhou says: <span style="color: var(--guangzhou-gold); font-size: 2rem; display: block;">${selectedItem}!</span>`;
-                    isSpinning = false;
-                }
-            }
-            animate();
-        }
-
-        spinBtn.addEventListener("click", spinWheel);
-
-        document.querySelectorAll('.preset-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                foodItems = btn.dataset.items.split(',');
-                winnerDiv.innerText = "";
-                drawWheel(foodItems, 0);
-            });
-        });
-
-        window.addEventListener('localBrandConfigUpdated', () => {
-            if (!isSpinning) drawWheel(foodItems, 0);
-        });
-
-        drawWheel(foodItems, 0);
-    </script>
+  FoodWheelEngine.init({
+    canvasSelector: "#wheel",
+    spinButtonSelector: "#spinBtn",
+    winnerSelector: "#winner",
+    presetButtonSelector: ".preset-btn",
+    defaultItems: ['Dim Sum', 'Roast Goose', 'Char Siu', 'Baked Pork Bun', 'Steamed Fish', 'Congee', 'Rice Noodles', 'Claypot Rice'],
+    resultFormatter: function (selectedItem) {
+      return `🥟 Guangzhou says: <span style="color: var(--guangzhou-gold); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+    }
+  });
+</script>
