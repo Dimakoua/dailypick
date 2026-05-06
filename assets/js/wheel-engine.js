@@ -421,6 +421,9 @@ var defaultSegmentColors = [
         } else {
           var resultHtml = resultFormatter(selectedItem);
           winnerElement.innerHTML = resultHtml;
+          if (typeof options.onResult === 'function') {
+            options.onResult(selectedItem, selectedIndex, winnerElement);
+          }
           if (showPopupResult) {
             showResultPopup(resultHtml);
           } else {

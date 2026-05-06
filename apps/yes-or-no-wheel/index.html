@@ -133,29 +133,22 @@ localBrandConfig: /apps/yes-or-no-wheel/local-brand-config.js
 
 </main>
 
+<script src="/assets/js/wheel-engine.js"></script>
 <script>
-  const canvas = document.getElementById('wheel');
-  const ctx = canvas.getContext('2d');
+  const modeSets = {
+    twoOption: ['YES', 'NO', 'YES', 'NO', 'YES', 'NO', 'YES', 'NO'],
+    threeOption: ['YES', 'NO', 'YES', 'MAYBE', 'NO', 'YES', 'NO', 'MAYBE']
+  };
+
   const spinBtn = document.getElementById('spinBtn');
   const resetBtn = document.getElementById('resetBtn');
   const modeBtn = document.getElementById('modeBtn');
   const resultText = document.getElementById('resultText');
   const resultMessage = document.getElementById('resultMessage');
 
-  const TEXT_COLOR = '#ffffff';
-
-  const modes = {
-    twoOption: ['YES', 'NO', 'YES', 'NO', 'YES', 'NO', 'YES', 'NO'],
-    threeOption: ['YES', 'NO', 'YES', 'MAYBE', 'NO', 'YES', 'NO', 'MAYBE']
-  };
-
-  const radius = canvas.width / 2;
-  let isSpinning = false;
-  let currentRotation = 0;
   let currentMode = 'twoOption';
-  let options = [...modes.twoOption];
 
-  function getSliceColor(option) {
+  function getOptionColor(option) {
     const style = getComputedStyle(document.documentElement);
     if (option === 'YES') return style.getPropertyValue('--yes-color').trim() || '#27ae60';
     if (option === 'NO') return style.getPropertyValue('--no-color').trim() || '#e74c3c';
@@ -163,158 +156,54 @@ localBrandConfig: /apps/yes-or-no-wheel/local-brand-config.js
     return '#95a5a6';
   }
 
-  function drawWheel() {
-    const angleStep = (2 * Math.PI) / options.length;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    ctx.save();
-    ctx.translate(radius, radius);
-    ctx.rotate(currentRotation);
-
-    options.forEach((option, i) => {
-      const angle = i * angleStep;
-      const color = getSliceColor(option);
-
-      // Draw slice
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.arc(0, 0, radius, angle, angle + angleStep);
-      ctx.lineTo(0, 0);
-      ctx.fillStyle = color;
-      ctx.fill();
-
-      // Draw border
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-
-      // Draw text
-      ctx.save();
-      ctx.rotate(angle + angleStep / 2);
-      ctx.textAlign = 'right';
-      ctx.fillStyle = TEXT_COLOR;
-      
-      const fontSize = options.length > 6 ? '32px' : '48px';
-      ctx.font = `bold ${fontSize} Nunito, sans-serif`;
-      ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-      ctx.shadowBlur = 4;
-      ctx.fillText(option, radius - 40, 6);
-      ctx.restore();
-    });
-
-    ctx.restore();
-  }
-
-  function calculateTargetRotation(chosenIndex) {
-    const angleStep = (2 * Math.PI) / options.length;
-    const sliceCenterAngle = chosenIndex * angleStep + angleStep / 2;
-
-    // Align the slice center with the top indicator (-π/2 in canvas coordinates).
-    let targetRotation = -Math.PI / 2 - sliceCenterAngle;
-    targetRotation = ((targetRotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
-    return targetRotation;
-  }
-
-  function spinWheel() {
-    if (isSpinning) return;
-
-    isSpinning = true;
-    spinBtn.disabled = true;
-    resetBtn.disabled = true;
-    modeBtn.disabled = true;
-    resultText.textContent = '';
-    resultMessage.textContent = '';
-
-    const spinDuration = 3000;
-    const spins = 10;
-    const baseRotation = spins * Math.PI * 2;
-    const chosenIndex = Math.floor(Math.random() * options.length);
-    
-    const startRotation = currentRotation;
-    const normalizedCurrent = ((currentRotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
-    
-    const targetRotation = calculateTargetRotation(chosenIndex);
-    
-    let distance = targetRotation - normalizedCurrent;
-    if (distance <= 0) {
-      distance += 2 * Math.PI;
-    }
-    
-    const finalRotation = baseRotation + distance;
-
-    const startTime = Date.now();
-
-    function animate() {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / spinDuration, 1);
-
-      const easeProgress = 1 - Math.pow(1 - progress, 3);
-
-      currentRotation = startRotation + finalRotation * easeProgress;
-      drawWheel();
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      } else {
-        isSpinning = false;
-        spinBtn.disabled = false;
-        resetBtn.disabled = false;
-        modeBtn.disabled = false;
-        showResult(chosenIndex);
-      }
-    }
-
-    requestAnimationFrame(animate);
-  }
-
-  function showResult(index) {
-    const result = options[index];
-    resultText.textContent = result;
-    resultText.className = `result-value ${result.toLowerCase()}`;
-
+  function getResultMessage(option) {
     const messages = {
       YES: ['Go for it!', 'The wheel has spoken: YES!', 'Destiny says YES!', 'All signs point to YES!'],
       NO: ['Better luck next time!', 'The wheel has spoken: NO!', 'Destiny says NO!', 'The answer is NO.'],
       MAYBE: ['Ask again later!', 'The wheel says: MAYBE!', 'It could go either way!', 'Perhaps...']
     };
-
-    const messageList = messages[result] || messages.YES;
-    const randomMessage = messageList[Math.floor(Math.random() * messageList.length)];
-    resultMessage.textContent = randomMessage;
+    const list = messages[option] || messages.YES;
+    return list[Math.floor(Math.random() * list.length)];
   }
 
-  function reset() {
-    isSpinning = false;
-    currentRotation = 0;
-    spinBtn.disabled = false;
-    resetBtn.disabled = false;
-    modeBtn.disabled = false;
+  function updateModeButton() {
+    modeBtn.textContent = currentMode === 'twoOption'
+      ? 'Switch to Yes/No/Maybe Mode'
+      : 'Switch to Yes/No Mode';
+  }
+
+  function resetWheel() {
     resultText.textContent = '';
     resultMessage.textContent = '';
-    drawWheel();
+    engine.setItems(modeSets[currentMode]);
   }
 
   function switchMode() {
-    if (isSpinning) return;
-    
     currentMode = currentMode === 'twoOption' ? 'threeOption' : 'twoOption';
-    options = [...modes[currentMode]];
-    
-    modeBtn.textContent = currentMode === 'twoOption' 
-      ? 'Switch to Yes/No/Maybe Mode' 
-      : 'Switch to Yes/No Mode';
-    
-    reset();
+    updateModeButton();
+    resetWheel();
   }
 
-  spinBtn.addEventListener('click', spinWheel);
-  resetBtn.addEventListener('click', reset);
-  modeBtn.addEventListener('click', switchMode);
-
-  window.addEventListener('localBrandConfigUpdated', () => {
-    if (!isSpinning) drawWheel();
+  const engine = FoodWheelEngine.init({
+    canvasSelector: '#wheel',
+    spinButtonSelector: '#spinBtn',
+    winnerSelector: '#resultText',
+    defaultItems: modeSets.twoOption,
+    showPopupResult: false,
+    segmentColorResolver: function (index, item) {
+      return getOptionColor(item);
+    },
+    resultFormatter: function (selectedItem) {
+      const normalized = String(selectedItem).toUpperCase();
+      resultText.className = `result-value ${normalized.toLowerCase()}`;
+      return normalized;
+    },
+    onResult: function (selectedItem) {
+      resultMessage.textContent = getResultMessage(String(selectedItem).toUpperCase());
+    }
   });
 
-  // Initial draw
-  drawWheel();
+  resetBtn.addEventListener('click', resetWheel);
+  modeBtn.addEventListener('click', switchMode);
+  updateModeButton();
 </script>
