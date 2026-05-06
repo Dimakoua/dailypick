@@ -340,10 +340,10 @@ var defaultSegmentColors = [
 
       var overlay = document.createElement('div');
       overlay.className = 'wheel-popup-overlay';
-      overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:20px;z-index:10000;background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);';
+      overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;overflow-y:auto;z-index:10000;background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);';
 
       var card = document.createElement('div');
-      card.style.cssText = 'max-width:90vw;min-width:280px;padding:24px 24px 20px 24px;border-radius:24px;background:rgba(255,255,255,0.98);box-shadow:0 24px 80px rgba(0,0,0,0.18);text-align:center;position:relative;';
+      card.style.cssText = 'max-width:90vw;min-width:280px;padding:24px 24px 20px 24px;border-radius:24px;background:rgba(255,255,255,0.98);box-shadow:0 24px 80px rgba(0,0,0,0.18);text-align:center;position:relative;max-height:calc(100vh - 40px);overflow-y:auto;box-sizing:border-box;';
 
       var contentContainer = document.createElement('div');
       contentContainer.className = 'wheel-popup-content';
