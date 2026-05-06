@@ -1,0 +1,210 @@
+---
+layout: base_app.njk
+title: "Sydney Food Wheel – Random Sydney Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide where to eat in Sydney? Spin the wheel for seafood, Asian fusion, cafés, and Harbour dining picks."
+keywords: "Sydney food wheel, Sydney restaurant picker, what to eat in Sydney, Sydney cuisine spinner, Sydney food guide, where to eat Sydney"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-sydney/"
+localBrandConfig: /apps/what-should-i-eat-sydney/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Harbour-side hunger — what are you eating?</p>
+            <h1>🍤 Sydney Food Wheel</h1>
+            <p>From seafood by the harbour to Asian fusion and café brunch, spin the wheel and let Sydney choose your next meal.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Fish and Chips,Moreton Bay Bugs,Beef Pie,Sydney Rock Oysters,Avocado Smash,Flat White,Twist Donut,BBQ Prawns">🌊 Sydney Classics</button>
+            <button class="preset-btn" data-items="Laksa,Ramen,Sushi Bowl,Thai Green Curry,Chinese Dumplings,Indian Biryani,Korean Fried Chicken,Vietnamese Banh Mi">🍜 Asian Fusion</button>
+            <button class="preset-btn" data-items="Food Truck Tacos,Loaded Fries,Gourmet Burger,Street Hot Dog,Acai Bowl,Shakshuka,Grilled Halloumi,Poke Bowl">🚚 Food Truck Favorites</button>
+            <button class="preset-btn" data-items="Surry Hills Brunch,Bondi Café,Newtown Pizza,Pyrmont Seafood,Double Bay Salad,Paddington Steakhouse,Glebe Burger,Chatswood Noodles">🏙️ Neighbourhood Picks</button>
+        </div>
+
+        <button id="spinBtn">🍤 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Sydney Food Wheel: Random Restaurant & Dish Picker for the Harbour City</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Sydney Food Wheel turns the city’s vibrant food scene into one easy decision. From seafood by the water to café brunch and multicultural eats, spin once and get a tasty Sydney suggestion.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>City-wide variety:</strong> Four presets spanning Sydney Classics, Asian Fusion, Food Truck Favorites, and Neighbourhood Picks.</li>
+                        <li><strong>Real Sydney food:</strong> Every item reflects the city’s harbour-side restaurants, café culture, and global cuisine scene.</li>
+                        <li><strong>Instant decision:</strong> One spin gives you a delicious direction without menu overwhelm.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-sydney-food-wheel">What is the Sydney Food Wheel?</a></li>
+                    <li><a href="#who-should-use-sydney-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-sydney-food-wheel-works">How it works</a></li>
+                    <li><a href="#sydney-food-wheel-features">Features</a></li>
+                    <li><a href="#sydney-food-wheel-categories">Sydney food categories</a></li>
+                    <li><a href="#sydney-food-wheel-tips">Tips</a></li>
+                    <li><a href="#sydney-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-sydney-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-sydney-food-wheel">
+                <h3>1. What is the Sydney Food Wheel?</h3>
+                <p>Sydney Food Wheel is a random restaurant and dish picker built for the Harbour City. It highlights Sydney’s coastal seafood, café favorites, and international flavors from across the city.</p>
+            </section>
+
+            <section id="who-should-use-sydney-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Sydney locals who want a fast meal choice, visitors exploring the city, and anyone overwhelmed by Sydney’s dining options. Spin and let Sydney choose the next tasty stop.</p>
+            </section>
+
+            <section id="how-sydney-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Select a preset then hit Spin. The wheel lands on a suggestion and announces it. Use the result as a meal prompt, then head out or order in. Spin again if you want another option.</p>
+            </section>
+
+            <section id="sydney-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> Sydney Classics, Asian Fusion, Food Truck Favorites, and Neighbourhood Picks.</li>
+                    <li><strong>Real Sydney picks:</strong> Every item reflects the city’s real dining scene.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>Instant result:</strong> Winner appears clearly after each spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel in Sydney-inspired colors.</li>
+                </ul>
+            </section>
+
+            <section id="sydney-food-wheel-categories">
+                <h3>5. Sydney food categories</h3>
+                <p><strong>Sydney Classics</strong> covers the city’s coastal favorites — fish and chips, Moreton Bay bugs, beef pies, Sydney rock oysters, avo smash, flat whites, twist donuts, and BBQ prawns. <strong>Asian Fusion</strong> reflects Sydney’s multicultural food scene — laksa, ramen, sushi bowls, Thai green curry, dumplings, biryani, Korean fried chicken, and bánh mì. <strong>Food Truck Favorites</strong> highlights market meals — food truck tacos, loaded fries, burgers, street hot dogs, açaí bowls, shakshuka, grilled halloumi, and poke bowls. <strong>Neighbourhood Picks</strong> points to local districts — Surry Hills brunch, Bondi cafés, Newtown pizza, Pyrmont seafood, Double Bay salads, Paddington steakhouses, Glebe burgers, and Chatswood noodles.</p>
+            </section>
+
+            <section id="sydney-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Choose Sydney Classics for coastal comfort food, Asian Fusion for global flavors, Food Truck Favorites for casual market dining, and Neighbourhood Picks when you want to explore a district. Add your favorite Sydney spots for a personalized wheel.</p>
+            </section>
+
+            <section id="sydney-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader food picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. If you want a cuisine-specific route, use the Indian, Chinese, or Japanese food wheels. Need a drink pairing? Try <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-sydney-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Sydney’s dining scene blends coastal freshness with multicultural flair. This wheel turns that abundance into one fast, fun decision.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Fish and Chips', 'Moreton Bay Bugs', 'Beef Pie', 'Sydney Rock Oysters', 'Avocado Smash', 'Flat White', 'Twist Donut', 'BBQ Prawns'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#00a8e8',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#ff6f61',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#f2b705',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#007a33',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#d6231f',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#ffc72c',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#6b2e77',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#73503c',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🍤 Sydney says: <span style="color: var(--sydney-blue); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
