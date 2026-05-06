@@ -1,0 +1,210 @@
+---
+layout: base_app.njk
+title: "Berlin Food Wheel – Random Berlin Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide where to eat in Berlin? Spin the wheel for currywurst, döner, biergarten food, and Kreuzberg dining picks."
+keywords: "Berlin food wheel, Berlin restaurant picker, what to eat in Berlin, Berlin cuisine spinner, Berlin food guide, where to eat Berlin"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-berlin/"
+localBrandConfig: /apps/what-should-i-eat-berlin/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Berlin appetite — what are you eating?</p>
+            <h1>🥨 Berlin Food Wheel</h1>
+            <p>From currywurst to schnitzel and international street food, spin the wheel and let Berlin choose your next meal.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Currywurst,Döner Kebap,Schnitzel,Pretzel,Bratwurst,Käsekuchen,Spätzle,Apfelstrudel">🇩🇪 Berlin Classics</button>
+            <button class="preset-btn" data-items="Vietnamese Pho,Turkish Lahmacun,Italian Pizza,Sushi Bowl,Greek Salad,Middle Eastern Mezze,Indian Curry,Spanish Tapas">🌍 International Eats</button>
+            <button class="preset-btn" data-items="Street Food Fries,Food Market Bowl,Loaded Currywurst,Doner Wrap,Ramen Snack,Bulgogi Taco,Polish Pierogi,Cold Brew">🚚 Food Truck Favorites</button>
+            <button class="preset-btn" data-items="Kreuzberg Café,Prenzlauer Berg Brunch,Friedrichshain Burger,Mitte Bistro,Charlottenburg Steak,Berghain Vegan,Neukölln Pizza,Wedding Döner">🏙️ Neighbourhood Picks</button>
+        </div>
+
+        <button id="spinBtn">🥨 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Berlin Food Wheel: Random Restaurant & Dish Picker for Germany’s Capital</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Berlin Food Wheel helps you decide what to eat in the city’s eclectic dining scene. From local favorites and market meals to international cuisine and neighborhood cafes, spin once and get a tasty Berlin suggestion.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>City-wide variety:</strong> Four presets spanning Berlin Classics, International Eats, Food Truck Favorites, and Neighbourhood Picks.</li>
+                        <li><strong>Real Berlin food:</strong> Every item reflects the city’s unique culinary culture.</li>
+                        <li><strong>Fast choice:</strong> One spin gives you a delicious direction without overthinking.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-berlin-food-wheel">What is the Berlin Food Wheel?</a></li>
+                    <li><a href="#who-should-use-berlin-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-berlin-food-wheel-works">How it works</a></li>
+                    <li><a href="#berlin-food-wheel-features">Features</a></li>
+                    <li><a href="#berlin-food-wheel-categories">Berlin food categories</a></li>
+                    <li><a href="#berlin-food-wheel-tips">Tips</a></li>
+                    <li><a href="#berlin-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-berlin-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-berlin-food-wheel">
+                <h3>1. What is the Berlin Food Wheel?</h3>
+                <p>Berlin Food Wheel is a random restaurant and dish picker built for the city’s bold food scene. It brings together Berlin classics, international street food, market meals, and neighborhood favorites.</p>
+            </section>
+
+            <section id="who-should-use-berlin-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Berliners who want a fast meal decision, visitors exploring the capital, and anyone overwhelmed by the variety. Spin and let Berlin pick your next bite.</p>
+            </section>
+
+            <section id="how-berlin-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Choose a preset then hit Spin. The wheel lands on a suggestion and announces it. Use it as a meal prompt, then head out or order in. Spin again if you want another option.</p>
+            </section>
+
+            <section id="berlin-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> Berlin Classics, International Eats, Food Truck Favorites, and Neighbourhood Picks.</li>
+                    <li><strong>Real Berlin picks:</strong> Every item is based on real city dishes and neighborhoods.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>Instant result:</strong> Winner appears clearly after each spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel with Berlin style.</li>
+                </ul>
+            </section>
+
+            <section id="berlin-food-wheel-categories">
+                <h3>5. Berlin food categories</h3>
+                <p><strong>Berlin Classics</strong> covers the city’s iconic eats — currywurst, döner kebab, schnitzel, pretzels, bratwurst, Käsekuchen, spätzle, and apfelstrudel. <strong>International Eats</strong> reflects Berlin’s diverse cuisine — Vietnamese pho, Turkish lahmacun, Italian pizza, sushi bowls, Greek salad, Middle Eastern mezze, Indian curry, and Spanish tapas. <strong>Food Truck Favorites</strong> highlights market meals — street food fries, loaded currywurst, döner wraps, ramen snacks, bulgogi tacos, Polish pierogi, and cold brew coffee. <strong>Neighbourhood Picks</strong> points to Berlin districts — Kreuzberg cafés, Prenzlauer Berg brunch, Friedrichshain burgers, Mitte bistros, Charlottenburg steak, Neukölln pizza, and Wedding döner.</p>
+            </section>
+
+            <section id="berlin-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Choose Berlin Classics for local comfort food, International Eats for global flavors, Food Truck Favorites for casual market dining, and Neighbourhood Picks when you want to explore a district. Personalize the wheel with your favorite Berlin spots.</p>
+            </section>
+
+            <section id="berlin-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader food picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. If you want cuisine-specific options, use the Indian, Chinese, or Japanese food wheels. Need a drink pairing? Try <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-berlin-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Berlin’s food scene is bold, international, and constantly changing. This wheel turns that variety into one fast, fun decision.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Currywurst', 'Döner Kebap', 'Schnitzel', 'Pretzel', 'Bratwurst', 'Käsekuchen', 'Spätzle', 'Apfelstrudel'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#ffcc00',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#0066cc',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#cc0000',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#7f6000',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#00563f',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#cc6600',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#6b2e77',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#73503c',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🥨 Berlin says: <span style="color: var(--berlin-gold); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
