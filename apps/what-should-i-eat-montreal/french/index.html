@@ -1,0 +1,127 @@
+---
+layout: base_app.njk
+title: "Montreal Food Wheel – Sélecteur aléatoire de restaurants et plats de Montréal | Daily Pick"
+description: "Vous ne savez pas quoi manger à Montréal ? Faites tourner la roue pour dénicher des bagels, de la viande fumée, de la poutine et des choix de restauration du Plateau."
+keywords: "roue alimentaire Montréal, sélectionneur de restaurants Montréal, quoi manger à Montréal, roue cuisine Montréal, guide alimentaire Montréal"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-montreal/french/"
+localBrandConfig: /apps/wheel/local-brand-config.js
+headExtra: |
+  <link href="/apps/what-should-i-eat-montreal/style.css" rel="stylesheet" />
+  <meta http-equiv="Content-Language" content="fr" />
+  <link rel="alternate" hreflang="en" href="https://dailypick.dev/apps/what-should-i-eat-montreal/" />
+  <link rel="alternate" hreflang="fr" href="https://dailypick.dev/apps/what-should-i-eat-montreal/french/" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Bonjour, amateur de bonne chère — que mangez-vous ?</p>
+            <h1>🥖 Montreal Food Wheel</h1>
+            <p>Des bagels à la viande fumée en passant par les cafés du Plateau, faites tourner la roue et laissez Montréal choisir votre prochain repas.</p>
+            <p>Cette page est disponible en français. Retourner à la version anglaise : <a href="/apps/what-should-i-eat-montreal/">Montreal Food Wheel</a>.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Bagel de Montréal,Sandwich à la viande fumée,Poutine,Steamé,Crêpe au sirop d'érable,Tourtière,Croissant,Brunch French Toast">🇨🇦 Classiques de Montréal</button>
+            <button class="preset-btn" data-items="Café St Viateur,Pho,Brunch au Mile End,Sushi,Salade grecque,Tacos,Curry indien,Pâtes italiennes">🌍 Saveurs internationales</button>
+            <button class="preset-btn" data-items="Poutine de camion-cantine,Frites de rue,BeaverTail,Bánh mì,Crêperie,Kebab,Hot dog garni,Bol végétal">🚚 Favoris de food truck</button>
+            <button class="preset-btn" data-items="Café du Plateau,Fruits de mer du Vieux-Montréal,Pizza Petite Italie,Brunch Griffintown,Tapas du Quartier Latin,Épicerie Outremont,Bistro Westmount,Burgers Verdun">🏙️ Sélections de quartier</button>
+        </div>
+
+        <button id="spinBtn">🥖 TOURNEZ POUR MANGER !</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Montreal Food Wheel : Sélecteur aléatoire de restaurants et plats pour Montréal</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Montreal Food Wheel facilite le choix d'un repas dans une ville gourmande. Des bagels emblématiques à la viande fumée, des cafés du Plateau aux plats internationaux, faites tourner la roue et laissez Montréal décider de votre prochaine halte gourmande.</p>
+                </div>
+                <div>
+                    <h3>Pourquoi cette roue aide</h3>
+                    <ul>
+                        <li><strong>Variété à l'échelle de la ville :</strong> quatre présets couvrant Classiques de Montréal, Saveurs internationales, Favoris de food truck et Sélections de quartier.</li>
+                        <li><strong>Saveur montréalaise :</strong> chaque option reflète les plats authentiques et les ambiances de quartier de Montréal.</li>
+                        <li><strong>Décision rapide :</strong> un seul tour vous donne une direction gourmande sans hésitation.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table des matières</h3>
+                <ol>
+                    <li><a href="#what-is-montreal-food-wheel">Qu'est-ce que Montreal Food Wheel ?</a></li>
+                    <li><a href="#who-should-use-montreal-food-wheel">Qui devrait utiliser cette roue ?</a></li>
+                    <li><a href="#how-montreal-food-wheel-works">Comment ça marche ?</a></li>
+                    <li><a href="#montreal-food-wheel-features">Caractéristiques</a></li>
+                    <li><a href="#montreal-food-wheel-categories">Catégories alimentaires de Montréal</a></li>
+                    <li><a href="#montreal-food-wheel-tips">Conseils</a></li>
+                    <li><a href="#montreal-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-montreal-food-wheel-works">Pourquoi ça marche ?</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-montreal-food-wheel">
+                <h3>1. Qu'est-ce que Montreal Food Wheel ?</h3>
+                <p>Montreal Food Wheel est un sélecteur aléatoire de restaurants et de plats créé pour la culture culinaire vibrante de la ville. Il met en valeur les plats emblématiques de Montréal — bagels, viande fumée, brunchs, food trucks et restaurants de quartier.</p>
+            </section>
+
+            <section id="who-should-use-montreal-food-wheel">
+                <h3>2. Qui devrait utiliser cette roue ?</h3>
+                <p>Les Montréalais qui veulent choisir rapidement un repas, les visiteurs qui explorent la ville et tous ceux qui sont submergés par les nombreuses excellentes options de restauration. Faites tourner et laissez Montréal choisir votre prochaine pause dégustation.</p>
+            </section>
+
+            <section id="how-montreal-food-wheel-works">
+                <h3>3. Comment ça marche ?</h3>
+                <p>Sélectionnez un préset puis appuyez sur Tourner. La roue s'arrête sur une suggestion et l'annonce. Utilisez le résultat comme une idée de repas, puis partez explorer ou commandez en ligne. Recommencez si vous souhaitez une autre option.</p>
+            </section>
+
+            <section id="montreal-food-wheel-features">
+                <h3>4. Caractéristiques</h3>
+                <ul>
+                    <li><strong>Quatre présets :</strong> Classiques de Montréal, Saveurs internationales, Favoris de food truck, et Sélections de quartier.</li>
+                    <li><strong>Choix montréalais réels :</strong> chaque élément est ancré dans la scène culinaire de la ville.</li>
+                    <li><strong>Roue mobile :</strong> tourne en douceur sur téléphones, tablettes et ordinateurs.</li>
+                    <li><strong>Résultat instantané :</strong> le gagnant s'affiche clairement après chaque tour.</li>
+                    <li><strong>Couleurs personnalisables :</strong> utilisez Local Brand Studio pour thématiser la roue aux palettes de Montréal.</li>
+                </ul>
+            </section>
+
+            <section id="montreal-food-wheel-categories">
+                <h3>5. Catégories alimentaires de Montréal</h3>
+                <p><strong>Classiques de Montréal</strong> couvre les plats emblématiques de la ville — bagels de Montréal, sandwichs à la viande fumée, poutine, steamés, crêpes au sirop d'érable, tourtière, croissants et brunch French toast. <strong>Saveurs internationales</strong> reflète la scène gastronomique mondiale de Montréal — café St Viateur, pho, brunch au Mile End, sushi, salade grecque, tacos, curry indien et pâtes italiennes. <strong>Favoris de food truck</strong> met en avant la street food et les marchés — poutine de food truck, frites de rue, BeaverTail, bánh mì, crêpes, kebab, hot dogs garnis et bols végétariens. <strong>Sélections de quartier</strong> indique les quartiers à découvrir — cafés du Plateau, fruits de mer du Vieux-Montréal, pizza de la Petite Italie, brunch de Griffintown, tapas du Quartier Latin, épicerie d'Outremont, bistros de Westmount et burgers de Verdun.</p>
+            </section>
+
+            <section id="montreal-food-wheel-tips">
+                <h3>6. Conseils</h3>
+                <p>Choisissez Classiques de Montréal pour un repas réconfortant, Saveurs internationales pour des saveurs du monde, Favoris de food truck pour un repas décontracté et Sélections de quartier pour explorer un quartier particulier. Ajoutez vos restaurants préférés de Montréal pour une roue personnalisée.</p>
+            </section>
+
+            <section id="montreal-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>Pour un sélecteur de repas plus large, essayez <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. Si vous voulez une route par type de cuisine, testez les roues Indian, Chinese ou Japanese food. Besoin d'un accord boisson ? Essayez <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-montreal-food-wheel-works">
+                <h3>8. Pourquoi ça marche ?</h3>
+                <p>La scène culinaire de Montréal mêle influence française, classiques québécois et saveurs internationales. Cette abondance rend le choix difficile, et cette roue la transforme en une décision rapide et ludique.</p>
+            </section>
+        </section>
+    </main>
+
+    <script src="/assets/js/wheel-engine.js"></script>
+    <script>
+  FoodWheelEngine.init({
+    canvasSelector: "#wheel",
+    spinButtonSelector: "#spinBtn",
+    winnerSelector: "#winner",
+    presetButtonSelector: ".preset-btn",
+    defaultItems: ['Montreal Bagel', 'Smoked Meat Sandwich', 'Poutine', 'Steamé', 'Maple Crepe', 'Tourtière', 'Croissant', 'Brunch French Toast'],
+    resultFormatter: function (selectedItem) {
+      return `🥖 Montreal dit : <span style="color: var(--montreal-red); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+    }
+  });
+</script>
