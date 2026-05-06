@@ -24,6 +24,30 @@ var defaultSegmentColors = [
     });
   }
 
+  function wrapCanvasText(ctx, text, maxWidth) {
+    var words = String(text).split(' ');
+    var lines = [];
+    var currentLine = '';
+
+    words.forEach(function (word) {
+      var testLine = currentLine ? currentLine + ' ' + word : word;
+      var testWidth = ctx.measureText(testLine).width;
+
+      if (testWidth <= maxWidth || !currentLine) {
+        currentLine = testLine;
+      } else {
+        lines.push(currentLine);
+        currentLine = word;
+      }
+    });
+
+    if (currentLine) {
+      lines.push(currentLine);
+    }
+
+    return lines;
+  }
+
   function getSegmentColors() {
     return getDefaultSegmentColors();
   }
@@ -72,11 +96,25 @@ var defaultSegmentColors = [
       ctx.translate(radius, radius);
       ctx.rotate(angle + angleStep / 2);
       ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
       ctx.fillStyle = '#fff';
-      ctx.font = 'bold 16px Nunito, Arial';
       ctx.shadowColor = 'rgba(0,0,0,0.5)';
       ctx.shadowBlur = 4;
-      ctx.fillText(item, radius - 16, 6);
+
+      var maxTextWidth = radius * 0.55;
+      ctx.font = 'bold 16px Nunito, Arial';
+      var lines = wrapCanvasText(ctx, item, maxTextWidth);
+      if (lines.length > 2) {
+        ctx.font = 'bold 14px Nunito, Arial';
+        lines = wrapCanvasText(ctx, item, maxTextWidth);
+      }
+      var lineHeight = 18;
+      var startY = -((lines.length - 1) * lineHeight) / 2;
+
+      lines.forEach(function (line) {
+        ctx.fillText(line, radius - 16, startY);
+        startY += lineHeight;
+      });
       ctx.restore();
     });
 
