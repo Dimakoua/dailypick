@@ -117,15 +117,32 @@ headExtra: |
     </main>
     <script src="/assets/js/wheel-engine.js"></script>
     <script>
-      FoodWheelEngine.init({
-        canvasSelector: '#wheel',
-        spinButtonSelector: '#spinBtn',
-        winnerSelector: '#winner',
-        defaultItems: ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'],
-        resultFormatter: function (selectedItem) {
-          return '🎉 ' + selectedItem + ' is next to speak!';
-        },
-        enableCanvasClick: true,
-        removeAfterSelection: true
-      });
+      (function () {
+        var DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
+        var roster = DEFAULT_NAMES;
+
+        try {
+          var stored = localStorage.getItem('namesList');
+          if (stored) {
+            var parsed = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.length) {
+              roster = parsed;
+            }
+          }
+        } catch (e) {
+          roster = DEFAULT_NAMES;
+        }
+
+        FoodWheelEngine.init({
+          canvasSelector: '#wheel',
+          spinButtonSelector: '#spinBtn',
+          winnerSelector: '#winner',
+          defaultItems: roster,
+          resultFormatter: function (selectedItem) {
+            return '🎉 ' + selectedItem + ' is next to speak!';
+          },
+          enableCanvasClick: true,
+          removeAfterSelection: true
+        });
+      })();
     </script>
