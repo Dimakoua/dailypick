@@ -1,0 +1,210 @@
+---
+layout: base_app.njk
+title: "Miami Food Wheel – Random Miami Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide where to eat in Miami? Spin the wheel for Cuban sandwiches, seafood, Latin street food, and South Beach dining picks."
+keywords: "Miami food wheel, Miami restaurant picker, what to eat in Miami, Miami cuisine spinner, Miami food guide, where to eat Miami"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-miami/"
+localBrandConfig: /apps/what-should-i-eat-miami/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Sunshine cravings — what are you eating?</p>
+            <h1>🌴 Miami Food Wheel</h1>
+            <p>From Cuban to ceviche, from Wynwood bites to South Beach brunch, spin the wheel and let Miami choose your next meal.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Cuban Sandwich,Stone Crab,Empanadas,Key Lime Pie,Ceviche,Plantain Chips,Chicken and Waffles,Arepas">☀️ Miami Classics</button>
+            <button class="preset-btn" data-items="Caribbean Jerk,Peruvian Lomo Saltado,Brazilian Feijoada,Mexican Tacos,Argentinian Steak,Cuban Ropa Vieja,Haitian Griot,Colombian Bandeja">🌍 International Eats</button>
+            <button class="preset-btn" data-items="Food Truck Tacos,Street Corn,Loaded Fries,Seafood Rolls,Shawarma,Dragon Fruit Smoothie,Poke Bowl,Gelato">🚚 Food Truck Favorites</button>
+            <button class="preset-btn" data-items="South Beach Brunch,Brickell Sushi,Little Havana Café,Wynwood Pizza,Coral Gables Seafood,Design District Salad,Midtown Burger,Key Biscayne Café">🏙️ Neighbourhood Picks</button>
+        </div>
+
+        <button id="spinBtn">🌴 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Miami Food Wheel: Random Restaurant & Dish Picker for the Magic City</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Miami Food Wheel takes the guesswork out of dining in the Magic City. From Cuban classics and Latin street food to beachside brunch and Wynwood eats, spin once and get a ready-to-eat Miami suggestion.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>City-wide variety:</strong> Four presets covering Miami Classics, International Eats, Food Truck Favorites, and Neighbourhood Picks.</li>
+                        <li><strong>Real Miami food:</strong> Every item is inspired by the city’s restaurant and street food scene.</li>
+                        <li><strong>Instant pick:</strong> One spin gives you a delicious direction without scrolling menus.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-miami-food-wheel">What is the Miami Food Wheel?</a></li>
+                    <li><a href="#who-should-use-miami-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-miami-food-wheel-works">How it works</a></li>
+                    <li><a href="#miami-food-wheel-features">Features</a></li>
+                    <li><a href="#miami-food-wheel-categories">Miami food categories</a></li>
+                    <li><a href="#miami-food-wheel-tips">Tips</a></li>
+                    <li><a href="#miami-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-miami-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-miami-food-wheel">
+                <h3>1. What is the Miami Food Wheel?</h3>
+                <p>Miami Food Wheel is a random restaurant and dish picker built for the city’s tropical food scene. It features iconic Miami eats, Latin-inspired dishes, beachside flavors, and neighbourhood restaurant picks.</p>
+            </section>
+
+            <section id="who-should-use-miami-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Miami locals who want a fast meal choice, visitors exploring the city, and anyone overwhelmed by Miami’s many dining options. Spin and let Miami choose the next tasty stop.</p>
+            </section>
+
+            <section id="how-miami-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Pick a preset then hit Spin. The wheel lands on a suggestion and announces it. Use it as a meal prompt, then head out or order in. Spin again if you want a second Miami idea.</p>
+            </section>
+
+            <section id="miami-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> Miami Classics, International Eats, Food Truck Favorites, and Neighbourhood Picks.</li>
+                    <li><strong>Real Miami picks:</strong> Every item reflects the city’s vibrant food culture.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>Instant result:</strong> Winner appears clearly after each spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel in Miami palettes.</li>
+                </ul>
+            </section>
+
+            <section id="miami-food-wheel-categories">
+                <h3>5. Miami food categories</h3>
+                <p><strong>Miami Classics</strong> covers the city’s signature dishes — Cuban sandwiches, stone crab, empanadas, key lime pie, ceviche, plantain chips, chicken and waffles, and arepas. <strong>International Eats</strong> reflects Miami’s Latin and global dining scene — Caribbean jerk, Peruvian lomo saltado, Brazilian feijoada, Mexican tacos, Argentinian steak, Cuban ropa vieja, Haitian griot, and Colombian bandeja. <strong>Food Truck Favorites</strong> highlights Miami’s market eats — food truck tacos, street corn, loaded fries, seafood rolls, shawarma, dragon fruit smoothies, poke bowls, and gelato. <strong>Neighbourhood Picks</strong> points to city districts — South Beach brunch, Brickell sushi, Little Havana café, Wynwood pizza, Coral Gables seafood, Design District salad, Midtown burger, and Key Biscayne café.</p>
+            </section>
+
+            <section id="miami-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Choose Miami Classics for the city’s signature flavors, International Eats for Latin and global dishes, Food Truck Favorites for casual market bites, and Neighbourhood Picks when you want to explore a part of the city. Personalize with your favorite Miami spots for a custom wheel.</p>
+            </section>
+
+            <section id="miami-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader food picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. If you want a cuisine-specific option, try the Indian, Chinese, or Japanese food wheels. Need a drink pairing? Try <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-miami-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Miami’s food scene blends beachside freshness with Latin energy. This wheel turns that abundance into one fast, delicious decision.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Cuban Sandwich', 'Stone Crab', 'Empanadas', 'Key Lime Pie', 'Ceviche', 'Plantain Chips', 'Chicken and Waffles', 'Arepas'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#ff6f61',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#00a8e8',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#f2b705',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#ed1c24',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#28a745',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#f5a623',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#6b2e77',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#73503c',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🌴 Miami says: <span style="color: var(--miami-orange); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
