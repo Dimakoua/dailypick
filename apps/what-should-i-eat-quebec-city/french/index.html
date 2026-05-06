@@ -1,0 +1,127 @@
+---
+layout: base_app.njk
+title: "Québec City Food Wheel – Sélecteur aléatoire de restaurants et plats de Québec | Daily Pick"
+description: "Vous ne savez pas quoi manger à Québec? Faites tourner la roue pour trouver de la poutine, de la tourtière, de la viande fumée et des choix gastronomiques du Vieux-Québec."
+keywords: "roue alimentaire Québec, sélectionneur de restaurants Québec, quoi manger à Québec, roue nourriture Québec, guide gastronomique Québec"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-quebec-city/french/"
+localBrandConfig: /apps/wheel/local-brand-config.js
+headExtra: |
+  <link href="/apps/what-should-i-eat-quebec-city/style.css" rel="stylesheet" />
+  <meta http-equiv="Content-Language" content="fr" />
+  <link rel="alternate" hreflang="en" href="https://dailypick.dev/apps/what-should-i-eat-quebec-city/" />
+  <link rel="alternate" hreflang="fr" href="https://dailypick.dev/apps/what-should-i-eat-quebec-city/french/" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Bonjour from la ville — que mangez-vous?</p>
+            <h1>🥖 Québec City Food Wheel</h1>
+            <p>De la poutine et de la tourtière aux cafés du Petit-Champlain, faites tourner la roue et laissez Québec choisir votre prochain repas.</p>
+            <p>Cette page est disponible en français. Revenir à la version anglaise : <a href="/apps/what-should-i-eat-quebec-city/">Québec City Food Wheel</a>.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Poutine,Tourtière,Sandwich à la viande fumée,Crêpe au sirop d'érable,Soupe aux pois,Cretons,Porc braisé,Croissant">🇨🇦 Classiques de Québec</button>
+            <button class="preset-btn" data-items="Brunch du Vieux-Québec,Latté au café,Chaudrée de fruits de mer,Assiette de charcuterie,Soupe à l'oignon,Une raclette,Steak frites,Beignet au cidre">🍷 Bistro & Brunch</button>
+            <button class="preset-btn" data-items="Poutine de camion-cantine,Tacos de rue,Hot dog,Frites garnies,Grilled cheese,Bol asiatique,Rouleau de sushi,Bol végétarien">🚚 Street & Market Eats</button>
+            <button class="preset-btn" data-items="Café Petit-Champlain,Pizza Saint-Roch,Bistro Montcalm,Fruits de mer du Vieux-Port,Pizzeria Beaupré,Burgers Sainte-Foy,Tacos Cap-Blanc,Desserts La Cité">🏙️ Sélections de quartier</button>
+        </div>
+
+        <button id="spinBtn">🥖 TOURNEZ POUR MANGER !</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Québec City Food Wheel : Sélecteur aléatoire de restaurants et plats pour le Vieux-Québec</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Québec City Food Wheel vous aide à choisir un repas dans une ville pleine de charme historique et de cuisine réconfortante. Faites tourner la roue une fois pour découvrir un classique local, une bouchée de marché ou un repas de café au bord du Saint-Laurent.</p>
+                </div>
+                <div>
+                    <h3>Pourquoi cette roue aide</h3>
+                    <ul>
+                        <li><strong>Variété à l'échelle de la ville :</strong> Quatre présets couvrant Classiques de Québec, Bistro & Brunch, Street & Market Eats et Sélections de quartier.</li>
+                        <li><strong>Saveur locale :</strong> Chaque option reflète la culture culinaire authentique de Québec et le dining du Vieux-Québec.</li>
+                        <li><strong>Décision rapide :</strong> Un tour suffit pour vous donner une direction locale délicieuse sans être submergé.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table des matières</h3>
+                <ol>
+                    <li><a href="#what-is-quebec-city-food-wheel">Qu'est-ce que Québec City Food Wheel ?</a></li>
+                    <li><a href="#who-should-use-quebec-city-food-wheel">Qui devrait utiliser cette roue ?</a></li>
+                    <li><a href="#how-quebec-city-food-wheel-works">Comment ça marche ?</a></li>
+                    <li><a href="#quebec-city-food-wheel-features">Caractéristiques</a></li>
+                    <li><a href="#quebec-city-food-wheel-categories">Catégories alimentaires de Québec</a></li>
+                    <li><a href="#quebec-city-food-wheel-tips">Conseils</a></li>
+                    <li><a href="#quebec-city-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-quebec-city-food-wheel-works">Pourquoi ça marche ?</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-quebec-city-food-wheel">
+                <h3>1. Qu'est-ce que Québec City Food Wheel ?</h3>
+                <p>Québec City Food Wheel est un sélecteur aléatoire de restaurants et de plats conçu pour le Vieux-Québec et la scène gastronomique du Saint-Laurent. Il couvre les comfort foods classiques de la ville, la culture des cafés, les bouchées de marché et les repas de quartier.</p>
+            </section>
+
+            <section id="who-should-use-quebec-city-food-wheel">
+                <h3>2. Qui devrait utiliser cette roue ?</h3>
+                <p>Les habitants qui veulent choisir rapidement un repas, les visiteurs explorant la ville historique, et tous ceux qui sont dépassés par les nombreuses options délicieuses de Québec. Faites tourner et laissez la ville choisir votre prochaine bouchée.</p>
+            </section>
+
+            <section id="how-quebec-city-food-wheel-works">
+                <h3>3. Comment ça marche ?</h3>
+                <p>Sélectionnez un préset puis appuyez sur Tourner. La roue s'arrête sur une suggestion et l'annonce. Utilisez le résultat comme une idée de repas, puis explorez le quartier ou commandez. Recommencez si vous voulez une autre option.</p>
+            </section>
+
+            <section id="quebec-city-food-wheel-features">
+                <h3>4. Caractéristiques</h3>
+                <ul>
+                    <li><strong>Quatre présets :</strong> Classiques de Québec, Bistro & Brunch, Street & Market Eats, et Sélections de quartier.</li>
+                    <li><strong>Saveurs locales :</strong> Chaque option est ancrée dans le caractère historique et culinaire de Québec.</li>
+                    <li><strong>Roulette mobile :</strong> Tourne en douceur sur téléphones, tablettes et ordinateurs.</li>
+                    <li><strong>Résultat instantané :</strong> Le gagnant s'affiche clairement après chaque tour.</li>
+                    <li><strong>Couleurs personnalisables :</strong> Utilisez Local Brand Studio pour thématiser la roue aux couleurs de Québec.</li>
+                </ul>
+            </section>
+
+            <section id="quebec-city-food-wheel-categories">
+                <h3>5. Catégories alimentaires de Québec</h3>
+                <p><strong>Classiques de Québec</strong> couvre les incontournables de la ville — poutine, tourtière, sandwich à la viande fumée, crêpe au sirop d'érable, soupe aux pois, cretons, porc braisé et croissant. <strong>Bistro & Brunch</strong> met en avant les repas de café confortables du Vieux-Québec — brunchs, lattés, chaudrée de fruits de mer, planches de charcuterie, soupe à l'oignon, raclette, steak frites et beignet au cidre. <strong>Street & Market Eats</strong> est parfait pour les bouchées décontractées — poutine de camion-cantine, tacos de rue, hot dogs, frites garnies, grilled cheese, bols asiatiques, rouleaux de sushi et bols végétariens. <strong>Sélections de quartier</strong> vous dirige vers les quartiers locaux — cafés du Petit-Champlain, pizza Saint-Roch, bistros Montcalm, fruits de mer du Vieux-Port, pizzerias Beaupré, burgers Sainte-Foy, tacos Cap-Blanc et desserts La Cité.</p>
+            </section>
+
+            <section id="quebec-city-food-wheel-tips">
+                <h3>6. Conseils</h3>
+                <p>Choisissez Classiques de Québec pour un plat réconfortant, Bistro & Brunch pour un repas de café, Street & Market Eats pour des bouchées de marché décontractées, et Sélections de quartier pour explorer un quartier précis. Personnalisez les choix avec vos restaurants locaux préférés.</p>
+            </section>
+
+            <section id="quebec-city-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>Pour un sélectionneur de repas plus large, essayez <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. Si vous voulez une route par type de cuisine, testez les roues Indian, Chinese ou Japanese food. Besoin d'un accord boisson ? Essayez <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-quebec-city-food-wheel-works">
+                <h3>8. Pourquoi ça marche ?</h3>
+                <p>Québec combine la cuisine d'inspiration française avec le comfort food québécois copieux. Ce mélange rend le choix difficile, et cette roue le transforme en une décision rapide et ludique.</p>
+            </section>
+        </section>
+    </main>
+
+    <script src="/assets/js/wheel-engine.js"></script>
+    <script>
+  FoodWheelEngine.init({
+    canvasSelector: "#wheel",
+    spinButtonSelector: "#spinBtn",
+    winnerSelector: "#winner",
+    presetButtonSelector: ".preset-btn",
+    defaultItems: ['Poutine', 'Tourtière', 'Smoked Meat Sandwich', 'Maple Crepe', 'Pea Soup', 'Cretons', 'Braised Pork', 'Croissant'],
+    resultFormatter: function (selectedItem) {
+      return `🥖 Québec City dit : <span style="color: var(--quebec-city-red); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+    }
+  });
+</script>
