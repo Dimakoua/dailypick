@@ -1,0 +1,210 @@
+---
+layout: base_app.njk
+title: "Shanghai Food Wheel – Random Shanghai Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide what to eat in Shanghai? Spin the wheel for Shanghainese favorites, street snacks, and Shanghai dining ideas."
+keywords: "Shanghai food wheel, Shanghai restaurant picker, what to eat in Shanghai, Shanghai cuisine spinner, Shanghainese food guide, where to eat Shanghai"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-shanghai/"
+localBrandConfig: /apps/what-should-i-eat-shanghai/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">River city meals and night market bites — what are you eating?</p>
+            <h1>🍜 Shanghai Food Wheel</h1>
+            <p>From xiaolongbao and shengjian to hairy crab and river fish, spin the wheel and let Shanghai choose your next meal.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Xiaolongbao,Shengjian Mantou,Hairy Crab,Drunken Chicken,Red-braised Pork,Shrimp Soup,Scallion Pancake,Sweet Soup Dumplings">🌆 Shanghai Classics</button>
+            <button class="preset-btn" data-items="Shanghai Noodles,Shanghai Fried Rice,Spicy Hot Pot,Mapo Tofu,Gong Bao Chicken,Kung Pao Shrimp,Hot & Sour Soup,Tea-Smoked Duck">🍲 Chinese Favorites</button>
+            <button class="preset-btn" data-items="Street Skewers,Stinky Tofu,Bubble Tea,Egg Tart,Lotus Leaf Rice,Peking Duck,Japanese Sushi,Thai Curry">🍜 Street & Global Eats</button>
+            <button class="preset-btn" data-items="Bund Seafood,French Concession Café,High Tea Pastries,Modern Bistro Salad,Shikumen Burger,Basil Chicken,Seafood Platter,Vegetable Dumplings">🏙️ City Dining</button>
+        </div>
+
+        <button id="spinBtn">🍜 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Shanghai Food Wheel: Random Restaurant & Dish Picker for the Pearl of the Orient</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Shanghai Food Wheel turns the city’s legendary food scene into one easy choice. From classic Shanghainese dishes and street snacks to global restaurant favorites, spin once and discover your next Shanghai meal.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>City-wide variety:</strong> Four presets covering Shanghai Classics, Chinese Favorites, Street & Global Eats, and City Dining.</li>
+                        <li><strong>Real Shanghai picks:</strong> Every item reflects the city’s modern dining scene and traditional cuisine.</li>
+                        <li><strong>Instant decision:</strong> One spin gives you a tasty direction without overthinking your meal.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-shanghai-food-wheel">What is the Shanghai Food Wheel?</a></li>
+                    <li><a href="#who-should-use-shanghai-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-shanghai-food-wheel-works">How it works</a></li>
+                    <li><a href="#shanghai-food-wheel-features">Features</a></li>
+                    <li><a href="#shanghai-food-wheel-categories">Shanghai food categories</a></li>
+                    <li><a href="#shanghai-food-wheel-tips">Tips</a></li>
+                    <li><a href="#shanghai-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-shanghai-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-shanghai-food-wheel">
+                <h3>1. What is the Shanghai Food Wheel?</h3>
+                <p>Shanghai Food Wheel is a meal picker built for the city’s cosmopolitan and traditional food culture. It combines Shanghai classics, Chinese favorites, and international eats into one playful decision tool.</p>
+            </section>
+
+            <section id="who-should-use-shanghai-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Shanghai locals choosing a meal, visitors exploring the city’s food scene, and anyone looking to simplify dining choices. Spin for a fresh Shanghai food idea.</p>
+            </section>
+
+            <section id="how-shanghai-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Select a preset then press Spin. The wheel lands on a suggestion and reveals it clearly. Use the result as a meal prompt, then enjoy. Spin again if you want another option.</p>
+            </section>
+
+            <section id="shanghai-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> Shanghai Classics, Chinese Favorites, Street & Global Eats, and City Dining.</li>
+                    <li><strong>Real Shanghai picks:</strong> Every item reflects the city’s historic cuisine and modern restaurants.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>Instant result:</strong> Winner appears clearly after each spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel with Shanghai-inspired tones.</li>
+                </ul>
+            </section>
+
+            <section id="shanghai-food-wheel-categories">
+                <h3>5. Shanghai food categories</h3>
+                <p><strong>Shanghai Classics</strong> includes xiaolongbao, shengjian, hairy crab, drunken chicken, red-braised pork, and sweet soup dumplings. <strong>Chinese Favorites</strong> covers beloved flavors like mapo tofu, kung pao, hot pot, and tea-smoked duck. <strong>Street & Global Eats</strong> highlights market snacks, fusion dishes, and popular international meals. <strong>City Dining</strong> points to Shanghai’s upscale restaurants, cafés, and riverfront dining.</p>
+            </section>
+
+            <section id="shanghai-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Choose Shanghai Classics for local specialties, Chinese Favorites for well-known Chinese dishes, Street & Global Eats for a mix of market food and international options, and City Dining for restaurant-style meals. Add your favorite Shanghai restaurants to personalize the wheel.</p>
+            </section>
+
+            <section id="shanghai-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader meal picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. If you want a cuisine-specific route, try the Chinese or street-food wheels. Need a drink pairing? Try <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-shanghai-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Shanghai blends historic culinary tradition with modern global dining. This wheel simplifies the city’s dining abundance into one fast, fun decision.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Xiaolongbao', 'Shengjian Mantou', 'Hairy Crab', 'Drunken Chicken', 'Red-braised Pork', 'Shrimp Soup', 'Scallion Pancake', 'Sweet Soup Dumplings'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#c0392b',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#d35400',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#2980b9',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#f39c12',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#8e44ad',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#2c3e50',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#ecf0f1',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#27ae60',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🍜 Shanghai says: <span style="color: var(--shanghai-blue); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
