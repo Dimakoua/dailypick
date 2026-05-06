@@ -1,0 +1,210 @@
+---
+layout: base_app.njk
+title: "Mumbai Food Wheel – Random Mumbai Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide where to eat in Mumbai? Spin the wheel for street food, local favorites, and Mumbai dining ideas."
+keywords: "Mumbai food wheel, Mumbai restaurant picker, what to eat in Mumbai, Mumbai cuisine spinner, where to eat Mumbai"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-mumbai/"
+localBrandConfig: /apps/what-should-i-eat-mumbai/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Spice, street food, and city flavor — what are you eating?</p>
+            <h1>🌶️ Mumbai Food Wheel</h1>
+            <p>From vada pav and pav bhaji to biryani and seafood, spin the wheel and let Mumbai choose your next meal.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Vada Pav,Pav Bhaji,Bombay Sandwich,Misal Pav,Bombil Fry,Kebabs,Bhel Puri,Mumbai Biryani">🌆 Street Classics</button>
+            <button class="preset-btn" data-items="Seafood Thali,Prawn Curry,Crab Masala,Fish Fry,Rice & Curry,Thalipeeth,Chicken Kheema,Matka Biryani">🦐 Coastal Eats</button>
+            <button class="preset-btn" data-items="Pav Bhaji,Chicken Frankie,Usal Pav,Kanda Poha,Malai Kulfi,Gulab Jamun,Masala Chai,Chuski">🍛 Local Favorites</button>
+            <button class="preset-btn" data-items="South Indian Dosa,Chinese Schezwan,Italian Pizza,Japanese Sushi,Mughlai Kebabs,Middle Eastern Shawarma,Continental Burger,BBQ Ribs">🌍 Global Mumbai</button>
+        </div>
+
+        <button id="spinBtn">🌶️ SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Mumbai Food Wheel: Random Restaurant & Dish Picker for the City of Dreams</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Mumbai Food Wheel turns the city’s vibrant street food and restaurant scene into one quick choice. From local vada pav and bhaji to coastal seafood and global dining, spin once and discover your next Mumbai meal.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>City-wide variety:</strong> Four presets covering Street Classics, Coastal Eats, Local Favorites, and Global Mumbai.</li>
+                        <li><strong>Real Mumbai picks:</strong> Every item reflects the city’s iconic food culture and local dining scene.</li>
+                        <li><strong>Instant decision:</strong> One spin gives you a tasty direction without overthinking your meal.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-mumbai-food-wheel">What is the Mumbai Food Wheel?</a></li>
+                    <li><a href="#who-should-use-mumbai-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-mumbai-food-wheel-works">How it works</a></li>
+                    <li><a href="#mumbai-food-wheel-features">Features</a></li>
+                    <li><a href="#mumbai-food-wheel-categories">Mumbai food categories</a></li>
+                    <li><a href="#mumbai-food-wheel-tips">Tips</a></li>
+                    <li><a href="#mumbai-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-mumbai-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-mumbai-food-wheel">
+                <h3>1. What is the Mumbai Food Wheel?</h3>
+                <p>Mumbai Food Wheel is a random meal picker built around the city’s legendary street food and restaurant scene. It blends local dishes, coastal favorites, and global flavors into one fun Mumbai dining decision tool.</p>
+            </section>
+
+            <section id="who-should-use-mumbai-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Mumbai locals wanting a quick meal decision, visitors exploring the city’s food culture, and anyone overwhelmed by the city’s endless dining options. Spin to get a fresh Mumbai food suggestion.</p>
+            </section>
+
+            <section id="how-mumbai-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Select a preset then hit Spin. The wheel lands on a suggestion and reveals it clearly. Use the result as a meal prompt, then head out or order in. Spin again if you want another option.</p>
+            </section>
+
+            <section id="mumbai-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> Street Classics, Coastal Eats, Local Favorites, and Global Mumbai.</li>
+                    <li><strong>Real Mumbai picks:</strong> Every item reflects the city’s food culture and iconic dining moments.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>Instant result:</strong> Winner appears clearly after each spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel with Mumbai-inspired tones.</li>
+                </ul>
+            </section>
+
+            <section id="mumbai-food-wheel-categories">
+                <h3>5. Mumbai food categories</h3>
+                <p><strong>Street Classics</strong> covers the city’s iconic snacks — vada pav, pav bhaji, Bombay sandwich, misal pav, bombil fry, kebabs, bhel puri, and biryani. <strong>Coastal Eats</strong> reflects Mumbai’s seafood heritage — prawn curry, crab masala, fish fry, seafood thali, and matka biryani. <strong>Local Favorites</strong> includes regional staples like frankies, poha, kulfi, gulab jamun, masala chai, and chuski. <strong>Global Mumbai</strong> captures the city’s international dining scene with dosa, Chinese schezwan, Italian pizza, sushi, kebabs, shawarma, burgers, and BBQ ribs.</p>
+            </section>
+
+            <section id="mumbai-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Choose Street Classics for local flavor, Coastal Eats for seafood, Local Favorites for snacks and sweets, and Global Mumbai for international variety. Add your favorite Mumbai restaurants to personalize the wheel even more.</p>
+            </section>
+
+            <section id="mumbai-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader meal picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. If you want a cuisine-specific route, use the Indian food wheel or the street-food wheel. Need a drink pairing? Try <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-mumbai-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Mumbai blends street food, coastal dining, and global cuisine into one incredible food city. This wheel simplifies the decision by turning the city’s best meal ideas into one fast, fun spin.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Vada Pav', 'Pav Bhaji', 'Bombay Sandwich', 'Misal Pav', 'Bombil Fry', 'Kebabs', 'Bhel Puri', 'Mumbai Biryani'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#d35400',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#c0392b',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#f1c40f',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#27ae60',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#2980b9',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#8e44ad',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#2c3e50',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#d35400',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🌶️ Mumbai says: <span style="color: var(--mumbai-gold); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
