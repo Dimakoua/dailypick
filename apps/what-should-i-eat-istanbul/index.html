@@ -1,0 +1,210 @@
+---
+layout: base_app.njk
+title: "Istanbul Food Wheel – Random Istanbul Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide what to eat in Istanbul? Spin the wheel for Turkish favorites, street food, and Istanbul dining ideas."
+keywords: "Istanbul food wheel, Istanbul restaurant picker, what to eat in Istanbul, Istanbul cuisine spinner, Turkish food guide, where to eat Istanbul"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-istanbul/"
+localBrandConfig: /apps/what-should-i-eat-istanbul/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">From simit to kebab — what are you eating?</p>
+            <h1>🍢 Istanbul Food Wheel</h1>
+            <p>Spin the wheel and let Istanbul choose your next meal, from Turkish street food to classic Bosphorus dining.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Simit,Döner Kebab,Pide,Lahmacun,Baklava,Turkish Tea,Menemen,Stuffed Grape Leaves">🇹🇷 Classic Turkish</button>
+            <button class="preset-btn" data-items="Balık Ekmek,Meze Platter,Manti,Iskender Kebab,Turkish Coffee,Çay,Kunefe,Tavuk Şiş">🌊 Bosphorus & Street Eats</button>
+            <button class="preset-btn" data-items="Baklava,Köfte,Grilled Eggplant,Turkish Pizza,Seafood Platter,Meatball Wrap,Pilav,Spinach Borek">🍴 Local Favorites</button>
+            <button class="preset-btn" data-items="Mediterranean Salad,Italian Pasta,Japanese Sushi,Middle Eastern Shawarma,German Sausage,Greek Mezze,Smoothie Bowl,Brunch Toast">🌍 Global Istanbul</button>
+        </div>
+
+        <button id="spinBtn">🍢 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Istanbul Food Wheel: Random Restaurant & Dish Picker for the City on Two Continents</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Istanbul Food Wheel turns the city’s eclectic food scene into one quick choice. From Turkish street favorites and Bosphorus seafood to global restaurants, spin once and discover your next Istanbul meal.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>City-wide variety:</strong> Four presets covering Classic Turkish, Bosphorus & Street Eats, Local Favorites, and Global Istanbul.</li>
+                        <li><strong>Real Istanbul picks:</strong> Every item reflects the city’s rich culinary culture.</li>
+                        <li><strong>Instant decision:</strong> One spin gives you a tasty direction without overthinking your meal.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-istanbul-food-wheel">What is the Istanbul Food Wheel?</a></li>
+                    <li><a href="#who-should-use-istanbul-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-istanbul-food-wheel-works">How it works</a></li>
+                    <li><a href="#istanbul-food-wheel-features">Features</a></li>
+                    <li><a href="#istanbul-food-wheel-categories">Istanbul food categories</a></li>
+                    <li><a href="#istanbul-food-wheel-tips">Tips</a></li>
+                    <li><a href="#istanbul-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-istanbul-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-istanbul-food-wheel">
+                <h3>1. What is the Istanbul Food Wheel?</h3>
+                <p>Istanbul Food Wheel is a random meal picker built for the city’s unique mix of Turkish tradition and global flavors. It blends street food, classic dishes, and international options into one playful decision tool.</p>
+            </section>
+
+            <section id="who-should-use-istanbul-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Istanbul visitors exploring the city, locals choosing a meal, and anyone overwhelmed by the city’s diverse dining scene. Spin to get a fresh Istanbul food idea.</p>
+            </section>
+
+            <section id="how-istanbul-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Pick a preset then hit Spin. The wheel lands on a suggestion and reveals it clearly. Use the result as a meal prompt, then enjoy. Spin again if you want another option.</p>
+            </section>
+
+            <section id="istanbul-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> Classic Turkish, Bosphorus & Street Eats, Local Favorites, and Global Istanbul.</li>
+                    <li><strong>Real Istanbul picks:</strong> Every item reflects the city’s culinary identity.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>Instant result:</strong> Winner appears clearly after each spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel with Istanbul-inspired tones.</li>
+                </ul>
+            </section>
+
+            <section id="istanbul-food-wheel-categories">
+                <h3>5. Istanbul food categories</h3>
+                <p><strong>Classic Turkish</strong> includes simit, döner, pide, lahmacun, baklava, Turkish tea, menemen, and stuffed grape leaves. <strong>Bosphorus & Street Eats</strong> captures seafood sandwiches, meze, manti, iskender, and tea-house favorites. <strong>Local Favorites</strong> highlights roast goose, claypot rice, and local snacks. <strong>Global Istanbul</strong> points to the city’s thriving international dining scene.</p>
+            </section>
+
+            <section id="istanbul-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Choose Classic Turkish for traditional dishes, Bosphorus & Street Eats for local and coastal picks, Local Favorites for beloved Istanbul meals, and Global Istanbul for international flavor. Add your favorite Istanbul restaurants to personalize the wheel.</p>
+            </section>
+
+            <section id="istanbul-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader meal picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. If you want cuisine-specific direction, try the Turkish or street-food wheels. Need a drink pairing? Try <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-istanbul-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Istanbul blends centuries of food tradition with global culinary influence. This wheel simplifies the city’s choice overload into one fast, fun decision.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Simit', 'Döner Kebab', 'Pide', 'Lahmacun', 'Baklava', 'Turkish Tea', 'Menemen', 'Stuffed Grape Leaves'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#e67e22',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#c0392b',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#f1c40f',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#2980b9',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#27ae60',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#8e44ad',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#2c3e50',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#d35400',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🍢 Istanbul says: <span style="color: var(--istanbul-gold); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
