@@ -1,0 +1,129 @@
+---
+layout: base_app.njk
+title: "Nueva York Food Wheel – Selector aleatorio de restaurantes y platos de NYC | Daily Pick"
+description: "¿No sabes qué comer en Nueva York? Gira la rueda para encontrar clásicos de NYC, comida callejera icónica, bocados de los barrios y selecciones gastronómicas de clase mundial."
+keywords: "rueda de comida Nueva York, selector de restaurantes NYC, qué comer en Nueva York, NYC food spinner, guía gastronómica de Nueva York"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-new-york/spanish/"
+localBrandConfig: /apps/wheel/local-brand-config.js
+headExtra: |
+  <link href="/apps/what-should-i-eat-new-york/style.css" rel="stylesheet" />
+  <meta http-equiv="Content-Language" content="es" />
+  <link rel="alternate" hreflang="en" href="https://dailypick.dev/apps/what-should-i-eat-new-york/" />
+  <link rel="alternate" hreflang="es" href="https://dailypick.dev/apps/what-should-i-eat-new-york/spanish/" />
+  <link rel="alternate" hreflang="hi" href="https://dailypick.dev/apps/what-should-i-eat-new-york/hindi/" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://dailypick.dev/apps/what-should-i-eat-new-york/mandarin/" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">La ciudad que nunca duerme — ¿qué vas a comer?</p>
+            <h1>🗽 Rueda de Comida de Nueva York</h1>
+            <p>Desde una porción de pizza por un dólar hasta un pastrami de Katz's, desde dumplings en Chinatown hasta un banquete de soul food en Harlem — ¡gira y deja que la ciudad decida!</p>
+            <p>Esta página está disponible en español. Volver a la versión en inglés: <a href="/apps/what-should-i-eat-new-york/">New York Food Wheel</a>. También disponible en <a href="/apps/what-should-i-eat-new-york/hindi/">हिंदी संस्करण</a> y <a href="/apps/what-should-i-eat-new-york/mandarin/">中文版本</a>.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Porción de Pizza de NYC,Pastrami en Rye,Bagel con Salmón y Queso Crema,Tarta de Queso,Hot Dog,Ala de Búfalo,Cronut,Galleta Blanco y Negro">🗽 Iconos de NYC</button>
+            <button class="preset-btn" data-items="Steakhouse,Sushi Omakase,Bistró Francés,Bar de Ostras,Menú de Degustación,Tapas de Bar en la Azotea,Aperitivos de Speakeasy,Cena en Club de Jazz">🌃 Restaurante en Manhattan</button>
+            <button class="preset-btn" data-items="Dumplings de Chinatown,Sopa de Dumplings de Flushing,Biryani en Jackson Heights,Tacos en East Harlem,Pasta en Arthur Avenue,Tacos en Sunset Park,Borscht en Brighton Beach,Pollo Jerk en Flatbush">🌍 Bocados de los Barrios</button>
+            <button class="preset-btn" data-items="Pollo y Arroz de Carrito Halal,Porción de Pizza por un Dólar,Knish,Pretzel Suave,Hot Dog de Agua Sucia,Sándwich de Huevo y Queso de Bodega,Sándwich de Deli,Elote Callejero">🚕 Comida Callejera</button>
+        </div>
+
+        <button id="spinBtn">🗽 ¡GIRA PARA COMER!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Rueda de Comida de Nueva York: selector aleatorio de restaurantes y platos para NYC</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>La Rueda de Comida de Nueva York simplifica las infinitas opciones gastronómicas de la ciudad y elige algo delicioso para ti. Desde la icónica porción de pizza de Nueva York vendida por una ventana y el pastrami de Katz's Deli en rye, hasta los dumplings de sopa de Flushing, el pollo con arroz del carrito halal y el biryani de Jackson Heights — esta rueda cubre todo lo que hace de NYC la mejor ciudad para comer.</p>
+                </div>
+                <div>
+                    <h3>Por qué esta rueda ayuda</h3>
+                    <ul>
+                        <li><strong>Variedad entre barrios:</strong> cuatro preajustes que abarcan iconos de NYC, restaurante en Manhattan, bocados de los barrios y comida callejera.</li>
+                        <li><strong>Comida real de NYC:</strong> cada elemento representa un plato, un estilo de restaurante o un clásico del vecindario en la escena gastronómica de Nueva York.</li>
+                        <li><strong>Selección instantánea:</strong> no más parálisis por demasiadas opciones en Yelp y Google Maps — una sola vuelta, una comida, ¡a comer!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Tabla de contenidos</h3>
+                <ol>
+                    <li><a href="#what-is-nyc-food-wheel">¿Qué es la Rueda de Comida de Nueva York?</a></li>
+                    <li><a href="#who-should-use-nyc-food-wheel">¿Quién debería usarla?</a></li>
+                    <li><a href="#how-nyc-food-wheel-works">¿Cómo funciona?</a></li>
+                    <li><a href="#nyc-food-wheel-features">Características</a></li>
+                    <li><a href="#nyc-food-wheel-categories">Categorías de comida de NYC</a></li>
+                    <li><a href="#nyc-food-wheel-tips">Consejos</a></li>
+                    <li><a href="#nyc-food-wheel-alternatives">Alternativas</a></li>
+                    <li><a href="#why-nyc-food-wheel-works">¿Por qué funciona?</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-nyc-food-wheel">
+                <h3>1. ¿Qué es la Rueda de Comida de Nueva York?</h3>
+                <p>La Rueda de Comida de Nueva York es un selector aleatorio de restaurantes y platos construido alrededor de la escena gastronómica real de NYC. Cubre la identidad culinaria de la ciudad — desde la legendaria porción de pizza y el pastrami en rye que definen la cultura gastronómica de Nueva York, hasta los barrios de inmigrantes en los cinco distritos que han convertido a la ciudad en uno de los lugares más extraordinarios para comer en el planeta.</p>
+            </section>
+
+            <section id="who-should-use-nyc-food-wheel">
+                <h3>2. ¿Quién debería usarla?</h3>
+                <p>Neoyorquinos que no pueden elegir entre mil excelentes opciones, turistas que buscan experimentar la escena gastronómica icónica de la ciudad y cualquiera que haya estado en Midtown o el Village completamente atascado por demasiadas buenas elecciones. Gira, camina, come.</p>
+            </section>
+
+            <section id="how-nyc-food-wheel-works">
+                <h3>3. ¿Cómo funciona?</h3>
+                <p>Elige uno de los cuatro preajustes y luego presiona el botón Girar. La rueda se detiene en una opción y la anuncia. Úsala como una sugerencia de categoría, luego encuentra el mejor lugar cerca de ti para ese plato o estilo. Si la elección está en el barrio equivocado, vuelve a girar.</p>
+            </section>
+
+            <section id="nyc-food-wheel-features">
+                <h3>4. Características</h3>
+                <ul>
+                    <li><strong>Cuatro preajustes de la ciudad:</strong> iconos de NYC, restaurante en Manhattan, bocados de los barrios y comida callejera.</li>
+                    <li><strong>Selecciones reales de NYC:</strong> cada opción está anclada en una tradición gastronómica, barrio o institución icónica de Nueva York.</li>
+                    <li><strong>Rueda compatible con móviles:</strong> gira suavemente en teléfonos, tabletas y escritorios — ideal para decidir sobre la marcha.</li>
+                    <li><strong>Resultado instantáneo:</strong> el ganador se muestra claramente después de cada giro para que puedas actuar rápidamente.</li>
+                    <li><strong>Colores personalizables:</strong> usa Local Brand Studio para tematizar la rueda con el dorado del taxi amarillo de NYC o los colores del mapa del metro.</li>
+                </ul>
+            </section>
+
+            <section id="nyc-food-wheel-categories">
+                <h3>5. Categorías de comida de NYC</h3>
+                <p><strong>Iconos de NYC</strong> incluye los platos que definen la ciudad — la porción de pizza por un dólar, el pastrami en rye de Katz's, el bagel con salmón y queso crema, la tarta de queso de Nueva York, el hot dog de carrito, las alas de búfalo, el Cronut de Dominique Ansel y la galleta blanco y negro. <strong>Restaurante en Manhattan</strong> refleja la escena gastronómica de clase mundial de la ciudad — steakhouses en Meatpacking District, sushi omakase en West Village, bistrós franceses en Upper East Side, bares de ostras en Midtown, cenas de menú de degustación y bocados en bares de azotea. <strong>Bocados de los barrios</strong> es NYC en su forma más auténtica — dumplings de Chinatown en Mott Street, sopa de dumplings de Flushing, biryani de Jackson Heights, tacos de East Harlem, pasta en Arthur Avenue en el Bronx, tacos de Sunset Park en Brooklyn, borscht de Brighton Beach y pollo jerk de Flatbush. <strong>Comida callejera</strong> es el corazón palpitante de la comida de NYC — pollo con arroz del carrito halal, la porción de pizza por un dólar, un knish, un pretzel suave, un hot dog de agua sucia, un sándwich de huevo y queso de bodega y un sándwich de deli bien cargado.</p>
+            </section>
+
+            <section id="nyc-food-wheel-tips">
+                <h3>6. Consejos</h3>
+                <p>Usa Iconos de NYC para una comida clásica de lista de deseos turística, Bocados de los Barrios cuando quieras comer como un verdadero neoyorquino, Restaurante en Manhattan para una ocasión especial o una cena con gastos pagados, y Comida Callejera cuando quieras algo rápido, barato y profundamente satisfactorio. Agrega tus propios lugares favoritos de NYC para una rueda totalmente personalizada.</p>
+            </section>
+
+            <section id="nyc-food-wheel-alternatives">
+                <h3>7. Alternativas</h3>
+                <p>Para un selector de comida global más amplio, prueba <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. Si estás decidiendo entre cocinas, profundiza con <a href="/apps/what-should-i-eat-chinese/">Chinese Food Wheel</a>, <a href="/apps/what-should-i-eat-indian/">Indian Food Wheel</a> o <a href="/apps/what-should-i-eat-colombian/">Colombian Food Wheel</a>. ¿Buscas otra rueda de ciudad? Prueba la <a href="/apps/what-should-i-eat-toronto/">Toronto Food Wheel</a>. Para elegir una bebida que acompañe tu comida, <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a> te ayuda.</p>
+            </section>
+
+            <section id="why-nyc-food-wheel-works">
+                <h3>8. ¿Por qué funciona?</h3>
+                <p>Nueva York tiene más restaurantes que cualquier otra ciudad de Estados Unidos y una diversidad cultural que pone comida de todos los rincones del mundo a un viaje en metro. Esa riqueza es precisamente lo que vuelve difícil elegir. Esta rueda convierte los mejores momentos gastronómicos de la ciudad en una decisión rápida y divertida. Una vuelta, una comida — ¡vamos a comer!</p>
+            </section>
+        </section>
+    </main>
+
+    <script src="/assets/js/wheel-engine.js"></script>
+    <script>
+  FoodWheelEngine.init({
+    canvasSelector: "#wheel",
+    spinButtonSelector: "#spinBtn",
+    winnerSelector: "#winner",
+    presetButtonSelector: ".preset-btn",
+    defaultItems: ['NY Pizza Slice', 'Pastrami on Rye', 'Bagel with Lox', 'Cheesecake', 'Hot Dog', 'Buffalo Wings', 'Cronut', 'Black & White Cookie'],
+    resultFormatter: function (selectedItem) {
+      return `🗽 NYC dice: <span style="color: var(--nyc-blue); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+    }
+  });
+</script>

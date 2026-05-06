@@ -1,0 +1,129 @@
+---
+layout: base_app.njk
+title: "न्यूयॉर्क फूड व्हील – रैंडम NYC रेस्टोरेंट और डिश पिकर | Daily Pick"
+description: "न्यूयॉर्क में क्या खाना है यह तय नहीं कर पा रहे? NYC क्लासिक्स, प्रतिष्ठित स्ट्रीट फूड, बरो बाइट्स और विश्व स्तरीय भोजन के लिए व्हील घुमाएँ।"
+keywords: "न्यूयॉर्क फूड व्हील, NYC रेस्टोरेंट पिकर, न्यूयॉर्क में क्या खाएं, NYC फूड स्पिनर, न्यूयॉर्क सिटी व्यंजन, कहां खाएं NYC"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-new-york/hindi/"
+localBrandConfig: /apps/wheel/local-brand-config.js
+headExtra: |
+  <link href="/apps/what-should-i-eat-new-york/style.css" rel="stylesheet" />
+  <meta http-equiv="Content-Language" content="hi" />
+  <link rel="alternate" hreflang="en" href="https://dailypick.dev/apps/what-should-i-eat-new-york/" />
+  <link rel="alternate" hreflang="es" href="https://dailypick.dev/apps/what-should-i-eat-new-york/spanish/" />
+  <link rel="alternate" hreflang="hi" href="https://dailypick.dev/apps/what-should-i-eat-new-york/hindi/" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://dailypick.dev/apps/what-should-i-eat-new-york/mandarin/" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">जो शहर कभी नहीं सोता — आप क्या खाने वाले हैं?</p>
+            <h1>🗽 न्यूयॉर्क फूड व्हील</h1>
+            <p>दोलर की पिज़्ज़ा स्लाइस से लेकर कैट्ज़ का पासट्रामी, चाइना टाउन के डंपलिंग से लेकर हार्लेम के सोल फ़ूड तक — व्हील घुमाएँ और शहर को फैसला करने दें!</p>
+            <p>यह पेज हिंदी में उपलब्ध है। अंग्रेज़ी संस्करण पर वापस जाएँ: <a href="/apps/what-should-i-eat-new-york/">New York Food Wheel</a>। यह <a href="/apps/what-should-i-eat-new-york/spanish/">Español</a> और <a href="/apps/what-should-i-eat-new-york/mandarin/">中文版本</a> में भी उपलब्ध है।</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="NY Pizza Slice,Pastrami on Rye,Bagel with Lox,Cheesecake,Hot Dog,Buffalo Wings,Cronut,Black & White Cookie">🗽 NYC आइकॉन्स</button>
+            <button class="preset-btn" data-items="Steakhouse,Sushi Omakase,French Bistro,Oyster Bar,Tasting Menu,Rooftop Bar Bites,Speakeasy Snacks,Jazz Club Supper">🌃 मैनहैटन डाइनिंग</button>
+            <button class="preset-btn" data-items="Chinatown Dumplings,Flushing Soup Dumplings,Jackson Heights Biryani,East Harlem Tacos,Arthur Avenue Pasta,Sunset Park Tacos,Brighton Beach Borscht,Flatbush Jerk Chicken">🌍 बरो बाइट्स</button>
+            <button class="preset-btn" data-items="Halal Cart Rice & Chicken,Dollar Slice,Knish,Soft Pretzel,Dirty Water Hot Dog,Egg & Cheese Bodega Sandwich,Deli Sandwich,Street Corn">🚕 स्ट्रीट फूड</button>
+        </div>
+
+        <button id="spinBtn">🗽 खाने के लिए घुमाएँ!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>न्यूयॉर्क फूड व्हील: NYC के लिए रैंडम रेस्टोरेंट और डिश पिकर</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>न्यूयॉर्क फूड व्हील शहर की अनंत खाने-पीने की विकल्पों को कम करके आपके लिए कुछ स्वादिष्ट चुनती है। न्यूयॉर्क पिज़्ज़ा स्लाइस, कैट्ज़ के डिल में पासट्रामी ऑन राय, फ्लशिंग के सूप डंपलिंग्स, हलाल कार्ट चिकन-ओवर-राइस और जैकसन हाइट्स बिरयानी — यह व्हील उस सबको कवर करता है जो NYC को दुनिया का सबसे महान भोजन शहर बनाता है।</p>
+                </div>
+                <div>
+                    <h3>यह व्हील क्यों मदद करता है</h3>
+                    <ul>
+                        <li><strong>बरो भर विविधता:</strong> NYC आइकॉन्स, मैनहैटन डाइनिंग, बरो बाइट्स, और स्ट्रीट फूड को कवर करने वाले चार प्रीसेट।</li>
+                        <li><strong>असली NYC खाना:</strong> हर आइटम एक डिश, रेस्टोरेंट स्टाइल या स्थानीय पड़ोस क्लासिक का प्रतिनिधित्व करता है।</li>
+                        <li><strong>तुरंत पिक:</strong> Yelp और Google Maps पर बहुत अधिक विकल्पों के कारण निर्णय जाम नहीं—एक घुमाव, एक खाना, चलो खाएं!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>सामग्री तालिका</h3>
+                <ol>
+                    <li><a href="#what-is-nyc-food-wheel">न्यूयॉर्क फूड व्हील क्या है?</a></li>
+                    <li><a href="#who-should-use-nyc-food-wheel">किसे यह उपयोग करना चाहिए?</a></li>
+                    <li><a href="#how-nyc-food-wheel-works">यह कैसे काम करता है?</a></li>
+                    <li><a href="#nyc-food-wheel-features">फीचर्स</a></li>
+                    <li><a href="#nyc-food-wheel-categories">NYC खाने की श्रेणियाँ</a></li>
+                    <li><a href="#nyc-food-wheel-tips">टिप्स</a></li>
+                    <li><a href="#nyc-food-wheel-alternatives">विकल्प</a></li>
+                    <li><a href="#why-nyc-food-wheel-works">यह क्यों काम करता है?</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-nyc-food-wheel">
+                <h3>1. न्यूयॉर्क फूड व्हील क्या है?</h3>
+                <p>न्यूयॉर्क फूड व्हील एक रैंडम रेस्टोरेंट और डिश पिकर है जो असली NYC डाइनिंग सीन के आधार पर बनाया गया है। यह शहर की पाक पहचान को कवर करता है—न्यूयॉर्क की प्रतिष्ठित पिज़्ज़ा स्लाइस और पासट्रामी ऑन राय से लेकर उन इमिग्रेंट पड़ोसों तक जिन्होंने शहर को ग्रह पर खाने के लिए सबसे असाधारण स्थानों में से एक बना दिया है।</p>
+            </section>
+
+            <section id="who-should-use-nyc-food-wheel">
+                <h3>2. किसे यह उपयोग करना चाहिए?</h3>
+                <p>वे न्यूयॉर्कर जो हजारों उत्कृष्ट विकल्पों में चयन नहीं कर पा रहे, वह पर्यटक जो शहर की प्रतिष्ठित खाद्य संस्कृति का अनुभव करना चाहते हैं, और कोई भी जो मिडटाउन या द विलेज में बहुत सारी अच्छी विकल्पों से चकरा गया हो। घुमाएँ, चलें, खाएँ।</p>
+            </section>
+
+            <section id="how-nyc-food-wheel-works">
+                <h3>3. यह कैसे काम करता है?</h3>
+                <p>चार प्रीसेट में से एक चुनें और फिर स्पिन बटन दबाएँ। व्हील एक विकल्प पर रुककर उसे घोषित करता है। इसे एक श्रेणी संकेत के रूप में उपयोग करें, फिर उस डिश या शैली के लिए आपके पास के सर्वश्रेष्ठ स्थान को ढूंढें। अगर चयन गलत बरो में है, तो फिर से घुमाएँ।</p>
+            </section>
+
+            <section id="nyc-food-wheel-features">
+                <h3>4. फीचर्स</h3>
+                <ul>
+                    <li><strong>चार शहर प्रीसेट:</strong> NYC आइकॉन्स, मैनहैटन डाइनिंग, बरो बाइट्स, और स्ट्रीट फूड।</li>
+                    <li><strong>असली NYC चयन:</strong> हर विकल्प न्यूयॉर्क की भोजन परंपरा, पड़ोस या प्रतिष्ठित संस्थान से जुड़ा है।</li>
+                    <li><strong>मोबाइल-फ्रेंडली व्हील:</strong> फोन, टैबलेट और डेस्कटॉप पर चिकनी घूमत है — चलते-फिरते निर्णय लेने के लिए आदर्श।</li>
+                    <li><strong>तुरंत परिणाम:</strong> हर स्पिन के बाद विजेता स्पष्ट रूप से प्रदर्शित होता है ताकि आप जल्दी से कार्रवाई कर सकें।</li>
+                    <li><strong>रंग अनुकूलन:</strong> स्थानीय ब्रांड स्टूडियो का उपयोग करके व्हील को NYC के येलो टैक्सी गोल्ड या सबवे मैप रंगों से थीम करें।</li>
+                </ul>
+            </section>
+
+            <section id="nyc-food-wheel-categories">
+                <h3>5. NYC खाने की श्रेणियाँ</h3>
+                <p><strong>NYC आइकॉन्स</strong> उन व्यंजनों को कवर करता है जो शहर को परिभाषित करते हैं — डॉलर पिज़्ज़ा स्लाइस, कैट्ज़ के पासट्रामी ऑन राय, लॉक्स के साथ बैगल और क्रीम चीज़, न्यूयॉर्क चीज़केक, हॉट डॉग, बफ़ेलो विंग्स, डोमिनिक अंसल का क्रोनट, और ब्लैक & व्हाइट कुकी। <strong>मैनहैटन डाइनिंग</strong> शहर के वर्ल्ड-क्लास रेस्टोरेंट दृश्य को दर्शाता है — मीटपैकिंग डिस्ट्रिक्ट के स्टीकहाउस, वेस्ट विलेज में सुशी ओमाकासे, अपर ईस्ट साइड में फ्रेंच बिस्टरो, मिडटाउन में ऑयस्टर बार, टेस्टिंग मेनू डिनर, और रूफटॉप बार बाइट्स। <strong>बरो बाइट्स</strong> NYC को उसकी सबसे प्रामाणिक स्थिति में प्रस्तुत करता है — चाइना टाउन में मॉट स्ट्रीट के डंपलिंग्स, फ्लशिंग की सूप डंपलिंग्स, जैकसन हाईट्स की बिरयानी, ईस्ट हार्लेम के टैकोस, ब्रोंक्स में आर्थर एवेन्यू की पास्ता, ब्रुकलिन में सनसेट पार्क के टैकोस, ब्राइटन बीच का बोरश्ट, और फ्लैटबश की जर्क चिकन। <strong>स्ट्रीट फूड</strong> NYC खाने के दिल की धड़कन है — हलाल कार्ट चिकन-ओवर-राइस, डॉलर स्लाइस, निश्च, सॉफ्ट प्रेट्ज़ेल, डर्टी वॉटर हॉट डॉग, अंडा और चीज़ बodega सैंडविच, डेली सैंडविच, और स्ट्रीट कॉर्न।</p>
+            </section>
+
+            <section id="nyc-food-wheel-tips">
+                <h3>6. टिप्स</h3>
+                <p>टूरिस्ट बकेट लिस्ट भोजन के लिए NYC आइकॉन्स का उपयोग करें, असली न्यूयॉर्कर की तरह खाने के लिए बरो बाइट्स चुनें, कोई विशेष अवसर या खर्च खाता डिनर के लिए मैनहैटन डाइनिंग, और कुछ तेज, सस्ता, और गहराई से संतोषजनक चाहने पर स्ट्रीट फूड। अपने पसंदीदा NYC स्पॉट जोड़कर पूरी तरह से व्यक्तिगत व्हील बनाएं।</p>
+            </section>
+
+            <section id="nyc-food-wheel-alternatives">
+                <h3>7. विकल्प</h3>
+                <p>अधिक व्यापक ग्लोबल फूड पिकर के लिए <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a> आज़माएँ। अगर आप किचन के बीच निर्णय ले रहे हैं, तो <a href="/apps/what-should-i-eat-chinese/">Chinese Food Wheel</a>, <a href="/apps/what-should-i-eat-indian/">Indian Food Wheel</a>, या <a href="/apps/what-should-i-eat-colombian/">Colombian Food Wheel</a> के साथ और गहराई से पता लगाएँ। एक और शहर व्हील की तलाश है? <a href="/apps/what-should-i-eat-toronto/">Toronto Food Wheel</a> आज़माएँ। अपने भोजन के साथ पेय चुनने के लिए, <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a> आपकी मदद करेगा।</p>
+            </section>
+
+            <section id="why-nyc-food-wheel-works">
+                <h3>8. यह क्यों काम करता है?</h3>
+                <p>न्यूयॉर्क में अमेरिका के किसी भी अन्य शहर की तुलना में अधिक रेस्तरां हैं, और इसकी सांस्कृतिक विविधता हर कोने से भोजन को एक सबवे की सवारी पर ला देती है। यही समृद्धि चयन को कठिन बनाती है। यह व्हील शहर के सर्वश्रेष्ठ खाद्य क्षणों को एक तेज, मजेदार निर्णय में बदल देती है। एक स्पिन, एक भोजन — चलो खाते हैं!</p>
+            </section>
+        </section>
+    </main>
+
+    <script src="/assets/js/wheel-engine.js"></script>
+    <script>
+  FoodWheelEngine.init({
+    canvasSelector: "#wheel",
+    spinButtonSelector: "#spinBtn",
+    winnerSelector: "#winner",
+    presetButtonSelector: ".preset-btn",
+    defaultItems: ['NY Pizza Slice', 'Pastrami on Rye', 'Bagel with Lox', 'Cheesecake', 'Hot Dog', 'Buffalo Wings', 'Cronut', 'Black & White Cookie'],
+    resultFormatter: function (selectedItem) {
+      return `🗽 NYC कहता है: <span style="color: var(--nyc-blue); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+    }
+  });
+</script>

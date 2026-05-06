@@ -1,0 +1,129 @@
+---
+layout: base_app.njk
+title: "纽约美食转盘 – 随机纽约餐厅与美食选择器 | Daily Pick"
+description: "还在犹豫纽约吃什么？旋转转盘，找到纽约经典、标志性街头小吃、各区美味和世界级餐饮选择。"
+keywords: "纽约美食转盘, 纽约餐厅选择器, 在纽约吃什么, NYC 美食转盘, 纽约美食指南"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-new-york/mandarin/"
+localBrandConfig: /apps/wheel/local-brand-config.js
+headExtra: |
+  <link href="/apps/what-should-i-eat-new-york/style.css" rel="stylesheet" />
+  <meta http-equiv="Content-Language" content="zh-Hans" />
+  <link rel="alternate" hreflang="en" href="https://dailypick.dev/apps/what-should-i-eat-new-york/" />
+  <link rel="alternate" hreflang="es" href="https://dailypick.dev/apps/what-should-i-eat-new-york/spanish/" />
+  <link rel="alternate" hreflang="hi" href="https://dailypick.dev/apps/what-should-i-eat-new-york/hindi/" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://dailypick.dev/apps/what-should-i-eat-new-york/mandarin/" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">这座城市永不眠——你今晚想吃什么？</p>
+            <h1>🗽 纽约美食转盘</h1>
+            <p>从一块美元披萨到卡茨熏牛肉，从唐人街小笼包到哈莱姆灵魂美食——旋转一下，让城市帮你做决定！</p>
+            <p>此页面提供中文版本。返回英文版：<a href="/apps/what-should-i-eat-new-york/">New York Food Wheel</a>。</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="NY Pizza Slice,Pastrami on Rye,Bagel with Lox,Cheesecake,Hot Dog,Buffalo Wings,Cronut,Black & White Cookie">🗽 纽约经典</button>
+            <button class="preset-btn" data-items="Steakhouse,Sushi Omakase,French Bistro,Oyster Bar,Tasting Menu,Rooftop Bar Bites,Speakeasy Snacks,Jazz Club Supper">🌃 曼哈顿美食</button>
+            <button class="preset-btn" data-items="Chinatown Dumplings,Flushing Soup Dumplings,Jackson Heights Biryani,East Harlem Tacos,Arthur Avenue Pasta,Sunset Park Tacos,Brighton Beach Borscht,Flatbush Jerk Chicken">🌍 区域美味</button>
+            <button class="preset-btn" data-items="Halal Cart Rice & Chicken,Dollar Slice,Knish,Soft Pretzel,Dirty Water Hot Dog,Egg & Cheese Bodega Sandwich,Deli Sandwich,Street Corn">🚕 街头小吃</button>
+        </div>
+
+        <button id="spinBtn">🗽 旋转开始吃！</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>纽约美食转盘：为 NYC 提供随机餐厅与美食选择</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>纽约美食转盘帮你从城市无数餐饮选择中快速筛选出美味。无论是窗口售卖的经典纽约披萨、卡茨的熏牛肉三明治，还是法拉盛的小笼汤包、清真车的鸡肉饭、杰克逊高地的印度香饭——这款转盘覆盖了让纽约成为全球最顶级美食城市的一切。 </p>
+                </div>
+                <div>
+                    <h3>这个转盘为什么有用</h3>
+                    <ul>
+                        <li><strong>全城多样：</strong>四个预设涵盖纽约经典、曼哈顿美食、区域美味和街头小吃。</li>
+                        <li><strong>真实 NYC 口味：</strong>每一个选项都源自纽约真实的菜品、餐厅风格或社区经典。</li>
+                        <li><strong>即时出结果：</strong>无需在 Yelp 或 Google Maps 上犹豫太久——一转盘，一个美食，马上出发！</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>目录</h3>
+                <ol>
+                    <li><a href="#what-is-nyc-food-wheel">什么是纽约美食转盘？</a></li>
+                    <li><a href="#who-should-use-nyc-food-wheel">谁应该使用？</a></li>
+                    <li><a href="#how-nyc-food-wheel-works">它如何运作？</a></li>
+                    <li><a href="#nyc-food-wheel-features">特点</a></li>
+                    <li><a href="#nyc-food-wheel-categories">纽约美食类别</a></li>
+                    <li><a href="#nyc-food-wheel-tips">小贴士</a></li>
+                    <li><a href="#nyc-food-wheel-alternatives">其他选择</a></li>
+                    <li><a href="#why-nyc-food-wheel-works">为什么它有效？</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-nyc-food-wheel">
+                <h3>1. 什么是纽约美食转盘？</h3>
+                <p>纽约美食转盘是基于真实纽约餐饮场景打造的随机餐厅和菜品选择工具。它覆盖城市的美食身份——从标志性的披萨片和熏牛肉三明治，到让纽约成为全球最惊艳美食城市之一的移民社区。 </p>
+            </section>
+
+            <section id="who-should-use-nyc-food-wheel">
+                <h3>2. 谁应该使用？</h3>
+                <p>适合在众多优质选择中犹豫不决的纽约人、想体验城市标志性美食的游客，以及在中城或绿地村被太多好选择难住的人。旋转、出发、吃起来。 </p>
+            </section>
+
+            <section id="how-nyc-food-wheel-works">
+                <h3>3. 它如何运作？</h3>
+                <p>选择四个预设之一，然后点击“旋转”。转盘停在一个选项上并显示结果。把它当作一个类别提示，然后在你附近找到该菜品或风格的最佳地点。如果所选在不适合的区，再次旋转。 </p>
+            </section>
+
+            <section id="nyc-food-wheel-features">
+                <h3>4. 特点</h3>
+                <ul>
+                    <li><strong>四个城市预设：</strong>纽约经典、曼哈顿美食、区域美味和街头小吃。</li>
+                    <li><strong>真实纽约选择：</strong>每个菜单项都扎根于纽约真实的美食传统、社区或标志性餐厅。</li>
+                    <li><strong>手机友好：</strong>在手机、平板和桌面上顺畅旋转，适合随时随地快速决定吃什么。</li>
+                    <li><strong>结果清晰：</strong>每次旋转后清晰显示赢家，方便你快速行动。</li>
+                    <li><strong>颜色可定制：</strong>使用本地品牌工作室，为转盘设置纽约黄色出租车金或地铁地图配色。</li>
+                </ul>
+            </section>
+
+            <section id="nyc-food-wheel-categories">
+                <h3>5. 纽约美食类别</h3>
+                <p><strong>纽约经典</strong>包含定义这座城市的菜品——美元披萨、卡茨的熏牛肉三明治、烟熏三文鱼奶油芝士贝果、纽约芝士蛋糕、热狗、布法罗鸡翅、克罗纳特和黑白曲奇。 <strong>曼哈顿美食</strong>反映了城市的世界级餐饮场景——肉类包装区的牛排馆、西村的寿司大赏、上东区的法式小酒馆、中城的生蚝吧、品鉴菜单晚餐和屋顶酒吧小吃。 <strong>区域美味</strong>呈现纽约最地道的一面——唐人街的饺子、法拉盛的小笼汤包、杰克逊高地的印度香饭、东哈莱姆的玉米饼、布朗克斯的亚瑟大道意面、布鲁克林日落公园的玉米饼、布莱顿海滩的罗宋汤和弗拉茨布什的牙买加烤鸡。 <strong>街头小吃</strong>是纽约美食的心跳——清真车鸡肉饭、美元披萨、克尼什、软椒盐卷饼、脏水热狗、便利店鸡蛋奶酪三明治、熟食店三明治和街头玉米。 </p>
+            </section>
+
+            <section id="nyc-food-wheel-tips">
+                <h3>6. 小贴士</h3>
+                <p>想体验旅游清单经典时选“纽约经典”，想像真正纽约人一样吃时选“区域美味”，想要特殊场合或报销晚餐时选“曼哈顿美食”，想要快捷、便宜、满足感强时选“街头小吃”。添加你自己的纽约最爱，让转盘更加个性化。 </p>
+            </section>
+
+            <section id="nyc-food-wheel-alternatives">
+                <h3>7. 其他选择</h3>
+                <p>想要更广泛的全球美食选择，请试试 <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>。如果你在不同菜系间犹豫，可以深入查看 <a href="/apps/what-should-i-eat-chinese/">Chinese Food Wheel</a>、<a href="/apps/what-should-i-eat-indian/">Indian Food Wheel</a> 或 <a href="/apps/what-should-i-eat-colombian/">Colombian Food Wheel</a>。想要另一座城市的美食转盘？试试 <a href="/apps/what-should-i-eat-toronto/">Toronto Food Wheel</a>。如果你想配饮料，可使用 <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>。 </p>
+            </section>
+
+            <section id="why-nyc-food-wheel-works">
+                <h3>8. 为什么它有效？</h3>
+                <p>纽约拥有比美国任何其他城市更多的餐厅，其文化多样性让世界各地的食物都能搭乘地铁抵达。这种丰富性正是让选择变难的原因。这个转盘把城市最好的美食瞬间转化为一个快速、有趣的决定。一转盘，一顿饭——开始吃吧！ </p>
+            </section>
+        </section>
+    </main>
+
+    <script src="/assets/js/wheel-engine.js"></script>
+    <script>
+  FoodWheelEngine.init({
+    canvasSelector: "#wheel",
+    spinButtonSelector: "#spinBtn",
+    winnerSelector: "#winner",
+    presetButtonSelector: ".preset-btn",
+    defaultItems: ['NY Pizza Slice', 'Pastrami on Rye', 'Bagel with Lox', 'Cheesecake', 'Hot Dog', 'Buffalo Wings', 'Cronut', 'Black & White Cookie'],
+    resultFormatter: function (selectedItem) {
+      return `🗽 NYC 说：<span style="color: var(--nyc-blue); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+    }
+  });
+</script>
