@@ -308,9 +308,9 @@
     sectionsContainer.className = 'local-brand-studio-sections';
 
     const sectionDefinitions = [
-      { id: 'page', title: 'Page Colors', open: true },
+      { id: 'page', title: 'Page Colors', open: false },
       { id: 'wheel', title: 'Wheel Colors', open: false },
-      { id: 'behavior', title: 'Wheel Behavior', open: false },
+      { id: 'behavior', title: 'Wheel Behavior', open: true },
       { id: 'other', title: 'Other Settings', open: false },
     ];
 
