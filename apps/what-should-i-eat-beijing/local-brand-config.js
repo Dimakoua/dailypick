@@ -1,8 +1,8 @@
 /**
  * Beijing Food Wheel - Local Brand Studio Configuration
  *
- * Allows customizing wheel segment colors and UI colors specific to the
- * Beijing Food Wheel. Include this script BEFORE local-brand-studio.js loads.
+ * Allows customizing wheel segment colors and wheel behavior settings specific
+ * to the Beijing Food Wheel. Include this script BEFORE local-brand-studio.js loads.
  */
 
 (() => {
@@ -85,6 +85,36 @@
         type: 'color',
         description: 'Color for the winner dish display',
         default: 'inherited',
+      },
+      spinSpeed: {
+        label: 'Spin Speed',
+        type: 'number',
+        description: 'How fast the wheel animation runs',
+        default: 1,
+        min: 0.25,
+        max: 5,
+        step: 0.25,
+      },
+      spinRounds: {
+        label: 'Spin Rounds',
+        type: 'number',
+        description: 'Full wheel revolutions before landing',
+        default: 5,
+        min: 1,
+        max: 12,
+        step: 1,
+      },
+      showPopupResult: {
+        label: 'Result Popup',
+        type: 'boolean',
+        description: 'Show the winning item in a popup when the wheel stops',
+        default: false,
+      },
+      enableConfetti: {
+        label: 'Confetti',
+        type: 'boolean',
+        description: 'Show confetti after the wheel lands',
+        default: false,
       },
     },
     cssVarMap: {

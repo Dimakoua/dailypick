@@ -189,11 +189,13 @@
   /**
    * Get current value from either local config or CSS variable
    */
-  function getCurrentValue(propertyKey) {
-    if (localBrandConfig[propertyKey]) {
+  function getCurrentValue(propertyKey, config = {}) {
+    if (localBrandConfig[propertyKey] !== undefined) {
       return localBrandConfig[propertyKey];
     }
-    // Fall back to current CSS variable value
+    if (config.default !== undefined) {
+      return config.default;
+    }
     const cssVar = cssVarMap[propertyKey];
     if (cssVar) {
       return getComputedStyle(document.documentElement).getPropertyValue(cssVar).trim() || 'inherited';
@@ -319,17 +321,36 @@
     if (config.type === 'color') {
       input = document.createElement('input');
       input.id = `local-brand-${propertyKey}`;
-      input.className = 'local-brand-studio-color-input';
+      input.className = 'local-brand-studio-color-input local-brand-studio-input';
       input.type = 'color';
-      input.value = normalizeColorToHex(getCurrentValue(propertyKey));
+      input.value = normalizeColorToHex(getCurrentValue(propertyKey, config));
       input.setAttribute('title', config.description || config.label);
       input.addEventListener('input', (e) => handlePropertyChange(propertyKey, e.target.value));
+    } else if (config.type === 'number') {
+      input = document.createElement('input');
+      input.id = `local-brand-${propertyKey}`;
+      input.className = 'local-brand-studio-number-input local-brand-studio-input';
+      input.type = 'number';
+      if (config.min !== undefined) input.min = config.min;
+      if (config.max !== undefined) input.max = config.max;
+      if (config.step !== undefined) input.step = config.step;
+      input.value = getCurrentValue(propertyKey, config);
+      input.setAttribute('title', config.description || config.label);
+      input.addEventListener('change', (e) => handlePropertyChange(propertyKey, parseFloat(e.target.value)));
+    } else if (config.type === 'boolean') {
+      input = document.createElement('input');
+      input.id = `local-brand-${propertyKey}`;
+      input.className = 'local-brand-studio-checkbox-input local-brand-studio-input';
+      input.type = 'checkbox';
+      input.checked = Boolean(getCurrentValue(propertyKey, config));
+      input.setAttribute('title', config.description || config.label);
+      input.addEventListener('change', (e) => handlePropertyChange(propertyKey, e.target.checked));
     } else {
       input = document.createElement('input');
       input.id = `local-brand-${propertyKey}`;
-      input.className = 'local-brand-studio-text-input';
+      input.className = 'local-brand-studio-text-input local-brand-studio-input';
       input.type = 'text';
-      input.value = getCurrentValue(propertyKey);
+      input.value = getCurrentValue(propertyKey, config);
       input.setAttribute('title', config.description || config.label);
       input.addEventListener('change', (e) => handlePropertyChange(propertyKey, e.target.value));
     }
@@ -387,12 +408,21 @@
     applyLocalBrandConfig();
 
     // Refresh the UI to inherited/default values
-    document.querySelectorAll('.local-brand-studio-color-input, .local-brand-studio-text-input')
-      .forEach((input) => {
-        input.value = normalizeColorToHex(getCurrentValue(
-          input.id.replace('local-brand-', ''),
-        ));
-      });
+    Object.entries(customizableProperties).forEach(([propertyKey, config]) => {
+      const input = document.getElementById(`local-brand-${propertyKey}`);
+      if (!input) return;
+
+      const value = getCurrentValue(propertyKey, config);
+      if (config.type === 'color') {
+        input.value = normalizeColorToHex(value);
+      } else if (config.type === 'number') {
+        input.value = value;
+      } else if (config.type === 'boolean') {
+        input.checked = Boolean(value);
+      } else {
+        input.value = value;
+      }
+    });
   }
 
   /**

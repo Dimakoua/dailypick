@@ -201,6 +201,53 @@ var defaultSegmentColors = [
     });
   }
 
+  function parseNumber(value, fallback) {
+    if (typeof value === 'number' && !isNaN(value)) {
+      return value;
+    }
+    if (typeof value === 'string') {
+      var parsed = parseFloat(value);
+      return isNaN(parsed) ? fallback : parsed;
+    }
+    return fallback;
+  }
+
+  function parseBoolean(value, fallback) {
+    if (typeof value === 'boolean') {
+      return value;
+    }
+    if (typeof value === 'string') {
+      var normalized = value.trim().toLowerCase();
+      if (normalized === 'true') return true;
+      if (normalized === 'false') return false;
+    }
+    return fallback;
+  }
+
+  function getLocalBrandStudioConfig() {
+    if (window.LocalBrandStudio?.getConfig && typeof window.LocalBrandStudio.getConfig === 'function') {
+      return window.LocalBrandStudio.getConfig();
+    }
+    return {};
+  }
+
+  function getEffectiveOption(options, studioConfig, key, fallback, type) {
+    var value = options[key];
+    if (value === undefined) {
+      value = studioConfig[key];
+    }
+
+    if (type === 'number') {
+      return parseNumber(value, fallback);
+    }
+
+    if (type === 'boolean') {
+      return parseBoolean(value, fallback);
+    }
+
+    return value !== undefined ? value : fallback;
+  }
+
   function init(options) {
     options = options || {};
     var canvas = document.querySelector(options.canvasSelector || '#wheel');
@@ -278,12 +325,60 @@ var defaultSegmentColors = [
       pendingRemovalItem = null;
     }
 
+    function removeResultPopup() {
+      var overlay = document.querySelector('.wheel-popup-overlay');
+      if (overlay) {
+        overlay.remove();
+      }
+    }
+
+    function showResultPopup(content) {
+      removeResultPopup();
+
+      var overlay = document.createElement('div');
+      overlay.className = 'wheel-popup-overlay';
+      overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:20px;z-index:10000;background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);';
+
+      var card = document.createElement('div');
+      card.style.cssText = 'max-width:90vw;min-width:280px;padding:24px 24px 20px 24px;border-radius:24px;background:rgba(255,255,255,0.98);box-shadow:0 24px 80px rgba(0,0,0,0.18);text-align:center;position:relative;';
+
+      var contentContainer = document.createElement('div');
+      contentContainer.className = 'wheel-popup-content';
+      contentContainer.style.cssText = 'font-size:1.05rem;color:#111;line-height:1.4;';
+      contentContainer.innerHTML = content;
+
+      var closeBtn = document.createElement('button');
+      closeBtn.type = 'button';
+      closeBtn.textContent = 'Close';
+      closeBtn.style.cssText = 'margin-top:20px;padding:12px 20px;border:none;border-radius:999px;background:#222;color:#fff;cursor:pointer;font-size:1rem;';
+      closeBtn.addEventListener('click', removeResultPopup);
+
+      overlay.addEventListener('click', function (event) {
+        if (event.target === overlay) {
+          removeResultPopup();
+        }
+      });
+
+      card.appendChild(contentContainer);
+      card.appendChild(closeBtn);
+      overlay.appendChild(card);
+      document.body.appendChild(overlay);
+    }
+
     function spinWheel() {
       if (isSpinning) return;
+      removeResultPopup();
       if (removeAfterSelection) {
         removePendingItem();
       }
       if (foodItems.length === 0) return;
+
+      var studioConfig = getLocalBrandStudioConfig();
+      var spinRounds = Math.max(1, Math.round(getEffectiveOption(options, studioConfig, 'spinRounds', 5, 'number')));
+      var spinSpeedFactor = Math.max(0.25, getEffectiveOption(options, studioConfig, 'spinSpeed', 1, 'number'));
+      var showPopupResult = getEffectiveOption(options, studioConfig, 'showPopupResult', false, 'boolean');
+      var enableConfetti = getEffectiveOption(options, studioConfig, 'enableConfetti', false, 'boolean');
+
       isSpinning = true;
       hasSpun = true;
       stopIdleRotation();
@@ -292,34 +387,42 @@ var defaultSegmentColors = [
       var angleStep = (2 * Math.PI) / foodItems.length;
       var selectedIndex = Math.floor(Math.random() * foodItems.length);
       var selectedItem = foodItems[selectedIndex];
-      var fullSpins = 5;
-      var targetRotation = fullSpins * 2 * Math.PI + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+      var targetRotation = spinRounds * 2 * Math.PI + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
       var currentRotation = 0;
 
       function animate() {
         var progress = currentRotation / targetRotation;
         var easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
-        currentRotation += easeOutSpeed;
+        var step = easeOutSpeed * spinSpeedFactor;
+        currentRotation = Math.min(currentRotation + step, targetRotation);
         renderWheel(currentRotation);
 
         if (currentRotation < targetRotation) {
           requestAnimationFrame(animate);
         } else {
-          winnerElement.innerHTML = resultFormatter(selectedItem);
+          var resultHtml = resultFormatter(selectedItem);
+          winnerElement.innerHTML = resultHtml;
+          if (showPopupResult) {
+            showResultPopup(resultHtml);
+          }
           if (removeAfterSelection) {
             pendingRemovalItem = selectedItem;
           }
+          if (enableConfetti) {
+            launchConfetti(canvas);
+          }
+
           isSpinning = false;
           renderWheel(currentRotation);
           startIdleRotation();
           if (foodItems.length === 1) {
-            launchConfetti(canvas);
             setTimeout(function () {
               foodItems = normalizeItems(originalItems);
               pendingRemovalItem = null;
               hasSpun = false;
               idleRotation = 0;
               winnerElement.innerText = '';
+              removeResultPopup();
               renderWheel(0);
               startIdleRotation();
             }, 3200);
