@@ -1,15 +1,15 @@
 (function (window, document) {
   'use strict';
 
-  var defaultSegmentColors = [
-    '#da291c',
-    '#003a6b',
-    '#f2b705',
-    '#8a1538',
-    '#008c95',
-    '#4f7942',
-    '#6b2e77',
-    '#73503c'
+var defaultSegmentColors = [
+    '#FF3F81', // Vibrant Pink
+    '#FF9100', // Bright Orange
+    '#FFEA00', // Sunny Yellow
+    '#00E676', // Spring Green
+    '#00B0FF', // Sky Blue
+    '#D500F9', // Electric Purple
+    '#3D5AFE', // Royal Indigo
+    '#FF1744'  // Energetic Red
   ];
 
   function getSegmentColor(index) {
