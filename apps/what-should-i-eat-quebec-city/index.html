@@ -1,0 +1,210 @@
+---
+layout: base_app.njk
+title: "Quebec City Food Wheel – Random Quebec City Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide where to eat in Quebec City? Spin the wheel for poutine, tourtière, smoked meat, and Old Quebec dining picks."
+keywords: "Quebec City food wheel, Quebec City restaurant picker, what to eat in Quebec City, Quebec City cuisine spinner, Quebec City food guide, where to eat Quebec City"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-quebec-city/"
+localBrandConfig: /apps/what-should-i-eat-quebec-city/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Bonjour from la ville — what are you eating?</p>
+            <h1>🥖 Quebec City Food Wheel</h1>
+            <p>From poutine and tourtière to rue du Petit-Champlain cafés, spin the wheel and let Quebec City choose your next meal.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Poutine,Tourtière,Smoked Meat Sandwich,Maple Crepe,Pea Soup,Cretons,Braised Pork,Croissant">🇨🇦 Quebec Classics</button>
+            <button class="preset-btn" data-items="Old Quebec Brunch,Café Latte,Seafood Chowder,Charcuterie Plate,French Onion Soup,Raclette,Steak Frites,Cider Donut">🍷 Bistro & Brunch</button>
+            <button class="preset-btn" data-items="Food Truck Poutine,Street Tacos,Hot Dog,Loaded Fries,Grilled Cheese,Asian Bowl,Sushi Roll,Plant-Based Bowl">🚚 Street & Market Eats</button>
+            <button class="preset-btn" data-items="Petit-Champlain Café,Saint-Roch Pizza,Montcalm Bistro,Old Port Seafood,Beaupré Pizzeria,Sainte-Foy Burgers,Cap-Blanc Tacos,La Cité Desserts">🏙️ Neighbourhood Picks</button>
+        </div>
+
+        <button id="spinBtn">🥖 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Quebec City Food Wheel: Random Restaurant & Dish Picker for Old Quebec</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Quebec City Food Wheel helps you choose a meal in a city full of historic charm and hearty cuisine. Spin once to discover a local classic, a market bite, or a cafe meal by the Saint Lawrence.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>City-wide variety:</strong> Four presets covering Quebec Classics, Bistro & Brunch, Street & Market Eats, and Neighbourhood Picks.</li>
+                        <li><strong>Local flavour:</strong> Every item reflects authentic Quebec City food culture and neighbourhood dining.</li>
+                        <li><strong>Quick decision:</strong> One spin gives you a delicious local direction without the overwhelm.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-quebec-city-food-wheel">What is the Quebec City Food Wheel?</a></li>
+                    <li><a href="#who-should-use-quebec-city-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-quebec-city-food-wheel-works">How it works</a></li>
+                    <li><a href="#quebec-city-food-wheel-features">Features</a></li>
+                    <li><a href="#quebec-city-food-wheel-categories">Quebec City food categories</a></li>
+                    <li><a href="#quebec-city-food-wheel-tips">Tips</a></li>
+                    <li><a href="#quebec-city-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-quebec-city-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-quebec-city-food-wheel">
+                <h3>1. What is the Quebec City Food Wheel?</h3>
+                <p>Quebec City Food Wheel is a random restaurant and dish picker built for Old Quebec and the Saint Lawrence dining scene. It covers the city’s classic comfort food, cafe culture, market bites, and neighbourhood meals.</p>
+            </section>
+
+            <section id="who-should-use-quebec-city-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Locals who want a fast meal choice, visitors exploring the historic city, and anyone overwhelmed by Quebec City’s many delicious options. Spin and let the city pick your next bite.</p>
+            </section>
+
+            <section id="how-quebec-city-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Select a preset then hit Spin. The wheel lands on a suggestion and announces it. Use the result as a meal prompt, then explore the neighbourhood or order in. Spin again if you want another option.</p>
+            </section>
+
+            <section id="quebec-city-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> Quebec Classics, Bistro & Brunch, Street & Market Eats, and Neighbourhood Picks.</li>
+                    <li><strong>Local Quebec flavour:</strong> Every item is rooted in Quebec City’s historic and culinary character.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>Instant result:</strong> Winner is shown clearly after each spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel in Quebec City-inspired colors.</li>
+                </ul>
+            </section>
+
+            <section id="quebec-city-food-wheel-categories">
+                <h3>5. Quebec City food categories</h3>
+                <p><strong>Quebec Classics</strong> covers the city’s iconic eats — poutine, tourtière, smoked meat sandwiches, maple crepes, pea soup, cretons, braised pork, and croissants. <strong>Bistro & Brunch</strong> highlights cozy Old Quebec café meals — brunch spots, café lattes, seafood chowder, charcuterie plates, French onion soup, raclette, steak frites, and cider donuts. <strong>Street & Market Eats</strong> is great for casual bites — food truck poutine, street tacos, hot dogs, loaded fries, grilled cheese, noodle bowls, sushi rolls, and plant-based bowls. <strong>Neighbourhood Picks</strong> points to local dining districts — Petit-Champlain cafés, Saint-Roch pizza, Montcalm bistros, Old Port seafood, Beaupré pizzerias, Sainte-Foy burgers, Cap-Blanc tacos, and La Cité desserts.</p>
+            </section>
+
+            <section id="quebec-city-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Choose Quebec Classics for comfort food, Bistro & Brunch for café and bistro meals, Street & Market Eats for casual market dining, and Neighbourhood Picks when you want to explore a specific part of the city. Personalize the picks with your favourite local restaurants.</p>
+            </section>
+
+            <section id="quebec-city-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader meal picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. If you want a cuisine-specific route, try the Indian, Chinese, or Japanese food wheels. Need a drink pairing? Try <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-quebec-city-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Quebec City blends French-inspired cuisine with hearty Quebecois comfort food. That mix makes choice hard, and this wheel turns it into one fast, playful decision.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Poutine', 'Tourtière', 'Smoked Meat Sandwich', 'Maple Crepe', 'Pea Soup', 'Cretons', 'Braised Pork', 'Croissant'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#d52b1e',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#1d2951',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#f2b705',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#8a1538',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#6b4226',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#4f7942',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#6b2e77',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#73503c',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🥖 Quebec City says: <span style="color: var(--quebec-city-red); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
