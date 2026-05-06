@@ -102,99 +102,16 @@ headExtra: |
         </section>
     </main>
 
+        <script src="/assets/js/food-wheel-engine.js"></script>
     <script>
-        const canvas = document.getElementById("wheel");
-        const ctx = canvas.getContext("2d");
-        const spinBtn = document.getElementById("spinBtn");
-        const winnerDiv = document.getElementById("winner");
-        const radius = canvas.width / 2;
-
-        let items = ['Take three deep breaths', 'Drink a glass of water', 'Stretch your shoulders', 'Step outside for a minute', 'Close your eyes for 10 seconds', "Write one thing you're grateful for", 'Send a kind message', 'Slow down and breathe'];
-
-        function getSegmentColors() {
-            const style = getComputedStyle(document.documentElement);
-            return [
-                style.getPropertyValue('--wheel-segment-1').trim() || '#b8e0d2',
-                style.getPropertyValue('--wheel-segment-2').trim() || '#f6d6ad',
-                style.getPropertyValue('--wheel-segment-3').trim() || '#d6c5f2',
-                style.getPropertyValue('--wheel-segment-4').trim() || '#f7c9d9',
-                style.getPropertyValue('--wheel-segment-5').trim() || '#c5ddff',
-                style.getPropertyValue('--wheel-segment-6').trim() || '#cdeac0',
-                style.getPropertyValue('--wheel-segment-7').trim() || '#f5e8c7',
-                style.getPropertyValue('--wheel-segment-8').trim() || '#d8e7ff',
-            ];
+      FoodWheelEngine.init({
+        canvasSelector: "#wheel",
+        spinButtonSelector: "#spinBtn",
+        winnerSelector: "#winner",
+        presetButtonSelector: ".preset-btn",
+        defaultItems: ['Take three deep breaths', 'Drink a glass of water', 'Stretch your shoulders', 'Step outside for a minute', 'Close your eyes for 10 seconds', "Write one thing you're grateful for", 'Send a kind message', 'Slow down and breathe'],
+        resultFormatter: function (selectedItem) {
+          return `💚 Your self-care prompt: <span style="color: var(--self-care-accent); font-size: 2rem; display: block;">${selectedItem}</span>`;
         }
-
-        function drawWheel(items, rotationAngle = 0) {
-            const angleStep = (2 * Math.PI) / items.length;
-            const segmentColors = getSegmentColors();
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.save();
-            ctx.translate(radius, radius);
-            ctx.rotate(rotationAngle);
-            ctx.translate(-radius, -radius);
-
-            items.forEach((item, i) => {
-                const angle = i * angleStep;
-                ctx.beginPath();
-                ctx.moveTo(radius, radius);
-                ctx.arc(radius, radius, radius, angle, angle + angleStep);
-                ctx.fillStyle = segmentColors[i % segmentColors.length];
-                ctx.fill();
-
-                ctx.save();
-                ctx.translate(radius, radius);
-                ctx.rotate(angle + angleStep / 2);
-                ctx.textAlign = "right";
-                ctx.fillStyle = "#2c3e50";
-                ctx.font = "bold 14px Nunito, Arial";
-                ctx.shadowColor = "rgba(255,255,255,0.6)";
-                ctx.shadowBlur = 6;
-                ctx.fillText(item, radius - 18, 6);
-                ctx.restore();
-            });
-            ctx.restore();
-        }
-
-        let isSpinning = false;
-        function spinWheel() {
-            if (isSpinning) return;
-            isSpinning = true;
-            winnerDiv.innerText = "";
-
-            const angleStep = (2 * Math.PI) / items.length;
-            const selectedIndex = Math.floor(Math.random() * items.length);
-            const selectedItem = items[selectedIndex];
-
-            const fullSpins = 5;
-            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
-            let currentRotation = 0;
-
-            function animate() {
-                const progress = currentRotation / targetRotation;
-                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
-                currentRotation += easeOutSpeed;
-                drawWheel(items, currentRotation);
-
-                if (currentRotation < targetRotation) {
-                    requestAnimationFrame(animate);
-                } else {
-                    winnerDiv.innerHTML = `💚 Your self-care prompt: <span style="color: var(--self-care-accent); font-size: 2rem; display: block;">${selectedItem}</span>`;
-                    isSpinning = false;
-                }
-            }
-            animate();
-        }
-
-        spinBtn.addEventListener("click", spinWheel);
-
-        document.querySelectorAll('.preset-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                items = btn.dataset.items.split(',');
-                winnerDiv.innerText = "";
-                drawWheel(items);
-            });
-        });
-
-        drawWheel(items);
+      });
     </script>

@@ -108,99 +108,16 @@ headExtra: |
         </section>
     </main>
 
+        <script src="/assets/js/food-wheel-engine.js"></script>
     <script>
-        const canvas = document.getElementById("wheel");
-        const ctx = canvas.getContext("2d");
-        const spinBtn = document.getElementById("spinBtn");
-        const winnerDiv = document.getElementById("winner");
-        const radius = canvas.width / 2;
-
-        let items = ['Absolutely Yes', 'Definitely Yes', 'Yes for Sure', 'Go For It', 'This Is a Great Idea', 'Your Time Is Now', 'The Answer Is Yes', 'Full Speed Ahead'];
-
-        function getSegmentColors() {
-            const style = getComputedStyle(document.documentElement);
-            return [
-                style.getPropertyValue('--wheel-segment-1').trim() || '#ffbe76',
-                style.getPropertyValue('--wheel-segment-2').trim() || '#ff7979',
-                style.getPropertyValue('--wheel-segment-3').trim() || '#7ed6df',
-                style.getPropertyValue('--wheel-segment-4').trim() || '#6ab04c',
-                style.getPropertyValue('--wheel-segment-5').trim() || '#e056fd',
-                style.getPropertyValue('--wheel-segment-6').trim() || '#f0932b',
-                style.getPropertyValue('--wheel-segment-7').trim() || '#22a6b3',
-                style.getPropertyValue('--wheel-segment-8').trim() || '#f6e58d',
-            ];
+      FoodWheelEngine.init({
+        canvasSelector: "#wheel",
+        spinButtonSelector: "#spinBtn",
+        winnerSelector: "#winner",
+        presetButtonSelector: ".preset-btn",
+        defaultItems: ['Absolutely Yes', 'Definitely Yes', 'Yes for Sure', 'Go For It', 'This Is a Great Idea', 'Your Time Is Now', 'The Answer Is Yes', 'Full Speed Ahead'],
+        resultFormatter: function (selectedItem) {
+          return `✨ The wheel says: <span style="color: var(--positive-accent); font-size: 2rem; display: block;">${selectedItem}!</span>`;
         }
-
-        function drawWheel(items, rotationAngle = 0) {
-            const angleStep = (2 * Math.PI) / items.length;
-            const segmentColors = getSegmentColors();
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.save();
-            ctx.translate(radius, radius);
-            ctx.rotate(rotationAngle);
-            ctx.translate(-radius, -radius);
-
-            items.forEach((item, i) => {
-                const angle = i * angleStep;
-                ctx.beginPath();
-                ctx.moveTo(radius, radius);
-                ctx.arc(radius, radius, radius, angle, angle + angleStep);
-                ctx.fillStyle = segmentColors[i % segmentColors.length];
-                ctx.fill();
-
-                ctx.save();
-                ctx.translate(radius, radius);
-                ctx.rotate(angle + angleStep / 2);
-                ctx.textAlign = "right";
-                ctx.fillStyle = "#fff";
-                ctx.font = "bold 15px Nunito, Arial";
-                ctx.shadowColor = "rgba(0,0,0,0.7)";
-                ctx.shadowBlur = 4;
-                ctx.fillText(item, radius - 16, 6);
-                ctx.restore();
-            });
-            ctx.restore();
-        }
-
-        let isSpinning = false;
-        function spinWheel() {
-            if (isSpinning) return;
-            isSpinning = true;
-            winnerDiv.innerText = "";
-
-            const angleStep = (2 * Math.PI) / items.length;
-            const selectedIndex = Math.floor(Math.random() * items.length);
-            const selectedItem = items[selectedIndex];
-
-            const fullSpins = 5;
-            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
-            let currentRotation = 0;
-
-            function animate() {
-                const progress = currentRotation / targetRotation;
-                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
-                currentRotation += easeOutSpeed;
-                drawWheel(items, currentRotation);
-
-                if (currentRotation < targetRotation) {
-                    requestAnimationFrame(animate);
-                } else {
-                    winnerDiv.innerHTML = `✨ The wheel says: <span style="color: var(--positive-accent); font-size: 2rem; display: block;">${selectedItem}!</span>`;
-                    isSpinning = false;
-                }
-            }
-            animate();
-        }
-
-        spinBtn.addEventListener("click", spinWheel);
-
-        document.querySelectorAll('.preset-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                items = btn.dataset.items.split(',');
-                winnerDiv.innerText = "";
-                drawWheel(items);
-            });
-        });
-
-        drawWheel(items);
+      });
     </script>

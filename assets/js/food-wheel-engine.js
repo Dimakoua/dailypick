@@ -32,7 +32,7 @@
     options = options || {};
     if (typeof options.segmentColorResolver === 'function') {
       return items.map(function (item, index) {
-        return options.segmentColorResolver(index, item) || getSegmentColor(index);
+        return options.segmentColorResolver(index, item, items) || getSegmentColor(index);
       });
     }
 
