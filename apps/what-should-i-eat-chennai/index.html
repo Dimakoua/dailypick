@@ -1,0 +1,210 @@
+---
+layout: base_app.njk
+title: "Chennai Food Wheel – Random Chennai Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide what to eat in Chennai? Spin the wheel for South Indian favorites, coastal dishes, and Chennai dining ideas."
+keywords: "Chennai food wheel, Chennai restaurant picker, what to eat in Chennai, Chennai cuisine spinner, Chennai food guide, where to eat Chennai"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-chennai/"
+localBrandConfig: /apps/what-should-i-eat-chennai/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Marina food and filter coffee — what are you eating?</p>
+            <h1>🍛 Chennai Food Wheel</h1>
+            <p>From dosa and idli to seafood curry and kebabs, spin the wheel and let Chennai choose your next meal.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Masala Dosa,Idli-Vada,Uttapam,Filter Coffee,Benne Dosa,Mysore Bonda,Vada,Payasam">🌿 South Indian Classics</button>
+            <button class="preset-btn" data-items="Chettinad Chicken,Crab Curry,Meen Kozhambu,Chicken 65,Parotta,Kurma,Paneer Tikka,Shawarma">🍲 Coastal & Spicy</button>
+            <button class="preset-btn" data-items="Pani Puri,Chaats,Pav Bhaji,Indian Sweets,Tea Stall Snacks,Sandwich,Rolls,Flatbread Wraps">🍛 Street Favorites</button>
+            <button class="preset-btn" data-items="Chinese Fried Rice,Thai Curry,Italian Pasta,Sushi Bowl,Greek Salad,Burger Plate,BBQ Platter,Continental Brunch">🌍 Global Choices</button>
+        </div>
+
+        <button id="spinBtn">🍛 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Chennai Food Wheel: Random Restaurant & Dish Picker for the Bay City</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Chennai Food Wheel turns the city’s dynamic dining scene into one quick choice. From traditional South Indian meals and seafood specialties to street eats and global restaurants, spin once and discover your next Chennai meal.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>City-wide variety:</strong> Four presets covering South Indian Classics, Coastal & Spicy, Street Favorites, and Global Choices.</li>
+                        <li><strong>Real Chennai picks:</strong> Every item reflects the city’s coastal cuisine and vibrant food culture.</li>
+                        <li><strong>Instant decision:</strong> One spin gives you a tasty direction without overthinking your meal.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-chennai-food-wheel">What is the Chennai Food Wheel?</a></li>
+                    <li><a href="#who-should-use-chennai-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-chennai-food-wheel-works">How it works</a></li>
+                    <li><a href="#chennai-food-wheel-features">Features</a></li>
+                    <li><a href="#chennai-food-wheel-categories">Chennai food categories</a></li>
+                    <li><a href="#chennai-food-wheel-tips">Tips</a></li>
+                    <li><a href="#chennai-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-chennai-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-chennai-food-wheel">
+                <h3>1. What is the Chennai Food Wheel?</h3>
+                <p>Chennai Food Wheel is a random meal picker built for the city’s coastal and South Indian dining culture. It blends traditional meals, local specialties, and global cuisine into an easy, fun decision tool.</p>
+            </section>
+
+            <section id="who-should-use-chennai-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Chennai locals deciding where to eat, visitors exploring the city, and anyone overwhelmed by endless dining choices. Spin for a fresh Chennai food idea.</p>
+            </section>
+
+            <section id="how-chennai-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Select a preset then press Spin. The wheel lands on a suggestion and reveals it clearly. Use the result as a meal prompt, then head out or order in. Spin again for another option.</p>
+            </section>
+
+            <section id="chennai-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> South Indian Classics, Coastal & Spicy, Street Favorites, and Global Choices.</li>
+                    <li><strong>Real Chennai picks:</strong> Every item reflects the city’s food culture.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>Instant result:</strong> Winner appears clearly after each spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel with Chennai-inspired tones.</li>
+                </ul>
+            </section>
+
+            <section id="chennai-food-wheel-categories">
+                <h3>5. Chennai food categories</h3>
+                <p><strong>South Indian Classics</strong> covers dosa, idli, uttapam, filter coffee, and sweets like payasam. <strong>Coastal & Spicy</strong> reflects Chennai’s seafood heritage with crab curry, meen kozhambu, chicken 65, and parotta. <strong>Street Favorites</strong> highlights easy eats like chaat, vada, sandwich, and rolls. <strong>Global Choices</strong> brings international dining into the city with pasta, sushi, shawarma, burgers, and Thai curry.</p>
+            </section>
+
+            <section id="chennai-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Choose South Indian Classics for comfort food, Coastal & Spicy for regional Chennai flavors, Street Favorites for quick eats, and Global Choices for international variety. Add your favorite local spots to personalize the wheel.</p>
+            </section>
+
+            <section id="chennai-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader meal picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. If you want cuisine-specific direction, try the South Indian or street-food wheels. Need a drink pairing? Try <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-chennai-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Chennai blends coastal cuisine, South Indian tradition, and modern dining. This wheel simplifies the choice by turning the city’s best meal ideas into one fast, fun spin.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Masala Dosa', 'Idli-Vada', 'Uttapam', 'Filter Coffee', 'Benne Dosa', 'Mysore Bonda', 'Vada', 'Payasam'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#e74c3c',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#f39c12',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#2980b9',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#27ae60',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#d35400',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#8e44ad',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#2c3e50',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#e67e22',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🍛 Chennai says: <span style="color: var(--chennai-gold); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
