@@ -1,0 +1,210 @@
+---
+layout: base_app.njk
+title: "Austin Food Wheel – Random Austin Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide where to eat in Austin? Spin the wheel for BBQ, food trucks, breakfast tacos, and East Austin dining picks."
+keywords: "Austin food wheel, Austin restaurant picker, what to eat in Austin, Austin cuisine spinner, Austin food guide, where to eat Austin"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-austin/"
+localBrandConfig: /apps/what-should-i-eat-austin/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Keep Austin tasty — what are you eating?</p>
+            <h1>🌮 Austin Food Wheel</h1>
+            <p>From breakfast tacos to BBQ and food truck fare, spin the wheel and let Austin decide your next bite.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Breakfast Tacos,Brisket Sandwich,Chicken Fried Steak,Smoked Sausage,Kolaches,Chili Cheese Fries,Tex-Mex Enchiladas,Pecan Pie">🤠 Austin Classics</button>
+            <button class="preset-btn" data-items="BBQ Brisket,Smoked Ribs,Pulled Pork,Brisket Tacos,Smoked Sausage,BBQ Nachos,Chicken Quarters,Mac and Cheese">🔥 BBQ & Smokehouse</button>
+            <button class="preset-btn" data-items="Food Truck Tacos,Loaded Fries,Chowder,Slider Trio,Asian Fusion Bowl,Plant-Based Burger,Gourmet Grilled Cheese,Craft Chips">🚚 Food Truck Favorites</button>
+            <button class="preset-btn" data-items="East Austin Pizza,SoCo Burgers,Urban Coffee Brunch,South Lamar Sushi,Deep Eddy Mexican,Dripping Springs Farm,Allandale Pho,Downtown Noodles">🌆 Neighbourhood Picks</button>
+        </div>
+
+        <button id="spinBtn">🌮 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Austin Food Wheel: Random Restaurant & Dish Picker for Texas</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Austin Food Wheel cuts through the city’s legendary dining scene with one quick spin. From breakfast tacos and brisket to food truck finds and East Austin neighbourhood meals, this wheel makes your next Austin meal easy.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>City-wide variety:</strong> Four presets across Austin Classics, BBQ & Smokehouse, Food Truck Favorites, and Neighbourhood Picks.</li>
+                        <li><strong>Real Austin food:</strong> Every item maps to a real Austin dish, style, or local trend.</li>
+                        <li><strong>Instant pick:</strong> One spin and one delicious idea—no more indecision.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-austin-food-wheel">What is the Austin Food Wheel?</a></li>
+                    <li><a href="#who-should-use-austin-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-austin-food-wheel-works">How it works</a></li>
+                    <li><a href="#austin-food-wheel-features">Features</a></li>
+                    <li><a href="#austin-food-wheel-categories">Austin food categories</a></li>
+                    <li><a href="#austin-food-wheel-tips">Tips</a></li>
+                    <li><a href="#austin-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-austin-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-austin-food-wheel">
+                <h3>1. What is the Austin Food Wheel?</h3>
+                <p>Austin Food Wheel is a random restaurant and dish picker built for Austin’s vibrant food scene. It covers the city’s most iconic eats — from breakfast tacos and barbecue to food trucks and local neighbourhood favourites.</p>
+            </section>
+
+            <section id="who-should-use-austin-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Austinites who need a fast meal decision, visitors exploring the city, and anyone overwhelmed by the endless options. Spin and let Austin choose your next tasty stop.</p>
+            </section>
+
+            <section id="how-austin-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Select a preset then hit Spin. The wheel lands on a suggestion and announces it. Use it as a meal prompt and head out or order in. Spin again if the pick lands somewhere too far.</p>
+            </section>
+
+            <section id="austin-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> Austin Classics, BBQ & Smokehouse, Food Truck Favorites, and Neighbourhood Picks.</li>
+                    <li><strong>Real Austin picks:</strong> Every item reflects an authentic Austin dining moment.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Works smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>Instant result:</strong> Winner appears clearly after each spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel in Austin color palettes.</li>
+                </ul>
+            </section>
+
+            <section id="austin-food-wheel-categories">
+                <h3>5. Austin food categories</h3>
+                <p><strong>Austin Classics</strong> covers the dishes locals love — breakfast tacos, brisket sandwiches, chicken fried steak, pie and mash, kolaches, chili cheese fries, Tex-Mex enchiladas, and pecan pie. <strong>BBQ & Smokehouse</strong> brings Austin’s legendary smokehouse scene to the wheel — BBQ brisket, smoked ribs, pulled pork, brisket tacos, smoked sausage, BBQ nachos, chicken quarters, and mac and cheese. <strong>Food Truck Favorites</strong> highlights vibrant market eats — truck tacos, loaded fries, chowder, slider trios, Asian fusion bowls, plant-based burgers, grilled cheese, and craft chips. <strong>Neighbourhood Picks</strong> points you to Austin dining districts — East Austin pizza, SoCo burgers, urban coffee brunch, South Lamar sushi, Deep Eddy Mexican, Dripping Springs farm meals, Allandale pho, and Downtown noodles.</p>
+            </section>
+
+            <section id="austin-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Choose Austin Classics for local comfort food, BBQ & Smokehouse for smoked meats, Food Truck Favorites for casual market dining, and Neighbourhood Picks when you want to explore a part of the city. Personalise further with your favourite Austin spots.</p>
+            </section>
+
+            <section id="austin-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader food choice, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. If you want a cuisine-specific pick, try the Indian, Chinese, or Mexican food wheels. Need a drink to go with it? Try <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-austin-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Austin is famous for its live music and bold food culture, which makes choosing a meal harder, not easier. This wheel turns that richness into a single fast decision so you can spend less time deciding and more time eating.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Breakfast Tacos', 'Brisket Sandwich', 'Chicken Fried Steak', 'Smoked Sausage', 'Kolaches', 'Chili Cheese Fries', 'Tex-Mex Enchiladas', 'Pecan Pie'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#da291c',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#003a6b',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#f2b705',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#8a1538',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#008c95',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#4f7942',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#6b2e77',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#73503c',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🌮 Austin says: <span style="color: var(--austin-red); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
