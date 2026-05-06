@@ -91,6 +91,7 @@
     <meta name="msapplication-TileColor" content="#2d89ef" />
     <meta name="theme-color" content="#ffffff" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
     {% if isApp %}
@@ -105,7 +106,7 @@
     <link rel="stylesheet" href="{{ '/css/style.css' | url }}" />
     <link rel="stylesheet" href="/assets/css/theme.css" />
     {# home.css is needed on the homepage, blog index, and suite pages #}
-    {% if page.url == '/' or (page.url and (page.url == '/blog/' or page.url.startsWith('/blog/page') or page.url == '/agile/' or page.url == '/randomizers/' or page.url == '/standups/' or page.url == '/games/' or page.url == '/lottery/')) %}
+    {% if page.url == '/' or (page.url and (page.url == '/blog/' or page.url.startsWith('/blog/page') or page.url == '/agile/' or page.url == '/randomizers/' or page.url == '/standups/' or page.url == '/games/' or page.url == '/lottery/' or page.url == '/food/')) %}
         <link rel="stylesheet" href="/assets/css/home.css" />
     {% endif %}
     {% else %}

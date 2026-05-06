@@ -1,0 +1,78 @@
+---
+layout: base.njk
+title: Food Decision Wheels | Daily Pick
+description: Choose from a growing collection of food decision wheels and meal spinners — global cuisines, city food guides, snacks, and dinner ideas.
+keywords: food wheel, meal picker, what should i eat, restaurant picker, cuisine wheel, food decision, dinner ideas, food spinner
+sitemap:
+  priority: 0.9
+  changefreq: weekly
+headExtra: |
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://dailypick.dev/" },
+      { "@type": "ListItem", "position": 2, "name": "Food Wheels", "item": "https://dailypick.dev/food/" }
+    ]
+  }
+  </script>
+---
+
+<main class="main-container" id="main" data-page-type="food">
+    <header class="hero">
+        <h1 class="hero__title">Food Decision Wheels</h1>
+        <p class="hero__subtitle">
+            Can’t decide what to eat? Use our food wheels to choose a meal, cuisine, snack, or city-based dining idea instantly. Quick, fun, and completely free.
+        </p>
+    </header>
+
+    <section aria-labelledby="food-heading" class="game-selection">
+        <div class="game-section__header">
+            <p class="section-eyebrow">Meal & Food Picks</p>
+            <h2 class="section-title" id="food-heading">Spin to Choose Your Next Bite</h2>
+            <p class="section-subtitle">Browse all food wheels for general meal ideas, cuisine themes, city dining guides, and snack/spice mood decisions.</p>
+        </div>
+        {% from "_includes/app-grid.njk" import appCards %}
+        <ul class="game-grid" role="list">
+          {{ appCards(apps, "food") }}
+        </ul>
+    </section>
+
+    <section aria-labelledby="why-food-heading" class="intro">
+        <h2 class="section-title" id="why-food-heading">Perfect for dinner indecision, travel planning, and cravings</h2>
+        <div class="intro__content">
+            <p>Use the food wheel hub whenever you need a fast, playful answer to "What should I eat?" It works for:
+            </p>
+            <ul class="intro__list">
+                <li><strong>Everyday meals:</strong> Decide between takeout, cooked dinner, or a new restaurant.</li>
+                <li><strong>Themed cuisine nights:</strong> Pick Indian, Chinese, Italian, Greek, or global city food wheels.</li>
+                <li><strong>Travel dining ideas:</strong> Find a local food wheel for Toronto, New York, Austin, Shanghai, Vancouver, and more.</li>
+                <li><strong>Snacks and drink pairings:</strong> Spin for snacks or use a drink wheel to complete the meal.</li>
+            </ul>
+            <p>All wheels are browser-based and ready to use — no sign-up, no download. Just open one, hit spin, and enjoy the suggestion.</p>
+        </div>
+    </section>
+
+    <section aria-labelledby="faq-food-heading" class="faq">
+        <h2 class="section-title" id="faq-food-heading">Frequently Asked Questions</h2>
+        <div class="faq__list">
+            <details class="faq__item">
+                <summary class="faq__question">What types of food wheels are available?</summary>
+                <div class="faq__answer"><p>Daily Pick food wheels include broad meal spinners, cuisine-based wheels, city-specific dining picks, snack suggestions, and themed meal ideas for every craving.</p></div>
+            </details>
+            <details class="faq__item">
+                <summary class="faq__question">Can I use food wheels when I’m traveling?</summary>
+                <div class="faq__answer"><p>Yes — food wheels are especially useful for travel. Choose a city-specific wheel like Toronto, New York, Austin, Shanghai, or Vancouver to get local food inspiration fast.</p></div>
+            </details>
+            <details class="faq__item">
+                <summary class="faq__question">Do these wheels work for group meal decisions?</summary>
+                <div class="faq__answer"><p>Absolutely. Share the page with friends or family, spin together, and let the wheel decide a restaurant or cuisine everyone can enjoy.</p></div>
+            </details>
+            <details class="faq__item">
+                <summary class="faq__question">How do I choose between food and other game categories?</summary>
+                <div class="faq__answer"><p>If you want meal ideas, start at this Food Wheels page. For party games, icebreakers, and social activities, visit the <a href="/games/">Games Hub</a>. For team decision tools, go to <a href="/randomizers/">Randomizers</a>.</p></div>
+            </details>
+        </div>
+    </section>
+</main>
