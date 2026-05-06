@@ -1,0 +1,210 @@
+---
+layout: base_app.njk
+title: "Kolkata Food Wheel – Random Kolkata Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide what to eat in Kolkata? Spin the wheel for Bengali favorites, street food, and Kolkata dining ideas."
+keywords: "Kolkata food wheel, Kolkata restaurant picker, what to eat in Kolkata, Kolkata cuisine spinner, Bengali food guide, where to eat Kolkata"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-kolkata/"
+localBrandConfig: /apps/what-should-i-eat-kolkata/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Sweet street snacks and fish curry — what are you eating?</p>
+            <h1>🍛 Kolkata Food Wheel</h1>
+            <p>From kathi rolls and biryani to mishti doi and fish curry, spin the wheel and let Kolkata pick your next meal.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Kathi Roll,Egg Roll,Mishti Doi,Roshogolla,Chingri Malai Curry,Phuchka,Telebhaja,Chicken Biryani">🍢 Street Classics</button>
+            <button class="preset-btn" data-items="Macher Jhol,Shorshe Ilish,Kosha Mangsho,Chicken Chaap,Beef Bhuna,Dal Bati,Khichuri,Cholar Dal">🍲 Bengali Favorites</button>
+            <button class="preset-btn" data-items="Kolkata Biryani,Fish Fry,Bhapa Ilish,Luchi,Tangra Chinese,Modern Café Salad,Sweets Counter Barfi,Tea Stall Chai">🏙️ City Eats</button>
+            <button class="preset-btn" data-items="Paneer Tikka,Hyderabadi Biryani,Chinese Noodles,Italian Pizza,Thai Curry,Japanese Sushi,Middle Eastern Shawarma,Continental Burger">🌍 Global Choices</button>
+        </div>
+
+        <button id="spinBtn">🍛 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Kolkata Food Wheel: Random Restaurant & Dish Picker for the City of Joy</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Kolkata Food Wheel turns the city’s iconic street food and rich Bengali cuisine into one quick choice. From kathi rolls and mishti doi to fish curry and biryani, spin once and discover your next Kolkata meal.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>City-wide variety:</strong> Four presets covering Street Classics, Bengali Favorites, City Eats, and Global Choices.</li>
+                        <li><strong>Real Kolkata picks:</strong> Every item reflects the city’s authentic flavor and dining culture.</li>
+                        <li><strong>Instant decision:</strong> One spin gives you a tasty direction without overthinking your meal.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-kolkata-food-wheel">What is the Kolkata Food Wheel?</a></li>
+                    <li><a href="#who-should-use-kolkata-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-kolkata-food-wheel-works">How it works</a></li>
+                    <li><a href="#kolkata-food-wheel-features">Features</a></li>
+                    <li><a href="#kolkata-food-wheel-categories">Kolkata food categories</a></li>
+                    <li><a href="#kolkata-food-wheel-tips">Tips</a></li>
+                    <li><a href="#kolkata-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-kolkata-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-kolkata-food-wheel">
+                <h3>1. What is the Kolkata Food Wheel?</h3>
+                <p>Kolkata Food Wheel is a random meal picker built for the city’s legendary food culture. It blends street snacks, Bengali classics, and international tastes into one playful decision tool.</p>
+            </section>
+
+            <section id="who-should-use-kolkata-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Kolkata locals deciding what to eat, visitors exploring the City of Joy, and anyone overwhelmed by the city’s many dining options. Spin for a fresh Kolkata food idea.</p>
+            </section>
+
+            <section id="how-kolkata-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Pick a preset then press Spin. The wheel lands on a suggestion and reveals it clearly. Use the result as a meal prompt, then head out or order in. Spin again if you want another option.</p>
+            </section>
+
+            <section id="kolkata-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> Street Classics, Bengali Favorites, City Eats, and Global Choices.</li>
+                    <li><strong>Real Kolkata picks:</strong> Every item reflects the city’s food culture.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>Instant result:</strong> Winner appears clearly after each spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel with Kolkata-inspired tones.</li>
+                </ul>
+            </section>
+
+            <section id="kolkata-food-wheel-categories">
+                <h3>5. Kolkata food categories</h3>
+                <p><strong>Street Classics</strong> covers Kolkata’s iconic snacks — kathi rolls, egg rolls, mishti doi, roshogolla, chingri malai curry, phuchka, telebhaja, and biryani. <strong>Bengali Favorites</strong> highlights the region’s traditional dishes — macher jhol, shorshe ilish, kosha mangsho, chicken chaap, dal, cholar dal, luchi, and khichuri. <strong>City Eats</strong> reflects the local restaurant culture — fish fry, bhapa ilish, Tangra Chinese, café food, sweets counters, and tea stall treats. <strong>Global Choices</strong> brings international dining into Kolkata with dosa, Schezwan noodles, pizza, sushi, kebabs, shawarma, burgers, and BBQ ribs.</p>
+            </section>
+
+            <section id="kolkata-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Choose Street Classics for Kolkata street food, Bengali Favorites for local comfort dishes, City Eats for neighborhood dining, and Global Choices for international variety. Personalize the wheel with your favourite Kolkata spots as needed.</p>
+            </section>
+
+            <section id="kolkata-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader meal picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. If you want cuisine-specific direction, explore the Indian or street-food wheels. Need a drink pairing? Try <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-kolkata-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Kolkata blends delicious street food with rich Bengali cuisine and international dining. This wheel simplifies the choice by turning the city’s best food ideas into one fast, fun spin.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Kathi Roll', 'Egg Roll', 'Mishti Doi', 'Roshogolla', 'Chingri Malai Curry', 'Phuchka', 'Telebhaja', 'Chicken Biryani'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#c0392b',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#f39c12',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#3498db',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#8e44ad',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#27ae60',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#d35400',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#2c3e50',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#f1c40f',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🍛 Kolkata says: <span style="color: var(--kolkata-gold); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>

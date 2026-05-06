@@ -1,0 +1,193 @@
+/* ==========================================================================
+   Kolkata Food Wheel – App Styles
+   - Warm spice palette and riverside blue
+   - Responsive layout for the Kolkata food wheel
+   ========================================================================== */
+
+:root {
+  --kolkata-gold: #f39c12;
+  --kolkata-orange: #d35400;
+  --kolkata-red: #c0392b;
+  --kolkata-blue: #2980b9;
+  --kolkata-cream: #f7dc6f;
+  --kolkata-night: #2c3e50;
+
+  --wheel-segment-1: #c0392b;
+  --wheel-segment-2: #f39c12;
+  --wheel-segment-3: #2980b9;
+  --wheel-segment-4: #d35400;
+  --wheel-segment-5: #f7dc6f;
+  --wheel-segment-6: #2c3e50;
+  --wheel-segment-7: #f5cba7;
+  --wheel-segment-8: #a04000;
+  --wheel-result-text: var(--kolkata-gold);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  flex-grow: 1;
+}
+
+.page-hero {
+  text-align: center;
+  max-width: 760px;
+  width: 92%;
+  padding: 32px;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.14));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--glass-shadow);
+}
+
+.page-hero h1 {
+  margin: 0.5rem 0;
+  font-size: clamp(1.8rem, 2.2rem, 2.6rem);
+  color: var(--brand-heading);
+  font-weight: 700;
+}
+
+.page-hero p {
+  margin: 0.75rem 0 0;
+  font-size: 1rem;
+  color: var(--brand-text);
+  line-height: 1.6;
+}
+
+.hero-eyebrow {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--kolkata-orange);
+}
+
+#wheel-container {
+  position: relative;
+  margin: 30px 0;
+}
+
+#indicator {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 30px solid var(--kolkata-orange);
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+#wheel {
+  max-width: 100%;
+  height: auto;
+}
+
+.preset-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  max-width: 620px;
+  margin: 0 auto 18px;
+  padding: 0 16px;
+}
+
+.preset-btn {
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 2px solid var(--kolkata-cream);
+  background: transparent;
+  color: var(--brand-text);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.preset-btn:hover,
+.preset-btn:focus-visible {
+  background: var(--kolkata-orange);
+  color: #fff;
+  outline: none;
+}
+
+#spinBtn {
+  display: block;
+  margin: 4px auto 18px;
+  padding: 14px 44px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 999px;
+  background: var(--kolkata-night);
+  color: #fff;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+#spinBtn:hover {
+  opacity: 0.9;
+}
+
+#spinBtn:active {
+  transform: scale(0.97);
+}
+
+#winner {
+  min-height: 64px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--brand-heading);
+  padding: 10px 16px;
+}
+
+@media (max-width: 600px) {
+  .seo-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.seo-toc {
+  background: var(--glass-bg, rgba(255,255,255,0.08));
+  border: 1px solid var(--glass-border, rgba(255,255,255,0.15));
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+
+.seo-toc ol {
+  margin: 0.5rem 0 0;
+  padding-left: 1.4rem;
+}
+
+.seo-toc li {
+  margin-bottom: 0.3rem;
+}
+
+.seo-toc a {
+  color: var(--kolkata-orange);
+  text-decoration: none;
+}
+
+.seo-toc a:hover {
+  text-decoration: underline;
+}
+
+.seo-content-area a {
+  color: var(--kolkata-orange);
+}
