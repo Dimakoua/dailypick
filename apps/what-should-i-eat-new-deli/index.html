@@ -1,0 +1,210 @@
+---
+layout: base_app.njk
+title: "New Deli Food Wheel – Random New Delhi Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide where to eat in New Deli? Spin the wheel for butter chicken, kebabs, chaat, and Delhi street food picks."
+keywords: "New Deli food wheel, New Delhi restaurant picker, what to eat in Delhi, Delhi cuisine spinner, New Deli food guide, where to eat Delhi"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-new-deli/"
+localBrandConfig: /apps/what-should-i-eat-new-deli/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Delhi cravings — what are you eating?</p>
+            <h1>🥘 New Deli Food Wheel</h1>
+            <p>From street-side chaat to rich butter chicken, spin the wheel and let New Deli decide your next meal.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Butter Chicken,Chole Bhature,Paneer Tikka,Chicken Tikka Masala,Biryani,Paratha,Rajma Chawal,Chaat">🇮🇳 Delhi Classics</button>
+            <button class="preset-btn" data-items="Kebabs,Naan,Parathas,Rolls,Street Chaat,Mithai,Samosa,Kulfi">🍴 Street Favorites</button>
+            <button class="preset-btn" data-items="Punjabi Lassi,Dosa,Idli,Vada Pav,Momos,Chinese Hakka Noodles,Shawarma,Shahi Paneer">🌍 International Delhi</button>
+            <button class="preset-btn" data-items="Karim's Kebabs,Old Delhi Brunch,Connaught Place Café,South Delhi Thali,Karol Bagh Sweets,Chandni Chowk Snacks,Gurgaon Grill,Gurudwara Langar">🏙️ Neighbourhood Picks</button>
+        </div>
+
+        <button id="spinBtn">🥘 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>New Deli Food Wheel: Random Restaurant & Dish Picker for New Delhi</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>New Deli Food Wheel helps you choose a meal in the city’s famous food scene. From iconic Delhi classics and street chaat to market bites and rich curries, spin once and discover your next delicious dish.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>City-wide variety:</strong> Four presets covering Delhi Classics, Street Favorites, International Delhi, and Neighbourhood Picks.</li>
+                        <li><strong>Real Delhi food:</strong> Every item reflects the city’s authentic dining culture.</li>
+                        <li><strong>Fast choice:</strong> One spin gives you a tasty direction without overthinking.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-new-deli-food-wheel">What is the New Deli Food Wheel?</a></li>
+                    <li><a href="#who-should-use-new-deli-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-new-deli-food-wheel-works">How it works</a></li>
+                    <li><a href="#new-deli-food-wheel-features">Features</a></li>
+                    <li><a href="#new-deli-food-wheel-categories">New Deli food categories</a></li>
+                    <li><a href="#new-deli-food-wheel-tips">Tips</a></li>
+                    <li><a href="#new-deli-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-new-deli-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-new-deli-food-wheel">
+                <h3>1. What is the New Deli Food Wheel?</h3>
+                <p>New Deli Food Wheel is a random restaurant and dish picker built for the capital’s legendary food scene. It highlights Delhi’s classic curries, market snacks, and neighbourhood favorites.</p>
+            </section>
+
+            <section id="who-should-use-new-deli-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Delhi locals who want a fast meal idea, visitors exploring the city, and anyone overwhelmed by the many delicious choices. Spin and let New Deli pick your next bite.</p>
+            </section>
+
+            <section id="how-new-deli-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Pick a preset then hit Spin. The wheel lands on a suggestion and announces it. Use the result as a meal prompt, then head out or order in. Spin again for another delicious option.</p>
+            </section>
+
+            <section id="new-deli-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> Delhi Classics, Street Favorites, International Delhi, and Neighbourhood Picks.</li>
+                    <li><strong>Real Delhi picks:</strong> Every item reflects the city’s authentic dining culture.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>Instant result:</strong> Winner appears clearly after each spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel in New Deli colors.</li>
+                </ul>
+            </section>
+
+            <section id="new-deli-food-wheel-categories">
+                <h3>5. New Deli food categories</h3>
+                <p><strong>Delhi Classics</strong> covers the city’s iconic fares — butter chicken, chole bhature, paneer tikka, chicken tikka masala, biryani, paratha, rajma chawal, and chaat. <strong>Street Favorites</strong> highlights popular market snacks — kebabs, naan, parathas, rolls, street chaat, mithai, samosas, and kulfi. <strong>International Delhi</strong> reflects the city’s global food scene — Punjabi lassi, dosa, idli, vada pav, momos, Chinese Hakka noodles, shawarma, and shahi paneer. <strong>Neighbourhood Picks</strong> points to Delhi districts — Karim’s kebabs, Old Delhi brunch, Connaught Place cafés, South Delhi thalis, Karol Bagh sweets, Chandni Chowk snacks, Gurgaon grills, and Langar at Gurudwara temples.</p>
+            </section>
+
+            <section id="new-deli-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Choose Delhi Classics for hearty comfort food, Street Favorites for market snacks, International Delhi for global eats, and Neighbourhood Picks when you want to explore a district. Personalize the picks with your favorite New Deli spots.</p>
+            </section>
+
+            <section id="new-deli-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader food picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. If you want a cuisine-specific choice, try the Indian, Chinese, or Japanese food wheels. Need a drink pairing? Try <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-new-deli-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>New Deli’s food scene is bold, rich, and full of variety. This wheel turns that abundance into one fast, fun, delicious decision.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Butter Chicken', 'Chole Bhature', 'Paneer Tikka', 'Chicken Tikka Masala', 'Biryani', 'Paratha', 'Rajma Chawal', 'Chaat'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#ff6f00',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#00897b',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#d32f2f',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#fdd835',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#7b1fa2',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#5d4037',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#c62828',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#2e7d32',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🥘 New Deli says: <span style="color: var(--new-deli-orange); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
