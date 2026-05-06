@@ -1,0 +1,210 @@
+---
+layout: base_app.njk
+title: "Bengaluru Food Wheel – Random Bengaluru Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide what to eat in Bengaluru? Spin the wheel for South Indian favorites, craft café bites, and Bengaluru dining ideas."
+keywords: "Bengaluru food wheel, Bengaluru restaurant picker, what to eat in Bengaluru, Bengaluru cuisine spinner, Bangalore food guide, where to eat Bengaluru"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-bengaluru/"
+localBrandConfig: /apps/what-should-i-eat-bengaluru/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Silicon Valley of India fuel — what are you eating?</p>
+            <h1>🍛 Bengaluru Food Wheel</h1>
+            <p>From dosa and idli to kebabs and café bowls, spin the wheel and let Bengaluru decide your next meal.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Masala Dosa,Idli-Vada,Uttapam,Rava Dosa,Mysore Bonda,Filter Coffee,Medu Vada,Kesari Bhath">🌿 South Indian Classics</button>
+            <button class="preset-btn" data-items="Chicken Kebab,Hyderabadi Biryani,Arabian Shawarma,Chinese Manchurian,Thai Curry,Sushi Bowl,Italian Pasta,BBQ Burger">🌍 Global Bengaluru</button>
+            <button class="preset-btn" data-items="Microbrewery Platter,Brunch Bowl,Avocado Toast,Stuffed Paratha,Paneer Tikka,Chilli Chicken,Gobi Manchurian,Kebabs">☕ Café & Nightlife</button>
+            <button class="preset-btn" data-items="Konark Biryani,Akki Roti,Benne Dosa,Bisi Bele Bath,Udupi Thali,Mughlai Pulao,Chaat Stall Pani Puri,Bengaluru Rolls">🏙️ Local Favorites</button>
+        </div>
+
+        <button id="spinBtn">🍛 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Bengaluru Food Wheel: Random Restaurant & Dish Picker for the Garden City</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Bengaluru Food Wheel turns the city’s diverse dining into one quick choice. From traditional South Indian staples and local favorites to global café trends, spin once and discover your next Bengaluru meal.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>City-wide variety:</strong> Four presets covering South Indian Classics, Global Bengaluru, Café & Nightlife, and Local Favorites.</li>
+                        <li><strong>Real Bengaluru picks:</strong> Every item reflects the city’s popular food culture and vibrant restaurant scene.</li>
+                        <li><strong>Instant decision:</strong> One spin gives you a tasty direction without overthinking your options.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-bengaluru-food-wheel">What is the Bengaluru Food Wheel?</a></li>
+                    <li><a href="#who-should-use-bengaluru-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-bengaluru-food-wheel-works">How it works</a></li>
+                    <li><a href="#bengaluru-food-wheel-features">Features</a></li>
+                    <li><a href="#bengaluru-food-wheel-categories">Bengaluru food categories</a></li>
+                    <li><a href="#bengaluru-food-wheel-tips">Tips</a></li>
+                    <li><a href="#bengaluru-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-bengaluru-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-bengaluru-food-wheel">
+                <h3>1. What is the Bengaluru Food Wheel?</h3>
+                <p>Bengaluru Food Wheel is a random meal picker built for the city’s fast-changing dining scene. It blends South Indian favorites, local classics, and global cuisine into a simple, fun decision tool.</p>
+            </section>
+
+            <section id="who-should-use-bengaluru-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Bengaluru locals choosing lunch, tech workers planning dinner, and visitors exploring the city’s food culture. Spin to get a fresh Bengaluru meal idea without scrolling through endless menus.</p>
+            </section>
+
+            <section id="how-bengaluru-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Select a preset then hit Spin. The wheel lands on a suggestion and reveals it clearly. Use the result as a meal prompt, then head out or order in. Spin again for another choice.</p>
+            </section>
+
+            <section id="bengaluru-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> South Indian Classics, Global Bengaluru, Café & Nightlife, and Local Favorites.</li>
+                    <li><strong>Real Bengaluru picks:</strong> Every item reflects the city’s restaurant culture.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>Instant result:</strong> Winner appears clearly after each spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel with Bengaluru-inspired tones.</li>
+                </ul>
+            </section>
+
+            <section id="bengaluru-food-wheel-categories">
+                <h3>5. Bengaluru food categories</h3>
+                <p><strong>South Indian Classics</strong> covers dosa, idli, uttapam, rava dosa, Mysore bonda, filter coffee, medu vada, and kesari bhath. <strong>Global Bengaluru</strong> includes kebabs, biryani, shawarma, Chinese Manchurian, Thai curry, sushi, pasta, and burgers. <strong>Café & Nightlife</strong> reflects the city’s coffee culture and night eating scene. <strong>Local Favorites</strong> highlights Bengaluru-specific dishes like Konark biryani, benne dosa, bisi bele bath, and street rolls.</p>
+            </section>
+
+            <section id="bengaluru-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Choose South Indian Classics for comfort food, Global Bengaluru for international variety, Café & Nightlife for café favorites and bar snacks, and Local Favorites for iconic Bangalore dishes. Add your favorite local restaurants to personalize the wheel.</p>
+            </section>
+
+            <section id="bengaluru-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader meal picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. If you want a cuisine-specific route, try the Indian or South Indian food wheels. Need a drink pairing? Try <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-bengaluru-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Bengaluru blends traditional South Indian cuisine with a modern global dining scene. This wheel simplifies the choice by turning the city’s best meal ideas into one fast, fun spin.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Masala Dosa', 'Idli-Vada', 'Uttapam', 'Rava Dosa', 'Mysore Bonda', 'Filter Coffee', 'Medu Vada', 'Kesari Bhath'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#1abc9c',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#16a085',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#f39c12',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#d35400',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#2980b9',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#8e44ad',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#2c3e50',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#d35400',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🍛 Bengaluru says: <span style="color: var(--bengaluru-green); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
