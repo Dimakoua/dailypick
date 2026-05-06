@@ -1,0 +1,210 @@
+---
+layout: base_app.njk
+title: "Tokio Food Wheel – Random Tokio Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide what to eat in Tokio? Spin the wheel for Japanese favorites, sushi, ramen, and Tokio dining ideas."
+keywords: "Tokio food wheel, Tokio restaurant picker, what to eat in Tokio, Tokio cuisine spinner, Japanese food guide, where to eat Tokio"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-tokio/"
+localBrandConfig: /apps/what-should-i-eat-tokio/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">From ramen to sushi — what are you eating?</p>
+            <h1>🍣 Tokio Food Wheel</h1>
+            <p>Spin the wheel and let Tokio choose your next meal, from izakaya favorites to street-side snacks.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Sushi,Ramen,Tempura,Okonomiyaki,Tonkatsu,Onigiri,Mochi,Yakitori">🍣 Japanese Classics</button>
+            <button class="preset-btn" data-items="Sashimi,Udon,Soba,Shabu Shabu,Teriyaki Chicken,Matcha Dessert,Sake,Takoyaki">🍜 Tokio Favorites</button>
+            <button class="preset-btn" data-items="Street Ramen,Convenience Store Bento,Crepe,Melonpan,Japanese Curry,Korean BBQ,Chinese Dim Sum,Italian Pizza">🌍 Global Eats</button>
+            <button class="preset-btn" data-items="Kaiseki Dinner,Rooftop Sushi,Bun Bowls,Brunch Pancakes,Seafood Platter,Modern Izakaya,Japanese Burger,Salad Bowl">🏙️ City Dining</button>
+        </div>
+
+        <button id="spinBtn">🍣 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Tokio Food Wheel: Random Restaurant & Dish Picker for the City of Lights</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Tokio Food Wheel turns the city’s rich food scene into one easy choice. From sushi and ramen to street snacks and modern restaurants, spin once and discover your next Tokio meal.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>City-wide variety:</strong> Four presets covering Japanese Classics, Tokio Favorites, Global Eats, and City Dining.</li>
+                        <li><strong>Real Tokio picks:</strong> Every item reflects the city’s food culture and dining diversity.</li>
+                        <li><strong>Instant decision:</strong> One spin gives you a tasty direction without overthinking your meal.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-tokio-food-wheel">What is the Tokio Food Wheel?</a></li>
+                    <li><a href="#who-should-use-tokio-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-tokio-food-wheel-works">How it works</a></li>
+                    <li><a href="#tokio-food-wheel-features">Features</a></li>
+                    <li><a href="#tokio-food-wheel-categories">Tokio food categories</a></li>
+                    <li><a href="#tokio-food-wheel-tips">Tips</a></li>
+                    <li><a href="#tokio-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-tokio-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-tokio-food-wheel">
+                <h3>1. What is the Tokio Food Wheel?</h3>
+                <p>Tokio Food Wheel is a random meal picker built for the city’s legendary food scene. It combines sushi, ramen, izakaya fare, and modern dining into a fun decision tool.</p>
+            </section>
+
+            <section id="who-should-use-tokio-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Tokio visitors exploring the city, locals deciding where to eat, and anyone overwhelmed by the city’s many dining choices. Spin for a fresh Tokio food idea.</p>
+            </section>
+
+            <section id="how-tokio-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Pick a preset then press Spin. The wheel lands on a suggestion and reveals it clearly. Use the result as a meal prompt, then enjoy. Spin again if you want another option.</p>
+            </section>
+
+            <section id="tokio-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> Japanese Classics, Tokio Favorites, Global Eats, and City Dining.</li>
+                    <li><strong>Real Tokio picks:</strong> Every item reflects the city’s food culture and dining scene.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>Instant result:</strong> Winner appears clearly after each spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel with Tokio-inspired tones.</li>
+                </ul>
+            </section>
+
+            <section id="tokio-food-wheel-categories">
+                <h3>5. Tokio food categories</h3>
+                <p><strong>Japanese Classics</strong> includes sushi, ramen, tempura, okonomiyaki, tonkatsu, onigiri, mochi, and yakitori. <strong>Tokio Favorites</strong> highlights local favorites like sashimi, udon, soba, shabu shabu, and matcha desserts. <strong>Global Eats</strong> brings international restaurants into the city. <strong>City Dining</strong> points to upscale restaurants and café dining in Tokio.</p>
+            </section>
+
+            <section id="tokio-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Choose Japanese Classics for traditional meals, Tokio Favorites for local picks, Global Eats for international variety, and City Dining for restaurant-style experiences. Add your favorite Tokio restaurants to personalize the wheel.</p>
+            </section>
+
+            <section id="tokio-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader meal picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. If you want cuisine-specific direction, try the Japanese or street-food wheels. Need a drink pairing? Try <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-tokio-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Tokio blends historic cuisine with modern dining and global influence. This wheel simplifies the city’s food choices into one fast, fun decision.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Sushi', 'Ramen', 'Tempura', 'Okonomiyaki', 'Tonkatsu', 'Onigiri', 'Mochi', 'Yakitori'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#c0392b',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#2980b9',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#f39c12',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#27ae60',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#8e44ad',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#2c3e50',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#ecf0f1',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#d35400',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🍣 Tokio says: <span style="color: var(--tokio-blue); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
