@@ -1,0 +1,210 @@
+---
+layout: base_app.njk
+title: "Chicago Food Wheel – Random Chicago Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide what to eat in Chicago? Spin the wheel for Chicago classics, neighbourhood favourites, street food, and downtown dining picks."
+keywords: "Chicago food wheel, Chicago restaurant picker, what to eat in Chicago, Chicago cuisine spinner, Chicago food guide, where to eat Chicago"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-chicago/"
+localBrandConfig: /apps/what-should-i-eat-chicago/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Windy City cravings — what are you eating?</p>
+            <h1>🌭 Chicago Food Wheel</h1>
+            <p>From deep dish to a classic Chicago dog, from neighborhood tacos to riverwalk seafood — spin and let the city decide.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Deep Dish Pizza,Chicago Hot Dog,Italian Beef Sandwich,Garrett Popcorn,Maxwell Street Polish,Rainbow Cone,Malfy Pizza,Chocolate Cake">🌭 Chicago Icons</button>
+            <button class="preset-btn" data-items="Rooftop Pizza,Steakhouse,Sushi Omakase,Riverwalk Seafood,Modern American,Brewery Fare,Seasonal Farm-to-Table,Chef's Tasting Menu">🌆 Downtown Dining</button>
+            <button class="preset-btn" data-items="Pilsen Tacos,Bronzeville Fried Chicken,Lincoln Park Brunch,Chinatown BBQ Pork,Boystown Brat,West Loop Ramen,Wicker Park Bagels,South Side Tamales">🏘️ Neighborhood Classics</button>
+            <button class="preset-btn" data-items="Chicago-Style Hot Dog,Italian Beef Stand,Tamale,Pizza Puff,Soft Pretzel,Cheese Curds,Street Corn,Falafel Wrap">🚕 Street Food</button>
+        </div>
+
+        <button id="spinBtn">🌭 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Chicago Food Wheel: Random Restaurant & Dish Picker for the Windy City</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Chicago Food Wheel cuts through the city's huge dining scene and picks something satisfying for you. From deep dish pizza and the famous Chicago hot dog to Italian beef, Maxwell Street polish, neighborhood tacos in Pilsen, and riverwalk seafood — this wheel makes choosing the next meal fast and fun.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>City-wide variety:</strong> Four presets spanning Chicago Icons, Downtown Dining, Neighborhood Classics, and Street Food.</li>
+                        <li><strong>Real Chicago food:</strong> Every item is a dish, restaurant style, or neighborhood favorite rooted in the actual Chicago scene.</li>
+                        <li><strong>Instant choice:</strong> No more scrolling delivery menus for 20 minutes — one spin, one meal, let's eat!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-chicago-food-wheel">What is the Chicago Food Wheel?</a></li>
+                    <li><a href="#who-should-use-chicago-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-chicago-food-wheel-works">How it works</a></li>
+                    <li><a href="#chicago-food-wheel-features">Features</a></li>
+                    <li><a href="#chicago-food-wheel-categories">Chicago food categories</a></li>
+                    <li><a href="#chicago-food-wheel-tips">Tips</a></li>
+                    <li><a href="#chicago-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-chicago-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-chicago-food-wheel">
+                <h3>1. What is the Chicago Food Wheel?</h3>
+                <p>Chicago Food Wheel is a random restaurant and dish picker built around the real Chicago dining scene. It covers the city's culinary identity — from deep dish and Chicago dogs that define the Windy City to neighborhood classics and street food specials that make Chicago eating so memorable.</p>
+            </section>
+
+            <section id="who-should-use-chicago-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>Chicagoans who can’t decide between dozens of great options, visitors exploring the city for the first time, and anyone staring down a menu and needing a fast, delicious answer. Spin, choose, go.</p>
+            </section>
+
+            <section id="how-chicago-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Pick one of the four presets, then hit Spin. The wheel lands on a suggestion and announces it. Use it as a meal prompt — then find the best nearby spot or order in. Spin again if the pick lands too far from where you are.</p>
+            </section>
+
+            <section id="chicago-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> Chicago Icons, Downtown Dining, Neighborhood Classics, and Street Food.</li>
+                    <li><strong>Real Chicago picks:</strong> Every item is grounded in Chicago food tradition, neighborhood favorites, or icon status.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops — ideal for deciding on the go.</li>
+                    <li><strong>Instant result:</strong> Winner is shown clearly after every spin so you can act fast.</li>
+                    <li><strong>Customizable colors:</strong> Use Local Brand Studio to theme the wheel in Chicago flag blue and red.</li>
+                </ul>
+            </section>
+
+            <section id="chicago-food-wheel-categories">
+                <h3>5. Chicago food categories</h3>
+                <p><strong>Chicago Icons</strong> covers the dishes that define the city — deep dish pizza, a Chicago hot dog, Italian beef, Garrett mix popcorn, Maxwell Street Polish, Rainbow Cone, classic chocolate cake, and dolce far niente dessert vibes. <strong>Downtown Dining</strong> reflects the city’s riverwalk and Loop restaurant scene — rooftop pizza, steakhouses, sushi omakase, riverfront seafood, modern American dining, brewery fare, farm-to-table seasonal menus, and chef tasting experiences. <strong>Neighborhood Classics</strong> showcases Chicago’s best local neighborhoods — Pilsen tacos, Bronzeville fried chicken, Lincoln Park brunch, Chinatown barbecue pork, Boystown brats, West Loop ramen, Wicker Park bagels, and South Side tamales. <strong>Street Food</strong> is Chicago at its most casual and iconic — hot dog stands, Italian beef carts, tamales, pizza puffs, soft pretzels, cheese curds, street corn, and falafel wraps.</p>
+            </section>
+
+            <section id="chicago-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Use Chicago Icons for a classic local meal, Downtown Dining for a date night or dinner with a view, Neighborhood Classics when you want to eat like a local, and Street Food for fast, satisfying bites. Swap in your own favorite Chicago spots for a fully personalized wheel.</p>
+            </section>
+
+            <section id="chicago-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader global food picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. If you want a different region or cuisine, check out the <a href="/apps/what-should-i-eat-indian/">Indian Food Wheel</a>, <a href="/apps/what-should-i-eat-chinese/">Chinese Food Wheel</a>, or <a href="/apps/what-should-i-eat-italian/">Italian Food Wheel</a>. To pick a drink to go with your meal, <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a> is a great companion.</p>
+            </section>
+
+            <section id="why-chicago-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>Chicago has one of the richest restaurant scenes in the U.S., with iconic classics, immigrant-driven neighborhood flavors, and casual street food all in the same city. That abundance makes choosing hard — this wheel turns the Windy City’s best food moments into a quick, playful decision. One spin, one meal.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Deep Dish Pizza', 'Chicago Hot Dog', 'Italian Beef Sandwich', 'Garrett Popcorn', 'Maxwell Street Polish', 'Rainbow Cone', 'Chocolate Cake', 'Malfy Pizza'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#a01839',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#1b365d',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#f8d12f',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#7c9cbe',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#c0392b',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#1f3a62',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#d2691e',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#6b3d9a',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🌭 Chicago says: <span style="color: var(--chicago-red); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
