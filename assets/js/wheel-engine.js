@@ -129,6 +129,8 @@ var defaultSegmentColors = [
       'height:' + rect.height + 'px',
       'pointer-events:none',
       'background:transparent',
+      'border-width:0',
+      'border-radius:0',
       'z-index:10001'
     ].join(';');
     document.body.appendChild(overlay);
