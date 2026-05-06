@@ -1,0 +1,210 @@
+---
+layout: base_app.njk
+title: "Los Angeles Food Wheel – Random LA Restaurant & Dish Picker | Daily Pick"
+description: "Can't decide where to eat in Los Angeles? Spin the wheel for tacos, sushi, food trucks, and Hollywood dining picks."
+keywords: "Los Angeles food wheel, LA restaurant picker, what to eat in LA, LA cuisine spinner, Los Angeles food guide, where to eat LA"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-la/"
+localBrandConfig: /apps/what-should-i-eat-la/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Sunset Boulevard hunger — what are you eating?</p>
+            <h1>🌮 Los Angeles Food Wheel</h1>
+            <p>From tacos and sushi to food trucks and Hollywood brunch, spin the wheel and let LA choose your next meal.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Taco Truck,Avocado Toast,Sushi Omakase,Poke Bowl,Street Corn,Plant-Based Burger,Korean BBQ,In-N-Out">🌴 LA Classics</button>
+            <button class="preset-btn" data-items="Santa Monica Seafood,West Hollywood Brunch,Venice Beach Burrito,Silver Lake Ramen,Chinatown Dim Sum,Koreatown Fried Chicken,Thai Salad,Italian Pasta">🍜 International Eats</button>
+            <button class="preset-btn" data-items="Food Truck Tacos,Loaded Fries,Chicken & Waffles,Gourmet Hot Dog,Street Pizza,Matcha Latte,Craft Salad,Frozen Yogurt">🚚 Food Truck Favorites</button>
+            <button class="preset-btn" data-items="Hollywood Bistro,Beverly Hills Steak,Melrose Café,DTLA Sandwich,Echo Park Vegan,Pasadena Donuts,Silver Lake Cafe,Marina Del Rey Seafood">🏙️ Neighbourhood Picks</button>
+        </div>
+
+        <button id="spinBtn">🌮 SPIN FOR FOOD!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>Los Angeles Food Wheel: Random Restaurant & Dish Picker for LA</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>Los Angeles Food Wheel turns LA’s huge dining scene into one quick decision. From tacos and sushi to beachside food truck meals and Hollywood brunch, spin once and let the city decide.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>City-wide variety:</strong> Four presets spanning LA Classics, International Eats, Food Truck Favorites, and Neighbourhood Picks.</li>
+                        <li><strong>Real LA food:</strong> Every item is rooted in the city’s authentic restaurant and street-food culture.</li>
+                        <li><strong>Instant pick:</strong> One spin gives you a fast direction so you can eat sooner.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-la-food-wheel">What is the Los Angeles Food Wheel?</a></li>
+                    <li><a href="#who-should-use-la-food-wheel">Who should use this wheel?</a></li>
+                    <li><a href="#how-la-food-wheel-works">How it works</a></li>
+                    <li><a href="#la-food-wheel-features">Features</a></li>
+                    <li><a href="#la-food-wheel-categories">LA food categories</a></li>
+                    <li><a href="#la-food-wheel-tips">Tips</a></li>
+                    <li><a href="#la-food-wheel-alternatives">Alternatives</a></li>
+                    <li><a href="#why-la-food-wheel-works">Why it works</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-la-food-wheel">
+                <h3>1. What is the Los Angeles Food Wheel?</h3>
+                <p>Los Angeles Food Wheel is a random restaurant and dish picker built for LA’s sprawling food scene. It highlights iconic LA meals, beachside street food, celebrity brunch spots, and neighbourhood restaurant moments.</p>
+            </section>
+
+            <section id="who-should-use-la-food-wheel">
+                <h3>2. Who should use this wheel?</h3>
+                <p>LA locals who want a quick meal idea, visitors seeing the city for the first time, and anyone overwhelmed by endless dining choices. Spin and let LA pick your next tasty stop.</p>
+            </section>
+
+            <section id="how-la-food-wheel-works">
+                <h3>3. How it works</h3>
+                <p>Select a preset then hit Spin. The wheel lands on a suggestion and announces it. Use the result to choose a meal, then head out or order in. Spin again if you want another option.</p>
+            </section>
+
+            <section id="la-food-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Four city presets:</strong> LA Classics, International Eats, Food Truck Favorites, and Neighbourhood Picks.</li>
+                    <li><strong>Real LA picks:</strong> Every item reflects a real LA food scene or district.</li>
+                    <li><strong>Mobile-friendly canvas wheel:</strong> Spins smoothly on phones, tablets, and desktops.</li>
+                    <li><strong>Instant result:</strong> Winner appears clearly after each spin.</li>
+                    <li><strong>Customisable colours:</strong> Use Local Brand Studio to theme the wheel in LA-inspired palettes.</li>
+                </ul>
+            </section>
+
+            <section id="la-food-wheel-categories">
+                <h3>5. LA food categories</h3>
+                <p><strong>LA Classics</strong> covers the city’s defining meals — taco truck tacos, avocado toast, sushi omakase, poke bowls, street corn, plant-based burgers, Korean BBQ, and In-N-Out. <strong>International Eats</strong> reflects LA’s diverse cuisine — Santa Monica seafood, West Hollywood brunch, Venice Burritos, Silver Lake ramen, Chinatown dim sum, Koreatown fried chicken, Thai salad, and Italian pasta. <strong>Food Truck Favorites</strong> highlights market meals — food truck tacos, loaded fries, chicken & waffles, gourmet hot dogs, street pizza, matcha lattes, craft salads, and frozen yogurt. <strong>Neighbourhood Picks</strong> maps LA by neighbourhood — Hollywood bistros, Beverly Hills steak, Melrose cafés, DTLA sandwiches, Echo Park vegan, Pasadena donuts, Silver Lake coffee, and Marina Del Rey seafood.</p>
+            </section>
+
+            <section id="la-food-wheel-tips">
+                <h3>6. Tips</h3>
+                <p>Choose LA Classics for iconic city meals, International Eats for global flavours, Food Truck Favorites for casual market dining, and Neighbourhood Picks when you want to explore a specific district. Personalize the wheel with your favourite LA spots.</p>
+            </section>
+
+            <section id="la-food-wheel-alternatives">
+                <h3>7. Alternatives</h3>
+                <p>For a broader meal picker, try <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>. If you want a cuisine-specific option, try the Indian, Chinese, or Japanese food wheels. Need a drink pairing? Try <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a>.</p>
+            </section>
+
+            <section id="why-la-food-wheel-works">
+                <h3>8. Why it works</h3>
+                <p>LA’s food scene is massive and constantly evolving. This wheel turns the city’s abundance into one quick, fun, and delicious decision.</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const winnerDiv = document.getElementById("winner");
+        const radius = canvas.width / 2;
+
+        let foodItems = ['Taco Truck', 'Avocado Toast', 'Sushi Omakase', 'Poke Bowl', 'Street Corn', 'Plant-Based Burger', 'Korean BBQ', 'In-N-Out'];
+
+        function getSegmentColors() {
+            const style = getComputedStyle(document.documentElement);
+            return [
+                style.getPropertyValue('--wheel-segment-1').trim() || '#f5a623',
+                style.getPropertyValue('--wheel-segment-2').trim() || '#0b3d91',
+                style.getPropertyValue('--wheel-segment-3').trim() || '#ff4d4d',
+                style.getPropertyValue('--wheel-segment-4').trim() || '#2d6a4f',
+                style.getPropertyValue('--wheel-segment-5').trim() || '#8a1538',
+                style.getPropertyValue('--wheel-segment-6').trim() || '#ffc72c',
+                style.getPropertyValue('--wheel-segment-7').trim() || '#6b2e77',
+                style.getPropertyValue('--wheel-segment-8').trim() || '#73503c',
+            ];
+        }
+
+        function drawWheel(items, rotationAngle = 0) {
+            const angleStep = (2 * Math.PI) / items.length;
+            const segmentColors = getSegmentColors();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(rotationAngle);
+            ctx.translate(-radius, -radius);
+
+            items.forEach((item, i) => {
+                const angle = i * angleStep;
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + angleStep);
+                ctx.fillStyle = segmentColors[i % segmentColors.length];
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + angleStep / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 16px Nunito, Arial";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(item, radius - 16, 6);
+                ctx.restore();
+            });
+            ctx.restore();
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            winnerDiv.innerText = "";
+
+            const angleStep = (2 * Math.PI) / foodItems.length;
+            const selectedIndex = Math.floor(Math.random() * foodItems.length);
+            const selectedItem = foodItems[selectedIndex];
+
+            const fullSpins = 5;
+            const targetRotation = (fullSpins * 2 * Math.PI) + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
+            let currentRotation = 0;
+
+            function animate() {
+                const progress = currentRotation / targetRotation;
+                const easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
+                currentRotation += easeOutSpeed;
+                drawWheel(foodItems, currentRotation);
+
+                if (currentRotation < targetRotation) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winnerDiv.innerHTML = `🌮 LA says: <span style="color: var(--la-gold); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+                    isSpinning = false;
+                }
+            }
+            animate();
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                foodItems = btn.dataset.items.split(',');
+                winnerDiv.innerText = "";
+                drawWheel(foodItems, 0);
+            });
+        });
+
+        window.addEventListener('localBrandConfigUpdated', () => {
+            if (!isSpinning) drawWheel(foodItems, 0);
+        });
+
+        drawWheel(foodItems, 0);
+    </script>
