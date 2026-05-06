@@ -152,24 +152,49 @@
     <script defer src="/assets/js/embed.js"></script>
     <script>
       (function () {
-        var homeUrl = 'https://dailypick.dev/';
-        var currentUrl = window.location.origin + window.location.pathname;
-        var pageHeading = document.querySelector('main h1')?.textContent?.trim();
-        var pageTitle = (pageHeading || document.title || 'Tool').replace(/\s*–.*$/, '').trim();
-        var appCategoryMap = {
-          {% for app in apps %}
-          "{{ app.path }}": "{{ app.category }}",
-          {% endfor %}
+        window.dpBreadcrumb = window.dpBreadcrumb || {};
+        window.dpBreadcrumb.apps = {{ apps | dump | safe }};
+        window.dpBreadcrumb.baseUrl = window.location.hostname === 'localhost' ? window.location.origin : 'https://dailypick.dev';
+        window.dpBreadcrumb.categoryPages = {
+          standup: { name: 'Stand-up Games', url: window.dpBreadcrumb.baseUrl + '/standups/' },
+          randomizer: { name: 'Random Pickers & Decision Tools', url: window.dpBreadcrumb.baseUrl + '/randomizers/' },
+          agile: { name: 'Agile Planning Tools', url: window.dpBreadcrumb.baseUrl + '/agile/' },
+          games: { name: 'Games & Group Activities', url: window.dpBreadcrumb.baseUrl + '/games/' },
+          lottery: { name: 'Lottery Hub', url: window.dpBreadcrumb.baseUrl + '/lottery/' },
+          food: { name: 'Food Wheels', url: window.dpBreadcrumb.baseUrl + '/food/' }
+        };
+        window.dpBreadcrumb.homeUrl = window.dpBreadcrumb.baseUrl + '/';
+        window.dpBreadcrumb.getAppCategoryMap = function () {
+          var map = {};
+          (window.dpBreadcrumb.apps || []).forEach(function (app) {
+            map[app.path] = app.category;
+          });
+          return map;
+        };
+        window.dpBreadcrumb.buildCategoryKey = function (path) {
+          var normalized = path.replace(/\/$/, '');
+          var map = window.dpBreadcrumb.getAppCategoryMap();
+          return map[path] || map[path + '/'] || map[normalized] || map[normalized + '/'];
+        };
+        window.dpBreadcrumb.getAppByPath = function (path) {
+          var normalized = path.replace(/\/$/, '');
+          var apps = window.dpBreadcrumb.apps || [];
+          for (var i = 0; i < apps.length; i += 1) {
+            if (apps[i].path === path || apps[i].path === normalized || apps[i].path === normalized + '/') {
+              return apps[i];
+            }
+          }
+          return null;
+        };
+        window.dpBreadcrumb.buildPageTitle = function () {
+          var pageHeading = document.querySelector('main h1')?.textContent?.trim();
+          return (pageHeading || document.title || 'Tool').replace(/\s*–.*$/, '').trim();
         };
 
-        var categoryPages = {
-          standup: { name: 'Stand-up Games', url: 'https://dailypick.dev/standups/' },
-          randomizer: { name: 'Random Pickers & Decision Tools', url: 'https://dailypick.dev/randomizers/' },
-          agile: { name: 'Agile Planning Tools', url: 'https://dailypick.dev/agile/' },
-          games: { name: 'Games & Group Activities', url: 'https://dailypick.dev/games/' },
-          lottery: { name: 'Lottery Hub', url: 'https://dailypick.dev/lottery/' },
-          food: { name: 'Food Wheels', url: 'https://dailypick.dev/food/' }
-        };
+        var currentUrl = window.location.origin + window.location.pathname;
+        var pageTitle = window.dpBreadcrumb.buildPageTitle();
+        var categoryKey = window.dpBreadcrumb.buildCategoryKey(window.location.pathname);
+        var category = window.dpBreadcrumb.categoryPages[categoryKey];
 
         var breadcrumb = {
           '@context': 'https://schema.org',
@@ -181,17 +206,12 @@
               name: 'Home',
               item: {
                 '@type': 'WebPage',
-                '@id': homeUrl,
+                '@id': window.dpBreadcrumb.homeUrl,
                 name: 'Home'
               }
             }
           ]
         };
-
-        var currentPath = window.location.pathname;
-        var normalizedPath = currentPath.replace(/\/$/, '');
-        var categoryKey = appCategoryMap[currentPath] || appCategoryMap[currentPath + '/'] || appCategoryMap[normalizedPath] || appCategoryMap[normalizedPath + '/'];
-        var category = categoryPages[categoryKey];
 
         if (category) {
           breadcrumb.itemListElement.push({
@@ -274,21 +294,8 @@
     </nav>
     <script>
     (function () {
-      var apps = {{ apps | dump | safe }};
-      var appMap = {};
-      apps.forEach(function (a) { appMap[a.path] = a; });
-      var categoryPages = {
-        standup: { name: 'Stand-up Games', url: '/standups/' },
-        randomizer: { name: 'Random Pickers & Decision Tools', url: '/randomizers/' },
-        agile: { name: 'Agile Planning Tools', url: '/agile/' },
-        games: { name: 'Games & Group Activities', url: '/games/' },
-        lottery: { name: 'Lottery Hub', url: '/lottery/' },
-        food: { name: 'Food Wheels', url: '/food/' }
-      };
-
-      var currentPath = window.location.pathname;
-      var normalized = currentPath.replace(/\/$/, '') + '/';
-      var app = appMap[currentPath] || appMap[normalized] || appMap[currentPath.replace(/\/$/, '')];
+      var app = window.dpBreadcrumb.getAppByPath(window.location.pathname);
+      var categoryPages = window.dpBreadcrumb.categoryPages;
       var pageTitle = document.querySelector('main h1')?.textContent?.trim() || document.title.split('–')[0] || '';
 
       var nav = document.getElementById('visible-breadcrumb');
