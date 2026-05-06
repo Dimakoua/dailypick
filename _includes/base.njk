@@ -180,7 +180,13 @@
           var normalized = path.replace(/\/$/, '');
           var apps = window.dpBreadcrumb.apps || [];
           for (var i = 0; i < apps.length; i += 1) {
-            if (apps[i].path === path || apps[i].path === normalized || apps[i].path === normalized + '/') {
+            var appPath = (apps[i].path || '').replace(/\/$/, '');
+            if (
+              apps[i].path === path ||
+              appPath === normalized ||
+              appPath === normalized + '/' ||
+              normalized.indexOf(appPath + '/') === 0
+            ) {
               return apps[i];
             }
           }

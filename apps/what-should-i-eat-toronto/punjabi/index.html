@@ -1,0 +1,129 @@
+---
+layout: base_app.njk
+title: "ਟੋਰਾਂਟੋ ਫੂਡ ਵ੍ਹੀਲ – ਟੋਰਾਂਟੋ ਰੈਸਟੋਰੈਂਟ ਅਤੇ ਡਿਸ਼ ਚੁਣੋ | Daily Pick"
+description: "ਟੋਰਾਂਟੋ ਵਿੱਚ ਕਿੱਸੇ ਖਾਣ ਦੀ ਸੋਚ ਨਹੀਂ ਪੈ ਰਹੀ? ਟੋਰਾਂਟੋ ਆਈਕਾਨ, ਬਹੁ-ਸੱਭਿਆਚਾਰਕ ਖਾਣੇ, ਪਿਆਰੇ ਇਲਾਕੇ ਅਤੇ ਡਾਊਨਟਾਊਨ ਖਾਣੇ ਲਈ ਵ੍ਹੀਲ ਫਿਰਾਓ।"
+keywords: "ਟੋਰਾਂਟੋ ਫੂਡ ਵ੍ਹੀਲ, Toronto restaurant picker, what to eat in Toronto, Punjabi food wheel, Toronto food guide"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-toronto/punjabi/"
+localBrandConfig: /apps/wheel/local-brand-config.js
+headExtra: |
+  <link href="/apps/what-should-i-eat-toronto/style.css" rel="stylesheet" />
+  <meta http-equiv="Content-Language" content="pa" />
+  <link rel="alternate" hreflang="en" href="https://dailypick.dev/apps/what-should-i-eat-toronto/" />
+  <link rel="alternate" hreflang="ta" href="https://dailypick.dev/apps/what-should-i-eat-toronto/tamil/" />
+  <link rel="alternate" hreflang="pa" href="https://dailypick.dev/apps/what-should-i-eat-toronto/punjabi/" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://dailypick.dev/apps/what-should-i-eat-toronto/mandarin/" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">6ix ਤੁਹਾਡੀ ਪਕਾਰ ਸੁਣ ਰਿਹਾ ਹੈ — ਤੁਸੀਂ ਕੀ ਖਾਣ ਜਾ ਰਹੇ ਹੋ?</p>
+            <h1>🍁 ਟੋਰਾਂਟੋ ਫੂਡ ਵ੍ਹੀਲ</h1>
+            <p>ਪੀਮੀਲ ਬੇਕਨ ਸੈਂਡਵਿਚ ਅਤੇ ਕੋਰੀਆਈ ਬਾਰਬੀਕਿਊ ਵਿਚਕਾਰ ਫਸੇ ਹੋ? ਵ੍ਹੀਲ ਫਿਰਾਓ ਤੇ 6ix ਨੂੰ ਚੁਣਨ ਦਿਓ!</p>
+            <p>ਇਹ ਪੇਜ਼ ਪੰਜਾਬੀ ਵਿੱਚ ਉਪਲਬਧ ਹੈ। ਅੰਗਰੇਜ਼ੀ ਲਈ ਵਾਪਸ: <a href="/apps/what-should-i-eat-toronto/">Toronto Food Wheel</a>, தமிழில்: <a href="/apps/what-should-i-eat-toronto/tamil/">தமிழ் பதிப்பு</a>, ਅਤੇ 中文 版本: <a href="/apps/what-should-i-eat-toronto/mandarin/">中文版本</a>。</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Peameal Bacon Sandwich,Butter Tart,Poutine,Nanaimo Bar,BeaverTail,Timbits,Jerk Chicken,Kensington Empanada">🍁 ਟੋਰਾਂਟੋ ਆਈਕਾਨ</button>
+            <button class="preset-btn" data-items="Sushi,Ramen,Steakhouse,Oysters,Craft Burger,Tacos,Rooftop Pizza,Izakaya">🌃 ਡਾਊਨਟਾਊਨ ਖਾਣੇ</button>
+            <button class="preset-btn" data-items="Vietnamese Pho,West Indian Roti,Korean BBQ,Sri Lankan Curry,Dim Sum,Ethiopian Injera,Falafel Wrap,Jamaican Patty">🌍 ਬਹੁ-ਸੱਭਿਆਚਾਰਕ ਮਿਲਾਪ</button>
+            <button class="preset-btn" data-items="Danforth Souvlaki,Little Italy Pasta,St Lawrence Peameal,Gerrard Butter Chicken,Roncy Pierogi,Chinatown Dim Sum,Kensington Tacos,Harbourfront Fish & Chips">🏘️ ਇਲਾਕਾਈ ਖਜ਼ਾਨੇ</button>
+        </div>
+
+        <button id="spinBtn">🍁 ਖਾਣ ਲਈ ਫਿਰਾਓ!</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>ਟੋਰਾਂਟੋ ਫੂਡ ਵ੍ਹੀਲ: 6ix ਲਈ ਰੈਂਡਮ ਰੈਸਟੋਰੈਂਟ ਅਤੇ ਡਿਸ਼ ਚੁਣਨ ਵਾਲਾ</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>ਟੋਰਾਂਟੋ ਫੂਡ ਵ੍ਹੀਲ ਸ਼ਹਿਰ ਦੇ ਭਾਰਭੂਕੇ ਖਾਣੇ ਦੇ ਦ੍ਰਿਸ਼ ਨੂੰ ਪਾਰ ਕਰਕੇ ਤੁਹਾਡੇ ਲਈ ਇੱਕ ਸੁਆਦਿਸ਼ਟ ਚੋਣ ਚੁਣਦੀ ਹੈ। ਸੇਂਟ ਲਾਰੈਂਸ ਮਾਰਕੀਟ ਦੇ ਪ੍ਰਸਿੱਧ ਪੀਮੀਲ ਬੇਕਨ ਸੈਂਡਵਿਚ ਅਤੇ ਸ਼ਹਿਰ ਦੀ ਸਭ ਤੋਂ ਖੁਸ਼ਕ ਬਟਰ ਟਾਰਟ ਤੋਂ ਲੈ ਕੇ ਬਲੂਰ ਦੇ ਕੋਰੀਆਈ ਬੀਬੀਕਿਊ, ਸਕਾਰਬੋਰਾ ਤੇ ਵੈਸਟ ਇੰਡੀਆਈ ਰੋਟੀ ਅਤੇ ਡੈਨਫੋਰਥ ਦੇ ਸੋਵਲਾਕੀ ਤੱਕ — ਫਿਰਾਓ ਅਤੇ ਖਾਓ।</p>
+                </div>
+                <div>
+                    <h3>ਇਹ ਵ੍ਹੀਲ ਕਿਵੇਂ ਮਦਦ ਕਰਦੀ ਹੈ</h3>
+                    <ul>
+                        <li><strong>ਸ਼ਹਿਰ ਭਰ ਦੀ ਵੱਖ-ਵੱਖਤਾ:</strong> ਟੋਰਾਂਟੋ ਆਈਕਾਨ, ਡਾਊਨਟਾਊਨ ਖਾਣੇ, ਬਹੁ-ਸੱਭਿਆਚਾਰਕ ਮਿਲਾਪ ਅਤੇ ਇਲਾਕਾਈ ਖਜ਼ਾਨਿਆਂ ਦੇ ਚਾਰ ਪ੍ਰੀਸੈਟ।</li>
+                        <li><strong>ਅਸਲ ਟੋਰਾਂਟੋ ਖਾਣਾ:</strong> ਹਰ ਇਕ ਆਈਟਮ ਇੱਕ ਖਾਣੇ, ਰੈਸਟੋਰੈਂਟ ਅੰਦਾਜ਼ ਜਾਂ ਨੇਬਰਹੁੱਡ ਖਾਸ ਹੈ ਜੋ ਅਸਲ ਟੋਰਾਂਟੋ ਖਾਣੇ ਨਾਲ ਜੁੜਿਆ ਹੈ।</li>
+                        <li><strong>ਤੁਰੰਤ ਚੋਣ:</strong> 20 ਮਿੰਟ ਯੈਲਪ ਸਕ੍ਰੋਲ ਕਰਨ ਦੀ ਲੋੜ ਨਹੀਂ — ਇਕ ਵਾਰੀ ਫਿਰਾਓ, ਇਕ ਖਾਣਾ, ਚੱਲੋ!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>ਸਿਰਲੇਖ ਸੂਚੀ</h3>
+                <ol>
+                    <li><a href="#what-is-toronto-food-wheel">ਟੋਰਾਂਟੋ ਫੂਡ ਵ੍ਹੀਲ ਕੀ ਹੈ?</a></li>
+                    <li><a href="#who-should-use-toronto-food-wheel">ਇਹ ਕਿਸ ਲਈ ਹੈ?</a></li>
+                    <li><a href="#how-toronto-food-wheel-works">ਇਹ ਕਿਵੇਂ ਕੰਮ ਕਰਦੀ ਹੈ?</a></li>
+                    <li><a href="#toronto-food-wheel-features">ਖਾਸੀਆਂ</a></li>
+                    <li><a href="#toronto-food-wheel-categories">ਟੋਰਾਂਟੋ ਖਾਣਾ ਵੱਗਾਂ</a></li>
+                    <li><a href="#toronto-food-wheel-tips">ਟਿਪਸ</a></li>
+                    <li><a href="#toronto-food-wheel-alternatives">ਵਿਕਲਪ</a></li>
+                    <li><a href="#why-toronto-food-wheel-works">ਇਹ ਕਿਉਂ ਕੰਮ ਕਰਦੀ ਹੈ</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-toronto-food-wheel">
+                <h3>1. ਟੋਰਾਂਟੋ ਫੂਡ ਵ੍ਹੀਲ ਕੀ ਹੈ?</h3>
+                <p>ਟੋਰਾਂਟੋ ਫੂਡ ਵ੍ਹੀਲ ਅਸਲ ਟੋਰਾਂਟੋ ਦੇ ਡਾਈਨਿੰਗ ਸीन ਦੇ ਆਧਾਰ 'ਤੇ ਬਣਾਈ ਗਈ ਇੱਕ ਰੈਂਡਮ ਰੈਸਟੋਰੈਂਟ ਅਤੇ ਡਿਸ਼ ਚੁਣਨ ਵਾਲੀ ਟੂਲ ਹੈ। ਇਹ ਸ਼ਹਿਰ ਦੀ ਖਾਣ-ਪੀਣ ਦੀ ਪਛਾਣ ਨੂੰ ਕਵਰ ਕਰਦੀ ਹੈ — ਟੋਰਾਂਟੋ ਦੇ ਪੀਮੀਲ ਬੇਕਨ ਸੈਂਡਵਿਚ ਅਤੇ ਬਟਰ ਟਾਰਟ ਵਰਗੇ ਆਈਕਾਨਿਕ ਵਰਕਾਂ ਤੋਂ ਲੈ ਕੇ ਉਹਨਾਂ ਬਹੁ-ਸੱਭਿਆਚਾਰਕ ਨੇਬਰਹੁੱਡਾਂ ਤੱਕ ਜੋ 6ix ਨੂੰ ਦੁਨੀਆ ਭਰ ਵਿੱਚ ਸਭ ਤੋਂ ਨਹੀ ਖਾਣ ਵਾਲਾਂ ਸ਼ਹਿਰ ਬਣਾਉਂਦੇ ਹਨ।</p>
+            </section>
+
+            <section id="who-should-use-toronto-food-wheel">
+                <h3>2. ਇਹ ਕਿਸ ਲਈ ਹੈ?</h3>
+                <p>ਉਹ ਟੋਰਾਂਟੋ ਵਾਲੇ ਜੋ ਸੌਂ ਚੰਗੇ ਵਿਕਲਪਾਂ ਵਿੱਚੋਂ ਚੁਣ ਨਹੀਂ ਸਕਦੇ, ਉਹ ਯਾਤਰੀ ਜੋ ਸ਼ਹਿਰ ਦੀ ਖਾਣ-ਪੀਣ ਦੀ ਦੁਨੀਆ ਦਾ ਅਨੁਭਵ ਲੈਣਾ ਚਾਹੁੰਦੇ ਹਨ, ਅਤੇ ਉਹ ਹਰ ਕੋਈ ਜੋ ਯੰਗ ਅਤੇ ਡੰਡਸ਼ 'ਤੇ ਖੜਾ ਹੋ ਕੇ ਬੇਹੱਦ ਚੰਗੇ ਚੋਣਾਂ ਕਾਰਨ ਹਿਲਾ-ਦਿਲਾ ਗਿਆ ਹੋਵੇ। ਫਿਰਾਓ, ਚੱਲੋ, ਖਾਓ।</p>
+            </section>
+
+            <section id="how-toronto-food-wheel-works">
+                <h3>3. ਇਹ ਕਿਵੇਂ ਕੰਮ ਕਰਦੀ ਹੈ?</h3>
+                <p>ਚਾਰ ਪ੍ਰੀਸੈਟਾਂ ਵਿੱਚੋਂ ਇੱਕ ਚੁਣੋ, ਫਿਰ ਸਪੀਨ ਬਟਨ ਦਬਾਓ। ਵ੍ਹੀਲ ਇਕ ਚੋਣ 'ਤੇ ਆ ਕੇ ਉਸਨੂੰ ਐਲਾਨ ਕਰਦੀ ਹੈ। ਇਸਨੂੰ ਇੱਕ ਸ਼੍ਰੇਣੀ ਦੇ ਪ੍ਰੰਪਟ ਵਜੋਂ ਵਰਤੋ — ਫਿਰ ਆਪਣੇ ਨੇੜੇ ਉਸ ਖਾਣੇ ਜਾਂ ਇਲਾਕੇ ਲਈ ਸਭ ਤੋਂ ਵਧੀਆ ਥਾਂ ਲੱਭੋ। ਜੇ ਇਹ ਬਹੁਤ ਦੂਰ ਪੁੱਜੇ ਤਾਂ ਫਿਰ ਵਾਪਿਸ ਫਿਰਾਓ।</p>
+            </section>
+
+            <section id="toronto-food-wheel-features">
+                <h3>4. ਖਾਸੀਆਂ</h3>
+                <ul>
+                    <li><strong>ਚਾਰ ਸ਼ਹਿਰੀ ਪ੍ਰੀਸੈਟ:</strong> ਟੋਰਾਂਟੋ ਆਈਕਾਨ, ਡਾਊਨਟਾਊਨ ਖਾਣੇ, ਬਹੁ-ਸੱਭਿਆਚਾਰਕ ਮਿਲਾਪ, ਅਤੇ ਇਲਾਕਾਈ ਖਜ਼ਾਨੇ।</li>
+                    <li><strong>ਅਸਲ ਟੋਰਾਂਟੋ ਚੋਣਾਂ:</strong> ਹਰ ਆਈਟਮ ਇੱਕ ਅਸਲ ਟੋਰਾਂਟੋ ਖਾਣੇ ਦੀ ਰਿਵਾਇਤ, ਜ਼ਿਲ੍ਹਾ ਜਾਂ ਸਿਨੇ ਹੈ।</li>
+                    <li><strong>ਮੋਬਾਈਲ-ਦੋਸਤਾਨਾ ਕੈਨਵਾਸ ਵ੍ਹੀਲ:</strong> ਫੋਨ, ਟੈਬਲੇਟ ਅਤੇ ਡੈਸਕਟਾਪ 'ਤੇ ਨਰਮ ਫਿਰਾਵਟ — ਚਲਦੇ ਫਿਰਦੇ ਫੈਸਲਾ ਕਰਨ ਲਈ ਬਿਲਕੁਲ ਠੀਕ।</li>
+                    <li><strong>ਤੁਰੰਤ ਨਤੀਜਾ:</strong> ਹਰ ਸਪੀਨ ਤੋਂ ਬਾਦ ਜੇਤੂ ਸਫਾਈ ਨਾਲ ਦਿਖਾਈ ਜਾਂਦੀ ਹੈ ਤਾਂ ਤੁਸੀਂ ਤੇਜ਼ੀ ਨਾਲ ਕਾਰਵਾਈ ਕਰ ਸਕਦੇ ਹੋ।</li>
+                    <li><strong>ਰੰਗ ਕਸਟਮਾਈਜ਼ੇਸ਼ਨ:</strong> ਲੋਕਲ ਬ੍ਰਾਂਡ ਸਟੂਡੀਓ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਟੋਰਾਂਟੋ ਲਾਲ ਰੰਗ ਦੇ ਨਾਲ ਥੀਮ ਬਣਾ ਸਕਦੇ ਹੋ।</li>
+                </ul>
+            </section>
+
+            <section id="toronto-food-wheel-categories">
+                <h3>5. ਟੋਰਾਂਟੋ ਖਾਣੇ ਦੀਆਂ ਵਰਗ</h3>
+                <p><strong>ਟੋਰਾਂਟੋ ਆਈਕਾਨ</strong> ਉਹ ਖਾਣੇ ਲੈ ਕੇ ਆਉਂਦਾ ਹੈ ਜੋ ਸ਼ਹਿਰ ਨੂੰ ਪਰਿਭਾਸ਼ਿਤ ਕਰਦੇ ਹਨ — ਸੇਂਟ ਲਾਰੈਂਸ ਮਾਰਕੀਟ ਤੋਂ ਪੀਮੀਲ ਬੇਕਨ ਸੈਂਡਵਿਚ, ਬਟਰ ਟਾਰਟ, ਪੁਤਿਨ, ਨੈਨਾਆਈਮੋ ਬਾਰ, ਬੀਵਰਟੇਲ, ਟਿੰਬਿਟਸ, ਏਗਲਿੰਟਨ ਵेस्ट ਤੋਂ ਜਰਕ ਚਿਕਨ ਅਤੇ ਕੇਨਸਿੰਗਟਨ ਤੋਂ ਇੰਪਾਨਾਡਾ. <strong>ਡਾਊਨਟਾਊਨ ਖਾਣੇ</strong> ਕਿੰਗ ਵੈਸਟ ਅਤੇ ਐਨਟਰਟੇਨਮੈਂਟ ਡਿਸਟ੍ਰਿਕਟ ਦਾ ਸੁਆਦ ਦਿਖਾਉਂਦਾ ਹੈ — ਸੁਸ਼ੀ, ਰੇਮਨ, ਸਟੀਕਹਾਊਸ, ਓਇਸਟਰਨ, ਕ੍ਰਾਫਟ ਬਰਗਰ ਅਤੇ ਛੱਤ ਉੱਤੇ ਪੀਜ਼ਾ. <strong>ਬਹੁ-ਸੱਭਿਆਚਾਰਕ ਮਿਲਾਪ</strong> ਟੋਰਾਂਟੋ ਦੇ ਸਭ ਤੋਂ ਵਧੀਆ ਪਹਲੂ ਨੂੰ ਵੱਖ ਕਰਦਾ ਹੈ — ਸਪadina' ਤੇ ਵਿਯਤਨਾਮੀ ਫੋ, ਸਕਾਰਬੋਰਾ ਵਿੱਚ ਵੈਸਟ ਇੰਡੀਆਈ ਰੋਟੀ, ਬਲੂਰ ‘ਤੇ ਕੋਰੀਆਈ ਬੀਬੀਕਿਊ, ਗੇਰਾਰਡ ‘ਤੇ ਸ੍ਰੀਲੰਕਾਈ ਕਰੀ, ਮਾਰਕਹੈਂਦ ਵਿਚ ਡਿਮ ਸਮ, ਡੈਨਫੋਰਥ ‘ਤੇ ਇਥਿਓਪੀਆਈ ਇੰਜਿਰਾ, ਕੇਨਸਿੰਗਟਨ ‘ਤੇ ਫਾਲਾਫਲ ਰੈਪ ਅਤੇ ਜਮਾਈਕਨ ਪੈਟੀ. <strong>ਇਲਾਕਾਈ ਖਜ਼ਾਨੇ</strong> ਸ਼ਹਿਰ ਦੇ ਵੱਖਰੇ ਖਾਣੇ ਦੇ ਪਿੰਡਾਂ ਨੂੰ ਦਰਸਾਉਂਦੇ ਹਨ — ਡੈਨਫੋਰਥ ‘ਤੇ ਸੋਵਲਾਕੀ, ਲਿਟਲ ਇਟਲੀ ‘ਚ ਪਾਸਤਾ, ਰੋਂਸੇਸਵਾਲਸ ‘ਤੇ ਪ੍ਯਰੋਜੀ, ਗੇਰਾਰਡ ‘ਤੇ ਬਟਰ ਚਿਕਨ, ਚਾਇਨਾ ਟਾਊਨ ‘ਚ ਡਿਮ ਸਮ, ਕੇਨਸਿੰਗਟਨ ‘ਚ ਟੈਕੋਜ਼, ਅਤੇ ਹਾਰਬਰਫਰੰਟ ‘ਤੇ ਮੱਛੀ ਅਤੇ ਚਿਪਸ.</p>
+            </section>
+
+            <section id="toronto-food-wheel-tips">
+                <h3>6. ਸੁਝਾਅ</h3>
+                <p>ਟੋਰਾਂਟੋ ਆਈਕਾਨ ਨੂੰ ਇੱਕ ਕਲਾਸਿਕ ਸਥਾਨਕ ਅਨੁਭਵ ਲਈ ਵਰਤੋਂ, ਬਹੁ-ਸੱਭਿਆਚਾਰਕ ਮਿਲਾਪ ਨੂੰ ਸ਼ਹਿਰੀ ਵਿਭਿੰਨਤਾ ਦੀ ਖੋਜ ਲਈ, ਡਾਊਨਟਾਊਨ ਖਾਣੇ ਨੂੰ ਡੇਟ ਨਾਈਟ ਜਾਂ ਖ਼ਰਚਾ ਖਾਤੇ ਦੇ ਡਿਨर ਲਈ, ਅਤੇ ਇਲਾਕਾਈ ਖਜ਼ਾਨੇ ਨੂੰ ਇੱਕ ਨਿਸ਼ਾਨ ਵਾਲੇ ਇਲਾਕੇ ਨੂੰ ਚੁਣਨ ਲਈ. ਆਪਣੀਆਂ ਟੋਰਾਂਟੋ ਪ੍ਰਿਯ ਰੈਸਟੋਰੈਂਟ ਚੋਣਾਂ ਨੂੰ ਸ਼ਾਮਲ ਕਰਕੇ ਇੱਕ ਪੂਰੀ ਤਰ੍ਹਾਂ ਨਿੱਜੀ ਸ਼ਹਿਰੀ ਖਾਣੇ ਦੀ ਵ੍ਹੀਲ ਬਣਾਓ.</p>
+            </section>
+
+            <section id="toronto-food-wheel-alternatives">
+                <h3>7. ਵਿਕਲਪ</h3>
+                <p>ਇੱਕ ਵੱਡੇ ਵਿਸ਼ਵ ਫੂਡ ਪਿਕਰ ਲਈ <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a> ਦਾ ਉਪਯੋਗ ਕਰੋ. ਜੇ ਵ੍ਹੀਲ ਕਿਸੇ ਅੰਤਰਰਾਸ਼ਟਰੀ ਖਾਣੇ 'ਤੇ ਠਹਿਰਦੀ ਹੈ, ਤਾਂ <a href="/apps/what-should-i-eat-indian/">Indian Food Wheel</a>, <a href="/apps/what-should-i-eat-chinese/">Chinese Food Wheel</a>, ਜਾਂ <a href="/apps/what-yousef-should-eat/">Persian Food Wheel</a> ਨਾਲ ਹੋਰ ਵਿਸ਼ਲੇਸ਼ਣ ਕਰੋ. ਆਪਣੇ ਭੋਜਨ ਲਈ ਇੱਕ ਪੀਣਾ ਚੁਣਨ ਲਈ, <a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a> ਤੁਹਾਡੀ ਮਦਦ ਕਰੇਗਾ.</p>
+            </section>
+
+            <section id="why-toronto-food-wheel-works">
+                <h3>8. ਇਹ ਕਿਉਂ ਕੰਮ ਕਰਦੀ ਹੈ</h3>
+                <p>ਟੋਰਾਂਟੋ ਵਿੱਚ ਨਿਊਯਾਰਕ ਸ਼ਹਿਰ ਨਾਲੋਂ ਜ਼ਿਆਦਾ ਰੈਸਟੋਰੈਂਟ ਪ੍ਰਤੀ ਵਿਅਕਤੀ ਹਨ, ਅਤੇ ਇੱਕ ਖਾਣੇ ਦੀ ਵਿਵਿਧਤਾ ਜੋ ਹਰ ਨੇਬਰਹੁੱਡ ਨੂੰ ਇੱਕ ਵੱਖਰੇ ਦੇਸ਼ ਵਾਂਗ ਮਹਿਸੂਸ ਕਰਵਾਉਂਦੀ ਹੈ. ਇਹ ਧਨੀ ਦਾ ਰਾਹੀ ਚੋਣ ਮੁਸ਼ਕਿਲ ਬਣ ਜਾਂਦੀ ਹੈ. ਇਹ ਵ੍ਹੀਲ ਸ਼ਹਿਰ ਦੇ ਸਰੋਤ ਖਾਣੇ ਦੇ ਪਲਾਂ ਨੂੰ ਇੱਕ ਤੇਜ਼, ਮਨੋਰੰਜਕ ਫੈਸਲੇ ਵਿੱਚ ਬਦਲਦੀ ਹੈ. ਇੱਕ ਵਾਰੀ ਫਿਰਾਓ, ਇੱਕ ਭੋਜਨ — ਚੱਲੋ।</p>
+            </section>
+        </section>
+    </main>
+
+    <script src="/assets/js/wheel-engine.js"></script>
+    <script>
+  FoodWheelEngine.init({
+    canvasSelector: "#wheel",
+    spinButtonSelector: "#spinBtn",
+    winnerSelector: "#winner",
+    presetButtonSelector: ".preset-btn",
+    defaultItems: ['Peameal Bacon Sandwich', 'Butter Tart', 'Poutine', 'Nanaimo Bar', 'BeaverTail', 'Timbits', 'Jerk Chicken', 'Kensington Empanada'],
+    resultFormatter: function (selectedItem) {
+      return `🍁 6ix ਕਹਿੰਦਾ ਹੈ: <span style="color: var(--toronto-red); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+    }
+  });
+</script>

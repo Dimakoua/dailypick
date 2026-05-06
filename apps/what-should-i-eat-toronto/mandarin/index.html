@@ -1,0 +1,129 @@
+---
+layout: base_app.njk
+title: "多伦多美食转盘 – 随机多伦多餐厅与菜品选择器 | Daily Pick"
+description: "还在犹豫多伦多吃什么？旋转转盘，选择多伦多地标餐点、多元文化美食、社区美味和市中心餐饮。"
+keywords: "多伦多美食转盘, Toronto restaurant picker, what to eat in Toronto, Mandarin food wheel, Toronto food guide"
+canonical: "https://dailypick.dev/apps/what-should-i-eat-toronto/mandarin/"
+localBrandConfig: /apps/wheel/local-brand-config.js
+headExtra: |
+  <link href="/apps/what-should-i-eat-toronto/style.css" rel="stylesheet" />
+  <meta http-equiv="Content-Language" content="zh-Hans" />
+  <link rel="alternate" hreflang="en" href="https://dailypick.dev/apps/what-should-i-eat-toronto/" />
+  <link rel="alternate" hreflang="ta" href="https://dailypick.dev/apps/what-should-i-eat-toronto/tamil/" />
+  <link rel="alternate" hreflang="pa" href="https://dailypick.dev/apps/what-should-i-eat-toronto/punjabi/" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://dailypick.dev/apps/what-should-i-eat-toronto/mandarin/" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">6ix 在呼唤你 — 你今晚想吃什么？</p>
+            <h1>🍁 多伦多美食转盘</h1>
+            <p>在卑美尔培根三明治和韩式烧烤之间犹豫不决？旋转转盘，让 6ix 来决定！</p>
+            <p>此页面提供多种语言版本：<a href="/apps/what-should-i-eat-toronto/">English</a>、<a href="/apps/what-should-i-eat-toronto/tamil/">தமிழ் பதிப்பு</a>、<a href="/apps/what-should-i-eat-toronto/punjabi/">ਪੰਜਾਬੀ ਸੰਸਕਰਨ</a>。</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Peameal Bacon Sandwich,Butter Tart,Poutine,Nanaimo Bar,BeaverTail,Timbits,Jerk Chicken,Kensington Empanada">🍁 多伦多标志</button>
+            <button class="preset-btn" data-items="Sushi,Ramen,Steakhouse,Oysters,Craft Burger,Tacos,Rooftop Pizza,Izakaya">🌃 市中心美食</button>
+            <button class="preset-btn" data-items="Vietnamese Pho,West Indian Roti,Korean BBQ,Sri Lankan Curry,Dim Sum,Ethiopian Injera,Falafel Wrap,Jamaican Patty">🌍 多元文化组合</button>
+            <button class="preset-btn" data-items="Danforth Souvlaki,Little Italy Pasta,St Lawrence Peameal,Gerrard Butter Chicken,Roncy Pierogi,Chinatown Dim Sum,Kensington Tacos,Harbourfront Fish & Chips">🏘️ 社区美食</button>
+        </div>
+
+        <button id="spinBtn">🍁 旋转转盘！</button>
+        <div id="winner"></div>
+
+        <section class="seo-content-area">
+            <h2>多伦多美食转盘：针对 6ix 的随机餐厅和菜品选择器</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>多伦多美食转盘帮你突破城市繁多的美食选择，直接选出一款美味。无论是圣劳伦斯市场的招牌卑美尔培根三明治、城市里最酥脆的黄油挞，还是布鲁尔街的韩式烧烤、士嘉堡的西印度罗蒂和丹佛斯的烤肉饼——旋转一下，就开吃。</p>
+                </div>
+                <div>
+                    <h3>为什么这个转盘好用</h3>
+                    <ul>
+                        <li><strong>全城多样：</strong>四组预设涵盖多伦多标志、市中心美食、多元文化组合和社区美食。</li>
+                        <li><strong>真实多伦多口味：</strong>每个选项都是一道菜、一种餐厅风格或一个社区经典。</li>
+                        <li><strong>立即出结果：</strong>无需浏览 Yelp 20 分钟——一旋转，一个决定，就出发！</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>目录</h3>
+                <ol>
+                    <li><a href="#what-is-toronto-food-wheel">什么是多伦多美食转盘？</a></li>
+                    <li><a href="#who-should-use-toronto-food-wheel">谁应该使用？</a></li>
+                    <li><a href="#how-toronto-food-wheel-works">它如何运作？</a></li>
+                    <li><a href="#toronto-food-wheel-features">特点</a></li>
+                    <li><a href="#toronto-food-wheel-categories">多伦多美食类别</a></li>
+                    <li><a href="#toronto-food-wheel-tips">小贴士</a></li>
+                    <li><a href="#toronto-food-wheel-alternatives">其他选项</a></li>
+                    <li><a href="#why-toronto-food-wheel-works">为什么它有效？</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-toronto-food-wheel">
+                <h3>1. 什么是多伦多美食转盘？</h3>
+                <p>多伦多美食转盘是基于真实多伦多餐饮场景打造的随机餐厅与菜品选择工具。它覆盖城市的美食身份——从代表多伦多的卑美尔培根三明治和黄油挞，到让 6ix 成为世界上最精彩美食城市之一的多元文化社区。</p>
+            </section>
+
+            <section id="who-should-use-toronto-food-wheel">
+                <h3>2. 谁应该使用？</h3>
+                <p>适合在百般美味间犹豫不决的多伦多人、想要体验城市美食的游客，以及站在样街和登打士广场前被太多选择搞糊涂的任何人。旋转、出发、吃起来。</p>
+            </section>
+
+            <section id="how-toronto-food-wheel-works">
+                <h3>3. 它如何运作？</h3>
+                <p>选择四个预设之一，然后点击“旋转”。转盘停在一个食物选项上并告知你结果。将其作为分类提示，然后在附近找到该菜品或社区的最佳地点。如果太远，就再旋转一次。</p>
+            </section>
+
+            <section id="toronto-food-wheel-features">
+                <h3>4. 特点</h3>
+                <ul>
+                    <li><strong>四个城市预设：</strong>多伦多标志、市中心美食、多元文化组合和社区美食。</li>
+                    <li><strong>真实多伦多选择：</strong>每个选项都扎根于多伦多真实的美食传统、社区或餐饮风格。</li>
+                    <li><strong>移动友好转盘：</strong>在手机、平板和桌面上顺畅旋转，适合随时决定吃什么。</li>
+                    <li><strong>即时结果：</strong>每次旋转后清晰显示结果，让你快速行动。</li>
+                    <li><strong>颜色可定制：</strong>使用本地品牌工作室为转盘设置多伦多红主题。</li>
+                </ul>
+            </section>
+
+            <section id="toronto-food-wheel-categories">
+                <h3>5. 多伦多美食类别</h3>
+                <p><strong>多伦多标志</strong>收录定义这座城市的经典菜品——圣劳伦斯市场的卑美尔培根三明治、黄油挞、肉汁薯条、纳奈莫条、海狸尾、廷比特、伊格林顿西区的香辣炖鸡和肯辛顿的肉馅卷。<strong>市中心美食</strong>反映金西区和娱乐区的餐饮风格——寿司、拉面、牛排馆、牡蛎吧、手工汉堡和屋顶披萨。<strong>多元文化组合</strong>展现多伦多的最佳风采——斯帕迪娜的越南粉、士嘉堡的西印度罗蒂、布鲁尔的韩式烧烤、葛拉德的斯里兰卡咖喱、马克汉姆的点心、丹佛斯的埃塞俄比亚因吉拉、肯辛顿的沙拉酥卷和牙买加饼。<strong>社区美食</strong>描绘城市独特的美食村——丹佛斯的烤肉饼、小意大利的意面、罗恩塞斯瓦尔斯的馅饼、葛拉德的黄油鸡、中国城的点心、肯辛顿的炸玉米饼和海滨区的炸鱼薯条。</p>
+            </section>
+
+            <section id="toronto-food-wheel-tips">
+                <h3>6. 小贴士</h3>
+                <p>选择“多伦多标志”体验经典本地美食，“多元文化组合”探索城市多样性，“市中心美食”用于约会夜或招待餐，“社区美食”则适合选定一个目的地社区慢慢逛。加入你自己的多伦多餐厅喜好，让这个城市美食转盘更具个人风格。</p>
+            </section>
+
+            <section id="toronto-food-wheel-alternatives">
+                <h3>7. 其他选项</h3>
+                <p>想要更广泛的全球美食选择，请试试 <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a>。如果转盘落在国际菜肴上，可进一步探索 <a href="/apps/what-should-i-eat-indian/">Indian Food Wheel</a>、<a href="/apps/what-should-i-eat-chinese/">Chinese Food Wheel</a> 或 <a href="/apps/what-yousef-should-eat/">Persian Food Wheel</a>。如果你想为餐食搭配饮品，<a href="/apps/what-drink-should-i-choose/">What Drink Should I Choose</a> 可以帮你决定。</p>
+            </section>
+
+            <section id="why-toronto-food-wheel-works">
+                <h3>8. 为什么它有效？</h3>
+                <p>多伦多的人均餐厅数量超过纽约市，城市的美食多样性让每个社区都像一个不同的国家。这种丰富性正是让选择变难的原因。这个转盘把城市最佳美食瞬间变成一个快速、有趣的决定。一次旋转，一餐美味——出发吧。</p>
+            </section>
+        </section>
+    </main>
+
+    <script src="/assets/js/wheel-engine.js"></script>
+    <script>
+  FoodWheelEngine.init({
+    canvasSelector: "#wheel",
+    spinButtonSelector: "#spinBtn",
+    winnerSelector: "#winner",
+    presetButtonSelector: ".preset-btn",
+    defaultItems: ['Peameal Bacon Sandwich', 'Butter Tart', 'Poutine', 'Nanaimo Bar', 'BeaverTail', 'Timbits', 'Jerk Chicken', 'Kensington Empanada'],
+    resultFormatter: function (selectedItem) {
+      return `🍁 6ix 说：<span style="color: var(--toronto-red); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+    }
+  });
+</script>
