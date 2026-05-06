@@ -45,7 +45,7 @@
     return getDefaultSegmentColors();
   }
 
-  function drawWheel(canvas, items, rotationAngle, options) {
+  function drawWheel(canvas, items, rotationAngle, options, showCenterPlayIcon) {
     if (!canvas || !items || !items.length) return;
     rotationAngle = rotationAngle || 0;
     options = options || {};
@@ -81,6 +81,39 @@
     });
 
     ctx.restore();
+
+    if (showCenterPlayIcon) {
+      var centerRadius = radius * 0.13;
+      var cx = radius;
+      var cy = radius;
+
+      ctx.save();
+
+      // Circle
+      ctx.shadowColor = 'rgba(0,0,0,0.22)';
+      ctx.shadowBlur = 8;
+      ctx.shadowOffsetY = 2;
+      ctx.beginPath();
+      ctx.arc(cx, cy, centerRadius, 0, 2 * Math.PI);
+      ctx.fillStyle = 'rgba(255,255,255,0.96)';
+      ctx.fill();
+      ctx.shadowColor = 'transparent';
+      ctx.shadowBlur = 0;
+      ctx.shadowOffsetY = 0;
+
+      // Triangle — centered within the circle
+      var s = centerRadius * 0.38;
+      ctx.translate(cx, cy);
+      ctx.beginPath();
+      ctx.moveTo(-s * 0.5, -s);
+      ctx.lineTo(-s * 0.5, s);
+      ctx.lineTo(s * 0.9, 0);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(30,30,30,0.85)';
+      ctx.fill();
+
+      ctx.restore();
+    }
   }
 
   function normalizeItems(items) {
@@ -114,9 +147,10 @@
     var idleAnimationFrame = null;
     var idleRotationSpeed = typeof options.idleRotationSpeed === 'number' ? options.idleRotationSpeed : 0.0035;
     var enableIdleRotation = options.enableIdleRotation !== false;
+    var enableCanvasClick = options.enableCanvasClick !== false;
 
     function renderWheel(rotation) {
-      drawWheel(canvas, foodItems, rotation, options);
+      drawWheel(canvas, foodItems, rotation, options, enableCanvasClick && !isSpinning && foodItems.length > 0);
     }
 
     function startIdleRotation() {
@@ -178,6 +212,7 @@
         } else {
           winnerElement.innerHTML = resultFormatter(selectedItem);
           isSpinning = false;
+          renderWheel(currentRotation);
           startIdleRotation();
         }
       }
@@ -186,6 +221,11 @@
     }
 
     spinButton.addEventListener('click', spinWheel);
+
+    if (enableCanvasClick) {
+      canvas.addEventListener('click', spinWheel);
+      canvas.style.cursor = 'pointer';
+    }
 
     presetButtons.forEach(function (button) {
       button.addEventListener('click', function () {
