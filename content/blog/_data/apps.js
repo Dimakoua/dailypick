@@ -358,7 +358,215 @@ module.exports = [
     footerGroup: "Games",
     emoji: "🇬🇷",
     description: "Spin the wheel for Greek classics, fresh Aegean seafood, grilled meats, and honey-soaked pastries. Moussaka or baklava? Opa!"
-  },  {
+  },
+  {
+    id: "what-should-i-eat-austin",
+    name: "Austin Food Wheel",
+    path: "/apps/what-should-i-eat-austin/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🌮",
+    description: "Spin the wheel for Austin eats, from BBQ and breakfast tacos to Tex-Mex, food trucks, and live music snacks."
+  },
+  {
+    id: "what-should-i-eat-beijing",
+    name: "Beijing Food Wheel",
+    path: "/apps/what-should-i-eat-beijing/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🥡",
+    description: "Spin the wheel for Beijing classics like Peking duck, noodles, dumplings, and street food favorites."
+  },
+  {
+    id: "what-should-i-eat-bengaluru",
+    name: "Bengaluru Food Wheel",
+    path: "/apps/what-should-i-eat-bengaluru/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🍛",
+    description: "Spin the wheel for Bengaluru bites — dosas, filter coffee, street-side chaats, and South Indian specialties."
+  },
+  {
+    id: "what-should-i-eat-berlin",
+    name: "Berlin Food Wheel",
+    path: "/apps/what-should-i-eat-berlin/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🥨",
+    description: "Spin the wheel for Berlin favorites like currywurst, döner, pretzels, and international street food."
+  },
+  {
+    id: "what-should-i-eat-chengdu",
+    name: "Chengdu Food Wheel",
+    path: "/apps/what-should-i-eat-chengdu/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🌶️",
+    description: "Spin the wheel for Chengdu heat — mapo tofu, spicy hotpot, noodles, and Sichuan peppercorn dishes."
+  },
+  {
+    id: "what-should-i-eat-chennai",
+    name: "Chennai Food Wheel",
+    path: "/apps/what-should-i-eat-chennai/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🍤",
+    description: "Spin the wheel for Chennai favorites like seafood, idli, dosa, biryani, and coastal South Indian cuisine."
+  },
+  {
+    id: "what-should-i-eat-chicago",
+    name: "Chicago Food Wheel",
+    path: "/apps/what-should-i-eat-chicago/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🍕",
+    description: "Spin the wheel for Chicago classics — deep dish pizza, hot dogs, Italian beef, and hearty comfort food."
+  },
+  {
+    id: "what-should-i-eat-dubai",
+    name: "Dubai Food Wheel",
+    path: "/apps/what-should-i-eat-dubai/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🏙️",
+    description: "Spin the wheel for Dubai eats — Arabic mezze, shawarma, seafood, luxury dining, and global fusion."
+  },
+  {
+    id: "what-should-i-eat-guangzhou",
+    name: "Guangzhou Food Wheel",
+    path: "/apps/what-should-i-eat-guangzhou/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🥟",
+    description: "Spin the wheel for Cantonese favorites — dim sum, roast meats, seafood, and classic noodle dishes."
+  },
+  {
+    id: "what-should-i-eat-istanbul",
+    name: "Istanbul Food Wheel",
+    path: "/apps/what-should-i-eat-istanbul/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🧆",
+    description: "Spin the wheel for Istanbul street food — kebabs, mezes, baklava, Turkish coffee, and spice market flavors."
+  },
+  {
+    id: "what-should-i-eat-kolkata",
+    name: "Kolkata Food Wheel",
+    path: "/apps/what-should-i-eat-kolkata/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🍛",
+    description: "Spin the wheel for Kolkata classics — street snacks, chaats, biryani, fish curry, and sweets."
+  },
+  {
+    id: "what-should-i-eat-la",
+    name: "LA Food Wheel",
+    path: "/apps/what-should-i-eat-la/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🌴",
+    description: "Spin the wheel for LA eats — tacos, sushi, vegan bowls, food trucks, and Hollywood-inspired dining."
+  },
+  {
+    id: "what-should-i-eat-london",
+    name: "London Food Wheel",
+    path: "/apps/what-should-i-eat-london/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "☕",
+    description: "Spin the wheel for London favorites — fish and chips, curries, street markets, and classic pub fare."
+  },
+  {
+    id: "what-should-i-eat-madrid",
+    name: "Madrid Food Wheel",
+    path: "/apps/what-should-i-eat-madrid/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🥘",
+    description: "Spin the wheel for Madrid tapas, paella, churros, and Spanish market dishes."
+  },
+  {
+    id: "what-should-i-eat-miami",
+    name: "Miami Food Wheel",
+    path: "/apps/what-should-i-eat-miami/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🌴",
+    description: "Spin the wheel for Miami flavors — Latin fusion, seafood, Cuban sandwiches, and beach-side bites."
+  },
+  {
+    id: "what-should-i-eat-montreal",
+    name: "Montreal Food Wheel",
+    path: "/apps/what-should-i-eat-montreal/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🥐",
+    description: "Spin the wheel for Montreal eats — bagels, poutine, smoked meat, and French-inspired comfort food."
+  },
+  {
+    id: "what-should-i-eat-mumbai",
+    name: "Mumbai Food Wheel",
+    path: "/apps/what-should-i-eat-mumbai/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🍲",
+    description: "Spin the wheel for Mumbai street food — vada pav, pav bhaji, bhel puri, and chai house treats."
+  },
+  {
+    id: "what-should-i-eat-new-deli",
+    name: "New Deli Food Wheel",
+    path: "/apps/what-should-i-eat-new-deli/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🍲",
+    description: "Spin the wheel for New Deli favorites — kebabs, biryani, chaat, and Delhi’s vibrant street food scene."
+  },
+  {
+    id: "what-should-i-eat-quebec-city",
+    name: "Québec City Food Wheel",
+    path: "/apps/what-should-i-eat-quebec-city/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🥐",
+    description: "Spin the wheel for Québec City fare — pastries, comfort classics, French-Canadian dishes, and cozy cafés."
+  },
+  {
+    id: "what-should-i-eat-shanghai",
+    name: "Shanghai Food Wheel",
+    path: "/apps/what-should-i-eat-shanghai/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🥡",
+    description: "Spin the wheel for Shanghai eats — soup dumplings, noodles, street bites, and riverfront restaurant dishes."
+  },
+  {
+    id: "what-should-i-eat-sydney",
+    name: "Sydney Food Wheel",
+    path: "/apps/what-should-i-eat-sydney/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🍤",
+    description: "Spin the wheel for Sydney dining — seafood, brunch spots, multicultural street food, and harbour views."
+  },
+  {
+    id: "what-should-i-eat-tokio",
+    name: "Tokyo Food Wheel",
+    path: "/apps/what-should-i-eat-tokio/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🍣",
+    description: "Spin the wheel for Tokyo favorites — sushi, ramen, izakaya bites, and neon-lit street stalls."
+  },
+  {
+    id: "what-should-i-eat-vancouver",
+    name: "Vancouver Food Wheel",
+    path: "/apps/what-should-i-eat-vancouver/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🍁",
+    description: "Spin the wheel for Vancouver eats — seafood, Asian fusion, farm-to-table dishes, and Pacific Northwest flavors."
+  },
+  {
     id: "when-should-i-go-to-the-gym",
     name: "When Should I Go to the Gym?",
     path: "/apps/when-should-i-go-to-the-gym/",
