@@ -1,7 +1,7 @@
 ---
 title: "Install Daily Pick as an App: PWA Support Now Available for Android and iOS"
 date: 2026-04-13
-description: "Discover how to install Daily Pick as a Progressive Web App on your mobile device. Get native app-like experience on Android and iOS with offline access and easy installation."
+description: "Learn how to install Daily Pick as a Progressive Web App on Android and iOS for offline access, easy installation, and a native-like experience."
 layout: post.njk
 tags: ["pwa", "mobile app", "android", "ios", "install", "progressive web app", "offline access"]
 canonical: "https://dailypick.dev/blog/install-daily-pick-pwa-android-ios/"
