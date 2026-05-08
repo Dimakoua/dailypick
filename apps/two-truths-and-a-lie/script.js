@@ -33,6 +33,7 @@ const statementCards = document.getElementById('statementCards');
 const prepareBtn = document.getElementById('prepareBtn');
 const revealBtn = document.getElementById('revealBtn');
 const resetBtn = document.getElementById('resetBtn');
+const endRoomBtn = document.getElementById('endRoomBtn');
 
 // Vote and Participants
 const voteButtons = document.getElementById('voteButtons');
@@ -46,6 +47,7 @@ let ws = null;
 let sessionId = null;
 let userId = null;
 let isHost = false;
+let isEndingRoom = false;
 let currentState = {
   hostId: null,
   roundIndex: 1,
@@ -155,6 +157,7 @@ function enableControls() {
   prepareBtn.disabled = !isHost || !currentState.hostId || currentState.isRevealed;
   revealBtn.disabled = !isHost || !currentState.isPrepared || currentState.isRevealed;
   resetBtn.disabled = !isHost || !sessionId;
+  endRoomBtn.disabled = !isHost || !sessionId;
   
   voteButtons.querySelectorAll('button').forEach((button) => {
     button.disabled = !sessionId || !currentState.isPrepared || currentState.isRevealed;
@@ -172,6 +175,48 @@ function updateRoundLabel() {
   if (roundLabel) {
     roundLabel.textContent = String(currentState.roundIndex);
   }
+}
+
+function cleanupSession() {
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    ws.close(1000, 'End room');
+  }
+  ws = null;
+  sessionId = null;
+  userId = null;
+  isHost = false;
+  isEndingRoom = false;
+  currentState = {
+    hostId: null,
+    roundIndex: 1,
+    statements: ['', '', ''],
+    lieIndex: null,
+    isPrepared: false,
+    isRevealed: false,
+    participants: [],
+    ownVoteIndex: null,
+  };
+  Object.keys(scores).forEach((key) => delete scores[key]);
+  lastScoredRound = null;
+  showSetupScreen();
+  updateSessionBadge();
+  updatePhaseIndicator();
+  renderStatementCards();
+  renderVoteButtons();
+  renderParticipants();
+  renderVoteSummary();
+  updateFormFields();
+  enableControls();
+  setStatus('Room closed. Ready for a new game.', 'success', true);
+}
+
+function endRoom() {
+  if (!sessionId) return;
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    isEndingRoom = true;
+    sendMessage({ type: 'end-room' });
+  }
+  cleanupSession();
 }
 
 function connectToRoom(rawCode) {
@@ -218,6 +263,10 @@ function connectToRoom(rawCode) {
   });
 
   ws.addEventListener('close', () => {
+    if (isEndingRoom) {
+      isEndingRoom = false;
+      return;
+    }
     setStatus('Disconnected. Reconnect to continue playing.', 'error');
     sessionId = null;
     isHost = false;
@@ -551,6 +600,7 @@ copyInviteBtn.addEventListener('click', copyInviteLink);
 prepareBtn.addEventListener('click', prepareRound);
 revealBtn.addEventListener('click', revealAnswer);
 resetBtn.addEventListener('click', resetRound);
+endRoomBtn.addEventListener('click', endRoom);
 
 document.addEventListener('DOMContentLoaded', () => {
   showSetupScreen();
