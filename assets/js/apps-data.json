@@ -414,6 +414,15 @@
     "description": "Spin the wheel for Chengdu heat — mapo tofu, spicy hotpot, noodles, and Sichuan peppercorn dishes."
   },
   {
+    "id": "what-should-i-eat-chongqing",
+    "name": "Chongqing Food Wheel",
+    "path": "/apps/what-should-i-eat-chongqing/",
+    "category": "food",
+    "footerGroup": "Food",
+    "emoji": "🔥",
+    "description": "Spin the wheel for Chongqing favorites — fiery hot pot, mala noodles, spicy skewers, dan dan noodles, and bold Sichuan street food."
+  },
+  {
     "id": "what-should-i-eat-chennai",
     "name": "Chennai Food Wheel",
     "path": "/apps/what-should-i-eat-chennai/",

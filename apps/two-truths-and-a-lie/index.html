@@ -10,112 +10,146 @@ headExtra: |
   <script defer src="./script.js"></script>
 ---
 <main data-page-type="standup" class="game-page" id="main">
-  <header class="page-hero glass-card">
-    <div>
-      <h1>🕵️ Two Truths and a Lie</h1>
-      <p>Statements on screen, let your team vote which one is the lie.</p>
-    </div>
-    <div class="hero-meta">
-      <span class="session-badge" id="sessionBadge">Offline</span>
-      <button class="ghost-btn" id="copyInviteBtn" type="button" disabled>Copy invite</button>
-      <button class="app-button app-button--secondary game-pip-trigger" type="button"
-        data-game-pip-target=".game-page"
-        data-game-pip-exclude=".seo-content-area, .game-pip-trigger"
-        data-game-pip-title="🕵️ Two Truths and a Lie"
-        data-game-pip-width="1100"
-        data-game-pip-height="820">🪟 Pop-out Game</button>
-    </div>
-  </header>
+  <!-- Setup Modal/Screen for initial room join -->
+  <section id="setupScreen" class="setup-screen">
+    <div class="setup-container">
+      <div class="setup-content">
+        <h1 class="setup-title">🕵️ Two Truths and a Lie</h1>
+        <p class="setup-subtitle">Guess the lie. Host controls the game.</p>
+        
+        <div class="setup-form">
+          <div class="form-section">
+            <label for="displayNameInput" class="form-label">Your Name</label>
+            <input 
+              id="displayNameInput" 
+              type="text" 
+              maxlength="32" 
+              placeholder="Enter your display name" 
+              class="form-input"
+            />
+          </div>
 
-  <section class="dashboard-card glass-card">
-    <div class="dashboard-header">
-      <div class="room-fields">
-        <div class="field-group">
-          <label for="displayNameInput">Your display name</label>
-          <div class="inline-row">
-            <input id="displayNameInput" type="text" maxlength="32" placeholder="Enter your name" />
-            <button class="btn btn--secondary" id="saveNameBtn" type="button">Save</button>
+          <div class="form-section">
+            <label class="form-label">Join or Create Room</label>
+            <div class="room-input-group">
+              <input 
+                id="roomCodeInput" 
+                type="text" 
+                inputmode="text" 
+                maxlength="8" 
+                placeholder="ABC123" 
+                class="form-input room-input"
+              />
+              <button class="btn btn--secondary" id="joinRoomBtn" type="button">Join</button>
+            </div>
+          </div>
+
+          <button class="btn btn--accent btn--large" id="createRoomBtn" type="button">Start New Game</button>
+          
+          <p id="setupStatus" class="setup-status"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Game Screen -->
+  <div id="gameScreen" class="game-screen" hidden>
+    <!-- Top Header Bar -->
+    <header class="game-header">
+      <div class="header-left">
+        <h1 class="game-title">🕵️ Two Truths and a Lie</h1>
+        <span class="game-round">Round <span id="roundLabel">1</span></span>
+      </div>
+      <div class="header-right">
+        <span class="session-badge" id="sessionBadge">Offline</span>
+        <button class="btn btn--ghost" id="copyInviteBtn" type="button" disabled>📋 Share</button>
+        <button class="app-button app-button--secondary game-pip-trigger" type="button"
+          data-game-pip-target=".game-screen"
+          data-game-pip-exclude=".game-pip-trigger"
+          data-game-pip-title="🕵️ Two Truths and a Lie"
+          data-game-pip-width="1100"
+          data-game-pip-height="820">🪟 Pop-out</button>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <div class="game-content">
+      <!-- Left: Statements (Main Focus) -->
+      <div class="statements-column">
+        <div class="game-phase-indicator" id="phaseIndicator">
+          <span class="phase-label">Setup</span>
+        </div>
+
+        <div id="hostNotice" class="host-notice" hidden>
+          <h3>👋 You're the Host</h3>
+          <p>Add your 3 statements, mark the lie, and guide your team through the game.</p>
+        </div>
+
+        <div id="hostControls" class="host-controls-section" hidden>
+          <h2 class="section-title">Create Statements</h2>
+          <div class="statement-form">
+            <div class="statement-input-group">
+              <div class="input-header">
+                <label for="statement1">Statement 1</label>
+                <label class="lie-marker">
+                  <input type="radio" name="lieChoice" value="0" />
+                  <span>This is the lie</span>
+                </label>
+              </div>
+              <textarea id="statement1" rows="2" placeholder="Write a truth or a lie" class="statement-textarea"></textarea>
+            </div>
+            <div class="statement-input-group">
+              <div class="input-header">
+                <label for="statement2">Statement 2</label>
+                <label class="lie-marker">
+                  <input type="radio" name="lieChoice" value="1" />
+                  <span>This is the lie</span>
+                </label>
+              </div>
+              <textarea id="statement2" rows="2" placeholder="Write a truth or a lie" class="statement-textarea"></textarea>
+            </div>
+            <div class="statement-input-group">
+              <div class="input-header">
+                <label for="statement3">Statement 3</label>
+                <label class="lie-marker">
+                  <input type="radio" name="lieChoice" value="2" />
+                  <span>This is the lie</span>
+                </label>
+              </div>
+              <textarea id="statement3" rows="2" placeholder="Write a truth or a lie" class="statement-textarea"></textarea>
+            </div>
+          </div>
+          <div class="host-actions">
+            <button id="prepareBtn" class="btn btn--accent btn--full" type="button">🧠 Prepare Round</button>
+            <div class="host-secondary-actions">
+              <button id="revealBtn" class="btn btn--secondary" type="button">🔍 Reveal</button>
+              <button id="resetBtn" class="btn btn--secondary" type="button">↺ Reset</button>
+            </div>
           </div>
         </div>
 
-        <div class="field-group">
-          <label for="roomCodeInput">Room code</label>
-          <input id="roomCodeInput" type="text" inputmode="text" maxlength="8" placeholder="ABC123" />
-        </div>
-
-        <div class="room-actions">
-          <button class="btn btn--accent" id="createRoomBtn" type="button">Start new room</button>
-          <button class="btn btn--secondary" id="joinRoomBtn" type="button">Join room</button>
-        </div>
-      </div>
-
-      <div class="room-status-panel">
-        <p id="statusLine" class="status-line">Enter name and join a room.</p>
-      </div>
-    </div>
-
-    <div class="host-notice" id="hostNotice" hidden>
-      <strong>You are the host.</strong> Set the statements, prepare the round, and reveal the lie when everyone has voted.
-    </div>
-
-    <div class="dashboard-grid">
-      <div class="statement-panel">
-        <div class="panel-heading">
-          <h2>Statements</h2>
-        </div>
         <div id="statementCards" class="statement-cards"></div>
       </div>
 
-      <aside class="side-panel">
-        <div id="hostControls" class="host-controls" hidden>
-          <h2>Host controls</h2>
-          <div class="statement-form">
-            <div class="statement-input">
-              <label for="statement1">Statement 1</label>
-              <textarea id="statement1" rows="2" placeholder="Write a truth or a lie"></textarea>
-              <label class="radio-field">
-                <input type="radio" name="lieChoice" value="0" /> Mark as lie
-              </label>
-            </div>
-            <div class="statement-input">
-              <label for="statement2">Statement 2</label>
-              <textarea id="statement2" rows="2" placeholder="Write a truth or a lie"></textarea>
-              <label class="radio-field">
-                <input type="radio" name="lieChoice" value="1" /> Mark as lie
-              </label>
-            </div>
-            <div class="statement-input">
-              <label for="statement3">Statement 3</label>
-              <textarea id="statement3" rows="2" placeholder="Write a truth or a lie"></textarea>
-              <label class="radio-field">
-                <input type="radio" name="lieChoice" value="2" /> Mark as lie
-              </label>
-            </div>
-          </div>
-          <div class="game-controls">
-            <button id="prepareBtn" class="btn btn--accent" type="button">🧠 Prepare round</button>
-            <button id="revealBtn" class="btn btn--secondary" type="button">🔍 Reveal lie</button>
-            <button id="resetBtn" class="btn btn--secondary" type="button">↺ Reset</button>
-          </div>
-        </div>
-
-        <div class="vote-panel">
-          <div class="panel-heading">
-            <h2>Vote</h2>
-          </div>
+      <!-- Right: Sidebar (Vote + Participants) -->
+      <aside class="sidebar">
+        <div class="vote-section">
+          <h2 class="section-title">Choose the Lie</h2>
           <div id="voteButtons" class="vote-buttons"></div>
-          <div id="voteSummary" class="vote-summary"></div>
+          <div id="voteSummary" class="vote-summary" hidden></div>
         </div>
 
-        <div class="participants-panel">
-          <div class="panel-heading">
-            <h2>Participants (<span id="participantCount">0</span>)</h2>
-          </div>
+        <div class="participants-section">
+          <h2 class="section-title">Players (<span id="participantCount">0</span>)</h2>
           <div id="participantsList" class="participants-list"></div>
+        </div>
+
+        <div class="status-panel">
+          <p id="statusLine" class="status-message"></p>
         </div>
       </aside>
     </div>
-  </section>
+  </div>
 
   <section class="seo-content-area glass-card">
     <h2>Two Truths and a Lie: Live Voting Icebreaker for Remote Teams</h2>

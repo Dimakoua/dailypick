@@ -1,32 +1,47 @@
 const ROOM_STORAGE_KEY = 'dailypick_two_truths_and_a_lie_room';
 const NAME_STORAGE_KEY = 'dailypick_two_truths_and_a_lie_name';
 
+// Screen Elements
+const setupScreen = document.getElementById('setupScreen');
+const gameScreen = document.getElementById('gameScreen');
+
+// Setup Form Elements
 const displayNameInput = document.getElementById('displayNameInput');
-const saveNameBtn = document.getElementById('saveNameBtn');
 const roomCodeInput = document.getElementById('roomCodeInput');
 const createRoomBtn = document.getElementById('createRoomBtn');
 const joinRoomBtn = document.getElementById('joinRoomBtn');
-const copyInviteBtn = document.getElementById('copyInviteBtn');
+const setupStatus = document.getElementById('setupStatus');
+
+// Game Screen Elements
 const sessionBadge = document.getElementById('sessionBadge');
-const statusLine = document.getElementById('statusLine');
+const copyInviteBtn = document.getElementById('copyInviteBtn');
+const phaseIndicator = document.getElementById('phaseIndicator');
+const roundLabel = document.getElementById('roundLabel');
 const hostNotice = document.getElementById('hostNotice');
-const hostControls = document.getElementById('hostControls');
+const hostControlsSection = document.getElementById('hostControls');
+
+// Statement Elements
 const statementInputs = [
   document.getElementById('statement1'),
   document.getElementById('statement2'),
   document.getElementById('statement3'),
 ];
 const lieInputs = Array.from(document.querySelectorAll('input[name="lieChoice"]'));
+const statementCards = document.getElementById('statementCards');
+
+// Host Control Buttons
 const prepareBtn = document.getElementById('prepareBtn');
 const revealBtn = document.getElementById('revealBtn');
 const resetBtn = document.getElementById('resetBtn');
-const statementCards = document.getElementById('statementCards');
+
+// Vote and Participants
 const voteButtons = document.getElementById('voteButtons');
+const voteSummary = document.getElementById('voteSummary');
 const participantCount = document.getElementById('participantCount');
 const participantsList = document.getElementById('participantsList');
-const voteSummary = document.getElementById('voteSummary');
-const roundLabel = document.getElementById('roundLabel');
+const statusLine = document.getElementById('statusLine');
 
+// Application State
 let ws = null;
 let sessionId = null;
 let userId = null;
@@ -52,8 +67,11 @@ function getSavedName() {
 
 function saveName() {
   const name = displayNameInput.value.trim();
+  if (!name) {
+    setStatus('Please enter a name', 'error', true);
+    return;
+  }
   localStorage.setItem(NAME_STORAGE_KEY, name);
-  setStatus('Name saved', 'success');
   if (ws && ws.readyState === WebSocket.OPEN) {
     sendMessage({ type: 'set-name', name });
   }
@@ -72,6 +90,16 @@ function loadPreferences() {
   }
 }
 
+function showSetupScreen() {
+  setupScreen.hidden = false;
+  gameScreen.hidden = true;
+}
+
+function showGameScreen() {
+  setupScreen.hidden = true;
+  gameScreen.hidden = false;
+}
+
 function updateSessionBadge() {
   if (sessionId) {
     sessionBadge.textContent = `Room ${sessionId}`;
@@ -82,9 +110,28 @@ function updateSessionBadge() {
   }
 }
 
-function setStatus(message, type = 'info') {
-  statusLine.textContent = message;
-  statusLine.dataset.type = type;
+function updatePhaseIndicator() {
+  if (!phaseIndicator) return;
+  
+  let phase = 'Setup';
+  if (currentState.isPrepared && !currentState.isRevealed) {
+    phase = 'Voting';
+  } else if (currentState.isRevealed) {
+    phase = 'Revealed';
+  }
+  
+  const phaseLabel = phaseIndicator.querySelector('.phase-label');
+  if (phaseLabel) {
+    phaseLabel.textContent = phase;
+  }
+}
+
+function setStatus(message, type = 'info', isSetupScreen = false) {
+  const target = isSetupScreen ? setupStatus : statusLine;
+  if (target) {
+    target.textContent = message;
+    target.dataset.type = type;
+  }
 }
 
 function enableControls() {
@@ -92,12 +139,13 @@ function enableControls() {
   prepareBtn.disabled = !isHost || !currentState.hostId || currentState.isRevealed;
   revealBtn.disabled = !isHost || !currentState.isPrepared || currentState.isRevealed;
   resetBtn.disabled = !isHost || !sessionId;
+  
   voteButtons.querySelectorAll('button').forEach((button) => {
     button.disabled = !sessionId || !currentState.isPrepared || currentState.isRevealed;
   });
 
-  if (hostControls) {
-    hostControls.hidden = !isHost;
+  if (hostControlsSection) {
+    hostControlsSection.hidden = !isHost;
   }
   if (hostNotice) {
     hostNotice.hidden = !isHost;
@@ -106,14 +154,20 @@ function enableControls() {
 
 function updateRoundLabel() {
   if (roundLabel) {
-    roundLabel.textContent = `Round ${currentState.roundIndex}`;
+    roundLabel.textContent = String(currentState.roundIndex);
   }
 }
 
 function connectToRoom(rawCode) {
   const code = sanitizeRoomCode(rawCode);
   if (!code) {
-    setStatus('Enter a room code before joining.', 'error');
+    setStatus('Enter a room code before joining.', 'error', true);
+    return;
+  }
+
+  const name = displayNameInput.value.trim();
+  if (!name) {
+    setStatus('Please enter your name first.', 'error', true);
     return;
   }
 
@@ -124,6 +178,7 @@ function connectToRoom(rawCode) {
   sessionId = code;
   saveRoomCode(sessionId);
   updateSessionBadge();
+  showGameScreen();
 
   const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
   const wsUrl = new URL(`/api/two-truths-and-a-lie/websocket?session_id=${sessionId}`, window.location.href);
@@ -132,12 +187,9 @@ function connectToRoom(rawCode) {
   ws = new WebSocket(wsUrl.href);
 
   ws.addEventListener('open', () => {
-    setStatus(`Connected to room ${sessionId}`, 'success');
-    copyInviteBtn.disabled = false;
+    setStatus(`Connected to Room ${sessionId}`, 'success');
     roomCodeInput.value = sessionId;
-    if (displayNameInput.value.trim()) {
-      sendMessage({ type: 'set-name', name: displayNameInput.value.trim() });
-    }
+    saveName();
   });
 
   ws.addEventListener('message', (event) => {
@@ -150,7 +202,7 @@ function connectToRoom(rawCode) {
   });
 
   ws.addEventListener('close', () => {
-    setStatus('Disconnected from the room.', 'error');
+    setStatus('Disconnected. Reconnect to continue playing.', 'error');
     sessionId = null;
     isHost = false;
     updateSessionBadge();
@@ -158,7 +210,7 @@ function connectToRoom(rawCode) {
   });
 
   ws.addEventListener('error', () => {
-    setStatus('Unable to connect to the room.', 'error');
+    setStatus('Connection error. Check your internet and try again.', 'error');
   });
 }
 
@@ -188,6 +240,7 @@ function handleServerMessage(payload) {
 
 function renderState() {
   updateRoundLabel();
+  updatePhaseIndicator();
   renderStatementCards();
   renderVoteButtons();
   renderParticipants();
@@ -205,6 +258,9 @@ function renderStatementCards() {
     if (currentState.isRevealed && currentState.lieIndex === index) {
       card.classList.add('statement-card--lie');
     }
+    if (currentState.isRevealed && currentState.ownVoteIndex === index && currentState.lieIndex !== index) {
+      card.classList.add('statement-card--wrong-pick');
+    }
 
     const badge = document.createElement('span');
     badge.className = 'statement-card__label';
@@ -220,7 +276,7 @@ function renderStatementCards() {
     if (currentState.isRevealed && currentState.lieIndex === index) {
       const lieNote = document.createElement('div');
       lieNote.className = 'statement-card__note';
-      lieNote.textContent = '✔️ Lie revealed';
+      lieNote.textContent = 'This was the lie! ✓';
       card.appendChild(lieNote);
     }
 
@@ -237,13 +293,24 @@ function renderVoteButtons() {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'btn btn--vote';
-    button.textContent = `Vote Statement ${index + 1}`;
+    button.textContent = `Statement ${index + 1}`;
     button.dataset.index = String(index);
     button.disabled = !sessionId || !currentState.isPrepared || currentState.isRevealed;
 
     if (currentState.ownVoteIndex === index) {
       button.dataset.selected = 'true';
-      button.textContent = `Your pick: Statement ${index + 1}`;
+      const isRevealed = currentState.isRevealed;
+      const isCorrect = isRevealed && currentState.lieIndex === index;
+      const isWrong = isRevealed && currentState.lieIndex !== index;
+      if (isCorrect) {
+        button.dataset.result = 'correct';
+        button.textContent = `✓ Correct! Statement ${index + 1}`;
+      } else if (isWrong) {
+        button.dataset.result = 'wrong';
+        button.textContent = `✗ Wrong — Statement ${index + 1}`;
+      } else {
+        button.textContent = `✓ You picked Statement ${index + 1}`;
+      }
     }
 
     button.addEventListener('click', () => {
@@ -267,17 +334,25 @@ function renderParticipants() {
 
     const left = document.createElement('div');
     left.className = 'participant-meta';
-    left.innerHTML = `
-      <span class="participant-name">${participant.name}</span>
-      ${participant.isHost ? '<span class="participant-badge">Host</span>' : ''}
-    `;
+    
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'participant-name';
+    nameSpan.textContent = participant.name;
+    left.appendChild(nameSpan);
+    
+    if (participant.isHost) {
+      const badge = document.createElement('span');
+      badge.className = 'participant-badge';
+      badge.textContent = 'Host';
+      left.appendChild(badge);
+    }
 
     const right = document.createElement('div');
     right.className = 'participant-status';
     if (currentState.isRevealed) {
       right.textContent = participant.voteIndex !== null ? `Chose ${participant.voteIndex + 1}` : 'No vote';
     } else {
-      right.textContent = participant.hasVoted ? 'Voted' : 'Waiting';
+      right.textContent = participant.hasVoted ? '✓ Voted' : 'Waiting...';
     }
 
     row.appendChild(left);
@@ -288,6 +363,13 @@ function renderParticipants() {
 
 function renderVoteSummary() {
   if (!voteSummary) return;
+  
+  if (!currentState.isPrepared) {
+    voteSummary.hidden = true;
+    return;
+  }
+  
+  voteSummary.hidden = false;
   const currentVotes = currentState.participants.reduce((summary, participant) => {
     if (participant.voteIndex === null || participant.voteIndex === undefined) return summary;
     summary[participant.voteIndex] = (summary[participant.voteIndex] || 0) + 1;
@@ -299,9 +381,10 @@ function renderVoteSummary() {
   currentState.statements.forEach((_, index) => {
     const item = document.createElement('div');
     item.className = 'vote-summary-item';
+    const votes = currentVotes[index] || 0;
     item.innerHTML = `
       <span>Statement ${index + 1}</span>
-      <span>${currentVotes[index] || 0} votes</span>
+      <span>${votes} ${votes === 1 ? 'vote' : 'votes'}</span>
     `;
     voteSummary.appendChild(item);
   });
@@ -316,15 +399,10 @@ function updateFormFields() {
 
   lieInputs.forEach((input) => {
     input.disabled = !isHost;
-    if (currentState.isRevealed || !isHost) {
-      input.checked = false;
-      input.closest('.radio-field')?.classList.remove('radio-field--checked');
-    } else if (Number(input.value) === currentState.lieIndex) {
+    if (Number(input.value) === currentState.lieIndex) {
       input.checked = true;
-      input.closest('.radio-field')?.classList.add('radio-field--checked');
     } else {
       input.checked = false;
-      input.closest('.radio-field')?.classList.remove('radio-field--checked');
     }
   });
 }
@@ -338,10 +416,10 @@ function getFormState() {
 
 function validateHostForm(statements, lieIndex) {
   if (statements.some((text) => !text)) {
-    return 'All three statements must be entered before preparing the round.';
+    return 'Write all three statements.';
   }
   if (lieIndex === null || Number.isNaN(lieIndex)) {
-    return 'Select which statement is the lie before preparing the round.';
+    return 'Mark which statement is the lie.';
   }
   return '';
 }
@@ -364,23 +442,25 @@ function prepareRound() {
     statements: formState.statements,
     lieIndex: formState.lieIndex,
   });
-  setStatus('Round prepared. Teammates can now vote for the lie.', 'success');
+  setStatus('Round prepared. Team can now vote.', 'success');
 }
 
 function revealAnswer() {
   if (!isHost) {
-    setStatus('Only the host can reveal the lie.', 'error');
+    setStatus('Only the host can reveal.', 'error');
     return;
   }
   sendMessage({ type: 'reveal-answer' });
+  setStatus('The lie has been revealed!', 'success');
 }
 
 function resetRound() {
   if (!isHost) {
-    setStatus('Only the host can reset the room.', 'error');
+    setStatus('Only the host can reset.', 'error');
     return;
   }
   sendMessage({ type: 'reset-round' });
+  setStatus('Round reset. Ready for next round!', 'success');
 }
 
 function sendMessage(message) {
@@ -404,6 +484,7 @@ function copyInviteLink() {
   }
 }
 
+// Event Listeners
 createRoomBtn.addEventListener('click', () => {
   const newRoom = Math.random().toString(36).slice(2, 8).toUpperCase();
   roomCodeInput.value = newRoom;
@@ -414,20 +495,36 @@ joinRoomBtn.addEventListener('click', () => {
   connectToRoom(roomCodeInput.value);
 });
 
-saveNameBtn.addEventListener('click', saveName);
+// Allow Enter key in room code
+roomCodeInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    connectToRoom(roomCodeInput.value);
+  }
+});
+
+// Allow Enter key in name field
+displayNameInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    connectToRoom(roomCodeInput.value);
+  }
+});
+
 copyInviteBtn.addEventListener('click', copyInviteLink);
 prepareBtn.addEventListener('click', prepareRound);
 revealBtn.addEventListener('click', revealAnswer);
 resetBtn.addEventListener('click', resetRound);
 
 document.addEventListener('DOMContentLoaded', () => {
+  showSetupScreen();
   loadPreferences();
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has('session_id')) {
     const sessionIdFromUrl = sanitizeRoomCode(urlParams.get('session_id'));
     if (sessionIdFromUrl) {
       roomCodeInput.value = sessionIdFromUrl;
-      connectToRoom(sessionIdFromUrl);
+      if (displayNameInput.value.trim()) {
+        connectToRoom(sessionIdFromUrl);
+      }
     }
   }
 });
