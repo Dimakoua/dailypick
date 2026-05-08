@@ -57,6 +57,22 @@ let currentState = {
   ownVoteIndex: null,
 };
 
+// Scoreboard (client-side, persists across rounds in memory)
+const scores = {};
+let lastScoredRound = null;
+
+function tallyScores() {
+  const { roundIndex, participants, lieIndex, isRevealed } = currentState;
+  if (!isRevealed || lieIndex === null || lieIndex === undefined) return;
+  if (lastScoredRound === roundIndex) return; // already scored this round
+  lastScoredRound = roundIndex;
+  participants.forEach((p) => {
+    if (p.voteIndex === lieIndex) {
+      scores[p.name] = (scores[p.name] || 0) + 1;
+    }
+  });
+}
+
 function sanitizeRoomCode(value) {
   return String(value || '').trim().toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8);
 }
@@ -241,6 +257,7 @@ function handleServerMessage(payload) {
 function renderState() {
   updateRoundLabel();
   updatePhaseIndicator();
+  tallyScores();
   renderStatementCards();
   renderVoteButtons();
   renderParticipants();
@@ -328,18 +345,30 @@ function renderParticipants() {
   const list = currentState.participants.slice();
   participantCount.textContent = String(list.length);
 
-  list.forEach((participant) => {
+  // Sort by score descending once any scoring has happened
+  const hasScores = lastScoredRound !== null;
+  if (hasScores) {
+    list.sort((a, b) => (scores[b.name] || 0) - (scores[a.name] || 0));
+  }
+
+  list.forEach((participant, rank) => {
     const row = document.createElement('div');
     row.className = 'participant-card';
 
+    // Highlight top scorer
+    const participantScore = scores[participant.name] || 0;
+    if (hasScores && rank === 0 && participantScore > 0) {
+      row.classList.add('participant-card--leader');
+    }
+
     const left = document.createElement('div');
     left.className = 'participant-meta';
-    
+
     const nameSpan = document.createElement('span');
     nameSpan.className = 'participant-name';
     nameSpan.textContent = participant.name;
     left.appendChild(nameSpan);
-    
+
     if (participant.isHost) {
       const badge = document.createElement('span');
       badge.className = 'participant-badge';
@@ -347,10 +376,19 @@ function renderParticipants() {
       left.appendChild(badge);
     }
 
+    if (hasScores) {
+      const scoreBadge = document.createElement('span');
+      scoreBadge.className = 'participant-score';
+      scoreBadge.textContent = `${participantScore} pt${participantScore !== 1 ? 's' : ''}`;
+      left.appendChild(scoreBadge);
+    }
+
     const right = document.createElement('div');
     right.className = 'participant-status';
     if (currentState.isRevealed) {
+      const votedCorrectly = participant.voteIndex === currentState.lieIndex;
       right.textContent = participant.voteIndex !== null ? `Chose ${participant.voteIndex + 1}` : 'No vote';
+      if (votedCorrectly) right.dataset.correct = 'true';
     } else {
       right.textContent = participant.hasVoted ? '✓ Voted' : 'Waiting...';
     }

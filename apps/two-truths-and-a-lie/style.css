@@ -645,6 +645,27 @@
   flex-shrink: 0;
 }
 
+.participant-score {
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(243, 156, 18, 0.14);
+  color: #b7770d;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  border: 1px solid rgba(243, 156, 18, 0.28);
+}
+
+.participant-card--leader {
+  border-color: rgba(243, 156, 18, 0.5);
+  background: linear-gradient(135deg, rgba(243, 156, 18, 0.08), var(--brand-surface));
+}
+
+.participant-status[data-correct="true"] {
+  color: #27ae60;
+  font-weight: 700;
+}
+
 .participant-status {
   color: var(--brand-text);
   font-size: 0.85rem;
