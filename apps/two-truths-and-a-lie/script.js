@@ -34,6 +34,9 @@ const prepareBtn = document.getElementById('prepareBtn');
 const revealBtn = document.getElementById('revealBtn');
 const resetBtn = document.getElementById('resetBtn');
 const endRoomBtn = document.getElementById('endRoomBtn');
+const userNameDisplay = document.getElementById('userNameDisplay');
+const headerNameInput = document.getElementById('headerNameInput');
+const saveNameBtn = document.getElementById('saveNameBtn');
 
 // Vote and Participants
 const voteButtons = document.getElementById('voteButtons');
@@ -145,6 +148,7 @@ function updateSessionBadge() {
     sessionBadge.textContent = 'Offline';
     delete sessionBadge.dataset.active;
   }
+  updateUserNameDisplay();
 }
 
 function updatePhaseIndicator() {
@@ -194,6 +198,25 @@ function updateRoundLabel() {
   if (roundLabel) {
     roundLabel.textContent = String(currentState.roundIndex);
   }
+}
+
+function updateUserNameDisplay() {
+  if (!userNameDisplay || !headerNameInput) return;
+  const name = displayNameInput.value.trim() || 'Player';
+  headerNameInput.value = name;
+  userNameDisplay.hidden = !sessionId;
+}
+
+function saveHeaderName() {
+  const newName = headerNameInput.value.trim();
+  if (!newName) {
+    setStatus('Please enter a valid name.', 'error');
+    return;
+  }
+  displayNameInput.value = newName;
+  saveName();
+  updateUserNameDisplay();
+  setStatus('Display name updated.', 'success');
 }
 
 function cleanupSession(message = 'Room closed. Ready for a new game.', type = 'success') {
@@ -633,6 +656,12 @@ prepareBtn.addEventListener('click', prepareRound);
 revealBtn.addEventListener('click', revealAnswer);
 resetBtn.addEventListener('click', resetRound);
 endRoomBtn.addEventListener('click', endRoom);
+saveNameBtn.addEventListener('click', saveHeaderName);
+headerNameInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    saveHeaderName();
+  }
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   showSetupScreen();
@@ -655,6 +684,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ============================================================
 function initTour() {
   const overlay   = document.getElementById('tourOverlay');
+  const tourCard  = overlay.querySelector('.tour-card');
   const closeBtn  = document.getElementById('tourCloseBtn');
   const prevBtn   = document.getElementById('tourPrevBtn');
   const nextBtn   = document.getElementById('tourNextBtn');
@@ -679,6 +709,73 @@ function initTour() {
     }
   }
 
+  function positionTourCard(step) {
+    tourCard.style.position = 'absolute';
+    tourCard.style.transform = 'none';
+    tourCard.style.left = '';
+    tourCard.style.top = '';
+    tourCard.style.right = '';
+    tourCard.style.bottom = '';
+
+    const selector = step.dataset.target;
+    const cardWidth = Math.min(420, window.innerWidth - 32);
+    tourCard.style.width = `min(420px, calc(100% - 2rem))`;
+
+    if (!selector) {
+      tourCard.style.left = '50%';
+      tourCard.style.top = '50%';
+      tourCard.style.transform = 'translate(-50%, -50%)';
+      return;
+    }
+
+    const target = document.querySelector(selector);
+    if (!target) {
+      tourCard.style.left = '50%';
+      tourCard.style.top = '50%';
+      tourCard.style.transform = 'translate(-50%, -50%)';
+      return;
+    }
+
+    const targetRect = target.getBoundingClientRect();
+    const cardRect = tourCard.getBoundingClientRect();
+    const cardHeight = cardRect.height || 260;
+    const viewportHeight = window.innerHeight;
+    const viewportWidth = window.innerWidth;
+    const offset = 28;
+
+    const spaceAbove = targetRect.top - offset;
+    const spaceBelow = viewportHeight - targetRect.bottom - offset;
+    let top;
+
+    if (spaceAbove >= cardHeight && (spaceAbove >= spaceBelow || spaceBelow < 140)) {
+      top = targetRect.top - cardHeight - offset;
+    } else if (spaceBelow >= cardHeight) {
+      top = targetRect.bottom + offset;
+    } else if (spaceBelow >= spaceAbove) {
+      top = Math.min(viewportHeight - cardHeight - offset, Math.max(offset, targetRect.bottom + offset));
+    } else {
+      top = Math.min(viewportHeight - cardHeight - offset, Math.max(offset, targetRect.top - cardHeight - offset));
+    }
+
+    let left = targetRect.left + (targetRect.width - cardWidth) / 2;
+    if (left + cardWidth > viewportWidth - offset) {
+      left = viewportWidth - cardWidth - offset;
+    }
+    if (left < offset) {
+      left = offset;
+    }
+
+    if (top + cardHeight > viewportHeight - offset) {
+      top = viewportHeight - cardHeight - offset;
+    }
+    if (top < offset) {
+      top = offset;
+    }
+
+    tourCard.style.top = `${top}px`;
+    tourCard.style.left = `${left}px`;
+  }
+
   function buildSteps() {
     const role = isHost ? 'host' : 'player';
     steps = allSteps.filter((step) => {
@@ -698,14 +795,15 @@ function initTour() {
     prevBtn.disabled = index === 0;
     nextBtn.textContent = index === total - 1 ? '✓ Got it' : 'Next →';
     applyHighlight(step);
+    requestAnimationFrame(() => positionTourCard(step));
   }
 
   function openTour() {
     buildSteps();
     if (!steps.length) return;
+    overlay.hidden = false;
     current = 0;
     showStep(0);
-    overlay.hidden = false;
     nextBtn.focus();
     markTourSeen();
   }

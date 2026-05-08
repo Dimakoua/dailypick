@@ -146,6 +146,10 @@ headExtra: |
       </div>
       <div class="header-right">
         <span class="session-badge" id="sessionBadge">Offline</span>
+        <span class="user-name-display" id="userNameDisplay" hidden>
+          <input id="headerNameInput" class="user-name-input" type="text" maxlength="32" aria-label="Display name" />
+          <button class="btn btn--ghost btn--small" id="saveNameBtn" type="button">Save</button>
+        </span>
         <button class="btn btn--ghost" id="copyInviteBtn" type="button" disabled>📋 Share</button>
         <button class="app-button app-button--secondary game-pip-trigger" type="button"
           data-game-pip-target=".game-screen"

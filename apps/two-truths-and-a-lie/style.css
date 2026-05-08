@@ -526,6 +526,41 @@
   border-color: var(--brand-accent);
 }
 
+.btn--small {
+  padding: 7px 10px;
+  font-size: 0.8rem;
+}
+
+.user-name-display {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--brand-text);
+  font-size: 0.85rem;
+}
+
+.user-name-input {
+  width: 140px;
+  min-width: 100px;
+  padding: 6px 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--brand-border);
+  background: var(--brand-surface);
+  color: var(--brand-text);
+  font-family: var(--brand-font-family);
+  font-size: 0.9rem;
+}
+
+.user-name-input:focus {
+  outline: none;
+  border-color: var(--brand-accent);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.12);
+}
+
 .btn--large {
   padding: 14px 24px;
   font-size: 1rem;
@@ -994,6 +1029,8 @@
   position: relative;
   width: 100%;
   max-width: 420px;
+  max-height: calc(100vh - 40px);
+  overflow: auto;
   background: var(--brand-surface);
   border-radius: var(--radius-lg);
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
