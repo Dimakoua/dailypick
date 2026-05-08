@@ -62,6 +62,25 @@ let currentState = {
 // Scoreboard (client-side, persists across rounds in memory)
 const scores = {};
 let lastScoredRound = null;
+let tourController = null;
+
+function markTourSeen() {
+  if (!sessionId) return;
+  try {
+    localStorage.setItem(`two-truths-tour:${sessionId}`, 'true');
+  } catch (_error) {
+    // ignore storage failures
+  }
+}
+
+function hasSeenTour() {
+  if (!sessionId) return false;
+  try {
+    return localStorage.getItem(`two-truths-tour:${sessionId}`) === 'true';
+  } catch (_error) {
+    return false;
+  }
+}
 
 function tallyScores() {
   const { roundIndex, participants, lieIndex, isRevealed } = currentState;
@@ -305,6 +324,9 @@ function handleServerMessage(payload) {
     };
     isHost = userId && payload.hostId === userId;
     renderState();
+    if (tourController) {
+      tourController.maybeAutoStart();
+    }
   }
 }
 
@@ -638,26 +660,64 @@ function initTour() {
   const nextBtn   = document.getElementById('tourNextBtn');
   const progress  = document.getElementById('tourProgress');
   const howToBtn  = document.getElementById('howToPlayBtn');
-  const steps     = Array.from(overlay.querySelectorAll('.tour-step'));
-  const total     = steps.length;
+  const allSteps  = Array.from(overlay.querySelectorAll('.tour-step'));
+  let steps       = [];
   let current     = 0;
 
+  function clearHighlight() {
+    document.querySelectorAll('.tour-highlight').forEach((el) => el.classList.remove('tour-highlight'));
+  }
+
+  function applyHighlight(step) {
+    clearHighlight();
+    const selector = step.dataset.target;
+    if (!selector) return;
+    const target = document.querySelector(selector);
+    if (target) {
+      target.classList.add('tour-highlight');
+      target.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }
+  }
+
+  function buildSteps() {
+    const role = isHost ? 'host' : 'player';
+    steps = allSteps.filter((step) => {
+      const stepRole = step.dataset.role || 'all';
+      return stepRole === 'all' || stepRole === role;
+    });
+  }
+
   function showStep(index) {
-    steps.forEach((s, i) => { s.hidden = i !== index; });
+    const total = steps.length;
+    if (index < 0 || index >= total) return;
+
+    steps.forEach((s) => { s.hidden = true; });
+    const step = steps[index];
+    step.hidden = false;
     progress.textContent = `${index + 1} / ${total}`;
     prevBtn.disabled = index === 0;
     nextBtn.textContent = index === total - 1 ? '✓ Got it' : 'Next →';
+    applyHighlight(step);
   }
 
   function openTour() {
+    buildSteps();
+    if (!steps.length) return;
     current = 0;
     showStep(0);
     overlay.hidden = false;
     nextBtn.focus();
+    markTourSeen();
   }
 
   function closeTour() {
     overlay.hidden = true;
+    clearHighlight();
+  }
+
+  function maybeAutoStart() {
+    if (!sessionId || hasSeenTour()) return;
+    openTour();
   }
 
   howToBtn.addEventListener('click', openTour);
@@ -679,7 +739,9 @@ function initTour() {
   });
 
   nextBtn.addEventListener('click', () => {
-    if (current < total - 1) { current++; showStep(current); }
+    if (current < steps.length - 1) { current++; showStep(current); }
     else closeTour();
   });
+
+  tourController = { maybeAutoStart, openTour, closeTour };
 }
