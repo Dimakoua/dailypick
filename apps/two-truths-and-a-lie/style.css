@@ -946,3 +946,114 @@
 .participants-list::-webkit-scrollbar-thumb:hover {
   background: var(--brand-text);
 }
+
+/* ==========================================================================
+   Tour Overlay
+   ========================================================================== */
+
+.tour-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.tour-overlay[hidden] {
+  display: none;
+}
+
+.tour-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+}
+
+.tour-card {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: var(--brand-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+  padding: 2rem 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: tourSlideIn 0.25s ease-out;
+}
+
+@keyframes tourSlideIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.tour-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--brand-text);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  line-height: 1;
+  transition: background 0.15s ease;
+}
+
+.tour-close:hover {
+  background: var(--brand-border);
+}
+
+.tour-steps {
+  min-height: 160px;
+}
+
+.tour-step {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tour-step[hidden] {
+  display: none;
+}
+
+.tour-step-icon {
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.tour-step-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--brand-heading);
+  line-height: 1.2;
+}
+
+.tour-step-text {
+  margin: 0;
+  color: var(--brand-text);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.tour-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.tour-progress {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--brand-text);
+  white-space: nowrap;
+}

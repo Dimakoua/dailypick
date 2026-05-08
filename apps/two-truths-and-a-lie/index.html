@@ -45,12 +45,66 @@ headExtra: |
           </div>
 
           <button class="btn btn--accent btn--large" id="createRoomBtn" type="button">Start New Game</button>
-          
+
+          <button class="btn btn--ghost btn--full" id="howToPlayBtn" type="button">❓ How to play</button>
+
           <p id="setupStatus" class="setup-status"></p>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Tour Overlay -->
+  <div id="tourOverlay" class="tour-overlay" hidden aria-modal="true" role="dialog" aria-labelledby="tourTitle">
+    <div class="tour-backdrop"></div>
+    <div class="tour-card">
+      <button class="tour-close" id="tourCloseBtn" type="button" aria-label="Close tour">✕</button>
+      <div class="tour-steps">
+
+        <div class="tour-step" data-step="0">
+          <div class="tour-step-icon">🎭</div>
+          <h2 class="tour-step-title" id="tourTitle">How to Play</h2>
+          <p class="tour-step-text">One person is the <strong>Host</strong>. Everyone else is a <strong>Player</strong>. The host writes three statements about themselves — two true, one a lie.</p>
+        </div>
+
+        <div class="tour-step" data-step="1" hidden>
+          <div class="tour-step-icon">🏠</div>
+          <h2 class="tour-step-title">Create or Join a Room</h2>
+          <p class="tour-step-text">The <strong>Host</strong> clicks <em>Start New Game</em> to get a room code, then shares it with teammates. Players enter the code and click <em>Join</em>.</p>
+        </div>
+
+        <div class="tour-step" data-step="2" hidden>
+          <div class="tour-step-icon">✍️</div>
+          <h2 class="tour-step-title">Host Writes Statements</h2>
+          <p class="tour-step-text">The host fills in all three statement boxes, marks which one is <strong>the lie</strong>, then clicks <em>Prepare Round</em> to open voting.</p>
+        </div>
+
+        <div class="tour-step" data-step="3" hidden>
+          <div class="tour-step-icon">🗳️</div>
+          <h2 class="tour-step-title">Players Vote</h2>
+          <p class="tour-step-text">Each player reads the statements and clicks the one they think is the <strong>lie</strong>. The sidebar shows who has voted in real time.</p>
+        </div>
+
+        <div class="tour-step" data-step="4" hidden>
+          <div class="tour-step-icon">🔍</div>
+          <h2 class="tour-step-title">Reveal &amp; Score</h2>
+          <p class="tour-step-text">The host clicks <em>Reveal</em>. The lie card lights up green — correct guessers earn a point. The <strong>Players</strong> panel tracks the score across rounds!</p>
+        </div>
+
+        <div class="tour-step" data-step="5" hidden>
+          <div class="tour-step-icon">🔄</div>
+          <h2 class="tour-step-title">Next Round</h2>
+          <p class="tour-step-text">Click <em>Reset</em> to start a fresh round — swap who is in the hot seat and keep playing! Scores accumulate until the page is refreshed.</p>
+        </div>
+
+      </div>
+      <div class="tour-nav">
+        <button class="btn btn--ghost" id="tourPrevBtn" type="button" disabled>← Back</button>
+        <span class="tour-progress" id="tourProgress">1 / 6</span>
+        <button class="btn btn--accent" id="tourNextBtn" type="button">Next →</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Main Game Screen -->
   <div id="gameScreen" class="game-screen" hidden>

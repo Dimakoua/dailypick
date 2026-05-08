@@ -565,4 +565,61 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   }
+  initTour();
 });
+
+// ============================================================
+// Tour
+// ============================================================
+function initTour() {
+  const overlay   = document.getElementById('tourOverlay');
+  const closeBtn  = document.getElementById('tourCloseBtn');
+  const prevBtn   = document.getElementById('tourPrevBtn');
+  const nextBtn   = document.getElementById('tourNextBtn');
+  const progress  = document.getElementById('tourProgress');
+  const howToBtn  = document.getElementById('howToPlayBtn');
+  const steps     = Array.from(overlay.querySelectorAll('.tour-step'));
+  const total     = steps.length;
+  let current     = 0;
+
+  function showStep(index) {
+    steps.forEach((s, i) => { s.hidden = i !== index; });
+    progress.textContent = `${index + 1} / ${total}`;
+    prevBtn.disabled = index === 0;
+    nextBtn.textContent = index === total - 1 ? '✓ Got it' : 'Next →';
+  }
+
+  function openTour() {
+    current = 0;
+    showStep(0);
+    overlay.hidden = false;
+    nextBtn.focus();
+  }
+
+  function closeTour() {
+    overlay.hidden = true;
+  }
+
+  howToBtn.addEventListener('click', openTour);
+
+  closeBtn.addEventListener('click', closeTour);
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay || e.target.classList.contains('tour-backdrop')) closeTour();
+  });
+
+  overlay.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeTour();
+    if (e.key === 'ArrowRight') nextBtn.click();
+    if (e.key === 'ArrowLeft' && !prevBtn.disabled) prevBtn.click();
+  });
+
+  prevBtn.addEventListener('click', () => {
+    if (current > 0) { current--; showStep(current); }
+  });
+
+  nextBtn.addEventListener('click', () => {
+    if (current < total - 1) { current++; showStep(current); }
+    else closeTour();
+  });
+}
