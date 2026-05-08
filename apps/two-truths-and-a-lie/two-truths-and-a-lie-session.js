@@ -87,6 +87,11 @@ export class TwoTruthsAndALieSession extends BaseEphemeralDO {
           this.resetRound();
         }
         break;
+      case 'end-room':
+        if (clientId === this.hostId) {
+          this.closeRoom();
+        }
+        break;
       default:
         break;
     }
@@ -155,6 +160,29 @@ export class TwoTruthsAndALieSession extends BaseEphemeralDO {
 
   isPrepared() {
     return this.statements.every(Boolean) && Number.isInteger(this.lieIndex);
+  }
+
+  closeRoom() {
+    const payload = {
+      type: 'room-closed',
+      reason: 'The host has closed the room.',
+    };
+
+    for (const targetClient of this.clients.values()) {
+      try {
+        targetClient.ws.send(JSON.stringify(payload));
+      } catch (err) {
+        console.error('[TwoTruths] Failed to send room-closed', err);
+      }
+    }
+
+    for (const targetClient of this.clients.values()) {
+      try {
+        targetClient.ws.close(1000, 'Room closed by host');
+      } catch (err) {
+        console.error('[TwoTruths] Failed to close client socket', err);
+      }
+    }
   }
 
   broadcastState() {

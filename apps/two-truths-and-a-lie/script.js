@@ -177,7 +177,7 @@ function updateRoundLabel() {
   }
 }
 
-function cleanupSession() {
+function cleanupSession(message = 'Room closed. Ready for a new game.', type = 'success') {
   if (ws && ws.readyState === WebSocket.OPEN) {
     ws.close(1000, 'End room');
   }
@@ -207,7 +207,7 @@ function cleanupSession() {
   renderVoteSummary();
   updateFormFields();
   enableControls();
-  setStatus('Room closed. Ready for a new game.', 'success', true);
+  setStatus(message, type, true);
 }
 
 function endRoom() {
@@ -216,7 +216,7 @@ function endRoom() {
     isEndingRoom = true;
     sendMessage({ type: 'end-room' });
   }
-  cleanupSession();
+  cleanupSession('Room closed by host. Ready for a new game.', 'success');
 }
 
 function connectToRoom(rawCode) {
@@ -287,6 +287,11 @@ function handleServerMessage(payload) {
     return;
   }
 
+  if (payload.type === 'room-closed') {
+    handleRoomClosed(payload.reason || 'The host has closed the room.');
+    return;
+  }
+
   if (payload.type === 'state') {
     currentState = {
       hostId: payload.hostId,
@@ -313,6 +318,11 @@ function renderState() {
   renderVoteSummary();
   updateFormFields();
   enableControls();
+}
+
+function handleRoomClosed(reason) {
+  isEndingRoom = true;
+  cleanupSession(reason, 'error');
 }
 
 function renderStatementCards() {
