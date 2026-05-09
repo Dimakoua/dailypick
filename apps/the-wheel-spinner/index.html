@@ -6,6 +6,7 @@ keywords: "choices spinner, decision spinner, option picker, lunch decision, top
 canonical: "https://dailypick.dev/apps/the-wheel-spinner/"
 headExtra: |
   <link href="./style.css" rel="stylesheet" />
+  <script src="/assets/js/wheel-engine.js"></script>
 localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
 ---
   <main data-page-type="randomizer" class="spinner-page" id="main">
@@ -169,18 +170,17 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
     const spinBtn = document.getElementById('spinBtn');
     const resultText = document.getElementById('resultText');
     const canvas = document.getElementById('wheel');
-    const ctx = canvas.getContext('2d');
+    const removeAfterCheckbox = document.getElementById('removeAfterSelection');
 
     const DEFAULT_OPTIONS = ['Pizza', 'Tacos', 'Sushi', 'Burger', 'Salad'];
     const STORAGE_KEY = 'dailypick_choices_spinner_options';
     const REMOVE_AFTER_KEY = 'dailypick_choices_spinner_remove_after_selection';
     let options = DEFAULT_OPTIONS.map(label => ({ label }));
     let isSpinning = false;
+    let pendingRemovalLabel = null;
     let lastRotation = 0;
     const imageCache = new Map();
-
-    const radius = canvas.width / 2;
-    const removeAfterCheckbox = document.getElementById('removeAfterSelection');
+    let wheelEngine = null;
 
     function isUploadedDataImage(option) {
       return Boolean(option.imageUrl && option.imageUrl.startsWith('data:'));
@@ -256,7 +256,8 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
       optionsInput.value = getOptionsTextValue();
       saveOptions();
       updateUploadedOptionsList();
-      drawWheel();
+      lastRotation = 0;
+      drawWheel(0);
       updateInteractionState();
     }
 
@@ -283,81 +284,81 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
 
     function addUploadedImages(files) {
       const validFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
-      if (!validFiles.length) return;
+      if (!validFiles.length) {
+        resultText.textContent = 'No valid image files selected.';
+        return;
+      }
 
+      const maxBytes = 5 * 1024 * 1024;
+      const fileReaders = [];
+      let filesProcessed = 0;
+      const newOptions = [];
+      const errors = [];
+
+      // Check file sizes first
       validFiles.forEach(file => {
-        const maxBytes = 5 * 1024 * 1024;
         if (file.size > maxBytes) {
-          resultText.textContent = `Image ${file.name} is too large; max file size is 5 MB.`;
-          return;
+          errors.push(`${file.name} is too large (max 5 MB)`);
         }
+      });
 
+      if (errors.length > 0) {
+        resultText.textContent = errors.join('; ');
+        return;
+      }
+
+      // Process all files and wait for completion
+      validFiles.forEach(file => {
         const reader = new FileReader();
+        
         reader.onload = (event) => {
           const imageUrl = event.target.result;
           const label = file.name.replace(/\.[^.]+$/, '').trim() || 'Uploaded Image';
           const newOption = { label, imageUrl };
           const key = `${label.toLowerCase()}|${imageUrl}`;
           const exists = options.some(option => `${option.label.toLowerCase()}|${option.imageUrl || ''}` === key);
+          
           if (!exists) {
-            options.push(newOption);
-            saveOptions();
-            optionsInput.value = getOptionsTextValue();
-            preloadOptionImage(newOption);
-            updateUploadedOptionsList();
-            drawWheel();
-            updateInteractionState();
+            newOptions.push(newOption);
+          }
+          
+          filesProcessed++;
+          
+          // When all files are processed, update the options and UI once
+          if (filesProcessed === validFiles.length) {
+            if (newOptions.length > 0) {
+              options.push(...newOptions);
+              saveOptions();
+              optionsInput.value = getOptionsTextValue();
+              newOptions.forEach(preloadOptionImage);
+              updateUploadedOptionsList();
+              lastRotation = 0;
+              drawWheel(0);
+              updateInteractionState();
+              resultText.textContent = `Added ${newOptions.length} image${newOptions.length > 1 ? 's' : ''}`;
+              setTimeout(() => { resultText.textContent = ''; }, 3000);
+            }
           }
         };
+        
+        reader.onerror = () => {
+          filesProcessed++;
+          errors.push(`Failed to read ${file.name}`);
+          
+          if (filesProcessed === validFiles.length) {
+            if (errors.length > 0) {
+              resultText.textContent = errors.join('; ');
+            } else if (newOptions.length > 0) {
+              resultText.textContent = `Added ${newOptions.length} image${newOptions.length > 1 ? 's' : ''}`;
+              setTimeout(() => { resultText.textContent = ''; }, 3000);
+            }
+          }
+        };
+        
         reader.readAsDataURL(file);
       });
 
       uploadImageInput.value = '';
-    }
-
-
-    function formatOptionEntry(option) {
-      return option.imageUrl ? `${option.label}|${option.imageUrl}` : option.label;
-    }
-
-    function parseOptionEntry(entry) {
-      const parts = entry.split('|').map(part => part.trim()).filter(Boolean);
-      if (!parts[0]) return null;
-      if (parts.length === 1) {
-        return { label: parts[0] };
-      }
-      return {
-        label: parts[0],
-        imageUrl: parts[1],
-      };
-    }
-
-    function normalizeSavedOptions(saved) {
-      if (!Array.isArray(saved)) return null;
-      return saved.map(item => {
-        if (typeof item === 'string') return parseOptionEntry(item);
-        if (item && typeof item === 'object' && item.label) return {
-          label: String(item.label),
-          imageUrl: item.imageUrl ? String(item.imageUrl) : undefined,
-        };
-        return null;
-      }).filter(Boolean);
-    }
-
-    function preloadOptionImage(option) {
-      if (!option.imageUrl || imageCache.has(option.imageUrl)) return;
-      const image = new Image();
-      image.crossOrigin = 'anonymous';
-      imageCache.set(option.imageUrl, { status: 'loading', image: image });
-
-      image.onload = () => {
-        imageCache.set(option.imageUrl, { status: 'loaded', image });
-        if (!isSpinning) drawWheel();
-      };
-      image.onerror = () => {
-        imageCache.set(option.imageUrl, { status: 'error', image: null });
-      };
-      image.src = option.imageUrl;
     }
 
     function getLoadedImage(url) {
@@ -385,7 +386,8 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
       optionsInput.value = getOptionsTextValue();
       options.forEach(preloadOptionImage);
       updateUploadedOptionsList();
-      drawWheel();
+      lastRotation = 0;
+      drawWheel(0);
       updateInteractionState();
     }
 
@@ -435,12 +437,157 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
       return colors;
     }
 
-    function drawWheel(rotation = 0) {
+    function getOptionLabels() {
+      return options.map(option => option.label || '');
+    }
+
+    function createResultFormatter() {
+      return function(selectedItem) {
+        const selectedOption = options.find(opt => opt.label === selectedItem);
+        if (!selectedOption) return `✨ ${selectedItem}`;
+        
+        if (selectedOption.imageUrl) {
+          const imageUrl = selectedOption.imageUrl.replace(/\"/g, '&quot;');
+          return `<img src="${imageUrl}" alt="${selectedItem}" class="result-image" />`;
+        }
+        return `✨ ${selectedItem}`;
+      };
+    }
+
+    function initializeWheelEngine() {
+      // We're using FoodWheelEngine for utilities, but handling drawing ourselves
+      // to support images which wheel-engine doesn't natively support
+      drawWheel();
+    }
+
+    function updateWheelEngine() {
+      drawWheel();
+    }
+
+    function spinWheel() {
+      // Remove the option from the previous spin before starting a new one
+      if (pendingRemovalLabel !== null) {
+        const indexToRemove = options.findIndex(opt => opt.label === pendingRemovalLabel);
+        if (indexToRemove !== -1) {
+          options.splice(indexToRemove, 1);
+          optionsInput.value = getOptionsTextValue();
+          saveOptions();
+          updateInteractionState();
+        }
+        pendingRemovalLabel = null;
+      }
+
       if (options.length === 0) return;
 
+      const spinBtn = document.getElementById('spinBtn');
+      if (spinBtn.disabled) return;
+
+      spinBtn.disabled = true;
+      resultText.textContent = '';
+
+      const radius = canvas.width / 2;
+      const angleStep = (2 * Math.PI) / options.length;
+      const selectedIndex = Math.floor(Math.random() * options.length);
+      const selectedOption = options[selectedIndex];
+
+      // Spin animation
+      const spinDuration = 3000;
+      const spinRounds = 5;
+      const totalRotation = spinRounds * 2 * Math.PI;
+      const indicatorAngle = 3 * Math.PI / 2;
+      const sliceCenter = (selectedIndex + 0.5) * angleStep;
+      const targetRotation = totalRotation + (indicatorAngle - sliceCenter);
+
+      const startTime = Date.now();
+      const ctx = canvas.getContext('2d');
+
+      function animateSpin() {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / spinDuration, 1);
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const currentRotation = targetRotation * easeOut;
+
+        // Custom drawing with rotation
+        if (options.length === 0) return;
+
+        const segmentColors = getSegmentColors(options.length);
+        const borderColor = getComputedStyle(document.documentElement).getPropertyValue('--wheel-border').trim() || 'rgba(255, 255, 255, 0.3)';
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.save();
+        ctx.translate(radius, radius);
+        ctx.rotate(currentRotation);
+
+        options.forEach((option, i) => {
+          const angle = i * angleStep;
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.arc(0, 0, radius, angle, angle + angleStep);
+          ctx.lineTo(0, 0);
+          ctx.fillStyle = segmentColors[i % segmentColors.length];
+          ctx.fill();
+          ctx.strokeStyle = borderColor;
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          const displayLabel = option.label || '';
+          const loadedImage = option.imageUrl ? getLoadedImage(option.imageUrl) : null;
+
+          ctx.save();
+          ctx.rotate(angle + angleStep / 2);
+          ctx.fillStyle = '#fff';
+          ctx.font = 'bold 16px Nunito, Arial';
+          ctx.shadowColor = 'rgba(0,0,0,0.5)';
+          ctx.shadowBlur = 4;
+          ctx.textAlign = 'right';
+          ctx.textBaseline = 'middle';
+
+          if (loadedImage) {
+            const iconSize = Math.min(70, radius * 0.28);
+            const imageDist = radius * 0.50;
+            ctx.drawImage(loadedImage, imageDist - iconSize / 2, -iconSize / 2, iconSize, iconSize);
+          } else {
+            ctx.fillText(displayLabel, radius - 16, 0);
+          }
+
+          ctx.restore();
+        });
+
+        ctx.restore();
+
+        if (progress < 1) {
+          requestAnimationFrame(animateSpin);
+        } else {
+          // Store the final rotation position
+          lastRotation = currentRotation;
+
+          // Set pending removal if checkbox is checked
+          if (removeAfterCheckbox.checked) {
+            pendingRemovalLabel = selectedOption.label;
+          }
+
+          // Show result
+          const resultHtml = createResultFormatter()(selectedOption.label);
+          resultText.innerHTML = resultHtml;
+
+          spinBtn.disabled = false;
+          drawWheel(lastRotation);
+          updateInteractionState();
+        }
+      }
+
+      animateSpin();
+    }
+
+    function drawWheel(rotation = lastRotation) {
+      if (options.length === 0) return;
+
+      const ctx = canvas.getContext('2d');
+      const radius = canvas.width / 2;
       const segmentColors = getSegmentColors(options.length);
       const borderColor = getComputedStyle(document.documentElement).getPropertyValue('--wheel-border').trim() || 'rgba(255, 255, 255, 0.3)';
       const angleStep = (2 * Math.PI) / options.length;
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       ctx.save();
@@ -465,88 +612,27 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
         ctx.save();
         ctx.rotate(angle + angleStep / 2);
         ctx.fillStyle = '#fff';
-        ctx.font = 'bold 14px Arial';
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-        ctx.shadowBlur = 3;
+        ctx.font = 'bold 16px Nunito, Arial';
+        ctx.shadowColor = 'rgba(0,0,0,0.5)';
+        ctx.shadowBlur = 4;
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
 
         if (loadedImage) {
           const iconSize = Math.min(70, radius * 0.28);
           const imageDist = radius * 0.50;
           ctx.drawImage(loadedImage, imageDist - iconSize / 2, -iconSize / 2, iconSize, iconSize);
         } else {
-          ctx.textAlign = 'right';
-          ctx.fillText(displayLabel, radius - 20, 6);
-          if (option.imageUrl) preloadOptionImage(option);
+          ctx.fillText(displayLabel, radius - 16, 0);
+          if (option.imageUrl) {
+            preloadOptionImage(option);
+          }
         }
 
         ctx.restore();
       });
 
       ctx.restore();
-    }
-
-    function spinWheel() {
-      if (isSpinning || options.length === 0) return;
-
-      lastRotation = 0;
-      isSpinning = true;
-      spinBtn.disabled = true;
-      resultText.textContent = '';
-
-      const spinDuration = 3000;
-      const spins = 8;
-      const totalRotation = spins * Math.PI * 2;
-      const anglePerSlice = (Math.PI * 2) / options.length;
-      const chosenIndex = Math.floor(Math.random() * options.length);
-
-      // Calculate rotation to point chosen item at the top indicator
-      // Each slice center is at: (i + 0.5) * anglePerSlice
-      // Indicator points to: 3π/2 (top)
-      // So rotation needed: 3π/2 - (chosenIndex + 0.5) * anglePerSlice
-      const indicatorAngle = 3 * Math.PI / 2;
-      const sliceCenter = (chosenIndex + 0.5) * anglePerSlice;
-      const targetRotation = totalRotation + (indicatorAngle - sliceCenter);
-
-      const startTime = Date.now();
-
-      function animateSpin() {
-        const elapsed = Date.now() - startTime;
-        const progress = Math.min(elapsed / spinDuration, 1);
-
-        const easeOut = 1 - Math.pow(1 - progress, 3);
-        const currentRotation = targetRotation * easeOut;
-
-        drawWheel(currentRotation);
-
-        if (progress < 1) {
-          requestAnimationFrame(animateSpin);
-        } else {
-          const selectedOption = options[chosenIndex];
-          const selectedImage = selectedOption.imageUrl ? getLoadedImage(selectedOption.imageUrl) : null;
-
-          lastRotation = currentRotation;
-
-          if (removeAfterCheckbox.checked) {
-            options.splice(chosenIndex, 1);
-            optionsInput.value = options.map(formatOptionEntry).join('\n');
-            saveOptions();
-          }
-
-          isSpinning = false;
-          spinBtn.disabled = false;
-
-          if (selectedImage) {
-            resultText.innerHTML = `<img src="${selectedOption.imageUrl}" alt="${selectedOption.label}" class="result-image" />`;
-          } else {
-            resultText.textContent = `✨ ${selectedOption.label}`;
-          }
-
-          drawWheel(lastRotation);
-          updateInteractionState();
-        }
-      }
-
-      animateSpin();
     }
 
     updateBtn.addEventListener('click', () => {
@@ -562,8 +648,9 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
       saveOptions();
       options.forEach(preloadOptionImage);
       updateUploadedOptionsList();
+      updateWheelEngine();
       lastRotation = 0;
-      drawWheel();
+      drawWheel(0);
       updateInteractionState();
     });
 
@@ -573,8 +660,9 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
       resultText.textContent = '';
       saveOptions();
       updateUploadedOptionsList();
+      updateWheelEngine();
       lastRotation = 0;
-      drawWheel();
+      drawWheel(0);
       updateInteractionState();
     });
 
@@ -594,12 +682,14 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
     spinBtn.addEventListener('click', spinWheel);
 
     function updateInteractionState() {
-      spinBtn.disabled = isSpinning || options.length === 0;
+      spinBtn.disabled = options.length === 0;
     }
 
     window.addEventListener('localBrandConfigUpdated', () => {
-      if (!isSpinning) drawWheel(lastRotation);
+      drawWheel();
     });
 
+    // Initialize wheel engine after DOM is ready
+    initializeWheelEngine();
     loadOptions();
   </script>
