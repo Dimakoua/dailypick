@@ -665,6 +665,9 @@
 
 .brand-form input[type="text"],
 .brand-form input[type="url"] {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   border-radius: 10px;
   border: 1px solid var(--brand-border);
   padding: 10px;
