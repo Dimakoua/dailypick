@@ -48,6 +48,21 @@
   margin: 0;
   color: var(--brand-subtle-text, #64748b);
 }
+.pro-settings {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  min-width: 0;
+  position: relative;
+}
+.pro-settings > .game-pip-fab {
+  position: static !important;
+  top: auto !important;
+  right: auto !important;
+  margin-left: 0;
+}
 .settings-hint a { color: #3498db; text-decoration: none; font-weight: bold; }
 
 /* --- 3-PANE WORKSPACE --- */
