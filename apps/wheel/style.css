@@ -25,7 +25,6 @@ html { scroll-padding-top: calc(var(--header-h, 64px) + 12px); }
 body {
   font-family: var(--brand-font-family, 'Nunito', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif);
   color: var(--brand-text, #34495e);
-  background: var(--brand-background, #f4f7f6);
   margin: 0;
   display: flex;
   flex-direction: column;

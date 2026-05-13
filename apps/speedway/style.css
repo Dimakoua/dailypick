@@ -2,13 +2,6 @@
    Speedway — glass-styled page (themes removed)
    ========================================================= */
 
-:root {
-    --speedway-background: linear-gradient(180deg, var(--brand-background, #f4f7f6) 0%, var(--brand-surface, #ffffff) 100%);
-    --speedway-track: var(--brand-surface, #ffffff);
-    --speedway-lane-color: #bdc3c7;
-    --speedway-accent: var(--brand-accent, #3498db);
-    --lane-alpha: rgba(189, 195, 199, .55);
-}
 
 /* Header-safe anchor offset */
 html {
@@ -18,7 +11,6 @@ html {
 body {
     font-family: var(--brand-font-family, 'Nunito', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif);
     text-align: center;
-    background: var(--speedway-background);
     color: var(--brand-text, #34495e);
     margin: 0;
     display: flex;

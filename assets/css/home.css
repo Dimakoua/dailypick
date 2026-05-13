@@ -24,7 +24,7 @@ html, body {
 body {
   font-family: var(--brand-font-family, 'Nunito', system-ui, sans-serif);
   line-height: 1.65;
-  background: var(--brand-background, #ffffff);
+  background: transparent;
   color: var(--brand-text, #374151);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
