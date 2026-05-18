@@ -91,6 +91,15 @@ body {
   font-family: var(--brand-font-family, system-ui, sans-serif);
 }
 
+.stats-note {
+  margin: 10px 0 0;
+  font-size: 0.8rem;
+  color: var(--wc-gold);
+  font-weight: 600;
+  text-align: center;
+  opacity: 0.9;
+}
+
 .prediction-display {
   max-width: 600px;
   width: 92%;

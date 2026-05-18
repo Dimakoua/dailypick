@@ -30,6 +30,7 @@ headExtra: |
                 <option value="default">Choose a matchup...</option>
             </select>
         </div>
+        <p class="stats-note">📊 Score probabilities weighted by ELO ratings — stronger teams score more &amp; concede less</p>
     </div>
 
     <div id="prediction-display" class="prediction-display" style="display:none;">
@@ -126,6 +127,53 @@ headExtra: |
 </main>
 
 <script>
+  // ELO ratings sourced May 2026 (eloratings.net + FIFA ranking points)
+  // Used for Poisson-based score generation: stronger teams score more & concede less
+  const teamRatings = {
+    'Spain': 2165, 'Argentina': 2113, 'France': 2081, 'England': 2020,
+    'Brazil': 1985, 'Portugal': 1960, 'Netherlands': 1940, 'Morocco': 1915,
+    'Belgium': 1890, 'Italy': 1870, 'Germany': 1875, 'Colombia': 1840,
+    'Uruguay': 1810, 'Denmark': 1800, 'Japan': 1775, 'Senegal': 1740,
+    'Mexico': 1720, 'Poland': 1710, 'Canada': 1690, 'Nigeria': 1670,
+    'Saudi Arabia': 1645, 'Egypt': 1630, 'Ghana': 1625, 'Costa Rica': 1615,
+  };
+  const BASE_LAMBDA = 1.3; // World Cup average goals per team per match
+  const AVG_RATING  = 1900;
+
+  /**
+   * Poisson random variable — realistic goal count distribution.
+   * lambda = expected goals. Capped at 8 to avoid extreme outliers.
+   */
+  function poisson(lambda) {
+    const L = Math.exp(-lambda);
+    let k = 0, p = 1;
+    do { k++; p *= Math.random(); } while (p > L);
+    return Math.min(k - 1, 8);
+  }
+
+  /**
+   * Generate score using ELO-weighted Poisson:
+   * - Each team’s λ scales with their own rating and the opponent’s defensive strength.
+   * - Formula: λ = BASE × (ownRating/avg) × (avg/oppRating)^0.4
+   */
+  function generateScore(team1, team2) {
+    const r1 = teamRatings[team1] || AVG_RATING;
+    const r2 = teamRatings[team2] || AVG_RATING;
+    const lambda1 = BASE_LAMBDA * (r1 / AVG_RATING) * Math.pow(AVG_RATING / r2, 0.4);
+    const lambda2 = BASE_LAMBDA * (r2 / AVG_RATING) * Math.pow(AVG_RATING / r1, 0.4);
+    return { scoreA: poisson(lambda1), scoreB: poisson(lambda2), r1, r2 };
+  }
+
+  /** Returns a human-readable favouritism label based on ELO gap. */
+  function getFavouriteLabel(team1, team2, r1, r2) {
+    const diff = Math.abs(r1 - r2);
+    if (diff < 40)  return null; // essentially a coin flip
+    const fav  = r1 > r2 ? team1 : team2;
+    if (diff < 130) return `${fav} slight favourites`;
+    if (diff < 280) return `${fav} favourites`;
+    return `${fav} heavy favourites`;
+  }
+
   const groupMatches = [
     { team1: 'Argentina', team2: 'Canada' },
     { team1: 'Argentina', team2: 'Morocco' },
@@ -213,8 +261,8 @@ headExtra: |
     const matchIdx = parseInt(document.getElementById('match-picker').value);
     const match = matches[matchIdx];
 
-    const scoreA = Math.floor(Math.random() * 5);
-    const scoreB = Math.floor(Math.random() * 5);
+    // ELO-weighted Poisson score
+    const { scoreA, scoreB, r1, r2 } = generateScore(match.team1, match.team2);
 
     const btn = document.getElementById('spinBtn');
     btn.disabled = true;
@@ -236,20 +284,20 @@ headExtra: |
     document.getElementById('result-message').innerHTML = '';
     document.getElementById('prediction-display').style.display = 'block';
 
-    // Slot A spins first, then B starts with a 400ms delay for suspense
+    // Slot A first, B with 420ms delay for suspense
     await Promise.all([
       animateScoreSlot(scoreAEl, scoreA, 0),
       animateScoreSlot(scoreBEl, scoreB, 420),
     ]);
 
     let note = '';
-    if (scoreA > scoreB) {
-      note = `${match.team1} wins!`;
-    } else if (scoreB > scoreA) {
-      note = `${match.team2} wins!`;
-    } else {
-      note = 'Draw — Extra time and penalties in knockout!';
-    }
+    if (scoreA > scoreB)      note = `✅ ${match.team1} wins!`;
+    else if (scoreB > scoreA) note = `✅ ${match.team2} wins!`;
+    else                      note = '🤝 Draw — penalties in knockout!';
+
+    const favLabel = getFavouriteLabel(match.team1, match.team2, r1, r2);
+    if (favLabel) note += ` · ${favLabel} (ELO: ${r1} vs ${r2})`;
+
     noteEl.textContent = note;
     noteEl.classList.add('note-reveal');
 
