@@ -101,6 +101,12 @@ Instant random quick picks for all major lotteries — no sign-up required.
 - [Daily Grand Generator](https://dailypick.dev/apps/daily-grand-number-generator): 5 numbers from 1–49 and a Grand Number from 1–7 (Canada).
 - [Australian Powerball Generator](https://dailypick.dev/apps/australian-powerball-number-generator): 7 numbers from 1–35 and a Powerball from 1–20.
 
+## FIFA World Cup 2026
+
+- [World Cup Team Wheel](https://dailypick.dev/apps/world-cup-team-wheel): Spin for a random FIFA 2026 nation — all 48 teams or filter by UEFA, CONMEBOL, CAF, AFC, CONCACAF, or Title Contenders.
+- [World Cup Host City Wheel](https://dailypick.dev/apps/world-cup-host-city-wheel): Pick a random FIFA 2026 host city — all 16 venues across the USA, Canada, and Mexico.
+- [Which World Cup Team Should I Support?](https://dailypick.dev/apps/which-world-cup-team-should-i-support): Neutral fan? Spin to back a favourite, underdog, host nation, or any of the 48 nations.
+
 ## Settings & Customization
 
 - [Settings & Brand Studio](https://dailypick.dev/apps/brand): Centralize rosters, brand presets, theme customization, and third-party integrations (Jira, Trello, GitHub).

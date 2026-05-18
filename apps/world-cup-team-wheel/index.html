@@ -1,0 +1,131 @@
+---
+layout: base_app.njk
+title: "World Cup Team Wheel – Random FIFA 2026 Team Picker | Daily Pick"
+description: "Can't pick a World Cup team to support? Spin the wheel for a random FIFA 2026 team — all 48 nations, or filter by UEFA, CONMEBOL, CAF, AFC, CONCACAF. Let football decide."
+keywords: "World Cup team wheel, FIFA 2026 team picker, random World Cup team, which World Cup team should I support, FIFA World Cup 2026 wheel, football team randomizer"
+canonical: "https://dailypick.dev/apps/world-cup-team-wheel/"
+localBrandConfig: /apps/wheel/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+    <header class="page-hero glass-card">
+        <p class="hero-eyebrow">48 nations. One ball. One spin.</p>
+        <h1>⚽ World Cup Team Wheel</h1>
+        <p>Argentina or Morocco? Japan or Portugal? Whether you're picking a team for the tournament, settling a watch-party argument, or just letting fate decide your loyalty — spin the wheel.</p>
+    </header>
+
+    <div id="wheel-container">
+        <div id="indicator"></div>
+        <canvas height="425" id="wheel" width="425"></canvas>
+    </div>
+
+    <div class="preset-btns">
+        <button class="preset-btn" data-items="Argentina,Brazil,Colombia,Uruguay,Ecuador,Venezuela,Chile,Paraguay">🌎 CONMEBOL</button>
+        <button class="preset-btn" data-items="Germany,Spain,France,England,Portugal,Netherlands,Belgium,Switzerland,Croatia,Serbia,Austria,Denmark,Poland,Turkey,Scotland,Romania">🇪🇺 UEFA</button>
+        <button class="preset-btn" data-items="Morocco,Senegal,Nigeria,Egypt,Côte d'Ivoire,South Africa,Tunisia,Algeria,Cameroon">🌍 CAF (Africa)</button>
+        <button class="preset-btn" data-items="Japan,South Korea,Iran,Australia,Saudi Arabia,Jordan,Uzbekistan,Indonesia">🌏 AFC (Asia)</button>
+        <button class="preset-btn" data-items="USA,Canada,Mexico,Panama,Costa Rica,Honduras">🌐 CONCACAF</button>
+        <button class="preset-btn" data-items="Argentina,France,Spain,England,Brazil,Germany,Portugal,Netherlands,Morocco,Japan,Colombia,Uruguay">🏆 Title Contenders</button>
+        <button class="preset-btn" data-items="Argentina,Brazil,Colombia,Uruguay,Ecuador,Venezuela,Chile,Paraguay,Germany,Spain,France,England,Portugal,Netherlands,Belgium,Switzerland,Croatia,Serbia,Austria,Denmark,Poland,Turkey,Scotland,Romania,Morocco,Senegal,Nigeria,Egypt,Côte d'Ivoire,South Africa,Tunisia,Algeria,Cameroon,Japan,South Korea,Iran,Australia,Saudi Arabia,Jordan,Uzbekistan,Indonesia,USA,Canada,Mexico,Panama,Costa Rica,Honduras,New Zealand,DR Congo">⚽ All 48 Teams</button>
+    </div>
+
+    <button id="spinBtn">⚽ SPIN THE WHEEL!</button>
+    <div id="winner"></div>
+
+    <section class="seo-content-area">
+        <h2>World Cup Team Wheel: FIFA 2026 Random Nation Picker</h2>
+        <div class="seo-grid">
+            <div>
+                <p>The World Cup Team Wheel randomly picks one of the 48 nations competing at FIFA World Cup 2026 — hosted across the USA, Canada, and Mexico. Use it to choose a team to follow, settle a group-stage argument, or assign nations for a sweepstake.</p>
+            </div>
+            <div>
+                <h3>Why this wheel helps</h3>
+                <ul>
+                    <li><strong>Six confederation presets:</strong> CONMEBOL, UEFA, CAF, AFC, CONCACAF, plus a Title Contenders shortlist.</li>
+                    <li><strong>All 48 qualified nations</strong> across the expanded 2026 format.</li>
+                    <li><strong>One spin. One team.</strong> No going back.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="seo-toc">
+            <h3>Table of Contents</h3>
+            <ol>
+                <li><a href="#what-is-world-cup-wheel">What is the World Cup Team Wheel?</a></li>
+                <li><a href="#who-should-use">Who should use this wheel?</a></li>
+                <li><a href="#how-it-works">How it works</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#all-teams">All 48 FIFA 2026 Teams</a></li>
+                <li><a href="#tips">Tips for using the wheel</a></li>
+                <li><a href="#alternatives">Alternatives</a></li>
+                <li><a href="#why-it-works">Why it works</a></li>
+            </ol>
+        </div>
+
+        <section id="what-is-world-cup-wheel">
+            <h3>1. What is the World Cup Team Wheel?</h3>
+            <p>The World Cup Team Wheel is a free random team picker for FIFA World Cup 2026. It covers all 48 qualified nations spread across six confederations. Spin it to find out which country you're supporting for the tournament, who you're drawing in a sweepstake, or simply which flag you're flying when you can't decide for yourself.</p>
+        </section>
+
+        <section id="who-should-use">
+            <h3>2. Who should use this wheel?</h3>
+            <p>Neutral fans who want to pick a team for the tournament. Watch-party groups who need fair nation assignments for a sweepstake. Friends settling a "best national team" debate. New football fans who want to choose a side without hometown bias. Office pools needing a fair draw. Anyone who just wants the wheel to decide for them.</p>
+        </section>
+
+        <section id="how-it-works">
+            <h3>3. How it works</h3>
+            <p>Choose a preset — Title Contenders for the favourites, a specific confederation for regional loyalty, or All 48 Teams for the full random draw. Hit Spin and the wheel picks your nation. Whatever it lands on, that country is yours for the tournament. No take-backs.</p>
+        </section>
+
+        <section id="features">
+            <h3>4. Features</h3>
+            <ul>
+                <li><strong>Six presets:</strong> CONMEBOL (South America), UEFA (Europe), CAF (Africa), AFC (Asia), CONCACAF (North/Central America), and Title Contenders.</li>
+                <li><strong>All 48 nations:</strong> The full expanded FIFA 2026 field including all three host nations.</li>
+                <li><strong>Mobile-friendly:</strong> Spin at the pub, at a watch party, or anywhere the debate starts.</li>
+                <li><strong>Customisable:</strong> Load your own list — group-stage rivals, sweepstake names, or your own shortlist.</li>
+                <li><strong>Instant result:</strong> Your nation is displayed the moment the wheel stops.</li>
+            </ul>
+        </section>
+
+        <section id="all-teams">
+            <h3>5. All 48 FIFA 2026 Teams</h3>
+            <p><strong>CONMEBOL (South America):</strong> Argentina, Brazil, Colombia, Uruguay, Ecuador, Venezuela, Chile, Paraguay.</p>
+            <p><strong>UEFA (Europe):</strong> Germany, Spain, France, England, Portugal, Netherlands, Belgium, Switzerland, Croatia, Serbia, Austria, Denmark, Poland, Turkey, Scotland, Romania.</p>
+            <p><strong>CAF (Africa):</strong> Morocco, Senegal, Nigeria, Egypt, Côte d'Ivoire, South Africa, Tunisia, Algeria, Cameroon.</p>
+            <p><strong>AFC (Asia):</strong> Japan, South Korea, Iran, Australia, Saudi Arabia, Jordan, Uzbekistan, Indonesia.</p>
+            <p><strong>CONCACAF (North/Central America &amp; Caribbean):</strong> USA, Canada, Mexico, Panama, Costa Rica, Honduras.</p>
+            <p><strong>OFC / Intercontinental:</strong> New Zealand, DR Congo.</p>
+        </section>
+
+        <section id="tips">
+            <h3>6. Tips</h3>
+            <p>Use <em>Title Contenders</em> if you want to follow a genuine trophy race. Use a confederation preset to stay loyal to a region. Use <em>All 48 Teams</em> for a sweepstake-style random draw — paste the result into your group chat and claim your nation. Spin multiple times to assign every person in your party their own team.</p>
+        </section>
+
+        <section id="alternatives">
+            <h3>7. Alternatives</h3>
+            <p>Picking where to watch? Use the <a href="/apps/world-cup-host-city-wheel/">World Cup Host City Wheel</a> to pick a 2026 venue. Need match-day food? The <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a> handles that. Running a watch-party game? Try <a href="/apps/truth-or-dare/">Truth or Dare</a> for halftime laughs. Need a yes/no on a prediction? The <a href="/apps/yes-or-no-wheel/">Yes or No Wheel</a> settles it instantly.</p>
+        </section>
+
+        <section id="why-it-works">
+            <h3>8. Why it works</h3>
+            <p>Picking a World Cup team is surprisingly fraught — heritage, geography, who knocked your actual team out, which kit looks best. The wheel removes all of that by making one clean, neutral, random decision that nobody can dispute. The wheel spun. The ball rolled. You're a fan now.</p>
+        </section>
+    </section>
+</main>
+
+<script src="/assets/js/wheel-engine.js"></script>
+<script>
+  FoodWheelEngine.init({
+    canvasSelector: "#wheel",
+    spinButtonSelector: "#spinBtn",
+    winnerSelector: "#winner",
+    presetButtonSelector: ".preset-btn",
+    defaultItems: ['Argentina', 'France', 'Spain', 'England', 'Brazil', 'Germany', 'Portugal', 'Netherlands', 'Morocco', 'Japan', 'Colombia', 'Uruguay'],
+    resultFormatter: function (selectedItem) {
+      return `⚽ Your team: <span style="color: var(--wc-green); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+    }
+  });
+</script>

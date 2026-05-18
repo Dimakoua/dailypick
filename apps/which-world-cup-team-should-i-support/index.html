@@ -1,0 +1,120 @@
+---
+layout: base_app.njk
+title: "Which World Cup Team Should I Support? – FIFA 2026 Team Picker | Daily Pick"
+description: "Can't decide which World Cup team to support in 2026? Spin the wheel for a random FIFA 2026 nation — filter by underdog, powerhouse, host nation, or any confederation. Let fate pick your team."
+keywords: "which World Cup team should I support, FIFA 2026 team picker, World Cup 2026 neutral fan, which football team should I support, random World Cup team, FIFA 2026 wheel"
+canonical: "https://dailypick.dev/apps/which-world-cup-team-should-i-support/"
+localBrandConfig: /apps/wheel/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+    <header class="page-hero glass-card">
+        <p class="hero-eyebrow">Neutral? Not anymore.</p>
+        <h1>⚽ Which World Cup Team Should I Support?</h1>
+        <p>You don't have a dog in this fight — yet. Spin the wheel and let FIFA World Cup 2026 assign you a nation. Whether you want a favourite, an underdog, or a host nation, there's a preset for you.</p>
+    </header>
+
+    <div id="wheel-container">
+        <div id="indicator"></div>
+        <canvas height="425" id="wheel" width="425"></canvas>
+    </div>
+
+    <div class="preset-btns">
+        <button class="preset-btn" data-items="Argentina,France,Spain,England,Brazil,Germany,Portugal,Netherlands,Morocco,Japan,Colombia,Uruguay">🏆 Favourites &amp; Contenders</button>
+        <button class="preset-btn" data-items="Morocco,Senegal,Nigeria,Egypt,Côte d'Ivoire,South Africa,Tunisia,Algeria,Cameroon,Japan,South Korea,Indonesia,Uzbekistan,Jordan,New Zealand,DR Congo,Panama,Costa Rica,Honduras,Venezuela,Ecuador,Scotland,Romania,Serbia,Austria,Turkey">🐯 Underdogs &amp; Dark Horses</button>
+        <button class="preset-btn" data-items="USA,Canada,Mexico">🌎 Host Nations</button>
+        <button class="preset-btn" data-items="Argentina,Brazil,Colombia,Uruguay,Ecuador,Venezuela,Chile,Paraguay">🌎 South America</button>
+        <button class="preset-btn" data-items="Germany,Spain,France,England,Portugal,Netherlands,Belgium,Switzerland,Croatia,Serbia,Austria,Denmark,Poland,Turkey,Scotland,Romania">🇪🇺 Europe</button>
+        <button class="preset-btn" data-items="Argentina,Brazil,Colombia,Uruguay,Ecuador,Venezuela,Chile,Paraguay,Germany,Spain,France,England,Portugal,Netherlands,Belgium,Switzerland,Croatia,Serbia,Austria,Denmark,Poland,Turkey,Scotland,Romania,Morocco,Senegal,Nigeria,Egypt,Côte d'Ivoire,South Africa,Tunisia,Algeria,Cameroon,Japan,South Korea,Iran,Australia,Saudi Arabia,Jordan,Uzbekistan,Indonesia,USA,Canada,Mexico,Panama,Costa Rica,Honduras,New Zealand,DR Congo">⚽ Any Nation</button>
+    </div>
+
+    <button id="spinBtn">⚽ FIND MY TEAM!</button>
+    <div id="winner"></div>
+
+    <section class="seo-content-area">
+        <h2>Which World Cup Team Should I Support in 2026?</h2>
+        <div class="seo-grid">
+            <div>
+                <p>No national team in the tournament? Just want to follow the best football without bias? This wheel assigns you a FIFA World Cup 2026 nation based on what kind of fan you want to be — pick the favourites, back an underdog, support a host nation, or go full random.</p>
+            </div>
+            <div>
+                <h3>Which preset is right for you?</h3>
+                <ul>
+                    <li><strong>Favourites:</strong> Back a team that can actually win it.</li>
+                    <li><strong>Underdogs:</strong> The best World Cups are won by surprise.</li>
+                    <li><strong>Host Nations:</strong> USA, Canada, or Mexico — the home crowd.</li>
+                    <li><strong>Any Nation:</strong> Pure, unfiltered football fate.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="seo-toc">
+            <h3>Table of Contents</h3>
+            <ol>
+                <li><a href="#how-to-pick">How to pick a World Cup team to support</a></li>
+                <li><a href="#favourites">Backing the favourites</a></li>
+                <li><a href="#underdogs">Supporting an underdog</a></li>
+                <li><a href="#host-nations">Cheering for a host nation</a></li>
+                <li><a href="#by-confederation">Picking by confederation</a></li>
+                <li><a href="#sweepstake">Running a sweepstake</a></li>
+                <li><a href="#alternatives">Alternatives</a></li>
+                <li><a href="#why-it-works">Why random team assignment works</a></li>
+            </ol>
+        </div>
+
+        <section id="how-to-pick">
+            <h3>1. How to pick a World Cup team to support</h3>
+            <p>There are only a few legitimate ways to choose a World Cup team when your own country isn't in it: pick the best team, back the most romantic underdog, support a nation with a connection to you, or let chance decide entirely. This wheel covers all of those options. Choose your preset and spin — your team for FIFA World Cup 2026 will be waiting when the wheel stops.</p>
+        </section>
+
+        <section id="favourites">
+            <h3>2. Backing the favourites</h3>
+            <p>The <em>Favourites &amp; Contenders</em> preset includes Argentina (defending champions), France, Spain, England, Brazil, Germany, Portugal, Netherlands, Morocco, Japan, Colombia, and Uruguay — teams that realistically could lift the trophy. If you want to follow a genuine title race, this is your preset. The wheel picks one; you follow them all the way to the final.</p>
+        </section>
+
+        <section id="underdogs">
+            <h3>3. Supporting an underdog</h3>
+            <p>The <em>Underdogs &amp; Dark Horses</em> preset is where the real World Cup magic lives. Morocco's run to the semi-finals in 2022. Japan beating Germany and Spain in the group stage. Senegal winning AFCON. These are teams capable of shocking the world, and backing one of them from the group stage makes every win feel enormous. Spin this preset for a tournament you'll actually remember.</p>
+        </section>
+
+        <section id="host-nations">
+            <h3>4. Cheering for a host nation</h3>
+            <p>FIFA World Cup 2026 has three host nations: the United States, Canada, and Mexico. All three qualify automatically and all three have passionate, growing football cultures. The USA is a genuine dark horse with a talented young squad. Canada is on an upward trajectory. Mexico brings decades of World Cup history and some of the loudest fans on the planet. Spin the <em>Host Nations</em> preset to back the home crowd.</p>
+        </section>
+
+        <section id="by-confederation">
+            <h3>5. Picking by confederation</h3>
+            <p>If you have a regional soft spot — a love of South American football, or a preference for European club pedigree — use the South America or Europe presets. These give you a team within a region you already follow, making the World Cup feel like an extension of the football you watch all season.</p>
+        </section>
+
+        <section id="sweepstake">
+            <h3>6. Running a sweepstake</h3>
+            <p>The <em>Any Nation</em> preset includes all 48 qualified teams. Gather your group, spin once per person, and assign each result as their sweepstake nation. Whoever's team lifts the trophy wins the pot. Spin until every person has a unique country — just close the tab and reopen if you want to reset.</p>
+        </section>
+
+        <section id="alternatives">
+            <h3>7. Alternatives</h3>
+            <p>Want to see all 48 teams? Use the <a href="/apps/world-cup-team-wheel/">World Cup Team Wheel</a>. Picking a host city to visit? Try the <a href="/apps/world-cup-host-city-wheel/">World Cup Host City Wheel</a>. Need match-day food? The <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a> has you covered. Can't decide whether to watch alone or in a group? The <a href="/apps/yes-or-no-wheel/">Yes or No Wheel</a> settles it.</p>
+        </section>
+
+        <section id="why-it-works">
+            <h3>8. Why random team assignment works</h3>
+            <p>When you choose a team yourself, you always second-guess it. Did I pick them because they'll win? Because their kit is nice? Because they knocked out someone I don't like? Random assignment removes all of that. The wheel picked your team. Now your job is to learn their players, find out when they play, and invest. You'd be surprised how quickly you start caring about a team the wheel assigned you.</p>
+        </section>
+    </section>
+</main>
+
+<script src="/assets/js/wheel-engine.js"></script>
+<script>
+  FoodWheelEngine.init({
+    canvasSelector: "#wheel",
+    spinButtonSelector: "#spinBtn",
+    winnerSelector: "#winner",
+    presetButtonSelector: ".preset-btn",
+    defaultItems: ['Argentina', 'France', 'Spain', 'England', 'Brazil', 'Germany', 'Portugal', 'Netherlands', 'Morocco', 'Japan', 'Colombia', 'Uruguay'],
+    resultFormatter: function (selectedItem) {
+      return `⚽ Your team: <span style="color: var(--wc-green); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+    }
+  });
+</script>

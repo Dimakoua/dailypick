@@ -1,0 +1,125 @@
+---
+layout: base_app.njk
+title: "World Cup Host City Wheel – Random FIFA 2026 Venue Picker | Daily Pick"
+description: "Spin the wheel to pick a FIFA World Cup 2026 host city. All 16 venues across the USA, Canada, and Mexico — from New York to Mexico City. Let the tournament decide where you go."
+keywords: "World Cup host city wheel, FIFA 2026 venue picker, World Cup 2026 cities, which World Cup city should I visit, FIFA 2026 host stadiums, random World Cup city"
+canonical: "https://dailypick.dev/apps/world-cup-host-city-wheel/"
+localBrandConfig: /apps/wheel/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+    <header class="page-hero glass-card">
+        <p class="hero-eyebrow">3 countries. 16 stadiums. One spin.</p>
+        <h1>🏟️ World Cup Host City Wheel</h1>
+        <p>New York or Los Angeles? Mexico City or Vancouver? FIFA World Cup 2026 spans 16 incredible venues across three nations. Spin the wheel to pick your city — for planning a trip, a sweepstake draw, or just the thrill of it.</p>
+    </header>
+
+    <div id="wheel-container">
+        <div id="indicator"></div>
+        <canvas height="425" id="wheel" width="425"></canvas>
+    </div>
+
+    <div class="preset-btns">
+        <button class="preset-btn" data-items="New York/New Jersey,Los Angeles,Dallas,Miami,San Francisco,Seattle,Boston,Atlanta,Kansas City,Houston,Philadelphia">🇺🇸 USA (11 Cities)</button>
+        <button class="preset-btn" data-items="Toronto,Vancouver">🇨🇦 Canada (2 Cities)</button>
+        <button class="preset-btn" data-items="Mexico City,Guadalajara,Monterrey">🇲🇽 Mexico (3 Cities)</button>
+        <button class="preset-btn" data-items="New York/New Jersey,Los Angeles,Dallas,Miami,San Francisco,Seattle,Boston,Atlanta,Kansas City,Houston,Philadelphia,Toronto,Vancouver,Mexico City,Guadalajara,Monterrey">🏟️ All 16 Venues</button>
+    </div>
+
+    <button id="spinBtn">🏟️ SPIN THE WHEEL!</button>
+    <div id="winner"></div>
+
+    <section class="seo-content-area">
+        <h2>World Cup Host City Wheel: FIFA 2026 Venue Picker</h2>
+        <div class="seo-grid">
+            <div>
+                <p>The World Cup Host City Wheel randomly picks one of the 16 official FIFA World Cup 2026 venues spread across the USA, Canada, and Mexico. Use it to plan a trip, assign cities in a sweepstake, or settle a debate about which city has the best atmosphere.</p>
+            </div>
+            <div>
+                <h3>Why this wheel helps</h3>
+                <ul>
+                    <li><strong>Four presets:</strong> USA (11 cities), Canada (2 cities), Mexico (3 cities), and All 16 Venues.</li>
+                    <li><strong>All official FIFA 2026 stadiums</strong> from MetLife to Azteca.</li>
+                    <li><strong>One spin.</strong> One city. Start planning.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="seo-toc">
+            <h3>Table of Contents</h3>
+            <ol>
+                <li><a href="#what-is-host-city-wheel">What is the World Cup Host City Wheel?</a></li>
+                <li><a href="#who-should-use">Who should use this wheel?</a></li>
+                <li><a href="#how-it-works">How it works</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#all-cities">All 16 FIFA 2026 Host Cities</a></li>
+                <li><a href="#tips">Tips</a></li>
+                <li><a href="#alternatives">Alternatives</a></li>
+                <li><a href="#why-it-works">Why it works</a></li>
+            </ol>
+        </div>
+
+        <section id="what-is-host-city-wheel">
+            <h3>1. What is the World Cup Host City Wheel?</h3>
+            <p>The World Cup Host City Wheel is a free random city picker for all 16 official FIFA World Cup 2026 venues. The 2026 tournament is the first to span three host nations — the United States (11 stadiums), Canada (2 stadiums), and Mexico (3 stadiums). Spin it to find your destination, run a city-draw sweepstake, or just see which stadium fate assigns you.</p>
+        </section>
+
+        <section id="who-should-use">
+            <h3>2. Who should use this wheel?</h3>
+            <p>Football fans planning a trip and can't pick a city. Watch-party groups running a host-city sweepstake. Travel bloggers looking for an unbiased city to review. Friends debating whether New York, LA, or Mexico City has the best football atmosphere. Anyone who wants the wheel to make the decision for them.</p>
+        </section>
+
+        <section id="how-it-works">
+            <h3>3. How it works</h3>
+            <p>Choose a country preset to stay in the USA, Canada, or Mexico — or hit All 16 Venues for a full cross-continent draw. Click Spin and the wheel picks your city. Book your flights. That's your World Cup base for the tournament.</p>
+        </section>
+
+        <section id="features">
+            <h3>4. Features</h3>
+            <ul>
+                <li><strong>Four presets:</strong> USA (11 cities), Canada (2 cities), Mexico (3 cities), and All 16 Venues.</li>
+                <li><strong>All official venues:</strong> Every FIFA-approved 2026 stadium, from MetLife Stadium (New York) to Estadio Azteca (Mexico City).</li>
+                <li><strong>Mobile-friendly:</strong> Spin during the group stage draw or at the travel planning table.</li>
+                <li><strong>Customisable:</strong> Edit the list to include only cities you can realistically travel to.</li>
+                <li><strong>Instant result:</strong> Your city is displayed the moment the wheel stops.</li>
+            </ul>
+        </section>
+
+        <section id="all-cities">
+            <h3>5. All 16 FIFA 2026 Host Cities</h3>
+            <p><strong>USA (11 venues):</strong> New York/New Jersey (MetLife Stadium), Los Angeles (SoFi Stadium), Dallas (AT&amp;T Stadium), Miami (Hard Rock Stadium), San Francisco Bay Area (Levi's Stadium), Seattle (Lumen Field), Boston (Gillette Stadium), Atlanta (Mercedes-Benz Stadium), Kansas City (Arrowhead Stadium), Houston (NRG Stadium), Philadelphia (Lincoln Financial Field).</p>
+            <p><strong>Canada (2 venues):</strong> Toronto (BMO Field), Vancouver (BC Place).</p>
+            <p><strong>Mexico (3 venues):</strong> Mexico City (Estadio Azteca), Guadalajara (Estadio Akron), Monterrey (Estadio BBVA).</p>
+        </section>
+
+        <section id="tips">
+            <h3>6. Tips</h3>
+            <p>Use the USA preset if you're flying into North America and want to pick from the biggest spread of venues. Use Canada if you want a shorter trip from Eastern Canada or the UK. Use Mexico if you want the most atmospheric, traditional football culture. Use All 16 Venues for a full random draw — wherever it lands, commit to going. The wheel has spoken.</p>
+        </section>
+
+        <section id="alternatives">
+            <h3>7. Alternatives</h3>
+            <p>Need a team to support at that city? Spin the <a href="/apps/world-cup-team-wheel/">World Cup Team Wheel</a>. Can't decide what to eat at the stadium? The <a href="/apps/what-should-i-eat/">What Should I Eat Wheel</a> has you covered. Need a yes/no on buying match tickets? The <a href="/apps/yes-or-no-wheel/">Yes or No Wheel</a> makes that call instantly.</p>
+        </section>
+
+        <section id="why-it-works">
+            <h3>8. Why it works</h3>
+            <p>With 16 incredible cities across three countries, choosing where to go for World Cup 2026 is genuinely hard — flights, hotels, group stage schedules, and atmosphere all factor in. The wheel strips away analysis paralysis and gives you one destination to research, plan for, and get excited about. The wheel spun. Pack your bags.</p>
+        </section>
+    </section>
+</main>
+
+<script src="/assets/js/wheel-engine.js"></script>
+<script>
+  FoodWheelEngine.init({
+    canvasSelector: "#wheel",
+    spinButtonSelector: "#spinBtn",
+    winnerSelector: "#winner",
+    presetButtonSelector: ".preset-btn",
+    defaultItems: ['New York/New Jersey', 'Los Angeles', 'Dallas', 'Miami', 'San Francisco', 'Seattle', 'Boston', 'Atlanta', 'Kansas City', 'Houston', 'Philadelphia', 'Toronto', 'Vancouver', 'Mexico City', 'Guadalajara', 'Monterrey'],
+    resultFormatter: function (selectedItem) {
+      return `🏟️ Your city: <span style="color: var(--wc-green); font-size: 2rem; display: block;">${selectedItem}!</span>`;
+    }
+  });
+</script>
