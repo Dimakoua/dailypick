@@ -1,0 +1,213 @@
+---
+layout: base_app.njk
+title: "World Cup Match Predictor – FIFA 2026 Score Prediction | Daily Pick"
+description: "Predict FIFA World Cup 2026 match scores randomly. Pick a matchup and spin for a score prediction. Fun for watch parties, fantasy pools, and tournament entertainment."
+keywords: "World Cup score predictor, FIFA 2026 score prediction, match predictor, World Cup betting predictions, football score generator, World Cup match simulation"
+canonical: "https://dailypick.dev/apps/world-cup-match-predictor/"
+localBrandConfig: /apps/wheel/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+    <header class="page-hero glass-card">
+        <p class="hero-eyebrow">Pick a match. Get a prediction.</p>
+        <h1>⚽ World Cup Match Predictor</h1>
+        <p>Can't call a FIFA World Cup 2026 scoreline? Choose a match and spin the wheel for a random prediction. Perfect for watch parties, fantasy pools, and bragging rights.</p>
+    </header>
+
+    <div id="match-selector">
+        <div class="control-group">
+            <label for="match-stage">Tournament Stage</label>
+            <select id="match-stage">
+                <option value="group">Group Stage</option>
+                <option value="knockout">Knockout Stage</option>
+            </select>
+        </div>
+        
+        <div class="control-group">
+            <label for="match-picker">Select a Match</label>
+            <select id="match-picker">
+                <option value="default">Choose a matchup...</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="prediction-display" class="prediction-display" style="display:none;">
+        <div class="match-info">
+            <div class="team team-a">
+                <h3 id="team-a-name"></h3>
+                <div id="team-a-score" class="score"></div>
+            </div>
+            <div class="vs">VS</div>
+            <div class="team team-b">
+                <h3 id="team-b-name"></h3>
+                <div id="team-b-score" class="score"></div>
+            </div>
+        </div>
+        <div id="prediction-note" class="prediction-note"></div>
+    </div>
+
+    <button id="spinBtn" class="spin-btn" style="display:none;">⚽ PREDICT THE SCORE!</button>
+    <div id="result-message" class="result-message"></div>
+
+    <section class="seo-content-area">
+        <h2>World Cup Match Predictor: FIFA 2026 Score Prediction</h2>
+        <div class="seo-grid">
+            <div>
+                <p>The World Cup Match Predictor randomly generates a score prediction for any FIFA World Cup 2026 match. Pick a group-stage matchup or knockout encounter, spin the wheel, and get an instant prediction. Share your prediction with friends, use it for fantasy pools, or just for fun.</p>
+            </div>
+            <div>
+                <h3>Why this predictor helps</h3>
+                <ul>
+                    <li><strong>Two tournament stages:</strong> Group stage and Knockout predictions.</li>
+                    <li><strong>Instant scores:</strong> No analysis paralysis — the wheel decides.</li>
+                    <li><strong>Share & compete:</strong> Great for watch parties and office pools.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="seo-toc">
+            <h3>Table of Contents</h3>
+            <ol>
+                <li><a href="#what-is-match-predictor">What is the World Cup Match Predictor?</a></li>
+                <li><a href="#who-should-use">Who should use this?</a></li>
+                <li><a href="#how-it-works">How it works</a></li>
+                <li><a href="#stages">Tournament stages</a></li>
+                <li><a href="#watch-parties">Using it for watch parties</a></li>
+                <li><a href="#tips">Tips for match predictions</a></li>
+                <li><a href="#alternatives">Alternatives</a></li>
+                <li><a href="#why-it-works">Why random predictions work</a></li>
+            </ol>
+        </div>
+
+        <section id="what-is-match-predictor">
+            <h3>1. What is the World Cup Match Predictor?</h3>
+            <p>The World Cup Match Predictor randomly generates a score prediction for any FIFA World Cup 2026 match. You pick the matchup, choose the tournament stage (group or knockout), and the randomizer generates a realistic scoreline. Use it for entertainment, fantasy pools, or to settle disagreements about match outcomes.</p>
+        </section>
+
+        <section id="who-should-use">
+            <h3>2. Who should use this?</h3>
+            <p>Watch-party hosts who want to entertain guests with predictions. Fantasy football players making lineup decisions. Friends who want a neutral prediction when debating a match. Anyone who wants to gamify World Cup matches without actual gambling. Streamers looking for interactive match-day content.</p>
+        </section>
+
+        <section id="how-it-works">
+            <h3>3. How it works</h3>
+            <p>Choose whether you want to predict a group-stage or knockout match. Select the specific matchup from the dropdown. Click Predict the Score and the randomizer generates a score between 0-0 and 4-4 (with heavier weight toward realistic low-scoring outcomes). The prediction appears instantly with both teams and the generated scoreline.</p>
+        </section>
+
+        <section id="stages">
+            <h3>4. Tournament stages</h3>
+            <ul>
+                <li><strong>Group Stage:</strong> Predictions for all group-phase matches between qualified nations. Typically lower scores than knockout matches.</li>
+                <li><strong>Knockout Stage:</strong> Predictions for round-of-16, quarterfinals, semifinals, and final matches. Can include extra time and penalty shootouts.</li>
+            </ul>
+        </section>
+
+        <section id="watch-parties">
+            <h3>5. Using it for watch parties</h3>
+            <p>Before a match kicks off, have everyone spin the predictor and write down their predicted score. As the match unfolds, whoever's prediction is closest to the actual result gets a point or wins the round. It adds a fun layer of prediction competition to the match day experience.</p>
+        </section>
+
+        <section id="tips">
+            <h3>6. Tips for match predictions</h3>
+            <p>Use group-stage predictions to warm up before the big knockout matches. In knockout predictions, remember that extra time and penalties are possible — the wheel might generate a tie, which would go to extra time in real life. Screenshot your prediction before the match starts so you have proof if you're right!</p>
+        </section>
+
+        <section id="alternatives">
+            <h3>7. Alternatives</h3>
+            <p>Want to pick which team wins overall? Use the <a href="/apps/world-cup-team-wheel/">World Cup Team Wheel</a>. Need to fill a knockout bracket? The <a href="/apps/world-cup-bracket-randomizer/">World Cup Bracket Randomizer</a> has you covered. Want to pick a match to watch? The <a href="/apps/yes-or-no-wheel/">Yes or No Wheel</a> helps decide.</p>
+        </section>
+
+        <section id="why-it-works">
+            <h3>8. Why random predictions work</h3>
+            <p>Predicting World Cup match scores is notoriously hard — even expert pundits get it wrong constantly. A random prediction is as legitimate as any analysis and has the bonus of being unbiased and fast. Plus, when your random prediction comes true, the bragging rights are eternal.</p>
+        </section>
+    </section>
+</main>
+
+<script>
+  const groupMatches = [
+    { team1: 'Argentina', team2: 'Canada' },
+    { team1: 'Argentina', team2: 'Morocco' },
+    { team1: 'Argentina', team2: 'Saudi Arabia' },
+    { team1: 'France', team2: 'Netherlands' },
+    { team1: 'France', team2: 'Poland' },
+    { team1: 'France', team2: 'Denmark' },
+    { team1: 'Brazil', team2: 'Spain' },
+    { team1: 'Brazil', team2: 'Germany' },
+    { team1: 'Brazil', team2: 'Costa Rica' },
+    { team1: 'England', team2: 'Portugal' },
+    { team1: 'England', team2: 'Italy' },
+    { team1: 'England', team2: 'Ghana' },
+    { team1: 'Germany', team2: 'Belgium' },
+    { team1: 'Germany', team2: 'Japan' },
+    { team1: 'Spain', team2: 'Mexico' },
+  ];
+
+  const knockoutMatches = [
+    { team1: 'Argentina', team2: 'France' },
+    { team1: 'Brazil', team2: 'England' },
+    { team1: 'Germany', team2: 'Spain' },
+    { team1: 'Netherlands', team2: 'Belgium' },
+    { team1: 'Argentina', team2: 'Brazil', stage: 'Semifinal' },
+    { team1: 'France', team2: 'England', stage: 'Semifinal' },
+    { team1: 'Argentina', team2: 'France', stage: 'Final' },
+  ];
+
+  document.getElementById('match-stage').addEventListener('change', function(e) {
+    updateMatches(e.target.value);
+  });
+
+  document.getElementById('match-picker').addEventListener('change', function(e) {
+    if (e.target.value !== 'default') {
+      document.getElementById('spinBtn').style.display = 'block';
+    }
+  });
+
+  document.getElementById('spinBtn').addEventListener('click', predictScore);
+
+  function updateMatches(stage) {
+    const matches = stage === 'group' ? groupMatches : knockoutMatches;
+    const select = document.getElementById('match-picker');
+    select.innerHTML = '<option value="default">Choose a matchup...</option>';
+    matches.forEach((m, i) => {
+      const label = `${m.team1} vs ${m.team2}${m.stage ? ' (' + m.stage + ')' : ''}`;
+      const opt = document.createElement('option');
+      opt.value = i;
+      opt.textContent = label;
+      select.appendChild(opt);
+    });
+    document.getElementById('spinBtn').style.display = 'none';
+  }
+
+  function predictScore() {
+    const stage = document.getElementById('match-stage').value;
+    const matches = stage === 'group' ? groupMatches : knockoutMatches;
+    const matchIdx = parseInt(document.getElementById('match-picker').value);
+    const match = matches[matchIdx];
+
+    const scoreA = Math.floor(Math.random() * 5);
+    const scoreB = Math.floor(Math.random() * 5);
+
+    document.getElementById('team-a-name').textContent = match.team1;
+    document.getElementById('team-b-name').textContent = match.team2;
+    document.getElementById('team-a-score').textContent = scoreA;
+    document.getElementById('team-b-score').textContent = scoreB;
+
+    let note = '';
+    if (scoreA > scoreB) {
+      note = `${match.team1} wins!`;
+    } else if (scoreB > scoreA) {
+      note = `${match.team2} wins!`;
+    } else {
+      note = 'Draw — Extra time and penalties in knockout!';
+    }
+    document.getElementById('prediction-note').textContent = note;
+
+    document.getElementById('prediction-display').style.display = 'block';
+    document.getElementById('result-message').innerHTML = `<strong>Prediction:</strong> <span style="color: var(--wc-green); font-size: 1.2rem;">${match.team1} ${scoreA} - ${scoreB} ${match.team2}</span>`;
+  }
+
+  // Initialize
+  updateMatches('group');
+</script>

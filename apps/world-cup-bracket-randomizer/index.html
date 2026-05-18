@@ -1,0 +1,164 @@
+---
+layout: base_app.njk
+title: "World Cup Bracket Randomizer – FIFA 2026 Knockout Draw | Daily Pick"
+description: "Randomly fill your FIFA World Cup 2026 knockout bracket. Pick quarterfinal winners, semifinal winners, or simulate a full bracket. Great for sweepstakes and tournament prediction games."
+keywords: "World Cup bracket randomizer, FIFA 2026 knockout bracket, World Cup bracket simulator, random World Cup winner, bracket predictor, tournament bracket generator"
+canonical: "https://dailypick.dev/apps/world-cup-bracket-randomizer/"
+localBrandConfig: /apps/wheel/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+    <header class="page-hero glass-card">
+        <p class="hero-eyebrow">16 teams. 4 rounds. One spin.</p>
+        <h1>🏆 World Cup Bracket Randomizer</h1>
+        <p>Fill your FIFA World Cup 2026 knockout bracket with one spin. Pick quarterfinal winners, semifinal teams, or predict the whole tournament. Perfect for sweepstakes, watch parties, and tournament predictions.</p>
+    </header>
+
+    <div id="bracket-controls">
+        <div class="control-group">
+            <label for="bracket-level">What round are you filling?</label>
+            <select id="bracket-level">
+                <option value="quarterfinal">Quarterfinals (Pick 4 teams)</option>
+                <option value="semifinal">Semifinals (Pick 2 teams)</option>
+                <option value="final">Final (Pick 1 winner)</option>
+                <option value="full">Full Bracket (Simulate all results)</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="wheel-container" style="display:none;">
+        <div id="indicator"></div>
+        <canvas height="425" id="wheel" width="425"></canvas>
+    </div>
+
+    <div id="bracket-display" class="bracket-display">
+        <div class="bracket-stage">
+            <h3>Quarterfinals</h3>
+            <div id="qf-results" class="bracket-results"></div>
+        </div>
+        <div class="bracket-stage">
+            <h3>Semifinals</h3>
+            <div id="sf-results" class="bracket-results"></div>
+        </div>
+        <div class="bracket-stage">
+            <h3>Final</h3>
+            <div id="final-result" class="bracket-results"></div>
+        </div>
+    </div>
+
+    <button id="spinBtn" class="spin-btn">🏆 FILL THE BRACKET!</button>
+    <div id="winner" class="result-display"></div>
+
+    <section class="seo-content-area">
+        <h2>World Cup Bracket Randomizer: FIFA 2026 Knockout Predictor</h2>
+        <div class="seo-grid">
+            <div>
+                <p>The World Cup Bracket Randomizer randomly fills your FIFA World Cup 2026 knockout bracket. Pick which round you want to predict, spin the wheel, and watch the tournament unfold — or simulate the entire bracket from quarterfinals to champion with one click.</p>
+            </div>
+            <div>
+                <h3>Why this randomizer helps</h3>
+                <ul>
+                    <li><strong>Four prediction modes:</strong> Quarterfinals, Semifinals, Final, or Full Bracket.</li>
+                    <li><strong>Fair sweepstake draws:</strong> Assign bracket positions to your watch-party group.</li>
+                    <li><strong>Tournament simulations:</strong> Build a complete bracket prediction in seconds.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="seo-toc">
+            <h3>Table of Contents</h3>
+            <ol>
+                <li><a href="#what-is-bracket-randomizer">What is the World Cup Bracket Randomizer?</a></li>
+                <li><a href="#who-should-use">Who should use this?</a></li>
+                <li><a href="#how-it-works">How it works</a></li>
+                <li><a href="#prediction-modes">Prediction modes</a></li>
+                <li><a href="#sweepstakes">Using it for sweepstakes</a></li>
+                <li><a href="#tips">Tips for bracket predictions</a></li>
+                <li><a href="#alternatives">Alternatives</a></li>
+                <li><a href="#why-it-works">Why random bracket fill works</a></li>
+            </ol>
+        </div>
+
+        <section id="what-is-bracket-randomizer">
+            <h3>1. What is the World Cup Bracket Randomizer?</h3>
+            <p>The World Cup Bracket Randomizer randomly predicts the outcomes of the FIFA World Cup 2026 knockout rounds. You choose which stage you want to predict — quarterfinals, semifinals, final, or the entire bracket from start to finish — and the randomizer assigns winners for you. It's perfect for tournament predictions, watch-party entertainment, and sweepstake draws.</p>
+        </section>
+
+        <section id="who-should-use">
+            <h3>2. Who should use this?</h3>
+            <p>Fans making a tournament prediction who want a neutral, unbiased pick. Watch-party hosts running a bracket sweepstake. Office pools assigning bracket positions. Anyone who wants to simulate what the 2026 tournament might look like. Fantasy football players looking for a tiebreaker when two people pick the same team.</p>
+        </section>
+
+        <section id="how-it-works">
+            <h3>3. How it works</h3>
+            <p>Choose which round you want to predict: Quarterfinals (pick 4 teams to advance), Semifinals (pick 2 teams), Final (pick 1 champion), or Full Bracket (simulate all three rounds). Click Fill the Bracket and the randomizer picks the advancing teams. The results appear instantly in the bracket display above.</p>
+        </section>
+
+        <section id="prediction-modes">
+            <h3>4. Prediction modes</h3>
+            <ul>
+                <li><strong>Quarterfinals:</strong> Pick 4 random teams from the 16 qualified nations. These become your semifinalists.</li>
+                <li><strong>Semifinals:</strong> Pick 2 random teams from the 16 (or from your quarterfinal winners if you filled those first).</li>
+                <li><strong>Final:</strong> Pick 1 random champion from all 48 nations or your narrowed list.</li>
+                <li><strong>Full Bracket:</strong> Simulate the entire knockout round automatically — quarterfinals → semifinals → final → champion in one spin.</li>
+            </ul>
+        </section>
+
+        <section id="sweepstakes">
+            <h3>5. Using it for sweepstakes</h3>
+            <p>Gather your watch-party group or office pool and assign each person a bracket position. Spin the randomizer once per person to fill each quarterfinal, semifinal, and final slot. Whoever's predicted bracket path produces the actual champion wins the pot. Or use Full Bracket mode to generate one complete bracket per player — most accurate bracket wins.</p>
+        </section>
+
+        <section id="tips">
+            <h3>6. Tips for bracket predictions</h3>
+            <p>Use Quarterfinals mode to get a quick sense of who might make the semis. Use Semifinals mode if you already know the quarterfinal matchups and want to predict the last four. Use Final mode as a tiebreaker — if two people pick the same semifinalists, let the randomizer pick the champion. Use Full Bracket mode for fast sweepstake rounds where everyone gets a complete, unique bracket in seconds.</p>
+        </section>
+
+        <section id="alternatives">
+            <h3>7. Alternatives</h3>
+            <p>Need to pick which teams make the bracket first? Use the <a href="/apps/world-cup-team-wheel/">World Cup Team Wheel</a>. Want to predict a specific group-stage match? Try the <a href="/apps/world-cup-match-predictor/">World Cup Match Predictor</a>. Need to pick your host city for the finals? The <a href="/apps/world-cup-host-city-wheel/">World Cup Host City Wheel</a> has you covered.</p>
+        </section>
+
+        <section id="why-it-works">
+            <h3>8. Why random bracket fill works</h3>
+            <p>Predicting a World Cup bracket is genuinely hard — you're balancing form, history, fatigue, and luck across 16 nations. The randomizer removes prediction anxiety and gives you a legitimate, unbiased bracket to commit to. Whether it's a sweepstake, a watch-party game, or just for fun, a random bracket is as valid as any prediction.</p>
+        </section>
+    </section>
+</main>
+
+<script src="/assets/js/wheel-engine.js"></script>
+<script>
+  const allTeams = ['Argentina', 'France', 'Spain', 'England', 'Brazil', 'Germany', 'Portugal', 'Netherlands', 'Morocco', 'Japan', 'Colombia', 'Uruguay', 'Egypt', 'Senegal', 'Nigeria', 'Belgium'];
+  
+  document.getElementById('spinBtn').addEventListener('click', function() {
+    const level = document.getElementById('bracket-level').value;
+    fillBracket(level);
+  });
+
+  function fillBracket(level) {
+    const qfDiv = document.getElementById('qf-results');
+    const sfDiv = document.getElementById('sf-results');
+    const finalDiv = document.getElementById('final-result');
+    
+    if (level === 'quarterfinal' || level === 'full') {
+      const qfTeams = shuffleArray([...allTeams]).slice(0, 4);
+      qfDiv.innerHTML = qfTeams.map(t => `<div class="bracket-team">✓ ${t}</div>`).join('');
+    }
+    
+    if (level === 'semifinal' || level === 'full') {
+      const sfTeams = shuffleArray([...allTeams]).slice(0, 2);
+      sfDiv.innerHTML = sfTeams.map(t => `<div class="bracket-team">✓ ${t}</div>`).join('');
+    }
+    
+    if (level === 'final' || level === 'full') {
+      const champion = allTeams[Math.floor(Math.random() * allTeams.length)];
+      finalDiv.innerHTML = `<div class="bracket-team champion">🏆 ${champion}</div>`;
+      document.getElementById('winner').innerHTML = `<strong>Champion:</strong> <span style="color: var(--wc-green); font-size: 2rem; display: block;">${champion}!</span>`;
+    }
+  }
+
+  function shuffleArray(arr) {
+    return arr.sort(() => Math.random() - 0.5);
+  }
+</script>

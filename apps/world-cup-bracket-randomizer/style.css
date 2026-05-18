@@ -1,0 +1,215 @@
+/* ==========================================================================
+   World Cup Bracket Randomizer – App Styles
+   ========================================================================== */
+
+:root {
+  --wc-green: #1a7a4a;
+  --wc-gold: #d4a017;
+  --wc-dark: #0d2b1a;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  flex-grow: 1;
+}
+
+.page-hero {
+  text-align: center;
+  max-width: 800px;
+  width: 92%;
+  padding: 30px;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.12));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--glass-shadow);
+}
+
+.page-hero h1 {
+  margin: 0.5rem 0;
+  font-size: clamp(1.6rem, 2rem, 2.2rem);
+  color: var(--brand-heading, var(--wc-dark));
+  font-weight: 700;
+}
+
+.page-hero p {
+  margin: 0.75rem 0 0;
+  font-size: 1rem;
+  color: var(--brand-text, #10203f);
+  line-height: 1.6;
+}
+
+.hero-eyebrow {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--wc-gold);
+}
+
+#bracket-controls {
+  max-width: 600px;
+  width: 92%;
+  margin: 20px 0;
+  padding: 20px;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.12));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
+  border-radius: var(--radius-md, 12px);
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.control-group label {
+  font-weight: 600;
+  color: var(--brand-heading, var(--wc-dark));
+}
+
+.control-group select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--brand-border, var(--wc-green));
+  background: var(--brand-surface, white);
+  color: var(--brand-text, #333);
+  font-size: 1rem;
+  font-family: var(--brand-font-family, system-ui, sans-serif);
+}
+
+.bracket-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  max-width: 800px;
+  width: 92%;
+  margin: 30px 0;
+}
+
+.bracket-stage {
+  background: var(--glass-bg, rgba(255, 255, 255, 0.07));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.15));
+  border-radius: var(--radius-md, 12px);
+  padding: 15px;
+}
+
+.bracket-stage h3 {
+  margin: 0 0 15px 0;
+  color: var(--wc-green);
+  font-size: 1.1rem;
+}
+
+.bracket-results {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bracket-team {
+  padding: 12px;
+  background: rgba(26, 122, 74, 0.1);
+  border: 1px solid var(--wc-green);
+  border-radius: 8px;
+  color: var(--wc-dark);
+  font-weight: 600;
+  text-align: center;
+}
+
+.bracket-team.champion {
+  background: rgba(212, 160, 23, 0.15);
+  border-color: var(--wc-gold);
+  color: var(--wc-gold);
+  font-size: 1.1rem;
+}
+
+.spin-btn {
+  padding: 12px 32px;
+  border: none;
+  border-radius: var(--radius-md, 40px);
+  background: linear-gradient(to bottom right, var(--wc-green), var(--wc-dark));
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--brand-font-family, system-ui, sans-serif);
+  margin: 20px auto;
+  display: block;
+}
+
+.spin-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(26, 122, 74, 0.4);
+}
+
+.spin-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(26, 122, 74, 0.35);
+}
+
+.result-display {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.3rem;
+  color: var(--brand-heading, var(--wc-dark));
+}
+
+.seo-content-area {
+  max-width: 800px;
+  width: 92%;
+  margin: 30px 0;
+}
+
+.seo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 20px 0;
+}
+
+@media (max-width: 600px) {
+  .seo-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .bracket-display {
+    grid-template-columns: 1fr;
+  }
+}
+
+.seo-toc {
+  background: var(--glass-bg, rgba(255, 255, 255, 0.07));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.15));
+  border-radius: var(--radius-md, 12px);
+  padding: 20px 24px;
+  margin: 24px 0;
+}
+
+.seo-toc ol {
+  margin: 0.5rem 0 0;
+  padding-left: 1.4rem;
+}
+
+.seo-toc a {
+  color: var(--wc-green);
+  text-decoration: none;
+}
+
+.seo-content-area h3 {
+  color: var(--brand-heading, var(--wc-dark));
+}
+
+.seo-content-area a {
+  color: var(--wc-green);
+}
