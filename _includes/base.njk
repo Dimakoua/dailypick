@@ -106,7 +106,7 @@
     <link rel="stylesheet" href="{{ '/css/style.css' | url }}" />
     <link rel="stylesheet" href="/assets/css/theme.css" />
     {# home.css is needed on the homepage, blog index, and suite pages #}
-    {% if page.url == '/' or (page.url and (page.url == '/blog/' or page.url.startsWith('/blog/page') or page.url == '/agile/' or page.url == '/randomizers/' or page.url == '/standups/' or page.url == '/games/' or page.url == '/lottery/' or page.url == '/food/')) %}
+    {% if page.url == '/' or (page.url and (page.url == '/blog/' or page.url.startsWith('/blog/page') or page.url == '/agile/' or page.url == '/randomizers/' or page.url == '/standups/' or page.url == '/games/' or page.url == '/lottery/' or page.url == '/food/' or page.url == '/apps/')) %}
         <link rel="stylesheet" href="/assets/css/home.css" />
     {% endif %}
     {% else %}

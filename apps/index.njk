@@ -1,0 +1,203 @@
+---
+layout: base.njk
+title: All Daily Pick Apps & Games | Daily Pick
+description: Browse every Daily Pick game, decision tool, and wheel from one searchable landing page. Filter by category, search names and descriptions, and open the perfect app instantly.
+keywords: all apps, games, tools, search, filters, daily pick apps
+canonical: "https://dailypick.dev/apps/"
+sitemap:
+  priority: 0.95
+  changefreq: weekly
+headExtra: |
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://dailypick.dev/" },
+      { "@type": "ListItem", "position": 2, "name": "All Apps", "item": "https://dailypick.dev/apps/" }
+    ]
+  }
+  </script>
+  <style>
+    .app-filters {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-top: 1.2rem;
+    }
+
+    .app-filters .search-container {
+      flex: 1 1 420px;
+      min-width: 320px;
+    }
+
+    .app-filters .search-input {
+      width: 100%;
+      min-width: 0;
+      padding: 12px 14px;
+      font-size: 15px;
+    }
+
+    .app-filter-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      align-items: center;
+    }
+
+    .app-filter-button {
+      border: 1px solid var(--brand-border, #dde4eb);
+      border-radius: 999px;
+      background: var(--brand-surface, #ffffff);
+      color: var(--brand-text, #34495e);
+      padding: 10px 14px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .app-filter-button:hover,
+    .app-filter-button:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.12);
+    }
+
+    .app-filter-button.active {
+      background: var(--brand-accent, #3498db);
+      border-color: var(--brand-accent, #3498db);
+      color: #ffffff;
+    }
+
+    #app-count {
+      margin-top: 1rem;
+      font-size: 0.98rem;
+      color: var(--brand-subtle-text, #6f7b8c);
+    }
+
+    #app-empty {
+      margin: 1.5rem 0 0;
+      color: var(--brand-subtle-text, #6f7b8c);
+    }
+
+    @media (max-width: 768px) {
+      .app-filters {
+        flex-direction: column;
+      }
+
+      .app-filter-buttons {
+        width: 100%;
+      }
+    }
+  </style>
+---
+
+{% set categoryLabels = {
+  standup: 'Stand-up',
+  randomizer: 'Randomizers',
+  agile: 'Agile Tools',
+  games: 'Games',
+  lottery: 'Lottery',
+  food: 'Food Wheels'
+} %}
+
+<main class="main-container" id="main" data-page-type="apps">
+  <header class="hero">
+    <p class="hero-eyebrow">App library</p>
+    <h1 class="hero__title">Browse all Daily Pick games & tools</h1>
+    <p class="hero__subtitle">Search every app, filter by category, and launch the game, decision tool, or wheel you need.</p>
+  </header>
+
+  <section aria-labelledby="apps-heading" class="game-selection">
+    <div class="game-section__header">
+      <p class="section-eyebrow">Search and filter</p>
+      <h2 class="section-title" id="apps-heading">Find the perfect game or tool</h2>
+      <p class="section-subtitle">Type a name, keyword, or category. Narrow the list instantly and click a card to open the app.</p>
+
+      <div class="app-filters">
+        <div class="search-container" style="flex:1; min-width:260px;">
+          <input id="app-search" class="search-input" placeholder="Search all apps..." aria-label="Search all apps" />
+        </div>
+
+        <div class="app-filter-buttons" role="group" aria-label="Choose a category">
+          <button type="button" class="app-filter-button active" data-filter-category="all" aria-pressed="true">All</button>
+          {% for key, label in categoryLabels %}
+            <button type="button" class="app-filter-button" data-filter-category="{{ key }}" aria-pressed="false">{{ label }}</button>
+          {% endfor %}
+        </div>
+      </div>
+
+      <p id="app-count" class="section-subtitle">Showing {{ apps | length }} apps</p>
+    </div>
+
+    <ul class="game-grid" id="app-gallery" role="list">
+      {% for app in apps %}
+        <li class="game-grid__item" data-name="{{ app.name | lower }}" data-description="{{ app.description | lower }}" data-category="{{ app.category }}">
+          <a class="game-card" href="{{ app.path }}">
+            <span aria-hidden="true" class="game-card__icon">{{ app.emoji }}</span>
+            <span class="game-card__title">{{ app.name }}</span>
+            <span class="game-card__desc">{{ categoryLabels[app.category] or app.category | capitalize }} · {{ app.description }}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+
+    <p id="app-empty" class="section-subtitle" hidden>No matching apps found. Try another search or category.</p>
+  </section>
+</main>
+
+<script>
+  (function() {
+    var filterButtons = Array.from(document.querySelectorAll('.app-filter-button'));
+    var searchInput = document.getElementById('app-search');
+    var cards = Array.from(document.querySelectorAll('#app-gallery .game-grid__item'));
+    var countEl = document.getElementById('app-count');
+    var emptyEl = document.getElementById('app-empty');
+    var totalApps = cards.length;
+    var activeCategory = 'all';
+    var activeQuery = '';
+
+    function updateSelection() {
+      filterButtons.forEach(function(button) {
+        var isActive = button.dataset.filterCategory === activeCategory;
+        button.classList.toggle('active', isActive);
+        button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+    }
+
+    function updateGallery() {
+      var query = activeQuery.trim().toLowerCase();
+      var visibleCount = 0;
+
+      cards.forEach(function(card) {
+        var category = card.dataset.category;
+        var text = (card.dataset.name + ' ' + card.dataset.description).toLowerCase();
+        var matchesCategory = activeCategory === 'all' || category === activeCategory;
+        var matchesQuery = !query || text.indexOf(query) !== -1;
+        var visible = matchesCategory && matchesQuery;
+
+        card.style.display = visible ? '' : 'none';
+        if (visible) visibleCount += 1;
+      });
+
+      countEl.textContent = 'Showing ' + visibleCount + ' of ' + totalApps + ' apps';
+      emptyEl.hidden = visibleCount > 0;
+    }
+
+    filterButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        activeCategory = button.dataset.filterCategory;
+        updateSelection();
+        updateGallery();
+      });
+    });
+
+    searchInput.addEventListener('input', function(event) {
+      activeQuery = event.target.value;
+      updateGallery();
+    });
+
+    updateSelection();
+    updateGallery();
+  })();
+</script>
