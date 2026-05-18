@@ -109,6 +109,7 @@ headExtra: |
   lottery: 'Lottery',
   food: 'Food Wheels'
 } %}
+{% set excludedAppIds = ['settings', 'blog', 'whats-new', 'feedback'] %}
 
 <main class="main-container" id="main" data-page-type="apps">
   <header class="hero">
@@ -141,13 +142,15 @@ headExtra: |
 
     <ul class="game-grid" id="app-gallery" role="list">
       {% for app in apps %}
-        <li class="game-grid__item" data-name="{{ app.name | lower }}" data-description="{{ app.description | lower }}" data-category="{{ app.category }}">
-          <a class="game-card" href="{{ app.path }}">
-            <span aria-hidden="true" class="game-card__icon">{{ app.emoji }}</span>
-            <span class="game-card__title">{{ app.name }}</span>
-            <span class="game-card__desc">{{ categoryLabels[app.category] or app.category | capitalize }} · {{ app.description }}</span>
-          </a>
-        </li>
+        {% if app.id not in excludedAppIds %}
+          <li class="game-grid__item" data-name="{{ app.name | lower }}" data-description="{{ app.description | lower }}" data-category="{{ app.category }}">
+            <a class="game-card" href="{{ app.path }}">
+              <span aria-hidden="true" class="game-card__icon">{{ app.emoji }}</span>
+              <span class="game-card__title">{{ app.name }}</span>
+              <span class="game-card__desc">{{ categoryLabels[app.category] or app.category | capitalize }} · {{ app.description }}</span>
+            </a>
+          </li>
+        {% endif %}
       {% endfor %}
     </ul>
 
