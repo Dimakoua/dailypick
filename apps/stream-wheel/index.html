@@ -6,7 +6,6 @@ keywords: "stream wheel, twitch wheel spinner, obs browser source wheel, live st
 canonical: "https://dailypick.dev/apps/stream-wheel/"
 headExtra: |
   <link href="./style.css" rel="stylesheet" />
-localBrandConfig: /apps/stream-wheel/local-brand-config.js
 ---
 <main data-page-type="randomizer" class="stream-wheel-page" id="main">
   <script>if(location.search.includes('overlay=1'))document.documentElement.classList.add('overlay-mode');</script>
@@ -166,7 +165,7 @@ localBrandConfig: /apps/stream-wheel/local-brand-config.js
         <li><strong>Remove winner mode:</strong> Each wheel can auto-remove the drawn item and track history. Restore any item individually or all at once.</li>
         <li><strong>OBS overlay mode:</strong> A single URL parameter strips all UI and makes the background transparent for use as an OBS Browser Source.</li>
         <li><strong>Shareable URL state:</strong> The complete configuration (titles, items, colors, history) is always in the URL — bookmark, share, or hand off mid-giveaway.</li>
-        <li><strong>Six streaming-themed palettes:</strong> Neon, Twitch, YouTube, Sunset, Ocean, and Forest — or override with Brand Studio colors.</li>
+        <li><strong>Six streaming-themed palettes:</strong> Neon, Twitch, YouTube, Sunset, Ocean, and Forest.</li>
         <li><strong>Adjustable spin duration:</strong> 2 to 12 seconds per wheel, independent per card.</li>
         <li><strong>Up to 200 items per wheel:</strong> For large viewer lists or competitions with many entries.</li>
       </ul>
@@ -742,16 +741,6 @@ localBrandConfig: /apps/stream-wheel/local-brand-config.js
 
       return card;
     }
-
-    // ── Brand Studio integration ──────────────────────────────────────────────
-    window.addEventListener('localBrandConfigUpdated', () => {
-      wheelsMap.forEach(state => {
-        if (!state.isSpinning) {
-          const active = state.items.filter(x => !state.removed.includes(x));
-          drawWheelCanvas(state.canvas, active, 0, state.palette);
-        }
-      });
-    });
 
     // ── Init ──────────────────────────────────────────────────────────────────
     function init() {
