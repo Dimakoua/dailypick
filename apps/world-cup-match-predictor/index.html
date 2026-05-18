@@ -127,18 +127,37 @@ headExtra: |
 </main>
 
 <script>
-  // ELO ratings sourced May 2026 (eloratings.net + FIFA ranking points)
+  // ELO ratings sourced from FIFA Men's World Ranking (November 2025)
+  // 48 qualified teams only — teams that did not qualify (Italy, Denmark, Poland, etc.) are excluded
   // Used for Poisson-based score generation: stronger teams score more & concede less
   const teamRatings = {
-    'Spain': 2165, 'Argentina': 2113, 'France': 2081, 'England': 2020,
-    'Brazil': 1985, 'Portugal': 1960, 'Netherlands': 1940, 'Morocco': 1915,
-    'Belgium': 1890, 'Italy': 1870, 'Germany': 1875, 'Colombia': 1840,
-    'Uruguay': 1810, 'Denmark': 1800, 'Japan': 1775, 'Senegal': 1740,
-    'Mexico': 1720, 'Poland': 1710, 'Canada': 1690, 'Nigeria': 1670,
-    'Saudi Arabia': 1645, 'Egypt': 1630, 'Ghana': 1625, 'Costa Rica': 1615,
+    // Group A
+    'Mexico': 1850, 'South Africa': 1545, 'South Korea': 1725, 'Czech Republic': 1635,
+    // Group B
+    'Canada': 1730, 'Bosnia and Herzegovina': 1580, 'Qatar': 1505, 'Switzerland': 1800,
+    // Group C
+    'Brazil': 2000, 'Morocco': 1865, 'Haiti': 1460, 'Scotland': 1645,
+    // Group D
+    'United States': 1835, 'Paraguay': 1630, 'Australia': 1720, 'Turkey': 1640,
+    // Group E
+    'Germany': 1895, 'Curaçao': 1430, 'Ivory Coast': 1615, 'Ecuador': 1755,
+    // Group F
+    'Netherlands': 1950, 'Japan': 1795, 'Sweden': 1700, 'Tunisia': 1620,
+    // Group G
+    'Belgium': 1900, 'Egypt': 1660, 'Iran': 1770, 'New Zealand': 1475,
+    // Group H
+    'Spain': 2165, 'Cape Verde': 1450, 'Saudi Arabia': 1565, 'Uruguay': 1820,
+    // Group I
+    'France': 2081, 'Senegal': 1780, 'Iraq': 1485, 'Norway': 1710,
+    // Group J
+    'Argentina': 2113, 'Algeria': 1655, 'Austria': 1745, 'Jordan': 1490,
+    // Group K
+    'Portugal': 1970, 'DR Congo': 1510, 'Uzbekistan': 1520, 'Colombia': 1845,
+    // Group L
+    'England': 2020, 'Croatia': 1870, 'Ghana': 1590, 'Panama': 1690,
   };
   const BASE_LAMBDA = 1.3; // World Cup average goals per team per match
-  const AVG_RATING  = 1900;
+  const AVG_RATING  = 1800;
 
   /**
    * Poisson random variable — realistic goal count distribution.
@@ -175,31 +194,125 @@ headExtra: |
   }
 
   const groupMatches = [
-    { team1: 'Argentina', team2: 'Canada' },
-    { team1: 'Argentina', team2: 'Morocco' },
-    { team1: 'Argentina', team2: 'Saudi Arabia' },
-    { team1: 'France', team2: 'Netherlands' },
-    { team1: 'France', team2: 'Poland' },
-    { team1: 'France', team2: 'Denmark' },
-    { team1: 'Brazil', team2: 'Spain' },
-    { team1: 'Brazil', team2: 'Germany' },
-    { team1: 'Brazil', team2: 'Costa Rica' },
-    { team1: 'England', team2: 'Portugal' },
-    { team1: 'England', team2: 'Italy' },
-    { team1: 'England', team2: 'Ghana' },
-    { team1: 'Germany', team2: 'Belgium' },
-    { team1: 'Germany', team2: 'Japan' },
-    { team1: 'Spain', team2: 'Mexico' },
+    // Group A: Mexico, South Africa, South Korea, Czech Republic
+    { team1: 'Mexico', team2: 'South Africa', group: 'A' },
+    { team1: 'South Korea', team2: 'Czech Republic', group: 'A' },
+    { team1: 'Mexico', team2: 'South Korea', group: 'A' },
+    { team1: 'Czech Republic', team2: 'South Africa', group: 'A' },
+    { team1: 'Czech Republic', team2: 'Mexico', group: 'A' },
+    { team1: 'South Africa', team2: 'South Korea', group: 'A' },
+    // Group B: Canada, Bosnia and Herzegovina, Qatar, Switzerland
+    { team1: 'Canada', team2: 'Bosnia and Herzegovina', group: 'B' },
+    { team1: 'Qatar', team2: 'Switzerland', group: 'B' },
+    { team1: 'Canada', team2: 'Qatar', group: 'B' },
+    { team1: 'Switzerland', team2: 'Bosnia and Herzegovina', group: 'B' },
+    { team1: 'Switzerland', team2: 'Canada', group: 'B' },
+    { team1: 'Bosnia and Herzegovina', team2: 'Qatar', group: 'B' },
+    // Group C: Brazil, Morocco, Haiti, Scotland
+    { team1: 'Brazil', team2: 'Morocco', group: 'C' },
+    { team1: 'Haiti', team2: 'Scotland', group: 'C' },
+    { team1: 'Scotland', team2: 'Morocco', group: 'C' },
+    { team1: 'Brazil', team2: 'Haiti', group: 'C' },
+    { team1: 'Scotland', team2: 'Brazil', group: 'C' },
+    { team1: 'Morocco', team2: 'Haiti', group: 'C' },
+    // Group D: United States, Paraguay, Australia, Turkey
+    { team1: 'United States', team2: 'Paraguay', group: 'D' },
+    { team1: 'Australia', team2: 'Turkey', group: 'D' },
+    { team1: 'United States', team2: 'Australia', group: 'D' },
+    { team1: 'Turkey', team2: 'Paraguay', group: 'D' },
+    { team1: 'Turkey', team2: 'United States', group: 'D' },
+    { team1: 'Paraguay', team2: 'Australia', group: 'D' },
+    // Group E: Germany, Curaçao, Ivory Coast, Ecuador
+    { team1: 'Germany', team2: 'Curaçao', group: 'E' },
+    { team1: 'Ivory Coast', team2: 'Ecuador', group: 'E' },
+    { team1: 'Germany', team2: 'Ivory Coast', group: 'E' },
+    { team1: 'Ecuador', team2: 'Curaçao', group: 'E' },
+    { team1: 'Ecuador', team2: 'Germany', group: 'E' },
+    { team1: 'Curaçao', team2: 'Ivory Coast', group: 'E' },
+    // Group F: Netherlands, Japan, Sweden, Tunisia
+    { team1: 'Netherlands', team2: 'Japan', group: 'F' },
+    { team1: 'Sweden', team2: 'Tunisia', group: 'F' },
+    { team1: 'Netherlands', team2: 'Sweden', group: 'F' },
+    { team1: 'Tunisia', team2: 'Japan', group: 'F' },
+    { team1: 'Japan', team2: 'Sweden', group: 'F' },
+    { team1: 'Tunisia', team2: 'Netherlands', group: 'F' },
+    // Group G: Belgium, Egypt, Iran, New Zealand
+    { team1: 'Belgium', team2: 'Egypt', group: 'G' },
+    { team1: 'Iran', team2: 'New Zealand', group: 'G' },
+    { team1: 'Belgium', team2: 'Iran', group: 'G' },
+    { team1: 'New Zealand', team2: 'Egypt', group: 'G' },
+    { team1: 'Egypt', team2: 'Iran', group: 'G' },
+    { team1: 'New Zealand', team2: 'Belgium', group: 'G' },
+    // Group H: Spain, Cape Verde, Saudi Arabia, Uruguay
+    { team1: 'Spain', team2: 'Cape Verde', group: 'H' },
+    { team1: 'Saudi Arabia', team2: 'Uruguay', group: 'H' },
+    { team1: 'Spain', team2: 'Saudi Arabia', group: 'H' },
+    { team1: 'Uruguay', team2: 'Cape Verde', group: 'H' },
+    { team1: 'Cape Verde', team2: 'Saudi Arabia', group: 'H' },
+    { team1: 'Uruguay', team2: 'Spain', group: 'H' },
+    // Group I: France, Senegal, Iraq, Norway
+    { team1: 'France', team2: 'Senegal', group: 'I' },
+    { team1: 'Iraq', team2: 'Norway', group: 'I' },
+    { team1: 'France', team2: 'Iraq', group: 'I' },
+    { team1: 'Norway', team2: 'Senegal', group: 'I' },
+    { team1: 'Norway', team2: 'France', group: 'I' },
+    { team1: 'Senegal', team2: 'Iraq', group: 'I' },
+    // Group J: Argentina, Algeria, Austria, Jordan
+    { team1: 'Argentina', team2: 'Algeria', group: 'J' },
+    { team1: 'Austria', team2: 'Jordan', group: 'J' },
+    { team1: 'Argentina', team2: 'Austria', group: 'J' },
+    { team1: 'Jordan', team2: 'Algeria', group: 'J' },
+    { team1: 'Algeria', team2: 'Austria', group: 'J' },
+    { team1: 'Jordan', team2: 'Argentina', group: 'J' },
+    // Group K: Portugal, DR Congo, Uzbekistan, Colombia
+    { team1: 'Portugal', team2: 'DR Congo', group: 'K' },
+    { team1: 'Uzbekistan', team2: 'Colombia', group: 'K' },
+    { team1: 'Portugal', team2: 'Uzbekistan', group: 'K' },
+    { team1: 'Colombia', team2: 'DR Congo', group: 'K' },
+    { team1: 'Colombia', team2: 'Portugal', group: 'K' },
+    { team1: 'DR Congo', team2: 'Uzbekistan', group: 'K' },
+    // Group L: England, Croatia, Ghana, Panama
+    { team1: 'England', team2: 'Croatia', group: 'L' },
+    { team1: 'Ghana', team2: 'Panama', group: 'L' },
+    { team1: 'England', team2: 'Ghana', group: 'L' },
+    { team1: 'Panama', team2: 'Croatia', group: 'L' },
+    { team1: 'Panama', team2: 'England', group: 'L' },
+    { team1: 'Croatia', team2: 'Ghana', group: 'L' },
   ];
 
+  // Knockout matchups are potential scenarios based on the official bracket draw.
+  // Actual opponents depend on group stage results (tournament starts June 11, 2026).
   const knockoutMatches = [
-    { team1: 'Argentina', team2: 'France' },
-    { team1: 'Brazil', team2: 'England' },
-    { team1: 'Germany', team2: 'Spain' },
-    { team1: 'Netherlands', team2: 'Belgium' },
-    { team1: 'Argentina', team2: 'Brazil', stage: 'Semifinal' },
-    { team1: 'France', team2: 'England', stage: 'Semifinal' },
-    { team1: 'Argentina', team2: 'France', stage: 'Final' },
+    // Round of 32 — potential matchups based on expected group finishes
+    { team1: 'Germany', team2: 'South Korea', stage: 'Round of 32' },
+    { team1: 'France', team2: 'Egypt', stage: 'Round of 32' },
+    { team1: 'Netherlands', team2: 'Morocco', stage: 'Round of 32' },
+    { team1: 'Brazil', team2: 'Japan', stage: 'Round of 32' },
+    { team1: 'Mexico', team2: 'Senegal', stage: 'Round of 32' },
+    { team1: 'England', team2: 'Colombia', stage: 'Round of 32' },
+    { team1: 'Spain', team2: 'Austria', stage: 'Round of 32' },
+    { team1: 'Argentina', team2: 'Uruguay', stage: 'Round of 32' },
+    { team1: 'Portugal', team2: 'Turkey', stage: 'Round of 32' },
+    { team1: 'Belgium', team2: 'Ecuador', stage: 'Round of 32' },
+    { team1: 'United States', team2: 'Croatia', stage: 'Round of 32' },
+    { team1: 'Canada', team2: 'Norway', stage: 'Round of 32' },
+    // Round of 16 — potential matchups
+    { team1: 'Germany', team2: 'France', stage: 'Round of 16' },
+    { team1: 'Brazil', team2: 'Belgium', stage: 'Round of 16' },
+    { team1: 'Mexico', team2: 'England', stage: 'Round of 16' },
+    { team1: 'Spain', team2: 'United States', stage: 'Round of 16' },
+    { team1: 'Argentina', team2: 'Portugal', stage: 'Round of 16' },
+    { team1: 'Netherlands', team2: 'Croatia', stage: 'Round of 16' },
+    // Quarterfinals — potential matchups
+    { team1: 'Germany', team2: 'Brazil', stage: 'Quarterfinal' },
+    { team1: 'France', team2: 'England', stage: 'Quarterfinal' },
+    { team1: 'Spain', team2: 'Netherlands', stage: 'Quarterfinal' },
+    { team1: 'Argentina', team2: 'Portugal', stage: 'Quarterfinal' },
+    // Semifinals — potential matchups
+    { team1: 'Brazil', team2: 'France', stage: 'Semifinal' },
+    { team1: 'Spain', team2: 'Argentina', stage: 'Semifinal' },
+    // Final — potential matchup
+    { team1: 'France', team2: 'Argentina', stage: 'Final' },
   ];
 
   document.getElementById('match-stage').addEventListener('change', function(e) {
@@ -219,7 +332,9 @@ headExtra: |
     const select = document.getElementById('match-picker');
     select.innerHTML = '<option value="default">Choose a matchup...</option>';
     matches.forEach((m, i) => {
-      const label = `${m.team1} vs ${m.team2}${m.stage ? ' (' + m.stage + ')' : ''}`;
+      const prefix = m.group ? `Group ${m.group}: ` : '';
+      const suffix = m.stage ? ` (${m.stage})` : '';
+      const label = `${prefix}${m.team1} vs ${m.team2}${suffix}`;
       const opt = document.createElement('option');
       opt.value = i;
       opt.textContent = label;
