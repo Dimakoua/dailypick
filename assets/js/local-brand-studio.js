@@ -87,6 +87,7 @@
    * Initialize local brand studio with game-specific config
    */
   function init() {
+    if (new URLSearchParams(window.location.search).has('overlay')) return;
     gameName = STORAGE_KEY_SUFFIX();
     
     // Allow games to provide custom properties and CSS variable mappings

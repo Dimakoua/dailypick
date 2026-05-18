@@ -158,7 +158,15 @@
       })();
     </script>
     {% endif %}
-    <script defer src="/assets/js/local-brand-studio.js"></script>
+    <script>
+      (function () {
+        if (new URLSearchParams(window.location.search).has('overlay')) return;
+        var s = document.createElement('script');
+        s.defer = true;
+        s.src = '/assets/js/local-brand-studio.js';
+        document.head.appendChild(s);
+      })();
+    </script>
     <script defer src="/assets/js/embed.js"></script>
     <script>
       (function () {
