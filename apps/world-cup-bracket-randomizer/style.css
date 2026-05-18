@@ -213,3 +213,47 @@ body {
 .seo-content-area a {
   color: var(--wc-green);
 }
+
+/* ==========================================================================
+   Slot Machine Animations
+   ========================================================================== */
+
+@keyframes slotLand {
+  0%   { transform: scale(1.12); box-shadow: 0 0 28px rgba(212, 160, 23, 0.75); }
+  55%  { transform: scale(0.96); box-shadow: none; }
+  100% { transform: scale(1); }
+}
+
+@keyframes championLand {
+  0%   { transform: scale(1.18); box-shadow: 0 0 40px rgba(212, 160, 23, 0.9); }
+  50%  { transform: scale(0.94); }
+  75%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+.bracket-team.slot-spinning {
+  filter: blur(1.8px);
+  color: var(--wc-gold) !important;
+  border-color: var(--wc-gold) !important;
+  background: rgba(212, 160, 23, 0.08) !important;
+  transition: none;
+}
+
+.bracket-team.slot-pending {
+  opacity: 0.4;
+  font-style: italic;
+}
+
+.bracket-team.slot-landed {
+  animation: slotLand 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.bracket-team.champion.slot-landed {
+  animation: championLand 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.spin-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}

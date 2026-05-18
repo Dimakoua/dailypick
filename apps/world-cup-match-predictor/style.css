@@ -217,6 +217,43 @@ body {
   padding-left: 1.4rem;
 }
 
+/* ==========================================================================
+   Slot Machine Animations
+   ========================================================================== */
+
+@keyframes scoreSlotLand {
+  0%   { transform: scale(1.35); color: var(--wc-gold); text-shadow: 0 0 30px rgba(212, 160, 23, 0.9); }
+  50%  { transform: scale(0.92); }
+  75%  { transform: scale(1.06); }
+  100% { transform: scale(1); color: var(--wc-green); text-shadow: none; }
+}
+
+@keyframes noteSlideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.score.slot-spinning {
+  filter: blur(3px);
+  color: var(--wc-gold) !important;
+  opacity: 0.85;
+  transition: none;
+}
+
+.score.slot-landed {
+  animation: scoreSlotLand 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.prediction-note.note-reveal {
+  animation: noteSlideIn 0.4s ease-out forwards;
+}
+
+.spin-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
 .seo-toc a {
   color: var(--wc-green);
   text-decoration: none;

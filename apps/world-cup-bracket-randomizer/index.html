@@ -130,32 +130,112 @@ headExtra: |
 <script src="/assets/js/wheel-engine.js"></script>
 <script>
   const allTeams = ['Argentina', 'France', 'Spain', 'England', 'Brazil', 'Germany', 'Portugal', 'Netherlands', 'Morocco', 'Japan', 'Colombia', 'Uruguay', 'Egypt', 'Senegal', 'Nigeria', 'Belgium'];
-  
+
   document.getElementById('spinBtn').addEventListener('click', function() {
     const level = document.getElementById('bracket-level').value;
     fillBracket(level);
   });
 
-  function fillBracket(level) {
+  function animateSlot(element, finalText, startDelay) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        element.classList.remove('slot-pending');
+        element.classList.add('slot-spinning');
+        // [interval_ms, frame_count] — fast → slow
+        const stages = [[45,18],[75,10],[120,7],[200,5],[300,3]];
+        let s = 0, f = 0;
+        function tick() {
+          element.textContent = allTeams[Math.floor(Math.random() * allTeams.length)];
+          f++;
+          if (f >= stages[s][1]) { s++; f = 0; }
+          if (s < stages.length) {
+            setTimeout(tick, stages[s][0]);
+          } else {
+            element.classList.remove('slot-spinning');
+            element.textContent = finalText;
+            element.classList.add('slot-landed');
+            setTimeout(() => element.classList.remove('slot-landed'), 700);
+            resolve();
+          }
+        }
+        setTimeout(tick, stages[0][0]); // kick off at first stage speed
+      }, startDelay);
+    });
+  }
+
+  async function fillBracket(level) {
+    const btn = document.getElementById('spinBtn');
+    btn.disabled = true;
+    btn.textContent = '⚽ Rolling...';
+
     const qfDiv = document.getElementById('qf-results');
     const sfDiv = document.getElementById('sf-results');
     const finalDiv = document.getElementById('final-result');
-    
+    qfDiv.innerHTML = '';
+    sfDiv.innerHTML = '';
+    finalDiv.innerHTML = '';
+    document.getElementById('winner').innerHTML = '';
+
+    // ── Calculate all results upfront so stages are properly chained ──────
+    // QF: 4 random teams advance from the pool of 16
+    const qfWinners = shuffleArray([...allTeams]).slice(0, 4);
+    // SF: 2 of the QF winners advance (or 2 fresh picks for SF-only mode)
+    const sfWinners = (level === 'full')
+      ? shuffleArray([...qfWinners]).slice(0, 2)
+      : shuffleArray([...allTeams]).slice(0, 2);
+    // Final: champion must come from the SF winners (or random for final-only)
+    const champion = (level === 'full')
+      ? sfWinners[Math.floor(Math.random() * sfWinners.length)]
+      : (level === 'semifinal')
+        ? sfWinners[Math.floor(Math.random() * sfWinners.length)]
+        : allTeams[Math.floor(Math.random() * allTeams.length)];
+    // ─────────────────────────────────────────────────────────────────────
+
+    const promises = [];
+    const GAP = 350;
+    let cursor = 0;
+
     if (level === 'quarterfinal' || level === 'full') {
-      const qfTeams = shuffleArray([...allTeams]).slice(0, 4);
-      qfDiv.innerHTML = qfTeams.map(t => `<div class="bracket-team">✓ ${t}</div>`).join('');
+      qfWinners.forEach(team => {
+        const el = document.createElement('div');
+        el.className = 'bracket-team slot-pending';
+        el.textContent = '—';
+        qfDiv.appendChild(el);
+        promises.push(animateSlot(el, `✓ ${team}`, cursor));
+        cursor += GAP;
+      });
+      cursor += 250;
     }
-    
+
     if (level === 'semifinal' || level === 'full') {
-      const sfTeams = shuffleArray([...allTeams]).slice(0, 2);
-      sfDiv.innerHTML = sfTeams.map(t => `<div class="bracket-team">✓ ${t}</div>`).join('');
+      const sfCursor = level === 'full' ? cursor : 0;
+      sfWinners.forEach((team, i) => {
+        const el = document.createElement('div');
+        el.className = 'bracket-team slot-pending';
+        el.textContent = '—';
+        sfDiv.appendChild(el);
+        promises.push(animateSlot(el, `✓ ${team}`, sfCursor + i * GAP));
+      });
+      cursor = sfCursor + 2 * GAP + 250;
     }
-    
+
     if (level === 'final' || level === 'full') {
-      const champion = allTeams[Math.floor(Math.random() * allTeams.length)];
-      finalDiv.innerHTML = `<div class="bracket-team champion">🏆 ${champion}</div>`;
-      document.getElementById('winner').innerHTML = `<strong>Champion:</strong> <span style="color: var(--wc-green); font-size: 2rem; display: block;">${champion}!</span>`;
+      const finalCursor = level === 'full' ? cursor : 0;
+      const el = document.createElement('div');
+      el.className = 'bracket-team champion slot-pending';
+      el.textContent = '—';
+      finalDiv.appendChild(el);
+      promises.push(
+        animateSlot(el, `🏆 ${champion}`, finalCursor).then(() => {
+          document.getElementById('winner').innerHTML =
+            `<strong>Champion:</strong> <span style="color: var(--wc-green); font-size: 2rem; display: block;">${champion}!</span>`;
+        })
+      );
     }
+
+    await Promise.all(promises);
+    btn.disabled = false;
+    btn.textContent = '🏆 FILL THE BRACKET!';
   }
 
   function shuffleArray(arr) {

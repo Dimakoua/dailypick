@@ -180,7 +180,34 @@ headExtra: |
     document.getElementById('spinBtn').style.display = 'none';
   }
 
-  function predictScore() {
+  function animateScoreSlot(element, finalScore, startDelay) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        element.classList.remove('slot-landed', 'slot-spinning');
+        element.classList.add('slot-spinning');
+        // [interval_ms, frame_count] — fast → slow
+        const stages = [[40,22],[65,12],[100,8],[160,5],[260,3]];
+        let s = 0, f = 0, digit = 0;
+        function tick() {
+          digit = (digit + 1) % 10;
+          element.textContent = digit;
+          f++;
+          if (f >= stages[s][1]) { s++; f = 0; }
+          if (s < stages.length) {
+            setTimeout(tick, stages[s][0]);
+          } else {
+            element.classList.remove('slot-spinning');
+            element.textContent = finalScore;
+            element.classList.add('slot-landed');
+            resolve();
+          }
+        }
+        setTimeout(tick, stages[0][0]); // kick off at first stage speed
+      }, startDelay);
+    });
+  }
+
+  async function predictScore() {
     const stage = document.getElementById('match-stage').value;
     const matches = stage === 'group' ? groupMatches : knockoutMatches;
     const matchIdx = parseInt(document.getElementById('match-picker').value);
@@ -189,10 +216,31 @@ headExtra: |
     const scoreA = Math.floor(Math.random() * 5);
     const scoreB = Math.floor(Math.random() * 5);
 
+    const btn = document.getElementById('spinBtn');
+    btn.disabled = true;
+    btn.textContent = '⚽ Predicting...';
+
+    const scoreAEl = document.getElementById('team-a-score');
+    const scoreBEl = document.getElementById('team-b-score');
+    const noteEl = document.getElementById('prediction-note');
+
+    // Reset state
+    scoreAEl.classList.remove('slot-landed', 'slot-spinning');
+    scoreBEl.classList.remove('slot-landed', 'slot-spinning');
+    noteEl.classList.remove('note-reveal');
+    scoreAEl.textContent = '0';
+    scoreBEl.textContent = '0';
+    noteEl.textContent = '';
     document.getElementById('team-a-name').textContent = match.team1;
     document.getElementById('team-b-name').textContent = match.team2;
-    document.getElementById('team-a-score').textContent = scoreA;
-    document.getElementById('team-b-score').textContent = scoreB;
+    document.getElementById('result-message').innerHTML = '';
+    document.getElementById('prediction-display').style.display = 'block';
+
+    // Slot A spins first, then B starts with a 400ms delay for suspense
+    await Promise.all([
+      animateScoreSlot(scoreAEl, scoreA, 0),
+      animateScoreSlot(scoreBEl, scoreB, 420),
+    ]);
 
     let note = '';
     if (scoreA > scoreB) {
@@ -202,10 +250,14 @@ headExtra: |
     } else {
       note = 'Draw — Extra time and penalties in knockout!';
     }
-    document.getElementById('prediction-note').textContent = note;
+    noteEl.textContent = note;
+    noteEl.classList.add('note-reveal');
 
-    document.getElementById('prediction-display').style.display = 'block';
-    document.getElementById('result-message').innerHTML = `<strong>Prediction:</strong> <span style="color: var(--wc-green); font-size: 1.2rem;">${match.team1} ${scoreA} - ${scoreB} ${match.team2}</span>`;
+    document.getElementById('result-message').innerHTML =
+      `<strong>Prediction:</strong> <span style="color: var(--wc-green); font-size: 1.2rem;">${match.team1} ${scoreA} – ${scoreB} ${match.team2}</span>`;
+
+    btn.disabled = false;
+    btn.textContent = '⚽ PREDICT THE SCORE!';
   }
 
   // Initialize
