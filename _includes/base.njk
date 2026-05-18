@@ -147,7 +147,7 @@
     <script defer src="/assets/js/brand-theme-engine.js"></script>
     <script defer src="/assets/js/brand-config.js"></script>
     {% if isApp %}
-    {% if localBrandConfig %}
+    {% if localBrandConfig and not hideLocalBrandStudio %}
     <script>
       (function () {
         if (new URLSearchParams(window.location.search).has('overlay')) return;
@@ -157,7 +157,6 @@
         document.head.appendChild(s);
       })();
     </script>
-    {% endif %}
     <script>
       (function () {
         if (new URLSearchParams(window.location.search).has('overlay')) return;
@@ -167,6 +166,7 @@
         document.head.appendChild(s);
       })();
     </script>
+    {% endif %}
     <script defer src="/assets/js/embed.js"></script>
     <script>
       (function () {
