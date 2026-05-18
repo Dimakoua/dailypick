@@ -98,3 +98,4 @@ The `/dailypick` slash command keeps rituals, polling, and morale checks within 
 4. If you ever need to expand what the command can do (follow-ups, scheduled reminders, etc.), Slack scopes can be added to the app later—this route currently stays within ephemeral replies.
 
 Because the Worker validates Slack’s timestamp and signature, you don’t need to expose the signing secret in the query string or elsewhere.
+
