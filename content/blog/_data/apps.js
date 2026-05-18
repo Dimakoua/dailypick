@@ -881,7 +881,7 @@ module.exports = [
     id: "world-cup-host-city-wheel",
     name: "World Cup Host City Wheel",
     path: "/apps/world-cup-host-city-wheel/",
-    category: "games",
+    category: "fifa-2026",
     footerGroup: "Games",
     emoji: "🏟️",
     description: "Spin the wheel to pick a FIFA World Cup 2026 host city — all 16 venues across the USA, Canada, and Mexico."
@@ -890,7 +890,7 @@ module.exports = [
     id: "which-world-cup-team-should-i-support",
     name: "Which World Cup Team Should I Support?",
     path: "/apps/which-world-cup-team-should-i-support/",
-    category: "games",
+    category: "fifa-2026",
     footerGroup: "Games",
     emoji: "🏆",
     description: "Can't pick a FIFA 2026 team? Spin the wheel — back the favourites, an underdog, a host nation, or go full random with all 48 nations."
@@ -899,7 +899,7 @@ module.exports = [
     id: "world-cup-bracket-randomizer",
     name: "World Cup Bracket Randomizer",
     path: "/apps/world-cup-bracket-randomizer/",
-    category: "games",
+    category: "fifa-2026",
     footerGroup: "Games",
     emoji: "🏆",
     description: "Randomly fill your FIFA World Cup 2026 knockout bracket. Pick quarterfinals, semifinals, final, or simulate the entire tournament."
@@ -908,7 +908,7 @@ module.exports = [
     id: "world-cup-match-predictor",
     name: "World Cup Match Predictor",
     path: "/apps/world-cup-match-predictor/",
-    category: "games",
+    category: "fifa-2026",
     footerGroup: "Games",
     emoji: "⚽",
     description: "Predict FIFA World Cup 2026 match scores randomly. Choose a group-stage or knockout match and spin for a score prediction."
