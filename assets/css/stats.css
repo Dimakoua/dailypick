@@ -1,0 +1,305 @@
+/* ==========================================================================
+   Standup Stats Page
+   Uses brand tokens from theme.css + settings.css patterns
+   ========================================================================== */
+
+/* KPI summary cards */
+.stats-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 16px;
+}
+
+.stats-kpi-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 20px 16px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stats-kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--brand-hover-shadow);
+}
+
+.stats-kpi-label {
+  font-size: 0.73rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--brand-subtle-text);
+}
+
+.stats-kpi-value {
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: var(--brand-accent);
+  line-height: 1;
+}
+
+.stats-kpi-detail {
+  font-size: 0.83rem;
+  color: var(--brand-subtle-text);
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Charts row */
+.stats-charts-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.stats-chart-card {
+  min-height: 260px;
+}
+
+.stats-chart-canvas-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 200px;
+  height: 220px;
+}
+
+.stats-chart-canvas-wrap canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Person table */
+.stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.stats-table th,
+.stats-table td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--brand-border);
+}
+
+.stats-table thead th {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--brand-subtle-text);
+  background: var(--glass-bg, rgba(255, 255, 255, 0.08));
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.15s;
+  white-space: nowrap;
+}
+
+.stats-table thead th:hover {
+  color: var(--brand-accent);
+}
+
+.stats-table thead th::after {
+  content: ' ⇅';
+  opacity: 0.35;
+  font-size: 0.8em;
+}
+
+.stats-table thead th.sort-asc::after {
+  content: ' ↑';
+  opacity: 1;
+  color: var(--brand-accent);
+}
+
+.stats-table thead th.sort-desc::after {
+  content: ' ↓';
+  opacity: 1;
+  color: var(--brand-accent);
+}
+
+.stats-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.stats-table tbody tr:hover {
+  background: var(--brand-accent-muted);
+}
+
+.stats-table td:first-child {
+  font-weight: 600;
+  color: var(--brand-heading);
+}
+
+/* Game breakdown */
+.stats-game-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stats-game-row {
+  display: grid;
+  grid-template-columns: 130px 36px 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.stats-game-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--brand-heading);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stats-game-count {
+  font-size: 0.85rem;
+  color: var(--brand-subtle-text);
+  text-align: right;
+}
+
+.stats-game-bar-track {
+  height: 10px;
+  background: var(--brand-accent-muted);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.stats-game-bar-fill {
+  height: 100%;
+  background: var(--brand-accent);
+  border-radius: 99px;
+}
+
+/* Sessions list */
+.stats-session-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.stats-session-row {
+  display: grid;
+  grid-template-columns: 110px 120px 1fr;
+  gap: 10px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--brand-border);
+  font-size: 0.9rem;
+}
+
+.stats-session-row:last-child {
+  border-bottom: none;
+}
+
+.stats-session-date {
+  font-weight: 700;
+  color: var(--brand-accent);
+  white-space: nowrap;
+}
+
+.stats-session-game {
+  color: var(--brand-subtle-text);
+  font-size: 0.85rem;
+}
+
+.stats-session-order {
+  color: var(--brand-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Cleanup row */
+.stats-cleanup-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.stats-cleanup-row label {
+  font-weight: 600;
+  color: var(--brand-heading);
+  font-size: 0.9rem;
+}
+
+.stats-cleanup-row select {
+  padding: 8px 12px;
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-sm);
+  background: var(--brand-surface);
+  color: var(--brand-text);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.stats-cleanup-row select:focus-visible {
+  outline: none;
+  box-shadow: var(--brand-focus-ring);
+}
+
+.stats-cleanup-status {
+  font-size: 0.85rem;
+  color: var(--brand-subtle-text);
+  margin: 0;
+  min-height: 1.2em;
+}
+
+/* Empty state */
+.stats-empty {
+  text-align: center;
+  padding: 60px 24px;
+}
+
+.stats-empty-icon {
+  font-size: 3rem;
+  margin-bottom: 12px;
+}
+
+.stats-empty strong {
+  display: block;
+  font-size: 1.1rem;
+  color: var(--brand-heading);
+  margin-bottom: 8px;
+}
+
+.stats-empty p {
+  margin: 0;
+  color: var(--brand-subtle-text);
+  font-size: 0.95rem;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .stats-charts-row {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-session-row {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .stats-session-order {
+    grid-column: 1 / -1;
+  }
+
+  .stats-game-row {
+    grid-template-columns: 100px 30px 1fr;
+  }
+
+  .stats-kpi-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+
+  .settings-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

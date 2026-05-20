@@ -11,6 +11,7 @@ localBrandConfig: /apps/wheel/local-brand-config.js
 headExtra: |
   <script defer="" src="/assets/js/game-pip.js"></script>
   <script defer="" src="/assets/js/standup-data.js"></script>
+  <script defer="" src="/assets/js/standup-stats.js"></script>
   <script defer="" src="/assets/js/standup-panel.js"></script>
   <script defer="" src="/assets/js/standup-onboarding.js"></script>
 ---
@@ -120,6 +121,7 @@ headExtra: |
       (function () {
         var DEFAULT_NAMES = ['Avery', 'Mira', 'Noah', 'Priya', 'Sofia', 'Leo', 'Jamal', 'Lena', 'Mason', 'Riya', 'Carlos', 'Zoe', 'Ibrahim', 'Nina', 'Elena', 'Theo'];
         var roster = DEFAULT_NAMES;
+        var completedOrder = [];
 
         try {
           var stored = localStorage.getItem('namesList');
@@ -133,6 +135,11 @@ headExtra: |
           roster = DEFAULT_NAMES;
         }
 
+        // Emit initial queue-reset event for stats tracking
+        window.dispatchEvent(new CustomEvent('standup:queue-reset', {
+          detail: { source: 'wheel', participants: roster }
+        }));
+
         FoodWheelEngine.init({
           canvasSelector: '#wheel',
           spinButtonSelector: '#spinBtn',
@@ -142,7 +149,24 @@ headExtra: |
             return '🎉 ' + selectedItem + ' is next to speak!';
           },
           enableCanvasClick: true,
-          removeAfterSelection: true
+          removeAfterSelection: true,
+          onResult: function (selectedItem) {
+            // Track selection order for stats
+            completedOrder.push(selectedItem);
+            
+            // Emit standup:queue event for auto-save
+            var detail = {
+              source: 'wheel',
+              mode: 'auto',
+              participants: roster,
+              completed: completedOrder
+            };
+            window.dispatchEvent(new CustomEvent('standup:queue', { detail: detail }));
+          }
         });
+
+        // Reset on page load or add a reset button listener
+        var spinBtn = document.getElementById('spinBtn');
+        var originalClickHandler = spinBtn ? spinBtn.onclick : null;
       })();
     </script>

@@ -1,0 +1,407 @@
+---
+layout: base_app.njk
+title: "Standup Stats – Daily Pick"
+description: "View your standup session history, speaking frequency, and team insights. Track who speaks first, game usage, and session streaks."
+keywords: "standup stats, session history, team speaking order, daily standups analytics"
+canonical: "https://dailypick.dev/standups/stats/"
+appStyles: |
+  <link href="/assets/css/settings.css" rel="stylesheet"/>
+  <link href="/assets/css/stats.css" rel="stylesheet"/>
+headExtra: |
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer=""></script>
+  <script defer="" src="/assets/js/standup-stats.js"></script>
+---
+
+<main aria-labelledby="statsHeading" class="settings-page">
+
+  <section class="settings-hero glass-card">
+    <div>
+      <p class="eyebrow">Session Analytics</p>
+      <h1 id="statsHeading">Standup Stats</h1>
+      <p>Track speaking patterns and session history for your team.</p>
+    </div>
+    <div class="hero-actions">
+      <a class="btn-link ghost" href="/apps/roster/">← Roster</a>
+    </div>
+  </section>
+
+  <!-- KPI Cards -->
+  <div class="stats-kpi-grid" id="kpiGrid"></div>
+
+  <!-- Charts -->
+  <div class="stats-charts-row" id="chartsRow" hidden>
+    <article class="settings-card glass-card stats-chart-card">
+      <div class="card-header">
+        <h2>Sessions — Last 30 Days</h2>
+      </div>
+      <div class="stats-chart-canvas-wrap">
+        <canvas id="sessionsChart" aria-label="Bar chart of sessions per day for the last 30 days" role="img"></canvas>
+      </div>
+    </article>
+    <article class="settings-card glass-card stats-chart-card">
+      <div class="card-header">
+        <h2>First Speaker Distribution</h2>
+      </div>
+      <div class="stats-chart-canvas-wrap">
+        <canvas id="firstSpeakerChart" aria-label="Horizontal bar chart of how many times each person went first" role="img"></canvas>
+      </div>
+    </article>
+  </div>
+
+  <!-- Per-Person Table -->
+  <section class="settings-card glass-card" id="personSection">
+    <div class="card-header">
+      <h2>Team Speaking Frequency</h2>
+      <p>Click any column header to sort.</p>
+    </div>
+    <div id="personTableContainer"></div>
+  </section>
+
+  <!-- Game Breakdown -->
+  <section class="settings-card glass-card" id="gamesSection">
+    <div class="card-header">
+      <h2>Games Used</h2>
+    </div>
+    <div id="gameBreakdownContainer"></div>
+  </section>
+
+  <!-- Recent Sessions -->
+  <section class="settings-card glass-card" id="recentSection">
+    <div class="card-header">
+      <h2>Recent Sessions</h2>
+    </div>
+    <div id="recentSessionsContainer"></div>
+  </section>
+
+  <!-- Storage & Cleanup -->
+  <section class="settings-card glass-card">
+    <div class="card-header">
+      <h2>Storage &amp; Cleanup</h2>
+      <p id="storageInfo" class="stats-cleanup-status"></p>
+    </div>
+    <div class="stats-cleanup-row">
+      <label for="cleanupSelect">Clear sessions older than</label>
+      <select id="cleanupSelect">
+        <option value="30">30 days</option>
+        <option value="60">60 days</option>
+        <option value="90" selected>90 days</option>
+        <option value="all">All sessions</option>
+      </select>
+      <button class="btn-link" id="cleanupBtn" style="background: #e74c3c;" type="button">Clear</button>
+    </div>
+    <p aria-live="polite" class="stats-cleanup-status" id="cleanupStatus"></p>
+  </section>
+
+</main>
+
+<script>
+(function () {
+  /* helpers */
+  function fmtDate(ts) {
+    return new Date(ts).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  }
+  function fmtShort(ts) {
+    return new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  }
+  function esc(str) {
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  /* chart instances */
+  let sessionsChartInst = null;
+  let firstSpeakerChartInst = null;
+
+  /* read brand tokens at runtime so custom themes are honoured */
+  function brandAccent() {
+    return getComputedStyle(document.documentElement).getPropertyValue('--brand-accent').trim() || '#3498db';
+  }
+  function brandBorder() {
+    return getComputedStyle(document.documentElement).getPropertyValue('--brand-border').trim() || '#dde4eb';
+  }
+  function brandSubtle() {
+    return getComputedStyle(document.documentElement).getPropertyValue('--brand-subtle-text').trim() || '#7f8c8d';
+  }
+
+  /* empty state */
+  function renderEmptyState() {
+    document.getElementById('kpiGrid').innerHTML = `
+      <div class="stats-empty" style="grid-column:1/-1">
+        <div class="stats-empty-icon">📊</div>
+        <strong>No sessions recorded yet</strong>
+        <p>Play any standup game and complete a session — stats will appear here automatically.</p>
+        <a class="btn-link" href="/standups/" style="display:inline-flex;margin-top:20px;">Browse Standup Games →</a>
+      </div>`;
+    ['personSection', 'gamesSection', 'recentSection'].forEach(id => {
+      document.getElementById(id).hidden = true;
+    });
+    document.getElementById('chartsRow').hidden = true;
+    document.getElementById('storageInfo').textContent = '0 sessions stored · 0 KB';
+  }
+
+  /* KPI cards */
+  function renderKPI(sessions) {
+    const total     = sessions.length;
+    const month     = window.standupStats.getThisMonth(sessions).length;
+    const streak    = window.standupStats.computeStreak(sessions);
+    const games     = window.standupStats.computeGameStats(sessions);
+    const topGame   = games[0] || null;
+    const mostFirst = window.standupStats.getMostFirstSpeaker(sessions);
+
+    const cards = [
+      { label: 'Total Sessions', value: total,  detail: 'all time' },
+      { label: 'This Month',     value: month,  detail: `of ${total} total` },
+      { label: 'Current Streak', value: streak, detail: streak === 1 ? 'day' : 'days' },
+      { label: 'Top Game',       value: topGame   ? topGame.count   : '—', detail: topGame   ? topGame.game          : 'no data' },
+      { label: 'Most First',     value: mostFirst ? mostFirst.count : '—', detail: mostFirst ? esc(mostFirst.name)   : 'no data' },
+    ];
+
+    document.getElementById('kpiGrid').innerHTML = cards.map(c => `
+      <div class="stats-kpi-card settings-card glass-card">
+        <div class="stats-kpi-label">${c.label}</div>
+        <div class="stats-kpi-value">${c.value}</div>
+        <div class="stats-kpi-detail" title="${c.detail}">${c.detail}</div>
+      </div>`).join('');
+  }
+
+  /* sessions bar chart */
+  function renderSessionsChart(sessions) {
+    const DAYS = 30;
+    const labels = [];
+    const counts = [];
+
+    for (let i = DAYS - 1; i >= 0; i--) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      const dayKey = d.toISOString().split('T')[0];
+      labels.push(i % 7 === 0 || i === 0 ? fmtShort(d) : '');
+      counts.push(sessions.filter(s => new Date(s.ts).toISOString().split('T')[0] === dayKey).length);
+    }
+
+    const accent = brandAccent();
+    const border = brandBorder();
+    const subtle = brandSubtle();
+    const ctx = document.getElementById('sessionsChart').getContext('2d');
+
+    if (sessionsChartInst) sessionsChartInst.destroy();
+    sessionsChartInst = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          data: counts,
+          backgroundColor: counts.map(v => v > 0 ? accent + 'bb' : border + '88'),
+          borderColor: counts.map(v => v > 0 ? accent : 'transparent'),
+          borderWidth: 1,
+          borderRadius: 4,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              title: (items) => {
+                const i = items[0].dataIndex;
+                const d = new Date();
+                d.setDate(d.getDate() - (DAYS - 1 - i));
+                return fmtDate(d);
+              },
+              label: (item) => ` ${item.raw} session${item.raw !== 1 ? 's' : ''}`,
+            }
+          }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: subtle, font: { size: 11 } } },
+          y: { beginAtZero: true, ticks: { color: subtle, stepSize: 1, font: { size: 11 } }, grid: { color: border + '60' } }
+        }
+      }
+    });
+  }
+
+  /* first speaker horizontal bar chart */
+  function renderFirstSpeakerChart(sessions) {
+    const firstMap = {};
+    sessions.forEach(s => {
+      if (s.order.length > 0) firstMap[s.order[0]] = (firstMap[s.order[0]] || 0) + 1;
+    });
+
+    const sorted = Object.entries(firstMap).sort((a, b) => b[1] - a[1]).slice(0, 8);
+    const accent = brandAccent();
+    const border = brandBorder();
+    const subtle = brandSubtle();
+    const ctx = document.getElementById('firstSpeakerChart').getContext('2d');
+
+    if (firstSpeakerChartInst) firstSpeakerChartInst.destroy();
+    firstSpeakerChartInst = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: sorted.map(e => e[0]),
+        datasets: [{
+          data: sorted.map(e => e[1]),
+          backgroundColor: accent + 'bb',
+          borderColor: accent,
+          borderWidth: 1,
+          borderRadius: 4,
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: (item) => ` ${item.raw} time${item.raw !== 1 ? 's' : ''} first` } }
+        },
+        scales: {
+          x: { beginAtZero: true, ticks: { color: subtle, stepSize: 1, font: { size: 11 } }, grid: { color: border + '60' } },
+          y: { grid: { display: false }, ticks: { color: subtle, font: { size: 12 } } }
+        }
+      }
+    });
+  }
+
+  /* person table */
+  function renderPersonTable(sessions) {
+    const people = window.standupStats.computePersonStats(sessions);
+    if (!people.length) { document.getElementById('personSection').hidden = true; return; }
+    document.getElementById('personSection').hidden = false;
+
+    document.getElementById('personTableContainer').innerHTML = `
+      <div style="overflow-x:auto">
+        <table class="stats-table" id="personTable">
+          <thead>
+            <tr>
+              <th>Name</th><th>Sessions</th><th>1st</th><th>Last</th><th>Avg&nbsp;Pos</th><th>Last&nbsp;Seen</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${people.map(p => `
+              <tr>
+                <td>${esc(p.name)}</td>
+                <td>${p.sessions}</td>
+                <td>${p.first}</td>
+                <td>${p.last}</td>
+                <td>${p.avgPos.toFixed(1)}</td>
+                <td>${fmtDate(p.lastSeen)}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`;
+
+    document.querySelectorAll('#personTable thead th').forEach((th, colIdx) => {
+      th.addEventListener('click', () => sortTable(th, colIdx));
+    });
+  }
+
+  function sortTable(th, colIdx) {
+    const table = th.closest('table');
+    const tbody = table.querySelector('tbody');
+    const rows  = Array.from(tbody.querySelectorAll('tr'));
+    const asc   = !th.classList.contains('sort-asc');
+
+    table.querySelectorAll('thead th').forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
+    th.classList.add(asc ? 'sort-asc' : 'sort-desc');
+
+    rows.sort((a, b) => {
+      const aVal = a.querySelectorAll('td')[colIdx].textContent.trim();
+      const bVal = b.querySelectorAll('td')[colIdx].textContent.trim();
+      const aNum = parseFloat(aVal), bNum = parseFloat(bVal);
+      if (!isNaN(aNum) && !isNaN(bNum)) return asc ? aNum - bNum : bNum - aNum;
+      return asc ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+    });
+
+    rows.forEach(r => tbody.appendChild(r));
+  }
+
+  /* game breakdown */
+  function renderGameBreakdown(sessions) {
+    const games = window.standupStats.computeGameStats(sessions);
+    if (!games.length) { document.getElementById('gamesSection').hidden = true; return; }
+    document.getElementById('gamesSection').hidden = false;
+    const max = games[0].count;
+
+    document.getElementById('gameBreakdownContainer').innerHTML = `
+      <div class="stats-game-list">
+        ${games.map(g => `
+          <div class="stats-game-row">
+            <div class="stats-game-name" title="${esc(g.game)}">${esc(g.game)}</div>
+            <div class="stats-game-count">${g.count}</div>
+            <div class="stats-game-bar-track">
+              <div class="stats-game-bar-fill" style="width:${(g.count / max * 100).toFixed(1)}%"></div>
+            </div>
+          </div>`).join('')}
+      </div>`;
+  }
+
+  /* recent sessions */
+  function renderRecentSessions(sessions) {
+    const recent = window.standupStats.getRecentSessions(10, sessions);
+    if (!recent.length) { document.getElementById('recentSection').hidden = true; return; }
+    document.getElementById('recentSection').hidden = false;
+
+    document.getElementById('recentSessionsContainer').innerHTML = `
+      <div class="stats-session-list">
+        ${recent.map(s => `
+          <div class="stats-session-row">
+            <div class="stats-session-date">${fmtDate(s.ts)}</div>
+            <div class="stats-session-game">${esc(s.game)}</div>
+            <div class="stats-session-order" title="${esc(s.order.join(', '))}">${esc(s.order.join(', '))}</div>
+          </div>`).join('')}
+      </div>`;
+  }
+
+  /* storage info */
+  function renderStorageInfo() {
+    const info = window.standupStats.getStorageInfo();
+    const kb = (info.bytes / 1024).toFixed(1);
+    document.getElementById('storageInfo').textContent = `${info.count} sessions stored · ~${kb} KB`;
+  }
+
+  /* main render */
+  function renderAll() {
+    const sessions = window.standupStats.loadSessions();
+    renderStorageInfo();
+
+    if (!sessions.length) {
+      renderEmptyState();
+      return;
+    }
+
+    renderKPI(sessions);
+    document.getElementById('chartsRow').hidden = false;
+    renderSessionsChart(sessions);
+    renderFirstSpeakerChart(sessions);
+    renderPersonTable(sessions);
+    renderGameBreakdown(sessions);
+    renderRecentSessions(sessions);
+  }
+
+  /* cleanup */
+  function setupCleanup() {
+    document.getElementById('cleanupBtn').addEventListener('click', () => {
+      const val   = document.getElementById('cleanupSelect').value;
+      const label = val === 'all' ? 'all sessions' : `sessions older than ${val} days`;
+      if (!window.confirm(`Delete ${label}? This cannot be undone.`)) return;
+
+      if (val === 'all') {
+        window.standupStats.clearAll();
+      } else {
+        window.standupStats.pruneOlderThan(parseInt(val, 10));
+      }
+
+      document.getElementById('cleanupStatus').textContent = 'Done — data cleared.';
+      setTimeout(() => { document.getElementById('cleanupStatus').textContent = ''; }, 3000);
+      renderAll();
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    setupCleanup();
+    renderAll();
+  });
+})();
+</script>
