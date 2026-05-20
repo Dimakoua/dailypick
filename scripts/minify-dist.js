@@ -67,32 +67,38 @@ async function walk(directory) {
     if (entry.name.endsWith(".html")) {
       const content = await fs.readFile(entryPath, "utf8");
       const beforeBytes = Buffer.byteLength(content);
-      const result = await minifyHtml(content, {
-        collapseWhitespace: true,
-        conservativeCollapse: true,
-        decodeEntities: true,
-        minifyCSS: true,
-        minifyJS: true,
-        removeComments: true,
-        removeEmptyAttributes: true,
-        removeRedundantAttributes: true,
-        removeScriptTypeAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        collapseBooleanAttributes: true,
-        sortAttributes: true,
-        sortClassName: true,
-        useShortDoctype: true,
-        minifyURLs: true,
-        keepClosingSlash: false,
-      });
+      try {
+        const result = await minifyHtml(content, {
+          collapseWhitespace: true,
+          conservativeCollapse: true,
+          decodeEntities: true,
+          minifyCSS: true,
+          minifyJS: true,
+          removeComments: true,
+          removeEmptyAttributes: true,
+          removeRedundantAttributes: false,
+          removeScriptTypeAttributes: true,
+          removeStyleLinkTypeAttributes: true,
+          collapseBooleanAttributes: true,
+          sortAttributes: true,
+          sortClassName: true,
+          useShortDoctype: true,
+          minifyURLs: true,
+          keepClosingSlash: false,
+        });
 
-      await fs.writeFile(entryPath, result);
-      recordStat(stats, "html", beforeBytes, Buffer.byteLength(result));
+        await fs.writeFile(entryPath, result, "utf8");
+        recordStat(stats, "html", beforeBytes, Buffer.byteLength(result));
+      } catch (err) {
+        // If HTML minification fails, keep the original
+        console.warn(`[minify] HTML minification failed for ${entryPath}, keeping original:`, err.message);
+        recordStat(stats, "html", beforeBytes, beforeBytes);
+      }
       continue;
     }
 
     if (entry.name.endsWith(".css")) {
-      const content = await fs.readFile(entryPath);
+      const content = await fs.readFile(entryPath); // read as Buffer — lightningcss requires Uint8Array/Buffer, not string
       const beforeBytes = content.length;
       const result = transform({
         filename: entryPath,

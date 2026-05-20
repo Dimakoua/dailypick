@@ -693,7 +693,7 @@
   color: var(--brand-text);
 }
 
-.brand-form input[type=\"color\"] {
+.brand-form input[type="color"] {
   height: 40px;
   border-radius: 8px;
   border: 1px solid var(--brand-border);
