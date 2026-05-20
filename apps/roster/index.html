@@ -48,6 +48,7 @@ appStyles: |
         <input id="meetingUrlInput" placeholder="https://meet.google.com/..." type="url" />
       </label>
       <p class="field-hint">Tip: save this to add a "Join Meeting" button to every stand-up game.</p>
+      <p class="field-hint"><strong>Privacy</strong>: Your meeting link is stored only on this device (in your browser's <code>localStorage</code>) and is not transmitted to or retained by our servers. We use the link solely to provide on-device conveniences — for example, the "Join Meeting" button and calendar shortcuts. To avoid persisting a link, leave the field blank; you can still open a meeting URL directly without saving it.</p>
       
       <div class="button-row">
         <button id="saveMeetingBtn" type="button">Save Link</button>
@@ -419,6 +420,7 @@ appStyles: |
       <li>Player names are stored locally in your browser via <code>localStorage</code>.</li>
       <li>Every game loads this list before a match starts.</li>
       <li>Integrations help you sync with external boards to keep your roster up-to-date.</li>
+        <li><strong>Meeting links:</strong> Stored only on your device (browser <code>localStorage</code>) and not transmitted to our servers. Links are used only to enable on-device conveniences like the "Join Meeting" button and calendar shortcuts.</li>
     </ul>
   </section>
 </main>
