@@ -146,6 +146,28 @@ h6 {
   gap: 24px;
 }
 
+@media (max-width: 960px) {
+  .site-header .header-content {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 14px;
+  }
+
+  .site-header .search-container {
+    order: 1;
+    min-width: 220px;
+    max-width: 100%;
+  }
+
+  .site-header .search-input {
+    width: 100%;
+  }
+
+  .site-header .weather {
+    display: none;
+  }
+}
+
 .site-title {
   display: inline-flex;
   align-items: center;
@@ -635,13 +657,14 @@ h6 {
   /* Full-width search in the mobile panel */
   .header-collapse .search-container {
     width: 100%;
-    padding-top: 4px;
+    padding-top: 0;
+    margin-bottom: 8px;
   }
 
   .header-collapse .search-input {
     width: 100%;
     box-sizing: border-box;
-    padding: 10px 14px;
+    padding: 8px 12px;
   }
 
   /* Weather + branding controls row at the bottom of the panel */
