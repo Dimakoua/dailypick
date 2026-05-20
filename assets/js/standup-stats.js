@@ -35,15 +35,24 @@
 
   /**
    * Save a new session and auto-prune old ones
+   * @param {Object} session - { ts, game, order, duration? }
+   * @param {number} session.ts - Timestamp when session started
+   * @param {string} session.game - Game/app source
+   * @param {Array} session.order - Speaker order
+   * @param {number} session.duration - Session duration in milliseconds (optional)
    */
-  function saveSession({ ts, game, order }) {
+  function saveSession({ ts, game, order, duration }) {
     if (!ts || !game || !Array.isArray(order) || order.length === 0) {
       console.warn('Invalid session data:', { ts, game, order });
       return;
     }
     
     const sessions = loadSessions();
-    sessions.unshift({ ts, game, order }); // Prepend
+    const sessionData = { ts, game, order };
+    if (typeof duration === 'number' && duration > 0) {
+      sessionData.duration = duration;
+    }
+    sessions.unshift(sessionData); // Prepend
     
     // Auto-prune during save
     const cutoffMs = Date.now() - (RETENTION_DAYS * 24 * 60 * 60 * 1000);
@@ -127,21 +136,35 @@
 
   /**
    * Compute per-game stats
-   * Returns: [{ game, count }, ...] sorted by count descending
+   * Returns: [{ game, count, avgDuration }, ...] sorted by count descending
    */
   function computeGameStats(sessions = null) {
     if (!sessions) sessions = loadSessions();
     
     const gameMap = {};
     sessions.forEach(session => {
-      const { game } = session;
-      gameMap[game] = (gameMap[game] || 0) + 1;
+      const { game, duration } = session;
+      if (!gameMap[game]) {
+        gameMap[game] = { count: 0, totalDuration: 0, durationCount: 0 };
+      }
+      gameMap[game].count++;
+      if (typeof duration === 'number' && duration > 0) {
+        gameMap[game].totalDuration += duration;
+        gameMap[game].durationCount++;
+      }
     });
 
-    const result = Object.keys(gameMap).map(game => ({
-      game,
-      count: gameMap[game]
-    }));
+    const result = Object.keys(gameMap).map(game => {
+      const stats = gameMap[game];
+      const avgDuration = stats.durationCount > 0
+        ? Math.round(stats.totalDuration / stats.durationCount)
+        : null;
+      return {
+        game,
+        count: stats.count,
+        avgDuration
+      };
+    });
 
     result.sort((a, b) => b.count - a.count);
     return result;
@@ -230,6 +253,77 @@
   }
 
   /**
+   * Compute average session duration across all sessions
+   * Returns: { avgDuration: ms, count: number } or null if no data
+   */
+  function computeAverageSessionDuration(sessions = null) {
+    if (!sessions) sessions = loadSessions();
+    
+    const withDuration = sessions.filter(s => typeof s.duration === 'number' && s.duration > 0);
+    if (withDuration.length === 0) return null;
+    
+    const totalDuration = withDuration.reduce((sum, s) => sum + s.duration, 0);
+    const avgDuration = Math.round(totalDuration / withDuration.length);
+    
+    return {
+      avgDuration,
+      count: withDuration.length,
+      formattedAvg: formatDuration(avgDuration)
+    };
+  }
+
+  /**
+   * Compute average session duration per game
+   * Returns: { game, avgDuration, count } for games with duration data
+   */
+  function computeAverageDurationPerGame(sessions = null) {
+    if (!sessions) sessions = loadSessions();
+    
+    const gameMap = {};
+    sessions.forEach(session => {
+      const { game, duration } = session;
+      if (typeof duration === 'number' && duration > 0) {
+        if (!gameMap[game]) {
+          gameMap[game] = { total: 0, count: 0 };
+        }
+        gameMap[game].total += duration;
+        gameMap[game].count++;
+      }
+    });
+
+    const result = Object.keys(gameMap).map(game => {
+      const stats = gameMap[game];
+      const avgDuration = Math.round(stats.total / stats.count);
+      return {
+        game,
+        avgDuration,
+        formattedAvg: formatDuration(avgDuration),
+        count: stats.count
+      };
+    });
+
+    result.sort((a, b) => b.count - a.count);
+    return result;
+  }
+
+  /**
+   * Format duration in milliseconds to readable string
+   * Returns: "1m 23s" or "45s"
+   */
+  function formatDuration(ms) {
+    if (typeof ms !== 'number' || ms < 0) return '0s';
+    
+    const seconds = Math.round(ms / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    
+    if (minutes === 0) {
+      return secs + 's';
+    }
+    return minutes + 'm ' + (secs < 10 ? '0' : '') + secs + 's';
+  }
+
+  /**
    * Get recent sessions (last N)
    */
   function getRecentSessions(limit = 10, sessions = null) {
@@ -286,14 +380,17 @@
       if (isSessionComplete() && currentSession.source && currentSession.startTime) {
         // Create the final order from completed participants
         const finalOrder = Array.from(currentSession.completed);
+        const duration = Date.now() - currentSession.startTime;
         
         saveSession({
           ts: currentSession.startTime,
           game: currentSession.source,
-          order: finalOrder
+          order: finalOrder,
+          duration: duration
         });
 
-        console.log(`[StandupStats] Auto-saved ${currentSession.source} session with ${finalOrder.length} participants`);
+        const formattedTime = formatDuration(duration);
+        console.log(`[StandupStats] Auto-saved ${currentSession.source} session with ${finalOrder.length} participants (${formattedTime})`);
 
         // Reset for next session
         currentSession = {
@@ -364,9 +461,12 @@
     computePersonStats,
     computeGameStats,
     computeStreak,
+    computeAverageSessionDuration,
+    computeAverageDurationPerGame,
     getThisMonth,
     getMostFirstSpeaker,
     formatDate,
+    formatDuration,
     getRecentSessions
   };
 })();
