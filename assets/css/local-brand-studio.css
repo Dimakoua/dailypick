@@ -302,6 +302,28 @@
   box-shadow: var(--brand-focus-ring);
 }
 
+/* Fallback styles for settings page text/url inputs when settings.css fails to load */
+.settings-page .brand-form input[type="text"],
+.settings-page .brand-form input[type="url"] {
+  width: 100%;
+  padding: 0.5rem 0.7rem;
+  border: 2px solid var(--brand-border);
+  border-radius: var(--radius-md, 12px);
+  background-color: var(--brand-surface);
+  color: var(--brand-text);
+  font-size: 0.95rem;
+  font-family: var(--brand-font-family);
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.settings-page .brand-form input[type="text"]:focus,
+.settings-page .brand-form input[type="url"]:focus {
+  outline: none;
+  border-color: var(--brand-accent);
+  box-shadow: var(--brand-focus-ring);
+}
+
 .local-brand-studio-checkbox-input {
   width: 18px;
   height: 18px;
