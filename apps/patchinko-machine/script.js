@@ -781,6 +781,12 @@ document.addEventListener('DOMContentLoaded', () => {
       window.dailyPickStandup.subscribe((snapshot) => {
         const newTeam = Array.isArray(snapshot.players) ? snapshot.players : [];
         const sanitized = uniqueNameList(newTeam);
+
+        // If no roster is configured yet, keep the default/local fallback.
+        if (sanitized.length === 0) {
+          return;
+        }
+
         if (!haveSameParticipants(teamMembers, sanitized)) {
           teamMembers = sanitized;
           resetGame();
