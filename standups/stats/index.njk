@@ -382,10 +382,33 @@ headExtra: |
 
   /* cleanup */
   function setupCleanup() {
-    document.getElementById('cleanupBtn').addEventListener('click', () => {
-      const val   = document.getElementById('cleanupSelect').value;
-      const label = val === 'all' ? 'all sessions' : `sessions older than ${val} days`;
-      if (!window.confirm(`Delete ${label}? This cannot be undone.`)) return;
+    const btn    = document.getElementById('cleanupBtn');
+    const status = document.getElementById('cleanupStatus');
+    let confirmPending = false;
+    let confirmTimer   = null;
+
+    function resetConfirm() {
+      confirmPending = false;
+      clearTimeout(confirmTimer);
+      btn.textContent = 'Clear';
+      btn.style.background = '#e74c3c';
+      status.textContent = '';
+    }
+
+    btn.addEventListener('click', () => {
+      if (!confirmPending) {
+        // First click — ask for confirmation inline
+        confirmPending = true;
+        btn.textContent = 'Confirm?';
+        btn.style.background = '#c0392b';
+        status.textContent = 'Click again to confirm. This cannot be undone.';
+        confirmTimer = setTimeout(resetConfirm, 5000);
+        return;
+      }
+
+      // Second click — execute
+      resetConfirm();
+      const val = document.getElementById('cleanupSelect').value;
 
       if (val === 'all') {
         window.standupStats.clearAll();
@@ -393,8 +416,8 @@ headExtra: |
         window.standupStats.pruneOlderThan(parseInt(val, 10));
       }
 
-      document.getElementById('cleanupStatus').textContent = 'Done — data cleared.';
-      setTimeout(() => { document.getElementById('cleanupStatus').textContent = ''; }, 3000);
+      status.textContent = 'Done — data cleared.';
+      setTimeout(() => { status.textContent = ''; }, 3000);
       renderAll();
     });
   }

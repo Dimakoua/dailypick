@@ -364,24 +364,30 @@
 
     window.addEventListener('standup:queue', (event) => {
       const detail = event.detail || {};
-      const { source, participants, completed } = detail;
+      const { source, participants, completed, order } = detail;
+      const effectiveParticipants = Array.isArray(participants) && participants.length
+        ? participants
+        : Array.isArray(order)
+          ? order
+          : [];
+      const effectiveCompleted = Array.isArray(completed)
+        ? completed
+        : Array.isArray(order)
+          ? Array.from(order)
+          : [];
 
-      if (!source || !participants) return;
+      if (!source || !effectiveParticipants.length) return;
 
       if (!currentSession.source || currentSession.source !== source) {
-        // Different (or new) game source — start a fresh session
         currentSession = {
-          participants: Array.from(participants || []),
-          completed: Array.from(completed || []),
+          participants: Array.from(effectiveParticipants),
+          completed: Array.from(effectiveCompleted),
           source: source,
           startTime: Date.now(),
           saved: false
         };
-      } else if (!currentSession.saved) {
-        // Same source, not yet saved — update the completed list
-        if (Array.isArray(completed)) {
-          currentSession.completed = Array.from(completed);
-        }
+      } else if (!currentSession.saved && effectiveCompleted.length) {
+        currentSession.completed = Array.from(effectiveCompleted);
       }
 
       autoSaveIfComplete();

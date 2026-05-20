@@ -265,12 +265,19 @@ headExtra: |
                 const order = Array.from(standupOrderList.children)
                     .map((entry) => entry.textContent.trim())
                     .filter(Boolean);
+                const participants = sanitizedParticipants();
+                const completed = Array.from(order);
+                const remaining = participants.filter((name) => !completed.includes(name));
                 window.dispatchEvent(new CustomEvent('standup:queue', {
                     detail: {
                         source: 'speedway',
                         mode: 'auto',
                         order,
-                        participants: sanitizedParticipants(),
+                        queue: Array.from(order),
+                        participants,
+                        completed,
+                        remaining,
+                        current: order[0] || null,
                     },
                 }));
             }
