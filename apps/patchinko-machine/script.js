@@ -135,6 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let activePattern = 'grid';
   let followBrandTheme = true;
   let animationFrameId;
+  let finalQueueEmitted = false;
 
   // 3. Team & Bucket Management
   function setupBuckets() {
@@ -623,15 +624,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     if (scoredThisFrame) {
-      updateQueue();
+      updateQueue(false);
     }
 
     if (balls.length === 0) {
-      stopGame();
+      finishGame();
       return;
     }
     
     animationFrameId = requestAnimationFrame(loop);
+  }
+
+  function finishGame() {
+    stopGame();
+    if (!finalQueueEmitted) {
+      updateQueue(true);
+      finalQueueEmitted = true;
+    }
   }
 
   // 8. Scoring & Queue Logic
@@ -652,7 +661,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function updateQueue() {
+  function updateQueue(emitEvent = false) {
     queueList.innerHTML = '';
 
     if (teamMembers.length === 0) {
@@ -681,6 +690,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const queueSnapshot = uniqueNameList(sortedTeam);
     const currentSpeaker = completedPlayers.length > 0 ? completedPlayers[0] : null;
 
+    if (!emitEvent) {
+      return;
+    }
+
     const eventData = {
       source: 'patchinko',
       mode: 'auto',
@@ -703,6 +716,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     balls = []; // Clear any previous balls
+    finalQueueEmitted = false;
     dropBallsBtn.disabled = true;
     
     const ballCount = teamMembers.length * 12;
