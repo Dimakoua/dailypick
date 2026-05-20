@@ -522,6 +522,35 @@
   color: var(--brand-subtle-text);
 }
 
+.settings-card label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 600;
+  color: var(--brand-heading);
+  font-size: 0.95rem;
+}
+
+.settings-card input[type="text"],
+.settings-card input[type="url"],
+.settings-card input[type="email"] {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 1px solid var(--brand-border);
+  padding: 10px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.4));
+  color: var(--brand-text);
+}
+
+.settings-card input:focus {
+  outline: none;
+  border-color: var(--brand-accent);
+  background: var(--glass-bg-strong, rgba(255, 255, 255, 0.6));
+}
+
 .settings-card textarea {
   border-radius: 12px;
   border: 1px solid var(--brand-border);
