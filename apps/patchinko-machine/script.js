@@ -404,37 +404,55 @@ document.addEventListener('DOMContentLoaded', () => {
       const topY = 100;   // top of letter
       const midY = 370;   // mid junction (where bowl ends / leg starts)
       const botY = 710;   // bottom of letter
+      const S    = 30;    // peg spacing
 
-      // Vertical spine — full height
-      for (let y = topY; y <= botY; y += 30) {
-        tryAddPeg(pegs, x0, y);
+      // Vertical spine — two columns
+      for (let y = topY; y <= botY; y += S) {
+        tryAddPeg(pegs, x0,      y);
+        tryAddPeg(pegs, x0 + S,  y);
       }
 
-      // Top horizontal cap
-      for (let x = x0 + 30; x <= xB; x += 30) {
+      // Top horizontal cap — two rows
+      for (let x = x0 + S * 2; x <= xB; x += S) {
         tryAddPeg(pegs, x, topY);
+        tryAddPeg(pegs, x, topY + S);
       }
 
-      // Middle horizontal cap (closes the bowl)
-      for (let x = x0 + 30; x <= xB; x += 30) {
+      // Middle horizontal cap — two rows
+      for (let x = x0 + S * 2; x <= xB; x += S) {
         tryAddPeg(pegs, x, midY);
+        tryAddPeg(pegs, x, midY + S);
       }
 
-      // Bowl — right-side semicircle from (xB, topY) → rightmost → (xB, midY)
+      // Bowl — two concentric semicircles (outer + inner, ~30px apart)
       const bowlCy = (topY + midY) / 2;
       const bowlRx = 80;
       const bowlRy = (midY - topY) / 2;
       const bowlSteps = 9;
       for (let i = 0; i <= bowlSteps; i++) {
         const angle = -Math.PI / 2 + (Math.PI * i) / bowlSteps;
-        tryAddPeg(pegs, xB + Math.cos(angle) * bowlRx, bowlCy + Math.sin(angle) * bowlRy);
+        const cx = Math.cos(angle);
+        const cy = Math.sin(angle);
+        // outer arc
+        tryAddPeg(pegs, xB + cx * bowlRx,        bowlCy + cy * bowlRy);
+        // inner arc (shrunk by S on each radius)
+        tryAddPeg(pegs, xB + cx * (bowlRx - S),  bowlCy + cy * (bowlRy - S));
       }
 
-      // Diagonal leg — from mid-right junction down to bottom-right
+      // Diagonal leg — two parallel rows
       const legSteps = 11;
+      // perpendicular offset vector for the diagonal
+      const dx = xLeg - xB;
+      const dy = botY - midY;
+      const len = Math.sqrt(dx * dx + dy * dy);
+      const perpX = (-dy / len) * S;
+      const perpY = ( dx / len) * S;
       for (let i = 1; i <= legSteps; i++) {
         const t = i / legSteps;
-        tryAddPeg(pegs, xB + (xLeg - xB) * t, midY + (botY - midY) * t);
+        const bx = xB + dx * t;
+        const by = midY + dy * t;
+        tryAddPeg(pegs, bx,          by);
+        tryAddPeg(pegs, bx + perpX,  by + perpY);
       }
 
       return pegs;
