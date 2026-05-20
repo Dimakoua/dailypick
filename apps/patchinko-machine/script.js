@@ -396,6 +396,49 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       return pegs;
     },
+    letterR: () => {
+      const pegs = [];
+      const x0   = 230;   // left spine x
+      const xB   = 430;   // right x of bowl / where caps meet spine
+      const xLeg = 510;   // bottom-right x of diagonal leg
+      const topY = 100;   // top of letter
+      const midY = 370;   // mid junction (where bowl ends / leg starts)
+      const botY = 710;   // bottom of letter
+
+      // Vertical spine — full height
+      for (let y = topY; y <= botY; y += 30) {
+        tryAddPeg(pegs, x0, y);
+      }
+
+      // Top horizontal cap
+      for (let x = x0 + 30; x <= xB; x += 30) {
+        tryAddPeg(pegs, x, topY);
+      }
+
+      // Middle horizontal cap (closes the bowl)
+      for (let x = x0 + 30; x <= xB; x += 30) {
+        tryAddPeg(pegs, x, midY);
+      }
+
+      // Bowl — right-side semicircle from (xB, topY) → rightmost → (xB, midY)
+      const bowlCy = (topY + midY) / 2;
+      const bowlRx = 80;
+      const bowlRy = (midY - topY) / 2;
+      const bowlSteps = 9;
+      for (let i = 0; i <= bowlSteps; i++) {
+        const angle = -Math.PI / 2 + (Math.PI * i) / bowlSteps;
+        tryAddPeg(pegs, xB + Math.cos(angle) * bowlRx, bowlCy + Math.sin(angle) * bowlRy);
+      }
+
+      // Diagonal leg — from mid-right junction down to bottom-right
+      const legSteps = 11;
+      for (let i = 1; i <= legSteps; i++) {
+        const t = i / legSteps;
+        tryAddPeg(pegs, xB + (xLeg - xB) * t, midY + (botY - midY) * t);
+      }
+
+      return pegs;
+    },
     orb: () => {
         const pegs = [];
         const centerX = canvas.width / 2;
