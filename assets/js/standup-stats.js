@@ -52,12 +52,18 @@
   }
 
   /**
-   * Manually prune sessions and save
+   * Prune sessions older than the given number of days.
+   * Accepts numeric values or numeric strings.
    */
-  function manualPrune(days) {
+  function pruneOlderThan(days) {
+    const parsedDays = Number(days);
+    if (!Number.isFinite(parsedDays) || parsedDays <= 0) {
+      return loadSessions();
+    }
+
     const sessions = loadSessions();
-    const cutoffMs = Date.now() - (days * 24 * 60 * 60 * 1000);
-    const filtered = sessions.filter(s => s.ts > cutoffMs);
+    const cutoffMs = Date.now() - (parsedDays * 24 * 60 * 60 * 1000);
+    const filtered = sessions.filter((s) => Number(s.ts) > cutoffMs);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
     return filtered;
   }
@@ -423,7 +429,7 @@
   window.standupStats = {
     saveSession,
     loadSessions,
-    pruneOlderThan: manualPrune,
+    pruneOlderThan,
     clearAll,
     getStorageInfo,
     computePersonStats,

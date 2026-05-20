@@ -413,7 +413,7 @@ headExtra: |
       if (val === 'all') {
         window.standupStats.clearAll();
       } else {
-        window.standupStats.pruneOlderThan(parseInt(val, 10));
+        window.standupStats.pruneOlderThan(val);
       }
 
       status.textContent = 'Done — data cleared.';
