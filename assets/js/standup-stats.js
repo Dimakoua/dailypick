@@ -8,19 +8,6 @@
   const RETENTION_DAYS = 90;
 
   /**
-   * Prune sessions older than retention period
-   */
-  function pruneOlderThan(days = RETENTION_DAYS) {
-    const sessions = loadSessions();
-    const cutoffMs = Date.now() - (days * 24 * 60 * 60 * 1000);
-    const filtered = sessions.filter(s => s.ts > cutoffMs);
-    if (filtered.length !== sessions.length) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
-    }
-    return filtered;
-  }
-
-  /**
    * Load all sessions from localStorage
    */
   function loadSessions() {
@@ -43,22 +30,25 @@
    */
   function saveSession({ ts, game, order, duration }) {
     if (!ts || !game || !Array.isArray(order) || order.length === 0) {
-      console.warn('Invalid session data:', { ts, game, order });
+      console.warn('[StandupStats] Invalid session data:', { ts, game, order });
       return;
     }
-    
+
     const sessions = loadSessions();
+
+    // Safety net: skip exact duplicate (same ts + game already stored)
+    if (sessions.length > 0 && sessions[0].ts === ts && sessions[0].game === game) {
+      return;
+    }
+
     const sessionData = { ts, game, order };
     if (typeof duration === 'number' && duration > 0) {
       sessionData.duration = duration;
     }
-    sessions.unshift(sessionData); // Prepend
-    
-    // Auto-prune during save
+    sessions.unshift(sessionData);
+
     const cutoffMs = Date.now() - (RETENTION_DAYS * 24 * 60 * 60 * 1000);
-    const pruned = sessions.filter(s => s.ts > cutoffMs);
-    
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(pruned));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions.filter(s => s.ts > cutoffMs)));
   }
 
   /**
@@ -340,95 +330,63 @@
       participants: [],
       completed: [],
       source: null,
-      startTime: null
+      startTime: null,
+      saved: false
     };
 
-    /**
-     * Check if a session is complete (all participants have been selected)
-     */
     function isSessionComplete() {
-      if (!currentSession.participants || currentSession.participants.length === 0) {
-        return false;
-      }
-      if (!currentSession.completed || currentSession.completed.length === 0) {
-        return false;
-      }
-      // Session is complete when all participants have been selected
-      return currentSession.completed.length >= currentSession.participants.length;
+      return (
+        Array.isArray(currentSession.participants) && currentSession.participants.length > 0 &&
+        Array.isArray(currentSession.completed) &&
+        currentSession.completed.length >= currentSession.participants.length
+      );
     }
 
-    /**
-     * Normalize name for comparison
-     */
-    function normalizeName(name) {
-      return typeof name === 'string' ? name.trim().toLowerCase() : '';
-    }
-
-    /**
-     * Check if two name lists are equal (case-insensitive, order-sensitive)
-     */
-    function namesEqual(list1, list2) {
-      if (!Array.isArray(list1) || !Array.isArray(list2)) return false;
-      if (list1.length !== list2.length) return false;
-      return list1.every((name, idx) => normalizeName(name) === normalizeName(list2[idx]));
-    }
-
-    /**
-     * Auto-save session when complete
-     */
     function autoSaveIfComplete() {
-      if (isSessionComplete() && currentSession.source && currentSession.startTime) {
-        // Create the final order from completed participants
-        const finalOrder = Array.from(currentSession.completed);
-        const duration = Date.now() - currentSession.startTime;
-        
-        saveSession({
-          ts: currentSession.startTime,
-          game: currentSession.source,
-          order: finalOrder,
-          duration: duration
-        });
+      // Only save once per session; a standup:queue-reset starts the next one
+      if (currentSession.saved) return;
+      if (!isSessionComplete() || !currentSession.source || !currentSession.startTime) return;
 
-        const formattedTime = formatDuration(duration);
-        console.log(`[StandupStats] Auto-saved ${currentSession.source} session with ${finalOrder.length} participants (${formattedTime})`);
+      const finalOrder = Array.from(currentSession.completed);
+      const duration = Date.now() - currentSession.startTime;
 
-        // Reset for next session
-        currentSession = {
-          participants: [],
-          completed: [],
-          source: null,
-          startTime: null
-        };
-      }
+      saveSession({
+        ts: currentSession.startTime,
+        game: currentSession.source,
+        order: finalOrder,
+        duration: duration
+      });
+
+      console.log(`[StandupStats] Auto-saved ${currentSession.source} session with ${finalOrder.length} participants (${formatDuration(duration)})`);
+
+      currentSession.saved = true;
     }
 
-    // Listen for queue updates
     window.addEventListener('standup:queue', (event) => {
       const detail = event.detail || {};
       const { source, participants, completed } = detail;
 
       if (!source || !participants) return;
 
-      // Initialize or update session
       if (!currentSession.source || currentSession.source !== source) {
+        // Different (or new) game source — start a fresh session
         currentSession = {
           participants: Array.from(participants || []),
           completed: Array.from(completed || []),
           source: source,
-          startTime: currentSession.startTime || Date.now()
+          startTime: Date.now(),
+          saved: false
         };
-      } else {
-        // Update completed list
-        if (completed && Array.isArray(completed)) {
+      } else if (!currentSession.saved) {
+        // Same source, not yet saved — update the completed list
+        if (Array.isArray(completed)) {
           currentSession.completed = Array.from(completed);
         }
       }
 
-      // Auto-save if complete
       autoSaveIfComplete();
     });
 
-    // Reset tracking on queue reset
     window.addEventListener('standup:queue-reset', (event) => {
       const detail = event.detail || {};
       const { source, participants } = detail;
@@ -438,17 +396,21 @@
           participants: Array.from(participants || []),
           completed: [],
           source: source,
-          startTime: Date.now()
+          startTime: Date.now(),
+          saved: false
         };
       }
     });
   }
 
-  // Initialize auto-collection when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initAutoCollection);
-  } else {
-    initAutoCollection();
+  // Initialize auto-collection when DOM is ready (guard against duplicate initialization)
+  if (!window.__dpStandupStatsAutoInit) {
+    window.__dpStandupStatsAutoInit = true;
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAutoCollection, { once: true });
+    } else {
+      initAutoCollection();
+    }
   }
 
   // Expose public API
