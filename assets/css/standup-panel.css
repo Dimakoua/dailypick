@@ -198,16 +198,30 @@
   padding: 0.35rem 0.65rem;
   background: var(--brand-accent-muted, rgba(15, 23, 42, 0.05));
   color: var(--brand-accent, rgba(15, 23, 42, 0.75));
-  font-weight: 600;
   font-size: 0.8rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 140ms ease, color 140ms ease;
+  transition: all 160ms ease;
 }
 
 .standup-panel__action:hover,
 .standup-panel__action:focus-visible {
   background: rgba(15, 23, 42, 0.12);
-  color: rgba(15, 23, 42, 0.95);
+  color: var(--brand-heading, #0f172a);
+}
+
+.standup-panel__action--meeting {
+  background: var(--brand-accent, #2563eb) !important;
+  color: var(--brand-accent-contrast-text, #ffffff) !important;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.standup-panel__action--meeting:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
 }
 
 .standup-panel__action--collapse {

@@ -38,6 +38,33 @@ appStyles: |
       <p aria-live="polite" class="settings-status" id="playersStatus"></p>
     </article>
 
+    <article aria-labelledby="meetingHeading" class="settings-card glass-card">
+      <div class="card-header">
+        <h2 id="meetingHeading">Meeting &amp; Calendar</h2>
+        <p>Save your team's meeting link and schedule rituals in your calendar.</p>
+      </div>
+      <label for="meetingUrlInput">Team Meeting URL</label>
+      <input id="meetingUrlInput" placeholder="https://meet.google.com/..." type="url" />
+      <p class="field-hint">Tip: save this to add a "Join Meeting" button to every stand-up game.</p>
+      
+      <div class="button-row">
+        <button id="saveMeetingBtn" type="button">Save Link</button>
+        <button class="ghost" id="launchMeetingBtn" type="button">Launch Call</button>
+      </div>
+
+      <hr style="border: 0; border-top: 1px solid var(--brand-border); margin: 8px 0;" />
+
+      <div class="card-header">
+        <h3>Calendar Shortcuts</h3>
+        <p>Quickly create meetings or schedule recurring rituals.</p>
+      </div>
+      <div class="button-row">
+        <button class="ghost" id="createMeetBtn" type="button">Create New Meet</button>
+        <button class="ghost" id="addCalendarBtn" type="button">Add to Google Calendar</button>
+      </div>
+      <p aria-live="polite" class="settings-status" id="meetingStatus"></p>
+    </article>
+
     <section aria-labelledby="integrationsHeading" class="settings-card glass-card integrations-panel">
       <div class="card-header">
         <h2 id="integrationsHeading">Third-Party Integrations</h2>
@@ -404,6 +431,14 @@ appStyles: |
     const resetPlayersBtn = document.getElementById('resetPlayersBtn');
     const playersStatus = document.getElementById('playersStatus');
 
+    const MEETING_URL_KEY = 'teamMeetingUrl';
+    const meetingUrlInput = document.getElementById('meetingUrlInput');
+    const saveMeetingBtn = document.getElementById('saveMeetingBtn');
+    const launchMeetingBtn = document.getElementById('launchMeetingBtn');
+    const createMeetBtn = document.getElementById('createMeetBtn');
+    const addCalendarBtn = document.getElementById('addCalendarBtn');
+    const meetingStatus = document.getElementById('meetingStatus');
+
     const integrationEndpoint = '/api/integrations/config';
     const integrationCards = Array.from(document.querySelectorAll('.integration-card'));
     const integrationNavButtons = Array.from(document.querySelectorAll('[data-integration-target]'));
@@ -413,10 +448,16 @@ appStyles: |
     const integrationResults = new Map();
 
     // Player Functions
-    function showStatus(el, message) {
+    function showStatus(el, message, tone = 'info') {
       if (!el) return;
       el.textContent = message;
-      setTimeout(() => { el.textContent = ''; }, 4000);
+      el.dataset.tone = tone;
+      setTimeout(() => { 
+        if (el.textContent === message) {
+          el.textContent = ''; 
+          el.dataset.tone = '';
+        }
+      }, 4000);
     }
 
     function normalizeNamesInput(raw) {
@@ -465,6 +506,45 @@ appStyles: |
       localStorage.removeItem(PLAYERS_KEY);
       playerNamesInput.value = DEFAULT_NAMES.join('\n');
       showStatus(playersStatus, 'Reverted to default names.');
+    }
+
+    // Meeting & Calendar Functions
+    function loadMeetingUrl() {
+      if (!meetingUrlInput) return;
+      const stored = localStorage.getItem(MEETING_URL_KEY);
+      if (stored) meetingUrlInput.value = stored;
+    }
+
+    function saveMeetingUrl() {
+      if (!meetingUrlInput) return;
+      const url = meetingUrlInput.value.trim();
+      if (url) {
+        localStorage.setItem(MEETING_URL_KEY, url);
+        showStatus(meetingStatus, 'Meeting link saved.', 'success');
+      } else {
+        localStorage.removeItem(MEETING_URL_KEY);
+        showStatus(meetingStatus, 'Meeting link cleared.');
+      }
+    }
+
+    function launchMeeting() {
+      const url = meetingUrlInput?.value?.trim() || localStorage.getItem(MEETING_URL_KEY);
+      if (url) {
+        window.open(url, '_blank');
+      } else {
+        showStatus(meetingStatus, 'Please enter a URL first.', 'error');
+      }
+    }
+
+    function openCalendarEvent() {
+      const meetingUrl = meetingUrlInput?.value?.trim() || localStorage.getItem(MEETING_URL_KEY) || '';
+      const ritualUrl = window.location.origin + '/standups/';
+      const title = encodeURIComponent('Daily Stand-up');
+      const details = encodeURIComponent(`Join the stand-up ritual on Daily Pick: ${ritualUrl}\n\nMeeting Link: ${meetingUrl}`);
+      const location = encodeURIComponent(meetingUrl);
+      
+      const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}`;
+      window.open(googleCalendarUrl, '_blank');
     }
 
     // Integration Utilities
@@ -590,6 +670,12 @@ appStyles: |
     // Initial Load
     savePlayersBtn.addEventListener('click', savePlayers);
     resetPlayersBtn.addEventListener('click', resetPlayers);
+    
+    saveMeetingBtn?.addEventListener('click', saveMeetingUrl);
+    launchMeetingBtn?.addEventListener('click', launchMeeting);
+    createMeetBtn?.addEventListener('click', () => window.open('https://meet.new', '_blank'));
+    addCalendarBtn?.addEventListener('click', openCalendarEvent);
+
     integrationNavButtons.forEach(btn => btn.addEventListener('click', () => setActiveIntegration(btn.dataset.integrationTarget)));
     integrationCards.forEach(card => {
       const svc = card.dataset.service;
@@ -612,6 +698,7 @@ appStyles: |
     });
 
     loadPlayers();
+    loadMeetingUrl();
     refreshIntegrationCards();
     setActiveIntegration('jira');
   });

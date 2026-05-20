@@ -50,6 +50,7 @@
     resizeHandle: null,
     resetButton: null,
     collapseButton: null,
+    meetingButton: null,
   };
 
   const panelLayout = {
@@ -894,13 +895,6 @@
     toggle.innerHTML = '<span class="standup-dock-toggle-icon">🧭</span><span>Stand-up Dock</span>';
     toggle.setAttribute('aria-expanded', 'false');
     toggle.setAttribute('aria-controls', panelId);
-    toggle.addEventListener('click', () => {
-      const isOpen = dock.dataset.open === 'true';
-      setDockOpenState(!isOpen);
-      if (!isOpen && standup && typeof standup.refresh === 'function') {
-        standup.refresh();
-      }
-    });
 
     const panel = document.createElement('div');
     panel.className = 'standup-panel';
@@ -912,6 +906,7 @@
           <p class="standup-panel__subtitle">Keep the queue, notes, and assignments together.</p>
         </div>
         <div class="standup-panel__header-actions">
+          <button type="button" class="standup-panel__action standup-panel__action--meeting" title="Join team meeting" hidden>Join Meeting</button>
           <button type="button" class="standup-panel__action standup-panel__action--help" title="How it works">Help</button>
           <button type="button" class="standup-panel__action standup-panel__action--reset" title="Reset panel layout">Reset</button>
           <button type="button" class="standup-panel__action standup-panel__action--collapse" title="Hide panel">Hide</button>
@@ -957,40 +952,6 @@
       <div class="standup-panel__resize-handle" aria-hidden="true"></div>
     `;
 
-    const refreshButton = panel.querySelector('.standup-panel__refresh');
-    refreshButton?.addEventListener('click', () => {
-      if (standup && typeof standup.refresh === 'function') {
-        standup.refresh(true);
-      }
-    });
-
-    const notesArea = panel.querySelector('.standup-notes textarea');
-    if (notesArea) {
-      notesArea.addEventListener('input', () => {
-        const currentName = queueState.current;
-        if (!currentName || !standup || typeof standup.setNote !== 'function') {
-          return;
-        }
-        const value = notesArea.value;
-        if (noteDebounce) {
-          clearTimeout(noteDebounce);
-        }
-        noteDebounce = setTimeout(() => {
-          standup.setNote(currentName, value);
-        }, 250);
-      });
-    }
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && dock.dataset.open === 'true') {
-        setDockOpenState(false);
-      }
-    });
-
-    dock.appendChild(toggle);
-    dock.appendChild(panel);
-    document.body.appendChild(dock);
-
     elements.dock = dock;
     elements.toggle = toggle;
     elements.panel = panel;
@@ -1006,11 +967,64 @@
     elements.assignmentsEmpty = panel.querySelector('.standup-assignments-empty');
     elements.unassignedList = panel.querySelector('.standup-unassigned-list');
     elements.unassignedEmpty = panel.querySelector('.standup-unassigned-empty');
-    elements.notes = notesArea;
+    elements.notes = panel.querySelector('.standup-notes textarea');
     elements.resizeHandle = panel.querySelector('.standup-panel__resize-handle');
     elements.resetButton = panel.querySelector('.standup-panel__action--reset');
     elements.helpButton = panel.querySelector('.standup-panel__action--help');
     elements.collapseButton = panel.querySelector('.standup-panel__action--collapse');
+    elements.meetingButton = panel.querySelector('.standup-panel__action--meeting');
+
+    function updateMeetingButton() {
+      if (!elements.meetingButton) return;
+      const url = localStorage.getItem('teamMeetingUrl');
+      if (url) {
+        elements.meetingButton.hidden = false;
+        elements.meetingButton.onclick = () => window.open(url, '_blank');
+      } else {
+        elements.meetingButton.hidden = true;
+      }
+    }
+
+    toggle.addEventListener('click', () => {
+      const isOpen = dock.dataset.open === 'true';
+      setDockOpenState(!isOpen);
+      if (!isOpen) {
+        updateMeetingButton();
+        if (standup && typeof standup.refresh === 'function') {
+          standup.refresh();
+        }
+      }
+    });
+
+    const refreshButton = panel.querySelector('.standup-panel__refresh');
+    refreshButton?.addEventListener('click', () => {
+      updateMeetingButton();
+      if (standup && typeof standup.refresh === 'function') {
+        standup.refresh(true);
+      }
+    });
+
+    if (elements.notes) {
+      elements.notes.addEventListener('input', () => {
+        const currentName = queueState.current;
+        if (!currentName || !standup || typeof standup.setNote !== 'function') {
+          return;
+        }
+        const value = elements.notes.value;
+        if (noteDebounce) {
+          clearTimeout(noteDebounce);
+        }
+        noteDebounce = setTimeout(() => {
+          standup.setNote(currentName, value);
+        }, 250);
+      });
+    }
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && dock.dataset.open === 'true') {
+        setDockOpenState(false);
+      }
+    });
 
     if (elements.helpButton) {
       elements.helpButton.addEventListener('click', () => {
@@ -1060,7 +1074,12 @@
       });
     }
 
+    updateMeetingButton();
     setupPanelInteractions(panel);
+
+    dock.appendChild(toggle);
+    dock.appendChild(panel);
+    document.body.appendChild(dock);
   }
 
   function renderItemDetail(item) {
