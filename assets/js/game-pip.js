@@ -45,6 +45,16 @@
             '.game-pip-fab:hover,.game-pip-fab:focus-visible{opacity:1;}',
             // Hide pop-out buttons in PWA standalone mode and on mobile
             '@media(display-mode:standalone),(max-width:720px){.game-pip-trigger,.pip-trigger{display:none!important;}}',
+            // Header PiP button
+            '.game-pip-header-btn{display:inline-flex;align-items:center;justify-content:center;',
+            'width:40px;height:40px;padding:0;border-radius:999px;',
+            'background:var(--brand-accent-muted,rgba(52,152,219,.16));',
+            'color:var(--brand-heading,#2d3e50);border:1px solid transparent;',
+            'cursor:pointer;flex-shrink:0;',
+            'transition:background .2s ease,color .2s ease;}',
+            '.game-pip-header-btn:hover{background:var(--brand-accent,#3498db);color:#fff;}',
+            '.game-pip-header-btn svg{width:18px;height:18px;display:block;flex-shrink:0;}',
+            '@media(display-mode:standalone),(max-width:720px){.game-pip-header-btn{display:none!important;}}',
         ].join('');
         document.head.appendChild(s);
     }
@@ -307,9 +317,39 @@
         }, { once: true });
     }
 
+    // ── Header shortcut button ────────────────────────────────────────────────
+    function addHeaderPipButton(triggers) {
+        if (!('documentPictureInPicture' in window)) return;
+        if (!triggers.length) return;
+
+        var brandingControls = document.querySelector('.branding-controls');
+        if (!brandingControls) return;
+        if (document.getElementById('gamePipHeaderBtn')) return;
+
+        var primary = triggers[0];
+        var btn = document.createElement('button');
+        btn.id = 'gamePipHeaderBtn';
+        btn.type = 'button';
+        btn.className = 'game-pip-header-btn';
+        btn.title = 'Pop game into floating window';
+        btn.setAttribute('aria-label', 'Pop game into floating window');
+        btn.innerHTML =
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+            '<rect x="2" y="3" width="20" height="14" rx="2"/>' +
+            '<rect x="13" y="9" width="7" height="5" rx="1"/>' +
+            '</svg>';
+
+        btn.addEventListener('click', function () {
+            openGamePiP(primary);
+        });
+
+        brandingControls.appendChild(btn);
+    }
+
     // ── Initialise ────────────────────────────────────────────────────────────
     function init() {
         injectMainStyles();
+        var triggers = [];
         document.querySelectorAll('[data-game-pip-target]').forEach(function (btn) {
             // ── Unify button position: move it into the top-right corner of its
             //    target element so the placement is identical on every game page.
@@ -326,11 +366,13 @@
                     targetEl.appendChild(btn);
                 }
             }
+            triggers.push(btn);
             btn.addEventListener('click', function (e) {
                 e.preventDefault();
                 openGamePiP(btn);
             });
         });
+        addHeaderPipButton(triggers);
     }
 
     if (document.readyState === 'loading') {
