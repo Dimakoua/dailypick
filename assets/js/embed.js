@@ -33,6 +33,15 @@ document.addEventListener("DOMContentLoaded", function () {
     copyEmbedBtn.addEventListener("click", function () {
       embedCodeTextarea.select();
       navigator.clipboard.writeText(embedCodeTextarea.value).then(function () {
+        if (typeof window.trackFeatureEvent === 'function') {
+          window.trackFeatureEvent('copy_embed_code', {
+            event_category: 'feature_engagement',
+            event_label: 'embed_code',
+            feature: 'embed',
+            method: 'copy_button'
+          });
+        }
+
         const originalText = copyEmbedBtn.textContent;
         copyEmbedBtn.textContent = "Copied!";
         setTimeout(function () {
