@@ -451,6 +451,16 @@ appStyles: |
     const INTEGRATION_CLIENT_KEY = 'integrationClientId';
     const integrationResults = new Map();
 
+    function trackRosterEvent(action, params) {
+      if (typeof window.trackFeatureEvent !== 'function') return;
+      window.trackFeatureEvent(`roster_${action}`, Object.assign({
+        event_category: 'feature_engagement',
+        event_label: 'team_roster',
+        feature: 'team_roster',
+        method: 'ui'
+      }, params || {}));
+    }
+
     // Player Functions
     function showStatus(el, message, tone = 'info') {
       if (!el) return;
@@ -503,6 +513,7 @@ appStyles: |
       playerNamesInput.value = toPersist.join('\n');
       localStorage.setItem(PLAYERS_KEY, JSON.stringify(toPersist));
       showStatus(playersStatus, `Saved ${toPersist.length} player${toPersist.length === 1 ? '' : 's'}.`);
+      trackRosterEvent('save_players', { count: toPersist.length });
     }
 
     function resetPlayers() {
@@ -510,6 +521,7 @@ appStyles: |
       localStorage.removeItem(PLAYERS_KEY);
       playerNamesInput.value = DEFAULT_NAMES.join('\n');
       showStatus(playersStatus, 'Reverted to default names.');
+      trackRosterEvent('reset_players', {});
     }
 
     // Meeting & Calendar Functions
@@ -525,14 +537,17 @@ appStyles: |
       if (url) {
         localStorage.setItem(MEETING_URL_KEY, url);
         showStatus(meetingStatus, 'Meeting link saved.', 'success');
+        trackRosterEvent('save_meeting_url', { url_saved: Boolean(url) });
       } else {
         localStorage.removeItem(MEETING_URL_KEY);
         showStatus(meetingStatus, 'Meeting link cleared.');
+        trackRosterEvent('clear_meeting_url', {});
       }
     }
 
     function launchMeeting() {
       const url = meetingUrlInput?.value?.trim() || localStorage.getItem(MEETING_URL_KEY);
+      trackRosterEvent('launch_meeting', { has_url: Boolean(url) });
       if (url) {
         window.open(url, '_blank');
       } else {
@@ -549,6 +564,7 @@ appStyles: |
       
       const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}`;
       window.open(googleCalendarUrl, '_blank');
+      trackRosterEvent('open_calendar_event', {});
     }
 
     // Integration Utilities
@@ -630,6 +646,7 @@ appStyles: |
       if (token) payload.token = token;
 
       try {
+        trackRosterEvent('integration_save', { service, enabled: payload.enabled });
         setIntegrationBusy(card, true);
         const response = await fetch(`${integrationEndpoint}/${service}`, {
           method: 'PUT',
@@ -640,14 +657,17 @@ appStyles: |
         setIntegrationStatus(card, 'Connection saved.', 'success');
         if (card.querySelector('.integration-token')) card.querySelector('.integration-token').value = '';
         await refreshIntegrationCards();
-      } catch (e) { setIntegrationStatus(card, e.message, 'error'); }
-      finally { setIntegrationBusy(card, false); }
+      } catch (e) {
+        setIntegrationStatus(card, e.message, 'error');
+        trackRosterEvent('integration_save_error', { service, error: e.message });
+      } finally { setIntegrationBusy(card, false); }
     }
 
     async function handleTestIntegration(card, service) {
       try {
-        setIntegrationBusy(card, true);
         const includeAssignments = !!card.querySelector('.integration-include-assignments')?.checked;
+        trackRosterEvent('integration_test', { service, include_assignments: includeAssignments });
+        setIntegrationBusy(card, true);
         const response = await fetch(`/api/integrations/${service}/pull`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'X-Integration-Client': integrationClientId },
@@ -658,8 +678,10 @@ appStyles: |
         integrationResults.set(service, { data: body.data, includeAssignments });
         updateIntegrationResult(card, service, body.data, includeAssignments);
         setIntegrationStatus(card, 'Connection test succeeded. Review and update your roster below.', 'success');
-      } catch (e) { setIntegrationStatus(card, e.message, 'error'); }
-      finally { setIntegrationBusy(card, false); }
+      } catch (e) {
+        setIntegrationStatus(card, e.message, 'error');
+        trackRosterEvent('integration_test_error', { service, error: e.message });
+      } finally { setIntegrationBusy(card, false); }
     }
 
     function updateIntegrationResult(card, service, data, includeAssignments) {
@@ -677,21 +699,32 @@ appStyles: |
     
     saveMeetingBtn?.addEventListener('click', saveMeetingUrl);
     launchMeetingBtn?.addEventListener('click', launchMeeting);
-    createMeetBtn?.addEventListener('click', () => window.open('https://meet.new', '_blank'));
+    createMeetBtn?.addEventListener('click', () => {
+      trackRosterEvent('create_new_meeting', {});
+      window.open('https://meet.new', '_blank');
+    });
     addCalendarBtn?.addEventListener('click', openCalendarEvent);
 
-    integrationNavButtons.forEach(btn => btn.addEventListener('click', () => setActiveIntegration(btn.dataset.integrationTarget)));
+    integrationNavButtons.forEach(btn => btn.addEventListener('click', () => {
+      const target = btn.dataset.integrationTarget;
+      setActiveIntegration(target);
+      trackRosterEvent('integration_tab_select', { service: target });
+    }));
     integrationCards.forEach(card => {
       const svc = card.dataset.service;
       card.querySelector('.integration-save')?.addEventListener('click', () => handleSaveIntegration(card, svc));
       card.querySelector('.integration-test')?.addEventListener('click', () => handleTestIntegration(card, svc));
       card.querySelector('.integration-action-update')?.addEventListener('click', () => {
         const data = integrationResults.get(svc)?.data;
+        trackRosterEvent('integration_update_players', { service: svc, player_count: Array.isArray(data?.players) ? data.players.length : 0 });
         if (data?.players) {
           const names = dedupeNames([...normalizeNamesInput(playerNamesInput.value), ...data.players]);
           playerNamesInput.value = names.join('\n');
           savePlayers();
         }
+      });
+      card.querySelector('.integration-disconnect')?.addEventListener('click', () => {
+        trackRosterEvent('integration_disconnect', { service: svc });
       });
       if (svc === 'trello') {
         card.querySelector('.trello-token-helper')?.addEventListener('click', () => {
@@ -705,5 +738,6 @@ appStyles: |
     loadMeetingUrl();
     refreshIntegrationCards();
     setActiveIntegration('jira');
+    trackRosterEvent('page_view', { service: 'team_roster' });
   });
 </script>
