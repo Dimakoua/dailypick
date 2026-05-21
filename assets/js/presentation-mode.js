@@ -1,6 +1,8 @@
 (function() {
     const STORAGE_KEY = 'dpPresentationMode';
     const TOGGLE_CLASS = 'presentation-mode';
+    const isMac = /mac/i.test(navigator.platform) || /mac/i.test(navigator.userAgentData?.platform ?? '');
+    const shortcutLabel = isMac ? '⌥P' : 'Alt+P';
 
     function init() {
         const isEnabled = localStorage.getItem(STORAGE_KEY) === 'true';
@@ -105,7 +107,17 @@
                 <path d="M3 21l7-7"></path>
             </svg>
         `;
-        button.onclick = togglePresentationMode;
+        button.addEventListener('click', function () {
+            const currentlyActive = document.documentElement.classList.contains(TOGGLE_CLASS);
+            trackFeatureEvent('presentation_button_click', {
+                event_category: 'feature_engagement',
+                event_label: 'presentation_button',
+                action: currentlyActive ? 'exit' : 'enter',
+                feature: 'presentation_mode',
+                method: 'header_icon'
+            });
+            togglePresentationMode();
+        });
 
         brandingControls.insertBefore(button, brandingControls.firstChild);
         updateToggleButtonLabel(document.documentElement.classList.contains(TOGGLE_CLASS));
