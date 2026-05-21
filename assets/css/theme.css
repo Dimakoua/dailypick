@@ -164,8 +164,12 @@ h6 {
   }
 
   .site-header .weather {
-    display: none;
+    display: none !important;
   }
+}
+
+:root.pwa-standalone .site-header .weather {
+  display: none !important;
 }
 
 .site-title {

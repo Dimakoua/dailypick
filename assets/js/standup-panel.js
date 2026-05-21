@@ -495,6 +495,8 @@
     ensureUpcomingFallback();
 
     const currentName = queueState.current ? getDisplayName(queueState.current) : '';
+    const nextName = queueState.upcoming.length ? getDisplayName(queueState.upcoming[0]) : '';
+
     if (currentName) {
       elements.current.dataset.empty = 'false';
       elements.current.textContent = currentName;
