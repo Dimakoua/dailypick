@@ -38,13 +38,10 @@
             '.game-pip-placeholder__icon{font-size:3rem;line-height:1;}',
             '.game-pip-placeholder__text{color:var(--brand-subtle-text,rgba(231,236,248,.7));',
             'font-size:1rem;margin:0;}',
-            // Unified FAB position – overrides any app-button sizing
-            '.game-pip-fab{position:absolute!important;top:12px!important;right:14px!important;',
-            'z-index:20;padding:5px 12px!important;font-size:0.78rem!important;',
-            'gap:5px!important;opacity:0.72;transition:opacity .2s,transform .2s,box-shadow .2s;}',
-            '.game-pip-fab:hover,.game-pip-fab:focus-visible{opacity:1;}',
-            // Hide pop-out buttons in PWA standalone mode and on mobile
-            '@media(display-mode:standalone),(max-width:720px){.game-pip-trigger,.pip-trigger{display:none!important;}}',
+            // Individual game triggers are now replaced by the header button
+            '.game-pip-trigger{display:none!important;}',
+            // Hide pip-trigger in PWA standalone mode and on mobile
+            '@media(display-mode:standalone),(max-width:720px){.pip-trigger{display:none!important;}}',
             // Header PiP button
             '.game-pip-header-btn{display:inline-flex;align-items:center;justify-content:center;',
             'width:40px;height:40px;padding:0;border-radius:999px;',
@@ -351,21 +348,6 @@
         injectMainStyles();
         var triggers = [];
         document.querySelectorAll('[data-game-pip-target]').forEach(function (btn) {
-            // ── Unify button position: move it into the top-right corner of its
-            //    target element so the placement is identical on every game page.
-            var targetSel = btn.dataset.gamePipTarget;
-            if (targetSel) {
-                var targetEl = document.querySelector(targetSel);
-                if (targetEl) {
-                    // Ensure the container is positioned so absolute children work.
-                    if (getComputedStyle(targetEl).position === 'static') {
-                        targetEl.style.position = 'relative';
-                    }
-                    // Give the button its FAB appearance and move it inside.
-                    btn.classList.add('game-pip-fab');
-                    targetEl.appendChild(btn);
-                }
-            }
             triggers.push(btn);
             btn.addEventListener('click', function (e) {
                 e.preventDefault();
