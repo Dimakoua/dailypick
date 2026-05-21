@@ -81,6 +81,10 @@
     }
 
     function addToggleToHeader() {
+        // Hide on listing/index pages where presentation mode isn't useful
+        const hiddenPaths = ['/agile/', '/apps/', '/randomizers/', '/games/'];
+        if (hiddenPaths.some(p => location.pathname === p || location.pathname === p.slice(0, -1))) return;
+
         const brandingControls = document.querySelector('.branding-controls');
         if (!brandingControls) return;
 
