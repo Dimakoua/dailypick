@@ -83,6 +83,17 @@
   // so we never blindly remove vars set by brand-config.js (holiday themes).
   let appliedLocalVars = new Set();
 
+  function trackLocalBrandEvent(action, params) {
+    if (typeof window.trackFeatureEvent !== 'function') return;
+
+    window.trackFeatureEvent(`local_branding_${action}`, Object.assign({
+      event_category: 'feature_engagement',
+      event_label: 'local_branding',
+      feature: 'local_branding',
+      method: 'ui'
+    }, params || {}));
+  }
+
   /**
    * Initialize local brand studio with game-specific config
    */
@@ -464,6 +475,11 @@
     
     saveLocalBrandConfig();
     applyLocalBrandConfig();
+
+    trackLocalBrandEvent('property_change', {
+      property: propertyKey,
+      action: value === 'inherited' || value === '' ? 'reset' : 'set'
+    });
   }
 
   /**
@@ -475,6 +491,8 @@
 
     localBrandConfig = {};
     applyLocalBrandConfig();
+
+    trackLocalBrandEvent('reset', {});
 
     // Refresh the UI to inherited/default values
     Object.entries(customizableProperties).forEach(([propertyKey, config]) => {
@@ -514,6 +532,7 @@
       panel.hidden = false;
       isUIShown = true;
       panel.focus();
+      trackLocalBrandEvent('panel_open', {});
     }
   }
 
