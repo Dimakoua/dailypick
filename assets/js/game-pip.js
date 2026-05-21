@@ -327,6 +327,14 @@
             '</svg>';
 
         btn.addEventListener('click', function () {
+            if (typeof window.trackFeatureEvent === 'function') {
+                window.trackFeatureEvent('game_pip_button_click', {
+                    event_category: 'feature_engagement',
+                    event_label: 'game_pip_button',
+                    feature: 'picture_in_picture',
+                    method: 'header_icon'
+                });
+            }
             openGamePiP(primary);
         });
 
