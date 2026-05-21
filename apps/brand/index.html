@@ -286,6 +286,22 @@ appStyles: |
       brandPreview.querySelector('button').style.background = styles.accentColor;
     }
 
+    function trackBrandEvent(action, params) {
+      if (typeof window.trackFeatureEvent !== 'function') return;
+      window.trackFeatureEvent(`brand_studio_${action}`, Object.assign({
+        event_category: 'feature_engagement',
+        event_label: 'brand_studio',
+        feature: 'brand_studio',
+        method: 'ui'
+      }, params || {}));
+    }
+
+    function trackInputChange(key) {
+      const identityKeys = ['brandName', 'brandMark', 'fontFamily', 'logoUrl'];
+      const changeType = identityKeys.includes(key) ? 'identity_change' : 'palette_change';
+      trackBrandEvent(changeType, { property: key });
+    }
+
     function loadBrand() {
       const stored = JSON.parse(localStorage.getItem(BRAND_CONFIG_KEY) || '{}');
       const data = { ...DEFAULT_BRAND, ...stored };
@@ -308,6 +324,7 @@ appStyles: |
       window.dispatchEvent(new CustomEvent('brandConfigUpdated', { detail: data }));
       brandStatus.textContent = 'Brand saved!';
       setTimeout(() => brandStatus.textContent = '', 3000);
+      trackBrandEvent('save', {});
     }
 
     saveBrandBtn.addEventListener('click', saveBrand);
@@ -317,6 +334,7 @@ appStyles: |
       loadBrand();
       brandStatus.textContent = 'Reset to defaults.';
       setTimeout(() => brandStatus.textContent = '', 3000);
+      trackBrandEvent('reset', {});
     });
 
     function applyDraftBrandConfig() {
@@ -328,11 +346,13 @@ appStyles: |
     themeModeInput.addEventListener('change', () => {
       setManualThemeVisibility(themeModeInput.value, seasonalThemesToggle.checked);
       applyDraftBrandConfig();
+      trackBrandEvent('theme_mode_change', { themeMode: themeModeInput.value });
     });
 
     seasonalThemesToggle.addEventListener('change', () => {
       setManualThemeVisibility(themeModeInput.value, seasonalThemesToggle.checked);
       applyDraftBrandConfig();
+      trackBrandEvent('seasonal_toggle', { enabled: seasonalThemesToggle.checked });
     });
 
     function collectForm() {
@@ -344,7 +364,22 @@ appStyles: |
       return data;
     }
 
-    Object.values(brandInputs).forEach(input => input?.addEventListener('input', applyDraftBrandConfig));
+    Object.entries(brandInputs).forEach(([key, input]) => {
+      if (!input) return;
+      input.addEventListener('input', () => {
+        applyDraftBrandConfig();
+        trackInputChange(key);
+      });
+    });
+
+    if (themeSelectInput) {
+      themeSelectInput.addEventListener('change', () => {
+        applyDraftBrandConfig();
+        trackBrandEvent('theme_select', { activeThemeId: themeSelectInput.value });
+      });
+    }
+
     loadBrand();
+    trackBrandEvent('page_view', {});
   });
 </script>
