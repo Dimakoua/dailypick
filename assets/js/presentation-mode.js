@@ -66,9 +66,6 @@
         if (btn) btn.remove();
     }
 
-    const isMac = /mac/i.test(navigator.platform) || /mac/i.test(navigator.userAgentData?.platform ?? '');
-    const shortcutLabel = isMac ? '⌥P' : 'Alt+P';
-
     function updateToggleButtonLabel(isActive) {
         const button = document.getElementById('presentationModeToggle');
         if (!button) return;
