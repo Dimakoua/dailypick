@@ -21,6 +21,20 @@
     }
 }
 
+/* Icon-only on tablet (720–960px) to save header space */
+@media (max-width: 960px) and (min-width: 721px) {
+    .presentation-toggle {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        justify-content: center;
+    }
+
+    .presentation-toggle span {
+        display: none;
+    }
+}
+
 :root.pwa-standalone .presentation-toggle {
     display: none !important;
 }

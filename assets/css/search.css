@@ -3,7 +3,34 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0;
+}
+
+/* Search icon button — shown only in the collapsible tablet state */
+.search-icon-btn {
+  display: none;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--brand-heading);
+  padding: 0;
+  border-radius: 8px;
+  transition: color 0.2s ease;
+}
+
+.search-icon-btn:hover {
+  color: var(--brand-accent);
+}
+
+.search-icon-btn svg {
+  display: block;
+  flex-shrink: 0;
 }
 
 .search-input {
@@ -112,19 +139,77 @@
   white-space: nowrap;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+/* Tablet (720–960px): collapsed search pill, expands on focus */
+@media (max-width: 960px) and (min-width: 721px) {
+  .site-header .search-container {
+    width: 40px;
+    min-width: 40px;
+    max-width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 999px;
+    background: var(--brand-accent-muted);
+    border: 1px solid transparent;
+    overflow: visible;
+    transition:
+      width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      max-width 0.25s cubic-bezier(0.4, 0, 0.2, 1),      border-radius 0.2s ease,
+      background 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .site-header .search-container:focus-within {
+    width: min(240px, 28vw);
+    max-width: min(240px, 28vw);
+    border-radius: 12px;
+    background: var(--brand-surface);
+    border-color: var(--brand-accent);
+    box-shadow: var(--brand-focus-ring, 0 0 0 3px rgba(52, 152, 219, 0.25));
+  }
+
+  .site-header .search-icon-btn {
+    display: flex;
+  }
+
+  .site-header .search-input {
+    flex: 1;
+    width: 0;
+    min-width: 0;
+    padding: 0;
+    opacity: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none !important;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+  }
+
+  .site-header .search-container:focus-within .search-input {
+    opacity: 1;
+    padding: 8px 12px 8px 2px;
+    pointer-events: auto;
+  }
+
+  .site-header #search-results {
+    min-width: 240px;
+    left: 0;
+    right: auto;
+  }
+}
+
+/* Mobile (≤720px): full-width search inside the nav dropdown */
+@media (max-width: 720px) {
   .search-container {
     order: -1;
     width: 100%;
     margin-bottom: 12px;
   }
-  
+
   .search-input {
     width: 100%;
     flex: 1;
   }
-  
+
   #search-results {
     left: 0;
     right: 0;

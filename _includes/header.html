@@ -13,6 +13,12 @@
                 <a href="/apps/brand/">Brand</a>
             </nav>
             <div class="search-container" id="search-container">
+                <button class="search-icon-btn" id="search-icon-btn" type="button" aria-label="Search games">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
                 <input type="text" id="search-input" class="search-input" placeholder="Search games..." aria-label="Search games and settings">
                 <div id="search-results"></div>
             </div>
@@ -82,6 +88,15 @@
             closeMenu();
           }
         });
+      });
+    }
+
+    // Search icon: click focuses the input, expanding the pill on tablet
+    const searchIconBtn = document.getElementById('search-icon-btn');
+    const searchInputEl = document.getElementById('search-input');
+    if (searchIconBtn && searchInputEl) {
+      searchIconBtn.addEventListener('click', function() {
+        searchInputEl.focus();
       });
     }
   });
