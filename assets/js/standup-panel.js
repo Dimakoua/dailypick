@@ -883,6 +883,17 @@
     });
   }
 
+  function trackStandupDockEvent(action, params) {
+    if (typeof window.trackFeatureEvent !== 'function') return;
+
+    window.trackFeatureEvent(`standup_dock_${action}`, Object.assign({
+      event_category: 'feature_engagement',
+      event_label: 'standup_dock',
+      feature: 'standup_dock',
+      method: 'ui'
+    }, params || {}));
+  }
+
   function createDock() {
     if (elements.dock) return;
     const dock = document.createElement('div');
@@ -990,6 +1001,7 @@
     toggle.addEventListener('click', () => {
       const isOpen = dock.dataset.open === 'true';
       setDockOpenState(!isOpen);
+      trackStandupDockEvent('toggle', { action: isOpen ? 'close' : 'open' });
       if (!isOpen) {
         updateMeetingButton();
         if (standup && typeof standup.refresh === 'function') {
@@ -1001,6 +1013,7 @@
     const refreshButton = panel.querySelector('.standup-panel__refresh');
     refreshButton?.addEventListener('click', () => {
       updateMeetingButton();
+      trackStandupDockEvent('refresh', {});
       if (standup && typeof standup.refresh === 'function') {
         standup.refresh(true);
       }
@@ -1030,6 +1043,7 @@
 
     if (elements.helpButton) {
       elements.helpButton.addEventListener('click', () => {
+        trackStandupDockEvent('help', {});
         window.dispatchEvent(new CustomEvent('standup:start-walkthrough'));
       });
     }
@@ -1066,12 +1080,14 @@
 
     if (elements.resetButton) {
       elements.resetButton.addEventListener('click', () => {
+        trackStandupDockEvent('reset', {});
         resetPanelLayout();
       });
     }
 
     if (elements.collapseButton) {
       elements.collapseButton.addEventListener('click', () => {
+        trackStandupDockEvent('collapse', {});
         collapsePanelToDock();
       });
     }
