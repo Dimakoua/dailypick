@@ -14,7 +14,7 @@
 
         // Add hotkey listener
         window.addEventListener('keydown', (e) => {
-            if (e.altKey && e.key.toLowerCase() === 'p') {
+            if (e.altKey && e.code === 'KeyP') {
                 e.preventDefault();
                 togglePresentationMode();
             }
