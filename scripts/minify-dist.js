@@ -166,6 +166,16 @@ async function walk(directory) {
           pure_getters: true,
           keep_fargs: false,
           unsafe_math: true,
+          drop_console: true,
+          drop_debugger: true,
+          pure_funcs: [
+            'console.debug',
+            'console.log',
+            'console.info',
+            'console.warn',
+            'console.error',
+            'console.trace'
+          ]
         },
         format: {
           comments: false,
