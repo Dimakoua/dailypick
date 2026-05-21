@@ -52,6 +52,37 @@
     flex-shrink: 0;
 }
 
+/* Tooltip */
+.presentation-toggle,
+.game-pip-header-btn {
+    position: relative;
+}
+
+.presentation-toggle::after,
+.game-pip-header-btn::after {
+    content: attr(title);
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--brand-heading);
+    color: var(--brand-surface);
+    font-size: 0.72rem;
+    font-weight: 600;
+    white-space: nowrap;
+    padding: 5px 10px;
+    border-radius: 6px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    z-index: 1001;
+}
+
+.presentation-toggle:hover::after,
+.game-pip-header-btn:hover::after {
+    opacity: 1;
+}
+
 /* Presentation Mode State */
 
 /* Hide non-essential UI in presentation mode */
