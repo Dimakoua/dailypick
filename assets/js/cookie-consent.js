@@ -14,7 +14,11 @@ function isLocalDevelopment() {
 }
 
 function loadAhrefsAnalytics() {
-  if (isLocalDevelopment() || window.ahrefsAnalyticsInitialized) {
+  if (isLocalDevelopment()) {
+    console.log('Cookie Consent [local]: skipping Ahrefs analytics load');
+    return;
+  }
+  if (window.ahrefsAnalyticsInitialized) {
     return;
   }
 
@@ -34,7 +38,11 @@ function loadAhrefsAnalytics() {
 }
 
 function loadGoogleTag() {
-  if (isLocalDevelopment() || window.gtagInitialized) {
+  if (isLocalDevelopment()) {
+    console.log('Cookie Consent [local]: skipping Google Tag load');
+    return;
+  }
+  if (window.gtagInitialized) {
     return;
   }
 
@@ -71,7 +79,11 @@ function loadGoogleTag() {
 }
 
 function loadContentsquare() {
-  if (isLocalDevelopment() || window.contentsquareInitialized) {
+  if (isLocalDevelopment()) {
+    console.log('Cookie Consent [local]: skipping Contentsquare load');
+    return;
+  }
+  if (window.contentsquareInitialized) {
     return;
   }
 
