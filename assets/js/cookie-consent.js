@@ -8,9 +8,7 @@ const CONSENT_KEY = "dailyPickCookieConsent";
 function isLocalDevelopment() {
   if (typeof window === 'undefined' || !window.location) return false;
   const host = window.location.hostname;
-  const isLocalDevelopment = host === 'localhost' || host === '127.0.0.1' || host === '[::1]' || host.endsWith('.local');
-  console.debug(`Cookie Consent: isLocalDevelopment=${isLocalDevelopment} (hostname=${host})`);
-  return isLocalDevelopment;
+  return host === 'localhost' || host === '127.0.0.1' || host === '[::1]' || host.endsWith('.local');
 }
 
 function loadAhrefsAnalytics() {

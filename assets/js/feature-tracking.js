@@ -4,7 +4,7 @@
     function sendFeatureEvent(eventName, params) {
         var payload = Object.assign({ event: eventName }, params || {});
 
-        console.debug('Feature Tracking: Sending event', payload);
+        console.log('Feature Tracking: Sending event', payload);
         if (typeof window.gtag === 'function') {
             window.gtag('event', eventName, params || {});
             return;
@@ -15,7 +15,7 @@
             return;
         }
 
-        console.debug('Feature Tracking: gtag not available, falling back to dataLayer push', payload);
+        console.log('Feature Tracking: gtag not available, falling back to dataLayer push', payload);
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push(payload);
     }
