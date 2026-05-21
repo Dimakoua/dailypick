@@ -23,7 +23,7 @@ headExtra: |
       <p>Track speaking patterns and session history for your team.</p>
     </div>
     <div class="hero-actions">
-      <a class="btn-link ghost" href="/apps/roster/">← Roster</a>
+      <a id="backToRosterLink" class="btn-link ghost" href="/apps/roster/">← Roster</a>
     </div>
   </section>
 
@@ -111,6 +111,16 @@ headExtra: |
     return d.innerHTML;
   }
 
+  function trackStandupStatsEvent(action, params) {
+    if (typeof window.trackFeatureEvent !== 'function') return;
+    window.trackFeatureEvent(`standup_stats_${action}`, Object.assign({
+      event_category: 'feature_engagement',
+      event_label: 'standup_stats',
+      feature: 'standup_stats',
+      method: 'ui'
+    }, params || {}));
+  }
+
   /* chart instances */
   let sessionsChartInst = null;
   let firstSpeakerChartInst = null;
@@ -133,7 +143,7 @@ headExtra: |
         <div class="stats-empty-icon">📊</div>
         <strong>No sessions recorded yet</strong>
         <p>Play any standup game and complete a session — stats will appear here automatically.</p>
-        <a class="btn-link" href="/standups/" style="display:inline-flex;margin-top:20px;">Browse Standup Games →</a>
+        <a id="browseStandupGamesLink" class="btn-link" href="/standups/" style="display:inline-flex;margin-top:20px;">Browse Standup Games →</a>
       </div>`;
     ['personSection', 'gamesSection', 'recentSection'].forEach(id => {
       document.getElementById(id).hidden = true;
@@ -295,7 +305,10 @@ headExtra: |
       </div>`;
 
     document.querySelectorAll('#personTable thead th').forEach((th, colIdx) => {
-      th.addEventListener('click', () => sortTable(th, colIdx));
+      th.addEventListener('click', () => {
+        sortTable(th, colIdx);
+        trackStandupStatsEvent('sort_person_table', { column: th.textContent.trim() });
+      });
     });
   }
 
@@ -404,6 +417,7 @@ headExtra: |
         btn.textContent = 'Confirm?';
         btn.style.background = '#c0392b';
         status.textContent = 'Click again to confirm. This cannot be undone.';
+        trackStandupStatsEvent('cleanup_prompt', {});
         confirmTimer = setTimeout(resetConfirm, 5000);
         return;
       }
@@ -411,6 +425,7 @@ headExtra: |
       // Second click — execute
       resetConfirm();
       const val = document.getElementById('cleanupSelect').value;
+      trackStandupStatsEvent('cleanup_execute', { range: val });
 
       if (val === 'all') {
         window.standupStats.clearAll();
@@ -427,6 +442,20 @@ headExtra: |
   document.addEventListener('DOMContentLoaded', () => {
     setupCleanup();
     renderAll();
+    trackStandupStatsEvent('page_view', {});
+
+    document.getElementById('backToRosterLink')?.addEventListener('click', () => {
+      trackStandupStatsEvent('navigate_to_roster', {});
+    });
+    document.getElementById('cleanupSelect')?.addEventListener('change', (event) => {
+      trackStandupStatsEvent('cleanup_select', { range: event.target.value });
+    });
+    document.addEventListener('click', (event) => {
+      const target = event.target.closest('#browseStandupGamesLink');
+      if (target) {
+        trackStandupStatsEvent('browse_standup_games', {});
+      }
+    });
   });
 })();
 </script>
