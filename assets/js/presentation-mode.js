@@ -67,12 +67,9 @@
     function updateToggleButtonLabel(isActive) {
         const button = document.getElementById('presentationModeToggle');
         if (!button) return;
-        
-        const span = button.querySelector('span');
-        if (span) {
-            span.textContent = isActive ? 'Exit Presentation' : 'Presentation';
-        }
-        
+
+        button.title = isActive ? 'Exit Presentation Mode (Esc)' : 'Presentation Mode (Alt+P)';
+
         if (isActive) {
             button.classList.add('is-active');
         } else {
@@ -81,7 +78,6 @@
     }
 
     function addToggleToHeader() {
-        // Find a place in the header to add the toggle
         const brandingControls = document.querySelector('.branding-controls');
         if (!brandingControls) return;
 
@@ -94,15 +90,13 @@
         button.id = 'presentationModeToggle';
         button.type = 'button';
         button.className = 'presentation-toggle';
-        button.title = 'Toggle Presentation Mode (Big Text)';
         button.innerHTML = `
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M15 3h6v6"></path>
                 <path d="M9 21H3v-6"></path>
                 <path d="M21 3l-7 7"></path>
                 <path d="M3 21l7-7"></path>
             </svg>
-            <span>Presentation</span>
         `;
         button.onclick = togglePresentationMode;
 

@@ -1,52 +1,55 @@
-/* Toggle button styles */
-.presentation-toggle {
+/* Shared icon-only button style (presentation toggle + game pip header btn) */
+.presentation-toggle,
+.game-pip-header-btn {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    margin: 0;
     border-radius: 999px;
     background: var(--brand-accent-muted);
     color: var(--brand-heading);
-    font-weight: 700;
-    font-size: 0.85rem;
-    border: 1px solid transparent;
+    border: none;
     cursor: pointer;
-    transition: all 0.2s ease;
+    flex-shrink: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 1;
+    transition: background 0.2s ease, color 0.2s ease;
 }
 
 /* Hide on mobile and PWA */
 @media (max-width: 720px) {
-    .presentation-toggle {
+    .presentation-toggle,
+    .game-pip-header-btn {
         display: none !important;
     }
 }
 
-/* Icon-only on tablet (720–960px) to save header space */
-@media (max-width: 960px) and (min-width: 721px) {
-    .presentation-toggle {
-        width: 40px;
-        height: 40px;
-        padding: 0;
-        justify-content: center;
-    }
-
-    .presentation-toggle span {
-        display: none;
-    }
-}
-
-:root.pwa-standalone .presentation-toggle {
+:root.pwa-standalone .presentation-toggle,
+:root.pwa-standalone .game-pip-header-btn {
     display: none !important;
 }
 
-.presentation-toggle:hover {
+.presentation-toggle:hover,
+.game-pip-header-btn:hover {
     background: var(--brand-accent);
     color: white;
 }
 
-.presentation-toggle svg {
-    width: 18px;
-    height: 18px;
+.presentation-toggle.is-active {
+    background: var(--brand-accent);
+    color: white;
+}
+
+.presentation-toggle svg,
+.game-pip-header-btn svg {
+    width: 17px;
+    height: 17px;
+    display: block;
+    flex-shrink: 0;
 }
 
 /* Presentation Mode State */
