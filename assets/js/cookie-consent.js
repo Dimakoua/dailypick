@@ -5,8 +5,16 @@ const CONTENTSQUARE_SRC = "https://t.contentsquare.net/uxa/74d1b6e548f9a.js";
 const CONTENTSQUARE_KEY = "74d1b6e548f9a";
 const CONSENT_KEY = "dailyPickCookieConsent";
 
+function isLocalDevelopment() {
+  if (typeof window === 'undefined' || !window.location) return false;
+  const host = window.location.hostname;
+  const isLocalDevelopment = host === 'localhost' || host === '127.0.0.1' || host === '[::1]' || host.endsWith('.local');
+  console.debug(`Cookie Consent: isLocalDevelopment=${isLocalDevelopment} (hostname=${host})`);
+  return isLocalDevelopment;
+}
+
 function loadAhrefsAnalytics() {
-  if (window.ahrefsAnalyticsInitialized) {
+  if (isLocalDevelopment() || window.ahrefsAnalyticsInitialized) {
     return;
   }
 
@@ -26,7 +34,7 @@ function loadAhrefsAnalytics() {
 }
 
 function loadGoogleTag() {
-  if (window.gtagInitialized) {
+  if (isLocalDevelopment() || window.gtagInitialized) {
     return;
   }
 
@@ -63,7 +71,7 @@ function loadGoogleTag() {
 }
 
 function loadContentsquare() {
-  if (window.contentsquareInitialized) {
+  if (isLocalDevelopment() || window.contentsquareInitialized) {
     return;
   }
 
