@@ -61,7 +61,6 @@
 :root.presentation-mode .cookie-consent,
 :root.presentation-mode .pwa-nav,
 :root.presentation-mode .feedback-popup-trigger,
-:root.presentation-mode .standup-dock-toggle,
 :root.presentation-mode .game-pip-trigger {
   display: none !important;
 }
