@@ -28,6 +28,7 @@ appStyles: |
     <div class="fortune-actions">
       <button id="generateBtn" class="btn btn--accent" type="button">🥠 Generate Fortune</button>
       <button id="copyBtn" class="btn btn--secondary" type="button">📋 Copy Message</button>
+      <button id="shareBtn" class="btn btn--accent" type="button" hidden>📤 Share Fortune</button>
     </div>
   </section>
 
@@ -39,6 +40,21 @@ appStyles: |
     <div id="fortuneText" class="fortune-text">Click Generate Fortune to open your cookie.</div>
     <p class="fortune-subtext">Change the category above for a different kind of message.</p>
   </section>
+
+  <div id="share-modal" class="share-modal" style="display:none;">
+    <div class="share-modal-content">
+      <button class="close-modal" aria-label="Close share modal">&times;</button>
+      <h3>Share Your Fortune</h3>
+      <p class="share-modal-copy">Generate a shareable image of your fortune and send it to a friend.</p>
+      <div id="share-preview-container">
+        <img id="sharePreviewImg" src="" alt="Share preview" />
+      </div>
+      <div class="share-actions">
+        <button id="download-png-btn" class="btn btn--accent" type="button">📥 Download PNG</button>
+        <button id="native-share-btn" class="btn btn--secondary" type="button">🔗 Share / Send...</button>
+      </div>
+    </div>
+  </div>
 
   <section class="seo-content-area glass-card">
     <h2>Fortune Cookie Generator — quick fortune messages for daily inspiration</h2>
@@ -106,6 +122,7 @@ appStyles: |
   </section>
 </main>
 
+<script src="/assets/js/share-engine.js"></script>
 <script>
   const FORTUNES = {
     daily: [
@@ -141,6 +158,11 @@ appStyles: |
   const categoryButtons = document.querySelectorAll('.category-btn');
   const generateBtn = document.getElementById('generateBtn');
   const copyBtn = document.getElementById('copyBtn');
+  const shareBtn = document.getElementById('shareBtn');
+  const shareModal = document.getElementById('share-modal');
+  const sharePreviewImg = document.getElementById('sharePreviewImg');
+  const downloadPngBtn = document.getElementById('download-png-btn');
+  const nativeShareBtn = document.getElementById('native-share-btn');
   const fortuneText = document.getElementById('fortuneText');
 
   function chooseRandom(items) {
@@ -174,6 +196,146 @@ appStyles: |
     });
   }
 
+  function createRoundedCard(ctx, x, y, width, height, radius) {
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
+  }
+
+  function createShareCanvas() {
+    const message = fortuneText.textContent || '';
+    const W = 1080;
+    const H = 1080;
+    const canvas = document.createElement('canvas');
+    canvas.width = W;
+    canvas.height = H;
+    const ctx = canvas.getContext('2d');
+
+    const gradient = ctx.createLinearGradient(0, 0, 0, H);
+    gradient.addColorStop(0, '#fff7ef');
+    gradient.addColorStop(0.45, '#fcf1e4');
+    gradient.addColorStop(1, '#ffffff');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.fillStyle = 'rgba(233, 150, 122, 0.14)';
+    ctx.beginPath();
+    ctx.arc(W * 0.82, H * 0.16, 120, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(244, 208, 145, 0.16)';
+    ctx.beginPath();
+    ctx.arc(W * 0.16, H * 0.24, 95, 0, Math.PI * 2);
+    ctx.fill();
+
+    const cardX = 50;
+    const cardY = 50;
+    const cardW = W - 100;
+    const cardH = H - 120;
+
+    ctx.save();
+    ctx.shadowColor = 'rgba(233, 150, 122, 0.16)';
+    ctx.shadowBlur = 28;
+    ctx.shadowOffsetY = 16;
+    createRoundedCard(ctx, cardX, cardY, cardW, cardH, 42);
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+    ctx.restore();
+
+    ctx.strokeStyle = 'rgba(233, 150, 122, 0.2)';
+    ctx.lineWidth = 2;
+    createRoundedCard(ctx, cardX, cardY, cardW, cardH, 42);
+    ctx.stroke();
+
+    const headerY = cardY + 28;
+    ctx.fillStyle = '#c1502d';
+    ctx.font = '700 40px system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Fortune Cookie', W / 2, headerY + 28);
+
+    ctx.fillStyle = '#5a3f2f';
+    ctx.font = '600 20px system-ui, sans-serif';
+    ctx.fillText('Your message is ready to share', W / 2, headerY + 58);
+
+    ctx.strokeStyle = 'rgba(233, 150, 122, 0.16)';
+    ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    ctx.moveTo(cardX + 48, headerY + 72);
+    ctx.lineTo(cardX + cardW - 48, headerY + 72);
+    ctx.stroke();
+
+    // Prepare centered, larger text block and vertically center it in the card
+    const textW = cardW - 160;
+    const mainFontSize = 56; // larger main font for the fortune
+    const quoteFontSize = 84; // decorative opening quote size
+    const lineHeight = Math.round(mainFontSize * 1.3);
+
+    ctx.fillStyle = '#2f3845';
+
+    // Clean surrounding quotes and split words
+    const raw = (message || '').replace(/(^["“”']+|["“”']+$)/g, '').trim();
+    const words = raw ? raw.split(/\s+/) : [];
+
+    // Build wrapped lines using the chosen main font
+    ctx.font = `700 ${mainFontSize}px system-ui, sans-serif`;
+    const lines = [];
+    let current = '';
+    words.forEach((word) => {
+      const test = current ? `${current} ${word}` : word;
+      const width = ctx.measureText(test).width;
+      if (width > textW && current) {
+        lines.push(current);
+        current = word;
+      } else {
+        current = test;
+      }
+    });
+    if (current) lines.push(current);
+
+    // Compute block sizing and vertical centering
+    const quotePadding = 12;
+    const totalTextHeight = lines.length * lineHeight;
+    const totalBlockHeight = quoteFontSize + quotePadding + totalTextHeight;
+    const blockTop = cardY + Math.round((cardH - totalBlockHeight) / 2);
+
+    // Draw opening quote (top of the block)
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.font = `700 ${quoteFontSize}px system-ui, sans-serif`;
+    ctx.fillText('“', W / 2, blockTop);
+
+    // Draw each wrapped line, using top-aligned baseline for predictable spacing
+    ctx.font = `700 ${mainFontSize}px system-ui, sans-serif`;
+    ctx.textBaseline = 'top';
+    const firstLineY = blockTop + quoteFontSize + quotePadding;
+    lines.forEach((ln, i) => {
+      ctx.fillText(ln, W / 2, firstLineY + i * lineHeight);
+    });
+
+    ctx.fillStyle = '#2f3845';
+    ctx.font = '600 20px system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('dailypick.dev/apps/fortune-cookie-generator/', W / 2, H - 42);
+
+    return canvas;
+  }
+
+  function getShareText() {
+    const text = fortuneText.textContent || '';
+    return `Fortune Cookie: ${text}`;
+  }
+
+  function getShareFileName() {
+    return `fortune-cookie-${new Date().toISOString().slice(0, 10)}.png`;
+  }
+
   categoryButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       categoryButtons.forEach(item => item.classList.remove('active'));
@@ -181,6 +343,28 @@ appStyles: |
     });
   });
 
-  generateBtn.addEventListener('click', generateFortune);
+  generateBtn.addEventListener('click', () => {
+    generateFortune();
+    if (shareBtn) {
+      shareBtn.hidden = false;
+    }
+  });
   copyBtn.addEventListener('click', copyFortune);
+
+  if (window.ShareEngine && shareBtn) {
+    ShareEngine.init({
+      shareButton: shareBtn,
+      shareModal: shareModal,
+      previewImage: sharePreviewImg,
+      downloadButton: downloadPngBtn,
+      nativeShareButton: nativeShareBtn,
+      createCanvas: createShareCanvas,
+      getShareText,
+      getFileName: getShareFileName,
+      shareTitle: 'Fortune Cookie Message',
+      onShareUnavailable() {
+        alert('Sharing is not available on this browser. Use Download PNG instead.');
+      },
+    });
+  }
 </script>
