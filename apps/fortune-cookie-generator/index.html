@@ -42,7 +42,7 @@ appStyles: |
   </section>
 
   <div id="share-modal" class="share-modal" style="display:none;">
-    <div class="share-modal-content">
+    <div class="share-modal-content glass-card">
       <button class="close-modal" aria-label="Close share modal">&times;</button>
       <h3>Share Your Fortune</h3>
       <p class="share-modal-copy">Generate a shareable image of your fortune and send it to a friend.</p>
@@ -219,18 +219,41 @@ appStyles: |
     canvas.height = H;
     const ctx = canvas.getContext('2d');
 
+    const cs = getComputedStyle(document.documentElement);
+    const brandBackground = cs.getPropertyValue('--brand-background').trim() || '#fff7ef';
+    const brandSurface = cs.getPropertyValue('--brand-surface').trim() || '#ffffff';
+    const brandAccent = cs.getPropertyValue('--brand-accent').trim() || '#e9927a';
+    const brandAccentMuted = cs.getPropertyValue('--brand-accent-muted').trim();
+    const brandHeading = cs.getPropertyValue('--brand-heading').trim() || '#c1502d';
+    const brandText = cs.getPropertyValue('--brand-text').trim() || '#2f3845';
+    const brandFont = cs.getPropertyValue('--brand-font-family').trim() || 'system-ui, sans-serif';
+
+    function hexToRgba(hex, alpha) {
+      const cleaned = hex.replace('#', '').trim();
+      const value = cleaned.length === 3
+        ? cleaned.split('').map(ch => ch + ch).join('')
+        : cleaned;
+      const int = parseInt(value, 16);
+      const r = (int >> 16) & 255;
+      const g = (int >> 8) & 255;
+      const b = int & 255;
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+
+    const accentMuted = brandAccentMuted || hexToRgba(brandAccent, 0.16);
+
     const gradient = ctx.createLinearGradient(0, 0, 0, H);
-    gradient.addColorStop(0, '#fff7ef');
-    gradient.addColorStop(0.45, '#fcf1e4');
-    gradient.addColorStop(1, '#ffffff');
+    gradient.addColorStop(0, brandBackground);
+    gradient.addColorStop(0.45, brandSurface);
+    gradient.addColorStop(1, brandBackground);
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, W, H);
 
-    ctx.fillStyle = 'rgba(233, 150, 122, 0.14)';
+    ctx.fillStyle = accentMuted;
     ctx.beginPath();
     ctx.arc(W * 0.82, H * 0.16, 120, 0, Math.PI * 2);
     ctx.fill();
-    ctx.fillStyle = 'rgba(244, 208, 145, 0.16)';
+    ctx.fillStyle = hexToRgba(brandAccent, 0.16);
     ctx.beginPath();
     ctx.arc(W * 0.16, H * 0.24, 95, 0, Math.PI * 2);
     ctx.fill();
@@ -241,30 +264,30 @@ appStyles: |
     const cardH = H - 120;
 
     ctx.save();
-    ctx.shadowColor = 'rgba(233, 150, 122, 0.16)';
+    ctx.shadowColor = hexToRgba(brandAccent, 0.16);
     ctx.shadowBlur = 28;
     ctx.shadowOffsetY = 16;
     createRoundedCard(ctx, cardX, cardY, cardW, cardH, 42);
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = brandSurface;
     ctx.fill();
     ctx.restore();
 
-    ctx.strokeStyle = 'rgba(233, 150, 122, 0.2)';
+    ctx.strokeStyle = hexToRgba(brandAccent, 0.2);
     ctx.lineWidth = 2;
     createRoundedCard(ctx, cardX, cardY, cardW, cardH, 42);
     ctx.stroke();
 
     const headerY = cardY + 28;
-    ctx.fillStyle = '#c1502d';
-    ctx.font = '700 40px system-ui, sans-serif';
+    ctx.fillStyle = brandHeading;
+    ctx.font = `700 40px ${brandFont}`;
     ctx.textAlign = 'center';
     ctx.fillText('Fortune Cookie', W / 2, headerY + 28);
 
-    ctx.fillStyle = '#5a3f2f';
-    ctx.font = '600 20px system-ui, sans-serif';
+    ctx.fillStyle = cs.getPropertyValue('--brand-accent-contrast-text').trim() || '#5a3f2f';
+    ctx.font = `600 20px ${brandFont}`;
     ctx.fillText('Your message is ready to share', W / 2, headerY + 58);
 
-    ctx.strokeStyle = 'rgba(233, 150, 122, 0.16)';
+    ctx.strokeStyle = hexToRgba(brandAccent, 0.16);
     ctx.lineWidth = 1.8;
     ctx.beginPath();
     ctx.moveTo(cardX + 48, headerY + 72);
@@ -308,10 +331,11 @@ appStyles: |
     // Draw opening quote (top of the block)
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
-    ctx.font = `700 ${quoteFontSize}px system-ui, sans-serif`;
+    ctx.font = `700 ${quoteFontSize}px ${brandFont}`;
+    ctx.fillText('“', W / 2, blockTop);
 
     // Draw each wrapped line, using top-aligned baseline for predictable spacing
-    ctx.font = `700 ${mainFontSize}px system-ui, sans-serif`;
+    ctx.font = `700 ${mainFontSize}px ${brandFont}`;
     ctx.textBaseline = 'top';
     const firstLineY = blockTop + quoteFontSize + quotePadding;
     lines.forEach((ln, i) => {
