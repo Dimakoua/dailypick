@@ -21,6 +21,8 @@
     "scripts": {
         "build": "eleventy && node scripts/minify-dist.js && node scripts/gzip-compress.js",
         "build:dev": "eleventy",
+        "watch": "npm run build:dev -- --watch --incremental",
+        "dev:watch": "npm run build:dev -- --watch --incremental & wrangler dev",
         "dev": "wrangler dev",
         "deploy": "wrangler deploy"
     }
