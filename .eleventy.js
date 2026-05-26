@@ -58,19 +58,7 @@ module.exports = async function(eleventyConfig) {
   // Add passthrough copy for public assets and game directories
   eleventyConfig.addPassthroughCopy({ "public": "." });
   // Only copy static assets from apps; allow app HTML pages to be processed by Eleventy.
-  eleventyConfig.addPassthroughCopy([
-    "apps/**/*.css",
-    "apps/**/*.js",
-    "apps/**/*.png",
-    "apps/**/*.jpg",
-    "apps/**/*.jpeg",
-    "apps/**/*.svg",
-    "apps/**/*.webp",
-    "apps/**/*.gif",
-    "apps/**/*.json",
-    "apps/**/*.txt",
-    "apps/**/*.ico"
-  ]);
+  eleventyConfig.addPassthroughCopy("apps/**/*.{css,js,png,jpg,jpeg,svg,webp,gif,json,txt,ico}");
 
   // Sitemap Plugin
   eleventyConfig.addPlugin(sitemap, {
