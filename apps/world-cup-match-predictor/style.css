@@ -263,6 +263,91 @@ body {
   transform: none !important;
 }
 
+/* ==========================================================================
+   Searchable Match Dropdown
+   ========================================================================== */
+
+.searchable-select {
+  position: relative;
+}
+
+.match-search-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--brand-border, var(--wc-green));
+  background: var(--brand-surface, white);
+  color: var(--brand-text, #333);
+  font-size: 1rem;
+  font-family: var(--brand-font-family, system-ui, sans-serif);
+  box-sizing: border-box;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.match-search-input:focus {
+  outline: none;
+  border-color: var(--wc-green);
+  box-shadow: 0 0 0 3px rgba(26, 122, 74, 0.2);
+}
+
+.match-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 280px;
+  overflow-y: auto;
+  background: var(--brand-surface, white);
+  border: 1px solid var(--brand-border, var(--wc-green));
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 200;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.match-dropdown.open {
+  display: block;
+}
+
+.match-dropdown li {
+  padding: 10px 14px;
+  cursor: pointer;
+  color: var(--brand-text, #333);
+  font-size: 0.95rem;
+  transition: background 0.1s;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.match-dropdown li:last-child {
+  border-bottom: none;
+}
+
+.match-dropdown li:hover,
+.match-dropdown li[aria-selected="true"] {
+  background: rgba(26, 122, 74, 0.1);
+  color: var(--wc-dark);
+}
+
+.match-dropdown li.no-results {
+  color: #888;
+  cursor: default;
+  font-style: italic;
+}
+
+.match-search-input.has-selection {
+  font-weight: 600;
+  border-color: var(--wc-green);
+  background: rgba(26, 122, 74, 0.04);
+}
+
+/* ==========================================================================
+   SEO & misc
+   ========================================================================== */
+
 .seo-toc a {
   color: var(--wc-green);
   text-decoration: none;

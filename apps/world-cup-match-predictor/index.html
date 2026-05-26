@@ -25,10 +25,20 @@ headExtra: |
         </div>
         
         <div class="control-group">
-            <label for="match-picker">Select a Match</label>
-            <select id="match-picker">
-                <option value="default">Choose a matchup...</option>
-            </select>
+            <label for="match-search">Select a Match</label>
+            <div class="searchable-select" id="match-select-wrapper">
+                <input
+                    type="text"
+                    id="match-search"
+                    class="match-search-input"
+                    placeholder="Type to search teams…"
+                    autocomplete="off"
+                    aria-label="Search or select a match"
+                    aria-autocomplete="list"
+                    aria-haspopup="listbox"
+                />
+                <ul id="match-dropdown" class="match-dropdown" role="listbox" aria-label="Available matches"></ul>
+            </div>
         </div>
         <p class="stats-note">📊 Score probabilities weighted by ELO ratings — stronger teams score more &amp; concede less</p>
     </div>
@@ -315,31 +325,90 @@ headExtra: |
     { team1: 'France', team2: 'Argentina', stage: 'Final' },
   ];
 
-  document.getElementById('match-stage').addEventListener('change', function(e) {
+  // ── Searchable match dropdown state ──────────────────────────────────────
+  let currentMatches = [];
+  let selectedMatchIdx = null;
+
+  function renderDropdown(filtered) {
+    const list = document.getElementById('match-dropdown');
+    list.innerHTML = '';
+    if (filtered.length === 0) {
+      const li = document.createElement('li');
+      li.textContent = 'No matches found';
+      li.className = 'no-results';
+      list.appendChild(li);
+      return;
+    }
+    filtered.forEach(({ idx, m }) => {
+      const prefix = m.group ? `Group ${m.group}: ` : '';
+      const suffix = m.stage ? ` (${m.stage})` : '';
+      const label  = `${prefix}${m.team1} vs ${m.team2}${suffix}`;
+      const li = document.createElement('li');
+      li.textContent = label;
+      li.dataset.idx = idx;
+      li.setAttribute('role', 'option');
+      li.addEventListener('mousedown', function (e) {
+        e.preventDefault(); // keep focus on input
+        selectMatch(parseInt(this.dataset.idx), label);
+      });
+      list.appendChild(li);
+    });
+  }
+
+  function getFiltered(q) {
+    return currentMatches
+      .map((m, i) => ({ idx: i, m }))
+      .filter(({ m }) => {
+        if (!q) return true;
+        const text = `${m.team1} ${m.team2} ${m.group || ''} ${m.stage || ''}`.toLowerCase();
+        return text.includes(q.toLowerCase());
+      });
+  }
+
+  function selectMatch(idx, label) {
+    selectedMatchIdx = idx;
+    const input = document.getElementById('match-search');
+    input.value = label;
+    input.classList.add('has-selection');
+    document.getElementById('match-dropdown').classList.remove('open');
+    document.getElementById('spinBtn').style.display = 'block';
+  }
+
+  document.getElementById('match-stage').addEventListener('change', function (e) {
     updateMatches(e.target.value);
   });
 
-  document.getElementById('match-picker').addEventListener('change', function(e) {
-    if (e.target.value !== 'default') {
-      document.getElementById('spinBtn').style.display = 'block';
-    }
+  const matchSearchInput = document.getElementById('match-search');
+
+  matchSearchInput.addEventListener('focus', function () {
+    renderDropdown(getFiltered(this.value));
+    document.getElementById('match-dropdown').classList.add('open');
+  });
+
+  matchSearchInput.addEventListener('input', function () {
+    this.classList.remove('has-selection');
+    selectedMatchIdx = null;
+    document.getElementById('spinBtn').style.display = 'none';
+    renderDropdown(getFiltered(this.value));
+    document.getElementById('match-dropdown').classList.add('open');
+  });
+
+  matchSearchInput.addEventListener('blur', function () {
+    // Small delay so mousedown on a list item fires first
+    setTimeout(() => {
+      document.getElementById('match-dropdown').classList.remove('open');
+    }, 160);
   });
 
   document.getElementById('spinBtn').addEventListener('click', predictScore);
 
   function updateMatches(stage) {
-    const matches = stage === 'group' ? groupMatches : knockoutMatches;
-    const select = document.getElementById('match-picker');
-    select.innerHTML = '<option value="default">Choose a matchup...</option>';
-    matches.forEach((m, i) => {
-      const prefix = m.group ? `Group ${m.group}: ` : '';
-      const suffix = m.stage ? ` (${m.stage})` : '';
-      const label = `${prefix}${m.team1} vs ${m.team2}${suffix}`;
-      const opt = document.createElement('option');
-      opt.value = i;
-      opt.textContent = label;
-      select.appendChild(opt);
-    });
+    currentMatches = stage === 'group' ? groupMatches : knockoutMatches;
+    const input = document.getElementById('match-search');
+    input.value = '';
+    input.classList.remove('has-selection');
+    selectedMatchIdx = null;
+    document.getElementById('match-dropdown').classList.remove('open');
     document.getElementById('spinBtn').style.display = 'none';
   }
 
@@ -371,10 +440,8 @@ headExtra: |
   }
 
   async function predictScore() {
-    const stage = document.getElementById('match-stage').value;
-    const matches = stage === 'group' ? groupMatches : knockoutMatches;
-    const matchIdx = parseInt(document.getElementById('match-picker').value);
-    const match = matches[matchIdx];
+    if (selectedMatchIdx === null) return;
+    const match = currentMatches[selectedMatchIdx];
 
     // ELO-weighted Poisson score
     const { scoreA, scoreB, r1, r2 } = generateScore(match.team1, match.team2);
@@ -424,5 +491,5 @@ headExtra: |
   }
 
   // Initialize
-  updateMatches('group');
+  currentMatches = groupMatches;
 </script>
