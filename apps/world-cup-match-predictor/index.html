@@ -61,6 +61,23 @@ headExtra: |
     <button id="spinBtn" class="spin-btn" style="display:none;">⚽ PREDICT THE SCORE!</button>
     <div id="result-message" class="result-message"></div>
 
+    <button id="shareBtn" class="spin-btn share-btn" style="display:none;">📤 SHARE PREDICTION</button>
+    
+    <div id="share-modal" style="display:none;">
+        <div class="share-modal-content">
+            <button class="close-modal" id="close-share-modal" aria-label="Close share modal">&times;</button>
+            <h3>Share Your Prediction</h3>
+            <p style="color: #666; margin-bottom: 10px; font-size: 0.9rem;">Here is your prediction card:</p>
+            <div id="share-preview-container">
+                <img id="sharePreviewImg" src="" alt="Result card preview" />
+            </div>
+            <div class="share-actions">
+                <button id="download-png-btn" class="action-btn">📥 Download PNG</button>
+                <button id="native-share-btn" class="action-btn share-social-btn">🔗 Share / Send...</button>
+            </div>
+        </div>
+    </div>
+
     <section class="seo-content-area">
         <h2>World Cup Match Predictor: FIFA 2026 Score Prediction</h2>
         <div class="seo-grid">
@@ -389,6 +406,7 @@ headExtra: |
     this.classList.remove('has-selection');
     selectedMatchIdx = null;
     document.getElementById('spinBtn').style.display = 'none';
+    document.getElementById('shareBtn').style.display = 'none'; // NEW: Hide share on change
     renderDropdown(getFiltered(this.value));
     document.getElementById('match-dropdown').classList.add('open');
   });
@@ -410,6 +428,7 @@ headExtra: |
     selectedMatchIdx = null;
     document.getElementById('match-dropdown').classList.remove('open');
     document.getElementById('spinBtn').style.display = 'none';
+    document.getElementById('shareBtn').style.display = 'none'; // NEW: Hide share on stage change
   }
 
   function animateScoreSlot(element, finalScore, startDelay) {
@@ -449,6 +468,7 @@ headExtra: |
     const btn = document.getElementById('spinBtn');
     btn.disabled = true;
     btn.textContent = '⚽ Predicting...';
+    document.getElementById('shareBtn').style.display = 'none'; // NEW: Hide while spinning
 
     const scoreAEl = document.getElementById('team-a-score');
     const scoreBEl = document.getElementById('team-b-score');
@@ -488,8 +508,181 @@ headExtra: |
 
     btn.disabled = false;
     btn.textContent = '⚽ PREDICT THE SCORE!';
+    
+    // NEW: Reveal the share button once complete
+    document.getElementById('shareBtn').style.display = 'block';
   }
 
   // Initialize
   currentMatches = groupMatches;
+
+  // ── Native Canvas Image Generation & Share Logic ──────────────────────────────────
+  const shareBtn = document.getElementById('shareBtn');
+  const shareModal = document.getElementById('share-modal');
+  
+  // Rip the modal out of the layout hierarchy to prevent CSS z-index/position traps
+  document.body.appendChild(shareModal);
+  
+  let _shareBlob = null;
+  let _shareText = '';
+
+  function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+    const words = text.split(' ');
+    let line = '', lines = [];
+    for (const w of words) {
+      const test = line ? line + ' ' + w : w;
+      if (ctx.measureText(test).width > maxWidth && line) { lines.push(line); line = w; }
+      else line = test;
+    }
+    if (line) lines.push(line);
+    const startY = y - ((lines.length - 1) * lineHeight) / 2;
+    lines.forEach((l, i) => ctx.fillText(l, x, startY + i * lineHeight));
+  }
+
+  async function generateShareImage() {
+    shareBtn.textContent = '⏳ Generating...';
+    shareBtn.disabled = true;
+    
+    // Ensure fonts are loaded before drawing
+    await document.fonts.ready;
+
+    const teamA = document.getElementById('team-a-name').textContent;
+    const teamB = document.getElementById('team-b-name').textContent;
+    const scoreA = document.getElementById('team-a-score').textContent;
+    const scoreB = document.getElementById('team-b-score').textContent;
+    const note = document.getElementById('prediction-note').textContent;
+
+    _shareText = `World Cup 2026 Prediction: ${teamA} ${scoreA} - ${scoreB} ${teamB}`;
+
+    const W = 1080, H = 1080;
+    const canvas = document.createElement('canvas');
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext('2d');
+
+    // Rounded rectangle helper
+    function rr(x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y); ctx.arcTo(x + w, y, x + w, y + r, r);
+      ctx.lineTo(x + w, y + h - r); ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
+      ctx.lineTo(x + r, y + h); ctx.arcTo(x, y + h, x, y + h - r, r);
+      ctx.lineTo(x, y + r); ctx.arcTo(x, y, x + r, y, r);
+      ctx.closePath();
+    }
+
+    // 1. Draw Background
+    ctx.fillStyle = '#f0f5f2'; // Light subtle green tint
+    ctx.fillRect(0, 0, W, H);
+
+    // Decorative circle accents
+    ctx.beginPath(); ctx.arc(W * 0.9, H * 0.1, 200, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(26, 122, 74, 0.05)'; ctx.fill();
+    ctx.beginPath(); ctx.arc(W * 0.1, H * 0.9, 150, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(26, 122, 74, 0.05)'; ctx.fill();
+
+    // 2. Draw Header
+    ctx.textAlign = 'center';
+    ctx.font = '800 45px system-ui, sans-serif';
+    ctx.fillStyle = '#1a7a4a'; // wc-green
+    ctx.fillText('⚽ WORLD CUP 2026 PREDICTION', W / 2, 140);
+
+    // 3. Draw Team Boxes
+    const boxW = 420, boxH = 420, boxY = 280;
+    const boxAx = 80, boxBx = W - boxW - 80;
+
+    // Box A
+    rr(boxAx, boxY, boxW, boxH, 24);
+    ctx.fillStyle = '#ffffff'; ctx.fill();
+    ctx.lineWidth = 4; ctx.strokeStyle = '#1a7a4a'; ctx.stroke();
+    
+    // Box B
+    rr(boxBx, boxY, boxW, boxH, 24);
+    ctx.fillStyle = '#ffffff'; ctx.fill();
+    ctx.stroke();
+
+    // VS Badge
+    ctx.font = '800 65px system-ui, sans-serif';
+    ctx.fillStyle = '#d4a017'; // wc-gold
+    ctx.fillText('VS', W / 2, boxY + boxH / 2 + 25);
+
+    // 4. Draw Content inside Boxes
+    ctx.fillStyle = '#0d2b1a'; // wc-dark
+    
+    // Team Names
+    ctx.font = '800 48px system-ui, sans-serif';
+    ctx.fillText(teamA, boxAx + boxW / 2, boxY + 100);
+    ctx.fillText(teamB, boxBx + boxW / 2, boxY + 100);
+
+    // Scores
+    ctx.font = '900 180px system-ui, sans-serif';
+    ctx.fillStyle = '#1a7a4a';
+    ctx.fillText(scoreA, boxAx + boxW / 2, boxY + 310);
+    ctx.fillText(scoreB, boxBx + boxW / 2, boxY + 310);
+
+    // 5. Draw Note Text
+    ctx.font = '600 36px system-ui, sans-serif';
+    ctx.fillStyle = '#0d2b1a';
+    wrapText(ctx, note, W / 2, boxY + boxH + 110, 900, 50);
+
+    // 6. Draw Footer Domain
+    ctx.font = '700 32px system-ui, sans-serif';
+    ctx.fillStyle = 'rgba(26, 122, 74, 0.6)';
+    ctx.fillText('dailypick.dev/apps/world-cup-match-predictor/', W / 2, 1020);
+
+    // Restore Button
+    shareBtn.textContent = '📤 SHARE PREDICTION';
+    shareBtn.disabled = false;
+
+    // Show Image in Modal
+    document.getElementById('sharePreviewImg').src = canvas.toDataURL('image/png');
+    shareModal.style.display = 'flex';
+
+    // Store Blob for native sharing
+    canvas.toBlob((blob) => { _shareBlob = blob; }, 'image/png');
+  }
+
+  shareBtn.addEventListener('click', generateShareImage);
+
+  // Close Modal Handlers
+  document.getElementById('close-share-modal').addEventListener('click', () => {
+    shareModal.style.display = 'none';
+  });
+  shareModal.addEventListener('click', (e) => {
+    if (e.target === shareModal) shareModal.style.display = 'none';
+  });
+
+  // Handle Download Button
+  document.getElementById('download-png-btn').addEventListener('click', () => {
+    if (!_shareBlob) return;
+    const teamA = document.getElementById('team-a-name').textContent.replace(/\s+/g, '-');
+    const teamB = document.getElementById('team-b-name').textContent.replace(/\s+/g, '-');
+    
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(_shareBlob);
+    a.download = `FIFA-2026-Prediction-${teamA}-vs-${teamB}.png`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+  });
+
+  // Handle Native Share Button
+  document.getElementById('native-share-btn').addEventListener('click', async () => {
+    if (!_shareBlob) return;
+    
+    const file = new File([_shareBlob], 'prediction.png', { type: 'image/png' });
+    const shareData = {
+      title: 'World Cup 2026 Prediction',
+      text: _shareText + ' - Try it at Daily Pick!',
+      files: [file]
+    };
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        console.error('Share cancelled:', err);
+      }
+    } else {
+      alert('Direct image sharing is not supported on this browser. Use "Download PNG" instead!');
+    }
+  });
 </script>

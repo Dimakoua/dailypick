@@ -202,11 +202,11 @@ body {
   .seo-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .match-info {
     grid-template-columns: 1fr;
   }
-  
+
   .vs {
     order: -1;
     margin-bottom: 10px;
@@ -231,15 +231,37 @@ body {
    ========================================================================== */
 
 @keyframes scoreSlotLand {
-  0%   { transform: scale(1.35); color: var(--wc-gold); text-shadow: 0 0 30px rgba(212, 160, 23, 0.9); }
-  50%  { transform: scale(0.92); }
-  75%  { transform: scale(1.06); }
-  100% { transform: scale(1); color: var(--wc-green); text-shadow: none; }
+  0% {
+    transform: scale(1.35);
+    color: var(--wc-gold);
+    text-shadow: 0 0 30px rgba(212, 160, 23, 0.9);
+  }
+
+  50% {
+    transform: scale(0.92);
+  }
+
+  75% {
+    transform: scale(1.06);
+  }
+
+  100% {
+    transform: scale(1);
+    color: var(--wc-green);
+    text-shadow: none;
+  }
 }
 
 @keyframes noteSlideIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .score.slot-spinning {
@@ -359,4 +381,126 @@ body {
 
 .seo-content-area a {
   color: var(--wc-green);
+}
+
+/* ==========================================================================
+   Share Modal Styles
+   ========================================================================== */
+
+.share-btn {
+  background: linear-gradient(to bottom right, var(--brand-accent), var(--brand-accent-strong));
+  margin-top: 10px;
+}
+
+#share-modal {
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(20, 35, 55, 0.78) !important;
+  backdrop-filter: blur(6px);
+  z-index: 999999 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.share-modal-content {
+  background: var(--brand-surface);
+  padding: 30px;
+  border-radius: var(--radius-lg, 16px);
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  position: relative;
+  box-shadow: var(--brand-shadow, 0 15px 50px rgba(0, 0, 0, 0.18));
+  font-family: var(--brand-font-family, system-ui, sans-serif);
+  border: 1px solid var(--brand-border);
+}
+
+.share-modal-content h3 {
+  margin-top: 0;
+  font-size: 1.6rem;
+  color: var(--brand-heading);
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  font-size: 1.5rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--brand-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.close-modal:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: var(--brand-heading);
+}
+
+#share-preview-container {
+  margin: 15px 0 25px;
+  background: color-mix(in srgb, var(--brand-surface) 96%, var(--brand-background));
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px dashed rgba(52, 152, 219, 0.2);
+  display: flex;
+  justify-content: center;
+  min-height: 120px;
+}
+
+#share-preview-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.share-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--brand-font-family, system-ui, sans-serif);
+  color: var(--brand-accent-contrast-text);
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--brand-hover-shadow, 0 6px 15px rgba(0, 0, 0, 0.12));
+}
+
+#download-png-btn {
+  background: var(--brand-accent-strong);
+  color: var(--brand-accent-contrast-text);
+}
+
+.share-social-btn {
+  background: var(--brand-accent);
+  color: var(--brand-accent-contrast-text);
 }
