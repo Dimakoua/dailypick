@@ -1,0 +1,109 @@
+---
+layout: base_app.njk
+title: "World Cup Trivia Challenge – Test Your FIFA Football Knowledge | Daily Pick"
+description: "Think you're a football expert? Take the World Cup Trivia Challenge! Test your knowledge on FIFA history, records, legendary players, and iconic tournament moments."
+keywords: "World Cup trivia, football quiz, FIFA World Cup quiz, soccer trivia questions, World Cup history quiz, football facts challenge, World Cup records"
+canonical: "https://dailypick.dev/apps/world-cup-trivia-challenge/"
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="game" class="main-container">
+    <header class="page-hero glass-card">
+        <p class="hero-eyebrow">20 questions. One champion.</p>
+        <h1>⚽ World Cup Trivia Challenge</h1>
+        <p>From Pele's magic to Messi's glory, and decades of legendary goals. How well do you really know the beautiful game's biggest stage? Step up to the spot and take the quiz.</p>
+    </header>
+
+    <div id="trivia-container" class="glass-card">
+        <div id="start-screen" class="screen">
+            <div class="trophy-icon">🏆</div>
+            <h2>Ready to play?</h2>
+            <p>You'll be asked 10 random questions from our World Cup vault. Can you get a perfect score?</p>
+            <button id="start-btn" class="primary-btn">START CHALLENGE</button>
+        </div>
+
+        <div id="question-screen" class="screen" hidden>
+            <div class="quiz-header">
+                <span id="progress-text">Question 1 of 10</span>
+                <div class="progress-bar-container">
+                    <div id="progress-bar" class="progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+            <h2 id="question-text">Question loading...</h2>
+            <div id="options-container" class="options-grid">
+                <!-- Options will be injected here -->
+            </div>
+            <div id="feedback" class="feedback-msg" hidden></div>
+        </div>
+
+        <div id="result-screen" class="screen" hidden>
+            <div class="result-icon" id="result-icon">🏅</div>
+            <h2 id="result-title">Challenge Complete!</h2>
+            <p id="result-text">You scored 8 out of 10.</p>
+            <div class="result-message" id="result-message">Expert! You really know your football.</div>
+            <button id="restart-btn" class="secondary-btn">TRY AGAIN</button>
+        </div>
+    </div>
+
+    <section class="seo-content-area">
+        <h2>World Cup Trivia: The Ultimate Football Quiz</h2>
+        <div class="seo-grid">
+            <div>
+                <p>The World Cup Trivia Challenge is a fast-paced quiz designed for football fans who want to test their knowledge of the world's most-watched sporting event. Covering everything from the inaugural 1930 tournament in Uruguay to the modern era of global superstars, it's the perfect way to pass time during half-time or test your expertise.</p>
+            </div>
+            <div>
+                <h3>What's in the vault?</h3>
+                <ul>
+                    <li><strong>Historical Milestones:</strong> Records from the 1930s to today.</li>
+                    <li><strong>Legendary Players:</strong> Questions on Pelé, Maradona, Messi, and more.</li>
+                    <li><strong>Tournament Firsts:</strong> Iconic moments and groundbreaking achievements.</li>
+                    <li><strong>Statistical Records:</strong> Top scorers, clean sheets, and winning nations.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="seo-toc">
+            <h3>Table of Contents</h3>
+            <ol>
+                <li><a href="#how-to-play">How to Play the World Cup Quiz</a></li>
+                <li><a href="#history-trivia">Classic World Cup History</a></li>
+                <li><a href="#player-records">Player Records & Legends</a></li>
+                <li><a href="#iconic-moments">Iconic Tournament Moments</a></li>
+                <li><a href="#trivia-benefits">Why Play Football Trivia?</a></li>
+                <li><a href="#share-score">Challenge Your Friends</a></li>
+            </ol>
+        </div>
+
+        <section id="how-to-play">
+            <h3>1. How to Play the World Cup Quiz</h3>
+            <p>Simply hit 'Start Challenge' to begin. You'll be presented with 10 random multiple-choice questions. Each question has four possible answers, but only one is correct. Your progress is tracked at the top of the card. Once you finish all 10 questions, you'll see your final score and a rank based on your performance.</p>
+        </section>
+
+        <section id="history-trivia">
+            <h3>2. Classic World Cup History</h3>
+            <p>Did you know the first World Cup was held in 1930? Uruguay not only hosted it but won it, beating Argentina in the final. Since then, the tournament has grown into a global phenomenon. Brazil remains the most successful nation with 5 titles, followed closely by Germany and Italy with 4 each.</p>
+        </section>
+
+        <section id="player-records">
+            <h3>3. Player Records & Legends</h3>
+            <p>The World Cup is where legends are made. Miroslav Klose holds the record for the most goals in history (16), while Just Fontaine's 13 goals in a single tournament (1958) remains an untouched record. Pelé is still the only player to have won three separate World Cup trophies (1958, 1962, 1970).</p>
+        </section>
+
+        <section id="iconic-moments">
+            <h3>4. Iconic Tournament Moments</h3>
+            <p>From the 'Hand of God' in 1986 to the dramatic 2022 final in Qatar, the World Cup has provided some of the most memorable moments in sporting history. Whether it's a underdog story or a dominant performance by a powerhouse nation, every tournament adds a new chapter to the history books of football.</p>
+        </section>
+
+        <section id="trivia-benefits">
+            <h3>5. Why Play Football Trivia?</h3>
+            <p>Trivia is a great way to improve your memory and learn surprising facts about your favourite sport. Whether you're a casual viewer or a die-hard ultras fan, knowing the history of the game adds depth to every match you watch. Plus, it's a great way to settle debates with friends about who the real football expert is.</p>
+        </section>
+
+        <section id="share-score">
+            <h3>6. Challenge Your Friends</h3>
+            <p>Got a perfect score? Take a screenshot and share it with your group chat! The World Cup Trivia Challenge is designed to be mobile-friendly, so you can play it anywhere — at the stadium, in the pub, or on your commute. See if your friends can beat your score or if they need to brush up on their football history.</p>
+        </section>
+    </section>
+</main>
+
+<script src="./script.js"></script>

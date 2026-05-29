@@ -912,5 +912,14 @@ module.exports = [
     footerGroup: "Games",
     emoji: "⚽",
     description: "Predict FIFA World Cup 2026 match scores randomly. Choose a group-stage or knockout match and spin for a score prediction."
+  },
+  {
+    id: "world-cup-trivia-challenge",
+    name: "World Cup Trivia Challenge",
+    path: "/apps/world-cup-trivia-challenge/",
+    category: "fifa-2026",
+    footerGroup: "Games",
+    emoji: "🏆",
+    description: "Test your football knowledge with the World Cup Trivia Challenge! From history and legends to 2026 facts, see if you can get a perfect score."
   }
 ];
