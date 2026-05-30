@@ -1,0 +1,104 @@
+---
+layout: base_app.njk
+title: "World Cup Mascot Wheel – Random FIFA Mascot Picker & Facts | Daily Pick"
+description: "Spin the wheel to discover every FIFA World Cup mascot from 1966 to 2022. Learn fun facts about World Cup Willie, Footix, Zakumi, La'eeb, and more."
+keywords: "World Cup mascot wheel, FIFA mascots list, random World Cup mascot, World Cup Willie, Footix, Zakumi, Fuleco, La'eeb, football mascot history"
+canonical: "https://dailypick.dev/apps/world-cup-mascot-wheel/"
+localBrandConfig: /apps/wheel/local-brand-config.js
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+    <header class="page-hero glass-card">
+        <p class="hero-eyebrow">From Willie to La'eeb. One spin.</p>
+        <h1>🦁 World Cup Mascot Wheel</h1>
+        <p>Since 1966, every World Cup has had its own unique face. From lions and peppers to armadillos and flying keffiyehs — spin the wheel to meet a legend and learn their story.</p>
+    </header>
+
+    <div id="wheel-container">
+        <div id="indicator"></div>
+        <canvas height="425" id="wheel" width="425"></canvas>
+    </div>
+
+    <div class="preset-btns">
+        <button class="preset-btn" data-items="World Cup Willie,Juanito,Tip and Tap,Gauchito,Naranjito,Pique,Ciao,Striker,Footix,The Spheriks,Goleo VI,Zakumi,Fuleco,Zabivaka,La'eeb">🌀 All Mascots</button>
+        <button class="preset-btn" data-items="World Cup Willie,Juanito,Tip and Tap,Gauchito,Naranjito,Pique,Ciao,Striker,Footix">📺 Classic Eras (1966-1998)</button>
+        <button class="preset-btn" data-items="The Spheriks,Goleo VI,Zakumi,Fuleco,Zabivaka,La'eeb">🚀 Modern Era (2002-2022)</button>
+    </div>
+
+    <button id="spinBtn">🌀 SPIN THE WHEEL!</button>
+    <div id="winner" class="winner-display"></div>
+
+    <section class="seo-content-area">
+        <h2>FIFA World Cup Mascots: A History of Icons</h2>
+        <div class="seo-grid">
+            <div>
+                <p>The World Cup Mascot Wheel is a nostalgic trip through football history. Starting with World Cup Willie in 1966, mascots have become a vital part of the tournament's identity, representing the host nation's culture, flora, or fauna. Spin the wheel to randomly pick a mascot and uncover the fun facts behind their creation.</p>
+            </div>
+            <div>
+                <h3>Iconic Mascots you'll find</h3>
+                <ul>
+                    <li><strong>World Cup Willie (1966):</strong> The first-ever mascot, a lion representing the UK.</li>
+                    <li><strong>Footix (1998):</strong> The blue rooster that became a symbol of French glory.</li>
+                    <li><strong>Fuleco (2014):</strong> A three-banded armadillo highlighting Brazil's biodiversity.</li>
+                    <li><strong>La'eeb (2022):</strong> The ethereal, flying mascot from Qatar.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="seo-toc">
+            <h3>Table of Contents</h3>
+            <ol>
+                <li><a href="#what-is-mascot-wheel">What is the World Cup Mascot Wheel?</a></li>
+                <li><a href="#history-of-mascots">A Brief History of FIFA Mascots</a></li>
+                <li><a href="#list-of-mascots">Complete List of World Cup Mascots</a></li>
+                <li><a href="#fun-facts">Mascot Fun Facts</a></li>
+                <li><a href="#why-mascots-matter">Why Mascots Matter</a></li>
+            </ol>
+        </div>
+
+        <section id="what-is-mascot-wheel">
+            <h3>1. What is the World Cup Mascot Wheel?</h3>
+            <p>The World Cup Mascot Wheel is an interactive tool that lets you randomly select any of the 15 official FIFA World Cup mascots. Whether you're a trivia buff looking for your next fact or a designer studying sports branding, the wheel provides a fun, visual way to explore these historical characters.</p>
+        </section>
+
+        <section id="history-of-mascots">
+            <h3>2. A Brief History of FIFA Mascots</h3>
+            <p>Official mascots were introduced in 1966 to help market the tournament to younger audiences and provide a friendly face for the event. Early mascots were often human boys (Juanito, Gauchito), but the trend eventually shifted towards animals and even abstract computer-generated creatures like the Spheriks in 2002.</p>
+        </section>
+
+        <section id="list-of-mascots">
+            <h3>3. Complete List of World Cup Mascots</h3>
+            <ul>
+                <li><strong>1966:</strong> World Cup Willie (Lion)</li>
+                <li><strong>1970:</strong> Juanito (Boy)</li>
+                <li><strong>1974:</strong> Tip and Tap (Two boys)</li>
+                <li><strong>1978:</strong> Gauchito (Boy)</li>
+                <li><strong>1982:</strong> Naranjito (Orange)</li>
+                <li><strong>1986:</strong> Pique (Jalapeño pepper)</li>
+                <li><strong>1990:</strong> Ciao (Stick figure)</li>
+                <li><strong>1994:</strong> Striker (Dog)</li>
+                <li><strong>1998:</strong> Footix (Rooster)</li>
+                <li><strong>2002:</strong> The Spheriks (Ato, Kaz, and Nik)</li>
+                <li><strong>2006:</strong> Goleo VI (Lion)</li>
+                <li><strong>2010:</strong> Zakumi (Leopard)</li>
+                <li><strong>2014:</strong> Fuleco (Armadillo)</li>
+                <li><strong>2018:</strong> Zabivaka (Wolf)</li>
+                <li><strong>2022:</strong> La'eeb (Keffiyeh)</li>
+            </ul>
+        </section>
+
+        <section id="fun-facts">
+            <h3>4. Mascot Fun Facts</h3>
+            <p>Did you know that <strong>Naranjito</strong> (1982) was the first mascot that wasn't a person or a lion? It was an orange! Or that <strong>Pique</strong> (1986) wore a sombrero so large it became a secondary icon of the tournament? Each mascot is a time capsule of the era it was created in.</p>
+        </section>
+
+        <section id="why-mascots-matter">
+            <h3>5. Why Mascots Matter</h3>
+            <p>Mascots bridge the gap between sport and culture. They are used in merchandise, television spots, and stadium appearances to create a festive atmosphere. For many fans, their first memory of a World Cup isn't a goal or a tackle, but the friendly face of the mascot that welcomed them to the tournament.</p>
+        </section>
+    </section>
+</main>
+
+<script src="/assets/js/wheel-engine.js"></script>
+<script src="./script.js"></script>

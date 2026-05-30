@@ -949,5 +949,14 @@
     "footerGroup": "Games",
     "emoji": "🏆",
     "description": "Discover which FIFA World Cup legend matches your playstyle. Are you a clinical finisher like Pelé, a creative genius like Messi, or a tactical leader like Beckenbauer?"
+  },
+  {
+    "id": "world-cup-mascot-wheel",
+    "name": "World Cup Mascot Wheel",
+    "path": "/apps/world-cup-mascot-wheel/",
+    "category": "fifa-2026",
+    "footerGroup": "Games",
+    "emoji": "🦁",
+    "description": "Spin the wheel to discover every FIFA World Cup mascot from 1966 to 2022. Learn fun facts about World Cup Willie, Footix, Zakumi, La'eeb, and more."
   }
 ]

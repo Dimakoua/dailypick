@@ -1,0 +1,161 @@
+:root {
+  --brand-accent: #3498db;
+  --wc-green: #2ecc71;
+}
+
+.main-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#wheel-container {
+  position: relative;
+  width: 425px;
+  height: 425px;
+  margin: 2rem auto;
+}
+
+#indicator {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 35px solid var(--brand-accent);
+  z-index: 10;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+}
+
+#wheel {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: 0 0 0 10px white, 0 12px 40px rgba(0,0,0,0.15);
+}
+
+.preset-btns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 800px;
+}
+
+.preset-btn {
+  padding: 10px 18px;
+  border-radius: 99px;
+  border: 2px solid #eee;
+  background: white;
+  color: #444;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.preset-btn:hover {
+  border-color: var(--brand-accent);
+  color: var(--brand-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+#spinBtn {
+  display: block;
+  margin: 1rem auto 2rem;
+  padding: 1.2rem 3rem;
+  font-size: 1.4rem;
+  font-weight: 800;
+  background: var(--brand-accent);
+  color: white;
+  border: none;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+#spinBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+}
+
+#spinBtn:active {
+  transform: translateY(1px);
+}
+
+.winner-display {
+  text-align: center;
+  margin: 2rem 0;
+  min-height: 150px;
+}
+
+.mascot-result-card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mascot-image {
+  max-width: 200px;
+  max-height: 200px;
+  object-fit: contain;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.mascot-name {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--brand-accent);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.mascot-year {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.mascot-fact {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: #444;
+}
+
+@media (max-width: 500px) {
+  #wheel-container {
+    width: 320px;
+    height: 320px;
+  }
+  #wheel {
+    width: 320px;
+    height: 320px;
+  }
+}
