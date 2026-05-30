@@ -79,12 +79,6 @@ const mascotData = {
 
 const mascotList = Object.keys(mascotData);
 
-function createMascotPlaceholder(name) {
-    const safeName = String(name).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="100%" height="100%" rx="32" fill="#eef3f7"/><text x="50%" y="45%" text-anchor="middle" dominant-baseline="middle" font-family="Inter, system-ui, sans-serif" font-size="34" font-weight="700" fill="#34495e">${safeName}</text><text x="50%" y="60%" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="16" fill="#7f8c8d">Mascot art unavailable</text></svg>`;
-    return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
-}
-
 FoodWheelEngine.init({
     canvasSelector: "#wheel",
     spinButtonSelector: "#spinBtn",
@@ -94,10 +88,13 @@ FoodWheelEngine.init({
     enableConfetti: true,
     resultFormatter: function (selectedItem) {
         const mascot = mascotData[selectedItem];
-        const imageUrl = mascot.image || createMascotPlaceholder(selectedItem);
+        const imageUrl = mascot.image;
+        const imageHtml = imageUrl
+            ? `<img src="${imageUrl}" alt="${selectedItem}" class="mascot-image" loading="lazy" onerror="this.style.display='none'">`
+            : '';
         return `
             <div class="mascot-result-card">
-                <img src="${imageUrl}" alt="${selectedItem}" class="mascot-image" loading="lazy" onerror="this.onerror=null;this.src='${createMascotPlaceholder(selectedItem)}'">
+                ${imageHtml}
                 <span class="mascot-name">${selectedItem}</span>
                 <span class="mascot-year">${mascot.year}</span>
                 <p class="mascot-fact">${mascot.fact}</p>
