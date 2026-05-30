@@ -1,0 +1,105 @@
+---
+layout: base_app.njk
+title: "Which World Cup Legend Are You? – Football Personality Quiz | Daily Pick"
+description: "Discover which FIFA World Cup legend matches your playstyle. Are you a clinical finisher like Pelé, a creative genius like Messi, or a tactical leader like Beckenbauer?"
+keywords: "World Cup legend quiz, football personality quiz, which soccer player am I, FIFA World Cup legends, Messi vs Ronaldo quiz, football playstyle quiz"
+canonical: "https://dailypick.dev/apps/which-world-cup-legend-are-you/"
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="game" class="main-container">
+    <header class="page-hero glass-card">
+        <p class="hero-eyebrow">7 questions. One legend.</p>
+        <h1>🏆 Which World Cup Legend Are You?</h1>
+        <p>Your attitude on the pitch says everything about your legacy. Answer these personality questions to find out which iconic World Cup hero matches your style.</p>
+    </header>
+
+    <div id="quiz-container" class="glass-card">
+        <div id="start-screen" class="screen">
+            <div class="legend-icons">🔟 🧤 ⚽ 🛡️</div>
+            <h2>Find Your Football Alter Ego</h2>
+            <p>Are you the heart of the team, a silent assassin, or the flashy superstar? Let's find out.</p>
+            <button id="start-btn" class="primary-btn">START THE QUIZ</button>
+        </div>
+
+        <div id="question-screen" class="screen" hidden>
+            <div class="quiz-header">
+                <span id="progress-text">Question 1 of 7</span>
+                <div class="progress-bar-container">
+                    <div id="progress-bar" class="progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+            <h2 id="question-text">Question loading...</h2>
+            <div id="options-container" class="options-list">
+                <!-- Options will be injected here -->
+            </div>
+        </div>
+
+        <div id="result-screen" class="screen" hidden>
+            <div class="result-header">
+                <p class="result-eyebrow">Your Legend Match is...</p>
+                <h2 id="legend-name">Legend Name</h2>
+            </div>
+            <div class="result-card">
+                <div class="legend-emoji" id="legend-emoji">⚽</div>
+                <div class="legend-description">
+                    <p id="legend-bio">Legend biography goes here.</p>
+                    <div class="trait-tags" id="trait-tags">
+                        <!-- Traits will be injected here -->
+                    </div>
+                </div>
+            </div>
+            <button id="restart-btn" class="secondary-btn">TAKE IT AGAIN</button>
+        </div>
+    </div>
+
+    <section class="seo-content-area">
+        <h2>Discover Your World Cup Identity</h2>
+        <div class="seo-grid">
+            <div>
+                <p>The World Cup is the ultimate stage where personalities collide. Some players lead through raw emotion, others through tactical perfection, and a rare few through pure, unadulterated magic. Our "Which World Cup Legend Are You?" quiz analyzes your preferences—from how you handle pressure to your role in a team—to find your historical counterpart.</p>
+            </div>
+            <div>
+                <h3>The Legends in our Pool</h3>
+                <ul>
+                    <li><strong>The Magicians:</strong> Pelé, Maradona, and Messi.</li>
+                    <li><strong>The Commanders:</strong> Franz Beckenbauer and Zinedine Zidane.</li>
+                    <li><strong>The Machines:</strong> Cristiano Ronaldo and Gerd Müller.</li>
+                    <li><strong>The Innovators:</strong> Johan Cruyff.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="seo-toc">
+            <h3>Table of Contents</h3>
+            <ol>
+                <li><a href="#how-it-works">How the Personality Quiz Works</a></li>
+                <li><a href="#the-legends">Meet the World Cup Legends</a></li>
+                <li><a href="#playstyles">Understanding Different Playstyles</a></li>
+                <li><a href="#why-take-quiz">Why Fans Love Personality Quizzes</a></li>
+            </ol>
+        </div>
+
+        <section id="how-it-works">
+            <h3>1. How the Personality Quiz Works</h3>
+            <p>Unlike a trivia quiz, there are no wrong answers here. Each choice you make is weighted toward a specific set of traits: Leadership, Creativity, Clinicality, or Technical Skill. By the end of the seven questions, our algorithm calculates which legendary player most closely mirrors your footballing philosophy.</p>
+        </section>
+
+        <section id="the-legends">
+            <h3>2. Meet the World Cup Legends</h3>
+            <p>From Pelé's three trophies to Messi's 2022 crowning moment, every legend has a unique story. Franz Beckenbauer redefined the 'Libero' role, while Johan Cruyff brought 'Total Football' to the world stage. Whether you're a goal machine or a midfield general, there's a legend for every type of player.</p>
+        </section>
+
+        <section id="playstyles">
+            <h3>3. Understanding Different Playstyles</h3>
+            <p>In modern football, roles are more fluid, but the core archetypes remain. The 'number 10' is the creative hub, the 'poacher' lives for the box, and the 'anchor' provides the stability. This quiz helps you understand which of these iconic roles fits your natural instincts.</p>
+        </section>
+
+        <section id="why-take-quiz">
+            <h3>4. Why Fans Love Personality Quizzes</h3>
+            <p>Football is as much about character as it is about skill. Fans love to see themselves in their idols. Are you as disciplined as Ronaldo? As cool-headed as Zidane? Taking this quiz is a fun way to engage with the history of the game while learning a little more about your own "football DNA."</p>
+        </section>
+    </section>
+</main>
+
+<script src="./script.js"></script>

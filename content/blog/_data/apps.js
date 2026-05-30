@@ -921,5 +921,14 @@ module.exports = [
     footerGroup: "Games",
     emoji: "🏆",
     description: "Test your football knowledge with the World Cup Trivia Challenge! From history and legends to 2026 facts, see if you can get a perfect score."
+  },
+  {
+    id: "which-world-cup-legend-are-you",
+    name: "Which World Cup Legend Are You?",
+    path: "/apps/which-world-cup-legend-are-you/",
+    category: "fifa-2026",
+    footerGroup: "Games",
+    emoji: "🏆",
+    description: "Discover which FIFA World Cup legend matches your playstyle. Are you a clinical finisher like Pelé, a creative genius like Messi, or a tactical leader like Beckenbauer?"
   }
 ];
