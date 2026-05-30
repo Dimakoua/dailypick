@@ -872,7 +872,7 @@ module.exports = [
     id: "world-cup-team-wheel",
     name: "World Cup Team Wheel",
     path: "/apps/world-cup-team-wheel/",
-    category: "games",
+    category: "fifa-2026",
     footerGroup: "Games",
     emoji: "⚽",
     description: "Spin the wheel for a random FIFA World Cup 2026 team — all 48 nations or filter by UEFA, CONMEBOL, CAF, AFC, CONCACAF, or Title Contenders."
