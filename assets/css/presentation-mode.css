@@ -163,8 +163,9 @@
     margin-bottom: 0;
 }
 
-:root.presentation-mode .patchinko-page .page-hero {
-    display: none;
+:root.presentation-mode .patchinko-page .page-hero,
+:root.presentation-mode .page-hero.glass-card {
+    display: none !important;
 }
 
 :root.presentation-mode h1 {
