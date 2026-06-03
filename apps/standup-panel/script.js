@@ -1,19 +1,76 @@
 /**
  * Daily Stand-up Panel
- * Integrates: Wheel (wheel-engine.js) + Timer + Queue (standup-data events) + Stats (standup-stats.js)
+ * Pluggable game architecture: 6 speaker-selection games
+ * Inline: Wheel (FoodWheelEngine canvas)
+ *Embedded iframes: Speedway, Trap!, Falling Letters, Gravity Drift, Patchinko
+ *   — each original game loads with ?embed=1, forwards events via postMessage
+ * Integrates: Game Engine + Timer + Queue + Stats
  */
 (function () {
   'use strict';
 
   /* ------------------------------------------------------------------ */
-  /*  State                                                              */
+  /*  Constants                                                          */
   /* ------------------------------------------------------------------ */
   var DEFAULT_NAMES = ['Avery', 'Mira', 'Noah', 'Priya', 'Sofia', 'Leo', 'Jamal', 'Lena', 'Mason', 'Riya', 'Carlos', 'Zoe', 'Ibrahim', 'Nina', 'Elena', 'Theo'];
   var STORAGE_KEY = 'namesList';
+  var GAME_STORAGE_KEY = 'sup_game_mode';
 
+  var GAMES = {
+    wheel: {
+      id: 'wheel',
+      label: '🎡 Wheel',
+      description: 'Spin the wheel to pick speakers one at a time',
+      inline: true,
+      url: null
+    },
+    speedway: {
+      id: 'speedway',
+      label: '🐢 Speedway',
+      description: 'Turtle race — the original Speedway game',
+      inline: false,
+      url: '/apps/speedway/?embed=1'
+    },
+    trap: {
+      id: 'trap',
+      label: '🎯 Trap!',
+      description: 'A strategy game — catch the next speaker',
+      inline: false,
+      url: '/apps/trap/?embed=1'
+    },
+    letters: {
+      id: 'letters',
+      label: '🕹️ Falling Letters',
+      description: 'Pinball letter-matching name picker',
+      inline: false,
+      url: '/apps/letters/?embed=1'
+    },
+    gravity: {
+      id: 'gravity',
+      label: '🚀 Gravity Drift',
+      description: 'Space trajectory challenge',
+      inline: false,
+      url: '/apps/gravity-drift/?embed=1'
+    },
+    patchinko: {
+      id: 'patchinko',
+      label: '🎳 Patchinko',
+      description: 'Pachinko drop board for stand-up order',
+      inline: false,
+      url: '/apps/patchinko-machine/?embed=1'
+    }
+  };
+
+  /* ------------------------------------------------------------------ */
+  /*  State                                                              */
+  /* ------------------------------------------------------------------ */
   var roster = [];
   var completedOrder = [];
   var sessionStartTime = null;
+  var currentGameId = 'wheel';
+  var wheelEngine = null;
+  var iframeReady = false;
+  var wheelInitRetryCount = 0;
 
   // Timer state
   var timerInterval = null;
@@ -27,6 +84,11 @@
   var $spinBtn = document.getElementById('supSpinBtn');
   var $winner = document.getElementById('supWinner');
   var $resetBtn = document.getElementById('supResetBtn');
+  var $gameBtns = document.querySelectorAll('.sup-game-btn');
+  var $wheelCard = document.querySelector('.sup-wheel-card');
+  var $wheelSection = document.getElementById('supWheelSection');
+  var $iframeSection = document.getElementById('supIframeSection');
+  var $gameFrame = document.getElementById('supGameFrame');
 
   var $timerDisplay = document.getElementById('supTimerDisplay');
   var $timerMin = document.getElementById('supTimerMin');
@@ -39,8 +101,6 @@
 
   var $currentSpeaker = document.getElementById('supCurrentSpeaker');
   var $upcomingList = document.getElementById('supUpcomingList');
-  var $completedList = document.getElementById('supCompletedList');
-  var $completedCount = document.getElementById('supCompletedCount');
 
   var $statStreak = document.getElementById('supStatStreak');
   var $statSessions = document.getElementById('supStatSessions');
@@ -48,6 +108,7 @@
   var $statThisMonth = document.getElementById('supStatThisMonth');
   var $recentSpeakers = document.getElementById('supRecentSpeakers');
   var $clearStatsBtn = document.getElementById('supClearStatsBtn');
+  var $nextBtn = document.getElementById('supNextBtn');
 
   /* ------------------------------------------------------------------ */
   /*  Helpers                                                            */
@@ -74,78 +135,100 @@
     return typeof value === 'string' ? value.trim().toLowerCase() : '';
   }
 
+  function loadSavedGame() {
+    try {
+      var saved = localStorage.getItem(GAME_STORAGE_KEY);
+      if (saved && GAMES[saved]) return saved;
+    } catch (e) { /* ignore */ }
+    return 'wheel';
+  }
+
+  function saveGameMode(mode) {
+    try {
+      localStorage.setItem(GAME_STORAGE_KEY, mode);
+    } catch (e) { /* ignore */ }
+  }
+
   /* ------------------------------------------------------------------ */
   /*  Queue logic                                                        */
   /* ------------------------------------------------------------------ */
-  function remainingSpeakers() {
-    var completedKeys = completedOrder.map(function (n) { return normalizeName(n); });
-    return roster.filter(function (name) {
-      return completedKeys.indexOf(normalizeName(name)) === -1;
-    });
-  }
-
   function renderQueue() {
-    var remaining = remainingSpeakers();
-    var current = remaining.length > 0 ? null : null;
-    // Current is the last picked (most recent spin winner that hasn't been completed)
-    // For simplicity: the first remaining is "current" after a spin
-    if (remaining.length > 0 && completedOrder.length > 0) {
-      // The most recently spun person is the one at the front of remaining
-      // Actually, let's track current separately
-    }
+    var currentName = window.__supCurrentSpeaker || null;
+    var gameQueue = window.__supGameQueue || null; // full ordered list from the game
 
-    // Re-derive: current is the last person picked by the wheel (if not completed)
-    var currentName = null;
-    if (window.__supCurrentSpeaker && remaining.indexOf(window.__supCurrentSpeaker) !== -1) {
-      currentName = window.__supCurrentSpeaker;
+    // Upcoming = remaining entries from the game's order after the current speaker
+    var upcoming;
+    if (gameQueue && gameQueue.length) {
+      var idx = gameQueue.indexOf(currentName);
+      if (idx >= 0) {
+        upcoming = gameQueue.slice(idx + 1);
+      } else {
+        // current speaker not in game queue — show full queue as upcoming
+        upcoming = gameQueue.slice();
+      }
+    } else {
+      // No game queue (e.g. wheel mode) — show roster minus current
+      upcoming = roster.filter(function (n) { return n !== currentName; });
     }
 
     if (currentName) {
       $currentSpeaker.textContent = currentName;
       $currentSpeaker.dataset.empty = 'false';
-    } else if (completedOrder.length === 0) {
-      $currentSpeaker.textContent = 'Spin the wheel to pick the first speaker';
-      $currentSpeaker.dataset.empty = 'true';
-    } else if (remaining.length === 0) {
-      $currentSpeaker.textContent = '✅ Everyone has spoken!';
-      $currentSpeaker.dataset.empty = 'false';
     } else {
-      $currentSpeaker.textContent = 'Spin again for the next speaker';
+      $currentSpeaker.textContent = 'Select the next speaker';
       $currentSpeaker.dataset.empty = 'true';
     }
 
-    // Upcoming list
     $upcomingList.innerHTML = '';
-    var upcoming = currentName ? remaining.filter(function (n) { return n !== currentName; }) : remaining;
-    upcoming.forEach(function (name) {
+    upcoming.forEach(function (name, i) {
       var li = document.createElement('li');
-      li.textContent = name;
+      li.textContent = (i + 1) + '. ' + name;
       $upcomingList.appendChild(li);
     });
 
-    // Completed list
-    $completedList.innerHTML = '';
-    completedOrder.forEach(function (name) {
-      var li = document.createElement('li');
-      li.textContent = name;
-      $completedList.appendChild(li);
-    });
-    $completedCount.textContent = '(' + completedOrder.length + ')';
+    // Enable Next button only when there is a current speaker and upcoming entries
+    var hasNext = !!(currentName && upcoming && upcoming.length);
+    $nextBtn.disabled = !hasNext;
+  }
+
+  function advanceQueue() {
+    var gameQueue = window.__supGameQueue;
+    var currentName = window.__supCurrentSpeaker;
+    if (!gameQueue || !gameQueue.length || !currentName) return;
+
+    var idx = gameQueue.indexOf(currentName);
+    if (idx < 0 || idx + 1 >= gameQueue.length) return;
+
+    window.__supCurrentSpeaker = gameQueue[idx + 1];
+    renderQueue();
+    emitQueueEvents();
   }
 
   function emitQueueEvents() {
-    var detail = {
-      source: 'standup-panel',
-      participants: roster,
-      completed: completedOrder
-    };
-    window.dispatchEvent(new CustomEvent('standup:queue', { detail: detail }));
+    window.dispatchEvent(new CustomEvent('standup:queue', {
+      detail: {
+        source: 'standup-panel',
+        participants: roster,
+        current: window.__supCurrentSpeaker
+      }
+    }));
   }
 
   function emitQueueReset() {
     window.dispatchEvent(new CustomEvent('standup:queue-reset', {
       detail: { source: 'standup-panel', participants: roster }
     }));
+  }
+
+  /* ------------------------------------------------------------------ */
+  /*  Process incoming game events (from wheel or iframe postMessage)    */
+  /* ------------------------------------------------------------------ */
+  function handleGameResult(name) {
+    window.__supCurrentSpeaker = name;
+    // Wheel picks one at a time — no full order, so clear any prior game queue
+    window.__supGameQueue = null;
+    renderQueue();
+    emitQueueEvents();
   }
 
   /* ------------------------------------------------------------------ */
@@ -164,7 +247,6 @@
     updateTimerDisplay();
     $timerStatus.textContent = '';
 
-    // Update preset buttons
     $presetBtns.forEach(function (btn) {
       btn.classList.toggle('sup-preset-btn--active', parseInt(btn.dataset.seconds, 10) === seconds);
     });
@@ -172,9 +254,7 @@
 
   function startTimer() {
     if (timerRunning) return;
-    if (timerRemaining <= 0) {
-      syncTimerFromInputs();
-    }
+    if (timerRemaining <= 0) syncTimerFromInputs();
     if (timerRemaining <= 0) {
       $timerStatus.textContent = 'Set a duration first.';
       return;
@@ -206,9 +286,7 @@
     timerRunning = false;
     $timerStartBtn.disabled = false;
     $timerPauseBtn.disabled = true;
-    if (!completed) {
-      $timerStatus.textContent = 'Paused.';
-    }
+    if (!completed) $timerStatus.textContent = 'Paused.';
   }
 
   function resetTimer() {
@@ -253,26 +331,18 @@
   /* ------------------------------------------------------------------ */
   function renderStats() {
     if (!window.standupStats) return;
-
     var stats = window.standupStats;
 
-    // Streak
-    var streak = stats.computeStreak();
-    $statStreak.textContent = streak;
+    $statStreak.textContent = stats.computeStreak();
 
-    // Total sessions
     var sessions = stats.loadSessions();
     $statSessions.textContent = sessions.length;
 
-    // Avg duration
     var avgDur = stats.computeAverageSessionDuration();
     $statAvgDuration.textContent = avgDur ? avgDur.formattedAvg : '—';
 
-    // This month
-    var thisMonth = stats.getThisMonth();
-    $statThisMonth.textContent = thisMonth.length;
+    $statThisMonth.textContent = stats.getThisMonth().length;
 
-    // Recent speakers (person stats)
     var personStats = stats.computePersonStats();
     $recentSpeakers.innerHTML = '';
     personStats.slice(0, 6).forEach(function (person) {
@@ -287,22 +357,16 @@
     }
   }
 
+
   /* ------------------------------------------------------------------ */
-  /*  Wheel integration (wheel-engine.js)                                */
+  /*  Game: Wheel (wraps FoodWheelEngine)                                */
   /* ------------------------------------------------------------------ */
-  function initWheel() {
+  function initWheelGame() {
     if (!window.FoodWheelEngine) {
       console.warn('[StandupPanel] FoodWheelEngine not loaded');
       return;
     }
-
-    roster = loadRoster();
-    sessionStartTime = Date.now();
-
-    // Emit initial queue reset for stats tracking
-    emitQueueReset();
-
-    window.FoodWheelEngine.init({
+    wheelEngine = window.FoodWheelEngine.init({
       canvasSelector: '#supWheel',
       spinButtonSelector: '#supSpinBtn',
       winnerSelector: '#supWinner',
@@ -312,76 +376,198 @@
       },
       enableCanvasClick: true,
       removeAfterSelection: false,
-      onResult: function (selectedItem) {
-        // Track current speaker
-        window.__supCurrentSpeaker = selectedItem;
-
-        // Add to completed (mark previous as done)
-        if (completedOrder.indexOf(selectedItem) === -1) {
-          completedOrder.push(selectedItem);
-        }
-
-        renderQueue();
-        emitQueueEvents();
-
-        // Auto-save session when everyone has spoken
-        var remaining = remainingSpeakers();
-        if (remaining.length === 0 && window.standupStats) {
-          window.standupStats.saveSession({
-            ts: sessionStartTime || Date.now(),
-            game: 'standup-panel',
-            order: completedOrder.slice(),
-            duration: Date.now() - (sessionStartTime || Date.now())
-          });
-          renderStats();
-        }
-      }
+      onResult: handleGameResult
     });
+    if (wheelEngine && typeof wheelEngine.drawWheel === 'function') {
+      wheelEngine.drawWheel(0);
+    }
+  }
+
+  function ensureWheelInitialized() {
+    if (wheelEngine) return;
+    initWheelGame();
+    if (wheelEngine && typeof wheelEngine.drawWheel === 'function') {
+      window.requestAnimationFrame(function () {
+        wheelEngine.drawWheel(0);
+      });
+      wheelInitRetryCount = 0;
+      return;
+    }
+
+    if (wheelInitRetryCount < 6) {
+      wheelInitRetryCount += 1;
+      setTimeout(ensureWheelInitialized, 100);
+    } else {
+      wheelInitRetryCount = 0;
+    }
+  }
+
+  function resetWheelGame() {
+    window.__supCurrentSpeaker = null;
+    window.__supGameQueue = null;
+    $winner.textContent = '';
+    if (wheelEngine) {
+      wheelEngine.setItems(roster);
+      if (typeof wheelEngine.drawWheel === 'function') {
+        wheelEngine.drawWheel(0);
+      }
+    } else {
+      ensureWheelInitialized();
+    }
+    renderQueue();
+  }
+
+  /* ------------------------------------------------------------------ */
+  /*  Game: Embedded iframe                                               */
+  /* ------------------------------------------------------------------ */
+  function initIframeGame(gameId) {
+    var game = GAMES[gameId];
+    if (!game || !game.url) return;
+
+    iframeReady = false;
+    $gameFrame.src = game.url;
+
+    // When iframe roster sync is needed, send via postMessage
+    // (the embed helper in the game listens for this)
+  }
+
+  function sendRosterToIframe() {
+    if (!$gameFrame || !$gameFrame.contentWindow) return;
+    try {
+      $gameFrame.contentWindow.postMessage({
+        type: 'standup:set-roster',
+        roster: roster
+      }, '*');
+    } catch (e) { /* ignore */ }
+  }
+
+  /* ------------------------------------------------------------------ */
+  /*  Game switching                                                     */
+  /* ------------------------------------------------------------------ */
+  function switchGame(gameId) {
+    if (!GAMES[gameId]) return;
+    var sameGame = currentGameId === gameId;
+    if (sameGame && !(GAMES[gameId].inline && !wheelEngine)) return;
+
+    currentGameId = gameId;
+    saveGameMode(gameId);
+
+    // Update picker UI
+    $gameBtns.forEach(function (btn) {
+      btn.classList.toggle('sup-game-btn--active', btn.dataset.game === gameId);
+      btn.setAttribute('aria-pressed', btn.dataset.game === gameId ? 'true' : 'false');
+    });
+
+    // Reset shared state
+    window.__supCurrentSpeaker = null;
+    sessionStartTime = Date.now();
+
+    // Hide Next button for games that don't produce a full order (wheel, trap)
+    if ($nextBtn) {
+      $nextBtn.style.display = (gameId === 'wheel' || gameId === 'trap') ? 'none' : '';
+    }
+
+    if (GAMES[gameId].inline) {
+      // Show wheel, hide iframe
+      $wheelSection.style.display = '';
+      $iframeSection.style.display = 'none';
+      $gameFrame.src = ''; // unload any previous iframe
+      $wheelCard.classList.remove('sup-iframe-active');
+
+      if (!wheelEngine) {
+        initWheelGame();
+      }
+      resetWheelGame();
+    } else {
+      // Show iframe, hide wheel
+      $wheelSection.style.display = 'none';
+      $iframeSection.style.display = '';
+      $wheelCard.classList.add('sup-iframe-active');
+
+      initIframeGame(gameId);
+      renderQueue();
+    }
+
+    emitQueueReset();
   }
 
   /* ------------------------------------------------------------------ */
   /*  New Round                                                          */
   /* ------------------------------------------------------------------ */
   function newRound() {
-    completedOrder = [];
-    window.__supCurrentSpeaker = null;
     sessionStartTime = Date.now();
-    $winner.textContent = '';
-    renderQueue();
+    window.__supGameQueue = null;
+
+    if (GAMES[currentGameId].inline) {
+      resetWheelGame();
+    } else {
+      // For iframe games — reload the iframe to re-send roster and start fresh
+      window.__supCurrentSpeaker = null;
+      iframeReady = false;
+
+      // Re-send roster first, then reload iframe after a tick
+      var game = GAMES[currentGameId];
+      if (game) {
+        // Set src to empty first, then reload
+        $gameFrame.src = '';
+        setTimeout(function () {
+          $gameFrame.src = game.url;
+        }, 50);
+      }
+
+      renderQueue();
+    }
+
     emitQueueReset();
+  }
 
-    // Re-init wheel with full roster
-    if (window.FoodWheelEngine) {
-      window.FoodWheelEngine.init({
-        canvasSelector: '#supWheel',
-        spinButtonSelector: '#supSpinBtn',
-        winnerSelector: '#supWinner',
-        defaultItems: roster,
-        resultFormatter: function (selectedItem) {
-          return '🎉 ' + selectedItem + ' is next to speak!';
-        },
-        enableCanvasClick: true,
-        removeAfterSelection: false,
-        onResult: function (selectedItem) {
-          window.__supCurrentSpeaker = selectedItem;
-          if (completedOrder.indexOf(selectedItem) === -1) {
-            completedOrder.push(selectedItem);
-          }
-          renderQueue();
-          emitQueueEvents();
+  /* ------------------------------------------------------------------ */
+  /*  postMessage listener (from embedded iframes)                       */
+  /* ------------------------------------------------------------------ */
+  function handleIframeMessage(event) {
+    var data = event.data;
+    if (!data || data.source !== 'standup-embed') return;
 
-          var remaining = remainingSpeakers();
-          if (remaining.length === 0 && window.standupStats) {
-            window.standupStats.saveSession({
-              ts: sessionStartTime || Date.now(),
-              game: 'standup-panel',
-              order: completedOrder.slice(),
-              duration: Date.now() - (sessionStartTime || Date.now())
-            });
-            renderStats();
-          }
+    switch (data.type) {
+      case 'standup:queue': {
+        var detail = data.detail || {};
+        // Reconstruct the full ordered list from whatever shape the game sends.
+        // Games may send: order[], queue[], or completed[] + remaining[].
+        var gameOrder = null;
+        if (detail.order && detail.order.length) {
+          gameOrder = detail.order;
+        } else if (detail.queue && detail.queue.length) {
+          gameOrder = detail.queue;
+        } else if (detail.completed && detail.completed.length) {
+          // completed first, then remaining — that's the speaking order
+          gameOrder = detail.completed.concat(detail.remaining || []);
         }
-      });
+        if (gameOrder) {
+          window.__supGameQueue = gameOrder;
+        }
+        // Set current speaker from the game's event
+        if (detail.current) {
+          window.__supCurrentSpeaker = detail.current;
+        } else if (gameOrder && gameOrder.length) {
+          window.__supCurrentSpeaker = gameOrder[0];
+        }
+        renderQueue();
+        emitQueueEvents();
+        break;
+      }
+      case 'standup:queue-reset': {
+        window.__supCurrentSpeaker = null;
+        window.__supGameQueue = null;
+        renderQueue();
+        emitQueueReset();
+        break;
+      }
+      case 'standup:embed-ready': {
+        iframeReady = true;
+        // Send the current roster to the newly loaded iframe
+        sendRosterToIframe();
+        break;
+      }
     }
   }
 
@@ -389,6 +575,13 @@
   /*  Event bindings                                                     */
   /* ------------------------------------------------------------------ */
   function bindEvents() {
+    // Game picker buttons
+    $gameBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        switchGame(btn.dataset.game);
+      });
+    });
+
     // Timer presets
     $presetBtns.forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -396,17 +589,17 @@
       });
     });
 
-    // Timer controls
     $timerStartBtn.addEventListener('click', startTimer);
     $timerPauseBtn.addEventListener('click', function () { stopTimer(false); });
     $timerResetBtn.addEventListener('click', resetTimer);
-
-    // Custom timer inputs
     $timerMin.addEventListener('change', syncTimerFromInputs);
     $timerSec.addEventListener('change', syncTimerFromInputs);
-
-    // New Round
     $resetBtn.addEventListener('click', newRound);
+
+    // Next button
+    if ($nextBtn) {
+      $nextBtn.addEventListener('click', advanceQueue);
+    }
 
     // Clear stats
     if ($clearStatsBtn) {
@@ -420,13 +613,21 @@
       });
     }
 
-    // Listen for roster changes from other pages
+    // Roster changes from other tabs
     window.addEventListener('storage', function (e) {
       if (e.key === STORAGE_KEY) {
         roster = loadRoster();
+        if (GAMES[currentGameId].inline) {
+          if (wheelEngine) wheelEngine.setItems(roster);
+        } else {
+          sendRosterToIframe();
+        }
         renderQueue();
       }
     });
+
+    // postMessage from iframes
+    window.addEventListener('message', handleIframeMessage);
   }
 
   /* ------------------------------------------------------------------ */
@@ -434,10 +635,12 @@
   /* ------------------------------------------------------------------ */
   function init() {
     roster = loadRoster();
-    renderQueue();
+    currentGameId = loadSavedGame();
+
     renderStats();
     bindEvents();
-    initWheel();
+    switchGame(currentGameId);
+    ensureWheelInitialized();
     updateTimerDisplay();
   }
 

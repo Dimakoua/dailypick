@@ -13,6 +13,7 @@ headExtra: |
   <script defer="" src="/assets/js/standup-stats.js"></script>
   <script defer="" src="/assets/js/standup-panel.js"></script>
   <script defer="" src="/assets/js/standup-onboarding.js"></script>
+  <script defer="" src="/assets/js/standup-embed.js"></script>
 ---
 <main id="main" data-page-type="standup">
         <h1 style="text-align: center;">🎯 Office Trap!</h1>
@@ -174,7 +175,7 @@ headExtra: |
         function emitStandupUpdate(currentNameOverride) {
             const participants = standupParticipants();
             const completed = uniqueNameList(eliminatedNames);
-            const remainingList = uniqueNameList(members.map(member => member.name));
+            const remainingList = uniqueNameList(members.filter(member => !member.isMouse).map(member => member.name));
 
             let current = null;
             if (typeof currentNameOverride === 'string') {
@@ -197,10 +198,18 @@ headExtra: |
                 ? remainingList.filter((name) => normalizeStandupKey(name) !== currentKey)
                 : remainingList;
 
+            // Build full speaking order: completed so far, then current, then remaining
+            var orderList = completed.slice();
+            if (currentKey && !completed.some(function (n) { return normalizeStandupKey(n) === currentKey; })) {
+                orderList.push(current);
+            }
+            orderList = orderList.concat(upcoming);
+
             const detail = {
                 source: STANDUP_SOURCE,
                 mode: 'manual',
                 participants,
+                order: orderList,
                 completed,
                 remaining: upcoming,
             };

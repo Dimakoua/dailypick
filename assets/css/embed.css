@@ -102,7 +102,12 @@ body.embed-mode .standup-walkthrough-overlay,
 body.embed-mode .standup-walkthrough-tooltip,
 body.embed-mode .standup-walkthrough-highlight,
 body.embed-mode .standup-walkthrough-actions,
-body.embed-mode .standup-walkthrough-content {
+body.embed-mode .standup-walkthrough-content,
+body.embed-mode .visible-breadcrumb,
+body.embed-mode .pwa-bottom-nav,
+body.embed-mode #pwa-install-banner,
+body.embed-mode #pwa-search,
+body.embed-mode #feedback-popup {
   display: none !important;
   visibility: hidden !important;
   height: 0 !important;

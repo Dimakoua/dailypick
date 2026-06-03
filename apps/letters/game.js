@@ -79,10 +79,18 @@ function emitStandupUpdate(currentNameOverride) {
         ? remainingList.filter((name) => normalizeStandupKey(name) !== currentKey)
         : remainingList;
 
+    // Build full speaking order: completed so far, then current, then remaining
+    var orderList = completed.slice();
+    if (currentKey && !completed.some(function (n) { return normalizeStandupKey(n) === currentKey; })) {
+        orderList.push(current);
+    }
+    orderList = orderList.concat(upcoming);
+
     const detail = {
         source: STANDUP_SOURCE,
         mode: 'auto',
         participants,
+        order: orderList,
         completed,
         remaining: upcoming,
     };
@@ -665,24 +673,34 @@ function setupObstacles() {
 function fitAppToScreen() {
     if (!appContainer) return;
 
+    const isEmbedded = window.self !== window.top ||
+        new URLSearchParams(window.location.search).get('embed');
+
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
 
-    // Use a percentage of the viewport to leave some margin
-    const availableWidth = viewportWidth * 0.95;
-    const availableHeight = viewportHeight * 0.95;
+    // In embedded/iframe mode use a smaller portion so the game feels compact
+    const marginPct = isEmbedded ? 0.7 : 0.95;
+    const availableWidth = viewportWidth * marginPct;
+    const availableHeight = viewportHeight * marginPct;
 
     const scaleX = availableWidth / ORIGINAL_APP_WIDTH;
     const scaleY = availableHeight / ORIGINAL_APP_HEIGHT;
 
     let scale = Math.min(scaleX, scaleY);
 
-    // Optional: Prevent upscaling beyond 1x if the original size fits comfortably
+    // Prevent upscaling beyond 1x if the original size fits comfortably
     if (ORIGINAL_APP_WIDTH <= availableWidth && ORIGINAL_APP_HEIGHT <= availableHeight) {
         scale = Math.min(scale, 1);
     }
 
+    // In embedded mode, cap the scale so it doesn't fill the entire iframe
+    if (isEmbedded) {
+        scale = Math.min(scale, 0.85);
+    }
+
     appContainer.style.transform = `scale(${scale})`;
+    appContainer.style.transformOrigin = 'top center';
 }
 
 function resetAndStartGame() {

@@ -118,10 +118,12 @@ document.addEventListener('DOMContentLoaded', () => {
             completed.push(name);
         });
         const remaining = participants.filter((name) => !seen.has(normalizeStandupKey(name)));
+        const order = completed.concat(remaining);
         const detail = {
             source: STANDUP_SOURCE,
             mode: 'auto',
             participants,
+            order: order,
             completed,
             remaining,
         };
@@ -1179,23 +1181,34 @@ document.addEventListener('DOMContentLoaded', () => {
     function fitGameToScreen() {
         if (!gameContainer) return;
 
+        const isEmbedded = window.self !== window.top ||
+            new URLSearchParams(window.location.search).get('embed');
+
         const viewportWidth = window.innerWidth;
         const viewportHeight = window.innerHeight;
 
-        // Consider available space, leaving some margin perhaps
-        const availableWidth = viewportWidth * 0.98; // Use 98% to avoid scrollbars with scaling
-        const availableHeight = viewportHeight * 0.90; // Leave more vertical space for other UI
+        // In embedded mode use more viewport space so the game fills the iframe nicely
+        const widthPct = isEmbedded ? 0.98 : 0.98;
+        const heightPct = isEmbedded ? 0.95 : 0.90;
+        const availableWidth = viewportWidth * widthPct;
+        const availableHeight = viewportHeight * heightPct;
 
         const scaleX = availableWidth / ORIGINAL_GAME_WIDTH;
         const scaleY = availableHeight / ORIGINAL_GAME_HEIGHT;
 
         let scale = Math.min(scaleX, scaleY);
 
-        // Optional: Prevent upscaling beyond 1x if the original size fits comfortably
+        // Prevent upscaling beyond 1x if the original size fits comfortably
         if (ORIGINAL_GAME_WIDTH <= availableWidth && ORIGINAL_GAME_HEIGHT <= availableHeight) {
             scale = Math.min(scale, 1);
         }
-        gameContainer.style.transformOrigin = 'center top'; // Scale from top-center
+
+        // In embedded mode, allow slight upscaling to fill the iframe better
+        if (isEmbedded && scale < 1) {
+            scale = Math.min(scale * 1.15, 1);
+        }
+
+        gameContainer.style.transformOrigin = 'center top';
         gameContainer.style.transform = `scale(${scale})`;
     }
     // Initial setup

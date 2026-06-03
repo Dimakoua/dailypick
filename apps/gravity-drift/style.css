@@ -286,3 +286,17 @@
     transform: none !important;
   }
 }
+
+/* --- Embedded / iframe mode --- */
+body.embed-mode .settings-hint {
+  display: none;
+}
+
+body.embed-mode .game-pip-trigger {
+  display: none;
+}
+
+body.embed-mode .game-container {
+  margin-top: 0;
+  padding: 8px 8px 12px;
+}

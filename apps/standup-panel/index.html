@@ -18,7 +18,7 @@ headExtra: |
     <div class="sup-header__titles">
       <p class="sup-eyebrow">Stand-up Dashboard</p>
       <h1>📋 Daily Stand-up Panel</h1>
-      <p>Spin the wheel, track the timer, manage the queue, and view stats — all in one place.</p>
+      <p>Pick speakers with a game — wheel, race, and more. Track the timer, manage the queue, and view stats — all in one place.</p>
     </div>
     <div class="sup-header__actions">
       <button type="button" id="supResetBtn" class="sup-btn sup-btn--ghost">🔄 New Round</button>
@@ -26,17 +26,57 @@ headExtra: |
     </div>
   </header>
 
+  <!-- Game Picker -->
+  <div class="sup-game-picker glass-card" role="group" aria-label="Speaker selection game">
+    <p class="sup-game-picker__label">Game Mode</p>
+    <div class="sup-game-picker__btns" id="supGamePicker">
+      <button type="button" class="sup-game-btn sup-game-btn--active" data-game="wheel" aria-pressed="true" title="Spin the wheel to pick speakers one at a time">
+        <span class="sup-game-btn__icon">🎡</span>
+        <span class="sup-game-btn__label">Wheel</span>
+      </button>
+      <button type="button" class="sup-game-btn" data-game="speedway" aria-pressed="false" title="Speedway — turtle race, original game embedded">
+        <span class="sup-game-btn__icon">🐢</span>
+        <span class="sup-game-btn__label">Speedway</span>
+      </button>
+      <button type="button" class="sup-game-btn" data-game="trap" aria-pressed="false" title="Trap! — a strategy game to pick the next speaker">
+        <span class="sup-game-btn__icon">🎯</span>
+        <span class="sup-game-btn__label">Trap!</span>
+      </button>
+      <button type="button" class="sup-game-btn" data-game="letters" aria-pressed="false" title="Falling Letters Pinball — letter matching game">
+        <span class="sup-game-btn__icon">🕹️</span>
+        <span class="sup-game-btn__label">Falling Letters</span>
+      </button>
+      <button type="button" class="sup-game-btn" data-game="gravity" aria-pressed="false" title="Gravity Drift — space trajectory game">
+        <span class="sup-game-btn__icon">🚀</span>
+        <span class="sup-game-btn__label">Gravity Drift</span>
+      </button>
+      <button type="button" class="sup-game-btn" data-game="patchinko" aria-pressed="false" title="Patchinko Machine — pachinko drop game">
+        <span class="sup-game-btn__icon">🎳</span>
+        <span class="sup-game-btn__label">Patchinko</span>
+      </button>
+    </div>
+  </div>
+
   <div class="sup-grid">
-    <!-- Wheel Section -->
-    <section class="sup-card glass-card sup-wheel-card" aria-labelledby="supWheelHeading">
-      <h2 id="supWheelHeading" class="sup-card__title">🎡 Pick Speaker</h2>
-      <div class="sup-wheel-wrap">
-        <div class="sup-wheel-container">
-          <div class="sup-wheel-indicator"></div>
-          <canvas id="supWheel" width="340" height="340"></canvas>
+    <!-- Speaker Selection Section (hosts active game) -->
+    <section class="sup-card glass-card sup-wheel-card" aria-labelledby="supGameHeading">
+      <h2 id="supGameHeading" class="sup-card__title">🎲 Pick Speaker</h2>
+
+      <!-- Wheel game UI (inline) -->
+      <div id="supWheelSection" class="sup-game-section">
+        <div class="sup-wheel-wrap">
+          <div class="sup-wheel-container">
+            <div class="sup-wheel-indicator"></div>
+            <canvas id="supWheel" width="340" height="340"></canvas>
+          </div>
+          <button type="button" id="supSpinBtn" class="sup-spin-btn">🎲 SPIN</button>
+          <div id="supWinner" class="sup-winner" aria-live="polite"></div>
         </div>
-        <button type="button" id="supSpinBtn" class="sup-spin-btn">🎲 SPIN</button>
-        <div id="supWinner" class="sup-winner" aria-live="polite"></div>
+      </div>
+
+      <!-- Embedded game iframe (Speedway, Trap!, Letters, Gravity, Patchinko) -->
+      <div id="supIframeSection" class="sup-game-section" style="display:none;">
+        <iframe id="supGameFrame" class="sup-iframe" title="Speaker selection game" sandbox="allow-scripts allow-same-origin" referrerpolicy="no-referrer" allowfullscreen></iframe>
       </div>
     </section>
 
@@ -76,17 +116,12 @@ headExtra: |
       <h2 id="supQueueHeading" class="sup-card__title">📝 Queue</h2>
       <div class="sup-queue-body">
         <div class="sup-current-speaker" id="supCurrentSpeaker" data-empty="true" aria-live="polite">
-          Spin the wheel to pick the first speaker
+          Select the next speaker
         </div>
+        <button type="button" id="supNextBtn" class="sup-btn sup-btn--primary sup-next-btn" disabled>⏭️ Next</button>
         <div class="sup-queue-section">
           <h3 class="sup-queue-label">Up Next</h3>
-          <ul class="sup-upcoming-list" id="supUpcomingList" aria-label="Upcoming speakers"></ul>
-        </div>
-        <div class="sup-queue-section sup-completed-section">
-          <details>
-            <summary class="sup-queue-label">Completed <span id="supCompletedCount">(0)</span></summary>
-            <ul class="sup-completed-list" id="supCompletedList" aria-label="Completed speakers"></ul>
-          </details>
+          <ol class="sup-upcoming-list" id="supUpcomingList" aria-label="Upcoming speakers"></ol>
         </div>
       </div>
     </section>
@@ -166,7 +201,7 @@ headExtra: |
       <h3>2. How the stand-up panel works</h3>
       <ol>
         <li><strong>Set up your roster:</strong> Visit the <a href="/apps/roster/">Roster page</a> to add your team members, or the panel will use a default list.</li>
-        <li><strong>Spin the wheel:</strong> Click the spin button to randomly pick the next speaker.</li>
+        <li><strong>Choose a game mode:</strong> Pick from six speaker-selection games — <strong>Wheel</strong> (spin to pick), <strong>Speedway</strong> (turtle race), <strong>Trap!</strong> (strategy), <strong>Falling Letters</strong> (pinball), <strong>Gravity Drift</strong> (space), or <strong>Patchinko</strong> (pachinko).</li>
         <li><strong>Start the timer:</strong> Choose a preset duration or set a custom time, then hit Start.</li>
         <li><strong>Track the queue:</strong> See who's speaking now, who's up next, and who's already gone.</li>
         <li><strong>Review stats:</strong> Check your streak, session count, and average meeting duration.</li>
@@ -176,12 +211,15 @@ headExtra: |
     <section id="features">
       <h3>3. Key features</h3>
       <ul>
-        <li><strong>Integrated wheel:</strong> Canvas-based spinning wheel with your team roster.</li>
+        <li><strong>Six game modes:</strong> Wheel (spin to pick), Speedway (turtle race), Trap! (strategy), Falling Letters (pinball), Gravity Drift (space), and Patchinko (pachinko).</li>
+        <li><strong>Integrated games:</strong> Wheel and Speedway run inline — no tab switching.</li>
+        <li><strong>External games:</strong> Trap!, Falling Letters, Gravity Drift, and Patchinko open in a new tab and feed results back automatically.</li>
         <li><strong>Quick timer:</strong> Preset buttons (1m, 3m, 5m, 10m, 15m) plus custom input.</li>
         <li><strong>Speaker queue:</strong> Current, upcoming, and completed speakers at a glance.</li>
         <li><strong>Session stats:</strong> Streak tracking, total sessions, average duration, monthly count.</li>
         <li><strong>New Round button:</strong> Reset the queue and start fresh without reloading.</li>
         <li><strong>Persistent roster:</strong> Reads from the same localStorage roster used by all Daily Pick apps.</li>
+        <li><strong>Game preference saved:</strong> Your chosen game mode is remembered across sessions.</li>
       </ul>
     </section>
 

@@ -251,3 +251,27 @@ button#restartButton:disabled {
     padding: 6px;
   }
 }
+
+/* Embedded / iframe mode: tighten up the layout */
+body.embed-mode #appContainer {
+  margin-top: 0;
+}
+
+body.embed-mode #gameContainer {
+  border-width: 6px;
+  border-radius: 18px;
+  padding: 8px;
+}
+
+body.embed-mode h1 {
+  font-size: 1.2rem;
+  margin: 6px 0;
+}
+
+body.embed-mode .settings-hint {
+  display: none;
+}
+
+body.embed-mode .game-pip-trigger {
+  display: none;
+}

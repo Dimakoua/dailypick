@@ -759,6 +759,7 @@ document.addEventListener('DOMContentLoaded', () => {
       source: 'patchinko',
       mode: 'auto',
       participants: participantsList,
+      order: queueSnapshot,
       queue: queueSnapshot,
       completed: completedPlayers,
       remaining: remainingPlayers,
@@ -859,6 +860,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     resetGame();
   }
+
+  // Listen for roster updates from the stand-up panel (embed mode)
+  window.addEventListener('standup:roster-update', function (e) {
+    var roster = (e.detail && e.detail.roster) ? e.detail.roster : [];
+    var sanitized = uniqueNameList(roster);
+    if (sanitized.length === 0) return;
+    if (!haveSameParticipants(teamMembers, sanitized)) {
+      teamMembers = sanitized;
+      resetGame();
+    }
+  });
 
   init();
 });
