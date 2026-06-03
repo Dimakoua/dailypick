@@ -1,0 +1,213 @@
+/* ==========================================================================
+   Charades Word Generator — App Styles
+   ========================================================================== */
+
+.charades-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem var(--layout-gutter);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ---- Controls ---- */
+
+.charades-controls {
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.charades-field-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--brand-subtle-text);
+  margin: 0 0 0.25rem;
+}
+
+.category-row,
+.difficulty-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.category-btn,
+.difficulty-btn {
+  flex: 1 1 110px;
+  min-width: 90px;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-md);
+  background: var(--brand-surface);
+  color: var(--brand-heading);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.category-btn:hover,
+.difficulty-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.category-btn.active,
+.difficulty-btn.active {
+  background: var(--brand-accent-muted);
+  border-color: var(--brand-accent);
+  color: var(--brand-heading);
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.15);
+}
+
+.charades-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  padding-top: 0.25rem;
+}
+
+/* ---- Word Card ---- */
+
+.charades-card {
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.charades-emoji {
+  font-size: 2.4rem;
+  margin: 0;
+  line-height: 1;
+}
+
+.charades-label {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brand-subtle-text);
+}
+
+.charades-word {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  color: var(--brand-heading);
+  line-height: 1.25;
+  min-height: 3.5rem;
+  word-break: break-word;
+  transition: transform 0.15s ease;
+}
+
+.charades-word.pop {
+  animation: charades-pop 0.3s ease;
+}
+
+@keyframes charades-pop {
+  0%   { transform: scale(0.9); opacity: 0.4; }
+  60%  { transform: scale(1.06); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ---- Timer ---- */
+
+.charades-timer {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  padding: 0.6rem 1.5rem;
+  border-radius: var(--radius-md);
+  background: var(--brand-accent-muted);
+  border: 1px solid var(--brand-border);
+}
+
+.charades-timer-value {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--brand-accent-strong);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  min-width: 3ch;
+  text-align: center;
+}
+
+.charades-timer-unit {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--brand-subtle-text);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.charades-timer.pulse {
+  animation: charades-pulse 0.8s ease infinite;
+}
+
+@keyframes charades-pulse {
+  0%, 100% { background: var(--brand-accent-muted); }
+  50%      { background: rgba(231, 76, 60, 0.2); }
+}
+
+.charades-hint {
+  margin: 0;
+  color: var(--brand-subtle-text);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 680px) {
+  .charades-page {
+    padding: 1rem var(--layout-gutter);
+    gap: 1.25rem;
+  }
+
+  .charades-controls {
+    padding: 1.25rem;
+  }
+
+  .charades-card {
+    padding: 1.75rem 1.25rem;
+  }
+
+  .category-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .category-btn {
+    flex: none;
+    min-width: 0;
+    font-size: 0.82rem;
+    padding: 0.65rem 0.5rem;
+  }
+
+  .difficulty-row {
+    flex-direction: row;
+  }
+
+  .difficulty-btn {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .charades-actions {
+    flex-direction: column;
+  }
+
+  .charades-actions .btn {
+    width: 100%;
+  }
+}

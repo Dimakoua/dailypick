@@ -1,0 +1,141 @@
+---
+layout: base_app.njk
+title: "Charades Word Generator – Random Charades Words & Phrases | Daily Pick"
+description: "Generate random charades words and phrases for your next game night! Pick a category and difficulty, then let the app deliver the perfect prompt for hilarious acting fun."
+keywords: "charades word generator, random charades words, charades prompts, charades ideas, party game generator, charades phrases, acting game prompts"
+canonical: "https://dailypick.dev/apps/charades-word-generator/"
+ogImageAlt: "Charades word generator showing a fun party prompt"
+headExtra: |
+  <link rel="stylesheet" href="./style.css" />
+  <script defer src="./script.js"></script>
+---
+<main data-page-type="games" class="charades-page">
+  <header class="page-hero glass-card">
+    <div>
+      <p class="hero-eyebrow">Party Game Night</p>
+      <h1>🎭 Charades Word Generator</h1>
+      <p>Get a random word or phrase to act out! Pick a category and difficulty, then generate your next charades prompt.</p>
+    </div>
+  </header>
+
+  <section class="charades-controls glass-card">
+    <div class="charades-field">
+      <label class="charades-field-label" id="category-label">Category</label>
+      <div class="category-row" role="tablist" aria-labelledby="category-label">
+        <button class="category-btn active" data-category="movies" type="button" role="tab" aria-selected="true">🎬 Movies</button>
+        <button class="category-btn" data-category="actions" type="button" role="tab" aria-selected="false">🏃 Actions</button>
+        <button class="category-btn" data-category="animals" type="button" role="tab" aria-selected="false">🐾 Animals</button>
+        <button class="category-btn" data-category="objects" type="button" role="tab" aria-selected="false">📦 Objects</button>
+        <button class="category-btn" data-category="food" type="button" role="tab" aria-selected="false">🍕 Food</button>
+        <button class="category-btn" data-category="all" type="button" role="tab" aria-selected="false">🌟 All</button>
+      </div>
+    </div>
+
+    <div class="charades-field">
+      <label class="charades-field-label" id="difficulty-label">Difficulty</label>
+      <div class="difficulty-row" role="radiogroup" aria-labelledby="difficulty-label">
+        <button class="difficulty-btn active" data-difficulty="easy" type="button" role="radio" aria-checked="true">😊 Easy</button>
+        <button class="difficulty-btn" data-difficulty="medium" type="button" role="radio" aria-checked="false">🤔 Medium</button>
+        <button class="difficulty-btn" data-difficulty="hard" type="button" role="radio" aria-checked="false">🔥 Hard</button>
+      </div>
+    </div>
+
+    <div class="charades-actions">
+      <button id="generateBtn" class="btn btn--accent" type="button">🎲 Generate Word</button>
+      <button id="copyBtn" class="btn btn--secondary" type="button">📋 Copy</button>
+      <button id="timerBtn" class="btn btn--secondary" type="button">⏱️ Start Timer</button>
+    </div>
+  </section>
+
+  <section class="charades-card glass-card">
+    <div class="charades-card-header">
+      <p class="charades-emoji">🎭</p>
+      <p class="charades-label">Your charades word</p>
+    </div>
+    <div id="wordDisplay" class="charades-word">Click Generate Word to get started!</div>
+    <div id="timerDisplay" class="charades-timer" hidden>
+      <span id="timerValue" class="charades-timer-value">60</span>
+      <span class="charades-timer-unit">sec</span>
+    </div>
+    <p id="hintText" class="charades-hint"></p>
+  </section>
+
+  <section class="seo-content-area glass-card">
+    <h2>Charades Word Generator — random prompts for your next game night</h2>
+    <p>Charades Word Generator is a simple, fun tool that delivers random words and phrases for the classic acting game. Pick a category and difficulty, press Generate, and get a fresh prompt instantly — no setup, no cards, no stress.</p>
+    <p>Whether you're hosting a family game night, a team-building icebreaker, or a party with friends, this generator keeps the momentum going with a steady stream of creative prompts across movies, actions, animals, objects, and food.</p>
+    <p>The built-in timer helps you keep rounds fast and fair, so everyone gets their moment in the spotlight.</p>
+
+    <h2>Table of Contents</h2>
+    <ul>
+      <li><a href="#what-is-charades-word-generator">1. What Is Charades Word Generator?</a></li>
+      <li><a href="#how-to-use-it">2. How to Use It?</a></li>
+      <li><a href="#categories">3. Categories</a></li>
+      <li><a href="#difficulty-levels">4. Difficulty Levels</a></li>
+      <li><a href="#timer-feature">5. Timer Feature</a></li>
+      <li><a href="#key-features">6. Key Features</a></li>
+      <li><a href="#when-to-use">7. When to Use Charades Word Generator</a></li>
+      <li><a href="#tips">8. Tips for a Great Charades Game</a></li>
+      <li><a href="#feedback">9. Feedback</a></li>
+      <li><a href="#alternative-tools">10. Alternative Tools</a></li>
+    </ul>
+
+    <h2 id="what-is-charades-word-generator">1. What Is Charades Word Generator?</h2>
+    <p>Charades Word Generator is an online tool designed to provide instant, random prompts for the classic party game of charades. It eliminates the need for pre-written slips of paper or card decks — just open the page and start playing.</p>
+    <p>With multiple categories and difficulty levels, it adapts to any group, from kids' birthday parties to adult game nights and team-building sessions.</p>
+
+    <h2 id="how-to-use-it">2. How to Use It?</h2>
+    <ol>
+      <li>Choose a category: Movies, Actions, Animals, Objects, Food, or All.</li>
+      <li>Select a difficulty: Easy, Medium, or Hard.</li>
+      <li>Click <strong>Generate Word</strong> to reveal a random prompt.</li>
+      <li>The actor acts out the word or phrase without speaking while their team guesses.</li>
+      <li>Click <strong>Start Timer</strong> to add a time limit to the round.</li>
+      <li>Generate again for your next turn.</li>
+    </ol>
+
+    <h2 id="categories">3. Categories</h2>
+    <p><strong>Movies</strong> includes famous film titles, from blockbusters to classics. <strong>Actions</strong> offers verbs and activities like "swimming" or "cooking." <strong>Animals</strong> covers creatures from aardvarks to zebras. <strong>Objects</strong> features everyday items, and <strong>Food</strong> spans dishes, ingredients, and snacks. The <strong>All</strong> category mixes everything together for maximum variety.</p>
+
+    <h2 id="difficulty-levels">4. Difficulty Levels</h2>
+    <p><strong>Easy</strong> prompts are common, well-known words that are straightforward to act out — perfect for kids or beginners. <strong>Medium</strong> introduces more specific or abstract challenges. <strong>Hard</strong> delivers obscure, multi-word, or highly abstract phrases that test even seasoned charades players.</p>
+
+    <h2 id="timer-feature">5. Timer Feature</h2>
+    <p>The built-in 60-second countdown timer adds urgency and fairness to each round. Press Start Timer when the actor begins, and the display counts down visibly. When time runs out, the timer pulses to signal the end of the round.</p>
+
+    <h2 id="key-features">6. Key Features</h2>
+    <ul>
+      <li><strong>Six categories:</strong> Movies, Actions, Animals, Objects, Food, and an All-mixed mode.</li>
+      <li><strong>Three difficulty levels:</strong> Easy, Medium, and Hard to match your group's skill.</li>
+      <li><strong>Built-in 60-second timer:</strong> Keep rounds fair and fast-paced.</li>
+      <li><strong>Copy button:</strong> Copy the current word to clipboard for easy sharing.</li>
+      <li><strong>No signup required:</strong> Start playing immediately — the whole app loads in the browser.</li>
+      <li><strong>Mobile-friendly:</strong> Works on phones, tablets, and desktops.</li>
+    </ul>
+
+    <h2 id="when-to-use">7. When to Use Charades Word Generator</h2>
+    <p>Use this generator whenever you need a quick, structured charades experience:</p>
+    <ul>
+      <li>Family game nights and holiday gatherings.</li>
+      <li>Team-building icebreakers at work or school.</li>
+      <li>Party entertainment that gets everyone involved.</li>
+      <li>Warm-up activities before presentations or workshops.</li>
+      <li>Rainy-day indoor fun with kids.</li>
+    </ul>
+
+    <h2 id="tips">8. Tips for a Great Charades Game</h2>
+    <ul>
+      <li>Start with Easy mode for mixed-age groups or first-time players.</li>
+      <li>Divide into teams and keep score to add friendly competition.</li>
+      <li>Set clear rules before starting: no speaking, no sounds, no pointing at objects.</li>
+      <li>Use the timer to keep energy high and prevent long stalemates.</li>
+      <li>Switch categories between rounds to keep things fresh.</li>
+    </ul>
+
+    <h2 id="feedback">9. Feedback</h2>
+    <p>Have ideas for new categories, additional words, or features? Share them on the <a href="/feedback/">Feedback page</a>. Your suggestions help make this tool better for everyone.</p>
+
+    <h2 id="alternative-tools">10. Alternative Tools</h2>
+    <p>If you want more party game prompts, try the <a href="/apps/truth-or-dare/">Truth or Dare Generator</a>. For team icebreaker activities, check out the <a href="/apps/wheel/">Wheel Spinner</a> to randomly pick who goes next.</p>
+  </section>
+</main>
