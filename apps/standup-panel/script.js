@@ -444,10 +444,16 @@
   /* ------------------------------------------------------------------ */
   /*  Game switching                                                     */
   /* ------------------------------------------------------------------ */
+  var pendingGameId = null; // tracks which game the loading iframe is for
+
   function switchGame(gameId) {
     if (!GAMES[gameId]) return;
+
+    // Allow re-clicking the same game to reload it (useful for iframe games)
     var sameGame = currentGameId === gameId;
-    if (sameGame && !(GAMES[gameId].inline && !wheelEngine)) return;
+
+    // For wheel (inline), skip if already active and engine exists — no reload needed
+    if (sameGame && GAMES[gameId].inline && wheelEngine) return;
 
     currentGameId = gameId;
     saveGameMode(gameId);
@@ -460,6 +466,7 @@
 
     // Reset shared state
     window.__supCurrentSpeaker = null;
+    window.__supGameQueue = null;
     sessionStartTime = Date.now();
 
     // Hide Next button for games that don't produce a full order (wheel, trap)
@@ -472,6 +479,7 @@
       $wheelSection.style.display = '';
       $iframeSection.style.display = 'none';
       $gameFrame.src = ''; // unload any previous iframe
+      pendingGameId = null;
       $wheelCard.classList.remove('sup-iframe-active');
 
       if (!wheelEngine) {
@@ -484,7 +492,22 @@
       $iframeSection.style.display = '';
       $wheelCard.classList.add('sup-iframe-active');
 
-      initIframeGame(gameId);
+      // If same iframe game, force a full reload by clearing src first
+      if (sameGame) {
+        $gameFrame.src = '';
+        pendingGameId = gameId;
+        // Small delay to let the browser clear the old iframe content
+        setTimeout(function () {
+          if (pendingGameId === gameId) {
+            iframeReady = false;
+            initIframeGame(gameId);
+          }
+        }, 30);
+      } else {
+        iframeReady = false;
+        pendingGameId = gameId;
+        initIframeGame(gameId);
+      }
       renderQueue();
     }
 
@@ -501,17 +524,18 @@
     if (GAMES[currentGameId].inline) {
       resetWheelGame();
     } else {
-      // For iframe games — reload the iframe to re-send roster and start fresh
+      // For iframe games — force a full reload of the current iframe
       window.__supCurrentSpeaker = null;
       iframeReady = false;
+      pendingGameId = currentGameId;
 
-      // Re-send roster first, then reload iframe after a tick
       var game = GAMES[currentGameId];
       if (game) {
-        // Set src to empty first, then reload
         $gameFrame.src = '';
         setTimeout(function () {
-          $gameFrame.src = game.url;
+          if (pendingGameId === currentGameId) {
+            $gameFrame.src = game.url;
+          }
         }, 50);
       }
 
@@ -527,6 +551,12 @@
   function handleIframeMessage(event) {
     var data = event.data;
     if (!data || data.source !== 'standup-embed') return;
+
+    // If we're in inline (wheel) mode, ignore all iframe messages
+    if (GAMES[currentGameId].inline) return;
+
+    // If a game switch is in progress, only accept messages for the pending game
+    if (pendingGameId !== null && pendingGameId !== currentGameId) return;
 
     switch (data.type) {
       case 'standup:queue': {
@@ -564,6 +594,7 @@
       }
       case 'standup:embed-ready': {
         iframeReady = true;
+        pendingGameId = null; // loading is complete
         // Send the current roster to the newly loaded iframe
         sendRosterToIframe();
         break;
