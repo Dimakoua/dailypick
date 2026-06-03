@@ -431,6 +431,11 @@
       }
 
       grid.innerHTML = allHtml;
+
+      var seoSection = document.querySelector('.seo-content-area');
+      if (seoSection && seoSection.parentNode) {
+        seoSection.parentNode.insertBefore(section, seoSection);
+      }
     })();
     </script>
 
