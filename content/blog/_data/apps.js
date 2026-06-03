@@ -207,6 +207,15 @@ module.exports = [
     description: "A customizable multi-wheel spinner for live streamers. Works as a transparent OBS Browser Source overlay. Shareable via URL."
   },
   {
+    id: "countdown",
+    name: "Countdown Timer",
+    path: "/apps/countdown/",
+    category: "randomizer",
+    footerGroup: "Randomizers",
+    emoji: "⏳",
+    description: "Create countdowns for any event with a live animated display. Share the countdown link with anyone — no sign-up needed."
+  },
+  {
     id: "obs-wheel-overlay",
     name: "OBS Wheel Overlay",
     path: "/apps/obs-wheel-overlay/",

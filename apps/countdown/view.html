@@ -1,0 +1,42 @@
+---
+layout: base.njk
+title: "Countdown Timer | Daily Pick"
+description: "Someone shared a countdown timer with you. See the live countdown and track the moment together."
+headExtra: |
+  <link href="/apps/countdown/view.css" rel="stylesheet" />
+  <script defer="" src="/apps/countdown/view.js"></script>
+---
+<main data-page-type="countdown-view" aria-labelledby="viewHeading" class="countdown-view-page">
+    <div class="view-container glass-card" id="viewContainer">
+        <p class="view-empty" id="viewEmpty">Loading countdown…</p>
+        <div class="view-countdown" id="viewCountdown" hidden>
+            <p class="view-label" id="viewHeading">Countdown</p>
+            <h1 class="view-name" id="viewName"></h1>
+            <div aria-live="polite" class="view-display" id="countdownDisplay">
+                <div class="countdown-unit">
+                    <span class="countdown-value" id="vdDays">00</span>
+                    <span class="countdown-label">days</span>
+                </div>
+                <span class="countdown-sep">:</span>
+                <div class="countdown-unit">
+                    <span class="countdown-value" id="vdHours">00</span>
+                    <span class="countdown-label">hrs</span>
+                </div>
+                <span class="countdown-sep">:</span>
+                <div class="countdown-unit">
+                    <span class="countdown-value" id="vdMinutes">00</span>
+                    <span class="countdown-label">min</span>
+                </div>
+                <span class="countdown-sep">:</span>
+                <div class="countdown-unit">
+                    <span class="countdown-value" id="vdSeconds">00</span>
+                    <span class="countdown-label">sec</span>
+                </div>
+            </div>
+            <p class="view-target" id="viewTarget"></p>
+            <p class="view-past" id="viewPast" hidden>🎉 This event has arrived!</p>
+            <a class="view-create-link" href="/apps/countdown/">Create your own countdown →</a>
+        </div>
+        <p class="view-error" id="viewError" hidden>Invalid or missing countdown link. <a href="/apps/countdown/">Create your own!</a></p>
+    </div>
+</main>

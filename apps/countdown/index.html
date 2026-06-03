@@ -1,0 +1,176 @@
+---
+layout: base_app.njk
+title: "Countdown Timer – Event Countdowns & Shareable Links | Daily Pick"
+description: "Create countdown timers for any event, see a live animated countdown, and share with others via a simple link. Free, no sign-up, works in any browser."
+keywords: "countdown timer, event countdown, countdown to date, shareable countdown, free countdown timer, launch countdown, birthday countdown"
+canonical: "https://dailypick.dev/apps/countdown/"
+ogImageAlt: "Live animated countdown timer with shareable event links inside Daily Pick"
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+  <script defer="" src="./script.js"></script>
+---
+<main data-page-type="countdown" aria-labelledby="countdownHeading" class="countdown-page">
+    <section class="countdown-hero glass-card">
+      <div>
+        <p class="hero-eyebrow">Event Tracker</p>
+        <h1 id="countdownHeading">Countdown Timer</h1>
+        <p>Create countdowns for any event, watch the seconds tick down in real time, and share the moment with a single link. No sign-up, no cost, no downloads.</p>
+      </div>
+    </section>
+
+    <section class="countdown-grid">
+      <article aria-labelledby="createHeading" class="create-card glass-card">
+        <div class="card-header">
+          <h2 id="createHeading">New Event</h2>
+          <p>Add an event and start the countdown.</p>
+        </div>
+        <form class="create-form" id="createForm" autocomplete="off">
+          <label>
+            Event name
+            <input id="eventName" maxlength="80" placeholder="e.g. Product Launch" required="" type="text" />
+          </label>
+          <div class="create-datetime">
+            <label>
+              Date
+              <input id="eventDate" required="" type="date" />
+            </label>
+            <label>
+              Time
+              <input id="eventTime" required="" type="time" />
+            </label>
+          </div>
+          <label class="color-label">
+            Theme
+            <div class="color-swatches" id="colorSwatches" role="radiogroup" aria-label="Event color theme">
+              <button aria-label="Red theme" class="color-swatch" data-color="#e74c3c" style="--swatch:#e74c3c" type="button"></button>
+              <button aria-label="Blue theme" class="color-swatch" data-color="#3498db" style="--swatch:#3498db" type="button"></button>
+              <button aria-label="Green theme" class="color-swatch" data-color="#2ecc71" style="--swatch:#2ecc71" type="button"></button>
+              <button aria-label="Gold theme" class="color-swatch" data-color="#f39c12" style="--swatch:#f39c12" type="button"></button>
+              <button aria-label="Purple theme" class="color-swatch" data-color="#9b59b6" style="--swatch:#9b59b6" type="button"></button>
+            </div>
+          </label>
+          <button class="create-btn" type="submit">Create Countdown</button>
+        </form>
+      </article>
+
+      <article aria-labelledby="activeHeading" class="active-card glass-card">
+        <div class="card-header">
+          <h2 id="activeHeading">Active Countdown</h2>
+          <p>Your selected event is ticking.</p>
+        </div>
+        <div class="active-body" id="activeBody">
+          <p class="active-empty" id="activeEmpty">Create an event or open a share link to see the countdown here.</p>
+          <div class="active-countdown" id="activeCountdown" hidden>
+            <h3 class="active-name" id="activeName"></h3>
+            <div aria-live="polite" class="countdown-display" id="countdownDisplay">
+              <div class="countdown-unit">
+                <span class="countdown-value" id="cdDays">00</span>
+                <span class="countdown-label">days</span>
+              </div>
+              <span class="countdown-sep">:</span>
+              <div class="countdown-unit">
+                <span class="countdown-value" id="cdHours">00</span>
+                <span class="countdown-label">hrs</span>
+              </div>
+              <span class="countdown-sep">:</span>
+              <div class="countdown-unit">
+                <span class="countdown-value" id="cdMinutes">00</span>
+                <span class="countdown-label">min</span>
+              </div>
+              <span class="countdown-sep">:</span>
+              <div class="countdown-unit">
+                <span class="countdown-value" id="cdSeconds">00</span>
+                <span class="countdown-label">sec</span>
+              </div>
+            </div>
+            <p class="active-target" id="activeTarget"></p>
+            <p class="active-past" id="activePast" hidden>This event has passed.</p>
+            <button class="share-btn ghost" id="shareBtn" type="button">🔗 Copy Share Link</button>
+            <p class="share-toast" id="shareToast" hidden>Link copied!</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section aria-labelledby="eventsHeading" class="events-section">
+      <h2 id="eventsHeading">My Events</h2>
+      <div class="events-grid" id="eventsGrid">
+        <p class="events-empty" id="eventsEmpty">No events yet. Create your first countdown above.</p>
+      </div>
+    </section>
+
+    <section class="seo-content-area glass-card">
+      <h2>Countdown Timer: Track Any Event and Share the Moment</h2>
+      <div class="seo-grid">
+        <figure>
+          <img src="/assets/images/countdown/countdown-create.png" alt="Creating a new countdown event with name, date, and color theme" loading="lazy" decoding="async" />
+          <figcaption>Create events with a name, target date, and color theme in seconds.</figcaption>
+        </figure>
+        <figure>
+          <img src="/assets/images/countdown/countdown-live.png" alt="Live animated countdown timer showing days, hours, minutes, and seconds" loading="lazy" decoding="async" />
+          <figcaption>Watch a live animated countdown with days, hours, minutes, and seconds.</figcaption>
+        </figure>
+      </div>
+
+      <div class="seo-toc">
+        <h3>Table of Contents</h3>
+        <ol>
+          <li><a href="#what-is-countdown-timer">What is Countdown Timer?</a></li>
+          <li><a href="#who-should-use-countdown-timer">Who should use Countdown Timer?</a></li>
+          <li><a href="#how-countdown-timer-works">How Countdown Timer works</a></li>
+          <li><a href="#countdown-timer-features">Countdown Timer features</a></li>
+          <li><a href="#countdown-timer-use-cases">Countdown Timer use cases</a></li>
+          <li><a href="#countdown-timer-tips">Tips for better countdowns</a></li>
+          <li><a href="#countdown-timer-alternatives">Alternatives to Countdown Timer</a></li>
+          <li><a href="#why-countdown-timer-works">Why Countdown Timer works</a></li>
+        </ol>
+      </div>
+
+      <section id="what-is-countdown-timer">
+        <h3>1. What is Countdown Timer?</h3>
+        <p>Countdown Timer is a free browser-based tool that lets you create named events with a target date and time, then displays a live animated countdown showing days, hours, minutes, and seconds remaining. Every event gets a shareable link so you can send the countdown to anyone — no accounts or downloads required.</p>
+      </section>
+
+      <section id="who-should-use-countdown-timer">
+        <h3>2. Who should use Countdown Timer?</h3>
+        <p>Use this tool if you are tracking a product launch, vacation, birthday, holiday, wedding, exam, sprint deadline, or any date that matters. It is perfect for individuals, teams, event planners, and anyone who wants a visual reminder of how much time is left.</p>
+      </section>
+
+      <section id="how-countdown-timer-works">
+        <h3>3. How Countdown Timer works</h3>
+        <p>Enter an event name, pick a date and time, choose a color theme, and hit Create. The countdown starts immediately with a live display. Copy the share link to send the same countdown to friends, colleagues, or social media. Your events are saved locally so you can return anytime.</p>
+      </section>
+
+      <section id="countdown-timer-features">
+        <h3>4. Countdown Timer features</h3>
+        <ul>
+          <li><strong>Live animated countdown:</strong> Days, hours, minutes, and seconds ticking in real time.</li>
+          <li><strong>Shareable links:</strong> One-click copy link — recipient sees the exact same countdown.</li>
+          <li><strong>Color themes:</strong> Five preset themes to personalize each event.</li>
+          <li><strong>Multiple events:</strong> Track as many events as you like in your local list.</li>
+          <li><strong>Past event handling:</strong> See how long ago an event passed with a clear visual indicator.</li>
+          <li><strong>No sign-up:</strong> Works entirely in the browser with no account needed.</li>
+        </ul>
+      </section>
+
+      <section id="countdown-timer-use-cases">
+        <h3>5. Countdown Timer use cases</h3>
+        <p>Countdown Timer is built for tracking product launches, team milestones, vacations, birthdays, holidays, weddings, exams, and sprint deadlines. Teams can share a launch countdown in Slack or email. Individuals can keep a personal list of upcoming dates that matter to them.</p>
+      </section>
+
+      <section id="countdown-timer-tips">
+        <h3>6. Tips for better countdowns</h3>
+        <p>Give events clear, specific names so they are easy to scan in your list. Use distinct colors for different event types. Share the link early so everyone can watch the countdown together. For recurring events, create a new countdown each cycle.</p>
+      </section>
+
+      <section id="countdown-timer-alternatives">
+        <h3>7. Alternatives to Countdown Timer</h3>
+        <p>For meeting and ritual timing, <a href="/apps/timer/">Cadence Timer Studio</a> offers multi-stage countdowns with audio cues. For team planning, <a href="/apps/planning-poker/">Planning Poker</a> keeps estimation sessions on track.</p>
+      </section>
+
+      <section id="why-countdown-timer-works">
+        <h3>8. Why Countdown Timer works</h3>
+        <p>Countdown Timer works because it makes time visible and shareable. A live countdown creates anticipation, keeps teams aligned on deadlines, and turns any date into a shared experience — all without requiring an account or a download.</p>
+      </section>
+    </section>
+  </main>
