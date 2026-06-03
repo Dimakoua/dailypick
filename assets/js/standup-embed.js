@@ -12,11 +12,8 @@
   'use strict';
 
   // ---- Detect embed mode ----
-  var isEmbed = false;
-  try {
-    isEmbed = new URLSearchParams(window.location.search).get('embed') === '1';
-  } catch (e) { /* ignore */ }
-  if (!isEmbed) return;
+  var search = window.location.search;
+  if (!search || search.indexOf('embed=1') === -1) return;
 
   // ---- 1. Inject embed CSS immediately (synchronously, before paint) ----
   var css = [
@@ -35,6 +32,7 @@
     /* Reset main element */
     'main { padding: 0 !important; margin: 0 !important; min-height: unset !important; height: auto !important; max-width: unset !important; width: 100% !important; }',
     'main > h1:first-child { display: none !important; }',
+    '.similar-apps-section { display: none !important; }',
   ].join('\n');
 
   // Game-specific hiding + layout reset (matched by URL path)
@@ -116,13 +114,12 @@
   var styleEl = document.createElement('style');
   styleEl.textContent = css;
   // Insert as first element in <head> so it applies before any other styles
-  var head = document.head || document.getElementsByTagName('head')[0];
+  var head = document.head;
   if (head) {
     head.insertBefore(styleEl, head.firstChild);
   } else {
-    // Fallback: wait for head to exist
     document.addEventListener('DOMContentLoaded', function () {
-      var h = document.head || document.getElementsByTagName('head')[0];
+      var h = document.head;
       if (h) h.insertBefore(styleEl, h.firstChild);
     });
   }
