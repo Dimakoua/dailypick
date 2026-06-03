@@ -81,6 +81,15 @@
     "description": "Unleash physics-based chaos! Push the ball into moving traps, triggering wild special effects with every capture."
   },
   {
+    "id": "standup-panel",
+    "name": "Daily Stand-up Panel",
+    "path": "/apps/standup-panel/",
+    "category": "standup",
+    "footerGroup": "Stand-up",
+    "emoji": "📋",
+    "description": "Your all-in-one stand-up dashboard. Spin the wheel, track the timer, manage the queue, and view stats in a single view."
+  },
+  {
     "id": "mimic-master",
     "name": "Mimic Master",
     "path": "/apps/mimic-master/",
@@ -891,7 +900,7 @@
     "id": "world-cup-team-wheel",
     "name": "World Cup Team Wheel",
     "path": "/apps/world-cup-team-wheel/",
-    "category": "games",
+    "category": "fifa-2026",
     "footerGroup": "Games",
     "emoji": "⚽",
     "description": "Spin the wheel for a random FIFA World Cup 2026 team — all 48 nations or filter by UEFA, CONMEBOL, CAF, AFC, CONCACAF, or Title Contenders."

@@ -1,0 +1,208 @@
+---
+layout: base_app.njk
+title: "Daily Stand-up Panel – All-in-One Stand-up Dashboard | Daily Pick"
+description: "Run your entire daily stand-up from one screen. Spin the wheel to pick speakers, track time with the built-in timer, manage the speaking queue, and view session stats."
+keywords: "daily standup, standup panel, standup timer, team meeting, scrum meeting, speaker wheel, meeting timer, standup dashboard, daily pick"
+canonical: "https://dailypick.dev/apps/standup-panel/"
+ogImageAlt: "Daily Stand-up Panel showing wheel, timer, queue, and stats in one dashboard"
+appStyles: |
+  <link href="/apps/standup-panel/style.css" rel="stylesheet" />
+headExtra: |
+  <script defer="" src="/assets/js/standup-data.js"></script>
+  <script defer="" src="/assets/js/standup-stats.js"></script>
+  <script defer="" src="/assets/js/wheel-engine.js"></script>
+  <script defer="" src="/apps/standup-panel/script.js"></script>
+---
+<main id="main" data-page-type="standup" class="sup-page">
+  <header class="sup-header glass-card">
+    <div class="sup-header__titles">
+      <p class="sup-eyebrow">Stand-up Dashboard</p>
+      <h1>📋 Daily Stand-up Panel</h1>
+      <p>Spin the wheel, track the timer, manage the queue, and view stats — all in one place.</p>
+    </div>
+    <div class="sup-header__actions">
+      <button type="button" id="supResetBtn" class="sup-btn sup-btn--ghost">🔄 New Round</button>
+      <a href="/apps/roster/" class="sup-btn sup-btn--ghost">⚙️ Roster</a>
+    </div>
+  </header>
+
+  <div class="sup-grid">
+    <!-- Wheel Section -->
+    <section class="sup-card glass-card sup-wheel-card" aria-labelledby="supWheelHeading">
+      <h2 id="supWheelHeading" class="sup-card__title">🎡 Pick Speaker</h2>
+      <div class="sup-wheel-wrap">
+        <div class="sup-wheel-container">
+          <div class="sup-wheel-indicator"></div>
+          <canvas id="supWheel" width="340" height="340"></canvas>
+        </div>
+        <button type="button" id="supSpinBtn" class="sup-spin-btn">🎲 SPIN</button>
+        <div id="supWinner" class="sup-winner" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- Timer Section -->
+    <section class="sup-card glass-card sup-timer-card" aria-labelledby="supTimerHeading">
+      <h2 id="supTimerHeading" class="sup-card__title">⏱️ Timer</h2>
+      <div class="sup-timer-body">
+        <div class="sup-timer-display" id="supTimerDisplay" aria-live="polite">05:00</div>
+        <div class="sup-timer-presets" role="group" aria-label="Timer presets">
+          <button type="button" class="sup-preset-btn" data-seconds="60">1m</button>
+          <button type="button" class="sup-preset-btn" data-seconds="180">3m</button>
+          <button type="button" class="sup-preset-btn sup-preset-btn--active" data-seconds="300">5m</button>
+          <button type="button" class="sup-preset-btn" data-seconds="600">10m</button>
+          <button type="button" class="sup-preset-btn" data-seconds="900">15m</button>
+        </div>
+        <div class="sup-timer-custom">
+          <label>
+            <input type="number" id="supTimerMin" min="0" max="999" value="5" inputmode="numeric" aria-label="Minutes" />
+            <span>min</span>
+          </label>
+          <label>
+            <input type="number" id="supTimerSec" min="0" max="59" value="0" inputmode="numeric" aria-label="Seconds" />
+            <span>sec</span>
+          </label>
+        </div>
+        <div class="sup-timer-controls">
+          <button type="button" id="supTimerStartBtn" class="sup-btn sup-btn--primary">Start</button>
+          <button type="button" id="supTimerPauseBtn" class="sup-btn sup-btn--ghost" disabled>Pause</button>
+          <button type="button" id="supTimerResetBtn" class="sup-btn sup-btn--ghost" disabled>Reset</button>
+        </div>
+        <p class="sup-timer-status" id="supTimerStatus" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- Queue Section -->
+    <section class="sup-card glass-card sup-queue-card" aria-labelledby="supQueueHeading">
+      <h2 id="supQueueHeading" class="sup-card__title">📝 Queue</h2>
+      <div class="sup-queue-body">
+        <div class="sup-current-speaker" id="supCurrentSpeaker" data-empty="true" aria-live="polite">
+          Spin the wheel to pick the first speaker
+        </div>
+        <div class="sup-queue-section">
+          <h3 class="sup-queue-label">Up Next</h3>
+          <ul class="sup-upcoming-list" id="supUpcomingList" aria-label="Upcoming speakers"></ul>
+        </div>
+        <div class="sup-queue-section sup-completed-section">
+          <details>
+            <summary class="sup-queue-label">Completed <span id="supCompletedCount">(0)</span></summary>
+            <ul class="sup-completed-list" id="supCompletedList" aria-label="Completed speakers"></ul>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="sup-card glass-card sup-stats-card" aria-labelledby="supStatsHeading">
+      <h2 id="supStatsHeading" class="sup-card__title">📊 Stats</h2>
+      <div class="sup-stats-body">
+        <div class="sup-stats-kpis">
+          <div class="sup-kpi">
+            <span class="sup-kpi__label">Streak</span>
+            <span class="sup-kpi__value" id="supStatStreak">0</span>
+            <span class="sup-kpi__unit">days</span>
+          </div>
+          <div class="sup-kpi">
+            <span class="sup-kpi__label">Sessions</span>
+            <span class="sup-kpi__value" id="supStatSessions">0</span>
+          </div>
+          <div class="sup-kpi">
+            <span class="sup-kpi__label">Avg Duration</span>
+            <span class="sup-kpi__value" id="supStatAvgDuration">—</span>
+          </div>
+          <div class="sup-kpi">
+            <span class="sup-kpi__label">This Month</span>
+            <span class="sup-kpi__value" id="supStatThisMonth">0</span>
+          </div>
+        </div>
+        <div class="sup-stats-recent">
+          <h3 class="sup-stats-recent__title">Recent Speakers</h3>
+          <div id="supRecentSpeakers" class="sup-recent-list"></div>
+        </div>
+        <div class="sup-stats-actions">
+          <a href="/standups/stats/" class="sup-btn sup-btn--ghost sup-btn--sm">Full Stats →</a>
+          <button type="button" id="supClearStatsBtn" class="sup-btn sup-btn--ghost sup-btn--sm sup-btn--danger">Clear Data</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="seo-content-area glass-card">
+    <h2>Daily Stand-up Panel: Your All-in-One Stand-up Dashboard</h2>
+    <div class="seo-grid">
+      <div>
+        <p>The Daily Stand-up Panel brings together everything you need to run a smooth daily stand-up meeting. Instead of juggling multiple tabs and tools, get a spinning wheel, countdown timer, speaker queue, and session stats in a single view.</p>
+        <p>Built for scrum masters, engineering leads, and facilitators who want to keep stand-ups focused, fair, and on time. No sign-up required — everything runs in your browser.</p>
+      </div>
+      <div>
+        <h3>Why use the stand-up panel?</h3>
+        <ul>
+          <li><strong>One screen:</strong> Wheel, timer, queue, and stats together — no tab switching.</li>
+          <li><strong>Fair speaker selection:</strong> The wheel picks randomly so everyone gets a turn.</li>
+          <li><strong>Built-in timing:</strong> Preset durations from 1 to 15 minutes, or set a custom time.</li>
+          <li><strong>Session tracking:</strong> Streak counter, average duration, and recent speaker history.</li>
+          <li><strong>Works with your roster:</strong> Reads the same player list from Settings → Roster.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="seo-toc">
+      <h3>Table of Contents</h3>
+      <ol>
+        <li><a href="#what-is-standup-panel">What is the Daily Stand-up Panel?</a></li>
+        <li><a href="#how-it-works">How the stand-up panel works</a></li>
+        <li><a href="#features">Key features</a></li>
+        <li><a href="#use-cases">Use cases</a></li>
+        <li><a href="#tips">Tips for better stand-ups</a></li>
+        <li><a href="#feedback">We want to hear your feedback</a></li>
+      </ol>
+    </div>
+
+    <section id="what-is-standup-panel">
+      <h3>1. What is the Daily Stand-up Panel?</h3>
+      <p>The Daily Stand-up Panel is a unified dashboard that combines a speaker wheel, countdown timer, speaking queue, and session stats into a single page. It replaces the need to open separate tools for each part of your stand-up routine.</p>
+    </section>
+
+    <section id="how-it-works">
+      <h3>2. How the stand-up panel works</h3>
+      <ol>
+        <li><strong>Set up your roster:</strong> Visit the <a href="/apps/roster/">Roster page</a> to add your team members, or the panel will use a default list.</li>
+        <li><strong>Spin the wheel:</strong> Click the spin button to randomly pick the next speaker.</li>
+        <li><strong>Start the timer:</strong> Choose a preset duration or set a custom time, then hit Start.</li>
+        <li><strong>Track the queue:</strong> See who's speaking now, who's up next, and who's already gone.</li>
+        <li><strong>Review stats:</strong> Check your streak, session count, and average meeting duration.</li>
+      </ol>
+    </section>
+
+    <section id="features">
+      <h3>3. Key features</h3>
+      <ul>
+        <li><strong>Integrated wheel:</strong> Canvas-based spinning wheel with your team roster.</li>
+        <li><strong>Quick timer:</strong> Preset buttons (1m, 3m, 5m, 10m, 15m) plus custom input.</li>
+        <li><strong>Speaker queue:</strong> Current, upcoming, and completed speakers at a glance.</li>
+        <li><strong>Session stats:</strong> Streak tracking, total sessions, average duration, monthly count.</li>
+        <li><strong>New Round button:</strong> Reset the queue and start fresh without reloading.</li>
+        <li><strong>Persistent roster:</strong> Reads from the same localStorage roster used by all Daily Pick apps.</li>
+      </ul>
+    </section>
+
+    <section id="use-cases">
+      <h3>4. Use cases</h3>
+      <p>The stand-up panel is ideal for daily scrum meetings, team check-ins, sprint retrospectives, and any recurring meeting where you need to manage speaking order and time. It works great on a shared screen in the room or on a shared call.</p>
+    </section>
+
+    <section id="tips">
+      <h3>5. Tips for better stand-ups</h3>
+      <ul>
+        <li>Keep your roster updated so the wheel always reflects the current team.</li>
+        <li>Use the 5-minute preset for quick stand-ups, or 15 minutes for deeper syncs.</li>
+        <li>Click "New Round" at the start of each meeting to reset the queue.</li>
+        <li>Check the streak stat to build a consistent daily habit.</li>
+      </ul>
+    </section>
+
+    <section id="feedback">
+      <h3>6. We want to hear your feedback</h3>
+      <p>Have an idea to make the stand-up panel better? Share your suggestions on the <a href="/feedback/">Feedback page</a>. We build tools based on what teams actually need.</p>
+    </section>
+  </section>
+</main>

@@ -81,6 +81,15 @@ module.exports = [
     description: "Unleash physics-based chaos! Push the ball into moving traps, triggering wild special effects with every capture."
   },
   {
+    id: "standup-panel",
+    name: "Daily Stand-up Panel",
+    path: "/apps/standup-panel/",
+    category: "standup",
+    footerGroup: "Stand-up",
+    emoji: "📋",
+    description: "Your all-in-one stand-up dashboard. Spin the wheel, track the timer, manage the queue, and view stats in a single view."
+  },
+  {
     id: "mimic-master",
     name: "Mimic Master",
     path: "/apps/mimic-master/",
