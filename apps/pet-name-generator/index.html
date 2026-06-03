@@ -1,0 +1,228 @@
+---
+layout: base_app.njk
+title: "Pet Name Generator – Dog, Cat & Pet Names | Daily Pick"
+description: "Generate cute, funny, and unique pet names by type. Perfect for naming your new dog, cat, fish, bird, or any beloved companion."
+keywords: "pet name generator, dog name generator, cat name generator, pet names, cute pet names, funny pet names, unique pet names"
+canonical: "https://dailypick.dev/apps/pet-name-generator/"
+ogImageAlt: "A playful pet name generator with dog, cat, and fish categories"
+appStyles: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="pet-name-page" id="main">
+  <header class="page-hero glass-card">
+    <div>
+      <p class="hero-eyebrow">Find the Perfect Name</p>
+      <h1>🐾 Pet Name Generator</h1>
+      <p>Generate adorable, funny, or unique pet names by type. Whether you have a dog, cat, fish, bird, or something more exotic — find a name that fits.</p>
+    </div>
+  </header>
+
+  <section class="pet-name-controls glass-card">
+    <div class="control-group">
+      <p class="control-label">Pet type</p>
+      <div class="toggle-row" role="tablist" aria-label="Pet type">
+        <button class="toggle-btn active" data-setting="type" data-value="dog" type="button">🐶 Dog</button>
+        <button class="toggle-btn" data-setting="type" data-value="cat" type="button">🐱 Cat</button>
+        <button class="toggle-btn" data-setting="type" data-value="fish" type="button">🐠 Fish</button>
+        <button class="toggle-btn" data-setting="type" data-value="bird" type="button">🐦 Bird</button>
+        <button class="toggle-btn" data-setting="type" data-value="any" type="button">🎲 Any</button>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <p class="control-label">Style</p>
+      <div class="toggle-row" role="tablist" aria-label="Name style">
+        <button class="toggle-btn active" data-setting="style" data-value="cute" type="button">💕 Cute</button>
+        <button class="toggle-btn" data-setting="style" data-value="funny" type="button">😂 Funny</button>
+        <button class="toggle-btn" data-setting="style" data-value="classic" type="button">👑 Classic</button>
+        <button class="toggle-btn" data-setting="style" data-value="unique" type="button">✨ Unique</button>
+      </div>
+    </div>
+
+    <div class="action-row">
+      <button id="generateBtn" class="btn btn--accent" type="button">🎲 Generate Name</button>
+      <button id="copyBtn" class="btn btn--secondary" type="button">📋 Copy Name</button>
+    </div>
+  </section>
+
+  <section class="pet-name-card glass-card">
+    <div class="pet-name-header">
+      <p class="pet-name-emoji">🐕</p>
+      <p class="pet-name-label">Your pet name</p>
+    </div>
+    <div id="petNameResult" class="pet-name-result">
+      Pick a pet type and style, then click Generate Name.
+    </div>
+    <p class="pet-name-subtext">Change the type or style above for different name suggestions.</p>
+  </section>
+
+  <section class="seo-content-area glass-card">
+    <h2>Pet Name Generator — cute, funny, and unique names for your companion</h2>
+    <p>Pet Name Generator is a fun, lightweight tool that helps you find the perfect name for your furry, feathered, or finned friend. Choose a pet type and name style, then generate a random name in an instant.</p>
+    <p>Whether you just adopted a puppy, welcomed a kitten, or need a name for your new goldfish, this generator offers hundreds of curated names across multiple categories. It is built for pet owners, animal lovers, and anyone who wants a quick dose of naming inspiration.</p>
+    <p>No signup, no clutter — just pick your preferences and discover a name that feels right.</p>
+
+    <h2>Table of Contents</h2>
+    <ul>
+      <li><a href="#what-is-pet-name-generator">1. What Is Pet Name Generator?</a></li>
+      <li><a href="#how-to-use-it">2. How to Use It?</a></li>
+      <li><a href="#pet-types">3. Pet Types</a></li>
+      <li><a href="#name-styles">4. Name Styles</a></li>
+      <li><a href="#key-features">5. Key Features</a></li>
+      <li><a href="#when-to-use-pet-name-generator">6. When to Use Pet Name Generator</a></li>
+      <li><a href="#sharing-names">7. Copying &amp; Sharing Names</a></li>
+      <li><a href="#feedback">8. Feedback</a></li>
+      <li><a href="#alternative-tools">9. Alternative Tools</a></li>
+    </ul>
+
+    <h2 id="what-is-pet-name-generator">1. What Is Pet Name Generator?</h2>
+    <p>Pet Name Generator is a browser-based tool that creates random pet names based on your chosen pet type and naming style. It is designed for new pet owners, experienced animal lovers, and anyone who wants a quick, fun way to brainstorm names.</p>
+    <p>The primary keyword is pet name generator, and it covers dogs, cats, fish, birds, and a mixed "any" category for all animals.</p>
+
+    <h2 id="how-to-use-it">2. How to Use It?</h2>
+    <ol>
+      <li>Select a pet type: Dog, Cat, Fish, Bird, or Any.</li>
+      <li>Choose a name style: Cute, Funny, Classic, or Unique.</li>
+      <li>Click <strong>Generate Name</strong> to reveal a random pet name.</li>
+      <li>Click <strong>Copy Name</strong> to save it to your clipboard.</li>
+      <li>Generate again anytime for a fresh suggestion.</li>
+    </ol>
+
+    <h2 id="pet-types">3. Pet Types</h2>
+    <p><strong>Dog names</strong> include playful, loyal, and energetic options that suit man's best friend. <strong>Cat names</strong> range from regal and mysterious to silly and endearing. <strong>Fish names</strong> offer aquatic-inspired and whimsical picks. <strong>Bird names</strong> cover everything from chirpy to majestic. The <strong>Any</strong> category mixes all types together for maximum variety.</p>
+
+    <h2 id="name-styles">4. Name Styles</h2>
+    <p><strong>Cute</strong> names are sweet and endearing — perfect for cuddly companions. <strong>Funny</strong> names bring humor and personality. <strong>Classic</strong> names are timeless and well-loved. <strong>Unique</strong> names stand out at the dog park and make your pet one of a kind.</p>
+
+    <h2 id="key-features">5. Key Features</h2>
+    <ul>
+      <li><strong>Five pet types:</strong> Dog, Cat, Fish, Bird, and Any for all animals.</li>
+      <li><strong>Four name styles:</strong> Cute, Funny, Classic, and Unique to match your pet's personality.</li>
+      <li><strong>Hundreds of names:</strong> A large curated pool ensures fresh suggestions every time.</li>
+      <li><strong>Instant generation:</strong> One click reveals a new name immediately.</li>
+      <li><strong>Copy to clipboard:</strong> Save or share any generated name with a single click.</li>
+      <li><strong>No signup required:</strong> Start generating names instantly — no account needed.</li>
+      <li><strong>Mobile-friendly:</strong> Works seamlessly on phones, tablets, and desktops.</li>
+    </ul>
+
+    <h2 id="when-to-use-pet-name-generator">6. When to Use Pet Name Generator</h2>
+    <p>Use Pet Name Generator whenever you need naming inspiration for a new or existing pet. It is especially helpful in these situations:</p>
+    <ul>
+      <li>You just adopted a new pet and want to explore name options.</li>
+      <li>You are fostering an animal and need a temporary or permanent name.</li>
+      <li>You want to rename a rescue pet with a fresh start.</li>
+      <li>You are helping a child pick a name for their first pet.</li>
+      <li>You need a fun icebreaker or creative exercise for a team or classroom.</li>
+      <li>You are writing a story, game, or project and need animal character names.</li>
+    </ul>
+
+    <h2 id="sharing-names">7. Copying &amp; Sharing Names</h2>
+    <p>Every generated name can be copied to your clipboard with one click. Share it via chat, email, or social media, or save it in your notes for later.</p>
+    <p>Send the page link to friends, family, or teammates so they can generate their own pet names — great for group decisions, family voting, or just having fun together.</p>
+
+    <h2 id="feedback">8. Feedback</h2>
+    <p>If you have ideas for new pet types, name styles, or additional features, please share them on the <a href="/feedback/">Feedback page</a>. Your input helps us make the generator better for everyone.</p>
+
+    <h2 id="alternative-tools">9. Alternative Tools</h2>
+    <p>For more random inspiration, try the <a href="/apps/fortune-cookie-generator/">Fortune Cookie Generator</a> for daily messages. If you need to pick from a custom list, the <a href="/apps/random-name-picker/">Random Name Picker</a> lets you enter your own options. For creative brainstorming, the <a href="/apps/random-letter-generator/">Random Letter Generator</a> is a great companion tool.</p>
+  </section>
+</main>
+
+<script>
+  const PET_NAMES = {
+    dog: {
+      cute: ['Biscuit', 'Clover', 'Mochi', 'Peanut', 'Nugget', 'Button', 'Sprinkle', 'Waffles', 'Cinnamon', 'Maple', 'Teddy', 'Bubbles', 'Honey', 'Cupcake', 'Pickles', 'Muffin', 'Jellybean', 'Pudding', 'Snickers', 'Twinkle'],
+      funny: ['Bark Twain', 'Sir Waggington', 'Chewbarka', 'Droolius Caesar', 'Bark Obama', 'Furdinand', 'Lord Barkley', 'Woofgang Puck', 'Pawdrey Hepburn', 'Jimmy Chew', 'Barkley', 'Snoop Doggy Dog', 'Mary Puppins', 'Pup Tart', 'Bark Wahlberg', 'Kanye Westie', 'Woof Blitzer', 'Hairy Pawter', 'Sherlock Bones', 'Chairman Meow'],
+      classic: ['Max', 'Buddy', 'Charlie', 'Cooper', 'Rocky', 'Bear', 'Duke', 'Tucker', 'Jack', 'Oliver', 'Milo', 'Leo', 'Teddy', 'Winston', 'Louie', 'Bentley', 'Zeus', 'Rusty', 'Rosie', 'Sadie'],
+      unique: ['Zephyr', 'Koda', 'Nimbus', 'Sable', 'Onyx', 'Indigo', 'Rune', 'Fjord', 'Basil', 'Cosmos', 'Ember', 'Sage', 'Thistle', 'Wren', 'Otis', 'Juno', 'Arlo', 'Nala', 'Kova', 'Ziggy']
+    },
+    cat: {
+      cute: ['Mittens', 'Whiskers', 'Pudding', 'Mochi', 'Noodle', 'Biscuit', 'Pompom', 'Tofu', 'Marmalade', 'Pipsqueak', 'Snuggles', 'Cuddles', 'Buttons', 'Patches', 'Tinkerbell', 'Fuzzball', 'Nibbles', 'Gingersnap', 'Pancake', 'Wiggles'],
+      funny: ['Chairman Meow', 'Cat Stevens', 'Meow Zedong', 'Fuzz Aldrin', 'Purr-cival', 'Clawdia', 'Meow-cat', 'Catrick Swayze', 'Paw-l McCartney', 'Meow-lline', 'Feline Dion', 'Cat Benatar', 'Purr-lock Holmes', 'Meow-ricio', 'Whisker Biscuit', 'Sir Meows-a-Lot', 'Catastrophe', 'Meow-chiavelli', 'Fur-guson', 'Purr-ince'],
+      classic: ['Luna', 'Oliver', 'Leo', 'Milo', 'Charlie', 'Max', 'Simba', 'Jasper', 'Felix', 'Shadow', 'Smokey', 'Tiger', 'Oscar', 'Tigger', 'Ginger', 'Boots', 'Lucky', 'Cleo', 'Cleopatra', 'Sophie'],
+      unique: ['Nyx', 'Sphinx', 'Zephyr', 'Obsidian', 'Sable', 'Rune', 'Indigo', 'Onyx', 'Ember', 'Cosmos', 'Jinx', 'Mystique', 'Phantom', 'Raven', 'Sage', 'Thistle', 'Vesper', 'Ziggy', 'Nimbus', 'Koda']
+    },
+    fish: {
+      cute: ['Bubbles', 'Splash', 'Coral', 'Pearl', 'Nemo', 'Dory', 'Gilly', 'Finny', 'Marina', 'Pebbles', 'Sprinkle', 'Jellybean', 'Cupcake', 'Wiggles', 'Snappy', 'Puddles', 'Twinkle', 'Sparkle', 'Glitter', 'Buttons'],
+      funny: ['Gill Clinton', 'Fin Diesel', 'Swim-pson', 'Captain Fish', 'Cod Stewart', 'Tanks-a-Lot', 'Barrack O-Fin', 'Fin-tastic', 'Gill-ty as Charged', 'Swim Shady', 'James Pond', 'Codename', 'Trout-berg', 'Salmon Rushdie', 'Gill-ian Anderson', 'Fin-ley', 'Sole-mate', 'Reef-er Madness', 'Anchovy Dave', 'Gill-bert'],
+      classic: ['Goldie', 'Bubbles', 'Nemo', 'Dory', 'Finley', 'Blue', 'Splash', 'Coral', 'Marina', 'Aqua', 'Ocean', 'River', 'Wave', 'Pearl', 'Sandy', 'Shadow', 'Flash', 'Comet', 'Sunny', 'Sky'],
+      unique: ['Zephyr', 'Nimbus', 'Abyss', 'Nebula', 'Cosmos', 'Ember', 'Onyx', 'Sable', 'Indigo', 'Rune', 'Koi', 'Zen', 'Mist', 'Drift', 'Reef', 'Tide', 'Coral', 'Sage', 'Thistle', 'Vesper']
+    },
+    bird: {
+      cute: ['Tweety', 'Sunny', 'Pepper', 'Kiwi', 'Mango', 'Peaches', 'Pip', 'Chirpy', 'Wings', 'Feathers', 'Nibbles', 'Buttons', 'Twinkle', 'Sparkle', 'Cuddles', 'Snuggles', 'Biscuit', 'Pudding', 'Sprinkle', 'Jellybean'],
+      funny: ['Tweety McBird', 'Beak-a-Boo', 'Flap Jack', 'Wingston', 'Bird Reynolds', 'Pecky Perry', 'Feather Locklear', 'Talon-tino', 'Beaker', 'Robin Williams', 'Flamingo-lio', 'Parrot Keet', 'Eagle-eye', 'Hawk-ward', 'Duck Norris', 'Swan-a Know', 'Owl-capino', 'Pea-head', 'Crow-byn', 'Pigeon-ing'],
+      classic: ['Charlie', 'Max', 'Buddy', 'Angel', 'Sunny', 'Sky', 'Blue', 'Kiwi', 'Rio', 'Mango', 'Spike', 'Shadow', 'Lucky', 'Coco', 'Pepper', 'Olive', 'Ruby', 'Goldie', 'Sapphire', 'Jade'],
+      unique: ['Zephyr', 'Nimbus', 'Sable', 'Onyx', 'Indigo', 'Rune', 'Ember', 'Cosmos', 'Vesper', 'Thistle', 'Sage', 'Jinx', 'Nyx', 'Phoenix', 'Raven', 'Wren', 'Kestrel', 'Lark', 'Finch', 'Sparrow']
+    }
+  };
+
+  const ANY_NAMES = {};
+  for (const style of ['cute', 'funny', 'classic', 'unique']) {
+    ANY_NAMES[style] = [
+      ...PET_NAMES.dog[style],
+      ...PET_NAMES.cat[style],
+      ...PET_NAMES.fish[style],
+      ...PET_NAMES.bird[style]
+    ];
+  }
+
+  const PET_EMOJI = {
+    dog: '🐕',
+    cat: '🐈',
+    fish: '🐠',
+    bird: '🐦',
+    any: '🎲'
+  };
+
+  const resultEl = document.getElementById('petNameResult');
+  const emojiEl = document.querySelector('.pet-name-emoji');
+  const labelEl = document.querySelector('.pet-name-label');
+  const generateBtn = document.getElementById('generateBtn');
+  const copyBtn = document.getElementById('copyBtn');
+  const toggleButtons = document.querySelectorAll('.toggle-btn');
+
+  function chooseRandom(list) {
+    return list[Math.floor(Math.random() * list.length)];
+  }
+
+  function activeSetting(name) {
+    return document.querySelector(`.toggle-btn[data-setting="${name}"].active`).dataset.value;
+  }
+
+  function renderName(name, type) {
+    resultEl.textContent = name;
+    emojiEl.textContent = PET_EMOJI[type];
+    labelEl.textContent = `Your ${type === 'any' ? 'pet' : type} name`;
+  }
+
+  function generateName() {
+    const type = activeSetting('type');
+    const style = activeSetting('style');
+    const name = chooseRandom(PET_NAMES[type]?.[style] || ANY_NAMES[style]);
+    renderName(name, type);
+  }
+
+  function copyName() {
+    const text = resultEl.textContent.trim();
+    if (!text || text.startsWith('Pick a pet type')) return;
+
+    navigator.clipboard.writeText(text).then(() => {
+      copyBtn.textContent = '✅ Copied';
+      setTimeout(() => { copyBtn.textContent = '📋 Copy Name'; }, 1500);
+    }).catch(() => {
+      copyBtn.textContent = '⚠️ Copy failed';
+      setTimeout(() => { copyBtn.textContent = '📋 Copy Name'; }, 1500);
+    });
+  }
+
+  toggleButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const setting = button.dataset.setting;
+      document.querySelectorAll(`.toggle-btn[data-setting="${setting}"]`).forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+    });
+  });
+
+  generateBtn.addEventListener('click', generateName);
+  copyBtn.addEventListener('click', copyName);
+</script>
