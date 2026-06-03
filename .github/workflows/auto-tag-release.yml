@@ -5,6 +5,11 @@ on:
     branches:
       - main
 
+# Prevent race conditions if multiple PRs are merged quickly
+concurrency:
+  group: "release-${{ github.ref }}"
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
@@ -22,8 +27,10 @@ jobs:
         uses: paulhatch/semantic-version@v5.4.0
         with:
           tag_prefix: "v"
-          major_pattern: "(MAJOR)"
-          minor_pattern: "(MINOR)"
+          # Now it correctly looks for "BREAKING CHANGE:" or "feat!:" for Major bumps
+          major_pattern: "(MAJOR|BREAKING CHANGE|feat!:|fix!:)"
+          # Looks for "feat:" for Minor bumps
+          minor_pattern: "(MINOR|feat:)"
           version_format: "${major}.${minor}.${patch}"
           bump_each_commit: false
           search_commit_body: true
@@ -33,9 +40,9 @@ jobs:
         id: check_tag
         run: |
           if git rev-parse "refs/tags/${{ steps.semver.outputs.version_tag }}" >/dev/null 2>&1; then
-            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "exists=true" >> "$GITHUB_OUTPUT"
           else
-            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Create tag
@@ -46,34 +53,14 @@ jobs:
           git tag -a "${{ steps.semver.outputs.version_tag }}" -m "Release ${{ steps.semver.outputs.version }}"
           git push origin "${{ steps.semver.outputs.version_tag }}"
 
-      - name: Generate release notes
-        if: steps.check_tag.outputs.exists == 'false'
-        id: release_notes
-        run: |
-          PREV_TAG=$(git describe --tags --abbrev=0 HEAD~1 2>/dev/null || echo "")
-          if [ -z "$PREV_TAG" ]; then
-            NOTES=$(git log --oneline --no-merges -20)
-          else
-            NOTES=$(git log --oneline --no-merges "${PREV_TAG}..HEAD")
-          fi
-          # Escape for GitHub Actions output
-          NOTES="${NOTES//'%'/'%25'}"
-          NOTES="${NOTES//$'\n'/'%0A'}"
-          NOTES="${NOTES//$'\r'/'%0D'}"
-          echo "notes=$NOTES" >> $GITHUB_OUTPUT
-
       - name: Create GitHub Release
         if: steps.check_tag.outputs.exists == 'false'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.semver.outputs.version_tag }}
           name: "Release ${{ steps.semver.outputs.version }}"
-          body: |
-            ## What's Changed
-
-            ${{ steps.release_notes.outputs.notes }}
-
-            **Full Changelog**: https://github.com/${{ github.repository }}/compare/${{ steps.semver.outputs.previous_version_tag }}...${{ steps.semver.outputs.version_tag }}
+          # This single line replaces your entire 15-line custom bash script
+          generate_release_notes: true
           draft: false
           prerelease: false
         env:

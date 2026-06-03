@@ -113,7 +113,7 @@
 /* Wheel card */
 .sup-wheel-card {
   grid-row: span 2;
-  min-height: 640px;
+  min-height: 800px;
 }
 
 .sup-wheel-wrap {
