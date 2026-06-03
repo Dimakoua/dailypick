@@ -48,6 +48,12 @@ module.exports = async function(eleventyConfig) {
     },
   });
 
+  // Exclude the local .qwen folder from Eleventy build input and file watching.
+  eleventyConfig.ignores.add(".qwen/**");
+  eleventyConfig.ignores.add("./.qwen/**");
+  eleventyConfig.watchIgnores.add(".qwen/**");
+  eleventyConfig.watchIgnores.add("./.qwen/**");
+
   // Tell Eleventy to watch your CSS changes for live reload.
   eleventyConfig.addWatchTarget("./content/blog/css/");
   // Passthrough copy for static assets. Eleventy will copy these directly.
