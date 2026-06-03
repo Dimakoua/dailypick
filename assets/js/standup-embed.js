@@ -12,28 +12,16 @@
   'use strict';
 
   // ---- Detect embed mode ----
-  var search = window.location.search;
-  if (!search || search.indexOf('embed=1') === -1) return;
+  if (window.location.search.indexOf('embed=1') === -1) return;
 
   // ---- 1. Inject embed CSS immediately (synchronously, before paint) ----
-  var css = [
-    /* Reset html/body layout completely — override game stylesheets */
-    'html { height: auto !important; min-height: unset !important; scroll-padding-top: 0 !important; }',
-    'body { margin: 0 !important; padding: 0 !important; background: transparent !important; min-height: unset !important; height: auto !important; display: block !important; overflow: visible !important; }',
-
-    /* Hide all common chrome across every game */
-    '.seo-content-area,',
-    '.settings-hint,',
-    '.pip-trigger,',
-    '.game-pip-trigger,',
-    '[data-game-pip-trigger],',
-    '[data-pip-trigger] { display: none !important; }',
-
-    /* Reset main element */
-    'main { padding: 0 !important; margin: 0 !important; min-height: unset !important; height: auto !important; max-width: unset !important; width: 100% !important; }',
-    'main > h1:first-child { display: none !important; }',
-    '.similar-apps-section { display: none !important; }',
-  ].join('\n');
+  var css =
+    'html { height: auto !important; min-height: unset !important; scroll-padding-top: 0 !important; }\n' +
+    'body { margin: 0 !important; padding: 0 !important; background: transparent !important; min-height: unset !important; height: auto !important; display: block !important; overflow: visible !important; }\n' +
+    '.seo-content-area, .settings-hint, .pip-trigger, .game-pip-trigger, [data-game-pip-trigger], [data-pip-trigger] { display: none !important; }\n' +
+    'main { padding: 0 !important; margin: 0 !important; min-height: unset !important; height: auto !important; max-width: unset !important; width: 100% !important; }\n' +
+    'main > h1:first-child { display: none !important; }\n' +
+    '.similar-apps-section { display: none !important; }\n';
 
   // Game-specific hiding + layout reset (matched by URL path)
   var path = window.location.pathname;
@@ -113,23 +101,15 @@
 
   var styleEl = document.createElement('style');
   styleEl.textContent = css;
-  // Insert as first element in <head> so it applies before any other styles
   var head = document.head;
-  if (head) {
-    head.insertBefore(styleEl, head.firstChild);
-  } else {
-    document.addEventListener('DOMContentLoaded', function () {
-      var h = document.head;
-      if (h) h.insertBefore(styleEl, h.firstChild);
-    });
-  }
+  if (head) head.insertBefore(styleEl, head.firstChild);
 
   // ---- 2. Forward CustomEvents to parent via postMessage ----
+  var isFramed = window.parent && window.parent !== window;
   function forwardEvent(type, detail) {
+    if (!isFramed) return;
     try {
-      if (window.parent && window.parent !== window) {
-        window.parent.postMessage({ type: type, detail: detail, source: 'standup-embed' }, '*');
-      }
+      window.parent.postMessage({ type: type, detail: detail, source: 'standup-embed' }, '*');
     } catch (e) { /* ignore */ }
   }
 
@@ -162,10 +142,9 @@
 
   // ---- 4. Notify parent when ready ----
   function notifyReady() {
+    if (!isFramed) return;
     try {
-      if (window.parent && window.parent !== window) {
-        window.parent.postMessage({ type: 'standup:embed-ready', source: 'standup-embed' }, '*');
-      }
+      window.parent.postMessage({ type: 'standup:embed-ready', source: 'standup-embed' }, '*');
     } catch (e) { /* ignore */ }
   }
   if (document.readyState === 'loading') {
