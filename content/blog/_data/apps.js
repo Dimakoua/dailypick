@@ -288,6 +288,24 @@ module.exports = [
     description: "Break the ice at parties or team hangouts with hundreds of curated fun and friendly prompts."
   },
   {
+    id: "charades-word-generator",
+    name: "Charades Word Generator",
+    path: "/apps/charades-word-generator/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🎭",
+    description: "Generate random charades words and phrases by category and difficulty. Perfect for game nights, parties, and team icebreakers."
+  },
+  {
+    id: "song-album-wheel",
+    name: "Song & Album Wheel",
+    path: "/apps/song-album-wheel/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🎵",
+    description: "Spin to discover your next track or album. Choose from curated genres — rock, hip-hop, pop, electronic, jazz, country, metal, and R&B — or build your own playlist."
+  },
+  {
     id: "what-should-i-eat",
     name: "What Should I Eat?",
     path: "/apps/what-should-i-eat/",
@@ -708,6 +726,15 @@ module.exports = [
     footerGroup: "Games",
     emoji: "🥠",
     description: "Open a digital fortune cookie for a short luck, motivation, advice, or daily insight message."
+  },
+  {
+    id: "pet-name-generator",
+    name: "Pet Name Generator",
+    path: "/apps/pet-name-generator/",
+    category: "games",
+    footerGroup: "Games",
+    emoji: "🐾",
+    description: "Generate cute, funny, classic, or unique pet names by type — dog, cat, fish, bird, or any animal."
   },
   {
     id: "what-should-i-wear",

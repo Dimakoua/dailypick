@@ -370,6 +370,70 @@
     {% if isApp %}
     {{ content | safe }}
 
+    <section class="similar-apps-section glass-card" id="similarAppsSection">
+        <h2>Similar Apps</h2>
+        <p>Discover more tools and games in the same category.</p>
+        <div class="similar-apps-grid" id="similarAppsGrid">
+            <p class="similar-apps-loading" id="similarAppsLoading">Loading similar apps…</p>
+        </div>
+    </section>
+    <script>
+    (function () {
+      if (new URLSearchParams(window.location.search).has('overlay')) return;
+      var apps = window.dpBreadcrumb && window.dpBreadcrumb.apps;
+      if (!apps || !apps.length) return;
+
+      var currentPath = window.location.pathname.replace(/\/$/, '') + '/';
+      var currentApp = apps.find(function (a) { return a.path === currentPath; });
+      if (!currentApp) return;
+
+      var categoryPages = window.dpBreadcrumb.categoryPages || {};
+      var categoryInfo = categoryPages[currentApp.category];
+      var categoryName = categoryInfo ? categoryInfo.name : '';
+      var categoryUrl = categoryInfo ? categoryInfo.url : null;
+
+      var similar = apps.filter(function (a) {
+        return a.category === currentApp.category && a.path !== currentApp.path && a.footerGroup;
+      }).slice(0, 6);
+
+      var section = document.getElementById('similarAppsSection');
+      var grid = document.getElementById('similarAppsGrid');
+      var loading = document.getElementById('similarAppsLoading');
+      if (!section || !grid) return;
+
+      if (loading) loading.remove();
+
+      if (!similar.length) {
+        section.hidden = true;
+        return;
+      }
+
+      if (categoryName) {
+        var heading = section.querySelector('h2');
+        if (heading) heading.textContent = 'More ' + categoryName;
+      }
+
+      var allHtml = '';
+      similar.forEach(function (app) {
+        allHtml += '<a href="' + app.path + '" class="similar-app-card">' +
+          '<span class="similar-app-emoji">' + (app.emoji || '🎲') + '</span>' +
+          '<span class="similar-app-name">' + app.name + '</span>' +
+          '<span class="similar-app-desc">' + app.description + '</span>' +
+          '</a>';
+      });
+
+      if (categoryUrl && similar.length >= 3) {
+        allHtml += '<a href="' + categoryUrl + '" class="similar-app-card similar-app-card--all">' +
+          '<span class="similar-app-emoji">➡️</span>' +
+          '<span class="similar-app-name">View All ' + categoryName + '</span>' +
+          '<span class="similar-app-desc">Browse the full collection</span>' +
+          '</a>';
+      }
+
+      grid.innerHTML = allHtml;
+    })();
+    </script>
+
     {% if not hideEmbed %}
     <section class="embed-section glass-card" id="embedSection">
         <h2>Embed this page</h2>
