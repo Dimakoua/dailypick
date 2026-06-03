@@ -104,7 +104,6 @@
 
   var $statStreak = document.getElementById('supStatStreak');
   var $statSessions = document.getElementById('supStatSessions');
-  var $statAvgDuration = document.getElementById('supStatAvgDuration');
   var $statThisMonth = document.getElementById('supStatThisMonth');
   var $recentSpeakers = document.getElementById('supRecentSpeakers');
   var $clearStatsBtn = document.getElementById('supClearStatsBtn');
@@ -337,9 +336,6 @@
 
     var sessions = stats.loadSessions();
     $statSessions.textContent = sessions.length;
-
-    var avgDur = stats.computeAverageSessionDuration();
-    $statAvgDuration.textContent = avgDur ? avgDur.formattedAvg : '—';
 
     $statThisMonth.textContent = stats.getThisMonth().length;
 
