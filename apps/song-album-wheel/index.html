@@ -1,0 +1,165 @@
+---
+layout: base_app.njk
+title: "Song & Album Wheel – Music Discovery Spinner | Daily Pick"
+description: "Spin the Song & Album Wheel to discover your next track or album. Choose from curated genres including rock, hip-hop, pop, electronic, jazz, and more."
+keywords: "song wheel, album wheel, music discovery spinner, random song picker, what should i listen to, music genre wheel, album randomizer, song roulette"
+canonical: "https://dailypick.dev/apps/song-album-wheel/"
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="randomizer" class="main-container">
+        <header class="page-hero glass-card">
+            <p class="hero-eyebrow">Can't pick what to play next?</p>
+            <h1>🎵 Song &amp; Album Wheel</h1>
+            <p>Spin to discover your next favourite track or album. Choose from curated genre presets — rock anthems, hip-hop classics, pop hits, electronic bangers, jazz standards, and more. Let the wheel soundtrack your day.</p>
+        </header>
+
+        <div id="wheel-container">
+            <div id="indicator"></div>
+            <canvas height="425" id="wheel" width="425"></canvas>
+        </div>
+
+        <div class="preset-btns">
+            <button class="preset-btn" data-items="Bohemian Rhapsody – Queen,Stairway to Heaven – Led Zeppelin,Hotel California – Eagles,Smells Like Teen Spirit – Nirvana,Imagine – John Lennon,Comfortably Numb – Pink Floyd,Free Bird – Lynyrd Skynyrd,Paranoid – Black Sabbath">🎸 Rock Anthems</button>
+            <button class="preset-btn" data-items="Lose Yourself – Eminem,Alright – Kendrick Lamar,Sicko Mode – Travis Scott,HUMBLE. – Kendrick Lamar,DNA. – Kendrick Lamar,Juicy – The Notorious B.I.G.,N.Y. State of Mind – Nas,Stan – Eminem">🎤 Hip-Hop Classics</button>
+            <button class="preset-btn" data-items="Blinding Lights – The Weeknd,Shape of You – Ed Sheeran,Uptown Funk – Bruno Mars,Bad Guy – Billie Eilish,Levitating – Dua Lipa,Watermelon Sugar – Harry Styles,As It Was – Harry Styles,Anti-Hero – Taylor Swift">✨ Pop Hits</button>
+            <button class="preset-btn" data-items="Strobe – deadmau5,One More Time – Daft Punk,Midnight City – M83,Shelter – Porter Robinson,Sandstorm – Darude,Levels – Avicii,Titanium – David Guetta,Faded – Alan Walker">🎧 Electronic</button>
+            <button class="preset-btn" data-items="So What – Miles Davis,Take Five – Dave Brubeck,My Favorite Things – John Coltrane,Round Midnight – Thelonious Monk,A Night in Tunisia – Dizzy Gillespie,Blue in Green – Miles Davis,Autumn Leaves – Chet Baker">🎷 Jazz Standards</button>
+            <button class="preset-btn" data-items="Jolene – Dolly Parton,The Gambler – Kenny Rings,Take Me Home, Country Roads – John Denver,Friends in Low Places – Garth Brooks,Before He Cheats – Carrie Underwood,I Will Always Love You – Dolly Parton,Tennessee Whiskey – Chris Stapleton">🤠 Country</button>
+            <button class="preset-btn" data-items="Thrashback,Master of Puppets – Metallica,Holy Wars… The Punishment Due – Megadeth,Cowboys from Hell – Pantera,Angel of Death – Slayer,Raining Blood – Slayer,Walk – Pantera,Peace Sells – Megadeth">🤘 Metal</button>
+            <button class="preset-btn" data-items="Redbone – Childish Gambino,Thinking Out Loud – Ed Sheeran,All of Me – John Legend,Best Part – Daniel Caesar,Earned It – The Weeknd,Peaches – Justin Bieber,Adorn – Miguel,Best Part – H.E.R.">💕 R&amp;B / Soul</button>
+        </div>
+
+        <button id="spinBtn">🎵 SPIN FOR MUSIC!</button>
+        <div id="winner"></div>
+
+        <div class="quick-add">
+            <h2>🎶 Quick Add: Build Your Own Playlist</h2>
+            <p>Type song or album names separated by commas, then hit &quot;Load Playlist&quot; to spin your custom wheel.</p>
+            <div class="quick-add-controls">
+                <textarea id="customPlaylist" placeholder="e.g. Hey Jude – Beatles, Like a Rolling Stone – Dylan, Superstition – Stevie Wonder" rows="3"></textarea>
+                <button class="btn btn--primary" id="loadPlaylistBtn" type="button">Load Playlist</button>
+            </div>
+        </div>
+
+        <section class="seo-content-area">
+            <h2>Song &amp; Album Wheel: A Music Discovery Spinner</h2>
+            <div class="seo-grid">
+                <div>
+                    <p>The Song &amp; Album Wheel is a music discovery spinner that helps you pick your next track or album. Choose from curated genre presets — rock anthems, hip-hop classics, pop hits, electronic bangers, jazz standards, country favourites, metal riffs, and R&amp;B / soul cuts. Or build your own playlist from scratch.</p>
+                </div>
+                <div>
+                    <h3>Why this wheel helps</h3>
+                    <ul>
+                        <li><strong>Curated genre presets:</strong> Eight genre-based playlists ready to spin.</li>
+                        <li><strong>Custom playlist input:</strong> Add your own songs or albums for a personalised spin.</li>
+                        <li><strong>Instant results:</strong> One spin, zero debate — just hit play.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="seo-toc">
+                <h3>Table of Contents</h3>
+                <ol>
+                    <li><a href="#what-is-song-album-wheel">What is the Song &amp; Album Wheel?</a></li>
+                    <li><a href="#who-should-use-song-album-wheel">Who should use the Song &amp; Album Wheel?</a></li>
+                    <li><a href="#how-song-album-wheel-works">How the Song &amp; Album Wheel works</a></li>
+                    <li><a href="#song-album-wheel-features">Features</a></li>
+                    <li><a href="#song-album-wheel-genres">Genre Presets</a></li>
+                    <li><a href="#song-album-wheel-custom-playlist">Custom Playlist Input</a></li>
+                    <li><a href="#song-album-wheel-tips">Tips</a></li>
+                    <li><a href="#song-album-wheel-alternatives">Alternatives</a></li>
+                </ol>
+            </div>
+
+            <section id="what-is-song-album-wheel">
+                <h3>1. What is the Song &amp; Album Wheel?</h3>
+                <p>The Song &amp; Album Wheel is a music discovery spinner that randomly selects a song or album from a curated list or a custom playlist you provide. It is built to end the &quot;what should I listen to?&quot; loop and make music discovery feel playful and effortless.</p>
+            </section>
+
+            <section id="who-should-use-song-album-wheel">
+                <h3>2. Who should use the Song &amp; Album Wheel?</h3>
+                <p>Anyone who listens to music. Perfect for commuters choosing their drive soundtrack, DJs setting the vibe before class, roommates agreeing on background music, and anyone looking for a guided, unexpected recommendation.</p>
+            </section>
+
+            <section id="how-song-album-wheel-works">
+                <h3>3. How the Song &amp; Album Wheel works</h3>
+                <p>Pick a genre preset, or type your own playlist. Press the spin button, and the wheel rotates through the list until it lands on one track. The winner is announced on screen in seconds.</p>
+            </section>
+
+            <section id="song-album-wheel-features">
+                <h3>4. Features</h3>
+                <ul>
+                    <li><strong>Eight genre presets:</strong> Rock, Hip-Hop, Pop, Electronic, Jazz, Country, Metal, and R&amp;B / Soul.</li>
+                    <li><strong>Custom playlist input:</strong> Paste any comma-separated list of songs or albums.</li>
+                    <li><strong>Visual spinning wheel:</strong> A colourful canvas-basec wheel with smooth animation.</li>
+                    <li><strong>Mobile-ready:</strong> Works on phones, tablets, and desktops.</li>
+                </ul>
+            </section>
+
+            <section id="song-album-wheel-genres">
+                <h3>5. Genre Presets</h3>
+                <p>The curated genre presets give you a balanced mix of iconic tracks and modern hits across eight styles:</p>
+                <ul>
+                    <li><strong>🎸 Rock Anthems:</strong> From Queen to Nirvana — the essential rock canon.</li>
+                    <li><strong>🎤 Hip-Hop Classics:</strong> Golden-era and modern greats from Eminem, Kendrick Lamar, Notorious B.I.G., and Nas.</li>
+                    <li><strong>✨ Pop Hits:</strong> Chart-toppers from The Weeknd, Ed Sheeran, Billie Eilish, and Harry Styles.</li>
+                    <li><strong>🎧 Electronic:</strong> Dancefloor staples from deadmau5, Daft Punk, M83, and Avicii.</li>
+                    <li><strong>🎷 Jazz Standards:</strong> Timeless cuts from Miles Davis, John Coltrane, and Chet Baker.</li>
+                    <li><strong>🤠 Country:</strong> Dolly Parton, Johnny Cash, Chris Stapleton, and Garth Brooks.</li>
+                    <li><strong>🤘 Metal:</strong> Heavy riffs from Metallica, Megadeth, Slayer, and Pantera.</li>
+                    <li><strong>💕 R&amp;B / Soul:</strong> Smooth grooves from Daniel Caesar, H.E.R., Miguel, and The Weeknd.</li>
+                </ul>
+            </section>
+
+            <section id="song-album-wheel-custom-playlist">
+                <h3>6. Custom Playlist Input</h3>
+                <p>Use the Quick Add box to paste your own list of songs or albums, separated by commas. Hit &quot;Load Playlist&quot; and the wheel immediately updates with your picks. This is great for party setlists, team anthem choices, or guilty-pleasure reveal rounds.</p>
+            </section>
+
+            <section id="song-album-wheel-tips">
+                <h3>7. Tips</h3>
+                <p>Start with a genre preset if you want a quick spin. Build a custom playlist for themed events or listening parties. Combine genres on the same wheel for variety, and use the result as a conversation starter at gatherings.</p>
+            </section>
+
+            <section id="song-album-wheel-alternatives">
+                <h3>8. Alternatives</h3>
+                <p>If you want a broader randomizing experience, try the <a href="/apps/the-wheel-spinner/">Choices Spinner</a> for any custom list, or the <a href="/apps/random-list-shuffler/">Random List Shuffler</a> to reorder full playlists. For a different kind of music fun, try <a href="/apps/truth-or-dare/">Truth or Dare</a> with friends.</p>
+            </section>
+        </section>
+    </main>
+
+    <script src="/assets/js/wheel-engine.js"></script>
+    <script>
+      var engine = FoodWheelEngine.init({
+        canvasSelector: '#wheel',
+        spinButtonSelector: '#spinBtn',
+        winnerSelector: '#winner',
+        presetButtonSelector: '.preset-btn',
+        defaultItems: [
+          'Bohemian Rhapsody – Queen',
+          'Lose Yourself – Eminem',
+          'Blinding Lights – The Weeknd',
+          'Strobe – deadmau5',
+          'So What – Miles Davis',
+          'Jolene – Dolly Parton',
+          'Master of Puppets – Metallica',
+          'Redbone – Childish Gambino'
+        ],
+        resultFormatter: function (selectedItem) {
+          return '🎵 Now playing: <span class="result-track">' + selectedItem + '</span>';
+        }
+      });
+
+      document.getElementById('loadPlaylistBtn').addEventListener('click', function () {
+        var input = document.getElementById('customPlaylist').value;
+        if (!input.trim()) return;
+        var items = input.split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+        if (items.length < 2) {
+          alert('Please enter at least 2 items separated by commas.');
+          return;
+        }
+        engine.setItems(items);
+        document.getElementById('customPlaylist').value = '';
+      });
+    </script>
