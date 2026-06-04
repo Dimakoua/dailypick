@@ -152,6 +152,7 @@ headExtra: |
 </main>
 
 <script src="/assets/js/share-engine.js"></script>
+<script src="/assets/js/lottery-share.js"></script>
 <script>
 (function () {
   'use strict';
@@ -281,164 +282,28 @@ headExtra: |
     return line.main.map(pad).join(' ') + ` + ${LOTTERY.bonusLabel} ${pad(line.bonus)}`;
   }
 
-  function createRoundedCard(ctx, x, y, width, height, radius) {
-    ctx.beginPath();
-    ctx.moveTo(x + radius, y);
-    ctx.lineTo(x + width - radius, y);
-    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-    ctx.lineTo(x + width, y + height - radius);
-    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-    ctx.lineTo(x + radius, y + height);
-    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-    ctx.lineTo(x, y + radius);
-    ctx.quadraticCurveTo(x, y, x + radius, y);
-    ctx.closePath();
-  }
+  // --- Share config for LotteryShare ---
+  const shareConfig = {
+    title: 'UK LOTTO QUICK PICK',
+    subtitle: '6 numbers plus a bonus ball — ready to play',
+    bonusColor: LOTTERY.bonusColor,
+    bonusLabel: LOTTERY.bonusLabel,
+    bonusCount: 1,
+    mainCount: LOTTERY.mainCount,
+    appName: 'UK Lotto',
+    shareUrl: 'dailypick.dev/apps/uk-national-lottery-number-generator/',
+  };
 
-  async function createShareCanvas() {
-    await document.fonts.ready;
-
-    const lines = currentLines.slice();
-    const W = 1080;
-    const H = 1080;
-    const canvas = document.createElement('canvas');
-    canvas.width = W;
-    canvas.height = H;
-    const ctx = canvas.getContext('2d');
-
-    // Base background with soft gradient
-    const bgGradient = ctx.createLinearGradient(0, 0, 0, H);
-    bgGradient.addColorStop(0, '#eef5fb');
-    bgGradient.addColorStop(0.45, '#f7fbff');
-    bgGradient.addColorStop(1, '#ffffff');
-    ctx.fillStyle = bgGradient;
-    ctx.fillRect(0, 0, W, H);
-
-    // Decorative accents
-    ctx.fillStyle = 'rgba(52, 152, 219, 0.14)';
-    ctx.beginPath();
-    ctx.arc(W * 0.15, H * 0.18, 140, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(W * 0.88, H * 0.22, 120, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = 'rgba(236, 84, 68, 0.12)';
-    ctx.beginPath();
-    ctx.arc(W * 0.78, H * 0.82, 170, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Header gradient band
-    const headerGradient = ctx.createLinearGradient(0, 0, W, 0);
-    headerGradient.addColorStop(0, '#3498db');
-    headerGradient.addColorStop(1, '#2e86c1');
-    ctx.fillStyle = headerGradient;
-    ctx.fillRect(60, 40, W - 120, 140);
-
-    ctx.fillStyle = 'rgba(255,255,255,0.95)';
-    createRoundedCard(ctx, 60, 40, W - 120, 140, 28);
-    ctx.fill();
-
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#15466d';
-    ctx.font = '800 48px system-ui, sans-serif';
-    ctx.fillText('UK LOTTO QUICK PICK', W / 2, 95);
-
-    ctx.font = '600 24px system-ui, sans-serif';
-    ctx.fillStyle = '#34495e';
-    ctx.fillText('6 numbers plus a bonus ball — ready to play', W / 2, 132);
-
-    ctx.strokeStyle = 'rgba(52, 152, 219, 0.16)';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(140, 160);
-    ctx.lineTo(W - 140, 160);
-    ctx.stroke();
-
-    const cardStartY = 210;
-    const cardHeight = 108;
-    const cardGap = 16;
-
-    lines.slice(0, 5).forEach((line, index) => {
-      const y = cardStartY + index * (cardHeight + cardGap);
-
-      // Background row card
-      createRoundedCard(ctx, 60, y, W - 120, cardHeight, 28);
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.94)';
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(52, 152, 219, 0.14)';
-      ctx.lineWidth = 1.8;
-      ctx.stroke();
-
-      // Line badge
-      createRoundedCard(ctx, 74, y + 18, 160, 44, 16);
-      ctx.fillStyle = '#eef5fb';
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(52, 152, 219, 0.2)';
-      ctx.stroke();
-      ctx.fillStyle = '#2d3e50';
-      ctx.font = '700 20px system-ui, sans-serif';
-      ctx.textAlign = 'left';
-      ctx.fillText(`Line ${index + 1}`, 96, y + 46);
-
-      // Number pills
-      const pillXStart = 260;
-      const pillY = y + 42;
-      const pillGap = 14;
-      const pillWidth = 100;
-      const pillHeight = 58;
-
-      line.main.forEach((num, pillIndex) => {
-        const x = pillXStart + pillIndex * (pillWidth + pillGap);
-        createRoundedCard(ctx, x, pillY - pillHeight / 2, pillWidth, pillHeight, 18);
-        ctx.fillStyle = '#f9fcff';
-        ctx.fill();
-        ctx.strokeStyle = 'rgba(52, 152, 219, 0.14)';
-        ctx.stroke();
-
-        ctx.fillStyle = '#15466d';
-        ctx.font = '700 26px system-ui, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(pad(num), x + pillWidth / 2, pillY + 10);
-      });
-
-      // Bonus ball vignette
-      const bonusX = W - 140;
-      const bonusY = y + cardHeight / 2;
-      ctx.beginPath();
-      ctx.arc(bonusX, bonusY, 42, 0, Math.PI * 2);
-      ctx.fillStyle = '#ffffff';
-      ctx.fill();
-      ctx.lineWidth = 3;
-      ctx.strokeStyle = LOTTERY.bonusColor;
-      ctx.stroke();
-      ctx.fillStyle = LOTTERY.bonusColor;
-      ctx.font = '700 28px system-ui, sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(pad(line.bonus), bonusX, bonusY + 10);
-
-      ctx.fillStyle = '#34495e';
-      ctx.font = '600 18px system-ui, sans-serif';
-      ctx.fillText('Bonus', bonusX, bonusY + 44);
-    });
-
-    ctx.textAlign = 'center';
-    ctx.font = '600 22px system-ui, sans-serif';
-    ctx.fillStyle = 'rgba(52, 73, 94, 0.6)';
-    ctx.fillText('dailypick.dev/apps/uk-national-lottery-number-generator/', W / 2, H - 52);
-
-    return canvas;
+  function createShareCanvas() {
+    return LotteryShare.createCanvas(shareConfig, currentLines);
   }
 
   function getShareText() {
-    if (!currentLines.length) {
-      return 'UK National Lottery quick pick from Daily Pick.';
-    }
-    return `UK Lotto quick pick: ${currentLines.map(formatLine).join(' / ')}.`;
+    return LotteryShare.getShareText(shareConfig, currentLines);
   }
 
   function getShareFileName() {
-    const date = new Date().toISOString().slice(0, 10);
-    return `UK-Lotto-Quick-Pick-${date}.png`;
+    return LotteryShare.getFileName(shareConfig);
   }
 
   function copyToClipboard(text) {

@@ -413,3 +413,77 @@
     justify-content: center;
   }
 }
+
+/* ==========================================================================
+   Share Modal
+   ========================================================================== */
+
+.share-modal {
+  position: fixed !important;
+  inset: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(20, 35, 55, 0.76);
+  backdrop-filter: blur(6px);
+  z-index: 99999;
+}
+.share-modal-content {
+  background: var(--brand-surface);
+  padding: 28px 24px 24px;
+  border-radius: var(--radius-lg);
+  width: min(520px, calc(100% - 40px));
+  box-shadow: var(--brand-shadow);
+  border: 1px solid var(--brand-border);
+  text-align: center;
+  position: relative;
+}
+.share-modal-content h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+  color: var(--brand-heading);
+}
+.share-modal-copy {
+  margin: 0 0 1rem;
+  color: var(--brand-text);
+  font-size: 0.96rem;
+}
+.close-modal {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--brand-text);
+  font-size: 1.35rem;
+  cursor: pointer;
+}
+#share-preview-container {
+  margin: 0 0 1rem;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px dashed rgba(52, 152, 219, 0.25);
+  background: color-mix(in srgb, var(--brand-surface) 96%, var(--brand-background));
+  min-height: 180px;
+  display: grid;
+  place-items: center;
+}
+#share-preview-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+.share-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.share-actions .btn {
+  min-width: 160px;
+}

@@ -56,6 +56,7 @@ headExtra: |
 
     <div class="copy-row" id="copyRow" hidden>
       <button id="copyBtn" class="btn btn--secondary" type="button">📋 Copy Numbers</button>
+      <button id="shareBtn" class="btn btn--accent" type="button" hidden>📤 Share Numbers</button>
       <span class="copy-confirm" id="copyConfirm" aria-live="polite"></span>
     </div>
   </section>
@@ -133,8 +134,25 @@ headExtra: |
     <p>For UK lottery picks, try the <a href="/apps/uk-national-lottery-number-generator/">UK National Lottery Generator</a>. For US lotteries, see <a href="/apps/powerball-number-generator/">Powerball</a> or <a href="/apps/mega-millions-number-generator/">Mega Millions</a>. Browse all lottery generators at the <a href="/lottery/">Lottery Hub</a>. Good luck!</p>
   </section>
 
+<div id="share-modal" class="share-modal" style="display:none;">
+  <div class="share-modal-content">
+    <button class="close-modal" aria-label="Close share modal">&times;</button>
+    <h3>Share Your EuroMillions Pick</h3>
+    <p class="share-modal-copy">Download a shareable image or send it directly from your device.</p>
+    <div id="share-preview-container">
+      <img id="sharePreviewImg" src="" alt="Share preview" />
+    </div>
+    <div class="share-actions">
+      <button id="download-png-btn" class="btn btn--accent" type="button">📥 Download PNG</button>
+      <button id="native-share-btn" class="btn btn--secondary" type="button">🔗 Share / Send...</button>
+    </div>
+  </div>
+</div>
+
 </main>
 
+<script src="/assets/js/share-engine.js"></script>
+<script src="/assets/js/lottery-share.js"></script>
 <script>
 (function () {
   'use strict';
@@ -154,6 +172,7 @@ headExtra: |
   const copyBtn = document.getElementById('copyBtn');
   const copyConfirm = document.getElementById('copyConfirm');
   const copyRow = document.getElementById('copyRow');
+  const shareBtn = document.getElementById('shareBtn');
   const linesCount = document.getElementById('linesCount');
   const multiLines = document.getElementById('multiLines');
   const historySection = document.getElementById('historySection');
@@ -268,6 +287,29 @@ headExtra: |
     return line.main.map(pad).join(' ') + ` + ${LOTTERY.bonusLabel} ${line.bonus.map(pad).join(' ')}`;
   }
 
+  const shareConfig = {
+    title: 'EUROMILLIONS QUICK PICK',
+    subtitle: '5 from 1–50 + 2 Lucky Stars 1–12',
+    bonusColor: LOTTERY.bonusColor,
+    bonusLabel: LOTTERY.bonusLabel,
+    bonusCount: 2,
+    mainCount: LOTTERY.mainCount,
+    appName: 'EuroMillions',
+    shareUrl: 'dailypick.dev/apps/euromillions-number-generator/',
+  };
+
+  function createShareCanvas() {
+    return LotteryShare.createCanvas(shareConfig, currentLines);
+  }
+
+  function getShareText() {
+    return LotteryShare.getShareText(shareConfig, currentLines);
+  }
+
+  function getShareFileName() {
+    return LotteryShare.getFileName(shareConfig);
+  }
+
   function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
       copyConfirm.textContent = '✓ Copied!';
@@ -324,6 +366,7 @@ headExtra: |
     }
 
     copyRow.hidden = false;
+    shareBtn.hidden = false;
     saveHistory(currentLines);
     generateBtn.disabled = false;
   });
@@ -335,6 +378,7 @@ headExtra: |
     multiLines.hidden = true;
     multiLines.innerHTML = '';
     copyRow.hidden = true;
+    shareBtn.hidden = true;
     currentLines = [];
     copyConfirm.textContent = '';
   });
@@ -355,5 +399,22 @@ headExtra: |
   buildMainBallEls();
   buildBonusBallEls();
   renderHistory(loadHistory());
+
+  if (window.ShareEngine && shareBtn) {
+    ShareEngine.init({
+      shareButton: shareBtn,
+      shareModal: document.getElementById('share-modal'),
+      previewImage: document.getElementById('sharePreviewImg'),
+      downloadButton: document.getElementById('download-png-btn'),
+      nativeShareButton: document.getElementById('native-share-btn'),
+      createCanvas: createShareCanvas,
+      getShareText,
+      getFileName: getShareFileName,
+      shareTitle: 'EuroMillions Quick Pick',
+      onShareUnavailable() {
+        alert('Sharing is not available in this browser. Download the image instead.');
+      },
+    });
+  }
 }());
 </script>
