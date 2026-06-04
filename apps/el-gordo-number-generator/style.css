@@ -1,0 +1,308 @@
+/* Ensure [hidden] always overrides display rules */
+[hidden] { display: none !important; }
+
+/* ==========================================================================
+   Lottery Number Generator — Shared App Styles (El Gordo)
+   - Single large 5-digit number display
+   - History section
+   ========================================================================== */
+
+/* Page layout */
+.lottery-page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem var(--layout-gutter);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Hero */
+.page-hero {
+  padding: 2rem 2.5rem;
+}
+
+.page-hero h1 {
+  margin: 0.4rem 0 0;
+  font-size: clamp(1.7rem, 2.2rem, 2.4rem);
+  color: var(--brand-heading);
+  font-weight: 700;
+}
+
+.page-hero p {
+  margin: 0.5rem 0 0;
+  font-size: 1rem;
+  color: var(--brand-text);
+  line-height: 1.6;
+}
+
+.hero-eyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--brand-subtle-text);
+}
+
+/* Main card */
+.lottery-card {
+  padding: 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+/* Rules badge */
+.lottery-rules {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.rules-badge {
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background: var(--brand-accent-muted);
+  color: var(--brand-accent-strong);
+  border: 1px solid var(--brand-accent);
+  letter-spacing: 0.02em;
+}
+
+/* El Gordo ticket display */
+.ticket-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.ticket-display {
+  background: linear-gradient(135deg, #fff8f0, #fff);
+  border: 3px dashed var(--brand-border);
+  border-radius: 16px;
+  padding: 2rem 3rem;
+  min-width: 280px;
+  text-align: center;
+  position: relative;
+}
+
+.ticket-display::before {
+  content: '🎄';
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  background: var(--brand-surface);
+  padding: 0 0.5rem;
+}
+
+.ticket-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--brand-subtle-text);
+  margin-bottom: 0.75rem;
+}
+
+.ticket-number {
+  display: block;
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--brand-heading);
+  letter-spacing: 0.15em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.ticket-number--empty {
+  color: var(--brand-subtle-text);
+  letter-spacing: 0.15em;
+}
+
+.ticket-reveal {
+  animation: ticketPop 0.4s ease;
+}
+
+@keyframes ticketPop {
+  0%   { transform: scale(0.85); opacity: 0; }
+  70%  { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Controls */
+.lottery-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Buttons */
+.btn {
+  font: inherit;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: var(--brand-focus-ring);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn--accent {
+  background-color: var(--brand-accent);
+  color: var(--brand-accent-contrast-text);
+  border-color: var(--brand-accent);
+}
+
+.btn--accent:hover:not(:disabled) {
+  background-color: var(--brand-accent-strong);
+  transform: translateY(-2px);
+}
+
+.btn--secondary {
+  background-color: var(--brand-surface);
+  color: var(--brand-heading);
+  border-color: var(--brand-border);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background-color: var(--brand-background);
+  transform: translateY(-2px);
+}
+
+.btn--sm {
+  padding: 7px 14px;
+  font-size: 0.85rem;
+}
+
+.btn--xs {
+  padding: 4px 10px;
+  font-size: 0.8rem;
+}
+
+/* Copy row */
+.copy-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.copy-confirm {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--brand-accent-strong);
+  min-height: 1.2em;
+}
+
+/* History */
+.history-card {
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.history-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--brand-heading);
+}
+
+.history-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.history-entry {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.6rem 0.9rem;
+  background: var(--brand-background);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-sm);
+  flex-wrap: wrap;
+}
+
+.history-ts {
+  font-size: 0.75rem;
+  color: var(--brand-subtle-text);
+  min-width: 140px;
+}
+
+.history-line {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--brand-heading);
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .lottery-page {
+    padding: 1rem var(--layout-gutter);
+  }
+
+  .lottery-card,
+  .page-hero,
+  .history-card,
+  .seo-content-area {
+    padding: 1.25rem 1.25rem;
+  }
+
+  .ticket-display {
+    padding: 1.5rem 1.5rem;
+    min-width: 200px;
+  }
+
+  .ticket-number {
+    font-size: 2.5rem;
+  }
+
+  .lottery-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .lottery-controls .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .history-entry {
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+}

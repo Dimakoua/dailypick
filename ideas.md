@@ -111,19 +111,14 @@
     │     │                                                 │ Singapore, Seoul, Bangkok, Mexico City, etc.      │             │
     ├─────┼─────────────────────────────────────────────────┼───────────────────────────────────────────────────┼─────────────┤
     │     │ More Lottery Generators missing lotteries:      │                                                   │             │
-    │ 25  │ EuroJackpot, SuperEnalotto, El Gordo (Spain),   │ Lottery                                           │             │
-    │     │ etc.                                            │                                                   │             │
+    │ 25  │ ✅ EuroJackpot, SuperEnalotto, El Gordo         │ Lottery                                           │             │
+    │     │ (done). Remaining: Oz Lotto (AU), Irish Lotto, │                                                   │             │
+    │     │ La Primitiva (ES), Polish Lotto, SA Powerball   │                                                   │             │
+    │     │ (ZA), NZ Powerball.                             │                                                   │             │
     ├─────┼─────────────────────────────────────────────────┼───────────────────────────────────────────────────┼─────────────┤
     │ 26  │ NFL / CFL Team Wheel                            │ Gaps in sports wheels — only have NHL, NBA, MLB.  │ Wheel       │
     │     │                                                 │                                                   │ (Sports)    │
     ├─────┼─────────────────────────────────────────────────┼───────────────────────────────────────────────────┼─────────────┤
-    │ 27  │ Song/Album Wheel                                │ Spin to discover music. Curated genres or custom  │ Wheel       │
-    │     │                                                 │ playlists.                                        │             │
-    ├─────┼─────────────────────────────────────────────────┼───────────────────────────────────────────────────┼─────────────┤
-    │ 28  │ Pet Name Generator                              │ Spin or generate random pet names by type (dog,   │ Generator   │
-    │     │                                                 │ cat, fish). Fun shareable tool.                   │             │
-    └─────┴─────────────────────────────────────────────────┴───────────────────────────────────────────────────┴─────────────┘
-
 
     🏗️ Platform Improvements
 

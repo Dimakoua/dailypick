@@ -854,6 +854,33 @@ module.exports = [
     description: "Generate random Australian Powerball quick picks — 7 numbers from 1–35 and a Powerball from 1–20."
   },
   {
+    id: "eurojackpot-number-generator",
+    name: "EuroJackpot Number Generator",
+    path: "/apps/eurojackpot-number-generator/",
+    category: "lottery",
+    footerGroup: "Lottery",
+    emoji: "🎯",
+    description: "Generate random EuroJackpot quick picks — 5 main numbers from 1–50 and 2 Euro Numbers from 1–12."
+  },
+  {
+    id: "superenalotto-number-generator",
+    name: "SuperEnalotto Number Generator",
+    path: "/apps/superenalotto-number-generator/",
+    category: "lottery",
+    footerGroup: "Lottery",
+    emoji: "🇮🇹",
+    description: "Generate random SuperEnalotto quick picks — 6 numbers from 1–90 and a Jolly number. Italy's legendary lottery."
+  },
+  {
+    id: "el-gordo-number-generator",
+    name: "El Gordo – Spanish Christmas Lottery",
+    path: "/apps/el-gordo-number-generator/",
+    category: "lottery",
+    footerGroup: "Lottery",
+    emoji: "🎄",
+    description: "Generate a random 5-digit number for the Spanish Christmas Lottery (Lotería de Navidad) — from 00000 to 99999."
+  },
+  {
     id: "lottery",
     name: "Lottery Hub",
     path: "/lottery/",

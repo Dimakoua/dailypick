@@ -1,0 +1,222 @@
+---
+layout: base_app.njk
+title: "El Gordo Number Generator – Spanish Christmas Lottery | Daily Pick"
+description: "Generate a random 5-digit number for the Spanish Christmas Lottery (Lotería de Navidad). Pick from 00000 to 99999 with cryptographically fair randomness."
+keywords: "el gordo number generator, spanish christmas lottery, loteria de navidad, el gordo quick pick, random lottery number spanish, loteria navidad generator"
+canonical: "https://dailypick.dev/apps/el-gordo-number-generator/"
+headExtra: |
+  <link href="./style.css" rel="stylesheet" />
+---
+<main data-page-type="lottery" class="lottery-page" id="main">
+
+  <header class="page-hero glass-card">
+    <p class="hero-eyebrow">🌍 International Lottery</p>
+    <h1>🎄 El Gordo – Spanish Christmas Lottery</h1>
+    <p>Generate a random 5-digit number for the world's biggest lottery draw. Pick from 00000 to 99999.</p>
+  </header>
+
+  <section class="lottery-card glass-card">
+    <div class="lottery-rules">
+      <span class="rules-badge">5-Digit Number: 00000–99999</span>
+    </div>
+
+    <div class="ticket-area">
+      <div class="ticket-display" id="ticketDisplay" aria-live="polite" aria-label="Generated lottery number">
+        <span class="ticket-label">Your Number</span>
+        <span class="ticket-number ticket-number--empty" id="ticketNumber">?????</span>
+      </div>
+    </div>
+
+    <div class="lottery-controls">
+      <button id="generateBtn" class="btn btn--accent" type="button">🎄 Generate Number</button>
+      <button id="resetBtn" class="btn btn--secondary" type="button">↺ Reset</button>
+    </div>
+
+    <div class="copy-row" id="copyRow" hidden>
+      <button id="copyBtn" class="btn btn--secondary" type="button">📋 Copy Number</button>
+      <span class="copy-confirm" id="copyConfirm" aria-live="polite"></span>
+    </div>
+  </section>
+
+  <section class="history-card glass-card" id="historySection" hidden>
+    <h2 class="history-title">Recent Picks</h2>
+    <ul class="history-list" id="historyList" aria-label="Recent El Gordo picks"></ul>
+    <button id="clearHistoryBtn" class="btn btn--secondary btn--sm" type="button">Clear History</button>
+  </section>
+
+  <section class="seo-content-area glass-card">
+    <h2>El Gordo Number Generator – your random pick for the Spanish Christmas Lottery</h2>
+    <p>El Gordo Number Generator creates a fair, random 5-digit number matching the format of the Spanish Christmas Lottery (Lotería de Navidad). Every ticket in the draw has a unique number from 00000 to 99999 — and our generator picks one for you with cryptographically fair randomness.</p>
+    <p>The generator uses <code>crypto.getRandomValues()</code> instead of <code>Math.random()</code>, so every pick is cryptographically random and unbiased.</p>
+    <p>Generate a number, copy it, and check it against the official draw results on December 22nd.</p>
+
+    <h2>Table of Contents</h2>
+    <ul>
+      <li><a href="#what-is-el-gordo">1. What Is El Gordo (Spanish Christmas Lottery)?</a></li>
+      <li><a href="#how-to-use-it">2. How to Use It?</a></li>
+      <li><a href="#key-features">3. Key Features</a></li>
+      <li><a href="#how-el-gordo-works">4. How the Spanish Christmas Lottery Works</a></li>
+      <li><a href="#sharing-and-exporting">5. Copying Your Number</a></li>
+      <li><a href="#when-to-use">6. When to Use This Generator?</a></li>
+      <li><a href="#feedback">7. We Want to Hear Your Feedback</a></li>
+      <li><a href="#alternative-tool">8. Need an Alternative Tool?</a></li>
+    </ul>
+
+    <h2 id="what-is-el-gordo">1. What Is El Gordo (Spanish Christmas Lottery)?</h2>
+    <p>El Gordo ("The Fat One") is the nickname for the top prize of the Spanish Christmas Lottery (Lotería de Navidad), the oldest and largest lottery draw in the world. The primary keyword is El Gordo number generator, and it replicates the official ticket format: a 5-digit number from 00000 to 99999.</p>
+    <p>Unlike most lotteries where you choose numbers, in the Spanish Christmas Lottery every ticket has a pre-printed number. There are 100,000 unique numbers, each printed in multiple series. This generator randomly selects one of those 100,000 numbers for you.</p>
+    <p>No sign-up is required. Generate your number, copy it, and have fun dreaming about the €400,000 top prize per décimo.</p>
+
+    <h2 id="how-to-use-it">2. How to Use It?</h2>
+    <ol>
+      <li>Click <strong>Generate Number</strong> to reveal a random 5-digit number with a satisfying animation.</li>
+      <li>Click <strong>Copy Number</strong> to copy it to your clipboard.</li>
+      <li>Click <strong>Reset</strong> to clear the display and start fresh.</li>
+    </ol>
+
+    <h2 id="key-features">3. Key Features</h2>
+    <ul>
+      <li><strong>Official format:</strong> 5-digit number from 00000 to 99999, matching the real Lotería de Navidad tickets.</li>
+      <li><strong>Cryptographically fair:</strong> uses <code>crypto.getRandomValues()</code> for unbiased randomness.</li>
+      <li><strong>Copy to clipboard:</strong> grab your number instantly for use anywhere.</li>
+      <li><strong>Pick history:</strong> your last 5 sessions are saved locally for reference.</li>
+      <li><strong>Ticket animation:</strong> numbers reveal with a satisfying pop effect.</li>
+    </ul>
+
+    <h2 id="how-el-gordo-works">4. How the Spanish Christmas Lottery Works</h2>
+    <p>The Spanish Christmas Lottery draw takes place every year on December 22nd. It is run by Loterías y Apuestas del Estado and has been held since 1812, making it the world's oldest continuous lottery.</p>
+    <p>The draw uses two large revolving spheres: one containing 100,000 wooden balls (each with a unique 5-digit number) and another with 1,807 prize balls. Students from the San Ildefonso school sing the winning numbers as they are drawn — it is a beloved national tradition broadcast live across Spain.</p>
+    <p>The top prize, "El Gordo," awards €4,000,000 per full ticket (€400,000 per décimo, the standard tenth-share). The total prize pool is 70% of ticket sales, making it the most generous lottery in the world by total payout.</p>
+    <p>This generator replicates the full 00000–99999 number range so your pick matches any real ticket in the draw.</p>
+
+    <h2 id="sharing-and-exporting">5. Copying Your Number</h2>
+    <p>After generating, click <strong>Copy Number</strong> to copy your 5-digit number to your clipboard (e.g., <em>04267</em>). Paste directly into notes, a text message, or share with friends.</p>
+    <p>Your last 5 sessions are also stored in browser localStorage so you can scroll back to previous picks without regenerating.</p>
+
+    <h2 id="when-to-use">6. When to Use This Generator?</h2>
+    <p>Use this tool whenever you want a random, unbiased number in the Spanish Christmas Lottery format.</p>
+    <ul>
+      <li>Dreaming about what you'd do with the €400,000 El Gordo prize.</li>
+      <li>Generating a fun number to share with friends and family.</li>
+      <p>Creating a random number for a holiday game or gift exchange.</p>
+      <li>Learning about the world's biggest lottery tradition.</li>
+      <li>Having fun with the iconic Spanish Christmas Lottery format.</li>
+    </ul>
+
+    <h2 id="feedback">7. We Want to Hear Your Feedback</h2>
+    <p>Have a feature request or found a bug? Visit the <a href="/feedback/">Feedback page</a> and let us know. We read every submission and use your ideas to improve the tool.</p>
+
+    <h2 id="alternative-tool">8. Need an Alternative Tool?</h2>
+    <p>For EuroJackpot quick picks, try the <a href="/apps/eurojackpot-number-generator/">EuroJackpot Number Generator</a>. For Italian lottery picks, see the <a href="/apps/superenalotto-number-generator/">SuperEnalotto Generator</a>. For US lotteries, try <a href="/apps/powerball-number-generator/">Powerball</a> or <a href="/apps/mega-millions-number-generator/">Mega Millions</a>. Browse all lottery generators at the <a href="/lottery/">Lottery Hub</a>. ¡Buena suerte!</p>
+  </section>
+
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  const LOTTERY = {
+    max: 99999,
+    storageKey: 'dailypick_el_gordo_history',
+  };
+
+  const generateBtn = document.getElementById('generateBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const copyBtn = document.getElementById('copyBtn');
+  const copyConfirm = document.getElementById('copyConfirm');
+  const copyRow = document.getElementById('copyRow');
+  const ticketNumber = document.getElementById('ticketNumber');
+  const historySection = document.getElementById('historySection');
+  const historyList = document.getElementById('historyList');
+  const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+
+  // --- Cryptographically fair randomness ---
+  function secureRandInt(min, max) {
+    const range = max - min + 1;
+    const bytesNeeded = Math.ceil(Math.log2(range) / 8) + 1;
+    const maxValid = Math.floor(256 ** bytesNeeded / range) * range;
+    const arr = new Uint8Array(bytesNeeded);
+    let val;
+    do {
+      crypto.getRandomValues(arr);
+      val = arr.reduce((acc, b, i) => acc + b * 256 ** i, 0);
+    } while (val >= maxValid);
+    return min + (val % range);
+  }
+
+  function pad5(n) { return String(n).padStart(5, '0'); }
+
+  // --- Generate ---
+  generateBtn.addEventListener('click', () => {
+    generateBtn.disabled = true;
+    const num = secureRandInt(0, LOTTERY.max);
+
+    ticketNumber.textContent = pad5(num);
+    ticketNumber.classList.remove('ticket-number--empty');
+    ticketNumber.classList.remove('ticket-reveal');
+    void ticketNumber.offsetWidth; // force reflow
+    ticketNumber.classList.add('ticket-reveal');
+
+    copyRow.hidden = false;
+    saveHistory(num);
+    generateBtn.disabled = false;
+  });
+
+  // --- Reset ---
+  resetBtn.addEventListener('click', () => {
+    ticketNumber.textContent = '?????';
+    ticketNumber.classList.add('ticket-number--empty');
+    ticketNumber.classList.remove('ticket-reveal');
+    copyRow.hidden = true;
+    copyConfirm.textContent = '';
+  });
+
+  // --- Copy ---
+  copyBtn.addEventListener('click', () => {
+    const num = ticketNumber.textContent;
+    if (num === '?????') return;
+    navigator.clipboard.writeText(num).then(() => {
+      copyConfirm.textContent = '✓ Copied!';
+      setTimeout(() => { copyConfirm.textContent = ''; }, 2000);
+    }).catch(() => {
+      copyConfirm.textContent = 'Copy failed — please select and copy manually.';
+    });
+  });
+
+  // --- History ---
+  function loadHistory() {
+    try {
+      return JSON.parse(localStorage.getItem(LOTTERY.storageKey)) || [];
+    } catch { return []; }
+  }
+
+  function saveHistory(num) {
+    const history = loadHistory();
+    history.unshift({ number: pad5(num), ts: Date.now() });
+    const trimmed = history.slice(0, 5);
+    localStorage.setItem(LOTTERY.storageKey, JSON.stringify(trimmed));
+    renderHistory(trimmed);
+  }
+
+  function renderHistory(history) {
+    if (!history.length) { historySection.hidden = true; return; }
+    historySection.hidden = false;
+    historyList.innerHTML = history.map(entry =>
+      `<li class="history-entry">
+        <span class="history-ts">${new Date(entry.ts).toLocaleString()}</span>
+        <span class="history-line">${entry.number}</span>
+      </li>`
+    ).join('');
+  }
+
+  // --- Clear history ---
+  clearHistoryBtn.addEventListener('click', () => {
+    localStorage.removeItem(LOTTERY.storageKey);
+    historySection.hidden = true;
+  });
+
+  // --- Init ---
+  renderHistory(loadHistory());
+}());
+</script>
