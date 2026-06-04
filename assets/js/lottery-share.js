@@ -104,43 +104,50 @@
     ctx.fillStyle = bgGradient;
     ctx.fillRect(0, 0, W, H);
 
+    // --- Vertical centering: compute content block height ---
+    const cardHeight = 108;
+    const cardGap = 16;
+    const maxLines = Math.min(lines.length, 5);
+    const headerBlockH = 190;  // header band (140) + top margin (40) + accent line + spacing (10)
+    const footerBlockH = 80;   // footer text + bottom margin
+    const linesBlockH = maxLines > 0 ? maxLines * cardHeight + (maxLines - 1) * cardGap : 0;
+    const contentH = headerBlockH + linesBlockH + footerBlockH;
+    const offsetY = Math.max(20, Math.floor((H - contentH) / 2));
+
     // Decorative blobs
     const blobAlpha = 0.14;
     ctx.fillStyle = hexToRgba(bonusColor, blobAlpha);
     ctx.beginPath(); ctx.arc(W * 0.15, H * 0.18, 140, 0, Math.PI * 2); ctx.fill();
     ctx.beginPath(); ctx.arc(W * 0.88, H * 0.22, 120, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = hexToRgba(darken(bonusColor, 0.15), 0.10);
-    ctx.beginPath(); ctx.arc(W * 0.78, H * 0.82, 170, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(W * 0.78, Math.min(H - 60, offsetY + contentH + 40), 170, 0, Math.PI * 2); ctx.fill();
 
     // --- Header band ---
     ctx.fillStyle = 'rgba(255,255,255,0.95)';
-    createRoundedCard(ctx, 60, 40, W - 120, 140, 28);
+    createRoundedCard(ctx, 60, offsetY, W - 120, 140, 28);
     ctx.fill();
 
     // Accent stripe along top edge of card
     ctx.fillStyle = bonusColor;
-    createRoundedCard(ctx, 60, 40, W - 120, 6, 3);
+    createRoundedCard(ctx, 60, offsetY, W - 120, 6, 3);
     ctx.fill();
 
     ctx.textAlign = 'center';
     ctx.fillStyle = headerDark;
     ctx.font = '800 48px system-ui, sans-serif';
-    ctx.fillText((config.title || 'LOTTERY QUICK PICK').toUpperCase(), W / 2, 98);
+    ctx.fillText((config.title || 'LOTTERY QUICK PICK').toUpperCase(), W / 2, offsetY + 58);
 
     ctx.font = '600 24px system-ui, sans-serif';
     ctx.fillStyle = darken(bonusColor, 0.05);
-    ctx.fillText(config.subtitle || '', W / 2, 135);
+    ctx.fillText(config.subtitle || '', W / 2, offsetY + 95);
 
     // Accent line
     ctx.strokeStyle = pillBorder;
     ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.moveTo(140, 160); ctx.lineTo(W - 140, 160); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(140, offsetY + 115); ctx.lineTo(W - 140, offsetY + 115); ctx.stroke();
 
     // --- Line cards ---
-    const cardStartY = 210;
-    const cardHeight = 108;
-    const cardGap = 16;
-    const maxLines = Math.min(lines.length, 5);
+    const cardStartY = offsetY + 130;
 
     for (let idx = 0; idx < maxLines; idx++) {
       const line = lines[idx];
@@ -228,12 +235,13 @@
     }
 
     // --- Footer ---
+    const footerY = offsetY + headerBlockH + linesBlockH + 50;
     const appName = config.appName || 'Lottery';
     const footerUrl = config.shareUrl || 'dailypick.dev';
     ctx.textAlign = 'center';
     ctx.font = '600 22px system-ui, sans-serif';
     ctx.fillStyle = 'rgba(52, 73, 94, 0.6)';
-    ctx.fillText(footerUrl, W / 2, H - 52);
+    ctx.fillText(footerUrl, W / 2, footerY);
 
     return canvas;
   }
