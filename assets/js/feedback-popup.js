@@ -55,6 +55,12 @@
   const form        = document.getElementById('feedback-popup-form');
   const ratingInput = document.getElementById('feedback-popup-rating-input');
   const pageInput   = document.getElementById('feedback-popup-page-input');
+  const uaInput     = document.getElementById('feedback-popup-ua');
+  const screenInput = document.getElementById('feedback-popup-screen');
+  const deviceInput = document.getElementById('feedback-popup-device');
+  const langInput   = document.getElementById('feedback-popup-lang');
+  const categoryContainer = document.getElementById('feedback-popup-category-container');
+  const categorySelect    = document.getElementById('feedback-popup-category');
   const skipBtn     = document.getElementById('feedback-popup-skip');
   const submitBtn   = form?.querySelector('.feedback-popup__submit');
   const errorEl     = document.getElementById('feedback-popup-error');
@@ -103,10 +109,37 @@
         s.classList.toggle('is-active', Number(s.dataset.value) <= Number(value));
       });
 
+      // Show category dropdown if rating is 3 or less
+      if (categoryContainer) {
+        if (Number(value) <= 3) {
+          categoryContainer.hidden = false;
+          if (categorySelect) categorySelect.required = true;
+        } else {
+          categoryContainer.hidden = true;
+          if (categorySelect) {
+            categorySelect.required = false;
+            categorySelect.value = "";
+          }
+        }
+      }
+
       // Brief pause then advance to message step
       setTimeout(() => showStep(stepMessage), 350);
     });
   });
+
+  // ── technical info ─────────────────────────────────────────────────────────
+
+  function populateTechnicalInfo() {
+    if (uaInput) uaInput.value = navigator.userAgent;
+    if (screenInput) screenInput.value = `${window.screen.width}x${window.screen.height}`;
+    if (langInput) langInput.value = navigator.language;
+    if (deviceInput) {
+      const width = window.innerWidth;
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      deviceInput.value = isMobile || width < 768 ? 'Mobile/Tablet' : 'Desktop';
+    }
+  }
 
   // ── form submit ────────────────────────────────────────────────────────────
 
@@ -119,6 +152,7 @@
       submitBtn.textContent = 'Sending…';
     }
 
+    populateTechnicalInfo();
     const data = new FormData(form);
 
     try {
@@ -151,12 +185,18 @@
 
   skipBtn?.addEventListener('click', async () => {
     if (ratingInput?.value) {
+      populateTechnicalInfo();
       const data = new FormData();
       data.append('access_key', '48c0d957-b209-4654-8efd-8adfa87e3651');
       data.append('subject', 'Daily Pick — quick feedback popup');
       data.append('rating', ratingInput.value);
       data.append('page', pageInput?.value || window.location.pathname);
       data.append('message', '(no comment)');
+      if (uaInput?.value) data.append('user_agent', uaInput.value);
+      if (screenInput?.value) data.append('screen_resolution', screenInput.value);
+      if (deviceInput?.value) data.append('device_type', deviceInput.value);
+      if (langInput?.value) data.append('language', langInput.value);
+
       fetch('https://api.web3forms.com/submit', { method: 'POST', body: data }).catch(() => {});
     }
     showStep(stepThanks);
