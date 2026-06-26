@@ -217,67 +217,88 @@
           return (pageHeading || document.title || 'Tool').replace(/\s*–.*$/, '').trim();
         };
 
-        var currentUrl = window.location.origin + window.location.pathname;
-        var pageTitle = window.dpBreadcrumb.buildPageTitle();
-        var categoryKey = window.dpBreadcrumb.buildCategoryKey(window.location.pathname);
-        var category = window.dpBreadcrumb.categoryPages[categoryKey];
+        })();
+    </script>
 
-        var breadcrumb = {
-          '@context': 'https://schema.org',
-          '@type': 'BreadcrumbList',
-          itemListElement: [
-            {
-              '@type': 'ListItem',
-              position: 1,
-              name: 'Home',
-              item: {
-                '@type': 'WebPage',
-                '@id': window.dpBreadcrumb.homeUrl,
-                name: 'Home'
-              }
-            }
-          ]
-        };
+    {% set breadcrumbTitle = (title.split('–')[0] if title else 'Tool') | trim %}
+    {% set appCategoryInfo = null %}
+    {% if isApp %}
+      {% set normalizedPageUrl = page.url %}
+      {% for app in apps %}
+        {% set normalizedAppPath = app.path %}
+        {% if app.path == page.url or normalizedAppPath == normalizedPageUrl %}
+          {% set appCategoryInfo = app.category %}
+        {% endif %}
+      {% endfor %}
+      {% if not appCategoryInfo %}
+         {% set appCategoryInfo = page.url.split('/')[1] %}
+      {% endif %}
+    {% else %}
+        {% set appCategoryInfo = page.url.split('/')[1] %}
+    {% endif %}
 
-        if (category) {
-          breadcrumb.itemListElement.push({
-            '@type': 'ListItem',
-            position: 2,
-            name: category.name,
-            item: {
-              '@type': 'WebPage',
-              '@id': category.url,
-              name: category.name
-            }
-          });
-          breadcrumb.itemListElement.push({
-            '@type': 'ListItem',
-            position: 3,
-            name: pageTitle,
-            item: {
-              '@type': 'WebPage',
-              '@id': currentUrl,
-              name: pageTitle
-            }
-          });
-        } else {
-          breadcrumb.itemListElement.push({
-            '@type': 'ListItem',
-            position: 2,
-            name: pageTitle,
-            item: {
-              '@type': 'WebPage',
-              '@id': currentUrl,
-              name: pageTitle
-            }
-          });
+    {% set categoryPages = {
+      'standups': { 'name': 'Stand-up Games', 'url': metadata.url + '/standups/' },
+      'standup': { 'name': 'Stand-up Games', 'url': metadata.url + '/standups/' },
+      'randomizers': { 'name': 'Random Pickers & Decision Tools', 'url': metadata.url + '/randomizers/' },
+      'randomizer': { 'name': 'Random Pickers & Decision Tools', 'url': metadata.url + '/randomizers/' },
+      'agile': { 'name': 'Agile Planning Tools', 'url': metadata.url + '/agile/' },
+      'games': { 'name': 'Games & Group Activities', 'url': metadata.url + '/games/' },
+      'lottery': { 'name': 'Lottery Hub', 'url': metadata.url + '/lottery/' },
+      'food': { 'name': 'Food Wheels', 'url': metadata.url + '/food/' }
+    } %}
+    {% set catMatched = categoryPages[appCategoryInfo] %}
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": {
+            "@type": "WebPage",
+            "@id": "{{ metadata.url }}/",
+            "name": "Home"
+          }
         }
-
-        var script = document.createElement('script');
-        script.type = 'application/ld+json';
-        script.textContent = JSON.stringify(breadcrumb);
-        document.head.appendChild(script);
-      })();
+        {% if catMatched %}
+        ,{
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ catMatched.name | dump | safe }},
+          "item": {
+            "@type": "WebPage",
+            "@id": {{ catMatched.url | dump | safe }},
+            "name": {{ catMatched.name | dump | safe }}
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": {{ breadcrumbTitle | dump | safe }},
+          "item": {
+            "@type": "WebPage",
+            "@id": {{ canonicalUrl | dump | safe }},
+            "name": {{ breadcrumbTitle | dump | safe }}
+          }
+        }
+        {% else %}
+        ,{
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ breadcrumbTitle | dump | safe }},
+          "item": {
+            "@type": "WebPage",
+            "@id": {{ canonicalUrl | dump | safe }},
+            "name": {{ breadcrumbTitle | dump | safe }}
+          }
+        }
+        {% endif %}
+      ]
+    }
     </script>
     {% endif %}
 
