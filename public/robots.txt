@@ -15,7 +15,6 @@ Disallow: /
 
 # General site rules
 User-agent: *
-Disallow: /assets/
 Disallow: /blog/page/
 Disallow: /Readme/
 Disallow: /feedback/
