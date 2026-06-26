@@ -27,6 +27,19 @@
         <input type="hidden" name="subject" value="Daily Pick — quick feedback popup">
         <input type="hidden" name="rating" id="feedback-popup-rating-input" value="">
         <input type="hidden" name="page" id="feedback-popup-page-input" value="">
+        <input type="hidden" name="user_agent" id="feedback-popup-ua" value="">
+        <input type="hidden" name="screen_resolution" id="feedback-popup-screen" value="">
+        <input type="hidden" name="device_type" id="feedback-popup-device" value="">
+        <input type="hidden" name="language" id="feedback-popup-lang" value="">
+        <div class="feedback-popup__field" id="feedback-popup-category-container" hidden>
+          <select class="feedback-popup__select" name="category" id="feedback-popup-category">
+            <option value="" disabled selected>What was the main issue?</option>
+            <option value="Bug / Issue">Bug / Issue</option>
+            <option value="Hard to use">Hard to use</option>
+            <option value="Missing feature">Missing feature</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
         <textarea
           class="feedback-popup__textarea"
           name="message"
