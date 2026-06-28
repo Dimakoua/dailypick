@@ -331,6 +331,10 @@
     {% include "header.html" %}
 
     {% if isApp %}
+    <div class="eeat-meta" style="text-align: center; font-size: 0.85rem; color: var(--text-muted, #666); margin-top: 1rem; position: relative; z-index: 10;">
+        By {{ author or metadata.authorName }} | Last Updated: <time datetime="{{ page.date.toISOString() }}">{{ page.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}</time>
+    </div>
+
     <!-- Visible breadcrumb for app pages (keeps in sync with JSON-LD) -->
     <nav aria-label="Breadcrumb" class="visible-breadcrumb" id="visible-breadcrumb" hidden>
         <ol>
