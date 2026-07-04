@@ -18,6 +18,13 @@ robots: index,follow
 ---
 If your meetings start to feel like deja vu—same starters, same volunteers, same polite pauses—it's time to pass the baton to something more impartial. The [Random Picker Wheel](/apps/wheel/) from Daily Pick sets the tone for fairness before anyone opens their mouth. With a single spin you remove bias, invite engagement, and give every teammate a chance to lead with confidence.
 
+
+**Table of Contents**
+- [Why a Random Picker Wheel feels like a team upgrade](#why-a-random-picker-wheel-feels-like-a-team-upgrade)
+- [Spin-based meeting rituals that keep the randomness fun](#spin-based-meeting-rituals-that-keep-the-randomness-fun)
+- [Keep the wheel honest](#keep-the-wheel-honest)
+- [Frequently Asked Questions](#frequently-asked-questions)
+
 ## Why a Random Picker Wheel feels like a team upgrade
 
 *   **It dissolves volunteer bias:** The loudest or most anxious folks no longer dominate the agenda because the wheel keeps things random.
@@ -49,3 +56,15 @@ Use the wheel to turn the final minute into a quick pulse check. Spin once more,
 The Random Picker Wheel is more than a selection tool—it’s a signal that you endorse fairness, that every voice matters, and that meetings can be fun. Try it out with your next flow state session, retrospective, or quick sync.
 
 Ready for the spin? Jump into the [Random Picker Wheel](/apps/wheel/) and flip the script on meetings that feel stuck. If you want more playful rituals, our library of [Daily Pick games and automations](/blog/conquer-decision-fatigue-fun-fair-ways-to-choose-team-projects/) is built to keep energy high. For reflection, revisit your retro guide with our [retrospective engagement tactics](/blog/level-up-your-team-retrospectives-fun-fair-activities-to-boost-engagement/).
+
+
+## Frequently Asked Questions
+
+**Q: What is the best way to use the random picker wheel feature?**
+A: To get the most out of this tool, integrate it into your daily rituals. It ensures fairness, keeps your team engaged, and provides transparent results that everyone can trust.
+
+**Q: Can random picker wheel help with remote teams?**
+A: Yes, it is perfect for remote teams. It bridges the gap between distributed members by providing a shared, interactive experience that makes everyone feel included in the process.
+
+**Q: Is there a limit to how often we can use random picker wheel?**
+A: No, you can use it as often as you like! Regular use builds consistency in your agile ceremonies and helps maintain high morale across all your collaborative projects.

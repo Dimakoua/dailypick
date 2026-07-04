@@ -23,6 +23,16 @@ Enter *[Planning Poker Hub](/apps/planning-poker/)* by Daily Pick — your team'
 
 ---
 
+
+**Table of Contents**
+- [Why Planning Poker Still Works (When Done Right)](#why-planning-poker-still-works-when-done-right)
+- [Meet Planning Poker Hub: Real-Time, Multiplayer Estimation](#meet-planning-poker-hub-real-time-multiplayer-estimation)
+- [How It Works (Step-by-Step)](#how-it-works-step-by-step)
+- [Why Teams Love It](#why-teams-love-it)
+- [Tips for a Better Estimation Session](#tips-for-a-better-estimation-session)
+- [Make Estimation a Moment, Not a Chore](#make-estimation-a-moment-not-a-chore)
+- [Frequently Asked Questions](#frequently-asked-questions)
+
 ## Why Planning Poker Still Works (When Done Right)
 
 Planning Poker has stood the test of time for a reason. It combines collaboration, transparency, and consensus-building — all key to accurate agile estimation.  
@@ -112,3 +122,14 @@ With *Planning Poker Hub*, you can bring focus, fairness, and fun back to sprint
 
 *Ready to level up your agile ceremonies?*  
 Explore more team-friendly tools at [Daily Pick](/) — designed to make every meeting a little smarter (and a lot more fun).
+
+## Frequently Asked Questions
+
+**Q: What is the best way to use the planning poker feature?**
+A: To get the most out of this tool, integrate it into your daily rituals. It ensures fairness, keeps your team engaged, and provides transparent results that everyone can trust.
+
+**Q: Can planning poker help with remote teams?**
+A: Yes, it is perfect for remote teams. It bridges the gap between distributed members by providing a shared, interactive experience that makes everyone feel included in the process.
+
+**Q: Is there a limit to how often we can use planning poker?**
+A: No, you can use it as often as you like! Regular use builds consistency in your agile ceremonies and helps maintain high morale across all your collaborative projects.

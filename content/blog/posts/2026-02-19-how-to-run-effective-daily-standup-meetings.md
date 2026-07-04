@@ -1,7 +1,7 @@
 ---
-title: "How to Run Effective Daily Standup Meetings: A Complete Guide"
+title: "How to Run Effective Daily Standup Meetings: A Complete Guide | How To Run Standups"
 date: 2026-02-19
-description: "Learn the proven daily standup format that keeps meetings under 15 minutes while ensuring all blockers surface. Templates, remote tips, and common..."
+description: "Learn the proven daily standup format that keeps meetings under 15 minutes while ensuring all blockers surface. Templates, remote tips, and common... Features how to run standups."
 layout: post.njk
 tags: ["standup meetings", "agile ceremonies", "meeting efficiency", "team leadership", "remote meetings", "productivity"]
 canonical: "https://dailypick.dev/blog/how-to-run-effective-daily-standup-meetings/"
@@ -34,6 +34,22 @@ Yet most teams default to a boring, ineffective format that nobody looks forward
 This guide covers the **proven standup format** that actually works—whether you're running 3-person teams, 30-person departments, or hybrid distributed squads. We'll cover the mechanics, common mistakes, remote challenges, and how to evolve your standups as your team grows.
 
 ---
+
+
+**Table of Contents**
+- [What is a Daily Standup?](#what-is-a-daily-standup)
+- [The Standard Standup Format (15 Minutes)](#the-standard-standup-format-15-minutes)
+- [Why 15 Minutes? The Science Behind the Format](#why-15-minutes-the-science-behind-the-format)
+- [The 3-Question Format: A Deep Dive](#the-3-question-format-a-deep-dive)
+- [How to Facilitate an Effective Standup](#how-to-facilitate-an-effective-standup)
+- [Format Variations: Adapt to Your Context](#format-variations-adapt-to-your-context)
+- [Common Standup Mistakes (And How to Fix Them)](#common-standup-mistakes-and-how-to-fix-them)
+- [Remote Standups: Special Considerations](#remote-standups-special-considerations)
+- [Agile Team Standups: Scaling Beyond 1 Team](#agile-team-standups-scaling-beyond-1-team)
+- [Standup Metrics: How to Know If Your Standup is Working](#standup-metrics-how-to-know-if-your-standup-is-working)
+- [FAQ: Daily Standup Questions](#faq-daily-standup-questions)
+- [Next Steps: Transform Your Standup](#next-steps-transform-your-standup)
+- [Build Your Standup Ritual](#build-your-standup-ritual)
 
 ## What is a Daily Standup?
 
@@ -481,20 +497,6 @@ A: Skip them that day. They're not part of the team's active sync. When they ret
 
 **Q: How do we handle multiple time zones?**  
 A: Either async-first (everyone writes, one sync for blocker resolution) or alternate times (standup at Sydney time on Mondays, Mumbai time on Tuesdays, etc.). Consistency is harder but possible.
-
-**Q: Can we do standup async-only?**  
-A: Yes, especially for distributed teams. But you lose the real-time connection moment. Consider one 30-min sync per week minimum for team cohesion.
-
-**Q: Should we stand for standup? (Remote edition)**  
-A: Not necessary. "Standup" is just the name from co-located practice. Sit if it's comfortable. Focus on the time limit, not posture.
-
-**Q: What if people don't have blockers?**  
-A: Either (a) they're not being transparent, (b) you're not asking for soft blockers (unclear requirements, architectural questions, knowledge gaps), or (c) your team is genuinely unblocked. Option (c) is rare. Ask: "Anything slowing you down? Unclear requirements? Need a second opinion on approach?"
-
-**Q: Should we record standups?**  
-A: No (unless you're async-first). Recording creates a performance mindset and kills honesty. People self-censor. If you need a written record, have someone take notes.
-
----
 
 ## Next Steps: Transform Your Standup
 

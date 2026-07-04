@@ -1,7 +1,7 @@
 ---
-title: How to Connect Jira to Daily Pick (API Token Guide)
+title: "How to Connect Jira to Daily Pick (API Token Guide) | Jira Api Token"
 date: 2025-10-26
-description: Follow this step-by-step Jira guide to generate an API token, choose the right project, and stream players plus assignments into Daily Pick.
+description: "Follow this step-by-step Jira guide to generate an API token, choose the right project, and stream players plus assignments into Daily Pick. Features jira api token."
 layout: post.njk
 tags: ["jira", "daily pick", "standup automation", "team productivity", "integrations"]
 canonical: "https://dailypick.dev/blog/connect-jira-to-daily-pick/"
@@ -19,6 +19,16 @@ robots: index,follow
 Daily Pick can pull your Jira players, queues, and assignment snapshots so the stand-up dock always knows who is up next and what they are shipping. This guide walks through the exact clicks inside Atlassian, how to configure the integration card inside **Settings → Third-Party Integrations**, and what to do if something fails along the way.
 
 ---
+
+
+**Table of Contents**
+- [What you need before you start](#what-you-need-before-you-start)
+- [Step-by-step: create the Jira API token](#step-by-step-create-the-jira-api-token)
+- [Configure the Jira integration card in Daily Pick](#configure-the-jira-integration-card-in-daily-pick)
+- [Test and save the connection](#test-and-save-the-connection)
+- [Troubleshooting common errors](#troubleshooting-common-errors)
+- [Keep your integration healthy](#keep-your-integration-healthy)
+- [Frequently Asked Questions](#frequently-asked-questions)
 
 ## What you need before you start
 
@@ -89,3 +99,15 @@ Still blocked? Toggle **Include assigned work** off and re-run the test to confi
 - **Refresh before the stand-up.** Click the **Refresh** button inside the stand-up dock to pull the latest assignments if you know big changes landed overnight.
 
 With Jira linked, Daily Pick can act as your real-time queue coordinator—no more copying names from a spreadsheet before the meeting. Jump into the [Settings page](/apps/brand/) whenever you need to tweak the connection.
+
+
+## Frequently Asked Questions
+
+**Q: What is the best way to use the jira api token feature?**
+A: To get the most out of this tool, integrate it into your daily rituals. It ensures fairness, keeps your team engaged, and provides transparent results that everyone can trust.
+
+**Q: Can jira api token help with remote teams?**
+A: Yes, it is perfect for remote teams. It bridges the gap between distributed members by providing a shared, interactive experience that makes everyone feel included in the process.
+
+**Q: Is there a limit to how often we can use jira api token?**
+A: No, you can use it as often as you like! Regular use builds consistency in your agile ceremonies and helps maintain high morale across all your collaborative projects.

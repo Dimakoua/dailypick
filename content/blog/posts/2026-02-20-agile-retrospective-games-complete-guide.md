@@ -1,6 +1,6 @@
 ---
 title: "Agile Retrospective Games: Complete Guide to Energizing Sprint Reviews"
-description: "Eight creative retrospective activities that surface insights, amplify every voice, and leave teams energized and ready for the next sprint."
+description: "Eight creative retrospective activities that surface insights, amplify every voice, and leave teams energized and ready for the next sprint. Features retrospective games."
 date: 2026-02-20
 tags: 
 section: Agile Ceremonies
@@ -18,6 +18,20 @@ twitterImage: /assets/og-image-main.png
 Sprint retrospectives are where teams unlock their greatest improvements—but only if everyone contributes. When retros turn into grumbling sessions or silent nods, you're missing 80% of your team's insights. That's where retrospective games come in. They're not fluffy icebreakers; they're structured rituals that surface buried ideas, balance voices, and send teams into the next sprint energized.
 
 In this guide, we'll walk through 8 proven retrospective games and formats that work across team sizes, industries, and remote/hybrid setups.
+
+
+**Table of Contents**
+- [Why Standard Retrospectives Fail](#why-standard-retrospectives-fail)
+- [The 8 Best Retrospective Games (by Format)](#the-8-best-retrospective-games-by-format)
+- [How to Choose Your Retrospective Format](#how-to-choose-your-retrospective-format)
+- [The Retro-Game Facilitation Checklist](#the-retro-game-facilitation-checklist)
+- [Common Retrospective Mistakes to Avoid](#common-retrospective-mistakes-to-avoid)
+- [Retrospective Games + Daily Pick](#retrospective-games-daily-pick)
+- [Retrospective Games That Don't Work (And Why)](#retrospective-games-that-dont-work-and-why)
+- [FAQ: Retrospective Games](#faq-retrospective-games)
+- [Your First Retrospective Game: A 45-Minute Plan](#your-first-retrospective-game-a-45-minute-plan)
+- [Key Takeaways](#key-takeaways)
+- [Related Reading](#related-reading)
 
 ## Why Standard Retrospectives Fail
 
@@ -326,20 +340,6 @@ A: Yes. Games like Speed Dating, Retro-Poker, and Rose/Thorn/Bud work great asyn
 
 **Q: What if our team doesn't want to play games?**
 A: Start with low-friction games (Start/Stop/Continue, Glad/Sad/Mad). Build trust. Resist calling them "games"—frame as "structured formats." After 3-4 retros, team buys into the format.
-
-**Q: How do we measure if our retro is working?**
-A: Track action items from each retro:
-- % of action items completed by next retro (should be 70%+)
-- Team engagement scores (use Retro-Poker health check)
-- Whether issues surface earlier or later in the sprint
-
-**Q: We have a 40-person team. Can we use these games?**
-A: Yes. Use the Fishbowl, Speed Dating, or split into smaller retro sub-groups. Aggregate themes. Sync up as one team on decisions.
-
-**Q: What if someone dominates the retro despite the game structure?**
-A: Use a talking object or timer explicitly. "Thanks for that input—let's hear from folks who haven't spoken yet." Name it directly, kindly, and move on.
-
----
 
 ## Your First Retrospective Game: A 45-Minute Plan
 
