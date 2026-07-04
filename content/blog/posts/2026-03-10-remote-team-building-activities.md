@@ -1,7 +1,7 @@
 ---
 title: Remote Team Building Activities That Actually Work
 date: 2026-03-10
-description: Practical, proven activities and games that strengthen remote team bonds and keep engagement high, even when everyone is distributed.
+description: "Practical, proven activities and games that strengthen remote team bonds and keep engagement high, even when everyone is distributed. Features remote team building activities."
 layout: post.njk
 tags: 
 section: Team Engagement
@@ -93,3 +93,18 @@ Survey responses can live in the same Slack channel where you run the games; tra
 Remote team building isn’t a checkbox – it’s an ongoing culture practice. The best ideas are low‑effort, inclusive, and easy to scale. Keep a running “idea backlog” (we use a simple GitHub issue) so you never find yourself scrambling for content. And remember: the point isn’t to manufacture camaraderie, it’s to create spaces where the camaraderie that already exists can surface.
 
 Start with one quick hit this week, revisit it the next, and before you know it your team will be exchanging inside jokes across continents.
+
+
+**Table of Contents**
+- [Frequently Asked Questions](#frequently-asked-questions)
+
+## Frequently Asked Questions
+
+**Q: What is the best way to use the remote team building activities feature?**
+A: To get the most out of this tool, integrate it into your daily rituals. It ensures fairness, keeps your team engaged, and provides transparent results that everyone can trust.
+
+**Q: Can remote team building activities help with remote teams?**
+A: Yes, it is perfect for remote teams. It bridges the gap between distributed members by providing a shared, interactive experience that makes everyone feel included in the process.
+
+**Q: Is there a limit to how often we can use remote team building activities?**
+A: No, you can use it as often as you like! Regular use builds consistency in your agile ceremonies and helps maintain high morale across all your collaborative projects.

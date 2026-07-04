@@ -1,5 +1,5 @@
 ---
-title: How to Connect GitHub to Daily Pick (PAT + Repository Guide)
+title: "How to Connect GitHub to Daily Pick (PAT + Repository Guide) | Github Personal Access Token"
 date: 2025-10-26
 description: Learn how to create a GitHub personal access token, scope it correctly, and sync collaborators plus open issues into Daily Pick.
 layout: post.njk
@@ -19,6 +19,16 @@ robots: index,follow
 GitHub already tracks who owns each issue and which pull requests are waiting for review. When you hook GitHub into Daily Pick, the stand-up dock can automatically display collaborators, open issues, and quick links to “Open” so your team never hunts for context. Here’s the full walkthrough.
 
 ---
+
+
+**Table of Contents**
+- [Requirements](#requirements)
+- [Step 1 — Create a GitHub personal access token](#step-1-create-a-github-personal-access-token)
+- [Step 2 — Complete the GitHub card in Daily Pick](#step-2-complete-the-github-card-in-daily-pick)
+- [Step 3 — Test, review, and save](#step-3-test-review-and-save)
+- [Troubleshooting checklist](#troubleshooting-checklist)
+- [Best practices after you connect](#best-practices-after-you-connect)
+- [Frequently Asked Questions](#frequently-asked-questions)
 
 ## Requirements
 
@@ -84,3 +94,15 @@ Daily Pick only needs read access. You can keep two-factor auth enabled and stil
 - **Leverage snapshots.** If a deploy freezes mid-sprint, click **Save assigned work snapshot** so the state is preserved for the retrospective.
 
 With GitHub wired in, Daily Pick becomes your unified view: queue order, notes, and the exact issues each teammate is touching. Revisit [the Settings page](/apps/brand/) any time you want to switch repositories or revoke the connection.
+
+
+## Frequently Asked Questions
+
+**Q: What is the best way to use the github personal access token feature?**
+A: To get the most out of this tool, integrate it into your daily rituals. It ensures fairness, keeps your team engaged, and provides transparent results that everyone can trust.
+
+**Q: Can github personal access token help with remote teams?**
+A: Yes, it is perfect for remote teams. It bridges the gap between distributed members by providing a shared, interactive experience that makes everyone feel included in the process.
+
+**Q: Is there a limit to how often we can use github personal access token?**
+A: No, you can use it as often as you like! Regular use builds consistency in your agile ceremonies and helps maintain high morale across all your collaborative projects.

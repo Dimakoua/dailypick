@@ -1,7 +1,7 @@
 ---
-title: 5 Fun Ways to Pick the Next Speaker in Stand-ups
+title: "5 Fun Ways to Pick the Next Speaker in Stand-ups | Team Engagement"
 date: 2025-06-10
-description: Reenergize daily stand-ups with five fair pickers that keep updates quick, inclusive, and fun for in-office and remote teams alike.
+description: "Reenergize daily stand-ups with five fair pickers that keep updates quick, inclusive, and fun for in-office and remote teams alike. Features team engagement."
 layout: post.njk
 tags: ["team engagement", "daily stand-up", "agile meetings", "fun at work", "productivity", "team morale"]
 canonical: "https://dailypick.dev/blog/spice-up-your-standups-5-fun-ways/"
@@ -19,6 +19,13 @@ robots: index,follow
 Let's be honest, the daily stand-up. It's essential, yes. But can it sometimes feel a *tad* repetitive? The same order, the same polite-but-slightly-forced "you go next," or the awkward silence until someone bravely steps up. What if we told you that deciding who speaks next could actually be... fun? And fair? And even a mini morale booster?
 
 At Daily Pick, we're all about injecting a bit of playfulness into the workday, especially when it comes to team interactions. A smooth, engaging stand-up sets a positive tone for the entire day. If you’re running hybrid or async updates, pair these ideas with our Slack + Daily Pick automation guide so the fun carries into every channel. So, let's ditch the monotony and explore some creative ways to pick your speaking order!
+
+
+**Table of Contents**
+- [Why Bother Shaking Things Up?](#why-bother-shaking-things-up)
+- [5 Fun & Fair Ways to Pick the Next Speaker:](#5-fun-fair-ways-to-pick-the-next-speaker)
+- [Make it Your Own](#make-it-your-own)
+- [Frequently Asked Questions](#frequently-asked-questions)
 
 ## Why Bother Shaking Things Up?
 
@@ -61,3 +68,15 @@ The key is to find what works for your team. Maybe you rotate through different 
 By introducing a little unpredictability and fun, you're not just choosing who speaks next; you're building a more connected and energized team.
 
 *Ready to make your stand-ups and team decisions more engaging?* Start with our [complete guide to 8 standup meeting ideas](/blog/8-best-standup-meeting-ideas/) to pick your format, then layer on speaker selection games from Daily Pick. Explore the fun and fair games at [Daily Pick](/) today, then level up with our tips for energizing daily stand-ups or the remote onboarding icebreaker hits that keep new teammates smiling. For a quick refresher on the format fundamentals, the official [Scrum Guide](https://scrumguides.org/scrum-guide.html) is still the gold standard—Daily Pick just makes the ritual infinitely more fun.
+
+
+## Frequently Asked Questions
+
+**Q: What is the best way to use the team engagement feature?**
+A: To get the most out of this tool, integrate it into your daily rituals. It ensures fairness, keeps your team engaged, and provides transparent results that everyone can trust.
+
+**Q: Can team engagement help with remote teams?**
+A: Yes, it is perfect for remote teams. It bridges the gap between distributed members by providing a shared, interactive experience that makes everyone feel included in the process.
+
+**Q: Is there a limit to how often we can use team engagement?**
+A: No, you can use it as often as you like! Regular use builds consistency in your agile ceremonies and helps maintain high morale across all your collaborative projects.
