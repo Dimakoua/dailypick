@@ -8,6 +8,49 @@ ogImageAlt: "Team checking the Daily Pick morale thermometer results during plan
 appStyles: |
   <link href="/apps/morale-thermometer/style.css" rel="stylesheet" />
 localBrandConfig: /apps/morale-thermometer/local-brand-config.js
+headExtra: |
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Team Morale Thermometer \u2013 Sprint Pulse Check | Daily Pick",
+    "operatingSystem": "All",
+    "applicationCategory": "GameApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is this team sentiment tracker completely free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the tool is entirely free to use directly in your browser. There are absolutely no subscriptions, no accounts required, and no hidden fees to use the slider or save your history locally."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does this daily check-in tool store my data online?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No, your data remains completely private. All logged moods and timestamps are saved exclusively in your device's local browser storage, ensuring your personal check-ins are never sent to external servers."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use this mental health check-in for team meetings?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. It is an excellent tool for remote standups. Team members can set their temperature, click the copy button, and paste their current status directly into chat channels like Slack or Teams."
+        }
+      }
+    ]
+  }
+  </script>
 ---
 <main data-page-type="agile" aria-labelledby="moraleHeading" class="morale-page">
                 <header class="page-hero glass-card">
