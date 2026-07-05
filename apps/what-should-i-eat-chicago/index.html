@@ -1,4 +1,5 @@
 ---
+
 layout: base_app.njk
 title: "Chicago Food Wheel – Restaurant & Dish Picker | Daily Pick"
 description: "Can't decide what to eat in Chicago? Spin the wheel for Chicago classics, neighbourhood favourites, street food, and downtown dining picks."
@@ -7,6 +8,48 @@ canonical: "https://dailypick.dev/apps/what-should-i-eat-chicago/"
 localBrandConfig: /apps/wheel/local-brand-config.js
 headExtra: |
   <link href="./style.css" rel="stylesheet" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "\ud83c\udf2d Chicago Food Wheel",
+    "operatingSystem": "All",
+    "applicationCategory": "GameApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is this what to eat in Chicago free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the tool is completely free to use without any hidden fees or mandatory sign-ups required. Enjoy unlimited spins immediately."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use this Chicago cuisine spinner on my phone?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. The interface is fully responsive, meaning it works perfectly and looks great on smartphones, tablets, and desktop computers alike."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are the where to eat Chicago results truly random?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the wheel uses a built-in randomized algorithm to ensure that every single spin produces a completely fair and unpredictable result."
+        }
+      }
+    ]
+  }
+  </script>
 ---
 <main data-page-type="randomizer" class="main-container">
         <header class="page-hero glass-card">
