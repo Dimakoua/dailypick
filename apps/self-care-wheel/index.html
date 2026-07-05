@@ -7,6 +7,48 @@ canonical: "https://dailypick.dev/apps/self-care-wheel/"
 localBrandConfig: /apps/wheel/local-brand-config.js
 headExtra: |
   <link href="./style.css" rel="stylesheet" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Self-Care Wheel",
+    "operatingSystem": "All",
+    "applicationCategory": "GameApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is this wellness wheel totally free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the application is completely free to use. We strongly believe that access to basic digital wellness tools should always remain unrestricted."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I spin the self care spinner on mobile?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. The interface is highly responsive and visually optimized, ensuring a flawless, calming spinning experience on your smartphone or tablet."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are the break ideas completely private?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Your interaction with the tool happens strictly locally inside your web browser, guaranteeing that your usage habits remain entirely private."
+        }
+      }
+    ]
+  }
+  </script>
 ---
 <main data-page-type="randomizer" class="main-container">
         <header class="page-hero glass-card">

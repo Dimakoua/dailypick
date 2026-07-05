@@ -8,6 +8,49 @@ ogImageAlt: "Team Roster and Integrations for Daily Pick"
 hideEmbed: true
 appStyles: |
   <link rel="stylesheet" href="/assets/css/settings.css" />
+headExtra: |
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Team Roster",
+    "operatingSystem": "All",
+    "applicationCategory": "GameApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Are these team players features free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, managing your fundamental player list is completely free, intentionally designed to make platform onboarding as frictionless as possible."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the GitHub integration work on mobile?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The interface is fully mobile responsive, allowing you to easily manage connections and update your lists directly from your smartphone."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is the Jira integration securely handled?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. The integrations use standardized OAuth protocols, ensuring your external project data remains strictly secure and heavily protected."
+        }
+      }
+    ]
+  }
+  </script>
 ---
 <main aria-labelledby="rosterHeading" class="settings-page">
   <section class="settings-hero glass-card">
