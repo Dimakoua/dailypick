@@ -8,6 +8,49 @@ ogImageAlt: "Animated trap catching a player token in Daily Pick"
 appStyles: |
   <link href="/apps/trap/style.css" rel="stylesheet" />
 headExtra: |
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Trap!",
+    "operatingSystem": "All",
+    "applicationCategory": "GameApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How does the trap game ensure fairness?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The digital avatars utilize a sophisticated physics engine featuring randomized starting trajectories and highly unpredictable bounce angles. This complex system guarantees that every active participant maintains a completely equal mathematical probability."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use this strategy game remotely?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. It operates perfectly via screen sharing during virtual conference calls. The visually engaging animations provide an excellent, high-quality interactive focal point for distributed teams conducting remote daily syncs."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I update the team game roster?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can effortlessly modify your participant list by accessing the central settings menu. These adjustments are instantly saved locally and automatically applied to the active playing field for immediate use."
+        }
+      }
+    ]
+  }
+  </script>
+
   <script defer="" src="/assets/js/game-pip.js"></script>
   <script defer="" src="/assets/js/standup-data.js"></script>
   <script defer="" src="/assets/js/standup-stats.js"></script>

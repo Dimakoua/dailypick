@@ -8,6 +8,49 @@ ogImageAlt: "Daily Stand-up Panel showing wheel, timer, queue, and stats in one 
 appStyles: |
   <link href="/apps/standup-panel/style.css" rel="stylesheet" />
 headExtra: |
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Daily Stand-up Panel",
+    "operatingSystem": "All",
+    "applicationCategory": "GameApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can I save my daily standup settings?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, your roster and specific game preferences are automatically stored within your local browser storage. This feature ensures your daily standup begins instantly every time without requiring any repetitive manual configuration each morning."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does the standup timer actually work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The standup timer includes quick presets ranging from one to fifteen minutes, plus a custom input field. It features start, pause, and reset controls to ensure your meetings always stay strictly on schedule."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is the speaker wheel fully responsive?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. The speaker wheel and the entire dashboard interface are fully optimized for both desktop and mobile devices, allowing you to effectively manage your agile rituals seamlessly from any screen size."
+        }
+      }
+    ]
+  }
+  </script>
+
   <script defer="" src="/assets/js/standup-data.js"></script>
   <script defer="" src="/assets/js/standup-stats.js"></script>
   <script defer="" src="/assets/js/wheel-engine.js"></script>
