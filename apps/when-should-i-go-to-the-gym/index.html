@@ -6,6 +6,48 @@ keywords: "when should I go to the gym, gym schedule wheel, gym picker, workout 
 canonical: "https://dailypick.dev/apps/when-should-i-go-to-the-gym/"
 localBrandConfig: /apps/wheel/local-brand-config.js
 headExtra: |
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Gym Wheel \u2013 Gym Schedule Picker",
+    "operatingSystem": "All",
+    "applicationCategory": "GameApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How fair is the gym schedule wheel?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The gym schedule wheel utilizes a true random number algorithm to ensure every spin delivers a completely fair and unbiased result. There is no hidden bias, meaning it is a genuinely reliable tool for dictating your workout times."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use this gym picker for home workouts?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, this gym picker is equally effective for home workouts. Whether you are heading to a commercial gym or just rolling out a yoga mat in your living room, the wheel successfully forces you to start exercising."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens if the workout time randomizer picks right now?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "If the workout time randomizer selects \"Right Now!\", you must honor the spin. Stop scrolling, change into your fitness gear immediately, and begin your workout. The entire purpose of the wheel is to eliminate your excuses."
+        }
+      }
+    ]
+  }
+  </script>
   <link href="./style.css" rel="stylesheet" />
 ---
 <main data-page-type="randomizer" class="main-container">
