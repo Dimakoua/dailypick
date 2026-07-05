@@ -6,6 +6,48 @@ keywords: "NHL team wheel, random NHL team picker, which NHL team should I root 
 canonical: "https://dailypick.dev/apps/nhl-team-wheel/"
 localBrandConfig: /apps/wheel/local-brand-config.js
 headExtra: |
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "NHL Team Wheel \u2013 Random NHL Team Picker | Daily Pick",
+    "operatingSystem": "All",
+    "applicationCategory": "GameApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is this random hockey team generator free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the NHL Team Wheel is completely free to use directly in your browser. There are absolutely no downloads required, no hidden fees, and no user accounts needed to spin the wheel."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does this NHL team spinner include all current teams?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the wheel comes completely pre-loaded with all 32 active professional NHL franchises. You do not need to spend any time manually entering team names before spinning."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is the result from the NHL randomizer truly fair?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The application utilizes a robust randomized physics algorithm to determine the final resting angle, ensuring every single team has an exactly equal mathematical probability of being selected."
+        }
+      }
+    ]
+  }
+  </script>
   <link href="./style.css" rel="stylesheet" />
 ---
 <main data-page-type="randomizer" class="main-container">
