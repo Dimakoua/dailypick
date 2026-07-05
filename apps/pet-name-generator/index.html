@@ -7,6 +7,42 @@ canonical: "https://dailypick.dev/apps/pet-name-generator/"
 ogImageAlt: "A playful pet name generator with dog, cat, and fish categories"
 appStyles: |
   <link href="./style.css" rel="stylesheet" />
+headExtra: |
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Pet Name Generator",
+    "operatingSystem": "All",
+    "applicationCategory": "GameApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "1. What Is Pet Name Generator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pet Name Generator is a browser-based tool that creates random pet names based on your chosen pet type and naming style. It is designed for new pet owners, experienced animal lovers, and anyone who wants a quick, fun way to brainstorm names."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "2. How to Use It?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Select a pet type: Dog, Cat, Fish, Bird, or Any. Choose a name style: Cute, Funny, Classic, or Unique. Click Generate Name to reveal a random pet name. Click Copy Name to save it to your clipboard. Generate again anytime for a fresh suggestion."
+        }
+      }
+    ]
+  }
+  </script>
+
 ---
 <main data-page-type="randomizer" class="pet-name-page" id="main">
   <header class="page-hero glass-card">
