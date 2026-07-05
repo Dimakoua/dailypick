@@ -6,6 +6,48 @@ keywords: "daily grand number generator, daily grand quick pick, random daily gr
 canonical: "https://dailypick.dev/apps/daily-grand-number-generator/"
 headExtra: |
   <link href="./style.css" rel="stylesheet" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Daily Grand Number Generator",
+    "operatingSystem": "All",
+    "applicationCategory": "GameApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is this Daily Grand generator fair?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. It uses crypto.getRandomValues() with Fisher-Yates shuffling and rejection sampling. Every number has an equal chance of being selected."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use these numbers to play Daily Grand?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. The generated numbers follow the official 5/49 + 1/7 format and are statistically identical to quick picks from a lottery terminal."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are the Daily Grand rules?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pick 5 numbers from 1–49 and 1 Grand Number from 1–7. Draws are Monday and Thursday. Match all 6 to win $1,000 a day for life."
+        }
+      }
+    ]
+  }
+  </script>
 ---
 <main data-page-type="lottery" class="lottery-page" id="main">
 

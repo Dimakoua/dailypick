@@ -7,6 +7,49 @@ canonical: "https://dailypick.dev/apps/fortune-cookie-generator/"
 ogImageAlt: "Fortune cookie on a plate with a fortune message"
 appStyles: |
   <link href="./style.css" rel="stylesheet" />
+headExtra: |
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Fortune Cookie Generator",
+    "operatingSystem": "All",
+    "applicationCategory": "GameApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What Is Fortune Cookie Generator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Fortune Cookie Generator is a playful online tool designed to give you quick messages of luck, motivation, advice, or daily inspiration. It is built for mood boosts, creative prompts, and tiny moments of pause during busy days."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How to Use It?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Choose a category: Daily, Motivation, Luck, or Advice. Click Generate Fortune to open your digital cookie. Read your fortune — it appears instantly in the result card. Click Copy Message to save or share the fortune with friends or teammates. Generate again anytime for a new message."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "When to Use Fortune Cookie Generator",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use Fortune Cookie Generator whenever you need a quick mood lift, creative spark, or moment of reflection. It pairs well with work breaks, morning routines, and team meetings."
+        }
+      }
+    ]
+  }
+  </script>
 ---
 <main data-page-type="randomizer" class="fortune-page" id="main">
   <header class="page-hero glass-card">
