@@ -5,6 +5,49 @@ description: "Spin a colorful wheel to choose between options: lunch spots, meet
 keywords: "choices spinner, decision spinner, option picker, lunch decision, topic selector, interactive choice wheel"
 canonical: "https://dailypick.dev/apps/the-wheel-spinner/"
 headExtra: |
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Choices Spinner",
+    "operatingSystem": "All",
+    "applicationCategory": "GameApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can I save my decision spinner options?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, your specific text entries and visual configurations are automatically preserved within your local browser storage. This convenient feature guarantees your customized setup remains instantly available whenever you return to the page."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is there a limit for the option picker?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "While the application supports numerous entries, keeping the list under fifty items typically ensures the most optimal visual presentation. Extremely large lists will still function perfectly utilizing the underlying randomization algorithm."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the interactive choice wheel work on mobile?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. The entire interface is comprehensively optimized for modern smartphones and tablets, providing a remarkably smooth, highly responsive interactive experience regardless of your chosen hardware or current operating system."
+        }
+      }
+    ]
+  }
+  </script>
+
   <link href="./style.css" rel="stylesheet" />
   <script src="/assets/js/wheel-engine.js"></script>
 localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js

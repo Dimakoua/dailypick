@@ -6,6 +6,49 @@ keywords: "what car should I buy, car picker wheel, what car to rent, dream car 
 canonical: "https://dailypick.dev/apps/what-car-should-i/"
 localBrandConfig: /apps/wheel/local-brand-config.js
 headExtra: |
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Car Choice Wheel",
+    "operatingSystem": "All",
+    "applicationCategory": "GameApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can it help decide what car should I buy?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, by randomly selecting a specific automotive category, it effectively forces you to quickly evaluate your genuine reaction to that particular choice, ultimately helping you overcome persistent analysis paralysis successfully."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I choose what car to rent?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Simply customize the digital segments with the specific models currently available at your local rental agency, then spin the interactive interface to securely finalize your weekend transportation decision without hesitation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I save my dream car wheel setup?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. Your customized vehicle options and specific visual configurations are automatically preserved within your local browser storage, ensuring your personalized setup remains instantly available whenever you return to the page."
+        }
+      }
+    ]
+  }
+  </script>
+
   <link href="./style.css" rel="stylesheet" />
 ---
 <main data-page-type="randomizer" class="main-container">
