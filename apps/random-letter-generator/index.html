@@ -7,6 +7,48 @@ canonical: "https://dailypick.dev/apps/random-letter-generator/"
 ogImageAlt: "A random letter generator result display"
 headExtra: |
   <link href="./style.css" rel="stylesheet" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Random Letter Generator",
+    "operatingSystem": "All",
+    "applicationCategory": "GameApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is this letter picker free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the tool is entirely free to use without any required subscriptions, ads, or hidden charges."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use the alphabet randomizer on my phone?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. The generator is fully optimized for mobile devices, working flawlessly in any modern smartphone browser."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the creative prompt generator save my data?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. All letter generation happens locally inside your browser, meaning none of your selections or outputs are ever saved to external servers."
+        }
+      }
+    ]
+  }
+  </script>
 ---
   <main data-page-type="randomizer" class="picker-page" id="main">
     <header class="page-hero glass-card">

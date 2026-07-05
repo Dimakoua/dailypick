@@ -7,6 +7,48 @@ canonical: "https://dailypick.dev/apps/retro-board/"
 ogImageAlt: "Team running a retrospective with Daily Pick Retro Board"
 headExtra: |
   <link href="./style.css" rel="stylesheet" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Collaborative Retro Board",
+    "operatingSystem": "All",
+    "applicationCategory": "GameApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is this sprint retro tool completely free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the core retrospective functionality is entirely free to use, allowing teams to collaborate effortlessly without encountering paywalls."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I access the agile tools on mobile?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "While accessible on mobile, the drag-and-drop board experience is highly optimized for desktop and tablet displays during live meetings."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is our team collaboration data secure?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. Your real-time session data is processed securely, ensuring your team's sensitive retrospective feedback remains private and protected."
+        }
+      }
+    ]
+  }
+  </script>
 ---
 <main data-page-type="agile" aria-labelledby="retroHeading" class="retro-page">
     <header class="retro-hero glass-card">

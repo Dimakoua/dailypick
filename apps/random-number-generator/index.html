@@ -7,6 +7,48 @@ canonical: "https://dailypick.dev/apps/random-number-generator/"
 ogImageAlt: "A number generator display showing a random number"
 headExtra: |
   <link href="./style.css" rel="stylesheet" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Random Number Generator",
+    "operatingSystem": "All",
+    "applicationCategory": "GameApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is this number picker completely free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the application is entirely free and accessible to everyone without requiring any user accounts or hidden fees."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use this integer generator on mobile?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. The interface is highly responsive and functions perfectly on smartphones, tablets, and desktop computers alike."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this random number tool secure?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The tool processes everything locally inside your browser, ensuring no data or generated outcomes are sent to external servers."
+        }
+      }
+    ]
+  }
+  </script>
 ---
   <main data-page-type="randomizer" class="picker-page" id="main">
     <header class="page-hero glass-card">
