@@ -8,6 +8,50 @@ ogImageAlt: "Green yes and red no options on the Yes or No decision wheel"
 appStyles: |
   <link href="/apps/yes-or-no-wheel/style.css" rel="stylesheet" />
 localBrandConfig: /apps/yes-or-no-wheel/local-brand-config.js
+headExtra: |
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Yes or No Wheel",
+    "operatingSystem": "All",
+    "applicationCategory": "GameApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is this a good decision wheel for kids?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, this decision wheel is entirely safe and simple for kids to use. It features bright colors, easy-to-read text, and requires no complicated setup, making it perfect for classroom games or family decisions."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can it act as a coin flip alternative?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. It serves as a visual coin flip alternative that is much more engaging. Instead of just heads or tails, you get a suspenseful spinning animation and clear Yes or No answers displayed prominently."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is the random choice truly random?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the random choice is determined by a math-based algorithm in your browser. Every spin calculates a fresh, unbiased rotation, ensuring that every Yes, No, or Maybe outcome is completely fair and unpredictable."
+        }
+      }
+    ]
+  }
+  </script>
+
 ---
 
 <main id="main" class="yes-no-page" data-page-type="randomizer">
