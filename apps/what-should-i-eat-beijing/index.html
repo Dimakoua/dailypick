@@ -1,4 +1,5 @@
 ---
+
 layout: base_app.njk
 title: "Beijing Food Wheel – Restaurant & Dish Picker | Daily Pick"
 description: "Can't decide where to eat in Beijing? Spin the wheel for Peking duck, hot pot, street food, and Hutong dining picks."
@@ -7,6 +8,48 @@ canonical: "https://dailypick.dev/apps/what-should-i-eat-beijing/"
 localBrandConfig: /apps/wheel/local-brand-config.js
 headExtra: |
   <link href="./style.css" rel="stylesheet" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "\ud83c\udfee Beijing Food Wheel",
+    "operatingSystem": "All",
+    "applicationCategory": "GameApplication",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is this what to eat in Beijing free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the tool is completely free to use without any hidden fees or mandatory sign-ups required. Enjoy unlimited spins immediately."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use this Beijing cuisine spinner on my phone?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. The interface is fully responsive, meaning it works perfectly and looks great on smartphones, tablets, and desktop computers alike."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are the where to eat Beijing results truly random?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the wheel uses a built-in randomized algorithm to ensure that every single spin produces a completely fair and unpredictable result."
+        }
+      }
+    ]
+  }
+  </script>
 ---
 <main data-page-type="randomizer" class="main-container">
         <header class="page-hero glass-card">
