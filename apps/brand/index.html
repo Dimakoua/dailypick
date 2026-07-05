@@ -8,6 +8,49 @@ ogImageAlt: "Brand Studio for customizing Daily Pick"
 hideEmbed: true
 appStyles: |
   <link rel="stylesheet" href="/assets/css/settings.css" />
+headExtra: |
+  <script type="application/ld+json">
+  {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Brand Studio",
+      "operatingSystem": "All",
+      "applicationCategory": "GameApplication",
+      "browserRequirements": "Requires JavaScript. Requires HTML5."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+          {
+              "@type": "Question",
+              "name": "What Is Brand Studio?",
+              "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Brand Studio is a brand studio experience for configuring your team\u2019s look and feel inside Daily Pick. It helps you personalize the interface with your own colors, emoji, typography, and logo settings. Use Brand Studio to make Daily Pick feel like part of your culture, whether you are in a stand-up, planning session, or classroom activity. The tool supports identity controls for your brand name and mark, a complete palette of surface and accent colors, and seasonal theme toggles for holiday styling. Brand Studio keeps the customization simple and immediate, so your team can see changes in real time without guesswork."
+              }
+          },
+          {
+              "@type": "Question",
+              "name": "How to Use It?",
+              "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Update the brand name, emoji, font family, or logo URL in the Brand identity section. Choose your accent, background, surface, and text colors in the Color palette section. Toggle seasonal themes on or off, then use Auto or Manual mode to control holiday styling. Click Save Brand to store your custom theme, or Reset Brand to return to defaults."
+              }
+          },
+          {
+              "@type": "Question",
+              "name": "When to Use This Brand Studio?",
+              "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Use Brand Studio when you want Daily Pick to feel like part of your organization instead of a generic tool. It is ideal for teams who want a polished, consistent visual identity across every session."
+              }
+          }
+      ]
+  }
+  </script>
 ---
 <main aria-labelledby="brandHeading" class="settings-page">
   <section class="settings-hero glass-card">
