@@ -1,5 +1,22 @@
 ---
 layout: base.njk
 isApp: true
+eleventyComputed:
+  title: >-
+    {%- set slug = page.fileSlug -%}
+    {%- if slug.startsWith('what-should-i-eat-') -%}
+      {%- set location = slug | replace('what-should-i-eat-', '') | replace('-', ' ') | title | replace('La', 'LA') | replace('Uk', 'UK') -%}
+      {%- if location in ['Indian', 'Chinese', 'Colombian', 'Greek', 'Italian', 'Nepali', 'Ukrainian'] -%}
+        What {{ location }} Food Should I Eat? | Random Food Picker
+      {%- else -%}
+        What Should I Eat in {{ location }}? | Random Food Picker
+      {%- endif -%}
+    {%- elif slug == 'what-should-i-eat' -%}
+      What Should I Eat? | Random Food Picker
+    {%- elif slug.endsWith('-generator') -%}
+      {{ slug | replace('-', ' ') | title }} | Daily Pick
+    {%- else -%}
+      {{ title }}
+    {%- endif -%}
 ---
 {{ content | safe }}
