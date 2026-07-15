@@ -324,6 +324,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-indian",
+    subCategory: "cuisine",
     name: "Indian Food Wheel",
     path: "/apps/what-should-i-eat-indian/",
     category: "food",
@@ -332,6 +333,7 @@ module.exports = [
     description: "Spin the wheel for authentic Indian dishes — North Indian curries, South Indian tiffin, street food, and sweets."
   },  {
     id: "what-should-i-eat-ukrainian",
+    subCategory: "cuisine",
     name: "Ukrainian Food Wheel",
     path: "/apps/what-should-i-eat-ukrainian/",
     category: "food",
@@ -340,6 +342,7 @@ module.exports = [
     description: "Spin the wheel for authentic Ukrainian dishes and drinks — borscht, varenyky, holubtsi, kvass, and more. Смачного!"
   },  {
     id: "what-should-i-eat-nepali",
+    subCategory: "cuisine",
     name: "Nepali Food Wheel",
     path: "/apps/what-should-i-eat-nepali/",
     category: "food",
@@ -348,6 +351,7 @@ module.exports = [
     description: "Spin the wheel for authentic Nepali dishes and drinks — dal bhat, momo, sekuwa, tongba, and more. स्वादिलो!"
   },  {
     id: "what-should-i-eat-colombian",
+    subCategory: "cuisine",
     name: "Colombian Food Wheel",
     path: "/apps/what-should-i-eat-colombian/",
     category: "food",
@@ -356,6 +360,7 @@ module.exports = [
     description: "Spin the wheel for authentic Colombian dishes and drinks — bandeja paisa, ajiaco, arepas, empanadas, and more. ¡Buen provecho!"
   },  {
     id: "what-should-i-eat-chinese",
+    subCategory: "cuisine",
     name: "Chinese Food Wheel",
     path: "/apps/what-should-i-eat-chinese/",
     category: "food",
@@ -364,6 +369,7 @@ module.exports = [
     description: "Spin the wheel for authentic Chinese dishes — Peking Duck, dim sum, Sichuan hot pot, dumplings, and more. 干杯!"
   },  {
     id: "what-should-i-eat-toronto",
+    subCategory: "city",
     name: "Toronto Food Wheel",
     path: "/apps/what-should-i-eat-toronto/",
     category: "food",
@@ -372,6 +378,7 @@ module.exports = [
     description: "Spin the wheel for Toronto icons, multicultural eats, neighbourhood gems, and downtown picks. The 6ix decides!"
   },  {
     id: "what-should-i-eat-new-york",
+    subCategory: "city",
     name: "New York Food Wheel",
     path: "/apps/what-should-i-eat-new-york/",
     category: "food",
@@ -380,6 +387,7 @@ module.exports = [
     description: "Spin the wheel for NYC icons, borough bites, street food classics, and Manhattan dining picks. The city decides!"
   },  {
     id: "what-should-i-eat-italian",
+    subCategory: "cuisine",
     name: "Italian Food Wheel",
     path: "/apps/what-should-i-eat-italian/",
     category: "food",
@@ -388,6 +396,7 @@ module.exports = [
     description: "Spin the wheel for Italian classics, Roman pasta, regional gems, and dolci. Carbonara or cannoli? Let the wheel decide. Mangia!"
   },  {
     id: "what-should-i-eat-greek",
+    subCategory: "cuisine",
     name: "Greek Food Wheel",
     path: "/apps/what-should-i-eat-greek/",
     category: "food",
@@ -397,6 +406,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-austin",
+    subCategory: "city",
     name: "Austin Food Wheel",
     path: "/apps/what-should-i-eat-austin/",
     category: "food",
@@ -406,6 +416,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-beijing",
+    subCategory: "city",
     name: "Beijing Food Wheel",
     path: "/apps/what-should-i-eat-beijing/",
     category: "food",
@@ -415,6 +426,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-bengaluru",
+    subCategory: "city",
     name: "Bengaluru Food Wheel",
     path: "/apps/what-should-i-eat-bengaluru/",
     category: "food",
@@ -424,6 +436,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-berlin",
+    subCategory: "city",
     name: "Berlin Food Wheel",
     path: "/apps/what-should-i-eat-berlin/",
     category: "food",
@@ -433,6 +446,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-chengdu",
+    subCategory: "city",
     name: "Chengdu Food Wheel",
     path: "/apps/what-should-i-eat-chengdu/",
     category: "food",
@@ -442,6 +456,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-chongqing",
+    subCategory: "city",
     name: "Chongqing Food Wheel",
     path: "/apps/what-should-i-eat-chongqing/",
     category: "food",
@@ -451,6 +466,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-chennai",
+    subCategory: "city",
     name: "Chennai Food Wheel",
     path: "/apps/what-should-i-eat-chennai/",
     category: "food",
@@ -460,6 +476,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-chicago",
+    subCategory: "city",
     name: "Chicago Food Wheel",
     path: "/apps/what-should-i-eat-chicago/",
     category: "food",
@@ -469,6 +486,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-dubai",
+    subCategory: "city",
     name: "Dubai Food Wheel",
     path: "/apps/what-should-i-eat-dubai/",
     category: "food",
@@ -478,6 +496,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-guangzhou",
+    subCategory: "city",
     name: "Guangzhou Food Wheel",
     path: "/apps/what-should-i-eat-guangzhou/",
     category: "food",
@@ -487,6 +506,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-istanbul",
+    subCategory: "city",
     name: "Istanbul Food Wheel",
     path: "/apps/what-should-i-eat-istanbul/",
     category: "food",
@@ -496,6 +516,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-kolkata",
+    subCategory: "city",
     name: "Kolkata Food Wheel",
     path: "/apps/what-should-i-eat-kolkata/",
     category: "food",
@@ -505,6 +526,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-la",
+    subCategory: "city",
     name: "LA Food Wheel",
     path: "/apps/what-should-i-eat-la/",
     category: "food",
@@ -514,6 +536,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-london",
+    subCategory: "city",
     name: "London Food Wheel",
     path: "/apps/what-should-i-eat-london/",
     category: "food",
@@ -523,6 +546,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-madrid",
+    subCategory: "city",
     name: "Madrid Food Wheel",
     path: "/apps/what-should-i-eat-madrid/",
     category: "food",
@@ -532,6 +556,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-miami",
+    subCategory: "city",
     name: "Miami Food Wheel",
     path: "/apps/what-should-i-eat-miami/",
     category: "food",
@@ -541,6 +566,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-montreal",
+    subCategory: "city",
     name: "Montreal Food Wheel",
     path: "/apps/what-should-i-eat-montreal/",
     category: "food",
@@ -550,6 +576,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-mumbai",
+    subCategory: "city",
     name: "Mumbai Food Wheel",
     path: "/apps/what-should-i-eat-mumbai/",
     category: "food",
@@ -559,6 +586,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-new-deli",
+    subCategory: "city",
     name: "New Deli Food Wheel",
     path: "/apps/what-should-i-eat-new-deli/",
     category: "food",
@@ -568,6 +596,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-quebec-city",
+    subCategory: "city",
     name: "Québec City Food Wheel",
     path: "/apps/what-should-i-eat-quebec-city/",
     category: "food",
@@ -577,6 +606,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-shanghai",
+    subCategory: "city",
     name: "Shanghai Food Wheel",
     path: "/apps/what-should-i-eat-shanghai/",
     category: "food",
@@ -586,6 +616,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-sydney",
+    subCategory: "city",
     name: "Sydney Food Wheel",
     path: "/apps/what-should-i-eat-sydney/",
     category: "food",
@@ -595,6 +626,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-tokio",
+    subCategory: "city",
     name: "Tokyo Food Wheel",
     path: "/apps/what-should-i-eat-tokio/",
     category: "food",
@@ -604,6 +636,7 @@ module.exports = [
   },
   {
     id: "what-should-i-eat-vancouver",
+    subCategory: "city",
     name: "Vancouver Food Wheel",
     path: "/apps/what-should-i-eat-vancouver/",
     category: "food",

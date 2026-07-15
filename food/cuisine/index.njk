@@ -1,0 +1,30 @@
+---
+layout: base.njk
+title: Cuisine Food Guides | Daily Pick
+description: Craving a specific cuisine? Spin our localized food wheels for Mexican, Italian, Chinese, Indian, Japanese, Korean, Thai, and more.
+keywords: cuisine food wheel, what should i eat, ethnic food picker, restaurant roulette
+sitemap:
+  priority: 0.8
+  changefreq: weekly
+---
+
+<main class="main-container" id="main" data-page-type="food-cuisine">
+    <header class="hero">
+        <h1 class="hero__title">Cuisine Food Guides</h1>
+        <p class="hero__subtitle">
+            Craving something specific? Spin our localized food wheels for Mexican, Italian, Chinese, Indian, Japanese, Korean, Thai, and more.
+        </p>
+    </header>
+
+    <section aria-labelledby="cuisine-food-heading" class="game-selection">
+        <div class="game-section__header">
+            <h2 class="section-title" id="cuisine-food-heading">Cuisine Food Wheels</h2>
+            <p class="section-subtitle">Choose a cuisine and spin to decide your next meal.</p>
+        </div>
+
+        <ul class="game-grid" role="list">
+          {% from "_includes/app-grid.njk" import appCards %}
+          {{ appCards(apps, "food", "subcategory", "cuisine") }}
+        </ul>
+    </section>
+</main>

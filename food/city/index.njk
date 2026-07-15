@@ -1,0 +1,30 @@
+---
+layout: base.njk
+title: City Food Guides | Daily Pick
+description: Can’t decide what to eat in your city? Use our localized food wheels for Austin, Beijing, Chicago, London, New York, and more.
+keywords: city food wheel, local food picker, what should i eat, restaurant picker, localized food decision
+sitemap:
+  priority: 0.8
+  changefreq: weekly
+---
+
+<main class="main-container" id="main" data-page-type="food-city">
+    <header class="hero">
+        <h1 class="hero__title">City Food Guides</h1>
+        <p class="hero__subtitle">
+            Find the perfect meal in your city. Spin our localized food wheels for Austin, Beijing, Chicago, London, New York, and more.
+        </p>
+    </header>
+
+    <section aria-labelledby="city-food-heading" class="game-selection">
+        <div class="game-section__header">
+            <h2 class="section-title" id="city-food-heading">City Food Wheels</h2>
+            <p class="section-subtitle">Choose a city and spin to decide where to eat next.</p>
+        </div>
+
+        <ul class="game-grid" role="list">
+          {% from "_includes/app-grid.njk" import appCards %}
+          {{ appCards(apps, "food", "subcategory", "city") }}
+        </ul>
+    </section>
+</main>

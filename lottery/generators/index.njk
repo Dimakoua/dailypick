@@ -1,0 +1,30 @@
+---
+layout: base.njk
+title: Lottery Number Generators | Daily Pick
+description: Generate lucky numbers for Powerball, Mega Millions, Eurojackpot, and other major lotteries around the world.
+keywords: lottery generator, powerball numbers, mega millions generator, lucky numbers, eurojackpot, lotto max
+sitemap:
+  priority: 0.8
+  changefreq: weekly
+---
+
+<main class="main-container" id="main" data-page-type="lottery-generators">
+    <header class="hero">
+        <h1 class="hero__title">Lottery Generators</h1>
+        <p class="hero__subtitle">
+            Generate lucky numbers for Powerball, Mega Millions, Eurojackpot, and other major lotteries around the world.
+        </p>
+    </header>
+
+    <section aria-labelledby="lottery-heading" class="game-selection">
+        <div class="game-section__header">
+            <h2 class="section-title" id="lottery-heading">Lottery Number Generators</h2>
+            <p class="section-subtitle">Pick a lottery and let our randomizer choose your next numbers.</p>
+        </div>
+
+        <ul class="game-grid" role="list">
+          {% from "_includes/app-grid.njk" import appCards %}
+          {{ appCards(apps, "lottery") }}
+        </ul>
+    </section>
+</main>
