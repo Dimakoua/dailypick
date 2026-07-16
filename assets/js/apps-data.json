@@ -325,6 +325,7 @@
   },
   {
     "id": "what-should-i-eat-indian",
+    "subCategory": "cuisine",
     "name": "Indian Food Wheel",
     "path": "/apps/what-should-i-eat-indian/",
     "category": "food",
@@ -334,6 +335,7 @@
   },
   {
     "id": "what-should-i-eat-ukrainian",
+    "subCategory": "cuisine",
     "name": "Ukrainian Food Wheel",
     "path": "/apps/what-should-i-eat-ukrainian/",
     "category": "food",
@@ -343,6 +345,7 @@
   },
   {
     "id": "what-should-i-eat-nepali",
+    "subCategory": "cuisine",
     "name": "Nepali Food Wheel",
     "path": "/apps/what-should-i-eat-nepali/",
     "category": "food",
@@ -352,6 +355,7 @@
   },
   {
     "id": "what-should-i-eat-colombian",
+    "subCategory": "cuisine",
     "name": "Colombian Food Wheel",
     "path": "/apps/what-should-i-eat-colombian/",
     "category": "food",
@@ -361,6 +365,7 @@
   },
   {
     "id": "what-should-i-eat-chinese",
+    "subCategory": "cuisine",
     "name": "Chinese Food Wheel",
     "path": "/apps/what-should-i-eat-chinese/",
     "category": "food",
@@ -370,6 +375,7 @@
   },
   {
     "id": "what-should-i-eat-toronto",
+    "subCategory": "city",
     "name": "Toronto Food Wheel",
     "path": "/apps/what-should-i-eat-toronto/",
     "category": "food",
@@ -379,6 +385,7 @@
   },
   {
     "id": "what-should-i-eat-new-york",
+    "subCategory": "city",
     "name": "New York Food Wheel",
     "path": "/apps/what-should-i-eat-new-york/",
     "category": "food",
@@ -388,6 +395,7 @@
   },
   {
     "id": "what-should-i-eat-italian",
+    "subCategory": "cuisine",
     "name": "Italian Food Wheel",
     "path": "/apps/what-should-i-eat-italian/",
     "category": "food",
@@ -397,6 +405,7 @@
   },
   {
     "id": "what-should-i-eat-greek",
+    "subCategory": "cuisine",
     "name": "Greek Food Wheel",
     "path": "/apps/what-should-i-eat-greek/",
     "category": "food",
@@ -406,6 +415,7 @@
   },
   {
     "id": "what-should-i-eat-austin",
+    "subCategory": "city",
     "name": "Austin Food Wheel",
     "path": "/apps/what-should-i-eat-austin/",
     "category": "food",
@@ -415,6 +425,7 @@
   },
   {
     "id": "what-should-i-eat-beijing",
+    "subCategory": "city",
     "name": "Beijing Food Wheel",
     "path": "/apps/what-should-i-eat-beijing/",
     "category": "food",
@@ -424,6 +435,7 @@
   },
   {
     "id": "what-should-i-eat-bengaluru",
+    "subCategory": "city",
     "name": "Bengaluru Food Wheel",
     "path": "/apps/what-should-i-eat-bengaluru/",
     "category": "food",
@@ -433,6 +445,7 @@
   },
   {
     "id": "what-should-i-eat-berlin",
+    "subCategory": "city",
     "name": "Berlin Food Wheel",
     "path": "/apps/what-should-i-eat-berlin/",
     "category": "food",
@@ -442,6 +455,7 @@
   },
   {
     "id": "what-should-i-eat-chengdu",
+    "subCategory": "city",
     "name": "Chengdu Food Wheel",
     "path": "/apps/what-should-i-eat-chengdu/",
     "category": "food",
@@ -451,6 +465,7 @@
   },
   {
     "id": "what-should-i-eat-chongqing",
+    "subCategory": "city",
     "name": "Chongqing Food Wheel",
     "path": "/apps/what-should-i-eat-chongqing/",
     "category": "food",
@@ -460,6 +475,7 @@
   },
   {
     "id": "what-should-i-eat-chennai",
+    "subCategory": "city",
     "name": "Chennai Food Wheel",
     "path": "/apps/what-should-i-eat-chennai/",
     "category": "food",
@@ -469,6 +485,7 @@
   },
   {
     "id": "what-should-i-eat-chicago",
+    "subCategory": "city",
     "name": "Chicago Food Wheel",
     "path": "/apps/what-should-i-eat-chicago/",
     "category": "food",
@@ -478,6 +495,7 @@
   },
   {
     "id": "what-should-i-eat-dubai",
+    "subCategory": "city",
     "name": "Dubai Food Wheel",
     "path": "/apps/what-should-i-eat-dubai/",
     "category": "food",
@@ -487,6 +505,7 @@
   },
   {
     "id": "what-should-i-eat-guangzhou",
+    "subCategory": "city",
     "name": "Guangzhou Food Wheel",
     "path": "/apps/what-should-i-eat-guangzhou/",
     "category": "food",
@@ -496,6 +515,7 @@
   },
   {
     "id": "what-should-i-eat-istanbul",
+    "subCategory": "city",
     "name": "Istanbul Food Wheel",
     "path": "/apps/what-should-i-eat-istanbul/",
     "category": "food",
@@ -505,6 +525,7 @@
   },
   {
     "id": "what-should-i-eat-kolkata",
+    "subCategory": "city",
     "name": "Kolkata Food Wheel",
     "path": "/apps/what-should-i-eat-kolkata/",
     "category": "food",
@@ -514,6 +535,7 @@
   },
   {
     "id": "what-should-i-eat-la",
+    "subCategory": "city",
     "name": "LA Food Wheel",
     "path": "/apps/what-should-i-eat-la/",
     "category": "food",
@@ -523,6 +545,7 @@
   },
   {
     "id": "what-should-i-eat-london",
+    "subCategory": "city",
     "name": "London Food Wheel",
     "path": "/apps/what-should-i-eat-london/",
     "category": "food",
@@ -532,6 +555,7 @@
   },
   {
     "id": "what-should-i-eat-madrid",
+    "subCategory": "city",
     "name": "Madrid Food Wheel",
     "path": "/apps/what-should-i-eat-madrid/",
     "category": "food",
@@ -541,6 +565,7 @@
   },
   {
     "id": "what-should-i-eat-miami",
+    "subCategory": "city",
     "name": "Miami Food Wheel",
     "path": "/apps/what-should-i-eat-miami/",
     "category": "food",
@@ -550,6 +575,7 @@
   },
   {
     "id": "what-should-i-eat-montreal",
+    "subCategory": "city",
     "name": "Montreal Food Wheel",
     "path": "/apps/what-should-i-eat-montreal/",
     "category": "food",
@@ -559,6 +585,7 @@
   },
   {
     "id": "what-should-i-eat-mumbai",
+    "subCategory": "city",
     "name": "Mumbai Food Wheel",
     "path": "/apps/what-should-i-eat-mumbai/",
     "category": "food",
@@ -568,6 +595,7 @@
   },
   {
     "id": "what-should-i-eat-new-deli",
+    "subCategory": "city",
     "name": "New Deli Food Wheel",
     "path": "/apps/what-should-i-eat-new-deli/",
     "category": "food",
@@ -577,6 +605,7 @@
   },
   {
     "id": "what-should-i-eat-quebec-city",
+    "subCategory": "city",
     "name": "Québec City Food Wheel",
     "path": "/apps/what-should-i-eat-quebec-city/",
     "category": "food",
@@ -586,6 +615,7 @@
   },
   {
     "id": "what-should-i-eat-shanghai",
+    "subCategory": "city",
     "name": "Shanghai Food Wheel",
     "path": "/apps/what-should-i-eat-shanghai/",
     "category": "food",
@@ -595,6 +625,7 @@
   },
   {
     "id": "what-should-i-eat-sydney",
+    "subCategory": "city",
     "name": "Sydney Food Wheel",
     "path": "/apps/what-should-i-eat-sydney/",
     "category": "food",
@@ -604,6 +635,7 @@
   },
   {
     "id": "what-should-i-eat-tokio",
+    "subCategory": "city",
     "name": "Tokyo Food Wheel",
     "path": "/apps/what-should-i-eat-tokio/",
     "category": "food",
@@ -613,6 +645,7 @@
   },
   {
     "id": "what-should-i-eat-vancouver",
+    "subCategory": "city",
     "name": "Vancouver Food Wheel",
     "path": "/apps/what-should-i-eat-vancouver/",
     "category": "food",
