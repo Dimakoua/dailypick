@@ -22,6 +22,8 @@ robots: index,follow
 If your holiday schedule looks like a string of Slack DMs, you’re one PTO request away from a coverage crisis. Teams need a transparent system that honors rest, keeps critical work staffed, and removes the politics from “who stays online.” Daily Pick gives you the randomizers and rotation controls to make holiday coverage predictable—and even friendly.
 
 
+As an engineering lead, I created these Daily Pick tools specifically to handle team holiday chaos without forcing everyone into yet another subscription app. Everything here is 100% ad-free, requires zero sign-ups, and operates completely client-side to ensure absolutely no tracking cookies monitor your team's availability data.
+
 **Table of Contents**
 - [The Three PTO Failure Modes](#the-three-pto-failure-modes)
 - [Build a PTO Coverage Ritual in 5 Steps](#build-a-pto-coverage-ritual-in-5-steps)

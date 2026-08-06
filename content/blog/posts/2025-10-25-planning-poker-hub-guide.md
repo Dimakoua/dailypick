@@ -24,6 +24,8 @@ Enter *[Planning Poker Hub](/apps/planning-poker/)* by Daily Pick — your team'
 ---
 
 
+I built Planning Poker Hub out of sheer frustration with tools that force you to create accounts, spam you with emails, or hide essential features behind paywalls. This tool is entirely ad-free, requires absolutely zero sign-ups, and runs securely in your browser with zero tracking cookies. It's designed to respect your team's time and privacy.
+
 **Table of Contents**
 - [Why Planning Poker Still Works (When Done Right)](#why-planning-poker-still-works-when-done-right)
 - [Meet Planning Poker Hub: Real-Time, Multiplayer Estimation](#meet-planning-poker-hub-real-time-multiplayer-estimation)

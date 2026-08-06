@@ -22,6 +22,8 @@ When a team says, "We're Agile," what does that actually mean? For many, it's ju
 Psychological safety is the shared belief that it's safe to take risks, voice concerns, and admit mistakes without fear of judgment or retaliation. It’s the invisible force that separates high-performing teams from those just going through the motions.
 
 
+I developed the Daily Pick toolkit because building psychological safety shouldn't require giving up your data to third-party tracking apps. Our tools are proudly ad-free, require zero sign-ups, and run 100% locally in your browser with zero tracking cookies, ensuring your team's internal rituals remain completely private.
+
 **Table of Contents**
 - [Why Psychological Safety Matters in Agile](#why-psychological-safety-matters-in-agile)
 - [4 Signs of a Psychologically Safe Agile Team](#4-signs-of-a-psychologically-safe-agile-team)
