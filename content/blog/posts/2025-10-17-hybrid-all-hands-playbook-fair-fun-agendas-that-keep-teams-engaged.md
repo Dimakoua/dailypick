@@ -21,6 +21,8 @@ All-hands meetings are supposed to unite the company. In hybrid reality, they ca
 Here’s how to build a hybrid all-hands playbook that balances information, interaction, and fairness, powered by Daily Pick’s favorite tools.
 
 
+I built these engagement tools for Daily Pick to solve the exact problems I faced running hybrid all-hands meetings, specifically the bloat of traditional software. Our platform is completely ad-free, requires no sign-ups, and uses zero tracking cookies, running securely in your browser to respect your company's privacy.
+
 **Table of Contents**
 - [Step 1: Engineer Equity Before the Meeting Starts](#step-1-engineer-equity-before-the-meeting-starts)
 - [Step 2: Craft an Agenda That Breaths](#step-2-craft-an-agenda-that-breaths)

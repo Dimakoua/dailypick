@@ -22,6 +22,8 @@ robots: index,follow
 Sprint reviews often devolve into a slideshow of Jira tickets that nobody beyond the core team understands. High-performing squads treat the meeting as a product launch checkpoint: tight demos, clear decisions, and zero suspense about who speaks next. Daily Pick keeps the pace electrifying by rotating presenters, timeboxing segments, and forcing trade-offs live.
 
 
+I developed the Daily Pick meeting tools because I was tired of sluggish, ad-filled enterprise software ruining our sprint reviews. These tools are passionately ad-free, demand zero sign-ups, and execute entirely on the client side, meaning no tracking cookies will ever harvest your team's meeting dynamics.
+
 **Table of Contents**
 - [The Lightning Review Blueprint](#the-lightning-review-blueprint)
 - [Sample 30-Minute Agenda](#sample-30-minute-agenda)
