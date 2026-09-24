@@ -526,60 +526,85 @@ var defaultSegmentColors = [
     // --- Dynamic "Edit Choices" & "Share Wheel" Controls ---
     (function setupCustomControls() {
       var container = document.querySelector(options.presetButtonSelector || '.preset-btns');
-      if (!container) return;
+      var spinBtn = document.querySelector(options.spinButtonSelector || '#spinBtn');
+      if (!container || !spinBtn) return;
 
       var controlsWrap = document.createElement('div');
-      controlsWrap.className = 'custom-wheel-actions';
-      controlsWrap.style.cssText = 'display:flex;gap:10px;justify-content:center;margin:14px auto 8px;flex-wrap:wrap;';
+      controlsWrap.className = 'custom-wheel-toolbar';
+      controlsWrap.style.cssText = 'display:flex;gap:12px;justify-content:center;align-items:center;margin:12px auto 16px;width:100%;max-width:500px;';
 
       var editBtn = document.createElement('button');
       editBtn.type = 'button';
-      editBtn.className = 'preset-btn custom-action-btn';
-      editBtn.innerHTML = '✏️ Edit Choices';
+      editBtn.className = 'custom-wheel-tool-btn';
+      editBtn.innerHTML = '<span style="margin-right:6px;">✏️</span><span>Edit Choices</span>';
       editBtn.title = 'Add or customize wheel items';
-      editBtn.style.cssText = 'background:rgba(255,255,255,0.85);color:#222;font-weight:600;border:1px solid #ccc;cursor:pointer;';
+      editBtn.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;padding:7px 18px;border-radius:999px;border:1.5px solid var(--wheel-result-text, #4f46e5);background:rgba(255,255,255,0.85);color:var(--brand-heading,#222);font-weight:600;font-size:0.88rem;cursor:pointer;transition:all 0.2s cubic-bezier(0.4,0,0.2,1);box-shadow:0 2px 8px rgba(0,0,0,0.04);';
 
       var shareBtn = document.createElement('button');
       shareBtn.type = 'button';
-      shareBtn.className = 'preset-btn custom-action-btn';
-      shareBtn.innerHTML = '🔗 Share Wheel';
+      shareBtn.className = 'custom-wheel-tool-btn';
+      shareBtn.innerHTML = '<span style="margin-right:6px;">🔗</span><span>Share Wheel</span>';
       shareBtn.title = 'Copy a link with your custom wheel choices';
-      shareBtn.style.cssText = 'background:rgba(255,255,255,0.85);color:#222;font-weight:600;border:1px solid #ccc;cursor:pointer;';
+      shareBtn.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;padding:7px 18px;border-radius:999px;border:1.5px solid var(--wheel-result-text, #4f46e5);background:rgba(255,255,255,0.85);color:var(--brand-heading,#222);font-weight:600;font-size:0.88rem;cursor:pointer;transition:all 0.2s cubic-bezier(0.4,0,0.2,1);box-shadow:0 2px 8px rgba(0,0,0,0.04);';
+
+      function applyHover(btn) {
+        btn.addEventListener('mouseenter', function() {
+          btn.style.transform = 'translateY(-1px)';
+          btn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.08)';
+          btn.style.background = '#ffffff';
+        });
+        btn.addEventListener('mouseleave', function() {
+          btn.style.transform = 'translateY(0)';
+          btn.style.boxShadow = '0 2px 8px rgba(0,0,0,0.04)';
+          btn.style.background = 'rgba(255,255,255,0.85)';
+        });
+      }
+      applyHover(editBtn);
+      applyHover(shareBtn);
 
       editBtn.addEventListener('click', function () {
         var currentText = foodItems.join('\n');
         var modalOverlay = document.createElement('div');
-        modalOverlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.55);display:flex;align-items:center;justify-content:center;z-index:99999;backdrop-filter:blur(4px);padding:15px;box-sizing:border-box;';
+        modalOverlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,23,42,0.6);display:flex;align-items:center;justify-content:center;z-index:99999;backdrop-filter:blur(8px);padding:18px;box-sizing:border-box;animation:fadeIn 0.2s ease;';
 
         var modal = document.createElement('div');
-        modal.style.cssText = 'background:#fff;color:#222;border-radius:16px;padding:24px;width:100%;max-width:440px;box-shadow:0 20px 60px rgba(0,0,0,0.25);box-sizing:border-box;';
-        modal.innerHTML = '<h3 style="margin:0 0 10px 0;font-size:1.3rem;">Customize Wheel Choices</h3>' +
-          '<p style="margin:0 0 12px 0;font-size:0.9rem;color:#666;">Enter one item per line, or comma-separated:</p>' +
-          '<textarea id="customChoicesInput" rows="7" style="width:100%;padding:10px;border-radius:8px;border:1px solid #ccc;font-size:1rem;box-sizing:border-box;font-family:inherit;">' + currentText + '</textarea>' +
-          '<div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px;">' +
-            '<button id="cancelChoicesBtn" type="button" style="padding:10px 16px;border-radius:8px;border:1px solid #ccc;background:#f5f5f5;cursor:pointer;">Cancel</button>' +
-            '<button id="saveChoicesBtn" type="button" style="padding:10px 18px;border-radius:8px;border:none;background:#ff3f81;color:#fff;font-weight:bold;cursor:pointer;">Save & Update</button>' +
-          '</div>';
+        modal.style.cssText = 'background:#ffffff;color:#1e293b;border-radius:20px;padding:26px;width:100%;max-width:440px;box-shadow:0 24px 70px rgba(0,0,0,0.28);box-sizing:border-box;border:1px solid rgba(255,255,255,0.2);';
+        modal.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">' +
+          '<h3 style="margin:0;font-size:1.25rem;font-weight:700;">✏️ Edit Wheel Choices</h3>' +
+          '<button id="closeModalX" type="button" style="background:none;border:none;font-size:1.4rem;line-height:1;cursor:pointer;color:#94a3b8;padding:4px;">&times;</button>' +
+        '</div>' +
+        '<p style="margin:0 0 12px 0;font-size:0.88rem;color:#64748b;line-height:1.4;">Add or edit choices (one per line, or comma-separated):</p>' +
+        '<textarea id="customChoicesInput" rows="7" style="width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid #cbd5e1;font-size:0.95rem;box-sizing:border-box;font-family:inherit;line-height:1.5;resize:vertical;outline:none;">' + currentText + '</textarea>' +
+        '<div style="display:flex;gap:10px;justify-content:flex-end;margin-top:18px;">' +
+          '<button id="cancelChoicesBtn" type="button" style="padding:10px 18px;border-radius:999px;border:1px solid #cbd5e1;background:#f8fafc;color:#475569;font-weight:600;font-size:0.9rem;cursor:pointer;">Cancel</button>' +
+          '<button id="saveChoicesBtn" type="button" style="padding:10px 22px;border-radius:999px;border:none;background:var(--wheel-result-text, #ff3f81);color:#fff;font-weight:700;font-size:0.9rem;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,0.15);">Save & Spin</button>' +
+        '</div>';
 
         modalOverlay.appendChild(modal);
         document.body.appendChild(modalOverlay);
 
-        modalOverlay.querySelector('#cancelChoicesBtn').addEventListener('click', function () {
-          modalOverlay.remove();
-        });
+        var textarea = modal.querySelector('#customChoicesInput');
+        textarea.focus();
 
-        modalOverlay.querySelector('#saveChoicesBtn').addEventListener('click', function () {
-          var text = modalOverlay.querySelector('#customChoicesInput').value;
+        function closeModal() {
+          modalOverlay.remove();
+        }
+
+        modal.querySelector('#closeModalX').addEventListener('click', closeModal);
+        modal.querySelector('#cancelChoicesBtn').addEventListener('click', closeModal);
+
+        modal.querySelector('#saveChoicesBtn').addEventListener('click', function () {
+          var text = textarea.value;
           var newItems = text.split(/[\n,]+/).map(function (s) { return s.trim(); }).filter(Boolean);
           if (newItems.length > 0) {
             setItems(newItems);
             updateShareUrl();
           }
-          modalOverlay.remove();
+          closeModal();
         });
 
         modalOverlay.addEventListener('click', function (e) {
-          if (e.target === modalOverlay) modalOverlay.remove();
+          if (e.target === modalOverlay) closeModal();
         });
       });
 
@@ -588,8 +613,10 @@ var defaultSegmentColors = [
         var fullUrl = window.location.href;
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(fullUrl).then(function () {
-            shareBtn.innerHTML = '✅ Link Copied!';
-            setTimeout(function () { shareBtn.innerHTML = '🔗 Share Wheel'; }, 2200);
+            shareBtn.innerHTML = '<span style="margin-right:6px;">✅</span><span>Link Copied!</span>';
+            setTimeout(function () {
+              shareBtn.innerHTML = '<span style="margin-right:6px;">🔗</span><span>Share Wheel</span>';
+            }, 2200);
           });
         } else {
           prompt('Copy this shareable link:', fullUrl);
@@ -598,7 +625,8 @@ var defaultSegmentColors = [
 
       controlsWrap.appendChild(editBtn);
       controlsWrap.appendChild(shareBtn);
-      container.parentNode.insertBefore(controlsWrap, container.nextSibling);
+      // Place neatly between the preset buttons and the Spin Button
+      spinBtn.parentNode.insertBefore(controlsWrap, spinBtn);
     })();
 
     if (redrawOnBrandUpdate) {
