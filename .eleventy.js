@@ -54,6 +54,14 @@ module.exports = async function(eleventyConfig) {
   eleventyConfig.watchIgnores.add(".qwen/**");
   eleventyConfig.watchIgnores.add("./.qwen/**");
 
+  // Exclude internal project documentation from being rendered into HTML routes
+  eleventyConfig.ignores.add("Readme.md");
+  eleventyConfig.ignores.add("README.md");
+  eleventyConfig.ignores.add("ideas.md");
+  eleventyConfig.ignores.add("seo-instructions.md");
+  eleventyConfig.ignores.add("SEO_MASTER_PLAN.md");
+  eleventyConfig.ignores.add("deleted-posts-log.md");
+
   // Tell Eleventy to watch your CSS changes for live reload.
   eleventyConfig.addWatchTarget("./content/blog/css/");
   // Passthrough copy for static assets. Eleventy will copy these directly.

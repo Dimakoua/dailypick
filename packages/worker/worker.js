@@ -277,6 +277,25 @@ router.get('/apps/settings/', (request) => {
     return Response.redirect(new URL('/apps/brand/', request.url).toString(), 301);
 });
 
+// Permanent 301 redirects for deleted/crawled zombie URLs to their relevant category hubs
+const legacyRedirects = {
+    '/blog/why-teams-who-skip-weekly-meeting-prep-waste-3-hours-and-how-daily-pick-instantly-recovers-it/': '/standups/',
+    '/blog/this-unicorn-stand-up-trick-dropped-our-escalation-rate-by-62/': '/standups/',
+    '/blog/we-turned-backlog-grooming-into-a-daily-game-and-daily-pick-kept-score/': '/agile/',
+    '/blog/random-picker-wheel-rituals-for-fair-team-task-rotations/': '/randomizers/',
+    '/blog/agile-estimation-conversation-not-numbers/': '/agile/',
+    '/Readme/': '/',
+    '/README/': '/'
+};
+
+for (const [oldPath, targetPath] of Object.entries(legacyRedirects)) {
+    router.get(oldPath, (request) => Response.redirect(new URL(targetPath, request.url).toString(), 301));
+    // Also catch path without trailing slash
+    if (oldPath.endsWith('/')) {
+        router.get(oldPath.slice(0, -1), (request) => Response.redirect(new URL(targetPath, request.url).toString(), 301));
+    }
+}
+
 
 export default {
     async fetch(request, env, ctx) {
