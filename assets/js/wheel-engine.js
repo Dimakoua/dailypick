@@ -304,8 +304,13 @@ var defaultSegmentColors = [
       return null;
     }
 
-    var originalItems = normalizeItems(options.defaultItems || []);
-    var foodItems = normalizeItems(options.defaultItems || []);
+    // Check URL query parameters for custom choices (e.g. ?choices=Pizza,Sushi,Tacos)
+    var urlParams = new URLSearchParams(window.location.search);
+    var queryChoices = urlParams.get('choices') || urlParams.get('items');
+    var initialItems = queryChoices ? queryChoices.split(',').map(decodeURIComponent) : (options.defaultItems || []);
+
+    var originalItems = normalizeItems(initialItems);
+    var foodItems = normalizeItems(initialItems);
     var isSpinning = false;
     var hasSpun = false;
     var idleRotation = 0;
@@ -315,6 +320,14 @@ var defaultSegmentColors = [
     var enableCanvasClick = options.enableCanvasClick !== false;
     var removeAfterSelection = options.removeAfterSelection === true;
     var pendingRemovalItem = null;
+
+    function updateShareUrl() {
+      if (window.history && window.history.replaceState) {
+        var url = new URL(window.location.href);
+        url.searchParams.set('choices', foodItems.join(','));
+        window.history.replaceState({}, '', url.toString());
+      }
+    }
 
     function renderWheel(rotation) {
       drawWheel(canvas, foodItems, rotation, options, enableCanvasClick && !isSpinning && foodItems.length > 0);
@@ -506,8 +519,87 @@ var defaultSegmentColors = [
       button.addEventListener('click', function () {
         var items = (button.dataset.items || '').split(',');
         setItems(items);
+        updateShareUrl();
       });
     });
+
+    // --- Dynamic "Edit Choices" & "Share Wheel" Controls ---
+    (function setupCustomControls() {
+      var container = document.querySelector(options.presetButtonSelector || '.preset-btns');
+      if (!container) return;
+
+      var controlsWrap = document.createElement('div');
+      controlsWrap.className = 'custom-wheel-actions';
+      controlsWrap.style.cssText = 'display:flex;gap:10px;justify-content:center;margin:14px auto 8px;flex-wrap:wrap;';
+
+      var editBtn = document.createElement('button');
+      editBtn.type = 'button';
+      editBtn.className = 'preset-btn custom-action-btn';
+      editBtn.innerHTML = '✏️ Edit Choices';
+      editBtn.title = 'Add or customize wheel items';
+      editBtn.style.cssText = 'background:rgba(255,255,255,0.85);color:#222;font-weight:600;border:1px solid #ccc;cursor:pointer;';
+
+      var shareBtn = document.createElement('button');
+      shareBtn.type = 'button';
+      shareBtn.className = 'preset-btn custom-action-btn';
+      shareBtn.innerHTML = '🔗 Share Wheel';
+      shareBtn.title = 'Copy a link with your custom wheel choices';
+      shareBtn.style.cssText = 'background:rgba(255,255,255,0.85);color:#222;font-weight:600;border:1px solid #ccc;cursor:pointer;';
+
+      editBtn.addEventListener('click', function () {
+        var currentText = foodItems.join('\n');
+        var modalOverlay = document.createElement('div');
+        modalOverlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.55);display:flex;align-items:center;justify-content:center;z-index:99999;backdrop-filter:blur(4px);padding:15px;box-sizing:border-box;';
+
+        var modal = document.createElement('div');
+        modal.style.cssText = 'background:#fff;color:#222;border-radius:16px;padding:24px;width:100%;max-width:440px;box-shadow:0 20px 60px rgba(0,0,0,0.25);box-sizing:border-box;';
+        modal.innerHTML = '<h3 style="margin:0 0 10px 0;font-size:1.3rem;">Customize Wheel Choices</h3>' +
+          '<p style="margin:0 0 12px 0;font-size:0.9rem;color:#666;">Enter one item per line, or comma-separated:</p>' +
+          '<textarea id="customChoicesInput" rows="7" style="width:100%;padding:10px;border-radius:8px;border:1px solid #ccc;font-size:1rem;box-sizing:border-box;font-family:inherit;">' + currentText + '</textarea>' +
+          '<div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px;">' +
+            '<button id="cancelChoicesBtn" type="button" style="padding:10px 16px;border-radius:8px;border:1px solid #ccc;background:#f5f5f5;cursor:pointer;">Cancel</button>' +
+            '<button id="saveChoicesBtn" type="button" style="padding:10px 18px;border-radius:8px;border:none;background:#ff3f81;color:#fff;font-weight:bold;cursor:pointer;">Save & Update</button>' +
+          '</div>';
+
+        modalOverlay.appendChild(modal);
+        document.body.appendChild(modalOverlay);
+
+        modalOverlay.querySelector('#cancelChoicesBtn').addEventListener('click', function () {
+          modalOverlay.remove();
+        });
+
+        modalOverlay.querySelector('#saveChoicesBtn').addEventListener('click', function () {
+          var text = modalOverlay.querySelector('#customChoicesInput').value;
+          var newItems = text.split(/[\n,]+/).map(function (s) { return s.trim(); }).filter(Boolean);
+          if (newItems.length > 0) {
+            setItems(newItems);
+            updateShareUrl();
+          }
+          modalOverlay.remove();
+        });
+
+        modalOverlay.addEventListener('click', function (e) {
+          if (e.target === modalOverlay) modalOverlay.remove();
+        });
+      });
+
+      shareBtn.addEventListener('click', function () {
+        updateShareUrl();
+        var fullUrl = window.location.href;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(fullUrl).then(function () {
+            shareBtn.innerHTML = '✅ Link Copied!';
+            setTimeout(function () { shareBtn.innerHTML = '🔗 Share Wheel'; }, 2200);
+          });
+        } else {
+          prompt('Copy this shareable link:', fullUrl);
+        }
+      });
+
+      controlsWrap.appendChild(editBtn);
+      controlsWrap.appendChild(shareBtn);
+      container.parentNode.insertBefore(controlsWrap, container.nextSibling);
+    })();
 
     if (redrawOnBrandUpdate) {
       window.addEventListener('localBrandConfigUpdated', function () {

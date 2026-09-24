@@ -399,13 +399,78 @@
     {% if not hideEmbed %}
     <section class="embed-section glass-card" id="embedSection">
         <h2>Embed this page</h2>
-        <p>Share this page on your own site by embedding it in an iframe. Copy the HTML below and paste it into any page.</p>
+        <p>Share this interactive wheel on your own site, Notion workspace, or live stream (OBS):</p>
+        <div class="embed-presets" style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+            <button class="embed-preset-btn active" type="button" data-type="html" style="padding:6px 14px;border-radius:999px;border:1px solid var(--brand-border,#ccc);background:var(--brand-primary,#ff3f81);color:#fff;cursor:pointer;font-size:0.85rem;font-weight:600;">Website (HTML)</button>
+            <button class="embed-preset-btn" type="button" data-type="notion" style="padding:6px 14px;border-radius:999px;border:1px solid var(--brand-border,#ccc);background:transparent;color:inherit;cursor:pointer;font-size:0.85rem;font-weight:600;">Notion Widget</button>
+            <button class="embed-preset-btn" type="button" data-type="obs" style="padding:6px 14px;border-radius:999px;border:1px solid var(--brand-border,#ccc);background:transparent;color:inherit;cursor:pointer;font-size:0.85rem;font-weight:600;">OBS Studio Overlay</button>
+        </div>
         <div class="embed-controls">
             <textarea id="embedCode" readonly aria-label="Embed code"></textarea>
             <button id="copyEmbedBtn" type="button">Copy embed code</button>
         </div>
-        <p class="embed-note">This iframe loads only the embedded game experience without the site header, footer, or SEO content.</p>
+        <p class="embed-note" id="embedNote">This iframe loads only the clean embedded game experience without site headers or ads, perfect for high-speed embeds.</p>
     </section>
+    <script>
+    (function() {
+      var embedArea = document.getElementById('embedCode');
+      var embedNote = document.getElementById('embedNote');
+      var presetBtns = document.querySelectorAll('.embed-preset-btn');
+      var copyBtn = document.getElementById('copyEmbedBtn');
+      if (!embedArea || !copyBtn) return;
+
+      var origin = window.location.origin;
+      var path = window.location.pathname;
+      var cleanUrl = origin + path + (path.endsWith('/') ? '' : '/') + '?overlay=true';
+
+      function setEmbedType(type) {
+        presetBtns.forEach(function(b) {
+          if (b.dataset.type === type) {
+            b.style.background = 'var(--brand-primary, #ff3f81)';
+            b.style.color = '#fff';
+          } else {
+            b.style.background = 'transparent';
+            b.style.color = 'inherit';
+          }
+        });
+
+        if (type === 'notion') {
+          embedArea.value = cleanUrl;
+          if (embedNote) embedNote.textContent = 'Paste this link directly into any Notion page and choose "Create embed".';
+          copyBtn.textContent = 'Copy Notion Link';
+        } else if (type === 'obs') {
+          embedArea.value = cleanUrl;
+          if (embedNote) embedNote.textContent = 'Add as a Browser Source in OBS Studio (Recommended width: 600px, height: 650px).';
+          copyBtn.textContent = 'Copy OBS URL';
+        } else {
+          embedArea.value = '<iframe src="' + cleanUrl + '" width="100%" height="650" style="border:none;border-radius:16px;max-width:600px;display:block;margin:auto;" title="' + document.title + '"></iframe>';
+          if (embedNote) embedNote.textContent = 'Standard iframe embed code for WordPress, Webflow, Squarespace, or custom HTML.';
+          copyBtn.textContent = 'Copy Embed Code';
+        }
+      }
+
+      presetBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          setEmbedType(btn.dataset.type);
+        });
+      });
+
+      setEmbedType('html');
+
+      copyBtn.addEventListener('click', function() {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(embedArea.value).then(function() {
+            var old = copyBtn.textContent;
+            copyBtn.textContent = '✅ Copied to clipboard!';
+            setTimeout(function() { copyBtn.textContent = old; }, 2000);
+          });
+        } else {
+          embedArea.select();
+          document.execCommand('copy');
+        }
+      });
+    })();
+    </script>
     {% endif %}
     {% else %}
     <main>
