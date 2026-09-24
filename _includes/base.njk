@@ -371,6 +371,50 @@
     <!-- Static Similar Apps Cross-Linking Section for SEO Link Equity -->
     {% set appCategory = appCategoryInfo or 'food' %}
     {% set currentCategoryData = categoryPages[appCategory] %}
+
+    {# Regional City Food Wheel Clusters #}
+    {% set naCities = ['what-should-i-eat-new-york', 'what-should-i-eat-la', 'what-should-i-eat-chicago', 'what-should-i-eat-miami', 'what-should-i-eat-austin', 'what-should-i-eat-toronto', 'what-should-i-eat-vancouver', 'what-should-i-eat-montreal', 'what-should-i-eat-quebec-city'] %}
+    {% set euCities = ['what-should-i-eat-london', 'what-should-i-eat-berlin', 'what-should-i-eat-madrid', 'what-should-i-eat-istanbul'] %}
+    {% set apacCities = ['what-should-i-eat-tokio', 'what-should-i-eat-beijing', 'what-should-i-eat-shanghai', 'what-should-i-eat-guangzhou', 'what-should-i-eat-chengdu', 'what-should-i-eat-kolkata', 'what-should-i-eat-mumbai', 'what-should-i-eat-bengaluru', 'what-should-i-eat-chennai', 'what-should-i-eat-new-deli', 'what-should-i-eat-sydney'] %}
+
+    {% set currentSlug = page.fileSlug %}
+    {% set currentRegionName = null %}
+    {% set currentRegionList = null %}
+
+    {% if currentSlug in naCities %}
+      {% set currentRegionName = 'North American City Food Guides' %}
+      {% set currentRegionList = naCities %}
+    {% elif currentSlug in euCities %}
+      {% set currentRegionName = 'European City Food Guides' %}
+      {% set currentRegionList = euCities %}
+    {% elif currentSlug in apacCities %}
+      {% set currentRegionName = 'Asia-Pacific City Food Guides' %}
+      {% set currentRegionList = apacCities %}
+    {% endif %}
+
+    {% if currentRegionList %}
+    <section class="similar-apps-section glass-card" id="regionalCitiesSection" style="margin-bottom: 2rem;">
+        <h2>🏙️ Explore {{ currentRegionName }}</h2>
+        <p>Traveling or craving dining ideas in other cities? Spin regional food wheels across the area:</p>
+        <div class="similar-apps-grid">
+            {% for otherApp in apps %}
+              {% if otherApp.id in currentRegionList and otherApp.path != page.url %}
+                <a href="{{ otherApp.path }}" class="similar-app-card">
+                  <span class="similar-app-emoji">{{ otherApp.emoji or '🏙️' }}</span>
+                  <span class="similar-app-name">{{ otherApp.name }}</span>
+                  <span class="similar-app-desc">{{ otherApp.description }}</span>
+                </a>
+              {% endif %}
+            {% endfor %}
+            <a href="/food/city/" class="similar-app-card similar-app-card--all">
+              <span class="similar-app-emoji">🌍</span>
+              <span class="similar-app-name">View All City Food Wheels</span>
+              <span class="similar-app-desc">Browse 20+ global city dining guides</span>
+            </a>
+        </div>
+    </section>
+    {% endif %}
+
     <section class="similar-apps-section glass-card" id="similarAppsSection">
         <h2>More {% if currentCategoryData %}{{ currentCategoryData.name }}{% else %}Similar Apps{% endif %}</h2>
         <p>Discover more tools and games in the same category.</p>

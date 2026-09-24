@@ -55,17 +55,17 @@ Googlebot is currently crawling Daily Pick's tool pages, but refusing to index t
 
 - [x] **2.0 Pre-rendered Static Internal Links & Breadcrumbs**
   - Converted dynamic JS breadcrumbs and "Similar Apps" cross-links in `_includes/base.njk` to static HTML rendered at build time so search crawlers receive link equity immediately.
-- [ ] **2.1 Regional Food Wheel Hubs (Static Silos)**
-  - Group city wheels into 3 regional clusters:
+- [x] **2.1 Regional Food Wheel Hubs (Static Silos)**
+  - Grouped city wheels into 3 regional clusters in `_includes/base.njk`:
     - **North America**: NYC, LA, Vancouver, Toronto, Chicago, Miami, Austin, Quebec City, Montreal.
-    - **Europe**: London, Berlin, Madrid.
-    - **Asia-Pacific**: Tokyo, Beijing, Shanghai, Kolkata, Bengaluru, Chennai, Mumbai, New Delhi, Chengdu.
-  - Implement a static cross-linking module at the bottom of each city page: `"Explore More Asian Food Wheels"`, linking to peers directly.
+    - **Europe**: London, Berlin, Madrid, Istanbul.
+    - **Asia-Pacific**: Tokyo, Beijing, Shanghai, Guangzhou, Kolkata, Bengaluru, Chennai, Mumbai, New Delhi, Chengdu, Sydney.
+  - Implemented static pre-rendered cross-linking module (`#regionalCitiesSection`) directly in HTML on each city page linking to peers and `/food/city/` hub.
 - [ ] **2.2 Rich Structured Data Implementation**
   - Implement `SoftwareApplication` or `WebApplication` schema with `operatingSystem`, `applicationCategory`, and `offers: { "@type": "Offer", "price": "0" }`.
   - Verify `FAQPage` schema on every tool page to secure rich snippet FAQs in Google SERPs (increasing organic CTR by 20–35%).
 - [ ] **2.3 Contextual In-Article Linking**
-  - Update top-performing blog articles to link directly into relevant interactive tools (`/apps/wheel/`, `/apps/speedway/`, `/apps/what-should-i-eat/`).
+  - Update top-performing blog articles to link directly into relevant interactive tools (`/apps/wheel/`, `/apps/speedway/`, `/apps/what-should-i-eat/`). (Partially completed across standup/raffle guides; agile/virtual meeting posts remaining).
 
 ---
 
@@ -88,8 +88,8 @@ Googlebot is currently crawling Daily Pick's tool pages, but refusing to index t
 
 - [ ] **4.1 Create "Alternative To" Pillar Landing Pages**
   - Launch dedicated comparison hubs:
-    - `/compare/wheel-decide-alternative/`
-    - `/compare/picker-wheel-alternative/`
+    - `/compare/wheel-decide-alternative/` (Live in blog: `/blog/wheeldecide-alternative-daily-pick-comparison/`)
+    - `/compare/picker-wheel-alternative/` (Live in blog: `/blog/pickerwheel-alternative-daily-pick-comparison/`)
     - `/compare/wheel-of-names-alternative/`
   - Highlight Daily Pick's core differentiators: **100% Free, Zero Ads, Ad-Free UI, Faster Native Canvas, PWA Support, Dark Mode**.
 - [x] **4.2 Streamer & Notion Embed Distribution**
