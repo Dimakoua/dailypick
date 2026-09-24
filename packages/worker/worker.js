@@ -284,6 +284,9 @@ const legacyRedirects = {
     '/blog/we-turned-backlog-grooming-into-a-daily-game-and-daily-pick-kept-score/': '/agile/',
     '/blog/random-picker-wheel-rituals-for-fair-team-task-rotations/': '/randomizers/',
     '/blog/agile-estimation-conversation-not-numbers/': '/agile/',
+    '/blog/conquer-meeting-monotony-fun-ways-to-spice-up-your-team-retrospectives/': '/blog/agile-retrospective-games-complete-guide/',
+    '/blog/level-up-your-team-retrospectives-fun-fair-activities-to-boost-engagement/': '/blog/agile-retrospective-games-complete-guide/',
+    '/blog/let-the-random-picker-wheel-decide-your-meeting-champion/': '/apps/wheel/',
     '/Readme/': '/',
     '/README/': '/'
 };
