@@ -16,8 +16,11 @@ Allow: /
 # General site rules
 User-agent: *
 Disallow: /blog/page/
+Disallow: /blog/?*
+Disallow: /blog?*
 Disallow: /Readme/
 Disallow: /feedback/
+Disallow: /seo-instructions/
 Disallow: /apps/brand/
 Disallow: /apps/roster/
 Disallow: /feedback/thank-you/
