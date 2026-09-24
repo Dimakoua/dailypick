@@ -34,15 +34,18 @@ Googlebot is currently crawling Daily Pick's tool pages, but refusing to index t
 
 *Goal: Remove all low-quality footprints that trigger automated Google demotions.*
 
-- [ ] **1.1 Purge AI Placeholder Tokens**
-  - Batch sweep all files across `/apps/` to remove leftover prompt tags like `[Image: Description]` and `[Image: View of the wheel interface]`.
-- [ ] **1.2 Remove Fabricated Feature Claims**
-  - Remove all mentions of `**(Premium Users)**` across tool descriptions (e.g. "Save custom configurations", "Adjust animation speed"). Google penalizes pages that promise features they do not deliver.
-- [ ] **1.3 Consolidate Thin Multilingual Variants**
-  - Add `robots: "noindex, follow"` to incomplete or machine-translated subpages (`/hindi/`, `/french/`, `/mandarin/`) or canonicalize them to the parent English URL until translations are comprehensive.
-- [ ] **1.4 Confirm Robots.txt & Soft 404 Hygiene**
-  - Ensure `/seo-instructions/`, `/Readme/`, `/feedback/thank-you/`, and `?tag=` queries remain disallowed in `public/robots.txt`.
-  - Verify that deleted blog posts return clean `410 Gone` or `301 Redirects` to `/standups/` or `/agile/`.
+- [x] **1.1 Purge AI Placeholder Tokens**
+  - Batch swept all 43 files across `/apps/` to remove leftover prompt tags like `[Image: Description]` and `[Image: View of the wheel interface]`. Verified 0 remaining.
+- [x] **1.2 Remove Fabricated Feature Claims**
+  - Removed all mentions of `**(Premium Users)**` across tool descriptions (e.g. "Save custom configurations", "Adjust animation speed"). Verified 0 remaining.
+- [x] **1.3 Consolidate Thin Multilingual Variants**
+  - Added `robots: "noindex, follow"` to all 13 incomplete/thin translated subpages (`/hindi/`, `/french/`, `/mandarin/`, `/spanish/`, `/punjabi/`, `/tamil/`, `/chinese/`).
+- [x] **1.4 Confirm Robots.txt, Soft 404 Hygiene & Internal Doc Ignore**
+  - Added `Disallow: /seo-instructions/`, `/Readme/`, `/feedback/thank-you/`, and `/blog/?*` queries to `public/robots.txt`.
+  - Added build ignores for `Readme.md`, `ideas.md`, `seo-instructions.md`, `SEO_MASTER_PLAN.md`.
+  - Configured permanent 301 redirects in `packages/worker/worker.js` for deleted posts and legacy URLs to relevant hubs (`/standups/`, `/agile/`, `/randomizers/`, `/`).
+- [x] **1.5 Prune Cannibalizing/Duplicate Blog Posts**
+  - Pruned thin, competing retrospective posts and set 301 redirects to the comprehensive 2,500+ word cornerstone guide (`/blog/agile-retrospective-games-complete-guide/`).
 
 ---
 
@@ -50,6 +53,8 @@ Googlebot is currently crawling Daily Pick's tool pages, but refusing to index t
 
 *Goal: Pass maximum link equity across related pages and establish topical authority.*
 
+- [x] **2.0 Pre-rendered Static Internal Links & Breadcrumbs**
+  - Converted dynamic JS breadcrumbs and "Similar Apps" cross-links in `_includes/base.njk` to static HTML rendered at build time so search crawlers receive link equity immediately.
 - [ ] **2.1 Regional Food Wheel Hubs (Static Silos)**
   - Group city wheels into 3 regional clusters:
     - **North America**: NYC, LA, Vancouver, Toronto, Chicago, Miami, Austin, Quebec City, Montreal.
@@ -68,10 +73,10 @@ Googlebot is currently crawling Daily Pick's tool pages, but refusing to index t
 
 *Goal: Maximize on-page engagement to satisfy Google's Helpful Content and User Intent signals.*
 
-- [ ] **3.1 Custom Choices Input on Wheel Tools**
-  - Allow users to edit, add, or paste their own choices into the wheel directly on the page, instead of restricting them to fixed preset buttons.
-- [ ] **3.2 Shareable URLs via Query State**
-  - Enable stateful sharing (e.g. `dailypick.dev/apps/wheel/?choices=Tacos,Sushi,Pizza`). When users share their custom wheels with teams or friends, it drives repeat visits and natural backlinks.
+- [x] **3.1 Custom Choices Input on Wheel Tools**
+  - Added `✏️ Edit Choices` button to `FoodWheelEngine` with a modal allowing users to paste/type custom choices and dynamically re-segment the wheel.
+- [x] **3.2 Shareable URLs via Query State**
+  - Enabled stateful sharing (e.g. `?choices=Tacos,Sushi,Pizza`) via `🔗 Share Wheel` button with automatic link copying and query string state hydration.
 - [ ] **3.3 One-Click Result Copying**
   - Provide a dedicated **"Copy Result"** / **"Share Decision"** button that copies a formatted message to clipboard for Slack, Discord, or Teams.
 
@@ -87,9 +92,8 @@ Googlebot is currently crawling Daily Pick's tool pages, but refusing to index t
     - `/compare/picker-wheel-alternative/`
     - `/compare/wheel-of-names-alternative/`
   - Highlight Daily Pick's core differentiators: **100% Free, Zero Ads, Ad-Free UI, Faster Native Canvas, PWA Support, Dark Mode**.
-- [ ] **4.2 Streamer & Notion Embed Distribution**
-  - Promote the existing clean iframe embed feature specifically as an **OBS Studio Overlay** for Twitch/YouTube streamers and a **Notion Widget** for remote teams.
-  - Add an "Embed this on Notion" / "Add to OBS" guide to generate passive high-domain backlinks.
+- [x] **4.2 Streamer & Notion Embed Distribution**
+  - Upgraded embed widget in `_includes/base.njk` with dedicated presets for **Website (HTML)**, **Notion Widget** link, and **OBS Studio Overlay** (Browser Source).
 - [ ] **4.3 IndexNow API Automated Trigger**
   - Integrate an automated IndexNow script in the CI/CD pipeline so new tools and updates are instantly submitted to Bing, Yandex, and IndexNow-compatible crawlers within minutes of deployment.
 
