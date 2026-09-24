@@ -51,10 +51,10 @@ Bonus: They take 5-10 minutes, so they don't lengthen meetings. They *improve* e
 
 ## The 10 Best Virtual Meeting Games
 
-### 1. **Two Truths and a Lie** — For All-Hands & New Teams
+### 1. **[Two Truths and a Lie](/apps/two-truths-and-a-lie/)** — For All-Hands & New Teams
 
 **How it works:**
-- Each person (or one per round) shares 3 statements about themselves: 2 true, 1 false
+- Each person (or one per round) shares 3 statements about themselves: 2 true, 1 false (or use our [Two Truths and a Lie prompt generator](/apps/two-truths-and-a-lie/))
 - Others guess which is the lie
 - Reveal and celebrate surprises
 
@@ -71,7 +71,7 @@ Bonus: They take 5-10 minutes, so they don't lengthen meetings. They *improve* e
 
 **Time:** 5-10 minutes (1-2 min per person)
 
-**Daily Pick Tip:** Use a Wheel to randomly select who goes next. Removes hands-up bias, introverts get picked fairly.
+**Daily Pick Tip:** Use the [Random Picker Wheel](/apps/wheel/) to randomly select who goes next. Removes hands-up bias, introverts get picked fairly.
 
 ---
 
@@ -96,15 +96,15 @@ Bonus: They take 5-10 minutes, so they don't lengthen meetings. They *improve* e
 
 **Time:** 3-5 minutes
 
-**Daily Pick Tip:** Have a pre-made list of 20 rapid-fire questions. Rotate them weekly so team expects novelty.
+**Daily Pick Tip:** Have a pre-made list of 20 rapid-fire questions, or spin the [Would You Rather wheel](/apps/would-you-rather/). Rotate them weekly so team expects novelty.
 
 ---
 
-### 3. **Emoji React Reactions** — For Pulse Checks & Feedback
+### 3. **Emoji React Reactions & [Morale Checks](/apps/morale-thermometer/)** — For Pulse Checks & Feedback
 
 **How it works:**
 - Host poses a question: "How's your energy today?" or "Clarity of goals for this sprint?"
-- Everyone reacts with an emoji (Zoom reactions, or chat emojis)
+- Everyone reacts with an emoji or opens the [Daily Pick Morale Thermometer](/apps/morale-thermometer/)
 - Host spot-checks: "Anyone under 3/5? Let's talk about support"
 
 **Why it works:**
@@ -128,7 +128,7 @@ Bonus: They take 5-10 minutes, so they don't lengthen meetings. They *improve* e
 ### 4. **Breakout Room Pair Debates** — For Longer Meetings
 
 **How it works:**
-- Pair people randomly (use Zoom's auto-assign or a randomizer)
+- Pair people randomly (use Zoom's auto-assign or our [Random List Shuffler](/apps/random-list-shuffler/))
 - Assign a silly debate topic: "Tabs vs. spaces?" "Hot dog is a sandwich?" "Pineapple on pizza?"
 - Pairs have 3 minutes to argue their side
 - Reconvene; pairs pitch their strongest argument (1 min per pair)
@@ -147,7 +147,7 @@ Bonus: They take 5-10 minutes, so they don't lengthen meetings. They *improve* e
 
 **Time:** 10 minutes (including the reveal)
 
-**Daily Pick Tip:** Use Daily Pick's Fair Spinner to randomize your pairs. Ensures no one's left out and builds cross-team relationships.
+**Daily Pick Tip:** Use Daily Pick's [Random List Shuffler](/apps/random-list-shuffler/) or [Speedway Racer](/apps/speedway/) to randomize your pairs. Ensures no one's left out and builds cross-team relationships.
 
 ---
 
@@ -222,7 +222,7 @@ Bonus: They take 5-10 minutes, so they don't lengthen meetings. They *improve* e
 
 **Time:** 20 minutes (for 5 talks)
 
-**Daily Pick Tip:** Use Daily Pick's Wheel to randomize which lightning talk goes first. Removes presenter bonus for going first or last.
+**Daily Pick Tip:** Use [Daily Pick's Decision Wheel](/apps/wheel/) or [Speedway Racer](/apps/speedway/) to randomize which lightning talk goes first. Removes presenter bonus for going first or last.
 
 ---
 
@@ -271,22 +271,22 @@ Bonus: They take 5-10 minutes, so they don't lengthen meetings. They *improve* e
 
 **Time:** 5 minutes
 
-**Daily Pick Tip:** Use a visible on-screen timer (or share your screen with a countdown). Makes the competition real.
+**Daily Pick Tip:** Use the [Daily Pick Meeting Timer](/apps/timer/) for a crisp visual countdown on your screen share. Makes the competition real.
 
 ---
 
 ### 10. **Meeting Raffle Giveaway** — For Attendance & Future Participation
 
 **How it works:**
-- Everyone who attends gets their name in a draws
-- During the meeting, randomly pick a name (use a Wheel)
+- Everyone who attends gets their name in a draw
+- During the meeting, randomly pick a name (use our [Raffle Ticket Puller](/apps/raffle-ticket-puller/) or [Giveaway Winner Picker](/apps/giveaway-winner-picker/))
 - Winner gets a small prize: coffee card, book, team dinner, remote day off, etc.
 - Announce it at the start so people know what to expect
 
 **Why it works:**
 - Incentive to show up + stay present (you might win)
 - Excitement when names are drawn (surprise moment)
-- Fairness when using a Spinner (feels random, not arbitrary)
+- Fairness when using a transparent tool (feels random, not arbitrary)
 - Builds positive association with meetings
 
 **Best for:**
@@ -296,7 +296,7 @@ Bonus: They take 5-10 minutes, so they don't lengthen meetings. They *improve* e
 
 **Time:** 2 minutes (the draw)
 
-**Daily Pick Tip:** Use Daily Pick's Fair Spinner to pick winners. No one feels the facilitator rigged it.
+**Daily Pick Tip:** Use Daily Pick's [Giveaway Winner Picker](/apps/giveaway-winner-picker/) or [Prize Wheel](/apps/wheel/) to pick winners live. No one feels the facilitator rigged it.
 
 ---
 

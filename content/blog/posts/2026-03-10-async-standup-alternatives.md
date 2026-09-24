@@ -64,7 +64,7 @@ For engineering teams, link each line to the relevant ticket or PR to reduce `�
 - **How:** a bot pings each contributor privately at a set time asking the three questions. When responses are collected, the bot posts the summary to the channel with nice formatting and links.
 - **Why it works:** automates the ritual; helpful for larger teams because the bot does the nudging.
 
-Daily Pick’s “standup” automation can randomly order who gets pinged first, keeping things fair and giving everyone a spotlight (even asynchronously).
+You can also use Daily Pick’s [Standup Panel](/apps/standup-panel/) or [Random List Shuffler](/apps/random-list-shuffler/) to randomly order who gets pinged or reports first, keeping things fair and giving everyone a spotlight (even asynchronously).
 
 #### 4. Email digest / ticket comment
 
@@ -100,7 +100,7 @@ Async should feel like a convenience, not a chore. Choose real‑time meetings a
 * a high‑urgency project requires immediate discussion;
 * the team size shrinks below 5 and coordination overhead is low.
 
-You can also adopt a hybrid cadence: async updates Monday‑Thursday, a 15‑minute live check‑in Friday to celebrate wins and clear ambiguities.
+You can also adopt a hybrid cadence: async updates Monday‑Thursday, and a quick 10‑minute live sync on Friday using [Speedway Racer](/apps/speedway/) or [The Decision Wheel](/apps/wheel/) and our [Meeting Timer](/apps/timer/) to celebrate weekly wins and clear ambiguities with zero drag.
 
 ### Wrapping up
 

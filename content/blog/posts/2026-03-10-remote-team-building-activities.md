@@ -32,7 +32,7 @@ In the sections below you’ll discover:
 * **Emoji introduction:** each person picks two emoji that describe their week and posts them in chat. A quick scroll of reactions builds empathy without talking.
 * **Photo share:** ask teammates to post a recent picture of *their view right now* or *something they made*; spend 2‑3 minutes scrolling and reacting.
 * **Random compliment thread:** each person privately messages the facilitator a compliment for someone else; the facilitator posts them anonymously mid‑week.
-* **Two‑minute trivia:** once a week the facilitator drops a fun question (`“What was the first concert you ever attended?”`) and people respond in chat; the top answer gets bragging rights.
+* **Two‑minute trivia & quick icebreakers:** spin the [Would You Rather wheel](/apps/would-you-rather/) or generate prompts with our [Two Truths and a Lie tool](/apps/two-truths-and-a-lie/); the most unexpected answers get bragging rights.
 * **“What’s in a name?”** Ask everyone to share the story behind their name (family origin, nickname, middle name quirk) in a shared document; reading them later makes the team feel more human.
 
 These micro‑rituals take almost no setup and can be stapled onto an existing standup or retro rebuild. They keep the team “moving” when you don’t have time for a full‑blown event.
@@ -49,7 +49,7 @@ Not the overpriced VR kits – a simple Google Form or Miro board with puzzles c
 
 #### 2. Themed “show & tell” offsite (45‑60 min)
 
-Each person brings one item related to a theme (childhood favorite, most adventurous trip, desk weirdness) and shares a 2‑minute story. Use a randomizer wheel to pick order so nobody “goes first” pressure. Ideal for quarterly all‑hands.
+Each person brings one item related to a theme (childhood favorite, most adventurous trip, desk weirdness) and shares a 2‑minute story. Use our [Random Picker Wheel](/apps/wheel/) or [Speedway Racer](/apps/speedway/) to pick the speaker order so nobody faces the awkward “who goes first” pressure. Ideal for quarterly all‑hands.
 
 #### 3. Remote cooking/assembly party (60 min)
 
@@ -81,7 +81,7 @@ Don’t let “fun” live in a vacuum. Track success with simple metrics:
 
 * **Participation rate.** Did >80 % of people join the activity? If not, ask why in a quick survey.
 * **Repeat requests.** If members ask to run the same game again, it’s a win. If you hear “do we have to?” it’s time to pivot.
-* **Qualitative feedback.** Use a one‑question pulse: “Did today’s activity make you feel more connected?” (yes/no/neutral).
+* **Qualitative feedback.** Check emotional safety with a one‑question pulse using our [Team Morale Thermometer](/apps/morale-thermometer/): “Did today’s activity make you feel more connected?”
 * **Retention correlation.** Over months, compare turnover or disengagement signals before and after introducing the rituals.
 
 Survey responses can live in the same Slack channel where you run the games; transparency turns engagement into a team‑owned metric.

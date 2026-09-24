@@ -70,7 +70,7 @@ Team members use sticky notes to write ideas, then place them on the correspondi
 
 **Time:** 45 minutes
 
-**Daily Pick Tip:** Use the Wheel to randomly select which obstacles to discuss first—removes bias from shouting out.
+**Daily Pick Tip:** Use the [Random Picker Wheel](/apps/wheel/) to randomly select which obstacles to discuss first—removes bias from shouting out.
 
 ---
 
@@ -91,7 +91,7 @@ Team members use sticky notes to write ideas, then place them on the correspondi
 
 **Time:** 40 minutes
 
-**Daily Pick Tip:** Use Daily Pick's Fair Spinner to randomly select which column to discuss first. Stops you from always ending on anger (and leaving people frustrated).
+**Daily Pick Tip:** Use Daily Pick's [Fair Decision Wheel](/apps/wheel/) to randomly select which column to discuss first. Stops you from always ending on anger (and leaving people frustrated).
 
 ---
 
@@ -296,23 +296,23 @@ If the vibe is "justify your work" instead of "improve together," people clam up
 
 Daily Pick is built for the messy dynamics that happen in team retrospectives. Here's how to blend them:
 
-**Use Daily Pick's Wheel to:**
+**Use [Daily Pick's Decision Wheel](/apps/wheel/) or [Speedway Racer](/apps/speedway/) to:**
 - Randomly select which retro game to play (keep it fresh)
 - Decide which feedback item to discuss first (removes facilitator bias)
-- Assign action items to sprint owners (fair rotation)
+- Assign action items to sprint owners (fair rotation without grumbling)
 
-**Use Daily Pick's Planning Poker to:**
+**Use [Daily Pick's Planning Poker](/apps/planning-poker/) to:**
 - Gauge effort on retro action items (don't commit to 5 massive changes)
 - Rate sprint health (baseline for tracking improvement)
 
-**Use Daily Pick's Spinner to:**
+**Use Daily Pick's [Retro Board](/apps/retro-board/) & [Choices Spinner](/apps/the-wheel-spinner/) to:**
+- Organize thoughts visually into actionable columns with your team
 - Break up pairs in Speed Dating retros (truly random, no cliques)
-- Randomize speaking order (introverts don't go last)
+- Randomize speaking order so introverts don't always get stuck going last
 
-**Use Daily Pick for Async Retros:**
-- Collect Glad/Sad/Mad votes throughout the sprint
-- Run Planning Poker retro health checks async
-- Compile themes before your sync discussion
+**Use [Daily Pick's Meeting Timer](/apps/timer/) for Timeboxing:**
+- Enforce crisp 5-minute reflection rounds and 3-minute discussion bursts
+- Keep retros from bloating past 45 minutes into fatigue-inducing marathons
 
 ---
 
