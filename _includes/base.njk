@@ -331,39 +331,16 @@
     {% include "header.html" %}
 
     {% if isApp %}
-    <!-- Visible breadcrumb for app pages (keeps in sync with JSON-LD) -->
-    <nav aria-label="Breadcrumb" class="visible-breadcrumb" id="visible-breadcrumb" hidden>
+    <!-- Static Breadcrumbs for search bots and users -->
+    <nav aria-label="Breadcrumb" class="visible-breadcrumb" id="visible-breadcrumb">
         <ol>
             <li><a href="/">Home</a></li>
-            <li id="breadcrumb-category"></li>
-            <li id="breadcrumb-current"></li>
+            {% if catMatched %}
+            <li id="breadcrumb-category"><a href="{{ catMatched.url | replace(metadata.url, '') }}">{{ catMatched.name }}</a></li>
+            {% endif %}
+            <li id="breadcrumb-current">{{ breadcrumbTitle }}</li>
         </ol>
     </nav>
-    <script>
-    (function () {
-      if (new URLSearchParams(window.location.search).has('overlay')) return;
-      var app = window.dpBreadcrumb.getAppByPath(window.location.pathname);
-      var categoryPages = window.dpBreadcrumb.categoryPages;
-      var pageTitle = document.querySelector('main h1')?.textContent?.trim() || document.title.split('–')[0] || '';
-
-      var nav = document.getElementById('visible-breadcrumb');
-      var catEl = document.getElementById('breadcrumb-category');
-      var curEl = document.getElementById('breadcrumb-current');
-
-      if (!nav || !catEl || !curEl) return;
-
-      if (app && categoryPages[app.category]) {
-        catEl.innerHTML = '<a href="' + categoryPages[app.category].url + '">' + categoryPages[app.category].name + '</a>';
-        curEl.textContent = pageTitle.trim();
-      } else {
-        // no category: collapse the middle item and show only Home → Current
-        catEl.remove();
-        curEl.textContent = pageTitle.trim();
-      }
-
-      nav.hidden = false;
-    })();
-    </script>
     <style>
     .visible-breadcrumb{
       font-size:0.9rem;
@@ -391,74 +368,33 @@
     {% if isApp %}
     {{ content | safe }}
 
+    <!-- Static Similar Apps Cross-Linking Section for SEO Link Equity -->
+    {% set appCategory = appCategoryInfo or 'food' %}
+    {% set currentCategoryData = categoryPages[appCategory] %}
     <section class="similar-apps-section glass-card" id="similarAppsSection">
-        <h2>Similar Apps</h2>
+        <h2>More {% if currentCategoryData %}{{ currentCategoryData.name }}{% else %}Similar Apps{% endif %}</h2>
         <p>Discover more tools and games in the same category.</p>
         <div class="similar-apps-grid" id="similarAppsGrid">
-            <p class="similar-apps-loading" id="similarAppsLoading">Loading similar apps…</p>
+            {% set count = 0 %}
+            {% for otherApp in apps %}
+              {% if otherApp.category == appCategory and otherApp.path != page.url and count < 6 %}
+                {% set count = count + 1 %}
+                <a href="{{ otherApp.path }}" class="similar-app-card">
+                  <span class="similar-app-emoji">{{ otherApp.emoji or '🎲' }}</span>
+                  <span class="similar-app-name">{{ otherApp.name }}</span>
+                  <span class="similar-app-desc">{{ otherApp.description }}</span>
+                </a>
+              {% endif %}
+            {% endfor %}
+            {% if currentCategoryData %}
+              <a href="{{ currentCategoryData.url | replace(metadata.url, '') }}" class="similar-app-card similar-app-card--all">
+                <span class="similar-app-emoji">➡️</span>
+                <span class="similar-app-name">View All {{ currentCategoryData.name }}</span>
+                <span class="similar-app-desc">Browse the full collection</span>
+              </a>
+            {% endif %}
         </div>
     </section>
-    <script>
-    (function () {
-      if (new URLSearchParams(window.location.search).has('overlay')) return;
-      var apps = window.dpBreadcrumb && window.dpBreadcrumb.apps;
-      if (!apps || !apps.length) return;
-
-      var currentPath = window.location.pathname.replace(/\/$/, '') + '/';
-      var currentApp = apps.find(function (a) { return a.path === currentPath; });
-      if (!currentApp) return;
-
-      var categoryPages = window.dpBreadcrumb.categoryPages || {};
-      var categoryInfo = categoryPages[currentApp.category];
-      var categoryName = categoryInfo ? categoryInfo.name : '';
-      var categoryUrl = categoryInfo ? categoryInfo.url : null;
-
-      var similar = apps.filter(function (a) {
-        return a.category === currentApp.category && a.path !== currentApp.path && a.footerGroup;
-      }).slice(0, 6);
-
-      var section = document.getElementById('similarAppsSection');
-      var grid = document.getElementById('similarAppsGrid');
-      var loading = document.getElementById('similarAppsLoading');
-      if (!section || !grid) return;
-
-      if (loading) loading.remove();
-
-      if (!similar.length) {
-        section.hidden = true;
-        return;
-      }
-
-      if (categoryName) {
-        var heading = section.querySelector('h2');
-        if (heading) heading.textContent = 'More ' + categoryName;
-      }
-
-      var allHtml = '';
-      similar.forEach(function (app) {
-        allHtml += '<a href="' + app.path + '" class="similar-app-card">' +
-          '<span class="similar-app-emoji">' + (app.emoji || '🎲') + '</span>' +
-          '<span class="similar-app-name">' + app.name + '</span>' +
-          '<span class="similar-app-desc">' + app.description + '</span>' +
-          '</a>';
-      });
-
-      if (categoryUrl && similar.length >= 3) {
-        allHtml += '<a href="' + categoryUrl + '" class="similar-app-card similar-app-card--all">' +
-          '<span class="similar-app-emoji">➡️</span>' +
-          '<span class="similar-app-name">View All ' + categoryName + '</span>' +
-          '<span class="similar-app-desc">Browse the full collection</span>' +
-          '</a>';
-      }
-
-      grid.innerHTML = allHtml;
-
-      var seoSection = document.querySelector('.seo-content-area');
-      if (seoSection && seoSection.parentNode) {
-        seoSection.parentNode.insertBefore(section, seoSection);
-      }
-    })();
-    </script>
 
     {% if not hideEmbed %}
     <section class="embed-section glass-card" id="embedSection">
