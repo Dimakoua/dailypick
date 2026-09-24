@@ -36,8 +36,8 @@ I built these engagement tools for Daily Pick to solve the exact problems I face
 
 Great hybrid experiences begin long before the first slide.
 
-- *Open with a pre-boarding pulse:* Send a quick survey asking “What should the exec team address this month?” Use Daily Pick’s Decision Wheel on anonymized suggestions so the agenda reflects reality, not just the loudest voices.
-- *Designate dual MCs:* Choose one in-office host and one remote host. Spin the Decision Wheel a week out so different team members get stage time, and pair them to script the handoffs.
+- *Open with a pre-boarding pulse:* Send a quick survey asking “What should the exec team address this month?” Use Daily Pick’s [Decision Wheel](/apps/wheel/) on anonymized suggestions so the agenda reflects reality, not just the loudest voices.
+- *Designate dual MCs:* Choose one in-office host and one remote host. Spin our [Decision Wheel](/apps/wheel/) a week out so different team members get stage time, and pair them to script the handoffs.
 - *Prep the tech:* Ensure the room camera tracks speakers, remote participants can see the audience, and the chat is visible to both hosts. Share a pre-read deck or Loom so people can follow along on their own screen.
 
 ## Step 2: Craft an Agenda That Breaths
@@ -47,12 +47,12 @@ Attention spans are short. Aim for a 45–50 minute core with crisp segments:
 1. *Welcome (5 min):* Remote MC kicks off with a Daily Pick spin to choose the “first word” shoutout—someone shares a win or gratitude to set the tone.
 2. *State of the Business (10 min):* Leadership updates with live captions and a shared document for Q&A. Encourage reactions and chat questions simultaneously.
 3. *Customer Story (8 min):* Rotate storytellers each month by spinning Daily Pick from a roster of customer-facing teams. Remote presenters get the same stage time as in-person speakers.
-4. *Functional Spotlight (10 min):* A team demo or a lightning talk. Use Trap! to reveal surprise prompts (e.g., “Show us the weirdest bug you squashed this month”).
+4. *Functional Spotlight (10 min):* A team demo or a lightning talk. Use [Trap!](/apps/trap/) to reveal surprise prompts (e.g., “Show us the weirdest bug you squashed this month”).
 5. *Interactive Break (7 min):* Hybrid-friendly mini-game. Ideas:
-   - Speedway Racer: offices vs. remote hubs racing to answer trivia.
-   - Decision Wheel: spin for an impromptu “two-truths-and-a-lie” from random teammates.
-   - Letters game: challenge everyone to post chat answers starting with a picked letter.
-6. *Live Q&A (8 min):* Collect questions beforehand via Slido or Google Forms. Spin the Decision Wheel between remote and in-office question queues to maintain balance.
+   - [Speedway Racer](/apps/speedway/): offices vs. remote hubs racing to answer trivia.
+   - [Decision Wheel](/apps/wheel/): spin for an impromptu “[Two Truths and a Lie](/apps/two-truths-and-a-lie/)” from random teammates.
+   - [Random Letters Game](/apps/letters/): challenge everyone to post chat answers starting with a picked letter.
+6. *Live Q&A (8 min):* Collect questions beforehand via Slido or Google Forms. Spin the [Decision Wheel](/apps/wheel/) between remote and in-office question queues to maintain balance.
 7. *Closing Ritual (5 min):* End with a community moment—spin for the next cultural value to spotlight or assign the next “DJ” to curate the pre-meeting playlist.
 
 Publish the agenda 48 hours in advance. Invite departments to add context or links in the shared document so remote participants don’t feel like observers.

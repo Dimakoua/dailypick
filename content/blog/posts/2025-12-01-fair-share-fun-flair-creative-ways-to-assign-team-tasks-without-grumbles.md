@@ -55,7 +55,7 @@ Sometimes, the fairest way is simply the most random way. Take human bias out of
 **How it works:**
 1.  List all the team members.
 2.  List the mundane tasks that need assigning.
-3.  Use a digital **Decision Wheel** (like Daily Pick's Decision Wheel) to randomly select who gets which task.
+3.  Use a digital [Decision Wheel](/apps/wheel/) to randomly select who gets which task.
 
 **Example:** You have weekly "Stand-up Note Taker," "Retrospective Facilitator," and "Coffee Machine Cleaner" duties. Pop these into a wheel, along with your team members' names, and spin to assign. It's quick, visually engaging, and undeniably fair because chance makes the call. No one can argue with the wheel!
 
@@ -64,8 +64,8 @@ Sometimes, the fairest way is simply the most random way. Take human bias out of
 Why just assign when you can make it a game? Gamification introduces an element of fun and friendly competition.
 
 **How it works:**
-1.  **Task Lottery:** Write each undesirable task on a slip of paper (or digital card). Team members draw one at random. You can even add a "wild card" that allows the picker to swap their task once with someone else.
-2.  **Daily Pick's Speedway Racer:** If you have multiple tasks that can be claimed on a first-come, first-served basis, use Speedway Racer. Present the tasks, and let team members "race" to claim the one they prefer most within a set time limit. This can work surprisingly well for tasks where individual preference might make one "mundane" task more palatable than another.
+1.  **Task Lottery:** Write each undesirable task on a slip of paper (or use our [Random List Shuffler](/apps/random-list-shuffler/)). Team members draw one at random. You can even add a "wild card" that allows the picker to swap their task once with someone else.
+2.  **Daily Pick's [Speedway Racer](/apps/speedway/):** If you have multiple tasks that can be claimed on a first-come, first-served basis, use Speedway Racer. Present the tasks, and let team members "race" to claim the one they prefer most within a set time limit. This can work surprisingly well for tasks where individual preference might make one "mundane" task more palatable than another.
 
 **Example:** Need someone to update the team's internal wiki this week? Or triage incoming support tickets? Put a few options out there on a Speedway Racer, and see who picks what first. The excitement of the "race" can override the dread of the chore.
 
@@ -84,9 +84,9 @@ Give your team agency over their **equitable workload** by allowing them to choo
 Add an element of surprise to task assignment. This method combines randomness with a reveal.
 
 **How it works:**
-1.  Prepare a list of tasks, perhaps even hidden in envelopes or behind digital "cards."
+1.  Prepare a list of tasks, perhaps even hidden behind digital "cards."
 2.  Have each team member pick a number or card.
-3.  Use a tool like Daily Pick's Trap to reveal the chosen person's task. The anticipation itself can be a moment of light-hearted team interaction.
+3.  Use a tool like Daily Pick's [Trap](/apps/trap/) to reveal the chosen person's task. The anticipation itself can be a moment of light-hearted team interaction.
 
 **Example:** "Today's dreaded meeting note-taker will be revealed! John, pick a card... and it's you!" It's a fun, low-stakes way to introduce an element of chance without making anyone feel singled out.
 
@@ -109,9 +109,9 @@ Remember, the goal is to reduce friction, increase engagement, and reinforce the
 
 ## Ready to make task assignment fun and fair?
 
-Explore Daily Pick's suite of tools like the **Decision Wheel**, **Speedway Racer**, and **Trap** to effortlessly implement these strategies and transform your team's approach to even the most mundane chores. Start building a fairer, more engaged, and happier team today!
+Explore Daily Pick's suite of tools like the [Decision Wheel](/apps/wheel/), [Speedway Racer](/apps/speedway/), and [Trap](/apps/trap/) to effortlessly implement these strategies and transform your team's approach to even the most mundane chores. Start building a fairer, more engaged, and happier team today!
 
-[Explore Daily Pick Tools Now!](https://dailypick.dev)
+[Explore Daily Pick Tools Now!](/apps/wheel/)
 
 
 ## Frequently Asked Questions

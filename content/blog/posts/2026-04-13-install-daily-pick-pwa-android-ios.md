@@ -40,11 +40,11 @@ A Progressive Web App combines the best of web and mobile apps. You access it th
 
 ## Benefits of Installing Daily Pick as a PWA
 
-- **Offline Access**: Use your favorite Daily Pick tools even without an internet connection
-- **Native Feel**: App-like interface with home screen icon
-- **No App Store Required**: Install directly from the website
-- **Automatic Updates**: Always get the latest features without manual updates
-- **Cross-Platform**: Works on Android, iOS, and desktop
+- **Offline Access**: Spin the [Decision Wheel](/apps/wheel/), roll with [Coin Flip & Dice](/apps/coin-flip-dice-roller/), or run [Speedway Racer](/apps/speedway/) even without an internet connection
+- **Native Feel**: App-like interface with home screen icon and zero browser address bar clutter
+- **No App Store Required**: Install directly from the website with zero downloads from Google Play or Apple App Store
+- **Automatic Updates**: Always get the latest features without manual app store updates
+- **Cross-Platform**: Works smoothly across Android, iOS, iPadOS, Mac, and Windows desktop
 
 ---
 
@@ -85,7 +85,7 @@ A Progressive Web App combines the best of web and mobile apps. You access it th
 
 ## Using Daily Pick Offline
 
-Once installed, Daily Pick will work offline for most features. Some advanced multiplayer tools may require an internet connection, but all your favorite randomizers and games are available anytime, anywhere.
+Once installed, Daily Pick will work offline for almost every standalone tool. While real-time multiplayer rooms require an active internet connection, all your favorite randomizers—including the [Random Picker Wheel](/apps/wheel/), [Random Number Generator](/apps/random-number-generator/), and [Giveaway Winner Picker](/apps/giveaway-winner-picker/)—are cached locally for lightning-fast launch anytime, anywhere.
 
 ---
 
