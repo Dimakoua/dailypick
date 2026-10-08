@@ -319,9 +319,45 @@ export default {
 
         // If the router didn't handle it, proceed with static asset serving.
         try {
+            const acceptHeader = request.headers.get('Accept') || '';
+            const wantsMarkdown = acceptHeader.toLowerCase().includes('text/markdown');
+
+            // Direct markdown request or content negotiation for root
+            if ((requestUrl.pathname === '/' && wantsMarkdown) || requestUrl.pathname === '/index.md') {
+                try {
+                    const mdRequest = new Request(new URL('/index.md', request.url), request);
+                    const assetResponse = await getAssetFromKV(
+                        { request: mdRequest, waitUntil: ctx.waitUntil.bind(ctx) },
+                        { ASSET_NAMESPACE: env.__STATIC_CONTENT, ASSET_MANIFEST: assetManifest }
+                    );
+                    if (assetResponse instanceof Response) {
+                        const headers = new Headers(assetResponse.headers);
+                        headers.set('Content-Type', 'text/markdown; charset=utf-8');
+                        headers.set('Vary', 'Accept');
+                        return new Response(assetResponse.body, {
+                            status: assetResponse.status,
+                            statusText: assetResponse.statusText,
+                            headers
+                        });
+                    }
+                } catch (e) {
+                    // fall through if /index.md not found in static assets
+                }
+            }
+
             // Try gzip compression first if client supports it
             const gzipResponse = await handleGzipRequest(request, env, assetManifest);
             if (gzipResponse) {
+                if (requestUrl.pathname === '/' || requestUrl.pathname === '/index.html') {
+                    const headers = new Headers(gzipResponse.headers);
+                    headers.set('Link', '</index.md>; rel="alternate"; type="text/markdown"');
+                    headers.append('Vary', 'Accept');
+                    return new Response(gzipResponse.body, {
+                        status: gzipResponse.status,
+                        statusText: gzipResponse.statusText,
+                        headers
+                    });
+                }
                 return gzipResponse;
             }
 
@@ -351,6 +387,16 @@ export default {
 
             // Ensure assetResponse is a valid Response object
             if (assetResponse instanceof Response) {
+                if (requestUrl.pathname === '/' || requestUrl.pathname === '/index.html') {
+                    const headers = new Headers(assetResponse.headers);
+                    headers.set('Link', '</index.md>; rel="alternate"; type="text/markdown"');
+                    headers.append('Vary', 'Accept');
+                    return new Response(assetResponse.body, {
+                        status: assetResponse.status,
+                        statusText: assetResponse.statusText,
+                        headers
+                    });
+                }
                 return assetResponse;
             } else {
                 // This case should theoretically not happen if getAssetFromKV is working correctly

@@ -53,3 +53,7 @@ new_sqlite_classes = ["TwoTruthsAndALieSession"]
 
 [observability.logs]
 enabled = false
+
+[dev]
+ip = "0.0.0.0"
+

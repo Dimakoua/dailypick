@@ -1,0 +1,220 @@
+{
+  "summary": {
+    "target_url": "https://dailypick.dev",
+    "domain": "dailypick.dev",
+    "health_score": 82,
+    "grade": "B+",
+    "business_type": "Free Web Tools / Agile Rituals & Publisher",
+    "audit_timestamp": "2026-10-08T14:48:00Z",
+    "framework_version": "claude-seo 2.4.2",
+    "top_findings": [
+      {
+        "title": "Sitemap Contains 13 Noindexed Multilingual Pages",
+        "severity": "High",
+        "category": "Technical SEO"
+      },
+      {
+        "title": "Programmatic City Wheels Risk Google Doorway Page demotion",
+        "severity": "High",
+        "category": "Content Quality / E-E-A-T"
+      },
+      {
+        "title": "FAQPage Schema Rich Results Officially Retired by Google",
+        "severity": "Medium",
+        "category": "Structured Data"
+      },
+      {
+        "title": "Blog Author Schema Set to Organization Instead of Person",
+        "severity": "Medium",
+        "category": "Structured Data"
+      },
+      {
+        "title": "Missing 1-Click Meeting Note / Slack Sharing for Ritual Dwell Time",
+        "severity": "Medium",
+        "category": "SXO / User Signals"
+      }
+    ],
+    "quick_wins": [
+      "Remove 13 noindexed URLs from sitemap.njk / sitemap.xml",
+      "Add explicit <label for> to the 2 remaining search/input elements to raise Agent-UX to 100",
+      "Update _includes/post.njk BlogPosting author schema to @type Person with sameAs links",
+      "Automate IndexNow submissions upon deploy via wrangler / GitHub Actions",
+      "Add 1-click 'Copy Result for Slack / Teams' button to FoodWheelEngine & Randomizers"
+    ]
+  },
+  "scores": {
+    "technical": 84,
+    "content_quality": 76,
+    "on_page": 88,
+    "schema": 72,
+    "performance": 82,
+    "ai_agentic_geo": 90,
+    "images": 85,
+    "composite": 82
+  },
+  "categories": [
+    {
+      "name": "Technical SEO",
+      "score": 84,
+      "weight": 0.22,
+      "what_works": [
+        "Robots.txt reachable and compliant with RFC 9309",
+        "Deliberate AI crawler controls: OAI-SearchBot, PerplexityBot, Claude-SearchBot allowed; GPTBot model training blocked",
+        "Soft-404 hygiene validated with real HTTP 404 responses",
+        "Cloudflare CDN edge-cached with HTTP/3 and compression enabled",
+        "Clean static breadcrumb navigation and regional clustering pre-rendered at build time"
+      ],
+      "findings": [
+        {
+          "title": "Noindexed URLs published in sitemap.xml",
+          "severity": "High",
+          "description": "13 multilingual subpages under /apps/what-should-i-eat-*/ carry 'robots: noindex, follow' meta tags but remain listed in sitemap.xml. Submitting noindexed URLs creates conflicting indexing directives.",
+          "recommendation": "Filter out pages with robots 'noindex' from sitemap.njk template."
+        },
+        {
+          "title": "IndexNow ping automation not active",
+          "severity": "Medium",
+          "description": "The site has an indexNow.txt key in the workspace but lacks an automated post-deploy API trigger to push URL updates instantly to Bing and IndexNow-compatible engines.",
+          "recommendation": "Integrate indexnow_submit.py into the deployment workflow."
+        }
+      ]
+    },
+    {
+      "name": "Content Quality & E-E-A-T",
+      "score": 76,
+      "weight": 0.23,
+      "what_works": [
+        "Zero AI prompt tokens or fake (Premium Users) markers remaining across apps",
+        "Cornerstone agile guides provide 2,500+ words of actionable team ritual advice",
+        "High information density (0.46) on main directory and tool landing pages"
+      ],
+      "findings": [
+        {
+          "title": "Doorway page risk on programmatic city food wheels",
+          "severity": "High",
+          "description": "20+ city dining pages share near-identical structural boilerplate with only the city name replaced. Under Google Quality Rater Guidelines §4.6.5 (Scaled Content Abuse) and doorway algorithms, this limits long-term indexation.",
+          "recommendation": "Inject unique regional culinary data, distinct local neighborhoods, and signature regional dishes into each city data set."
+        },
+        {
+          "title": "Missing author credentials and first-hand E-E-A-T proof",
+          "severity": "Medium",
+          "description": "Cornerstone blog guides lack personal author bylines, professional practitioner bios, and first-hand photographic evidence of tools used in actual agile ceremonies.",
+          "recommendation": "Introduce verified author profile cards with Scrum Master / Agile Coach credentials and real workshop screenshots."
+        }
+      ]
+    },
+    {
+      "name": "Schema / Structured Data",
+      "score": 72,
+      "weight": 0.10,
+      "what_works": [
+        "Valid WebApplication schema across all 112 app pages with Free offer pricing",
+        "Valid BreadcrumbList schema accurately reflecting hierarchical site structure",
+        "Site-level WebSite schema with SearchAction"
+      ],
+      "findings": [
+        {
+          "title": "FAQPage rich results retired by Google",
+          "severity": "Info",
+          "description": "Google completely retired FAQPage rich snippets for all sites on May 7, 2026. Over 110 pages on Daily Pick have FAQPage blocks intended to capture SERP real estate. They provide no rich result benefit.",
+          "recommendation": "Maintain existing blocks for internal semantics, but avoid investing effort in writing new FAQPage markup for Google SERP visibility. Pivot single-topic Q&A to QAPage where applicable."
+        },
+        {
+          "title": "Blog author schema configured as Organization instead of Person",
+          "severity": "Medium",
+          "description": "_includes/post.njk outputs author as '@type': 'Organization'. Google's Helpful Content system prefers individual Person entities with verifiable credentials.",
+          "recommendation": "Update author schema to @type Person with jobTitle and sameAs links."
+        }
+      ]
+    },
+    {
+      "name": "AI Search Readiness & Agentic Browsing",
+      "score": 90,
+      "weight": 0.10,
+      "what_works": [
+        "llms.txt and llms-full.txt present, properly formatted, and passing Lighthouse ARD checks",
+        "Agent-UX score of 92/100 with 100+ native interactive accessible nodes",
+        "Server-rendered HTML serves 1,200+ words of content prior to JS execution",
+        "Robots.txt deliberately permits OAI-SearchBot, PerplexityBot, and Claude-SearchBot"
+      ],
+      "findings": [
+        {
+          "title": "Two form inputs missing explicit label associates",
+          "severity": "Low",
+          "description": "agent_ux_check.py detected 2 inputs lacking explicit label[for] attributes, deducting 8 points from the Agent-UX readiness score.",
+          "recommendation": "Ensure all input elements have matching label tags or aria-label attributes."
+        },
+        {
+          "title": "Missing Markdown content negotiation",
+          "severity": "Low",
+          "description": "The site does not support HTTP content negotiation (Accept: text/markdown) or .md alternative URLs for LLM scraping agents.",
+          "recommendation": "Configure Cloudflare Worker to serve clean Markdown representation when Accept: text/markdown is requested."
+        }
+      ]
+    },
+    {
+      "name": "Search Experience Optimization (SXO)",
+      "score": 88,
+      "weight": 0.20,
+      "what_works": [
+        "100% free, zero ads experience strongly outperforms ad-laden competitors (Wheel Decide, Picker Wheel)",
+        "Instant canvas interaction without login or paywalls",
+        "Shareable query state (?choices=...) enables collaborative viral loops"
+      ],
+      "findings": [
+        {
+          "title": "Missing one-click Slack/Teams meeting notes export",
+          "severity": "Medium",
+          "description": "Teams using Daily Pick in standups need an instant button to copy formatted results directly to clipboard for Slack, Discord, or Jira sprint notes.",
+          "recommendation": "Add a prominent '📋 Copy for Slack / Teams' button on spin completion."
+        },
+        {
+          "title": "Dedicated /compare/ landing hubs not yet live",
+          "severity": "Medium",
+          "description": "Comparison content currently lives as blog posts rather than conversion-focused pillar landing pages.",
+          "recommendation": "Deploy dedicated /compare/wheel-decide-alternative/ and /compare/picker-wheel-alternative/ hubs."
+        }
+      ]
+    }
+  ],
+  "action_plan": {
+    "phases": [
+      {
+        "name": "Phase 1: Immediate Hygiene & Indexing Alignment",
+        "timeframe": "Sprint 1 (Days 1-3)",
+        "items": [
+          "Prune 13 noindexed multilingual pages from sitemap.njk and regenerate sitemap.xml",
+          "Fix 2 unlabeled input elements to achieve 100/100 Agent-UX score",
+          "Update _includes/post.njk to output Person schema for author with sameAs references"
+        ]
+      },
+      {
+        "name": "Phase 2: Dwell Time & Meeting Workflow Enhancements",
+        "timeframe": "Sprint 2 (Week 2)",
+        "items": [
+          "Deploy 1-click 'Copy for Slack / Teams' button on all decision spinners and tools",
+          "Wire automated IndexNow submission script into Cloudflare deploy pipeline",
+          "Enhance WebApplication schema with featureList and applicationSubCategory"
+        ]
+      },
+      {
+        "name": "Phase 3: Programmatic Quality Upgrade & Comparison Hubs",
+        "timeframe": "Sprint 3 (Weeks 3-4)",
+        "items": [
+          "Upgrade city food wheels with unique local neighborhood data to eliminate doorway page risk",
+          "Promote competitor comparison blog posts to dedicated /compare/ landing hubs",
+          "Add Worker route for Accept: text/markdown content negotiation"
+        ]
+      },
+      {
+        "name": "Phase 4: Authority & AI Citability Expansion",
+        "timeframe": "Ongoing",
+        "items": [
+          "Build external brand citations across Reddit (r/scrum, r/agile), LinkedIn, and YouTube demos",
+          "Establish quarterly drift baseline snapshots using claude-seo drift_baseline.py",
+          "Monitor Search Console query impressions for brand and alternative keywords"
+        ]
+      }
+    ]
+  }
+}

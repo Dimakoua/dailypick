@@ -61,6 +61,8 @@ module.exports = async function(eleventyConfig) {
   eleventyConfig.ignores.add("seo-instructions.md");
   eleventyConfig.ignores.add("SEO_MASTER_PLAN.md");
   eleventyConfig.ignores.add("deleted-posts-log.md");
+  eleventyConfig.ignores.add("dailypick.dev-audit/**");
+  eleventyConfig.watchIgnores.add("dailypick.dev-audit/**");
 
   // Tell Eleventy to watch your CSS changes for live reload.
   eleventyConfig.addWatchTarget("./content/blog/css/");
@@ -144,7 +146,12 @@ module.exports = async function(eleventyConfig) {
       // @quasibit/eleventy-plugin-sitemap TemplateContentPrematureUseError in Eleventy v3.
       const isPaginatedIndex = item.data && item.data.pagination;
 
-      return !excludedPaths.includes(item.inputPath) && !isPaginatedIndex;
+      // Exclude pages explicitly marked with noindex in robots meta or sitemap: false
+      const robotsMeta = item.data && typeof item.data.robots === 'string' ? item.data.robots.toLowerCase() : '';
+      const isNoIndex = robotsMeta.includes('noindex');
+      const isSitemapDisabled = item.data && item.data.sitemap === false;
+
+      return !excludedPaths.includes(item.inputPath) && !isPaginatedIndex && !isNoIndex && !isSitemapDisabled;
     });
 
     for (const item of items) {
@@ -156,6 +163,9 @@ module.exports = async function(eleventyConfig) {
         item.data.sitemap.changefreq = 'daily';
         item.data.sitemap.priority = 1.0;
       } else if (item.inputPath.startsWith('./apps/')) {
+        item.data.sitemap.changefreq = 'weekly';
+        item.data.sitemap.priority = 0.8;
+      } else if (item.inputPath.startsWith('./compare/')) {
         item.data.sitemap.changefreq = 'weekly';
         item.data.sitemap.priority = 0.8;
       } else if (item.inputPath.startsWith('./content/blog/posts/')) {

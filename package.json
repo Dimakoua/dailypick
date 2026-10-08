@@ -23,8 +23,10 @@
         "build": "eleventy && node scripts/minify-dist.js && node scripts/gzip-compress.js",
         "build:dev": "eleventy",
         "watch": "npm run build:dev -- --watch --incremental",
-        "dev:watch": "npm run build:dev -- --watch --incremental & wrangler dev",
-        "dev": "wrangler dev",
-        "deploy": "wrangler deploy"
+        "dev:watch": "npm run build:dev -- --watch --incremental & wrangler dev --ip 0.0.0.0",
+        "dev": "wrangler dev --ip 0.0.0.0",
+        "start": "wrangler dev --ip 0.0.0.0",
+        "deploy": "wrangler deploy",
+        "indexnow": "node scripts/indexnow-submit.js"
     }
 }
