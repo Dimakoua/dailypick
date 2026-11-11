@@ -332,15 +332,18 @@
   max-height: 200px;
   overflow-y: auto;
   scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.12) transparent;
 }
 
-.sup-upcoming-list::-webkit-scrollbar {
-  width: 4px;
-}
+@supports not (scrollbar-color: auto) {
+  .sup-upcoming-list::-webkit-scrollbar {
+    width: 4px;
+  }
 
-.sup-upcoming-list::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.12);
-  border-radius: 999px;
+  .sup-upcoming-list::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.12);
+    border-radius: 999px;
+  }
 }
 
 .sup-upcoming-list li {

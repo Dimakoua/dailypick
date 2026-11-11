@@ -1,4 +1,6 @@
 :root {
+  color-scheme: light dark;
+  interpolate-size: allow-keywords;
   --brand-font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --brand-background: #f4f7f6;
   --brand-background-image: radial-gradient(circle at 10% 10%, rgba(52, 152, 219, 0.12), transparent 28%), radial-gradient(circle at 90% 20%, rgba(41, 128, 185, 0.08), transparent 26%), linear-gradient(180deg, #f4f7f6 0%, #ffffff 100%);

@@ -48,7 +48,8 @@
 }
 
 .whats-new-popup.expanded .whats-new-content {
-    max-height: 200px; /* Adjust as needed */
+    max-height: 200px; /* Fallback for older browsers */
+    max-height: calc-size(auto, size);
     opacity: 1;
 }
 

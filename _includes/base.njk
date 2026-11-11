@@ -91,6 +91,7 @@
     <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
     <meta name="msapplication-TileColor" content="#2d89ef" />
     <meta name="theme-color" content="#ffffff" />
+    <meta name="color-scheme" content="light dark" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -487,9 +488,9 @@
     {% include "feedback-popup.html" %}
 
     <script src="/assets/js/cookie-consent.js" defer></script>
-    <script src="/assets/js/feature-tracking.js" defer></script>
+    <script src="/assets/js/feature-tracking.js" defer fetchpriority="low"></script>
     <script src="/assets/js/presentation-mode.js" defer></script>
     <script src="/assets/js/pwa-install.js" defer></script>
-    <script src="/assets/js/feedback-popup.js" defer></script>
+    <script src="/assets/js/feedback-popup.js" defer fetchpriority="low"></script>
 </body>
 </html>

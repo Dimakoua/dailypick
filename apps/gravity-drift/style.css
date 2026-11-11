@@ -235,14 +235,21 @@
 }
 
 /* Кастомний скролбар (делікатний і видимий) */
-#leaderboard ul::-webkit-scrollbar { width: 10px; }
-#leaderboard ul::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,.28);
-  border-radius: 8px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
+#leaderboard ul {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.28) transparent;
 }
-#leaderboard ul::-webkit-scrollbar-track { background: transparent; }
+
+@supports not (scrollbar-color: auto) {
+  #leaderboard ul::-webkit-scrollbar { width: 10px; }
+  #leaderboard ul::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,.28);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  #leaderboard ul::-webkit-scrollbar-track { background: transparent; }
+}
 
 /* Світла тема (за наявності) */
 :root.light #leaderboard {

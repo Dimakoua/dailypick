@@ -49,6 +49,7 @@
 
 /* Panel Container */
 .local-brand-studio-panel {
+  color-scheme: light dark;
   position: absolute;
   bottom: 48px;
   right: 0;
@@ -482,21 +483,28 @@
 }
 
 /* Scrollbar styling */
-.local-brand-studio-panel::-webkit-scrollbar {
-  width: 4px;
+.local-brand-studio-panel {
+  scrollbar-width: thin;
+  scrollbar-color: var(--brand-border) transparent;
 }
 
-.local-brand-studio-panel::-webkit-scrollbar-track {
-  background: transparent;
-}
+@supports not (scrollbar-color: auto) {
+  .local-brand-studio-panel::-webkit-scrollbar {
+    width: 4px;
+  }
 
-.local-brand-studio-panel::-webkit-scrollbar-thumb {
-  background-color: var(--brand-border);
-  border-radius: 2px;
-}
+  .local-brand-studio-panel::-webkit-scrollbar-track {
+    background: transparent;
+  }
 
-.local-brand-studio-panel::-webkit-scrollbar-thumb:hover {
-  background-color: var(--brand-accent-muted);
+  .local-brand-studio-panel::-webkit-scrollbar-thumb {
+    background-color: var(--brand-border);
+    border-radius: 2px;
+  }
+
+  .local-brand-studio-panel::-webkit-scrollbar-thumb:hover {
+    background-color: var(--brand-accent-muted);
+  }
 }
 
 /* Accessibility: Reduced motion */

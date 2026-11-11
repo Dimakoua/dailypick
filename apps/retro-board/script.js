@@ -303,6 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
     title.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
         e.preventDefault();
+        if (e.isComposing || e.keyCode === 229) return;
         title.blur();
       }
     });
@@ -514,6 +515,7 @@ document.addEventListener('DOMContentLoaded', () => {
     content.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
+        if (e.isComposing || e.keyCode === 229) return;
         content.blur();
       }
     });

@@ -218,19 +218,26 @@
 }
 
 /* Scrollbar styling */
-#search-results::-webkit-scrollbar {
-  width: 6px;
+#search-results {
+  scrollbar-width: thin;
+  scrollbar-color: var(--brand-border, #dde4eb) transparent;
 }
 
-#search-results::-webkit-scrollbar-track {
-  background: transparent;
-}
+@supports not (scrollbar-color: auto) {
+  #search-results::-webkit-scrollbar {
+    width: 6px;
+  }
 
-#search-results::-webkit-scrollbar-thumb {
-  background: var(--brand-border, #dde4eb);
-  border-radius: 3px;
-}
+  #search-results::-webkit-scrollbar-track {
+    background: transparent;
+  }
 
-#search-results::-webkit-scrollbar-thumb:hover {
-  background: var(--brand-subtle-text, #7f8c8d);
+  #search-results::-webkit-scrollbar-thumb {
+    background: var(--brand-border, #dde4eb);
+    border-radius: 3px;
+  }
+
+  #search-results::-webkit-scrollbar-thumb:hover {
+    background: var(--brand-subtle-text, #7f8c8d);
+  }
 }

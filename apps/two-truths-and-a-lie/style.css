@@ -982,22 +982,29 @@
 }
 
 /* Scrollbar Styling */
-.participants-list::-webkit-scrollbar {
-  width: 6px;
+.participants-list {
+  scrollbar-width: thin;
+  scrollbar-color: var(--brand-border) var(--brand-surface);
 }
 
-.participants-list::-webkit-scrollbar-track {
-  background: var(--brand-surface);
-  border-radius: 3px;
-}
+@supports not (scrollbar-color: auto) {
+  .participants-list::-webkit-scrollbar {
+    width: 6px;
+  }
 
-.participants-list::-webkit-scrollbar-thumb {
-  background: var(--brand-border);
-  border-radius: 3px;
-}
+  .participants-list::-webkit-scrollbar-track {
+    background: var(--brand-surface);
+    border-radius: 3px;
+  }
 
-.participants-list::-webkit-scrollbar-thumb:hover {
-  background: var(--brand-text);
+  .participants-list::-webkit-scrollbar-thumb {
+    background: var(--brand-border);
+    border-radius: 3px;
+  }
+
+  .participants-list::-webkit-scrollbar-thumb:hover {
+    background: var(--brand-text);
+  }
 }
 
 /* ==========================================================================
