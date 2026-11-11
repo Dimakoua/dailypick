@@ -1,5 +1,4 @@
 /* Global Resets & Base Styles */
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
 
 a {
     color: #007bff; /* Professional and accessible blue */
@@ -105,8 +104,11 @@ p {
 }
 
 .post-body img {
+    width: 100%;
     max-width: 100%;
     height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
     border-radius: 12px;
     margin: 2rem 0;
     box-shadow: 0 8px 30px rgba(0,0,0,0.1);

@@ -459,15 +459,6 @@
     "description": "Read articles, updates, and tips for making everyday meetings more engaging."
   },
   {
-    "id": "whats-new",
-    "name": "What's New",
-    "path": "/apps/whats-new/",
-    "category": "nav",
-    "footerGroup": "Resources",
-    "emoji": "✨",
-    "description": "See recently added features, games, and improvements."
-  },
-  {
     "id": "feedback",
     "name": "Feedback",
     "path": "/feedback/",

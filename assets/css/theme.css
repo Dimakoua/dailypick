@@ -41,6 +41,7 @@ body {
   margin: 0;
   color: var(--brand-text);
   font-family: var(--brand-font-family);
+  font-size-adjust: from-font;
   background: transparent;
   min-height: 100vh;
   min-height: 100dvh;
@@ -115,6 +116,7 @@ h6 {
 
 .site-header {
   width: 100%;
+  min-height: 80px;
   padding: 20px min(5vw, 48px);
   box-sizing: border-box;
   position: relative;
@@ -249,6 +251,14 @@ h6 {
   gap: 16px;
 }
 
+[data-show-only="standup"] {
+  display: none !important;
+}
+
+body:has(main[data-page-type="standup"]) [data-show-only="standup"] {
+  display: inline !important;
+}
+
 .site-header nav a {
   color: var(--brand-heading);
   font-weight: 600;
@@ -284,6 +294,8 @@ h6 {
   align-items: center;
   justify-content: center;
   min-width: 96px;
+  height: 38px;
+  box-sizing: border-box;
   padding: 8px 12px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.65);

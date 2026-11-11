@@ -37,7 +37,7 @@ function parseArgs() {
 const args = parseArgs();
 const baseUrl = (args['base-url'] || args.baseUrl || 'http://localhost:8787').replace(/\/$/, '');
 const outDir = args['out-dir'] || args.outDir || 'apps/whats-new/screenshots';
-const source = args.source || 'apps/whats-new/index.html';
+const source = args.source || 'apps/index.njk';
 const sizesArg = args.sizes || '1600x900,1200x720';
 const format = (args.format || 'png').toLowerCase();
 const waitMs = parseInt(args.wait || '1000', 10) || 1000;
