@@ -297,6 +297,7 @@ const legacyRedirects = {
     '/Readme/': '/',
     '/README/': '/',
     '/apps/whats-new/': '/',
+    '/apps/team-generator/': '/apps/random-list-shuffler/',
 
     // Pruned Programmatic City & Regional Food Wheels -> Master Food Wheel
     '/apps/what-should-i-eat-austin/': '/apps/what-should-i-eat/',

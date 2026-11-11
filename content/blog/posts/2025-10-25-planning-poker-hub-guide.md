@@ -19,7 +19,7 @@ robots: index,follow
 Let’s face it — sprint estimation meetings can sometimes drag on. Long discussions, inconsistent votes, awkward silences while waiting for everyone to decide... sound familiar?  
 
 But what if you could *bring energy and clarity* back to the process — and actually make it enjoyable for everyone involved?  
-Enter *[Planning Poker Hub](/apps/planning-poker/)* by Daily Pick — your team's new favorite way to estimate stories *together*. It's the natural follow-up to our guides on energizing stand-ups and [making retros fun](/blog/level-up-your-team-retrospectives-fun-fair-activities-to-boost-engagement/), giving your entire agile loop a fairness upgrade.
+Enter *[Planning Poker Hub](/apps/planning-poker/)* by Daily Pick — your team's new favorite way to estimate stories *together*. It's the natural follow-up to our guides on energizing stand-ups and [making retros fun](/blog/agile-retrospective-games-complete-guide/), giving your entire agile loop a fairness upgrade.
 
 ---
 
