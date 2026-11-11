@@ -1,35 +1,28 @@
 .patchinko-page {
-    width: min(1180px, calc(100% - clamp(32px, 4vw, 64px)));
+    width: min(1200px, calc(100% - clamp(24px, 3vw, 48px)));
     margin: 0 auto 60px;
-    padding: 0 clamp(16px, 4vw, 32px);
+    padding: 0 clamp(12px, 2vw, 24px);
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    align-items: center;
+    gap: 16px;
 }
 
-.page-hero {
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.app-section-heading {
-    margin: 0;
-    font-size: clamp(2rem, 3vw, 2.8rem);
+.patchinko-page h1 {
+    margin: 1.5rem 0 0;
+    text-align: center;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
     font-weight: 800;
     color: var(--brand-heading);
 }
 
-.app-subheading {
-    margin: 0;
-    font-size: 1.05rem;
-    color: var(--brand-subtle-text);
-    max-width: 520px;
+.patchinko-page .settings-hint {
+    text-align: center;
+    margin: 0.5rem auto 1rem;
 }
 
 :root {
-    --board-width: 700px;
+    --board-width: 660px;
     --board-height: 820px;
     --controls-width: 320px;
     --bucket-height: 60px;
@@ -40,32 +33,105 @@
     --ball-size-max: 22px;
 }
 
-.patchinko-main {
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
 .patchinko-container {
-    padding: clamp(24px, 3vw, 40px);
+    width: 100%;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 32px;
+}
+
+.patchinko-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 24px;
+    align-items: start;
+    width: 100%;
 }
 
 .patchinko-board-container {
     position: relative;
-    width: var(--board-width);
-    height: var(--board-height);
-    background-color: #0c0a1a;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var(--brand-surface);
     border-radius: var(--radius-lg);
-    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.5), var(--brand-shadow);
-    overflow: hidden;
+    box-shadow: var(--brand-shadow);
+    border: 1px solid var(--brand-border);
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+/* Controls Bar at top of board */
+.controls-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 14px;
+    z-index: 5;
+}
+
+.pattern-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    background: color-mix(in srgb, var(--brand-surface) 70%, var(--brand-background));
+    padding: 4px;
+    border-radius: var(--radius-md);
     border: 1px solid var(--brand-border);
 }
 
-.patchinko-board-container::before {
+.pattern-button {
+    background: transparent;
+    border: none;
+    color: var(--brand-subtle-text);
+    font-size: 0.82rem;
+    font-weight: 600;
+    font-family: inherit;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pattern-button:hover {
+    color: var(--brand-heading);
+    background: var(--brand-accent-muted);
+}
+
+.pattern-button[aria-pressed="true"] {
+    background: var(--brand-accent);
+    color: var(--brand-accent-contrast-text);
+    box-shadow: var(--brand-hover-shadow);
+}
+
+.action-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn-sm {
+    padding: 6px 14px;
+    font-size: 0.88rem;
+    border-radius: var(--radius-sm);
+}
+
+/* Canvas Wrapper Stage */
+.canvas-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 700 / 820;
+    border-radius: var(--radius-md);
+    background-color: #0c0a1a;
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.canvas-wrapper::before {
     content: '· . • . · • .      .·     . .   ·   • .  .·     · .  .      • . · .  . ·   •  . .  · . • . . ·   · •   . . ·   · . • . . ·   · •   . . ·   · . • . . ·   · • . .';
     position: absolute;
     inset: 0;
@@ -92,42 +158,91 @@
 #patchinko-canvas {
     position: absolute;
     inset: 0;
+    width: 100%;
+    height: 100%;
     z-index: 2;
+    display: block;
 }
 
 .buckets-container {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    position: relative;
     height: var(--bucket-height);
     display: flex;
+    gap: 6px;
+    margin-top: 10px;
+    width: 100%;
     z-index: 3;
 }
 
 .bucket {
     flex: 1;
+    min-width: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.15));
-    border-left: 1px solid rgba(255, 255, 255, 0.2);
-    transition: background-color 0.2s ease, transform 0.2s ease;
-    color: #fff;
+    background: color-mix(in srgb, var(--brand-surface) 90%, var(--brand-background));
+    border: 1px solid var(--brand-border);
+    border-radius: var(--radius-sm);
+    padding: 8px 4px;
+    transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    color: var(--brand-heading);
     font-weight: 600;
-    font-size: 0.9rem;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    font-size: 0.88rem;
+    position: relative;
 }
 
 .bucket:first-child {
-    border-left: none;
+    border-left: 1px solid var(--brand-border);
 }
 
 .bucket.highlight {
     background: linear-gradient(180deg, var(--brand-accent-muted), var(--brand-accent));
-    transform: scale(1.02);
+    border-color: var(--brand-accent);
+    color: var(--brand-accent-contrast-text);
+    transform: scale(1.05) translateY(-3px);
     z-index: 4;
+    box-shadow: 0 4px 16px var(--brand-accent-muted);
+}
+
+.bucket-name {
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+
+.bucket-score {
+    font-size: 1rem;
+    font-weight: 800;
+    display: block;
+    margin-top: 1px;
+}
+
+.score-floater {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--brand-accent);
+    pointer-events: none;
+    animation: floatUp 0.6s ease forwards;
+    z-index: 10;
+}
+
+@keyframes floatUp {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -20px);
+    }
 }
 
 .bucket-placeholder {
@@ -152,21 +267,45 @@
     opacity: 0.8;
 }
 
-/* Controls */
+/* Controls / Sidebar */
 .patchinko-controls {
-    width: var(--controls-width);
-    flex-grow: 1;
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
 
-.control-group {
+.sidebar-panel {
+    background: var(--brand-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--brand-shadow);
+    border: 1px solid var(--brand-border);
     padding: 1.5rem;
-    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.sidebar-title .badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 3px 8px;
     background: var(--brand-accent-muted);
-    border-radius: var(--radius-md);
-    border: 1px solid color-mix(in srgb, var(--brand-accent) 20%, transparent);
+    color: var(--brand-accent);
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--brand-accent) 25%, transparent);
 }
 
 .control-group:last-child {
@@ -267,30 +406,67 @@
 
 .standup-queue li {
     border-bottom: 1px solid color-mix(in srgb, var(--brand-border) 40%, transparent);
-    padding: 0.4rem 0.25rem;
+    padding: 0.5rem 0.4rem;
     display: flex;
     align-items: center;
     gap: 0.75rem;
     font-size: 1rem;
     background: transparent;
-    border-radius: 0;
+    border-radius: 8px;
     box-shadow: none;
+    transition: background 0.15s ease;
+}
+
+.standup-queue li:hover {
+    background: color-mix(in srgb, var(--brand-surface) 60%, transparent);
 }
 
 .queue-position {
     font-weight: 700;
     color: var(--brand-accent-strong);
-    font-size: 0.9rem;
-    width: 24px;
+    font-size: 0.85rem;
+    width: 26px;
+    height: 26px;
     text-align: center;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    border-radius: 50%;
+    background: var(--brand-accent-muted);
+    flex-shrink: 0;
+}
+
+.standup-queue li:nth-child(1) .queue-position {
+    background: #fbbf24;
+    color: #1e293b;
+    box-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
+}
+.standup-queue li:nth-child(2) .queue-position {
+    background: #cbd5e1;
+    color: #1e293b;
+}
+.standup-queue li:nth-child(3) .queue-position {
+    background: #d97706;
+    color: #ffffff;
 }
 
 .queue-name {
+    flex: 1;
     font-weight: 600;
     color: var(--brand-heading);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.queue-score-pill {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--brand-subtle-text);
+    background: color-mix(in srgb, var(--brand-border) 40%, transparent);
+    padding: 2px 8px;
+    border-radius: 6px;
+    flex-shrink: 0;
 }
 
 .queue-placeholder {
@@ -304,101 +480,140 @@
 
 @media (max-width: 1024px) {
     .patchinko-main {
-        flex-direction: column;
-        align-items: center;
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+
+    .patchinko-board-container {
+        max-width: 660px;
     }
 
     .patchinko-controls {
-        width: 100%;
-        max-width: var(--board-width);
+        max-width: 660px;
     }
 }
 
 /* Scale-down the board on tablets/phones */
 @media (max-width: 760px) {
     :root {
-        --board-width: 100%;
-        --board-height: calc(var(--board-width) * 820 / 700);
-        --controls-width: 100%;
-        --bucket-height: 48px;
+        --bucket-height: 52px;
     }
 
     .patchinko-page {
-        gap: 20px;
+        gap: 12px;
+        padding: 0 12px;
+    }
+
+    .patchinko-page h1 {
+        margin: 1rem 0 0;
+        font-size: clamp(1.8rem, 6vw, 2.2rem);
     }
 
     .patchinko-container {
-        padding: 16px;
-        gap: 20px;
+        padding: 0;
+        gap: 16px;
     }
 
     .patchinko-board-container {
-        width: 100%;
-        /* Keep the 700:820 aspect ratio */
-        aspect-ratio: 700 / 820;
-        height: auto;
+        padding: 12px;
+        border-radius: var(--radius-md);
     }
 
-    #patchinko-canvas {
-        width: 100% !important;
-        height: 100% !important;
-    }
-
-    .patchinko-controls {
-        width: 100%;
-    }
-
-    .control-group {
-        padding: 1rem;
-        margin-bottom: 1rem;
-    }
-
-    .queue-header {
+    .controls-bar {
         flex-direction: column;
-        gap: 0.6rem;
+        align-items: stretch;
+        gap: 10px;
     }
 
-    .queue-action-buttons {
+    .pattern-group {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4px;
         width: 100%;
-        justify-content: stretch;
     }
 
-    .queue-action-buttons .app-button {
+    .pattern-button {
+        text-align: center;
+        padding: 8px 4px;
+        font-size: 0.78rem;
+    }
+
+    .action-group {
+        width: 100%;
+        display: flex;
+    }
+
+    .action-group .app-button {
         flex: 1;
-        min-width: 0;
+        justify-content: center;
     }
 
-    .control-group--queue .pip-trigger {
-        align-self: stretch;
-        justify-content: center;
-        font-size: 0.9rem;
+    .buckets-container {
+        gap: 4px;
+        margin-top: 8px;
     }
 
     .bucket {
+        padding: 6px 2px;
         font-size: 0.75rem;
+    }
+
+    .bucket-name {
+        font-size: 0.68rem;
+    }
+
+    .bucket-score {
+        font-size: 0.88rem;
+    }
+
+    .sidebar-panel {
+        padding: 1rem;
+        border-radius: var(--radius-md);
+    }
+
+    .control-group--queue .pip-trigger {
+        width: 100%;
+        justify-content: center;
+        font-size: 0.9rem;
     }
 }
 
 @media (max-width: 480px) {
     .patchinko-container {
-        padding: 12px;
-        gap: 16px;
+        padding: 0;
+        gap: 12px;
     }
 
-    .app-section-heading {
-        font-size: clamp(1.5rem, 6vw, 2rem);
+    .patchinko-page h1 {
+        font-size: clamp(1.5rem, 6vw, 1.85rem);
     }
 
-    .pattern-selector {
-        grid-template-columns: 1fr 1fr 1fr;
+    .patchinko-board-container {
+        padding: 8px;
+    }
+
+    .pattern-group {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .pattern-button {
+        font-size: 0.75rem;
+        padding: 6px 2px;
     }
 
     .standup-queue li {
-        font-size: 0.9rem;
+        font-size: 0.88rem;
+        padding: 0.4rem 0.25rem;
+    }
+
+    .queue-position {
+        width: 22px;
+        height: 22px;
+        font-size: 0.75rem;
     }
 
     :root {
-        --bucket-height: 40px;
+        --bucket-height: 44px;
     }
 }
 

@@ -65,9 +65,7 @@ headExtra: |
   <script defer="" src="/assets/js/standup-embed.js"></script>
 ---
 <main id="main" data-page-type="standup">
-    <h1 style="text-align: center;">🎯 Office Trap!</h1>
-    <p class="settings-hint">Need to update the player list or brand colors? Visit the <a href="/apps/roster/">Settings
-            page</a>.</p>
+    {% standupHeader "🎯 Office Trap!", 'Need to update the player list or brand colors? Visit the <a href="/apps/roster/">Settings page</a>.' %}
     <div class="game-container">
         <canvas height="400" id="gameCanvas" width="500"></canvas>
         <div id="office-overlay"></div>

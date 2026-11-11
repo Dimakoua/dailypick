@@ -72,57 +72,55 @@ headExtra: |
   </script>
 ---
 <main class="patchinko-page" data-page-type="standup">
+    {% standupHeader "🎯 Patchinko Machine" %}
+    
     <div class="patchinko-container">
-      <header class="page-hero">
-        <div>
-          <h1 class="app-section-heading">🎯 Patchinko Machine</h1>
-        </div>
-        <button class="app-button app-button--secondary game-pip-trigger" type="button"
-          data-game-pip-target=".patchinko-container"
-          data-game-pip-exclude=".seo-content-area, .pip-trigger, .game-pip-trigger"
-          data-game-pip-title="🎯 Patchinko Machine"
-          data-game-pip-width="1100"
-          data-game-pip-height="780">🪟 Pop-out Game</button>
-      </header>
-      <p class="settings-hint" style="margin-bottom:0;">Customize players and the brand before you launch from the <a href="/apps/roster/">Settings page</a>.</p>
-      
       <div class="patchinko-main">
-        <div class="patchinko-board-container">
-          <canvas id="patchinko-canvas" width="700" height="820"></canvas>
-          <div id="buckets-container" class="buckets-container"></div>
-        </div>
-        
-        <aside class="patchinko-controls">
-        <div id="standup-leaderboard" class="control-group control-group--queue">
-          <div class="queue-header">
-            <div>
-              <h2 class="control-heading">Stand-up Queue</h2>
-              <p class="queue-subheading">Everyone sees where they fall once the balls land.</p>
+        <!-- Board Container -->
+        <section class="patchinko-board-container" aria-label="Patchinko Game Board">
+          <div class="controls-bar">
+            <div class="pattern-group" role="group" aria-label="Peg pattern choices">
+              <button class="pattern-button" data-pattern="grid" aria-pressed="true">Grid</button>
+              <button class="pattern-button" data-pattern="tree">Tree</button>
+              <button class="pattern-button" data-pattern="triangles">Triangles</button>
+              <button class="pattern-button" data-pattern="orb">Orb</button>
+              <button class="pattern-button" data-pattern="letterR">Letter R</button>
+              <button class="pattern-button" data-pattern="random">Chaos</button>
             </div>
-            <div class="queue-action-buttons">
-              <button id="drop-balls-btn" class="app-button">Drop Balls</button>
-              <button id="reset-btn" class="app-button app-button--secondary">Reset</button>
+            <div class="action-group">
+              <button id="reset-btn" class="app-button app-button--secondary btn-sm">Reset</button>
+              <button id="drop-balls-btn" class="app-button btn-sm">Drop Balls</button>
             </div>
           </div>
-          <button id="patchinkoPipBtn" class="pip-trigger" type="button"
-            data-pip-target="#standup-leaderboard"
-            data-pip-title="Patchinko Stand-up Queue"
-            data-pip-exclude="#patchinkoPipBtn, .queue-action-buttons"
-            data-pip-width="360"
-            data-pip-height="420">Open in Picture in Picture</button>
-          <ul id="standup-queue" class="standup-queue">
-            <li class="queue-placeholder">Drop balls to generate the queue...</li>
-          </ul>
-        </div>
 
-          <div class="control-group">
-            <h2 class="control-heading">Peg Pattern</h2>
-            <div class="pattern-selector">
-              <button class="app-button app-button--secondary pattern-button" data-pattern="grid" aria-pressed="true">Grid</button>
-              <button class="app-button app-button--secondary pattern-button" data-pattern="tree">Tree</button>
-              <button class="app-button app-button--secondary pattern-button" data-pattern="triangles">Triangles</button>
-              <button class="app-button app-button--secondary pattern-button" data-pattern="letterR">R</button>
+          <div class="canvas-wrapper">
+            <canvas id="patchinko-canvas" width="700" height="820"></canvas>
+          </div>
+
+          <div id="buckets-container" class="buckets-container"></div>
+        </section>
+        
+        <!-- Queue Sidebar -->
+        <aside class="patchinko-controls">
+          <div id="standup-leaderboard" class="control-group control-group--queue sidebar-panel">
+            <div class="queue-header">
+              <div>
+                <h2 class="control-heading sidebar-title">
+                  Speaking Queue
+                  <span class="badge">Live</span>
+                </h2>
+                <p class="queue-subheading">Everyone sees where they fall once the balls land.</p>
+              </div>
             </div>
+            <button id="patchinkoPipBtn" class="pip-trigger" type="button"
+              data-pip-target="#standup-leaderboard"
+              data-pip-title="Patchinko Stand-up Queue"
+              data-pip-exclude="#patchinkoPipBtn, .queue-action-buttons"
+              data-pip-width="360"
+              data-pip-height="420">Open in Picture in Picture</button>
+            <ol id="standup-queue" class="standup-queue">
+              <li class="queue-placeholder">Drop balls to generate the queue...</li>
+            </ol>
           </div>
         </aside>
       </div>

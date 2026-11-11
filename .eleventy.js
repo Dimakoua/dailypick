@@ -94,6 +94,17 @@ module.exports = async function(eleventyConfig) {
 
   eleventyConfig.addShortcode("year", () => `${new Date().getFullYear()}`);
 
+  // Shared stand-up game header: centered title + settings hint.
+  // Usage: {% standupHeader "🎯 Title" %}  or  {% standupHeader "🎯 Title", "Custom hint HTML" %}
+  eleventyConfig.addShortcode("standupHeader", (title, hint) => {
+    const hintHtml = hint ||
+      'Need to edit the roster or tweak branding? Visit the <a href="/apps/roster/">Settings page</a>.';
+    return `<header class="standup-header">
+  <h1 class="standup-header__title">${title}</h1>
+  <p class="settings-hint">${hintHtml}</p>
+</header>`;
+  });
+
   // Filter apps by footerGroup and optionally limit count
   eleventyConfig.addFilter("filterGroup", (apps, group, limit) => {
     const filtered = (apps || []).filter(app => app.footerGroup === group);

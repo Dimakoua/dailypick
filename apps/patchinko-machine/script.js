@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (targetList.some((peg) => distance(peg.x, peg.y, x, y) < MIN_PEG_SPACING)) {
       return false;
     }
-    const peg = { x, y };
+    const peg = { x, y, pulse: 0 };
     if (color) {
       peg.color = color;
     }
@@ -130,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   let balls = [];
   let pegs = [];
+  let hitParticles = [];
   let teamMembers = loadPersistedNames();
   let scores = {};
   let activePattern = 'grid';
@@ -525,25 +526,96 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 5. Drawing
+  // 5. Visual Particles & Effects
+  function spawnHitSparks(x, y, color) {
+    for (let i = 0; i < 4; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = Math.random() * 2 + 1.2;
+      hitParticles.push({
+        x,
+        y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        radius: Math.random() * 2 + 1,
+        color: color || '#fff',
+        life: 1.0,
+        decay: Math.random() * 0.05 + 0.04
+      });
+    }
+  }
+
+  function updateAndDrawParticles() {
+    for (let i = hitParticles.length - 1; i >= 0; i--) {
+      const p = hitParticles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life -= p.decay;
+
+      if (p.life <= 0) {
+        hitParticles.splice(i, 1);
+        continue;
+      }
+
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, p.life);
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  // 6. Drawing Elements
   function drawPegs() {
-    ctx.shadowColor = PEG_SHADOW;
-    ctx.shadowBlur = 8;
     pegs.forEach(peg => {
       const pegColor = peg.color || PEG_COLOR;
+
+      // Pulse ring when hit
+      if (peg.pulse > 0.05) {
+        ctx.save();
+        ctx.strokeStyle = pegColor;
+        ctx.globalAlpha = peg.pulse;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(peg.x, peg.y, PEG_RADIUS + (1 - peg.pulse) * 8, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+        peg.pulse *= 0.88;
+      }
+
+      // Peg Body
+      ctx.save();
+      ctx.shadowColor = peg.pulse > 0.1 ? pegColor : PEG_SHADOW;
+      ctx.shadowBlur = peg.pulse > 0.1 ? 12 : 6;
       ctx.fillStyle = pegColor;
       ctx.beginPath();
       ctx.arc(peg.x, peg.y, PEG_RADIUS, 0, Math.PI * 2);
       ctx.fill();
+      ctx.restore();
     });
-    ctx.shadowBlur = 0;
   }
 
   function drawBall(ball) {
-    ctx.fillStyle = ball.color;
+    ctx.save();
+    // 3D Sphere Radial Shading
+    const grad = ctx.createRadialGradient(
+      ball.x - ball.radius * 0.35,
+      ball.y - ball.radius * 0.35,
+      ball.radius * 0.1,
+      ball.x,
+      ball.y,
+      ball.radius
+    );
+    grad.addColorStop(0, '#ffffff');
+    grad.addColorStop(0.35, ball.color);
+    grad.addColorStop(1, '#090d16');
+
+    ctx.fillStyle = grad;
     ctx.beginPath();
     ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
     ctx.fill();
+    ctx.restore();
   }
 
   // 6. Simple Physics Engine
@@ -637,6 +709,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         ball.vx = (newVx + Math.cos(angle)) * BOUNCE;
         ball.vy = (newVy + Math.sin(angle)) * BOUNCE;
+
+        peg.pulse = 1.0;
+        spawnHitSparks(peg.x, peg.y, ball.color);
       }
     });
 
@@ -659,6 +734,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function loop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawPegs();
+    updateAndDrawParticles();
 
     let scoredThisFrame = false;
 
@@ -714,12 +790,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function highlightBucket(bucketIndex) {
     const buckets = bucketsContainer.children;
-    if (buckets[bucketIndex]) {
-      buckets[bucketIndex].classList.add('highlight');
-      setTimeout(() => {
-        buckets[bucketIndex].classList.remove('highlight');
-      }, 400);
-    }
+    const target = buckets[bucketIndex];
+    if (!target) return;
+
+    target.classList.add('highlight');
+
+    // Floating +1 particle element
+    const floater = document.createElement('div');
+    floater.className = 'score-floater';
+    floater.textContent = '+1';
+    target.appendChild(floater);
+
+    setTimeout(() => floater.remove(), 600);
+    setTimeout(() => target.classList.remove('highlight'), 300);
   }
 
   function updateQueue(emitEvent = false) {
@@ -734,9 +817,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     sortedTeam.forEach((name, index) => {
       const li = document.createElement('li');
+      const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}`;
       li.innerHTML = `
-        <span class="queue-position">${index + 1}</span>
+        <span class="queue-position">${medal}</span>
         <span class="queue-name">${name}</span>
+        <span class="queue-score-pill">${scores[name] || 0} pts</span>
       `;
       queueList.appendChild(li);
     });
@@ -802,6 +887,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function resetGame() {
     stopGame();
     balls = [];
+    hitParticles = [];
     shuffleTeamMembers();
     setupBuckets();
     setPattern(activePattern);

@@ -111,6 +111,29 @@ h6 {
   color: var(--brand-subtle-text);
   font-size: 0.95rem;
 }
+.standup-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+.standup-header__title {
+  margin: 1.5rem 0 0;
+  text-align: center;
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+}
+.standup-header .settings-hint {
+  margin: 0.5rem auto 1rem;
+  text-align: center;
+}
+@media (max-width: 520px) {
+  .standup-header__title {
+    margin-top: 1rem;
+    font-size: clamp(1.5rem, 6vw, 1.85rem);
+  }
+}
+
 .settings-hint a {
   color: var(--brand-accent);
   font-weight: 600;
