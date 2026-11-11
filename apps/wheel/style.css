@@ -94,15 +94,18 @@ canvas {
 /* Indicator arrow */
 #indicator {
   position: absolute;
-  top: -12px;
+  top: -14px;
   left: 50%;
-  transform: translateX(-50%) rotate(57deg);
-  width: 0; height: 0;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
   border-left: 14px solid transparent;
   border-right: 14px solid transparent;
-  border-bottom: 22px solid #e74c3c;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,.7));
-  z-index: 2;
+  border-top: 26px solid #e74c3c;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.35));
+  z-index: 10;
+  transform-origin: 50% 0%;
+  pointer-events: none;
 }
 
 /* Winner display */
@@ -137,6 +140,6 @@ canvas {
 @media (max-width: 520px) {
   .seo-content-area { padding: 18px 16px; }
   /* tighten indicator and canvas border a touch */
-  #indicator { border-left-width: 10px; border-right-width: 10px; border-bottom-width: 18px; top: -10px; }
+  #indicator { border-left-width: 10px; border-right-width: 10px; border-top-width: 20px; top: -10px; }
   canvas { border-width: 4px; }
 }

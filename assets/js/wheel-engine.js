@@ -69,6 +69,51 @@ var defaultSegmentColors = [
     return getDefaultSegmentColors();
   }
 
+  var audioCtx = null;
+  var isSoundMuted = false;
+  try {
+    isSoundMuted = localStorage.getItem('wheelSoundMuted') === 'true';
+  } catch (e) {}
+
+  function initAudio() {
+    if (audioCtx) return;
+    try {
+      var AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (AudioContextClass) {
+        audioCtx = new AudioContextClass();
+      }
+    } catch (e) {}
+  }
+
+  function playRatchetTick(progress) {
+    if (isSoundMuted) return;
+    if (!audioCtx) initAudio();
+    if (!audioCtx) return;
+
+    try {
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      var now = audioCtx.currentTime;
+      var osc = audioCtx.createOscillator();
+      var gain = audioCtx.createGain();
+
+      var baseFreq = 540 - Math.min(progress || 0, 1) * 240;
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(baseFreq, now);
+      osc.frequency.exponentialRampToValueAtTime(80, now + 0.022);
+
+      gain.gain.setValueAtTime(0.14, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.022);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.025);
+    } catch (e) {}
+  }
+
   function drawWheel(canvas, items, rotationAngle, options, showCenterPlayIcon) {
     if (!canvas || !items || !items.length) return;
     rotationAngle = rotationAngle || 0;
@@ -92,6 +137,14 @@ var defaultSegmentColors = [
       ctx.fillStyle = segmentColors[index % segmentColors.length];
       ctx.fill();
 
+      // Clean divider between segments
+      ctx.beginPath();
+      ctx.moveTo(radius, radius);
+      ctx.lineTo(radius + Math.cos(angle) * radius, radius + Math.sin(angle) * radius);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.45)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
       ctx.save();
       ctx.translate(radius, radius);
       ctx.rotate(angle + angleStep / 2);
@@ -112,46 +165,89 @@ var defaultSegmentColors = [
       var startY = -((lines.length - 1) * lineHeight) / 2;
 
       lines.forEach(function (line) {
-        ctx.fillText(line, radius - 16, startY);
+        ctx.fillText(line, radius - 18, startY);
         startY += lineHeight;
       });
       ctx.restore();
     });
 
+    // Metallic rim pegs (pins) at each segment boundary
+    items.forEach(function (_, index) {
+      var pegAngle = index * angleStep;
+      var px = radius + Math.cos(pegAngle) * (radius - 9);
+      var py = radius + Math.sin(pegAngle) * (radius - 9);
+
+      // Subtle drop shadow
+      ctx.beginPath();
+      ctx.arc(px, py + 1.2, 3.8, 0, 2 * Math.PI);
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+      ctx.fill();
+
+      // Shiny chrome peg body
+      var pegGrad = ctx.createRadialGradient(px - 1, py - 1, 0.5, px, py, 3.6);
+      pegGrad.addColorStop(0, '#ffffff');
+      pegGrad.addColorStop(0.35, '#f1f5f9');
+      pegGrad.addColorStop(1, '#94a3b8');
+
+      ctx.beginPath();
+      ctx.arc(px, py, 3.6, 0, 2 * Math.PI);
+      ctx.fillStyle = pegGrad;
+      ctx.fill();
+
+      ctx.strokeStyle = 'rgba(51, 65, 85, 0.5)';
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+    });
+
     ctx.restore();
 
+    // Central axle hub
+    var centerRadius = radius * 0.14;
+    var cx = radius;
+    var cy = radius;
+
+    ctx.save();
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.28)';
+    ctx.shadowBlur = 10;
+    ctx.shadowOffsetY = 2;
+
+    ctx.beginPath();
+    ctx.arc(cx, cy, centerRadius, 0, 2 * Math.PI);
+    var hubGrad = ctx.createLinearGradient(cx - centerRadius, cy - centerRadius, cx + centerRadius, cy + centerRadius);
+    hubGrad.addColorStop(0, '#ffffff');
+    hubGrad.addColorStop(1, '#e2e8f0');
+    ctx.fillStyle = hubGrad;
+    ctx.fill();
+
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetY = 0;
+
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.5)';
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
     if (showCenterPlayIcon) {
-      var centerRadius = radius * 0.13;
-      var cx = radius;
-      var cy = radius;
-
-      ctx.save();
-
-      // Circle
-      ctx.shadowColor = 'rgba(0,0,0,0.22)';
-      ctx.shadowBlur = 8;
-      ctx.shadowOffsetY = 2;
-      ctx.beginPath();
-      ctx.arc(cx, cy, centerRadius, 0, 2 * Math.PI);
-      ctx.fillStyle = 'rgba(255,255,255,0.96)';
-      ctx.fill();
-      ctx.shadowColor = 'transparent';
-      ctx.shadowBlur = 0;
-      ctx.shadowOffsetY = 0;
-
-      // Triangle — centered within the circle
-      var s = centerRadius * 0.38;
+      var s = centerRadius * 0.42;
       ctx.translate(cx, cy);
       ctx.beginPath();
-      ctx.moveTo(-s * 0.5, -s);
-      ctx.lineTo(-s * 0.5, s);
-      ctx.lineTo(s * 0.9, 0);
+      ctx.moveTo(-s * 0.45, -s * 0.85);
+      ctx.lineTo(-s * 0.45, s * 0.85);
+      ctx.lineTo(s * 0.95, 0);
       ctx.closePath();
-      ctx.fillStyle = 'rgba(30,30,30,0.85)';
+      ctx.fillStyle = 'rgba(30, 41, 59, 0.88)';
       ctx.fill();
-
-      ctx.restore();
+    } else {
+      ctx.beginPath();
+      ctx.arc(cx, cy, centerRadius * 0.38, 0, 2 * Math.PI);
+      ctx.fillStyle = '#cbd5e1';
+      ctx.fill();
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 1;
+      ctx.stroke();
     }
+
+    ctx.restore();
   }
 
   function launchConfetti(canvas) {
@@ -437,6 +533,7 @@ var defaultSegmentColors = [
 
     function spinWheel() {
       if (isSpinning) return;
+      initAudio();
       removeResultPopup();
       if (removeAfterSelection) {
         removePendingItem();
@@ -444,7 +541,7 @@ var defaultSegmentColors = [
       if (foodItems.length === 0) return;
 
       var studioConfig = getLocalBrandStudioConfig();
-      var spinRounds = Math.max(1, Math.round(getEffectiveOption(options, studioConfig, 'spinRounds', 5, 'number')));
+      var baseRounds = Math.max(1, Math.round(getEffectiveOption(options, studioConfig, 'spinRounds', 5, 'number')));
       var spinSpeedFactor = Math.max(0.25, getEffectiveOption(options, studioConfig, 'spinSpeed', 1, 'number'));
       var showPopupResult = getEffectiveOption(options, studioConfig, 'showPopupResult', false, 'boolean');
       var enableConfetti = getEffectiveOption(options, studioConfig, 'enableConfetti', false, 'boolean');
@@ -457,19 +554,122 @@ var defaultSegmentColors = [
       var angleStep = (2 * Math.PI) / foodItems.length;
       var selectedIndex = Math.floor(Math.random() * foodItems.length);
       var selectedItem = foodItems[selectedIndex];
-      var targetRotation = spinRounds * 2 * Math.PI + (3 * Math.PI / 2) - (selectedIndex * angleStep + angleStep / 2);
-      var currentRotation = 0;
 
-      function animate() {
-        var progress = currentRotation / targetRotation;
-        var easeOutSpeed = Math.max(0.01, (1 - progress) * 0.8);
-        var step = easeOutSpeed * spinSpeedFactor;
-        currentRotation = Math.min(currentRotation + step, targetRotation);
+      // Realistic dramatic ending types:
+      // Type 0 (38%): "Peg Hop" - hangs on previous name until last moment, then pops over peg into winner
+      // Type 1 (38%): "Near-Miss Rollback" - drives near exit peg, flapper resists, gently rolls back into winner
+      // Type 2 (24%): "Sustained Coast" - drifts smoothly into mid-slice
+      var outcomeRoll = Math.random();
+      var outcomeType = outcomeRoll < 0.38 ? 0 : (outcomeRoll < 0.76 ? 1 : 2);
+      var sliceOffset;
+      var rollbackAngle = 0; // in radians
+
+      if (outcomeType === 0) {
+        sliceOffset = 0.12 + Math.random() * 0.16;
+      } else if (outcomeType === 1) {
+        sliceOffset = 0.72 + Math.random() * 0.10;
+        rollbackAngle = (1.8 + Math.random() * 1.5) * (Math.PI / 180);
+      } else {
+        sliceOffset = 0.35 + Math.random() * 0.30;
+      }
+
+      var totalRounds = baseRounds + (Math.random() < 0.5 ? 1 : 0);
+      var startRotation = idleRotation;
+      var indAngle = 3 * Math.PI / 2;
+      var desiredModulo = indAngle - (selectedIndex + sliceOffset) * angleStep;
+      var currentMod = ((startRotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+      var deltaToTarget = desiredModulo - currentMod;
+      while (deltaToTarget < 0) {
+        deltaToTarget += 2 * Math.PI;
+      }
+      var totalDeltaRotation = totalRounds * 2 * Math.PI + deltaToTarget;
+      var targetRotation = startRotation + totalDeltaRotation;
+
+      var baseDuration = 6400;
+      var totalDuration = baseDuration / spinSpeedFactor;
+      var rollbackDuration = outcomeType === 1 ? (750 / spinSpeedFactor) : 0;
+      var forwardDuration = totalDuration - rollbackDuration;
+      var startTime = performance.now();
+
+      var indicatorEl = document.querySelector(options.indicatorSelector || '#indicator, .wheel-indicator, .sup-wheel-indicator, .owo-indicator, .sw-indicator');
+      if (indicatorEl) {
+        indicatorEl.style.transformOrigin = '50% 0%';
+      }
+
+      var wasContacting = false;
+      var lastSnapTime = 0;
+
+      function animate(now) {
+        now = now || performance.now();
+        var elapsed = now - startTime;
+        var currentRotation;
+        var isSpinComplete = false;
+
+        if (outcomeType === 1) {
+          if (elapsed < forwardDuration) {
+            var p = elapsed / forwardDuration;
+            var eased = 1 - Math.pow(1 - p, 2.25);
+            currentRotation = startRotation + (totalDeltaRotation + rollbackAngle) * eased;
+          } else if (elapsed < totalDuration) {
+            var s = (elapsed - forwardDuration) / rollbackDuration;
+            var rollEase = 0.5 * (1 - Math.cos(s * Math.PI));
+            currentRotation = (targetRotation + rollbackAngle) - rollbackAngle * rollEase;
+          } else {
+            currentRotation = targetRotation;
+            isSpinComplete = true;
+          }
+        } else {
+          if (elapsed < totalDuration) {
+            var p = elapsed / totalDuration;
+            var eased = 1 - Math.pow(1 - p, 2.25);
+            currentRotation = startRotation + totalDeltaRotation * eased;
+          } else {
+            currentRotation = targetRotation;
+            isSpinComplete = true;
+          }
+        }
+
+        // Indicator peg deflection & snap physics
+        var modAngle = ((currentRotation - indAngle) % angleStep + angleStep) % angleStep;
+        if (Math.abs(modAngle - angleStep) < 1e-5) modAngle = 0;
+
+        var contactWindow = Math.min(angleStep * 0.38, 0.12);
+        var deflection = 0;
+
+        if (modAngle > angleStep - contactWindow && !isSpinComplete) {
+          var contactProgress = (modAngle - (angleStep - contactWindow)) / contactWindow;
+          deflection = contactProgress * 15;
+          wasContacting = true;
+        } else {
+          if (wasContacting) {
+            wasContacting = false;
+            if (modAngle < angleStep * 0.5) {
+              lastSnapTime = now;
+              playRatchetTick(elapsed / totalDuration);
+            }
+          }
+          if (now - lastSnapTime < 140) {
+            var dt = (now - lastSnapTime) / 1000;
+            deflection = -7 * Math.exp(-22 * dt) * Math.sin(45 * dt);
+          } else {
+            deflection = 0;
+          }
+        }
+
+        if (indicatorEl) {
+          indicatorEl.style.transform = 'translateX(-50%) rotate(' + deflection.toFixed(2) + 'deg)';
+        }
+
         renderWheel(currentRotation);
 
-        if (currentRotation < targetRotation) {
+        if (!isSpinComplete) {
           requestAnimationFrame(animate);
         } else {
+          if (indicatorEl) {
+            indicatorEl.style.transform = 'translateX(-50%) rotate(0deg)';
+          }
+          idleRotation = currentRotation;
+
           var resultHtml = resultFormatter(selectedItem);
           winnerElement.innerHTML = resultHtml;
           if (typeof options.onResult === 'function') {
@@ -505,7 +705,7 @@ var defaultSegmentColors = [
         }
       }
 
-      animate();
+      requestAnimationFrame(animate);
     }
 
     spinButton.addEventListener('click', spinWheel);
@@ -523,11 +723,10 @@ var defaultSegmentColors = [
       });
     });
 
-    // --- Dynamic "Edit Choices" & "Share Wheel" Controls ---
+    // --- Dynamic "Edit Choices", "Share Wheel" & "Sound" Controls ---
     (function setupCustomControls() {
-      var container = document.querySelector(options.presetButtonSelector || '.preset-btns');
       var spinBtn = document.querySelector(options.spinButtonSelector || '#spinBtn');
-      if (!container || !spinBtn) return;
+      if (!spinBtn || !spinBtn.parentNode) return;
 
       var controlsWrap = document.createElement('div');
       controlsWrap.className = 'custom-wheel-toolbar';
@@ -547,6 +746,13 @@ var defaultSegmentColors = [
       shareBtn.title = 'Copy a link with your custom wheel choices';
       shareBtn.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;padding:7px 18px;border-radius:999px;border:1.5px solid var(--wheel-result-text, #4f46e5);background:rgba(255,255,255,0.85);color:var(--brand-heading,#222);font-weight:600;font-size:0.88rem;cursor:pointer;transition:all 0.2s cubic-bezier(0.4,0,0.2,1);box-shadow:0 2px 8px rgba(0,0,0,0.04);';
 
+      var soundBtn = document.createElement('button');
+      soundBtn.type = 'button';
+      soundBtn.className = 'custom-wheel-tool-btn';
+      soundBtn.title = 'Toggle wheel sound effects';
+      soundBtn.innerHTML = isSoundMuted ? '<span style="margin-right:6px;">🔇</span><span>Muted</span>' : '<span style="margin-right:6px;">🔊</span><span>Sound</span>';
+      soundBtn.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;padding:7px 18px;border-radius:999px;border:1.5px solid var(--wheel-result-text, #4f46e5);background:rgba(255,255,255,0.85);color:var(--brand-heading,#222);font-weight:600;font-size:0.88rem;cursor:pointer;transition:all 0.2s cubic-bezier(0.4,0,0.2,1);box-shadow:0 2px 8px rgba(0,0,0,0.04);';
+
       function applyHover(btn) {
         btn.addEventListener('mouseenter', function() {
           btn.style.transform = 'translateY(-1px)';
@@ -561,6 +767,19 @@ var defaultSegmentColors = [
       }
       applyHover(editBtn);
       applyHover(shareBtn);
+      applyHover(soundBtn);
+
+      soundBtn.addEventListener('click', function() {
+        initAudio();
+        isSoundMuted = !isSoundMuted;
+        try {
+          localStorage.setItem('wheelSoundMuted', isSoundMuted ? 'true' : 'false');
+        } catch (e) {}
+        soundBtn.innerHTML = isSoundMuted ? '<span style="margin-right:6px;">🔇</span><span>Muted</span>' : '<span style="margin-right:6px;">🔊</span><span>Sound</span>';
+        if (!isSoundMuted) {
+          playRatchetTick(0.5);
+        }
+      });
 
       editBtn.addEventListener('click', function () {
         var currentText = foodItems.join('\n');
@@ -625,6 +844,7 @@ var defaultSegmentColors = [
 
       controlsWrap.appendChild(editBtn);
       controlsWrap.appendChild(shareBtn);
+      controlsWrap.appendChild(soundBtn);
       // Place neatly between the preset buttons and the Spin Button
       spinBtn.parentNode.insertBefore(controlsWrap, spinBtn);
     })();
