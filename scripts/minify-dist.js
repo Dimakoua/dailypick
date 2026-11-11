@@ -117,9 +117,9 @@ async function walk(directory) {
       const beforeBytes = input.length;
       const image = sharp(input).rotate();
       const output = entry.name.endsWith(".png")
-        ? await image.png({ compressionLevel: 9, adaptiveFiltering: true, effort: 10, palette: true, colors: 256 }).toBuffer()
+        ? await image.png({ compressionLevel: 8, adaptiveFiltering: true, effort: 4, palette: true, colors: 256 }).toBuffer()
         : entry.name.endsWith(".gif")
-        ? await image.gif({ effort: 10 }).toBuffer()
+        ? await image.gif({ effort: 4 }).toBuffer()
         : await image.jpeg({ quality: 75, mozjpeg: true, progressive: true }).toBuffer();
 
       await fs.writeFile(entryPath, output);

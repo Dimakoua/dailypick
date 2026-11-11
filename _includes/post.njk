@@ -52,9 +52,14 @@ layout: base.njk
     "articleBody": content | striptags | slice(0, 500),
     "wordCount": wordCount,
     "author": {
-        "@type": "Organization",
+        "@type": "Person",
         "name": author,
-        "url": metadata.url
+        "jobTitle": "Agile Practitioner & Team Coach",
+        "worksFor": {
+            "@type": "Organization",
+            "name": "Daily Pick",
+            "url": metadata.url
+        }
     },
     "publisher": {
         "@type": "Organization",
