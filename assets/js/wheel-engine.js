@@ -98,13 +98,14 @@ var defaultSegmentColors = [
       var osc = audioCtx.createOscillator();
       var gain = audioCtx.createGain();
 
-      var baseFreq = 540 - Math.min(progress || 0, 1) * 240;
+      var baseFreq = 520 - Math.min(progress || 0, 1) * 220;
       osc.type = 'triangle';
       osc.frequency.setValueAtTime(baseFreq, now);
-      osc.frequency.exponentialRampToValueAtTime(80, now + 0.022);
+      osc.frequency.exponentialRampToValueAtTime(75, now + 0.020);
 
-      gain.gain.setValueAtTime(0.14, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.022);
+      var clickVol = 0.13 - Math.min(progress || 0, 1) * 0.05;
+      gain.gain.setValueAtTime(clickVol, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.020);
 
       osc.connect(gain);
       gain.connect(audioCtx.destination);
@@ -585,9 +586,9 @@ var defaultSegmentColors = [
       var totalDeltaRotation = totalRounds * 2 * Math.PI + deltaToTarget;
       var targetRotation = startRotation + totalDeltaRotation;
 
-      var baseDuration = 6400;
+      var baseDuration = 6800;
       var totalDuration = baseDuration / spinSpeedFactor;
-      var rollbackDuration = outcomeType === 1 ? (750 / spinSpeedFactor) : 0;
+      var rollbackDuration = outcomeType === 1 ? (850 / spinSpeedFactor) : 0;
       var forwardDuration = totalDuration - rollbackDuration;
       var startTime = performance.now();
 
@@ -608,7 +609,7 @@ var defaultSegmentColors = [
         if (outcomeType === 1) {
           if (elapsed < forwardDuration) {
             var p = elapsed / forwardDuration;
-            var eased = 1 - Math.pow(1 - p, 2.25);
+            var eased = 1 - Math.pow(1 - p, 2.45);
             currentRotation = startRotation + (totalDeltaRotation + rollbackAngle) * eased;
           } else if (elapsed < totalDuration) {
             var s = (elapsed - forwardDuration) / rollbackDuration;
@@ -621,7 +622,7 @@ var defaultSegmentColors = [
         } else {
           if (elapsed < totalDuration) {
             var p = elapsed / totalDuration;
-            var eased = 1 - Math.pow(1 - p, 2.25);
+            var eased = 1 - Math.pow(1 - p, 2.45);
             currentRotation = startRotation + totalDeltaRotation * eased;
           } else {
             currentRotation = targetRotation;
@@ -635,10 +636,13 @@ var defaultSegmentColors = [
 
         var contactWindow = Math.min(angleStep * 0.38, 0.12);
         var deflection = 0;
+        var maxDeflection = 9;
 
         if (modAngle > angleStep - contactWindow && !isSpinComplete) {
           var contactProgress = (modAngle - (angleStep - contactWindow)) / contactWindow;
-          deflection = contactProgress * 15;
+          // Cubic Hermite smoothstep for silky needle flex
+          var contactSmooth = contactProgress * contactProgress * (3 - 2 * contactProgress);
+          deflection = contactSmooth * maxDeflection;
           wasContacting = true;
         } else {
           if (wasContacting) {
@@ -648,12 +652,18 @@ var defaultSegmentColors = [
               playRatchetTick(elapsed / totalDuration);
             }
           }
-          if (now - lastSnapTime < 140) {
+          if (now - lastSnapTime < 110) {
             var dt = (now - lastSnapTime) / 1000;
-            deflection = -7 * Math.exp(-22 * dt) * Math.sin(45 * dt);
+            deflection = -3.2 * Math.exp(-24 * dt) * Math.sin(40 * dt);
           } else {
             deflection = 0;
           }
+        }
+
+        // Seamless glide to zero deflection as wheel comes to rest
+        if (elapsed > totalDuration * 0.92) {
+          var settleFade = Math.max(0, (totalDuration - elapsed) / (totalDuration * 0.08));
+          deflection *= settleFade;
         }
 
         if (indicatorEl) {

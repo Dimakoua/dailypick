@@ -516,8 +516,8 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
         sliceOffset = 0.35 + Math.random() * 0.30;
       }
 
-      const totalDuration = 6400;
-      const rollbackDuration = outcomeType === 1 ? 750 : 0;
+      const totalDuration = 6800;
+      const rollbackDuration = outcomeType === 1 ? 850 : 0;
       const forwardDuration = totalDuration - rollbackDuration;
       const spinRounds = 5 + (Math.random() < 0.5 ? 1 : 0);
       const indicatorAngle = 3 * Math.PI / 2;
@@ -549,7 +549,7 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
         if (outcomeType === 1) {
           if (elapsed < forwardDuration) {
             const p = elapsed / forwardDuration;
-            const eased = 1 - Math.pow(1 - p, 2.25);
+            const eased = 1 - Math.pow(1 - p, 2.45);
             currentRotation = startRotation + (totalDeltaRotation + rollbackAngle) * eased;
           } else if (elapsed < totalDuration) {
             const s = (elapsed - forwardDuration) / rollbackDuration;
@@ -562,7 +562,7 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
         } else {
           if (elapsed < totalDuration) {
             const p = elapsed / totalDuration;
-            const eased = 1 - Math.pow(1 - p, 2.25);
+            const eased = 1 - Math.pow(1 - p, 2.45);
             currentRotation = startRotation + totalDeltaRotation * eased;
           } else {
             currentRotation = targetRotation;
@@ -575,10 +575,12 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
         if (Math.abs(modAngle - angleStep) < 1e-5) modAngle = 0;
         const contactWindow = Math.min(angleStep * 0.38, 0.12);
         let deflection = 0;
+        const maxDeflection = 9;
 
         if (modAngle > angleStep - contactWindow && !isSpinComplete) {
           const contactProgress = (modAngle - (angleStep - contactWindow)) / contactWindow;
-          deflection = contactProgress * 15;
+          const contactSmooth = contactProgress * contactProgress * (3 - 2 * contactProgress);
+          deflection = contactSmooth * maxDeflection;
           wasContacting = true;
         } else {
           if (wasContacting) {
@@ -590,12 +592,17 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
               }
             }
           }
-          if (now - lastSnapTime < 140) {
+          if (now - lastSnapTime < 110) {
             const dt = (now - lastSnapTime) / 1000;
-            deflection = -7 * Math.exp(-22 * dt) * Math.sin(45 * dt);
+            deflection = -3.2 * Math.exp(-24 * dt) * Math.sin(40 * dt);
           } else {
             deflection = 0;
           }
+        }
+
+        if (elapsed > totalDuration * 0.92) {
+          const settleFade = Math.max(0, (totalDuration - elapsed) / (totalDuration * 0.08));
+          deflection *= settleFade;
         }
 
         if (indicatorEl) {
