@@ -390,6 +390,6 @@ Your next retrospective could unlock the insight that changes your sprint. Or it
 
 - [How to Run Effective Daily Standup Meetings](/blog/how-to-run-effective-daily-standup-meetings/)
 - [8 Best Standup Meeting Ideas for Remote & In-Office Teams](/blog/8-best-standup-meeting-ideas/)
-- Stop the Meeting Dread: Fun Ways to Make Stand-Ups Engaging
-- [Level Up Your Team Retrospectives: Fun, Fair Activities to Boost Engagement](/blog/level-up-your-team-retrospectives-fun-fair-activities-to-boost-engagement/)
+- [How to Connect Jira, Trello, and GitHub to Daily Pick](/blog/connect-jira-trello-github-to-daily-pick/)
+- [Planning Poker Hub Guide](/blog/planning-poker-hub-guide/)
 - [Hybrid All-Hands Agendas That Keep Every Voice Engaged](/blog/hybrid-all-hands-playbook-fair-fun-agendas-that-keep-teams-engaged/)

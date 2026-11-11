@@ -403,6 +403,7 @@ A: Depends. Mon + Fri are lower-energy (more admin, less code). Some teams skip 
 Once you've nailed the format, add fairness + engagement with:
 
 - **[Decision Wheel](/apps/wheel/)** — Randomized speaker order and prompt selection
+- **[Random List Shuffler](/apps/random-list-shuffler/)** — Shuffle your full roster in one click and copy the clean speaking queue into Slack or Teams
 - **[Speedway Racer](/apps/speedway/)** — Race-based participation that keeps energy high
 - **[Timer](/apps/timer/)** — Visual countdown keeps people concise
 - **[Planning Poker](/apps/planning-poker/)** — If your standup surfaces estimation needs
@@ -438,9 +439,9 @@ Pick one standup idea above and start this week. Notice which moments create eng
 
 **Related guides for team rituals:**
 - **Running estimations alongside standups?** Read our [Planning Poker Hub Guide](/blog/planning-poker-hub-guide/)
-- **Make sprints even stronger?** Check out our [Agile Retro Activities Guide](/blog/level-up-your-team-retrospectives-fun-fair-activities-to-boost-engagement/)
-- **Async or distributed team?** Explore Async Standups with Slack Integration
-- **Want to automate standup prep?** Read about Meeting Prep Automation
+- **Make sprints even stronger?** Check out our [Agile Retrospective Games Guide](/blog/agile-retrospective-games-complete-guide/)
+- **Async or distributed team?** Explore [Async Standup Alternatives](/blog/async-standup-alternatives/)
+- **Want to automate standup prep?** Learn [How to Connect Jira, Trello, and GitHub to Daily Pick](/blog/connect-jira-trello-github-to-daily-pick/)
 
 Your team's standup doesn't have to be a slog. It can be the moment the team aligns, surfaces problems early, and feels genuinely connected.
 

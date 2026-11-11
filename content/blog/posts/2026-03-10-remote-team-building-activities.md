@@ -95,16 +95,13 @@ Remote team building isn’t a checkbox – it’s an ongoing culture practice. 
 Start with one quick hit this week, revisit it the next, and before you know it your team will be exchanging inside jokes across continents.
 
 
-**Table of Contents**
-- [Frequently Asked Questions](#frequently-asked-questions)
-
 ## Frequently Asked Questions
 
-**Q: What is the best way to use the remote team building activities feature?**
-A: To get the most out of this tool, integrate it into your daily rituals. It ensures fairness, keeps your team engaged, and provides transparent results that everyone can trust.
+**Q: How often should remote teams schedule team-building activities?**  
+A: Micro-activities (2–5 minutes at the start of meetings) can happen a few times a week, while dedicated 30–45 minute social events work best every 2 to 4 weeks.
 
-**Q: Can remote team building activities help with remote teams?**
-A: Yes, it is perfect for remote teams. It bridges the gap between distributed members by providing a shared, interactive experience that makes everyone feel included in the process.
+**Q: How do you avoid "forced fun" fatigue?**  
+A: Keep participation voluntary, rotate host responsibilities, and avoid high-pressure activities. Short games like [Speedway Racer](/apps/speedway/) or [Two Truths and a Lie](/apps/two-truths-and-a-lie/) feel natural and fun without dragging on.
 
-**Q: Is there a limit to how often we can use remote team building activities?**
-A: No, you can use it as often as you like! Regular use builds consistency in your agile ceremonies and helps maintain high morale across all your collaborative projects.
+**Q: What works best for globally distributed teams across wide time zones?**  
+A: Asynchronous games—like photo scavenger hunts in Slack, weekly trivia threads, or Spotify playlist collaborations—allow everyone to participate regardless of time zone.

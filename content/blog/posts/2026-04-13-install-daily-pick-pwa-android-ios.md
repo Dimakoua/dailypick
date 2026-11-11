@@ -111,11 +111,11 @@ Have questions or feedback? [Contact us](https://dailypick.dev/feedback/) or joi
 
 ## Frequently Asked Questions
 
-**Q: What is the best way to use the install daily pick app feature?**
-A: To get the most out of this tool, integrate it into your daily rituals. It ensures fairness, keeps your team engaged, and provides transparent results that everyone can trust.
+**Q: Does installing the Daily Pick PWA require space from my app store quota?**  
+A: No. Progressive Web Apps (PWAs) take up only a few megabytes of cached browser storage and install instantly without going through Google Play or Apple App Store downloads.
 
-**Q: Can install daily pick app help with remote teams?**
-A: Yes, it is perfect for remote teams. It bridges the gap between distributed members by providing a shared, interactive experience that makes everyone feel included in the process.
+**Q: Do Daily Pick tools work offline once installed?**  
+A: Yes. Essential tools—including the Decision Wheel, Random Number Generator, and Timers—are cached via the service worker and function seamlessly even without an active internet connection.
 
-**Q: Is there a limit to how often we can use install daily pick app?**
-A: No, you can use it as often as you like! Regular use builds consistency in your agile ceremonies and helps maintain high morale across all your collaborative projects.
+**Q: How do I update the Daily Pick app once installed?**  
+A: PWAs update automatically in the background whenever you open the app with an internet connection, ensuring you always have the latest games and features.

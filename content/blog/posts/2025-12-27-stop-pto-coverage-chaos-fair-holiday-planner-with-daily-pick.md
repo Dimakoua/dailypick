@@ -106,11 +106,11 @@ Holidays shouldn’t be negotiated in whispers. When you let Daily Pick handle P
 
 ## Frequently Asked Questions
 
-**Q: What is the best way to use the PTO coverage plan feature?**
-A: To get the most out of this tool, integrate it into your daily rituals. It ensures fairness, keeps your team engaged, and provides transparent results that everyone can trust.
+**Q: How do you handle overlapping holiday PTO requests fairly?**  
+A: Use a transparent weighted lottery or draft order (e.g. via [Random List Shuffler](/apps/random-list-shuffler/)), with guardrails ensuring team members who covered holiday shifts the previous year receive priority selection this year.
 
-**Q: Can PTO coverage plan help with remote teams?**
-A: Yes, it is perfect for remote teams. It bridges the gap between distributed members by providing a shared, interactive experience that makes everyone feel included in the process.
+**Q: Can Daily Pick track historical coverage rosters?**  
+A: Daily Pick allows facilitators to export and save roster snapshots directly, making it easy to reference past holiday assignments when planning future coverage.
 
-**Q: Is there a limit to how often we can use PTO coverage plan?**
-A: No, you can use it as often as you like! Regular use builds consistency in your agile ceremonies and helps maintain high morale across all your collaborative projects.
+**Q: How can engineering teams balance on-call duties during major holidays?**  
+A: Split holiday coverage into shorter micro-shifts (e.g., 2–3 days instead of full weeks) and compensate coverage shifts with extra floating time off.

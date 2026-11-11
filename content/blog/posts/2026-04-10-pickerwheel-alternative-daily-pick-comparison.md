@@ -155,11 +155,11 @@ Ready to try it? Start with the [Wheel](/apps/wheel/), run a [Planning Poker ses
 
 ## Frequently Asked Questions
 
-**Q: What is the best way to use the picker wheel alternative feature?**
-A: To get the most out of this tool, integrate it into your daily rituals. It ensures fairness, keeps your team engaged, and provides transparent results that everyone can trust.
+**Q: How is Daily Pick different from Picker Wheel?**  
+A: While Picker Wheel focuses solely on spinning wheels surrounded by ad banners, Daily Pick provides a comprehensive suite of agile, meeting, and classroom tools—including Planning Poker, Retrospective Boards, and Speedway Racer—completely ad-free.
 
-**Q: Can picker wheel alternative help with remote teams?**
-A: Yes, it is perfect for remote teams. It bridges the gap between distributed members by providing a shared, interactive experience that makes everyone feel included in the process.
+**Q: Can I remove selected names after each spin?**  
+A: Yes. Daily Pick supports elimination mode, allowing you to automatically remove picked options so each person or option is selected only once.
 
-**Q: Is there a limit to how often we can use picker wheel alternative?**
-A: No, you can use it as often as you like! Regular use builds consistency in your agile ceremonies and helps maintain high morale across all your collaborative projects.
+**Q: Does Daily Pick require personal information or track cookies?**  
+A: No. Daily Pick does not require account creation, tracks zero third-party cookies, and operates with local browser storage.

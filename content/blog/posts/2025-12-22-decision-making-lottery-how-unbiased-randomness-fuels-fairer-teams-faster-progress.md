@@ -110,11 +110,11 @@ Ready to infuse fairness and fun into your team's decision-making? Dive into Dai
 
 ## Frequently Asked Questions
 
-**Q: What is the best way to use the team building feature?**
-A: To get the most out of this tool, integrate it into your daily rituals. It ensures fairness, keeps your team engaged, and provides transparent results that everyone can trust.
+**Q: Doesn't using randomness make leadership look indecisive?**  
+A: Quite the opposite. Strong leaders recognize when debates deliver diminishing returns and choose structured randomization—known as sortition—to break deadlocks and maintain velocity.
 
-**Q: Can team building help with remote teams?**
-A: Yes, it is perfect for remote teams. It bridges the gap between distributed members by providing a shared, interactive experience that makes everyone feel included in the process.
+**Q: In what team scenarios is randomness most effective?**  
+A: Random selection is ideal for speaker order, meeting facilitation, code review distribution, and choosing between multiple well-researched, equally viable design variants.
 
-**Q: Is there a limit to how often we can use team building?**
-A: No, you can use it as often as you like! Regular use builds consistency in your agile ceremonies and helps maintain high morale across all your collaborative projects.
+**Q: How does transparent chance eliminate office politics?**  
+A: Because algorithmic randomization has no bias, status, or hidden incentives, team members trust the selection process and commit wholeheartedly to the outcome.

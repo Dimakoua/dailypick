@@ -69,11 +69,11 @@ Ready to transform your classroom dynamics? **[Launch the Random Name Picker now
 
 ## Frequently Asked Questions
 
-**Q: What is the best way to use the random name picker for teachers feature?**
-A: To get the most out of this tool, integrate it into your daily rituals. It ensures fairness, keeps your team engaged, and provides transparent results that everyone can trust.
+**Q: Can I save student rosters between class periods?**  
+A: Yes. Daily Pick saves your rosters locally in your browser, so you can easily switch between Period 1, Period 2, and Homeroom without retyping student names.
 
-**Q: Can random name picker for teachers help with remote teams?**
-A: Yes, it is perfect for remote teams. It bridges the gap between distributed members by providing a shared, interactive experience that makes everyone feel included in the process.
+**Q: How does random name picking reduce classroom anxiety?**  
+A: Transparent randomization removes the feeling that the teacher is "targeting" specific students. Combining it with a "pass" rule or collaborative answer pairs keeps student engagement high without unnecessary stress.
 
-**Q: Is there a limit to how often we can use random name picker for teachers?**
-A: No, you can use it as often as you like! Regular use builds consistency in your agile ceremonies and helps maintain high morale across all your collaborative projects.
+**Q: Can the tool be displayed on smartboards or projectors?**  
+A: Absolutely. Daily Pick is optimized for high-resolution classroom projectors and smartboards, featuring crisp text, vibrant animations, and a clean ad-free interface.

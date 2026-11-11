@@ -109,16 +109,13 @@ Higher productivity isn’t the only benefit of async standups; teams consistent
 Start small – pick one format, announce the change, and iterate based on feedback. After a month you’ll know if your team thrives on the freedom or secretly misses the camera. Either way, you’ll have been intentional about your communication rather than letting schedules dictate your collaboration.
 
 
-**Table of Contents**
-- [Frequently Asked Questions](#frequently-asked-questions)
-
 ## Frequently Asked Questions
 
-**Q: What is the best way to use the async standup feature?**
-A: To get the most out of this tool, integrate it into your daily rituals. It ensures fairness, keeps your team engaged, and provides transparent results that everyone can trust.
+**Q: How do you handle urgent blockers when running asynchronous standups?**  
+A: Async standups are for status alignment, not emergency triage. Teams should establish an explicit escalation path—such as tagging an on-call engineer in a dedicated #blockers channel or initiating a quick 5-minute huddle.
 
-**Q: Can async standup help with remote teams?**
-A: Yes, it is perfect for remote teams. It bridges the gap between distributed members by providing a shared, interactive experience that makes everyone feel included in the process.
+**Q: What is the best cadence for teams adopting async standups for the first time?**  
+A: A hybrid rhythm works best: asynchronous check-ins Monday through Thursday, with a single 15-minute live synchronous sync on Friday to celebrate accomplishments and connect socially.
 
-**Q: Is there a limit to how often we can use async standup?**
-A: No, you can use it as often as you like! Regular use builds consistency in your agile ceremonies and helps maintain high morale across all your collaborative projects.
+**Q: How can facilitators ensure teammates actually read async updates?**  
+A: Keep updates ultra-short (3 bullet points max per person) and encourage acknowledgment reactions (e.g., 👀 or 👍) to confirm visibility without creating noise.

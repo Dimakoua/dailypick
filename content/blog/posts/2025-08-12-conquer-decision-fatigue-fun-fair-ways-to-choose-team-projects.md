@@ -64,17 +64,13 @@ Ready to make your team decisions less of a drag and more of a delight? Explore 
 
 
 
-**Table of Contents**
-- [Conquer Decision Fatigue: Fun & Fair Ways to Choose Team Projects](#conquer-decision-fatigue-fun-fair-ways-to-choose-team-projects)
-- [Frequently Asked Questions](#frequently-asked-questions)
-
 ## Frequently Asked Questions
 
-**Q: What is the best way to use the team building feature?**
-A: To get the most out of this tool, integrate it into your daily rituals. It ensures fairness, keeps your team engaged, and provides transparent results that everyone can trust.
+**Q: What causes decision fatigue in agile and product teams?**  
+A: Repeated low-stakes debates—such as who owns documentation, who runs standup, or which minor bug to tackle next—deplete mental bandwidth, leaving teams exhausted when making critical architectural or product decisions.
 
-**Q: Can team building help with remote teams?**
-A: Yes, it is perfect for remote teams. It bridges the gap between distributed members by providing a shared, interactive experience that makes everyone feel included in the process.
+**Q: When should teams delegate decisions to randomization tools?**  
+A: Randomization works best for equal-weight options: breaking ties between equally viable ideas, rotating facilitators, or assigning chore tickets where prolonged debate provides negative ROI.
 
-**Q: Is there a limit to how often we can use team building?**
-A: No, you can use it as often as you like! Regular use builds consistency in your agile ceremonies and helps maintain high morale across all your collaborative projects.
+**Q: How does structured randomization improve team buy-in?**  
+A: When selection rules are agreed upon upfront, transparent tools like [Decision Wheel](/apps/wheel/) eliminate suspicion of favoritism and streamline consensus.

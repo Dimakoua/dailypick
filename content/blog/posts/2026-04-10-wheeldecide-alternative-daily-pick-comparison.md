@@ -153,11 +153,11 @@ Start now: [spin the Wheel](/apps/wheel/), [run a Planning Poker session](/apps/
 
 ## Frequently Asked Questions
 
-**Q: What is the best way to use the wheel decide alternative feature?**
-A: To get the most out of this tool, integrate it into your daily rituals. It ensures fairness, keeps your team engaged, and provides transparent results that everyone can trust.
+**Q: Is Daily Pick really 100% ad-free compared to Wheel Decide?**  
+A: Yes. Unlike Wheel Decide, Daily Pick runs completely without display banners, popup ads, or video takeovers. Your team calls and classroom presentations stay clean and distraction-free.
 
-**Q: Can wheel decide alternative help with remote teams?**
-A: Yes, it is perfect for remote teams. It bridges the gap between distributed members by providing a shared, interactive experience that makes everyone feel included in the process.
+**Q: Do I need an account to save custom wheels?**  
+A: No account or login is required. Daily Pick saves your wheel slices, presets, and rosters directly in your browser's local storage.
 
-**Q: Is there a limit to how often we can use wheel decide alternative?**
-A: No, you can use it as often as you like! Regular use builds consistency in your agile ceremonies and helps maintain high morale across all your collaborative projects.
+**Q: Can I embed Daily Pick wheels in Notion, Confluence, or an iframe?**  
+A: Yes. Daily Pick supports clean iframe embedding with a dedicated presentation mode, perfect for team wikis, dashboards, and live video meetings.

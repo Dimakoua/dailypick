@@ -57,10 +57,12 @@ module.exports = async function(eleventyConfig) {
   // Exclude internal project documentation from being rendered into HTML routes
   eleventyConfig.ignores.add("Readme.md");
   eleventyConfig.ignores.add("README.md");
+  eleventyConfig.ignores.add("**/README.md");
   eleventyConfig.ignores.add("ideas.md");
   eleventyConfig.ignores.add("seo-instructions.md");
   eleventyConfig.ignores.add("SEO_MASTER_PLAN.md");
   eleventyConfig.ignores.add("deleted-posts-log.md");
+  eleventyConfig.ignores.add("content/blog/prompt.md");
   eleventyConfig.ignores.add("dailypick.dev-audit/**");
   eleventyConfig.watchIgnores.add("dailypick.dev-audit/**");
 

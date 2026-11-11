@@ -74,11 +74,11 @@ Ready to pick your next winner? **[Try the Giveaway Winner Picker now.](/apps/gi
 
 ## Frequently Asked Questions
 
-**Q: What is the best way to use the giveaway winner picker feature?**
-A: To get the most out of this tool, integrate it into your daily rituals. It ensures fairness, keeps your team engaged, and provides transparent results that everyone can trust.
+**Q: How do I prove the giveaway draw was unbiased and fair?**  
+A: Screen-record your draw while pasting the participant list and hitting Pick. Daily Pick's Giveaway Winner Picker generates a clear visual selection that you can screenshot and share directly on your social channels or community page.
 
-**Q: Can giveaway winner picker help with remote teams?**
-A: Yes, it is perfect for remote teams. It bridges the gap between distributed members by providing a shared, interactive experience that makes everyone feel included in the process.
+**Q: Can I pick multiple winners from a single list?**  
+A: Yes. You can pick multiple winners in successive draws, and use elimination mode to ensure the same participant isn't selected twice.
 
-**Q: Is there a limit to how often we can use giveaway winner picker?**
-A: No, you can use it as often as you like! Regular use builds consistency in your agile ceremonies and helps maintain high morale across all your collaborative projects.
+**Q: Is there a limit on how many entry names I can paste?**  
+A: Daily Pick can easily process thousands of entries in the browser without lagging, requiring no account or server upload.

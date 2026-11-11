@@ -116,11 +116,11 @@ Explore Daily Pick's suite of tools like the [Decision Wheel](/apps/wheel/), [Sp
 
 ## Frequently Asked Questions
 
-**Q: What is the best way to use the team productivity feature?**
-A: To get the most out of this tool, integrate it into your daily rituals. It ensures fairness, keeps your team engaged, and provides transparent results that everyone can trust.
+**Q: How do you handle tasks requiring specialized technical skills that can't be randomly assigned?**  
+A: Segment tasks into two pools: specialized items assigned by domain expertise, and non-specialized chores (on-call rotation, meeting notes, release checks) distributed via transparent tools like [Random List Shuffler](/apps/random-list-shuffler/) or [Decision Wheel](/apps/wheel/).
 
-**Q: Can team productivity help with remote teams?**
-A: Yes, it is perfect for remote teams. It bridges the gap between distributed members by providing a shared, interactive experience that makes everyone feel included in the process.
+**Q: Can team members trade tasks after a random assignment?**  
+A: Yes! A "trade window" (e.g., 5 minutes after sprint planning) encourages peer collaboration and flexibility while keeping the initial baseline distribution neutral and fair.
 
-**Q: Is there a limit to how often we can use team productivity?**
-A: No, you can use it as often as you like! Regular use builds consistency in your agile ceremonies and helps maintain high morale across all your collaborative projects.
+**Q: How does fair task assignment prevent burnout in agile teams?**  
+A: In unmanaged assignments, conscientious or junior developers often disproportionately volunteer for unglamorous tasks ("glue work"). Automated fair assignment prevents volunteer fatigue and balances team responsibilities evenly.

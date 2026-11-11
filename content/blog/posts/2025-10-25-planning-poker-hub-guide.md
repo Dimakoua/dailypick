@@ -127,11 +127,11 @@ Explore more team-friendly tools at [Daily Pick](/) — designed to make every m
 
 ## Frequently Asked Questions
 
-**Q: What is the best way to use the planning poker feature?**
-A: To get the most out of this tool, integrate it into your daily rituals. It ensures fairness, keeps your team engaged, and provides transparent results that everyone can trust.
+**Q: Which estimation scales does Planning Poker Hub support?**  
+A: Planning Poker Hub supports standard Fibonacci (1, 2, 3, 5, 8, 13, 21), Modified Fibonacci (0, ½, 1, 2, 3, 5, 8, 13, 20, 40, 100), T-Shirt sizing (XS, S, M, L, XL), and sequential numbers.
 
-**Q: Can planning poker help with remote teams?**
-A: Yes, it is perfect for remote teams. It bridges the gap between distributed members by providing a shared, interactive experience that makes everyone feel included in the process.
+**Q: Do team members need to create accounts to vote?**  
+A: No accounts or logins are needed. Facilitators can share their screen or teammates can pull up the tool in their own browser with zero onboarding friction.
 
-**Q: Is there a limit to how often we can use planning poker?**
-A: No, you can use it as often as you like! Regular use builds consistency in your agile ceremonies and helps maintain high morale across all your collaborative projects.
+**Q: How does Planning Poker eliminate anchoring bias?**  
+A: By having all estimators reveal their votes simultaneously, teammates form independent judgments rather than being influenced by senior engineers or outspoken participants.

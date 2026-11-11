@@ -67,11 +67,11 @@ Ready to level up your next ritual? **[Explore the Agile Toolkit now.](/apps/pla
 
 ## Frequently Asked Questions
 
-**Q: What is the best way to use the team morale thermometer feature?**
-A: To get the most out of this tool, integrate it into your daily rituals. It ensures fairness, keeps your team engaged, and provides transparent results that everyone can trust.
+**Q: How often should teams check in using the Morale Thermometer?**  
+A: A weekly pulse check (e.g. at the start of sprint retrospectives or mid-sprint) provides actionable trends without causing survey fatigue.
 
-**Q: Can team morale thermometer help with remote teams?**
-A: Yes, it is perfect for remote teams. It bridges the gap between distributed members by providing a shared, interactive experience that makes everyone feel included in the process.
+**Q: How does Capacity Dice help prevent overcommitting in sprints?**  
+A: Capacity Dice incorporates real-world friction—like unplanned bugs, meetings, and production incidents—into capacity estimations, prompting teams to leave realistic buffer space.
 
-**Q: Is there a limit to how often we can use team morale thermometer?**
-A: No, you can use it as often as you like! Regular use builds consistency in your agile ceremonies and helps maintain high morale across all your collaborative projects.
+**Q: Are team morale submissions anonymous?**  
+A: Yes. The Morale Thermometer displays aggregate sentiment distribution without attaching names, encouraging candid reflection.

@@ -104,11 +104,11 @@ When everyone knows the rules and sees the randomness live, sprint reviews stop 
 
 ## Frequently Asked Questions
 
-**Q: What is the best way to use the sprint review agenda feature?**
-A: To get the most out of this tool, integrate it into your daily rituals. It ensures fairness, keeps your team engaged, and provides transparent results that everyone can trust.
+**Q: How do lightning sprint reviews differ from standard demo meetings?**  
+A: Lightning reviews enforce strict 3-to-5 minute demo windows per feature, focus on user impact rather than technical implementation details, and immediately capture structured stakeholder feedback.
 
-**Q: Can sprint review agenda help with remote teams?**
-A: Yes, it is perfect for remote teams. It bridges the gap between distributed members by providing a shared, interactive experience that makes everyone feel included in the process.
+**Q: How do you keep external stakeholders engaged during sprint reviews?**  
+A: Share an interactive preview link beforehand, randomize demo presentation order to keep energy high, and dedicate the final 10 minutes strictly to roadmap impact and decision-making.
 
-**Q: Is there a limit to how often we can use sprint review agenda?**
-A: No, you can use it as often as you like! Regular use builds consistency in your agile ceremonies and helps maintain high morale across all your collaborative projects.
+**Q: What is the best way to handle unfinished user stories during the review?**  
+A: Adhere to the agile Definition of Done: only demonstrate completed, accepted work. Acknowledge work-in-progress briefly in one slide without doing live incomplete demos.
