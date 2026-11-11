@@ -1,7 +1,8 @@
 ---
 layout: base_app.njk
 title: "Trap! – Strategic Name Picker Game | Daily Pick"
-description: "Turn name selection into a playful meeting ritual with Office Trap, a decision game that uses surprise traps and animated teammates to choose speakers."
+description: "Turn name selection into a playful meeting ritual with Office Trap, a decision game that uses surprise
+traps and animated teammates to choose speakers."
 keywords: "trap game, name picker game, strategy game, team game, fun decision maker, interactive game, daily pick"
 canonical: "https://dailypick.dev/apps/trap/"
 ogImageAlt: "Animated trap catching a player token in Daily Pick"
@@ -64,696 +65,1042 @@ headExtra: |
   <script defer="" src="/assets/js/standup-embed.js"></script>
 ---
 <main id="main" data-page-type="standup">
-        <h1 style="text-align: center;">🎯 Office Trap!</h1>
-        <p class="settings-hint">Need to update the player list or brand colors? Visit the <a
-                href="/apps/roster/">Settings page</a>.</p>
-        <div class="game-container">
-            <canvas height="400" id="gameCanvas" width="500"></canvas>
-            <div id="office-overlay"></div>
-        </div>
-        <button id="trapBtn">🪤 Set Trap!</button>        <button class="app-button app-button--secondary game-pip-trigger" type="button"
-            data-game-pip-target="#main"
-            data-game-pip-exclude=".seo-content-area, .game-pip-trigger"
-            data-game-pip-title="🎯 Office Trap!"
-            data-game-pip-width="700"
-            data-game-pip-height="580">🪟 Pop-out Game</button>        <!-- NEW: announce selection updates to screen readers -->
-        <div aria-atomic="true" aria-live="polite" id="info"></div>
-        <section class="seo-content-area glass-card">
-    <h2>Office Trap: The Ultimate Name Picker Game</h2>
-    <p>Office Trap functions as an engaging, highly interactive digital activity designed to revolutionize routine selection processes by seamlessly blending strategic placement mechanics with unpredictable automated movement. I built this strategy game because standard spinner wheels got boring, and my team wanted a significantly more suspenseful way to pick speakers. This tool is 100% ad-free, completely browser-native with zero tracking cookies, requires no sign-ups, and operates entirely client-side to strictly respect your privacy. You can instantly share your custom configurations via a simple URL.</p>
-
-    <div class="seo-toc">
-      <h3>Table of Contents</h3>
-      <ul>
-        <li><a href="#what-is">1. What Is the Office Trap?</a></li>
-        <li><a href="#how-to-use">2. How Do You Use the Office Trap?</a></li>
-        <li><a href="#customization">3. What Customization Features Are Available?</a></li>
-        <li><a href="#feature">4. How Does Animated Surprise Traps Improve Your Experience?</a></li>
-        <li><a href="#share">5. How Can You Share and Export Results?</a></li>
-        <li><a href="#why-use">6. Why Should You Use a Name Picker Game?</a></li>
-        <li><a href="#faq">7. Frequently Asked Questions</a></li>
-        <li><a href="#alternatives">8. What Are the Best Alternative Tools?</a></li>
-      </ul>
+    <h1 style="text-align: center;">🎯 Office Trap!</h1>
+    <p class="settings-hint">Need to update the player list or brand colors? Visit the <a href="/apps/roster/">Settings
+            page</a>.</p>
+    <div class="game-container">
+        <canvas height="400" id="gameCanvas" width="500"></canvas>
+        <div id="office-overlay"></div>
     </div>
+    <button id="trapBtn">🪤 Set Trap!</button>
+    <button class="app-button app-button--secondary game-pip-trigger" type="button" data-game-pip-target="#main"
+        data-game-pip-exclude=".seo-content-area, .game-pip-trigger" data-game-pip-title="🎯 Office Trap!"
+        data-game-pip-width="700" data-game-pip-height="580">🪟 Pop-out Game</button>
+    <div aria-atomic="true" aria-live="polite" id="info"></div>
+    <section class="seo-content-area glass-card">
+        <h2>Office Trap: The Ultimate Name Picker Game</h2>
+        <p>Office Trap functions as an engaging, highly interactive digital activity designed to revolutionize routine
+            selection processes by seamlessly blending strategic placement mechanics with unpredictable automated
+            movement. I built this strategy game because standard spinner wheels got boring, and my team wanted a
+            significantly more suspenseful way to pick speakers. This tool is 100% ad-free, completely browser-native
+            with zero tracking cookies, requires no sign-ups, and operates entirely client-side to strictly respect your
+            privacy. You can instantly share your custom configurations via a simple URL.</p>
 
-    <h2 id="what-is">1. What Is the Office Trap?</h2>
-    <p>This innovative application operates as a strategic name picker game that entirely eliminates traditional guesswork. By utilizing animated digital avatars that bounce randomly around a defined space until caught by a user-placed trap, it guarantees your selection experience remains completely fair, genuinely suspenseful, and thoroughly entertaining.</p>
+        <div class="seo-toc">
+            <h3>Table of Contents</h3>
+            <ul>
+                <li><a href="#what-is">1. What Is the Office Trap?</a></li>
+                <li><a href="#how-to-use">2. How Do You Use the Office Trap?</a></li>
+                <li><a href="#customization">3. What Customization Features Are Available?</a></li>
+                <li><a href="#feature">4. How Does Animated Surprise Traps Improve Your Experience?</a></li>
+                <li><a href="#share">5. How Can You Share and Export Results?</a></li>
+                <li><a href="#why-use">6. Why Should You Use a Name Picker Game?</a></li>
+                <li><a href="#faq">7. Frequently Asked Questions</a></li>
+                <li><a href="#alternatives">8. What Are the Best Alternative Tools?</a></li>
+            </ul>
+        </div>
 
-    <h2 id="how-to-use">2. How Do You Use the Office Trap?</h2>
-    <p>Playing Office Trap is remarkably simple and incredibly intuitive. First, verify your participant roster is properly configured in settings. Next, carefully select a strategic location on the digital canvas to place your virtual snare, and watch closely as the animated avatars bounce unpredictably until one is ultimately captured.</p>
+        <h2 id="what-is">1. What Is the Office Trap?</h2>
+        <p>This innovative application operates as a strategic name picker game that entirely eliminates traditional
+            guesswork. By utilizing animated digital avatars that bounce randomly around a defined space until caught by
+            a user-placed trap, it guarantees your selection experience remains completely fair, genuinely suspenseful,
+            and thoroughly entertaining.</p>
 
-    <h2 id="customization">3. What Customization Features Are Available?</h2>
-    <p>This dynamic team game offers several excellent customization options to enhance your team's experience. You can easily modify the internal participant roster, seamlessly adjust the visual dimensions of the interactive playing field, and utilize the convenient pop-out window functionality to maintain continuous visibility during complex screen-sharing sessions.</p>
+        <h2 id="how-to-use">2. How Do You Use the Office Trap?</h2>
+        <p>Playing Office Trap is remarkably simple and incredibly intuitive. First, verify your participant roster is
+            properly configured in settings. Next, carefully select a strategic location on the digital canvas to place
+            your virtual snare, and watch closely as the animated avatars bounce unpredictably until one is ultimately
+            captured.</p>
 
-    <h2 id="feature">4. How Does Animated Surprise Traps Improve Your Experience?</h2>
-    <p>Integrating animated surprise traps significantly elevates the standard selection methodology by introducing genuine suspense. Unlike traditional, predictable spinning utilities, the chaotic, physics-based movement of the digital avatars creates a highly engaging visual spectacle that effectively captures attention and successfully energizes participants right before they speak.</p>
+        <h2 id="customization">3. What Customization Features Are Available?</h2>
+        <p>This dynamic team game offers several excellent customization options to enhance your team's experience. You
+            can easily modify the internal participant roster, seamlessly adjust the visual dimensions of the
+            interactive playing field, and utilize the convenient pop-out window functionality to maintain continuous
+            visibility during complex screen-sharing sessions.</p>
 
-    <h2 id="share">5. How Can You Share and Export Results?</h2>
-    <p>Sharing your specific team configuration is exceptionally straightforward and completely secure. Because the participant roster relies on shared local storage utilized across all connected applications on the site, you can easily manage your settings centrally and seamlessly deploy the identical interactive environment across multiple different digital devices instantly.</p>
+        <h2 id="feature">4. How Does Animated Surprise Traps Improve Your Experience?</h2>
+        <p>Integrating animated surprise traps significantly elevates the standard selection methodology by introducing
+            genuine suspense. Unlike traditional, predictable spinning utilities, the chaotic, physics-based movement of
+            the digital avatars creates a highly engaging visual spectacle that effectively captures attention and
+            successfully energizes participants right before they speak.</p>
 
-    <h2 id="why-use">6. Why Should You Use a Name Picker Game?</h2>
-    <p>Utilizing a dedicated name picker game dramatically improves overall group morale during routine administrative tasks. It successfully breaks the ice, eliminates stressful manual selections, ensures completely fair participation, provides a brief moment of shared entertainment, and consistently encourages active engagement during otherwise monotonous daily scheduling activities.</p>
+        <h2 id="share">5. How Can You Share and Export Results?</h2>
+        <p>Sharing your specific team configuration is exceptionally straightforward and completely secure. Because the
+            participant roster relies on shared local storage utilized across all connected applications on the site,
+            you can easily manage your settings centrally and seamlessly deploy the identical interactive environment
+            across multiple different digital devices instantly.</p>
 
-    <h2 id="faq">7. Frequently Asked Questions</h2>
-    <p>Understanding the capabilities of your trap game can significantly improve your overall operational efficiency and team morale. Below you will discover concise, helpful answers regarding the tool's core features, typical configuration options, and effective best practices designed to help you thoroughly maximize your continuous engagement.</p>
+        <h2 id="why-use">6. Why Should You Use a Name Picker Game?</h2>
+        <p>Utilizing a dedicated name picker game dramatically improves overall group morale during routine
+            administrative tasks. It successfully breaks the ice, eliminates stressful manual selections, ensures
+            completely fair participation, provides a brief moment of shared entertainment, and consistently encourages
+            active engagement during otherwise monotonous daily scheduling activities.</p>
 
-    <h3>How does the trap game ensure fairness?</h3>
-    <p>The digital avatars utilize a sophisticated physics engine featuring randomized starting trajectories and highly unpredictable bounce angles. This complex system guarantees that every active participant maintains a completely equal mathematical probability.</p>
+        <h2 id="faq">7. Frequently Asked Questions</h2>
+        <p>Understanding the capabilities of your trap game can significantly improve your overall operational
+            efficiency and team morale. Below you will discover concise, helpful answers regarding the tool's core
+            features, typical configuration options, and effective best practices designed to help you thoroughly
+            maximize your continuous engagement.</p>
 
-    <h3>Can I use this strategy game remotely?</h3>
-    <p>Absolutely. It operates perfectly via screen sharing during virtual conference calls. The visually engaging animations provide an excellent, high-quality interactive focal point for distributed teams conducting remote daily syncs.</p>
+        <h3>How does the trap game ensure fairness?</h3>
+        <p>The digital avatars utilize a sophisticated physics engine featuring randomized starting trajectories and
+            highly unpredictable bounce angles. This complex system guarantees that every active participant maintains a
+            completely equal mathematical probability.</p>
 
-    <h3>How do I update the team game roster?</h3>
-    <p>You can effortlessly modify your participant list by accessing the central settings menu. These adjustments are instantly saved locally and automatically applied to the active playing field for immediate use.</p>
+        <h3>Can I use this strategy game remotely?</h3>
+        <p>Absolutely. It operates perfectly via screen sharing during virtual conference calls. The visually engaging
+            animations provide an excellent, high-quality interactive focal point for distributed teams conducting
+            remote daily syncs.</p>
 
-    <h2 id="alternatives">8. What Are the Best Alternative Tools?</h2>
-    <p>If you require slightly different functionality or seek a distinct layout, consider exploring the highly rated Choices Spinner. It delivers a comparable, exceptionally reliable experience while focusing on slightly varied interactive features. Please contact our support team if you ever encounter any unexpected technical issues during your session!</p>
-  </section>
-    </main>
-    <script>
-        const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
-        const LOCAL_STORAGE_KEY = 'namesList';
+        <h3>How do I update the team game roster?</h3>
+        <p>You can effortlessly modify your participant list by accessing the central settings menu. These adjustments
+            are instantly saved locally and automatically applied to the active playing field for immediate use.</p>
 
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const trapBtn = document.getElementById('trapBtn');
-        const info = document.getElementById('info');
-        const namesInput = document.getElementById("namesInput");
-        const updateNamesBtn = document.getElementById("updateNamesBtn");
-        const syncNamesInput = () => {
-            if (namesInput) {
-                namesInput.value = originalNames.join('\n');
-            }
-        };
+        <h2 id="alternatives">8. What Are the Best Alternative Tools?</h2>
+        <p>If you require slightly different functionality or seek a distinct layout, consider exploring the highly
+            rated Choices Spinner. It delivers a comparable, exceptionally reliable experience while focusing on
+            slightly varied interactive features. Please contact our support team if you ever encounter any unexpected
+            technical issues during your session!</p>
+    </section>
+</main>
+<script>
+    const DEFAULT_NAMES = ['Kate', 'Andre', 'Juan', 'Dmytro', 'Vetura', 'Zachary', 'Lindsay'];
+    const LOCAL_STORAGE_KEY = 'namesList';
 
-        let originalNames = [...DEFAULT_NAMES];
-        let members = [];
-        let eliminatedNames = [];
-        const STANDUP_SOURCE = 'trap';
-
-        function normalizeStandupKey(name) {
-            return typeof name === 'string' ? name.trim().toLowerCase() : '';
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const trapBtn = document.getElementById('trapBtn');
+    const info = document.getElementById('info');
+    const namesInput = document.getElementById("namesInput");
+    const updateNamesBtn = document.getElementById("updateNamesBtn");
+    const syncNamesInput = () => {
+        if (namesInput) {
+            namesInput.value = originalNames.join('\n');
         }
+    };
 
-        function uniqueNameList(names) {
-            const seen = new Set();
-            const result = [];
-            names.forEach((name) => {
-                const trimmed = typeof name === 'string' ? name.trim() : '';
-                const key = normalizeStandupKey(trimmed);
-                if (!key || seen.has(key)) {
-                    return;
-                }
-                seen.add(key);
-                result.push(trimmed);
-            });
-            return result;
-        }
+    let originalNames = [...DEFAULT_NAMES];
+    let members = [];
+    let eliminatedNames = [];
+    const STANDUP_SOURCE = 'trap';
 
-        function standupParticipants() {
-            return uniqueNameList(originalNames);
-        }
+    function normalizeStandupKey(name) {
+        return typeof name === 'string' ? name.trim().toLowerCase() : '';
+    }
 
-        function emitStandupReset() {
-            const participants = standupParticipants();
-            window.dispatchEvent(new CustomEvent('standup:queue-reset', {
-                detail: {
-                    source: STANDUP_SOURCE,
-                    participants,
-                },
-            }));
-            emitStandupUpdate();
-        }
-
-        function emitStandupUpdate(currentNameOverride) {
-            const participants = standupParticipants();
-            const completed = uniqueNameList(eliminatedNames);
-            const remainingList = uniqueNameList(members.filter(member => !member.isMouse).map(member => member.name));
-
-            let current = null;
-            if (typeof currentNameOverride === 'string') {
-                const trimmed = currentNameOverride.trim();
-                if (normalizeStandupKey(trimmed)) {
-                    current = trimmed;
-                }
-            }
-
-            if (!current) {
-                if (remainingList.length > 0) {
-                    current = remainingList[0];
-                } else if (completed.length > 0) {
-                    current = completed[completed.length - 1];
-                }
-            }
-
-            const currentKey = normalizeStandupKey(current);
-            const upcoming = currentKey
-                ? remainingList.filter((name) => normalizeStandupKey(name) !== currentKey)
-                : remainingList;
-
-            // Build full speaking order: completed so far, then current, then remaining
-            var orderList = completed.slice();
-            if (currentKey && !completed.some(function (n) { return normalizeStandupKey(n) === currentKey; })) {
-                orderList.push(current);
-            }
-            orderList = orderList.concat(upcoming);
-
-            const detail = {
-                source: STANDUP_SOURCE,
-                mode: 'manual',
-                participants,
-                order: orderList,
-                completed,
-                remaining: upcoming,
-            };
-            if (currentKey) {
-                detail.current = current;
-            }
-
-            window.dispatchEvent(new CustomEvent('standup:queue', { detail }));
-        }
-
-        function recordTrapCatch(name) {
-            if (typeof name !== 'string') {
-                emitStandupUpdate();
-                return;
-            }
-            const trimmed = name.trim();
+    function uniqueNameList(names) {
+        const seen = new Set();
+        const result = [];
+        names.forEach((name) => {
+            const trimmed = typeof name === 'string' ? name.trim() : '';
             const key = normalizeStandupKey(trimmed);
-            if (!key) {
-                emitStandupUpdate();
+            if (!key || seen.has(key)) {
                 return;
             }
-            if (!eliminatedNames.some((entry) => normalizeStandupKey(entry) === key)) {
-                eliminatedNames.push(trimmed);
+            seen.add(key);
+            result.push(trimmed);
+        });
+        return result;
+    }
+
+    function standupParticipants() {
+        return uniqueNameList(originalNames);
+    }
+
+    function emitStandupReset() {
+        const participants = standupParticipants();
+        window.dispatchEvent(new CustomEvent('standup:queue-reset', {
+            detail: {
+                source: STANDUP_SOURCE,
+                participants,
+            },
+        }));
+        emitStandupUpdate();
+    }
+
+    function emitStandupUpdate(currentNameOverride) {
+        const participants = standupParticipants();
+        const completed = uniqueNameList(eliminatedNames);
+        const remainingList = uniqueNameList(members.filter(member => !member.isMouse).map(member => member.name));
+
+        let current = null;
+        if (typeof currentNameOverride === 'string') {
+            const trimmed = currentNameOverride.trim();
+            if (normalizeStandupKey(trimmed)) {
+                current = trimmed;
             }
-            emitStandupUpdate(trimmed);
         }
-        
-        // Confirm a caught member (shared logic used by button and auto-confirm)
-        function confirmCaughtMember(caughtMember) {
-            if (!caughtMember || typeof caughtMember.name !== 'string') return;
 
-            // Remove the caught member from the active roster
-            members = members.filter(m => m.name !== caughtMember.name);
-
-            // Reset trap state
-            trap = null;
-            trapActive = false;
-            members.forEach(m => m.trapped = false);
-
-            // Record the catch (this emits the standup:queue event used by stats)
-            recordTrapCatch(caughtMember.name);
-
-            const humanRemaining = members.filter(m => !m.isMouse).length;
-            if (humanRemaining === 0) {
-                info.innerHTML = `🎉 SURVIVOR: ${caughtMember.name} made it!`;
-                celebrateFinalUser(caughtMember);
-                trapBtn.disabled = true;
-            } else {
-                info.innerHTML = `<strong>${caughtMember.name}</strong> caught! ${humanRemaining} colleagues left.`;
+        if (!current) {
+            if (remainingList.length > 0) {
+                current = remainingList[0];
+            } else if (completed.length > 0) {
+                current = completed[completed.length - 1];
             }
         }
-        const shapes = ['circle', 'square', 'triangle', 'star', 'hexagon', 'diamond'];
-        const colors = [
-            '#e74c3c', // Alizarin
-            '#3498db', // Peter River
-            '#2ecc71', // Emerald
-            '#f1c40f', // Sun Flower
-            '#9b59b6', // Amethyst
-            '#e67e22', // Carrot
-            '#1abc9c', // Turquoise
-            '#34495e', // Wet Asphalt
-            '#d35400', // Pumpkin
-            '#27ae60', // Nephritis
-            '#c0392b', // Pomegranate
-        ];
 
-        const trapRadius = 45;
-        let trap = null; // {x,y}
-        let trapActive = false;
-        let trapStartTime = 0;
-        const ATTRACTION_DELAY = 5000; // Wait 5 seconds before starting to pull
-        const ATTRACTION_FORCE = 0.05; // Strength of the pull
-        // Delay before auto-confirming the final captured user (ms)
-        const AUTO_CONFIRM_DELAY_MS = 1200;
+        const currentKey = normalizeStandupKey(current);
+        const upcoming = currentKey
+            ? remainingList.filter((name) => normalizeStandupKey(name) !== currentKey)
+            : remainingList;
 
-        // Custom Pixel Assets (Using descriptive icons instead of plain shapes)
-        const PIXEL_WORKERS = [
-            '👨‍💻', '👩‍💻', '👨‍💼', '👩‍💼', '👨‍🎨', '👩‍🎨', '👨‍🔬', '👩‍🔬'
-        ];
-        const OFFICE_BG_COLOR = '#e8ebed'; // Lighter office floor color
-        const OFFICE_GRID_COLOR = '#d1d5d8'; // Subtle grid lines
+        var orderList = completed.slice();
+        if (currentKey && !completed.some(function (n) { return normalizeStandupKey(n) === currentKey; })) {
+            orderList.push(current);
+        }
+        orderList = orderList.concat(upcoming);
 
-        // Add furniture layout
-        const furniture = [];
+        const detail = {
+            source: STANDUP_SOURCE,
+            mode: 'manual',
+            participants,
+            order: orderList,
+            completed,
+            remaining: upcoming,
+        };
+        if (currentKey) {
+            detail.current = current;
+        }
 
-        function setupOfficeFurniture() {
-            furniture.length = 0;
-            const rows = 3;
-            const cols = 2;
-            const paddingX = 80;
-            const paddingY = 70;
-            const spacingX = (canvas.width - paddingX * 2) / (cols - 1);
-            const spacingY = (canvas.height - paddingY * 2) / (rows - 1);
+        window.dispatchEvent(new CustomEvent('standup:queue', { detail }));
+    }
 
-            // Create Desk Rows
-            for (let r = 0; r < rows; r++) {
-                for (let c = 0; c < cols; c++) {
-                    const x = paddingX + c * spacingX;
-                    const y = paddingY + r * spacingY;
+    function recordTrapCatch(name) {
+        if (typeof name !== 'string') {
+            emitStandupUpdate();
+            return;
+        }
+        const trimmed = name.trim();
+        const key = normalizeStandupKey(trimmed);
+        if (!key) {
+            emitStandupUpdate();
+            return;
+        }
+        if (!eliminatedNames.some((entry) => normalizeStandupKey(entry) === key)) {
+            eliminatedNames.push(trimmed);
+        }
+        emitStandupUpdate(trimmed);
+    }
 
-                    furniture.push({
-                        type: 'desk',
-                        icon: '📦', // Using box as desk base
-                        x: x,
-                        y: y,
-                        items: ['🖥️', '☕', '🪴'][Math.floor(Math.random() * 3)]
-                    });
+    function confirmCaughtMember(caughtMember) {
+        if (!caughtMember || typeof caughtMember.name !== 'string') return;
 
-                    // Add a chair for each desk
-                    furniture.push({
-                        type: 'chair',
-                        icon: '💺',
-                        x: x,
-                        y: y + 25
-                    });
+        members = members.filter(m => m.name !== caughtMember.name);
+
+        trap = null;
+        trapActive = false;
+        members.forEach(m => m.trapped = false);
+
+        recordTrapCatch(caughtMember.name);
+
+        const humanRemaining = members.filter(m => !m.isMouse).length;
+        if (humanRemaining === 0) {
+            info.innerHTML = `🎉 SURVIVOR: ${caughtMember.name} made it!`;
+            celebrateFinalUser(caughtMember);
+            trapBtn.disabled = true;
+        } else {
+            info.innerHTML = `<strong>${caughtMember.name}</strong> caught! ${humanRemaining} colleagues left.`;
+        }
+    }
+
+    const colors = [
+        '#e74c3c', '#3498db', '#2ecc71', '#f1c40f', '#9b59b6',
+        '#e67e22', '#1abc9c', '#34495e', '#d35400', '#27ae60', '#c0392b',
+    ];
+
+    const trapRadius = 45;
+    let trap = null;
+    let trapActive = false;
+    let trapStartTime = 0;
+    const ATTRACTION_DELAY = 5000;
+    const ATTRACTION_FORCE = 0.05;
+    const AUTO_CONFIRM_DELAY_MS = 1200;
+
+    const PIXEL_WORKERS = [
+        '👨‍💻', '👩‍💻', '👨‍💼', '👩‍💼', '👨‍🎨', '👩‍🎨', '👨‍🔬', '👩‍🔬'
+    ];
+
+    const furniture = [];
+    const solidObstacles = [];
+
+    // --- REALISTIC TOP-DOWN OFFICE ARCHITECTURE & COLLISION MAPPING ---
+    function setupOfficeFurniture() {
+        furniture.length = 0;
+        solidObstacles.length = 0;
+
+        // Top Wall Boundary
+        solidObstacles.push({ x: 0, y: 0, w: canvas.width, h: 26 });
+
+        // Workstation Pod Left (Desks + Screen)
+        furniture.push({
+            type: 'workstation_pod',
+            x: 105,
+            y: 175,
+            w: 125,
+            h: 90
+        });
+        solidObstacles.push({ x: 105 - 125 / 2, y: 175 - 90 / 2, w: 125, h: 90 });
+
+        // Workstation Pod Right (Desks + Screen)
+        furniture.push({
+            type: 'workstation_pod',
+            x: 395,
+            y: 175,
+            w: 125,
+            h: 90
+        });
+        solidObstacles.push({ x: 395 - 125 / 2, y: 175 - 90 / 2, w: 125, h: 90 });
+
+        // Executive / Focus Desk (Bottom Center)
+        furniture.push({
+            type: 'single_desk',
+            x: 250,
+            y: 330,
+            w: 96,
+            h: 44
+        });
+        solidObstacles.push({ x: 250 - 96 / 2, y: 330 - 44 / 2, w: 96, h: 44 });
+
+        // Break / Kitchenette Area (Top Left)
+        furniture.push({
+            type: 'break_corner',
+            x: 44,
+            y: 52
+        });
+        solidObstacles.push({ x: 44 - 20, y: 52 - 14, w: 46, h: 50 });
+
+        // Lounge / Couch Zone (Top Right)
+        furniture.push({
+            type: 'lounge_zone',
+            x: 430,
+            y: 56
+        });
+        solidObstacles.push({ x: 430 - 24, y: 56 - 12, w: 48, h: 42 });
+
+        // Architectural Planters (Potted Ficus)
+        furniture.push({ type: 'planter', x: 250, y: 56, r: 13 });
+        solidObstacles.push({ x: 250 - 13, y: 56 - 13, w: 26, h: 26 });
+
+        furniture.push({ type: 'planter', x: 30, y: 350, r: 12 });
+        solidObstacles.push({ x: 30 - 12, y: 350 - 12, w: 24, h: 24 });
+
+        furniture.push({ type: 'planter', x: 470, y: 350, r: 12 });
+        solidObstacles.push({ x: 470 - 12, y: 350 - 12, w: 24, h: 24 });
+    }
+
+    // Helper: Verify if a coordinate or circle collides with any solid piece of furniture
+    function collidesWithFurniture(x, y, radius = 0) {
+        for (const obs of solidObstacles) {
+            const closestX = Math.max(obs.x, Math.min(x, obs.x + obs.w));
+            const closestY = Math.max(obs.y, Math.min(y, obs.y + obs.h));
+            const distX = x - closestX;
+            const distY = y - closestY;
+            if ((distX * distX + distY * distY) < (radius * radius)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function drawDeskSurface(x, y, w, h) {
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.roundRect(x, y, w, h, 4);
+        ctx.fill();
+        ctx.strokeStyle = '#cbd5e1';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        ctx.fillStyle = '#334155';
+        ctx.beginPath();
+        ctx.roundRect(x + w * 0.15, y + h * 0.15, w * 0.7, h * 0.7, 3);
+        ctx.fill();
+    }
+
+    function drawMonitor(cx, cy, w, h, glowColor) {
+        ctx.fillStyle = '#64748b';
+        ctx.fillRect(cx - 5, cy - 2, 10, 4);
+
+        ctx.fillStyle = '#0f172a';
+        ctx.beginPath();
+        ctx.roundRect(cx - w / 2, cy - h / 2, w, h, 2);
+        ctx.fill();
+
+        ctx.fillStyle = glowColor;
+        ctx.fillRect(cx - w / 2 + 2, cy - h / 2 + 1, w - 4, h - 2);
+    }
+
+    function drawKeyboard(cx, cy) {
+        ctx.fillStyle = '#94a3b8';
+        ctx.beginPath();
+        ctx.roundRect(cx - 10, cy - 3, 20, 6, 1.5);
+        ctx.fill();
+
+        ctx.fillStyle = '#64748b';
+        ctx.beginPath();
+        ctx.roundRect(cx + 14, cy - 3, 4, 6, 2);
+        ctx.fill();
+    }
+
+    function drawErgoChair(cx, cy, rotation) {
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(rotation);
+
+        ctx.strokeStyle = '#64748b';
+        ctx.lineWidth = 1.5;
+        for (let i = 0; i < 5; i++) {
+            const ang = (i * 2 * Math.PI) / 5;
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(Math.cos(ang) * 9, Math.sin(ang) * 9);
+            ctx.stroke();
+        }
+
+        ctx.fillStyle = '#1e293b';
+        ctx.beginPath();
+        ctx.roundRect(-8, -6, 16, 12, 4);
+        ctx.fill();
+
+        ctx.fillStyle = '#0f172a';
+        ctx.beginPath();
+        ctx.roundRect(-7, -10, 14, 4, 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#475569';
+        ctx.fillRect(-10, -5, 2, 8);
+        ctx.fillRect(8, -5, 2, 8);
+
+        ctx.restore();
+    }
+
+    function drawWorkstationPod(pod) {
+        const halfH = (pod.h - 6) / 2;
+
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.08)';
+        ctx.beginPath();
+        ctx.roundRect(pod.x - pod.w / 2 - 2, pod.y - pod.h / 2 + 3, pod.w + 4, pod.h + 4, 6);
+        ctx.fill();
+
+        drawDeskSurface(pod.x - pod.w / 2, pod.y - pod.h / 2, pod.w, halfH);
+        drawDeskSurface(pod.x - pod.w / 2, pod.y + 3, pod.w, halfH);
+
+        // Acoustic fabric partition
+        ctx.fillStyle = '#475569';
+        ctx.beginPath();
+        ctx.roundRect(pod.x - pod.w / 2 - 2, pod.y - 3, pod.w + 4, 6, 3);
+        ctx.fill();
+
+        // Top desk screens & keyboards
+        drawMonitor(pod.x - 24, pod.y - halfH / 2 - 4, 28, 6, '#38bdf8');
+        drawKeyboard(pod.x - 24, pod.y - halfH / 2 + 6);
+        drawMonitor(pod.x + 24, pod.y - halfH / 2 - 4, 28, 6, '#38bdf8');
+        drawKeyboard(pod.x + 24, pod.y - halfH / 2 + 6);
+
+        // Bottom desk screens & keyboards
+        drawMonitor(pod.x - 24, pod.y + halfH / 2 + 6, 26, 6, '#818cf8');
+        drawKeyboard(pod.x - 24, pod.y + halfH / 2 - 6);
+        drawMonitor(pod.x + 24, pod.y + halfH / 2 + 6, 26, 6, '#818cf8');
+        drawKeyboard(pod.x + 24, pod.y + halfH / 2 - 6);
+
+        // Ergonomic Chairs
+        drawErgoChair(pod.x - 24, pod.y - pod.h / 2 - 14, 0);
+        drawErgoChair(pod.x + 24, pod.y - pod.h / 2 - 14, 0);
+        drawErgoChair(pod.x - 24, pod.y + pod.h / 2 + 14, Math.PI);
+        drawErgoChair(pod.x + 24, pod.y + pod.h / 2 + 14, Math.PI);
+    }
+
+    function drawSingleDesk(desk) {
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.08)';
+        ctx.beginPath();
+        ctx.roundRect(desk.x - desk.w / 2 - 2, desk.y - desk.h / 2 + 3, desk.w + 4, desk.h + 4, 6);
+        ctx.fill();
+
+        drawDeskSurface(desk.x - desk.w / 2, desk.y - desk.h / 2, desk.w, desk.h);
+        drawMonitor(desk.x, desk.y - 8, 48, 7, '#0ea5e9');
+        drawKeyboard(desk.x, desk.y + 4);
+        drawErgoChair(desk.x, desk.y + desk.h / 2 + 14, Math.PI);
+    }
+
+    function drawBreakCorner(corner) {
+        ctx.fillStyle = '#cbd5e1';
+        ctx.beginPath();
+        ctx.roundRect(corner.x - 20, corner.y - 14, 46, 50, 5);
+        ctx.fill();
+        ctx.strokeStyle = '#94a3b8';
+        ctx.stroke();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.roundRect(corner.x - 14, corner.y - 6, 18, 18, 3);
+        ctx.fill();
+        ctx.strokeStyle = '#cbd5e1';
+        ctx.stroke();
+
+        ctx.fillStyle = 'rgba(56, 189, 248, 0.85)';
+        ctx.beginPath();
+        ctx.arc(corner.x - 5, corner.y + 3, 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#10b981';
+        ctx.fillRect(corner.x + 8, corner.y - 4, 10, 11);
+        ctx.fillStyle = '#64748b';
+        ctx.fillRect(corner.x + 8, corner.y + 11, 10, 11);
+    }
+
+    function drawLoungeZone(lounge) {
+        ctx.fillStyle = '#e2e8f0';
+        ctx.beginPath();
+        ctx.arc(lounge.x, lounge.y + 10, 32, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#cbd5e1';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.fillStyle = '#334155';
+        ctx.beginPath();
+        ctx.roundRect(lounge.x - 22, lounge.y - 10, 44, 15, 4);
+        ctx.fill();
+
+        ctx.fillStyle = '#475569';
+        ctx.beginPath();
+        ctx.roundRect(lounge.x - 20, lounge.y - 8, 18, 11, 3);
+        ctx.roundRect(lounge.x + 2, lounge.y - 8, 18, 11, 3);
+        ctx.fill();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.roundRect(lounge.x - 13, lounge.y + 14, 26, 13, 3);
+        ctx.fill();
+        ctx.strokeStyle = '#e2e8f0';
+        ctx.stroke();
+
+        ctx.fillStyle = '#f43f5e';
+        ctx.fillRect(lounge.x - 9, lounge.y + 17, 8, 7);
+        ctx.fillStyle = '#475569';
+        ctx.beginPath();
+        ctx.arc(lounge.x + 5, lounge.y + 20, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    function drawPlanter(x, y, r) {
+        ctx.fillStyle = 'rgba(0,0,0,0.1)';
+        ctx.beginPath();
+        ctx.arc(x + 1, y + 2, r, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#e2e8f0';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.fillStyle = '#78350f';
+        ctx.beginPath();
+        ctx.arc(x, y, r - 3, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#15803d';
+        for (let i = 0; i < 6; i++) {
+            const ang = (i * Math.PI) / 3;
+            const leafX = x + Math.cos(ang) * (r - 2);
+            const leafY = y + Math.sin(ang) * (r - 2);
+            ctx.beginPath();
+            ctx.ellipse(leafX, leafY, 6, 3, ang, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        ctx.fillStyle = '#22c55e';
+        ctx.beginPath();
+        ctx.arc(x, y, 3, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    function drawOfficeFloor() {
+        ctx.fillStyle = '#e9edf0';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const tileSize = 40;
+        for (let x = 0; x < canvas.width; x += tileSize) {
+            for (let y = 0; y < canvas.height; y += tileSize) {
+                const isAlt = ((x / tileSize) + (y / tileSize)) % 2 === 0;
+                ctx.fillStyle = isAlt ? '#e2e7ec' : '#eaeff3';
+                ctx.fillRect(x, y, tileSize, tileSize);
+            }
+        }
+
+        // Hardwood corridor
+        const walkwayX = 205;
+        const walkwayW = 90;
+        ctx.fillStyle = '#d8cbbe';
+        ctx.fillRect(walkwayX, 26, walkwayW, canvas.height - 26);
+
+        ctx.strokeStyle = '#c5b6a7';
+        ctx.lineWidth = 1;
+        for (let y = 26; y < canvas.height; y += 18) {
+            ctx.beginPath();
+            ctx.moveTo(walkwayX, y);
+            ctx.lineTo(walkwayX + walkwayW, y);
+            ctx.stroke();
+        }
+        ctx.strokeStyle = '#b8a694';
+        ctx.beginPath();
+        ctx.moveTo(walkwayX, 26);
+        ctx.lineTo(walkwayX, canvas.height);
+        ctx.moveTo(walkwayX + walkwayW, 26);
+        ctx.lineTo(walkwayX + walkwayW, canvas.height);
+        ctx.stroke();
+
+        // Architectural Top Wall
+        ctx.fillStyle = '#1e293b';
+        ctx.fillRect(0, 0, canvas.width, 24);
+
+        ctx.fillStyle = '#334155';
+        ctx.fillRect(0, 22, canvas.width, 3);
+        ctx.fillStyle = 'rgba(0,0,0,0.12)';
+        ctx.fillRect(0, 25, canvas.width, 5);
+
+        // Wall Glass Whiteboard
+        ctx.fillStyle = '#f8fafc';
+        ctx.shadowColor = 'rgba(0,0,0,0.2)';
+        ctx.shadowBlur = 4;
+        ctx.beginPath();
+        ctx.roundRect(175, 4, 150, 16, 3);
+        ctx.fill();
+        ctx.shadowColor = 'transparent';
+        ctx.strokeStyle = '#94a3b8';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        ctx.fillStyle = '#fef08a';
+        ctx.fillRect(182, 7, 8, 8);
+        ctx.fillStyle = '#bae6fd';
+        ctx.fillRect(193, 7, 8, 8);
+        ctx.fillStyle = '#64748b';
+        ctx.font = '8px sans-serif';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('SPRINT GOALS 📊', 206, 12);
+
+        furniture.forEach(item => {
+            if (item.type === 'workstation_pod') {
+                drawWorkstationPod(item);
+            } else if (item.type === 'single_desk') {
+                drawSingleDesk(item);
+            } else if (item.type === 'break_corner') {
+                drawBreakCorner(item);
+            } else if (item.type === 'lounge_zone') {
+                drawLoungeZone(item);
+            } else if (item.type === 'planter') {
+                drawPlanter(item.x, item.y, item.r);
+            }
+        });
+    }
+
+    function loadNamesFromStorage() {
+        const storedNamesJson = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (storedNamesJson) {
+            try {
+                const storedNames = JSON.parse(storedNamesJson);
+                if (Array.isArray(storedNames) && storedNames.length > 0) {
+                    originalNames = [...storedNames];
                 }
-            }
-
-            // Add some "break area" items
-            furniture.push({ type: 'decor', icon: '🚰', x: 40, y: 40 }); // Water cooler
-            furniture.push({ type: 'decor', icon: '🛋️', x: canvas.width - 50, y: 40 }); // Couch
-        }
-
-        function loadNamesFromStorage() {
-            const storedNamesJson = localStorage.getItem(LOCAL_STORAGE_KEY);
-            if (storedNamesJson) {
-                try {
-                    const storedNames = JSON.parse(storedNamesJson);
-                    if (Array.isArray(storedNames) && storedNames.length > 0) {
-                        originalNames = [...storedNames];
-                    }
-                } catch (e) {
-                    console.error("Error parsing names from localStorage:", e);
-                    originalNames = [...DEFAULT_NAMES];
-                }
-            } else {
+            } catch (e) {
+                console.error("Error parsing names from localStorage:", e);
                 originalNames = [...DEFAULT_NAMES];
             }
-            syncNamesInput();
+        } else {
+            originalNames = [...DEFAULT_NAMES];
         }
+        syncNamesInput();
+    }
 
-        function saveNamesToStorage() {
-            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(originalNames));
+    function saveNamesToStorage() {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(originalNames));
+    }
+
+    // Helper: Find a free spot on open floor that is not inside furniture
+    function getSpawnPosition() {
+        let x = 250, y = 200;
+        let attempts = 0;
+        while (attempts < 60) {
+            x = Math.random() * (canvas.width - 60) + 30;
+            y = Math.random() * (canvas.height - 70) + 40;
+            if (!collidesWithFurniture(x, y, 16)) {
+                return { x, y };
+            }
+            attempts++;
         }
+        return { x, y };
+    }
 
-        function initializeMembers(currentNames) {
-            members = currentNames.map(name => ({
+    function initializeMembers(currentNames) {
+        members = currentNames.map(name => {
+            const pos = getSpawnPosition();
+            return {
                 name,
                 sprite: PIXEL_WORKERS[Math.floor(Math.random() * PIXEL_WORKERS.length)],
                 color: colors[Math.floor(Math.random() * colors.length)],
-                x: Math.random() * (canvas.width - 60) + 30,
-                y: Math.random() * (canvas.height - 60) + 30,
-                vx: (Math.random() * 1.0 + 0.5) * (Math.random() < 0.5 ? 1 : -1), // Slower "walking"
+                x: pos.x,
+                y: pos.y,
+                vx: (Math.random() * 1.0 + 0.5) * (Math.random() < 0.5 ? 1 : -1),
                 vy: (Math.random() * 1.0 + 0.5) * (Math.random() < 0.5 ? 1 : -1),
                 trapped: false,
                 facing: Math.random() < 0.5 ? 1 : -1
-            }));
-
-            // Add mice back - they won't be caught by the trap
-            for (let i = 0; i < 3; i++) {
-                members.push({
-                    name: "Office Mouse",
-                    sprite: '🐭',
-                    color: '#999',
-                    x: Math.random() * (canvas.width - 60) + 30,
-                    y: Math.random() * (canvas.height - 60) + 30,
-                    vx: (Math.random() * 2.0 + 1.0) * (Math.random() < 0.5 ? 1 : -1),
-                    vy: (Math.random() * 2.0 + 1.0) * (Math.random() < 0.5 ? 1 : -1),
-                    trapped: false,
-                    facing: Math.random() < 0.5 ? 1 : -1,
-                    isMouse: true
-                });
-            }
-
-            trapBtn.disabled = members.filter(m => !m.isMouse).length === 0;
-            if (members.length === 0 && originalNames.length > 0) {
-                info.innerHTML = "All caught! End of the shift. ✨";
-            } else if (members.length === 0 && originalNames.length === 0) {
-                info.textContent = "Please add office mates to the list.";
-            }
-        }
-
-        function drawOfficeFloor() {
-            // Background - Professional Grey Office Carpet
-            ctx.fillStyle = '#f5f7f9'; // Soft off-white/grey background
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Subtle Carpet/Tile Pattern
-            ctx.strokeStyle = '#e1e4e8';
-            ctx.lineWidth = 1;
-            const tileSize = 60;
-            for (let x = 0; x <= canvas.width; x += tileSize) {
-                ctx.beginPath();
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, canvas.height);
-                ctx.stroke();
-            }
-            for (let y = 0; y <= canvas.height; y += tileSize) {
-                ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(canvas.width, y);
-                ctx.stroke();
-            }
-
-            // Draw Furniture
-            furniture.forEach(item => {
-                ctx.save();
-                ctx.translate(item.x, item.y);
-
-                if (item.type === 'desk') {
-                    // Draw Desk Base - Modern Wood/White Look
-                    ctx.fillStyle = '#ffffff'; // White desk top
-                    ctx.beginPath();
-                    ctx.roundRect(-30, -15, 60, 30, 4);
-                    ctx.fill();
-                    ctx.shadowColor = 'rgba(0,0,0,0.05)';
-                    ctx.shadowBlur = 4;
-                    ctx.shadowOffsetY = 2;
-                    ctx.strokeStyle = '#d1d5da';
-                    ctx.stroke();
-                    ctx.shadowColor = 'transparent';
-
-                    // Draw PC/Item on desk
-                    ctx.font = '24px serif';
-                    ctx.fillText(item.items, 0, 0);
-                } else {
-                    // Draw Chairs and Decor
-                    ctx.font = '24px serif';
-                    ctx.fillText(item.icon, 0, 5);
-                }
-                ctx.restore();
-            });
-        }
-
-        function drawShape(m) {
-            // Draw sprite
-            ctx.font = m.isMouse ? '18px serif' : '32px serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-
-            // Draw a subtle drop shadow
-            ctx.shadowColor = 'rgba(0,0,0,0.1)';
-            ctx.shadowBlur = 4;
-            ctx.shadowOffsetY = 4;
-
-            // Flip emoji based on direction
-            ctx.save();
-            ctx.translate(m.x, m.y);
-            if (m.facing < 0) ctx.scale(-1, 1);
-            ctx.fillText(m.sprite, 0, 0);
-            ctx.restore();
-
-            // Reset shadow
-            ctx.shadowColor = 'transparent';
-            ctx.shadowBlur = 0;
-            ctx.shadowOffsetY = 0;
-
-            // Draw name sticker - only for humans
-            if (!m.isMouse) {
-                ctx.font = 'bold 9px Nunito, Arial, sans-serif';
-                const textWidth = ctx.measureText(m.name).width;
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-                ctx.beginPath();
-                ctx.roundRect(m.x - (textWidth / 2 + 4), m.y + 18, textWidth + 8, 12, 4);
-                ctx.fill();
-                ctx.strokeStyle = '#ddd';
-                ctx.stroke();
-
-                ctx.fillStyle = '#444';
-                ctx.fillText(m.name, m.x, m.y + 24);
-            }
-
-            // Selection Highlight - only for human players who are trapped
-            if (m.trapped && !m.isMouse) {
-                ctx.strokeStyle = '#e74c3c';
-                ctx.lineWidth = 2;
-                ctx.setLineDash([4, 2]);
-                ctx.beginPath();
-                ctx.arc(m.x, m.y, 22, 0, Math.PI * 2);
-                ctx.stroke();
-                ctx.setLineDash([]);
-            }
-        }
-
-        function moveMembers() {
-            const now = Date.now();
-            const pulling = trap && trapActive && (now - trapStartTime > ATTRACTION_DELAY);
-
-            members.forEach(m => {
-                if (m.trapped) return;
-
-                // Trap Attraction Logic
-                if (pulling && !m.isMouse) {
-                    const dx = trap.x - m.x;
-                    const dy = trap.y - m.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-
-                    if (dist > 5) { // Don't pull if already basically there
-                        m.vx += (dx / dist) * ATTRACTION_FORCE;
-                        m.vy += (dy / dist) * ATTRACTION_FORCE;
-
-                        // Cap velocity so they don't go too crazy
-                        const speed = Math.sqrt(m.vx * m.vx + m.vy * m.vy);
-                        const maxSpeed = 3.5;
-                        if (speed > maxSpeed) {
-                            m.vx = (m.vx / speed) * maxSpeed;
-                            m.vy = (m.vy / speed) * maxSpeed;
-                        }
-                    }
-                }
-
-                m.x += m.vx;
-                m.y += m.vy;
-
-                // Update facing direction
-                if (m.vx > 0) m.facing = 1;
-                if (m.vx < 0) m.facing = -1;
-
-                if (m.x < 30) { m.x = 30; m.vx = -m.vx; }
-                else if (m.x > canvas.width - 30) { m.x = canvas.width - 30; m.vx = -m.vx; }
-                if (m.y < 30) { m.y = 30; m.vy = -m.vy; }
-                else if (m.y > canvas.height - 30) { m.y = canvas.height - 30; m.vy = -m.vy; }
-
-                // Add some "wandering" logic
-                if (Math.random() < 0.02) m.vx = (Math.random() * 2 - 1);
-                if (Math.random() < 0.02) m.vy = (Math.random() * 2 - 1);
-            });
-        }
-
-        function drawTrap() {
-            if (!trap) return;
-
-            const now = Date.now();
-            const pulling = trapActive && (now - trapStartTime > ATTRACTION_DELAY);
-
-            // Draw Trap Circle
-            ctx.save();
-            ctx.globalAlpha = 0.2;
-            ctx.fillStyle = '#e74c3c';
-            ctx.beginPath();
-            ctx.arc(trap.x, trap.y, trapRadius, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.restore();
-
-            ctx.strokeStyle = '#c0392b';
-            ctx.lineWidth = 2;
-            ctx.setLineDash([6, 4]);
-            ctx.beginPath();
-            ctx.arc(trap.x, trap.y, trapRadius, 0, Math.PI * 2);
-            ctx.stroke();
-            ctx.setLineDash([]);
-
-            // Trap Icon - Switch from Mic to Burger after delay
-            ctx.font = '32px serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(pulling ? '🍔' : '🎤', trap.x, trap.y);
-        }
-
-        function celebrateFinalUser(user) {
-            const cards = [];
-            const cardCount = 50;
-            const startY = canvas.height - 50;
-
-            for (let i = 0; i < cardCount; i++) {
-                cards.push({
-                    x: Math.random() * canvas.width,
-                    y: startY,
-                    vx: (Math.random() - 0.5) * 8,
-                    vy: -15 - Math.random() * 10,
-                    gravity: 0.6,
-                    rotation: 0,
-                    rotationSpeed: (Math.random() - 0.5) * 0.4,
-                    delay: i * 3,
-                    active: false,
-                    color: user.color,
-                    icon: ['📁', '🖊️', '☕', '📅'][Math.floor(Math.random() * 4)]
-                });
-            }
-
-            let frame = 0;
-
-            function animate() {
-                drawOfficeFloor();
-
-                // Keep the final user in center with a trophy
-                ctx.font = '80px serif';
-                ctx.fillText('⭐', canvas.width / 2, canvas.height / 2 - 40);
-
-                ctx.save();
-                ctx.translate(canvas.width / 2, canvas.height / 2);
-                ctx.font = '64px serif';
-                ctx.fillText(user.sprite, 0, 0);
-                ctx.restore();
-
-                ctx.font = 'bold 24px Nunito';
-                ctx.fillStyle = '#333';
-                ctx.fillText(`${user.name} wins!`, canvas.width / 2, canvas.height / 2 + 60);
-
-                for (const card of cards) {
-                    if (!card.active && frame > card.delay) card.active = true;
-                    if (card.active) {
-                        card.vy += card.gravity;
-                        card.x += card.vx;
-                        card.y += card.vy;
-                        card.rotation += card.rotationSpeed;
-
-                        ctx.save();
-                        ctx.translate(card.x, card.y);
-                        ctx.rotate(card.rotation);
-                        ctx.font = '24px serif';
-                        ctx.fillText(card.icon, 0, 0);
-                        ctx.restore();
-                    }
-                }
-
-                frame++;
-                if (frame < 300) requestAnimationFrame(animate);
-                else {
-                    info.innerHTML = `🎉 ${user.name} is the winner! Refresh to restart.`;
-                }
-            }
-            animate();
-        }
-
-        function checkTrap() {
-            if (!trap) return [];
-
-            if (trapActive) {
-                // Only humans can be trapped
-                const trapable = members.filter(m => !m.isMouse);
-                for (const m of trapable) {
-                    if (m.trapped) continue;
-                    const dx = m.x - trap.x;
-                    const dy = m.y - trap.y;
-                    if (Math.sqrt(dx * dx + dy * dy) <= trapRadius) {
-                        m.trapped = true;
-                        trapActive = false;
-
-                        // If this was the final human (no other untrapped humans remain), show a short
-                        // auto-confirm countdown so the pinned state is visible before saving stats.
-                        const humansLeftUntrapped = members.filter(mm => !mm.isMouse && !mm.trapped).length;
-                        if (humansLeftUntrapped === 0) {
-                            info.innerHTML = `🎯 <strong>${m.name}</strong> pinned! Auto-confirming in ${AUTO_CONFIRM_DELAY_MS / 1000}s...`;
-                            setTimeout(() => confirmCaughtMember(m), AUTO_CONFIRM_DELAY_MS);
-                        } else {
-                            info.innerHTML = `🎯 <strong>${m.name}</strong> pinned! Click to confirm.`;
-                        }
-
-                        return [m];
-                    }
-                }
-                return [];
-            } else {
-                return members.filter(m => m.trapped);
-            }
-        }
-
-        function resetAndInitializeGame() {
-            eliminatedNames = [];
-            setupOfficeFurniture();
-            initializeMembers(originalNames);
-            trap = null;
-            trapActive = false;
-            if (originalNames.length > 0) {
-                info.textContent = "Everyone is at their desks. Ready?";
-            } else {
-                info.textContent = "Please add names to the list.";
-            }
-            trapBtn.disabled = originalNames.length === 0;
-            emitStandupReset();
-        }
-
-        function updateNamesFromInput() {
-            if (!namesInput) return;
-            const inputText = namesInput.value.trim();
-            const newNames = inputText ? inputText.split(/[\n,]+/).map(name => name.trim()).filter(name => name.length > 0) : [];
-            originalNames = newNames.length > 0 ? [...newNames] : [...DEFAULT_NAMES];
-            syncNamesInput();
-            saveNamesToStorage();
-            resetAndInitializeGame();
-        }
-
-        function gameLoop() {
-            drawOfficeFloor();
-
-            moveMembers();
-
-            if (trap && trapActive) {
-                checkTrap();
-            }
-
-            drawTrap();
-
-            members.forEach(drawShape);
-
-            requestAnimationFrame(gameLoop);
-        }
-
-        trapBtn.addEventListener('click', () => {
-            if (trap) {
-                const caughtMembers = members.filter(m => m.trapped && !m.isMouse);
-                if (caughtMembers.length > 0) {
-                    const caughtMember = caughtMembers[0];
-                    confirmCaughtMember(caughtMember);
-                } else {
-                    info.textContent = "They dodged it! Try again.";
-                    trap = null;
-                    trapActive = false;
-                }
-            } else {
-                const humanRemaining = members.filter(m => !m.isMouse).length;
-                if (humanRemaining === 0) return;
-                const margin = trapRadius + 10;
-                trap = {
-                    x: Math.random() * (canvas.width - margin * 2) + margin,
-                    y: Math.random() * (canvas.height - margin * 2) + margin
-                };
-                trapActive = true;
-                trapStartTime = Date.now();
-                info.textContent = "Trap set! Let's see who steps in...";
-            }
+            };
         });
 
-        if (updateNamesBtn && namesInput) {
-            updateNamesBtn.addEventListener("click", updateNamesFromInput);
+        for (let i = 0; i < 3; i++) {
+            const pos = getSpawnPosition();
+            members.push({
+                name: "Office Mouse",
+                sprite: '🐭',
+                color: '#999',
+                x: pos.x,
+                y: pos.y,
+                vx: (Math.random() * 2.0 + 1.0) * (Math.random() < 0.5 ? 1 : -1),
+                vy: (Math.random() * 2.0 + 1.0) * (Math.random() < 0.5 ? 1 : -1),
+                trapped: false,
+                facing: Math.random() < 0.5 ? 1 : -1,
+                isMouse: true
+            });
         }
 
-        // Initial setup
-        loadNamesFromStorage();
-        resetAndInitializeGame(); // Initialize with loaded or default names and sync stand-up state
+        trapBtn.disabled = members.filter(m => !m.isMouse).length === 0;
+        if (members.length === 0 && originalNames.length > 0) {
+            info.innerHTML = "All caught! End of the shift. ✨";
+        } else if (members.length === 0 && originalNames.length === 0) {
+            info.textContent = "Please add office mates to the list.";
+        }
+    }
 
-        gameLoop();
-    </script>
+    function drawShape(m) {
+        ctx.font = m.isMouse ? '18px serif' : '32px serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        ctx.shadowColor = 'rgba(0,0,0,0.15)';
+        ctx.shadowBlur = 4;
+        ctx.shadowOffsetY = 4;
+
+        ctx.save();
+        ctx.translate(m.x, m.y);
+        if (m.facing < 0) ctx.scale(-1, 1);
+        ctx.fillText(m.sprite, 0, 0);
+        ctx.restore();
+
+        ctx.shadowColor = 'transparent';
+        ctx.shadowBlur = 0;
+        ctx.shadowOffsetY = 0;
+
+        if (!m.isMouse) {
+            ctx.font = 'bold 9px Nunito, Arial, sans-serif';
+            const textWidth = ctx.measureText(m.name).width;
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            ctx.beginPath();
+            ctx.roundRect(m.x - (textWidth / 2 + 5), m.y + 18, textWidth + 10, 13, 4);
+            ctx.fill();
+            ctx.strokeStyle = '#cbd5e1';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            ctx.fillStyle = '#334155';
+            ctx.fillText(m.name, m.x, m.y + 25);
+        }
+
+        if (m.trapped && !m.isMouse) {
+            ctx.strokeStyle = '#e74c3c';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([4, 2]);
+            ctx.beginPath();
+            ctx.arc(m.x, m.y, 22, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+    }
+
+    function moveMembers() {
+        const now = Date.now();
+        const pulling = trap && trapActive && (now - trapStartTime > ATTRACTION_DELAY);
+        const avatarRadius = 14;
+
+        members.forEach(m => {
+            if (m.trapped) return;
+
+            if (pulling && !m.isMouse) {
+                const dx = trap.x - m.x;
+                const dy = trap.y - m.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist > 5) {
+                    m.vx += (dx / dist) * ATTRACTION_FORCE;
+                    m.vy += (dy / dist) * ATTRACTION_FORCE;
+
+                    const speed = Math.sqrt(m.vx * m.vx + m.vy * m.vy);
+                    const maxSpeed = 3.5;
+                    if (speed > maxSpeed) {
+                        m.vx = (m.vx / speed) * maxSpeed;
+                        m.vy = (m.vy / speed) * maxSpeed;
+                    }
+                }
+            }
+
+            // X-AXIS MOVEMENT & FURNITURE COLLISION
+            let nextX = m.x + m.vx;
+            if (nextX < 20) {
+                nextX = 20;
+                m.vx = -m.vx;
+            } else if (nextX > canvas.width - 20) {
+                nextX = canvas.width - 20;
+                m.vx = -m.vx;
+            }
+
+            if (collidesWithFurniture(nextX, m.y, avatarRadius)) {
+                m.vx = -m.vx;
+            } else {
+                m.x = nextX;
+            }
+
+            // Y-AXIS MOVEMENT & FURNITURE COLLISION
+            let nextY = m.y + m.vy;
+            if (nextY < 35) {
+                nextY = 35;
+                m.vy = -m.vy;
+            } else if (nextY > canvas.height - 25) {
+                nextY = canvas.height - 25;
+                m.vy = -m.vy;
+            }
+
+            if (collidesWithFurniture(m.x, nextY, avatarRadius)) {
+                m.vy = -m.vy;
+            } else {
+                m.y = nextY;
+            }
+
+            if (m.vx > 0) m.facing = 1;
+            if (m.vx < 0) m.facing = -1;
+
+            if (Math.random() < 0.02) m.vx = (Math.random() * 2 - 1);
+            if (Math.random() < 0.02) m.vy = (Math.random() * 2 - 1);
+        });
+    }
+
+    function drawTrap() {
+        if (!trap) return;
+
+        const now = Date.now();
+        const pulling = trapActive && (now - trapStartTime > ATTRACTION_DELAY);
+
+        ctx.save();
+        ctx.globalAlpha = 0.2;
+        ctx.fillStyle = '#e74c3c';
+        ctx.beginPath();
+        ctx.arc(trap.x, trap.y, trapRadius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        ctx.strokeStyle = '#c0392b';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([6, 4]);
+        ctx.beginPath();
+        ctx.arc(trap.x, trap.y, trapRadius, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.font = '32px serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(pulling ? '🍔' : '🎤', trap.x, trap.y);
+    }
+
+    function celebrateFinalUser(user) {
+        const cards = [];
+        const cardCount = 50;
+        const startY = canvas.height - 50;
+
+        for (let i = 0; i < cardCount; i++) {
+            cards.push({
+                x: Math.random() * canvas.width,
+                y: startY,
+                vx: (Math.random() - 0.5) * 8,
+                vy: -15 - Math.random() * 10,
+                gravity: 0.6,
+                rotation: 0,
+                rotationSpeed: (Math.random() - 0.5) * 0.4,
+                delay: i * 3,
+                active: false,
+                color: user.color,
+                icon: ['📁', '🖊️', '☕', '📅'][Math.floor(Math.random() * 4)]
+            });
+        }
+
+        let frame = 0;
+
+        function animate() {
+            drawOfficeFloor();
+
+            ctx.font = '80px serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('⭐', canvas.width / 2, canvas.height / 2 - 40);
+
+            ctx.save();
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.font = '64px serif';
+            ctx.fillText(user.sprite, 0, 0);
+            ctx.restore();
+
+            ctx.font = 'bold 24px Nunito';
+            ctx.fillStyle = '#333';
+            ctx.fillText(`${user.name} wins!`, canvas.width / 2, canvas.height / 2 + 60);
+
+            for (const card of cards) {
+                if (!card.active && frame > card.delay) card.active = true;
+                if (card.active) {
+                    card.vy += card.gravity;
+                    card.x += card.vx;
+                    card.y += card.vy;
+                    card.rotation += card.rotationSpeed;
+
+                    ctx.save();
+                    ctx.translate(card.x, card.y);
+                    ctx.rotate(card.rotation);
+                    ctx.font = '24px serif';
+                    ctx.fillText(card.icon, 0, 0);
+                    ctx.restore();
+                }
+            }
+
+            frame++;
+            if (frame < 300) requestAnimationFrame(animate);
+            else {
+                info.innerHTML = `🎉 ${user.name} is the winner! Refresh to restart.`;
+            }
+        }
+        animate();
+    }
+
+    function checkTrap() {
+        if (!trap) return [];
+
+        if (trapActive) {
+            const trapable = members.filter(m => !m.isMouse);
+            for (const m of trapable) {
+                if (m.trapped) continue;
+                const dx = m.x - trap.x;
+                const dy = m.y - trap.y;
+                if (Math.sqrt(dx * dx + dy * dy) <= trapRadius) {
+                    m.trapped = true;
+                    trapActive = false;
+
+                    const humansLeftUntrapped = members.filter(mm => !mm.isMouse && !mm.trapped).length;
+                    if (humansLeftUntrapped === 0) {
+                        info.innerHTML = `🎯 <strong>${m.name}</strong> pinned! Auto-confirming in ${AUTO_CONFIRM_DELAY_MS / 1000}s...`;
+                        setTimeout(() => confirmCaughtMember(m), AUTO_CONFIRM_DELAY_MS);
+                    } else {
+                        info.innerHTML = `🎯 <strong>${m.name}</strong> pinned! Click to confirm.`;
+                    }
+
+                    return [m];
+                }
+            }
+            return [];
+        } else {
+            return members.filter(m => m.trapped);
+        }
+    }
+
+    function resetAndInitializeGame() {
+        eliminatedNames = [];
+        setupOfficeFurniture();
+        initializeMembers(originalNames);
+        trap = null;
+        trapActive = false;
+        if (originalNames.length > 0) {
+            info.textContent = "Everyone is at their desks. Ready?";
+        } else {
+            info.textContent = "Please add names to the list.";
+        }
+        trapBtn.disabled = originalNames.length === 0;
+        emitStandupReset();
+    }
+
+    function updateNamesFromInput() {
+        if (!namesInput) return;
+        const inputText = namesInput.value.trim();
+        const newNames = inputText ? inputText.split(/[\n,]+/).map(name => name.trim()).filter(name => name.length > 0) : [];
+        originalNames = newNames.length > 0 ? [...newNames] : [...DEFAULT_NAMES];
+        syncNamesInput();
+        saveNamesToStorage();
+        resetAndInitializeGame();
+    }
+
+    function gameLoop() {
+        drawOfficeFloor();
+        moveMembers();
+
+        if (trap && trapActive) {
+            checkTrap();
+        }
+
+        drawTrap();
+        members.forEach(drawShape);
+
+        requestAnimationFrame(gameLoop);
+    }
+
+    trapBtn.addEventListener('click', () => {
+        if (trap) {
+            const caughtMembers = members.filter(m => m.trapped && !m.isMouse);
+            if (caughtMembers.length > 0) {
+                const caughtMember = caughtMembers[0];
+                confirmCaughtMember(caughtMember);
+            } else {
+                info.textContent = "They dodged it! Try again.";
+                trap = null;
+                trapActive = false;
+            }
+        } else {
+            const humanRemaining = members.filter(m => !m.isMouse).length;
+            if (humanRemaining === 0) return;
+
+            const margin = trapRadius + 10;
+            let targetX = 250;
+            let targetY = 200;
+            let placed = false;
+            let attempts = 0;
+
+            // Pick a location on the open floor that doesn't overlap furniture
+            while (!placed && attempts < 100) {
+                targetX = Math.random() * (canvas.width - margin * 2) + margin;
+                targetY = Math.random() * (canvas.height - margin * 2) + margin;
+
+                // Ensure the trap zone stays completely clear of tables & obstacles
+                if (!collidesWithFurniture(targetX, targetY, trapRadius + 10)) {
+                    placed = true;
+                }
+                attempts++;
+            }
+
+            // Fallback to center corridor if random tries were crowded
+            if (!placed) {
+                targetX = 250;
+                targetY = 200;
+            }
+
+            trap = { x: targetX, y: targetY };
+            trapActive = true;
+            trapStartTime = Date.now();
+            info.textContent = "Trap set in the corridor! Let's see who steps in...";
+        }
+    });
+
+    if (updateNamesBtn && namesInput) {
+        updateNamesBtn.addEventListener("click", updateNamesFromInput);
+    }
+
+    // Initial setup
+    loadNamesFromStorage();
+    resetAndInitializeGame();
+    gameLoop();
+</script>
