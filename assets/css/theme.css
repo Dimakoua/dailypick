@@ -29,7 +29,14 @@
   --app-header-offset: 120px;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html {
+  scrollbar-gutter: stable;
   background: var(--brand-background-image), var(--brand-background);
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -249,14 +256,12 @@ h6 {
 .site-header nav {
   display: inline-flex;
   gap: 16px;
+  flex-shrink: 0;
 }
 
-[data-show-only="standup"] {
-  display: none !important;
-}
-
-body:has(main[data-page-type="standup"]) [data-show-only="standup"] {
-  display: inline !important;
+.site-header .search-container {
+  width: 200px;
+  flex-shrink: 0;
 }
 
 .site-header nav a {
@@ -281,6 +286,8 @@ body:has(main[data-page-type="standup"]) [data-show-only="standup"] {
   gap: 12px;
   font-size: 0.9rem;
   color: var(--brand-heading);
+  flex-shrink: 0;
+  min-width: 96px;
 }
 
 .site-header .branding-controls svg {

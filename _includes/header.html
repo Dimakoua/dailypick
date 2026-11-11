@@ -9,7 +9,7 @@
             <nav aria-label="Main navigation">
                 <a href="/">Play</a>
                 <a href="/blog/">Blog</a>
-                <a href="/apps/roster/" data-show-only="standup">Roster</a>
+                <a href="/apps/roster/">Roster</a>
                 <a href="/apps/brand/">Brand</a>
             </nav>
             <div class="search-container" id="search-container">
@@ -37,18 +37,9 @@
     </div>
 </header>
 <script src="/assets/js/weather.js" defer></script>
-<link href="/assets/css/search.css" rel="stylesheet">
 <script src="/assets/js/search.js" defer></script>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Hide standup-only features on non-standup pages
-    const mainEl = document.querySelector('main');
-    const isStandupPage = mainEl && mainEl.hasAttribute('data-page-type') && mainEl.getAttribute('data-page-type') === 'standup';
-    const standupLinks = document.querySelectorAll('[data-show-only="standup"]');
-    standupLinks.forEach(link => {
-      link.style.display = isStandupPage ? 'inline' : 'none';
-    });
-
     // Mobile nav toggle
     const navToggle = document.getElementById('nav-toggle');
     const headerCollapse = document.getElementById('header-collapse');
