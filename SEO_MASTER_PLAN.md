@@ -30,22 +30,27 @@ Googlebot is currently crawling Daily Pick's tool pages, but refusing to index t
 
 ---
 
-### Phase 1: Urgent Quality Cleanup & Penalty Removal (Sprint 1)
+### Phase 1: Urgent Quality Cleanup, Scaled Doorway Pruning & Penalty Removal (Sprint 1)
 
-*Goal: Remove all low-quality footprints that trigger automated Google demotions.*
+*Goal: Remove all low-quality footprints and programmatic doorway pages that triggered Google's site-wide demotion and "Crawled - not indexed" validation failure.*
 
-- [x] **1.1 Purge AI Placeholder Tokens**
-  - Batch swept all 43 files across `/apps/` to remove leftover prompt tags like `[Image: Description]` and `[Image: View of the wheel interface]`. Verified 0 remaining.
+- [x] **1.1 Purge AI Placeholder Tokens & Synthetic Boilerplate**
+  - Swept code across all tools to eliminate raw prompt tags and synthetic FAQ boilerplate ("This tool is considered the best option for your unique needs...").
 - [x] **1.2 Remove Fabricated Feature Claims**
-  - Removed all mentions of `**(Premium Users)**` across tool descriptions (e.g. "Save custom configurations", "Adjust animation speed"). Verified 0 remaining.
-- [x] **1.3 Consolidate Thin Multilingual Variants**
-  - Added `robots: "noindex, follow"` to all 13 incomplete/thin translated subpages (`/hindi/`, `/french/`, `/mandarin/`, `/spanish/`, `/punjabi/`, `/tamil/`, `/chinese/`).
-- [x] **1.4 Confirm Robots.txt, Soft 404 Hygiene & Internal Doc Ignore**
-  - Added `Disallow: /seo-instructions/`, `/Readme/`, `/feedback/thank-you/`, and `/blog/?*` queries to `public/robots.txt`.
-  - Added build ignores for `Readme.md`, `ideas.md`, `seo-instructions.md`, `SEO_MASTER_PLAN.md`.
-  - Configured permanent 301 redirects in `packages/worker/worker.js` for deleted posts and legacy URLs to relevant hubs (`/standups/`, `/agile/`, `/randomizers/`, `/`).
-- [x] **1.5 Prune Cannibalizing/Duplicate Blog Posts**
-  - Pruned thin, competing retrospective posts and set 301 redirects to the comprehensive 2,500+ word cornerstone guide (`/blog/agile-retrospective-games-complete-guide/`).
+  - Removed all mentions of `**(Premium Users)**` across tool descriptions. Verified 0 remaining.
+- [x] **1.3 Prune 13 Thin Multilingual Localized Folders**
+  - Deleted all 13 thin localized subpages (`/hindi/`, `/french/`, `/mandarin/`, `/spanish/`, `/punjabi/`, `/tamil/`, `/chinese/`) and configured 301 redirects to `/apps/what-should-i-eat/`.
+- [x] **1.4 Prune 34 Programmatic City Food Spinners & Consolidate to Master Food Wheel**
+  - Pruned all 34 individual doorway city/cuisine wheels (`what-should-i-eat-*`).
+  - Consolidated into a single, high-utility master tool: `/apps/what-should-i-eat/` with rich regional and cuisine presets (NYC, LA, European, Asian, Latin, Healthy).
+  - Mapped all 34 old URLs to 301 redirects in `packages/worker/worker.js`.
+- [x] **1.5 Prune Off-Topic Lottery Generators (12) & World Cup Clones (8)**
+  - Pruned 12 lottery quick-pick pages and redirected to `/apps/random-number-generator/`.
+  - Pruned 8 World Cup wheels and redirected to `/apps/wheel/`.
+- [x] **1.6 Resolve Robots.txt & Sitemap Conflicts**
+  - Removed `/apps/whats-new/`, `/apps/brand/`, and `/apps/roster/` from `sitemap.xml` to eliminate GSC "Blocked by robots.txt" error.
+- [x] **1.7 Rebuild Pristine Sitemap (Down from 156 to 88 High-Value URLs)**
+  - Rebuilt sitemap containing strictly core tools and cornerstone guides, eliminating 68 low-quality/unindexed URLs from the crawl queue.
 
 ---
 

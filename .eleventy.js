@@ -137,7 +137,11 @@ module.exports = async function(eleventyConfig) {
       './content/feedback/index.njk',
       './content/feedback/thank-you.njk',
       './seo-instructions.md',
+      './apps/whats-new/index.html',
       './apps/whats-new/screenshots/README.md',
+      './apps/brand/index.html',
+      './apps/roster/index.html',
+      './public/index.md',
       './GZIP-COMPRESSION.md'
     ];
 

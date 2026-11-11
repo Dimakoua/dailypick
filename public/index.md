@@ -1,3 +1,8 @@
+---
+permalink: /index.md
+eleventyExcludeFromCollections: true
+sitemap: false
+---
 # Daily Pick – Free Randomizers, Games & Team Tools
 
 > A free, browser-based collection of over 60 tools covering randomizers, spinning wheels, name pickers, stand-up games, agile planning tools, lottery number generators, and party games. No sign-up, no installs required.
