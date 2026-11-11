@@ -1,7 +1,7 @@
 (function (window, document) {
   'use strict';
 
-var defaultSegmentColors = [
+  var defaultSegmentColors = [
     '#FF3F81', // Vibrant Pink
     '#FF9100', // Bright Orange
     '#FFEA00', // Sunny Yellow
@@ -73,7 +73,7 @@ var defaultSegmentColors = [
   var isSoundMuted = false;
   try {
     isSoundMuted = localStorage.getItem('wheelSoundMuted') === 'true';
-  } catch (e) {}
+  } catch (e) { }
 
   function initAudio() {
     if (audioCtx) return;
@@ -82,10 +82,62 @@ var defaultSegmentColors = [
       if (AudioContextClass) {
         audioCtx = new AudioContextClass();
       }
-    } catch (e) {}
+    } catch (e) { }
   }
 
-  function playRatchetTick(progress) {
+  // Velocity-aware dual-layer ratchet sound (wood/plastic body thud + crisp pin snap)
+  function playRatchetTick(normSpeed) {
+    if (isSoundMuted) return;
+    if (!audioCtx) initAudio();
+    if (!audioCtx) return;
+
+    try {
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      var s = Math.max(0, Math.min(1, normSpeed === undefined ? 0.5 : normSpeed));
+      var now = audioCtx.currentTime;
+
+      // Primary transient snap
+      var osc = audioCtx.createOscillator();
+      var gain = audioCtx.createGain();
+      var baseFreq = 310 + s * 340;
+      var duration = 0.042 - s * 0.020;
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(baseFreq, now);
+      osc.frequency.exponentialRampToValueAtTime(58, now + duration);
+
+      var clickVol = 0.09 + s * 0.08;
+      gain.gain.setValueAtTime(clickVol, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + duration + 0.005);
+
+      // High-harmonic flapper click for slow, heavy final ticks
+      if (s < 0.35) {
+        var snapOsc = audioCtx.createOscillator();
+        var snapGain = audioCtx.createGain();
+        snapOsc.type = 'sine';
+        snapOsc.frequency.setValueAtTime(1150, now);
+        snapOsc.frequency.exponentialRampToValueAtTime(220, now + 0.015);
+
+        snapGain.gain.setValueAtTime(0.06 * (1 - s * 2), now);
+        snapGain.gain.exponentialRampToValueAtTime(0.001, now + 0.015);
+
+        snapOsc.connect(snapGain);
+        snapGain.connect(audioCtx.destination);
+        snapOsc.start(now);
+        snapOsc.stop(now + 0.018);
+      }
+    } catch (e) { }
+  }
+
+  // Synthesized celebratory chord arpeggio when winner locks in
+  function playWinFanfare() {
     if (isSoundMuted) return;
     if (!audioCtx) initAudio();
     if (!audioCtx) return;
@@ -95,34 +147,51 @@ var defaultSegmentColors = [
         audioCtx.resume();
       }
       var now = audioCtx.currentTime;
-      var osc = audioCtx.createOscillator();
-      var gain = audioCtx.createGain();
+      // C5, E5, G5, B5, C6 (bright major 7th/9th shimmer)
+      var notes = [523.25, 659.25, 783.99, 987.77, 1046.50];
 
-      var baseFreq = 520 - Math.min(progress || 0, 1) * 220;
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(baseFreq, now);
-      osc.frequency.exponentialRampToValueAtTime(75, now + 0.020);
+      notes.forEach(function (freq, i) {
+        var osc = audioCtx.createOscillator();
+        var gain = audioCtx.createGain();
+        var start = now + i * 0.055;
+        var dur = i === notes.length - 1 ? 0.65 : 0.28;
 
-      var clickVol = 0.13 - Math.min(progress || 0, 1) * 0.05;
-      gain.gain.setValueAtTime(clickVol, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.020);
+        osc.type = i === notes.length - 1 ? 'triangle' : 'sine';
+        osc.frequency.setValueAtTime(freq, start);
 
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
+        gain.gain.setValueAtTime(0.0001, start);
+        gain.gain.linearRampToValueAtTime(0.085, start + 0.015);
+        gain.gain.exponentialRampToValueAtTime(0.0008, start + dur);
 
-      osc.start(now);
-      osc.stop(now + 0.025);
-    } catch (e) {}
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(start);
+        osc.stop(start + dur + 0.02);
+      });
+    } catch (e) { }
   }
 
-  function drawWheel(canvas, items, rotationAngle, options, showCenterPlayIcon) {
+  function getActiveSliceIndex(rotationAngle, itemCount) {
+    if (!itemCount) return -1;
+    var angleStep = (2 * Math.PI) / itemCount;
+    var indAngle = 1.5 * Math.PI; // Top 12 o'clock needle
+    var relAngle = ((indAngle - rotationAngle) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+    return Math.floor(relAngle / angleStep) % itemCount;
+  }
+
+  function drawWheel(canvas, items, rotationAngle, options, showCenterPlayIcon, renderState) {
     if (!canvas || !items || !items.length) return;
     rotationAngle = rotationAngle || 0;
     options = options || {};
+    renderState = renderState || {};
+
     var ctx = canvas.getContext('2d');
     var radius = canvas.width / 2;
     var angleStep = (2 * Math.PI) / items.length;
     var segmentColors = resolveSegmentColors(items, options);
+    var activeIndex = renderState.activeIndex !== undefined ? renderState.activeIndex : -1;
+    var winnerIndex = renderState.winnerIndex !== undefined ? renderState.winnerIndex : -1;
+    var winnerPulse = renderState.winnerPulse || 0; // 0..1
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.save();
@@ -132,17 +201,54 @@ var defaultSegmentColors = [
 
     items.forEach(function (item, index) {
       var angle = index * angleStep;
+      var isWinner = index === winnerIndex;
+      var isActiveCrawl = index === activeIndex && winnerIndex === -1;
+
       ctx.beginPath();
       ctx.moveTo(radius, radius);
       ctx.arc(radius, radius, radius, angle, angle + angleStep);
+      ctx.closePath();
       ctx.fillStyle = segmentColors[index % segmentColors.length];
       ctx.fill();
+
+      // Subtle inner rim vignette for depth
+      var sliceGrad = ctx.createRadialGradient(radius, radius, radius * 0.15, radius, radius, radius);
+      sliceGrad.addColorStop(0, 'rgba(255, 255, 255, 0.12)');
+      sliceGrad.addColorStop(0.75, 'rgba(0, 0, 0, 0)');
+      sliceGrad.addColorStop(1, 'rgba(0, 0, 0, 0.16)');
+      ctx.fillStyle = sliceGrad;
+      ctx.fill();
+
+      // Live crawl highlight (lights up slice currently under needle during slow crawl)
+      if (isActiveCrawl) {
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.18)';
+        ctx.fill();
+      }
+
+      // Winner spotlight glow
+      if (isWinner) {
+        var glowAlpha = 0.22 + 0.18 * Math.sin(winnerPulse * Math.PI * 4);
+        ctx.fillStyle = 'rgba(255, 255, 255, ' + glowAlpha.toFixed(3) + ')';
+        ctx.fill();
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(radius, radius);
+        ctx.arc(radius, radius, radius - 2, angle, angle + angleStep);
+        ctx.closePath();
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.95)';
+        ctx.lineWidth = 4;
+        ctx.shadowColor = '#ffffff';
+        ctx.shadowBlur = 14;
+        ctx.stroke();
+        ctx.restore();
+      }
 
       // Clean divider between segments
       ctx.beginPath();
       ctx.moveTo(radius, radius);
       ctx.lineTo(radius + Math.cos(angle) * radius, radius + Math.sin(angle) * radius);
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.45)';
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.48)';
       ctx.lineWidth = 1.5;
       ctx.stroke();
 
@@ -152,14 +258,16 @@ var defaultSegmentColors = [
       ctx.textAlign = 'right';
       ctx.textBaseline = 'middle';
       ctx.fillStyle = '#fff';
-      ctx.shadowColor = 'rgba(0,0,0,0.5)';
-      ctx.shadowBlur = 4;
+      ctx.shadowColor = isWinner ? 'rgba(0,0,0,0.75)' : 'rgba(0,0,0,0.5)';
+      ctx.shadowBlur = isWinner ? 8 : 4;
 
       var maxTextWidth = radius * 0.55;
-      ctx.font = 'bold 16px Nunito, Arial';
+      var fontScale = isWinner ? 1 + 0.06 * Math.sin(winnerPulse * Math.PI * 2) : 1;
+      var baseSize = Math.round(16 * fontScale);
+      ctx.font = 'bold ' + baseSize + 'px Nunito, Arial';
       var lines = wrapCanvasText(ctx, item, maxTextWidth);
       if (lines.length > 2) {
-        ctx.font = 'bold 14px Nunito, Arial';
+        ctx.font = 'bold ' + Math.round(14 * fontScale) + 'px Nunito, Arial';
         lines = wrapCanvasText(ctx, item, maxTextWidth);
       }
       var lineHeight = 18;
@@ -180,22 +288,22 @@ var defaultSegmentColors = [
 
       // Subtle drop shadow
       ctx.beginPath();
-      ctx.arc(px, py + 1.2, 3.8, 0, 2 * Math.PI);
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+      ctx.arc(px, py + 1.2, 4.0, 0, 2 * Math.PI);
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.34)';
       ctx.fill();
 
       // Shiny chrome peg body
-      var pegGrad = ctx.createRadialGradient(px - 1, py - 1, 0.5, px, py, 3.6);
+      var pegGrad = ctx.createRadialGradient(px - 1.2, py - 1.2, 0.5, px, py, 3.8);
       pegGrad.addColorStop(0, '#ffffff');
       pegGrad.addColorStop(0.35, '#f1f5f9');
-      pegGrad.addColorStop(1, '#94a3b8');
+      pegGrad.addColorStop(1, '#64748b');
 
       ctx.beginPath();
-      ctx.arc(px, py, 3.6, 0, 2 * Math.PI);
+      ctx.arc(px, py, 3.8, 0, 2 * Math.PI);
       ctx.fillStyle = pegGrad;
       ctx.fill();
 
-      ctx.strokeStyle = 'rgba(51, 65, 85, 0.5)';
+      ctx.strokeStyle = 'rgba(30, 41, 59, 0.55)';
       ctx.lineWidth = 0.8;
       ctx.stroke();
     });
@@ -254,8 +362,9 @@ var defaultSegmentColors = [
   function launchConfetti(canvas) {
     var overlay = document.createElement('canvas');
     var rect = canvas.getBoundingClientRect();
-    overlay.width = Math.round(rect.width * window.devicePixelRatio);
-    overlay.height = Math.round(rect.height * window.devicePixelRatio);
+    var dpr = window.devicePixelRatio || 1;
+    overlay.width = Math.round(rect.width * dpr);
+    overlay.height = Math.round(rect.height * dpr);
     overlay.style.cssText = [
       'position:fixed',
       'top:' + rect.top + 'px',
@@ -273,28 +382,38 @@ var defaultSegmentColors = [
     var ctx = overlay.getContext('2d');
     var cx = overlay.width / 2;
     var cy = overlay.height / 2;
-    var colors = ['#da291c', '#f2b705', '#008c95', '#4f7942', '#6b2e77', '#003a6b', '#8a1538', '#73503c'];
+    var colors = ['#FF3F81', '#FF9100', '#FFEA00', '#00E676', '#00B0FF', '#D500F9', '#ffffff', '#FFD700'];
     var particles = [];
 
-    for (var i = 0; i < 160; i++) {
-      var angle = Math.random() * Math.PI * 2;
-      var speed = Math.random() * 10 + 3;
-      particles.push({
-        x: cx,
-        y: cy,
-        vx: Math.cos(angle) * speed,
-        vy: Math.sin(angle) * speed - 5,
-        w: Math.random() * 12 + 5,
-        h: Math.random() * 6 + 3,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        rotation: Math.random() * Math.PI * 2,
-        rotationSpeed: (Math.random() - 0.5) * 0.35,
-        gravity: 0.28,
-        opacity: 1
-      });
+    function spawnWave(count, speedMult, yOffset) {
+      for (var i = 0; i < count; i++) {
+        var angle = Math.random() * Math.PI * 2;
+        var speed = (Math.random() * 11 + 3.5) * speedMult * dpr;
+        particles.push({
+          x: cx,
+          y: cy + (yOffset || 0),
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 6 * dpr,
+          w: (Math.random() * 12 + 5) * dpr,
+          h: (Math.random() * 6 + 3) * dpr,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * Math.PI * 2,
+          rotationSpeed: (Math.random() - 0.5) * 0.38,
+          wobble: Math.random() * Math.PI * 2,
+          wobbleSpeed: 0.08 + Math.random() * 0.08,
+          gravity: 0.25 * dpr,
+          drag: 0.985,
+          opacity: 1
+        });
+      }
     }
 
-    var duration = 3200;
+    spawnWave(140, 1.0, 0);
+    setTimeout(function () {
+      spawnWave(80, 0.85, -overlay.height * 0.15);
+    }, 220);
+
+    var duration = 3500;
     var start = null;
 
     function step(timestamp) {
@@ -305,11 +424,13 @@ var defaultSegmentColors = [
       ctx.clearRect(0, 0, overlay.width, overlay.height);
 
       particles.forEach(function (p) {
-        p.vy += p.gravity;
-        p.x += p.vx;
+        p.vx *= p.drag;
+        p.vy = p.vy * p.drag + p.gravity;
+        p.wobble += p.wobbleSpeed;
+        p.x += p.vx + Math.sin(p.wobble) * 1.2 * dpr;
         p.y += p.vy;
         p.rotation += p.rotationSpeed;
-        p.opacity = progress > 0.55 ? Math.max(0, 1 - (progress - 0.55) / 0.45) : 1;
+        p.opacity = progress > 0.58 ? Math.max(0, 1 - (progress - 0.58) / 0.42) : 1;
 
         ctx.save();
         ctx.globalAlpha = p.opacity;
@@ -401,7 +522,6 @@ var defaultSegmentColors = [
       return null;
     }
 
-    // Check URL query parameters for custom choices (e.g. ?choices=Pizza,Sushi,Tacos)
     var urlParams = new URLSearchParams(window.location.search);
     var queryChoices = urlParams.get('choices') || urlParams.get('items');
     var initialItems = queryChoices ? queryChoices.split(',').map(decodeURIComponent) : (options.defaultItems || []);
@@ -426,8 +546,15 @@ var defaultSegmentColors = [
       }
     }
 
-    function renderWheel(rotation) {
-      drawWheel(canvas, foodItems, rotation, options, enableCanvasClick && !isSpinning && foodItems.length > 0);
+    function renderWheel(rotation, renderState) {
+      drawWheel(
+        canvas,
+        foodItems,
+        rotation,
+        options,
+        enableCanvasClick && !isSpinning && foodItems.length > 0,
+        renderState
+      );
     }
 
     function startIdleRotation() {
@@ -542,7 +669,7 @@ var defaultSegmentColors = [
       if (foodItems.length === 0) return;
 
       var studioConfig = getLocalBrandStudioConfig();
-      var baseRounds = Math.max(1, Math.round(getEffectiveOption(options, studioConfig, 'spinRounds', 5, 'number')));
+      var baseRounds = Math.max(1, Math.round(getEffectiveOption(options, studioConfig, 'spinRounds', 7, 'number')));
       var spinSpeedFactor = Math.max(0.25, getEffectiveOption(options, studioConfig, 'spinSpeed', 1, 'number'));
       var showPopupResult = getEffectiveOption(options, studioConfig, 'showPopupResult', false, 'boolean');
       var enableConfetti = getEffectiveOption(options, studioConfig, 'enableConfetti', false, 'boolean');
@@ -552,117 +679,156 @@ var defaultSegmentColors = [
       stopIdleRotation();
       winnerElement.innerText = '';
 
-      var angleStep = (2 * Math.PI) / foodItems.length;
-      var selectedIndex = Math.floor(Math.random() * foodItems.length);
+      var itemCount = foodItems.length;
+      var angleStep = (2 * Math.PI) / itemCount;
+      var selectedIndex = Math.floor(Math.random() * itemCount);
       var selectedItem = foodItems[selectedIndex];
 
-      // Realistic dramatic ending types:
-      // Type 0 (38%): "Peg Hop" - hangs on previous name until last moment, then pops over peg into winner
-      // Type 1 (38%): "Near-Miss Rollback" - drives near exit peg, flapper resists, gently rolls back into winner
-      // Type 2 (24%): "Sustained Coast" - drifts smoothly into mid-slice
+      // 4 High-Suspense Endgame Archetypes:
+      // Type 0 (40%): "Late Cliffhanger Hop" - stalls against the entry peg of winner, barely pops over at the end
+      // Type 1 (35%): "Elastic Peg Rejection" - pushes to the exit peg of winner, fails to pass, and rocks back
+      // Type 2 (15%): "Double-Tease Crawl" - clears entry peg by a razor margin and stops just inside the border
+      // Type 3 (10%): "Deep Glide" - ultra-long slow coast into the center of the winning slice
       var outcomeRoll = Math.random();
-      var outcomeType = outcomeRoll < 0.38 ? 0 : (outcomeRoll < 0.76 ? 1 : 2);
+      var outcomeType = outcomeRoll < 0.40 ? 0 : (outcomeRoll < 0.75 ? 1 : (outcomeRoll < 0.90 ? 2 : 3));
       var sliceOffset;
-      var rollbackAngle = 0; // in radians
+      var rollbackAngle = 0;
 
       if (outcomeType === 0) {
-        sliceOffset = 0.12 + Math.random() * 0.16;
+        sliceOffset = 0.08 + Math.random() * 0.11;
       } else if (outcomeType === 1) {
-        sliceOffset = 0.72 + Math.random() * 0.10;
-        rollbackAngle = (1.8 + Math.random() * 1.5) * (Math.PI / 180);
+        sliceOffset = 0.78 + Math.random() * 0.12;
+        // Push right up into the exit peg, then spring back
+        var distToExitPeg = (1.0 - sliceOffset) * angleStep;
+        rollbackAngle = distToExitPeg * (0.78 + Math.random() * 0.14);
+      } else if (outcomeType === 2) {
+        sliceOffset = 0.04 + Math.random() * 0.05;
       } else {
         sliceOffset = 0.35 + Math.random() * 0.30;
       }
 
-      var totalRounds = baseRounds + (Math.random() < 0.5 ? 1 : 0);
+      var totalRounds = baseRounds + Math.floor(Math.random() * 3);
       var startRotation = idleRotation;
-      var indAngle = 3 * Math.PI / 2;
+      var windupAngle = 0.19; // ~11 deg counter-rotation wind-up
+      var launchRotation = startRotation - windupAngle;
+
+      var indAngle = 1.5 * Math.PI;
       var desiredModulo = indAngle - (selectedIndex + sliceOffset) * angleStep;
-      var currentMod = ((startRotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+      var currentMod = ((launchRotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
       var deltaToTarget = desiredModulo - currentMod;
       while (deltaToTarget < 0) {
         deltaToTarget += 2 * Math.PI;
       }
       var totalDeltaRotation = totalRounds * 2 * Math.PI + deltaToTarget;
-      var targetRotation = startRotation + totalDeltaRotation;
+      var targetRotation = launchRotation + totalDeltaRotation;
 
-      var baseDuration = 6800;
-      var totalDuration = baseDuration / spinSpeedFactor;
-      var rollbackDuration = outcomeType === 1 ? (850 / spinSpeedFactor) : 0;
-      var forwardDuration = totalDuration - rollbackDuration;
+      // Extended duration for a suspenseful multi-second crawl
+      var windupDuration = 260 / spinSpeedFactor;
+      var mainSpinDuration = (8400 + Math.random() * 900) / spinSpeedFactor;
+      var rollbackDuration = outcomeType === 1 ? (1050 / spinSpeedFactor) : 0;
+      var totalDuration = windupDuration + mainSpinDuration + rollbackDuration;
       var startTime = performance.now();
 
-      var indicatorEl = document.querySelector(options.indicatorSelector || '#indicator, .wheel-indicator, .sup-wheel-indicator, .owo-indicator, .sw-indicator');
+      var indicatorEl = document.querySelector(
+        options.indicatorSelector || '#indicator, .wheel-indicator, .sup-wheel-indicator, .owo-indicator, .sw-indicator'
+      );
       if (indicatorEl) {
-        indicatorEl.style.transformOrigin = '50% 0%';
+        indicatorEl.style.transformOrigin = '50% 12%';
       }
 
-      var wasContacting = false;
+      // Track discrete peg crossings so no tick is ever missed at high or low speed
+      var lastPegIndex = Math.floor((launchRotation - indAngle) / angleStep);
       var lastSnapTime = 0;
+      var prevRotation = startRotation;
+
+      // Steeper power-4.35 deceleration with a tiny late-crawl shelf
+      function computeMainEase(p) {
+        var base = 1 - Math.pow(1 - p, 4.35);
+        return base;
+      }
 
       function animate(now) {
         now = now || performance.now();
         var elapsed = now - startTime;
         var currentRotation;
         var isSpinComplete = false;
+        var inCrawlPhase = false;
 
-        if (outcomeType === 1) {
-          if (elapsed < forwardDuration) {
-            var p = elapsed / forwardDuration;
-            var eased = 1 - Math.pow(1 - p, 2.45);
-            currentRotation = startRotation + (totalDeltaRotation + rollbackAngle) * eased;
-          } else if (elapsed < totalDuration) {
-            var s = (elapsed - forwardDuration) / rollbackDuration;
-            var rollEase = 0.5 * (1 - Math.cos(s * Math.PI));
-            currentRotation = (targetRotation + rollbackAngle) - rollbackAngle * rollEase;
-          } else {
-            currentRotation = targetRotation;
-            isSpinComplete = true;
-          }
-        } else {
-          if (elapsed < totalDuration) {
-            var p = elapsed / totalDuration;
-            var eased = 1 - Math.pow(1 - p, 2.45);
-            currentRotation = startRotation + totalDeltaRotation * eased;
-          } else {
-            currentRotation = targetRotation;
-            isSpinComplete = true;
-          }
-        }
+        if (elapsed < windupDuration) {
+          // Phase 1: Quick anticipation pull-back
+          var wp = elapsed / windupDuration;
+          var windEase = 0.5 * (1 - Math.cos(wp * Math.PI));
+          currentRotation = startRotation - windupAngle * windEase;
+        } else if (elapsed < windupDuration + mainSpinDuration) {
+          // Phase 2: Main launch + long suspenseful deceleration
+          var p = (elapsed - windupDuration) / mainSpinDuration;
+          var eased = computeMainEase(p);
+          var rawRotation = launchRotation + (totalDeltaRotation + rollbackAngle) * eased;
 
-        // Indicator peg deflection & snap physics
-        var modAngle = ((currentRotation - indAngle) % angleStep + angleStep) % angleStep;
-        if (Math.abs(modAngle - angleStep) < 1e-5) modAngle = 0;
+          // Physical peg resistance during the slow crawl phase (last 42% of time)
+          if (p > 0.58) {
+            inCrawlPhase = true;
+            var crawlIntensity = (p - 0.58) / 0.42; // 0..1
+            var phaseInSlice = (((rawRotation - indAngle) % angleStep) + angleStep) % angleStep / angleStep;
 
-        var contactWindow = Math.min(angleStep * 0.38, 0.12);
-        var deflection = 0;
-        var maxDeflection = 9;
-
-        if (modAngle > angleStep - contactWindow && !isSpinComplete) {
-          var contactProgress = (modAngle - (angleStep - contactWindow)) / contactWindow;
-          // Cubic Hermite smoothstep for silky needle flex
-          var contactSmooth = contactProgress * contactProgress * (3 - 2 * contactProgress);
-          deflection = contactSmooth * maxDeflection;
-          wasContacting = true;
-        } else {
-          if (wasContacting) {
-            wasContacting = false;
-            if (modAngle < angleStep * 0.5) {
-              lastSnapTime = now;
-              playRatchetTick(elapsed / totalDuration);
+            // As a peg approaches the flapper (phaseInSlice -> 1.0), the flapper pushes back,
+            // creating realistic hesitation right on the pins.
+            if (phaseInSlice > 0.65) {
+              var u = (phaseInSlice - 0.65) / 0.35; // 0..1 approaching pin
+              // Smooth bell-shaped resistance that peaks just before the peg snaps through
+              var stallCurve = Math.sin(u * Math.PI) * Math.pow(u, 0.7);
+              var fadeNearEnd = outcomeType === 1 ? 1 : Math.max(0, 1 - Math.pow(p, 8));
+              var maxHoldBack = angleStep * 0.16 * crawlIntensity * fadeNearEnd;
+              rawRotation -= stallCurve * maxHoldBack;
             }
           }
-          if (now - lastSnapTime < 110) {
-            var dt = (now - lastSnapTime) / 1000;
-            deflection = -3.2 * Math.exp(-24 * dt) * Math.sin(40 * dt);
-          } else {
-            deflection = 0;
-          }
+
+          currentRotation = rawRotation;
+        } else if (elapsed < totalDuration && outcomeType === 1) {
+          // Phase 3: Elastic peg rejection (rolls backward off the pin and settles)
+          inCrawlPhase = true;
+          var s = (elapsed - windupDuration - mainSpinDuration) / rollbackDuration;
+          // Damped spring settle
+          var springEase = 1 - Math.exp(-4.2 * s) * Math.cos(1.35 * Math.PI * s);
+          currentRotation = (targetRotation + rollbackAngle) - rollbackAngle * Math.min(1.04, springEase);
+        } else {
+          currentRotation = targetRotation;
+          isSpinComplete = true;
         }
 
-        // Seamless glide to zero deflection as wheel comes to rest
-        if (elapsed > totalDuration * 0.92) {
-          var settleFade = Math.max(0, (totalDuration - elapsed) / (totalDuration * 0.08));
+        // Instantaneous angular speed for realistic sound pitch & needle physics
+        var angularDelta = Math.abs(currentRotation - prevRotation);
+        prevRotation = currentRotation;
+        var normSpeed = Math.min(1, angularDelta / 0.22);
+
+        // Accurate peg-crossing detector
+        var currentPegIndex = Math.floor((currentRotation - indAngle) / angleStep);
+        if (currentPegIndex !== lastPegIndex && elapsed > windupDuration * 0.5) {
+          lastPegIndex = currentPegIndex;
+          lastSnapTime = now;
+          playRatchetTick(normSpeed);
+        }
+
+        // Indicator peg deflection & spring-back vibration
+        var modAngle = (((currentRotation - indAngle) % angleStep) + angleStep) % angleStep;
+        var contactWindow = Math.min(angleStep * 0.36, 0.16);
+        var deflection = 0;
+        var maxDeflection = 16; // Stronger bend on slow peg climbs
+
+        if (modAngle > angleStep - contactWindow && !isSpinComplete && elapsed >= windupDuration) {
+          var contactProgress = (modAngle - (angleStep - contactWindow)) / contactWindow;
+          var contactSmooth = contactProgress * contactProgress * (3 - 2 * contactProgress);
+          // Bend deeper when crawling slowly against a peg
+          var slowBoost = 1 + (1 - normSpeed) * 0.45;
+          deflection = -contactSmooth * maxDeflection * slowBoost;
+        } else if (now - lastSnapTime < 150) {
+          var dt = (now - lastSnapTime) / 1000;
+          var snapAmp = 7.5 + normSpeed * 5.0;
+          deflection = snapAmp * Math.exp(-22 * dt) * Math.sin(52 * dt);
+        }
+
+        if (elapsed > totalDuration * 0.95) {
+          var settleFade = Math.max(0, (totalDuration - elapsed) / (totalDuration * 0.05));
           deflection *= settleFade;
         }
 
@@ -670,7 +836,12 @@ var defaultSegmentColors = [
           indicatorEl.style.transform = 'translateX(-50%) rotate(' + deflection.toFixed(2) + 'deg)';
         }
 
-        renderWheel(currentRotation);
+        var activeIdx = inCrawlPhase ? getActiveSliceIndex(currentRotation, itemCount) : -1;
+        renderWheel(currentRotation, {
+          activeIndex: activeIdx,
+          winnerIndex: isSpinComplete ? selectedIndex : -1,
+          winnerPulse: 0
+        });
 
         if (!isSpinComplete) {
           requestAnimationFrame(animate);
@@ -679,6 +850,8 @@ var defaultSegmentColors = [
             indicatorEl.style.transform = 'translateX(-50%) rotate(0deg)';
           }
           idleRotation = currentRotation;
+
+          playWinFanfare();
 
           var resultHtml = resultFormatter(selectedItem);
           winnerElement.innerHTML = resultHtml;
@@ -697,21 +870,44 @@ var defaultSegmentColors = [
             launchConfetti(canvas);
           }
 
-          isSpinning = false;
-          renderWheel(currentRotation);
-          startIdleRotation();
-          if (foodItems.length === 1) {
-            setTimeout(function () {
-              foodItems = normalizeItems(originalItems);
-              pendingRemovalItem = null;
-              hasSpun = false;
-              idleRotation = 0;
-              winnerElement.innerText = '';
-              removeResultPopup();
-              renderWheel(0);
+          // Animate a 950ms spotlight pulse on the winning slice before unlocking
+          var pulseStart = performance.now();
+          var pulseDuration = 950;
+
+          function animateWinnerPulse(tNow) {
+            var pElapsed = tNow - pulseStart;
+            if (pElapsed < pulseDuration) {
+              renderWheel(currentRotation, {
+                activeIndex: -1,
+                winnerIndex: selectedIndex,
+                winnerPulse: pElapsed / pulseDuration
+              });
+              requestAnimationFrame(animateWinnerPulse);
+            } else {
+              isSpinning = false;
+              renderWheel(currentRotation, {
+                activeIndex: -1,
+                winnerIndex: selectedIndex,
+                winnerPulse: 0
+              });
               startIdleRotation();
-            }, 3200);
+
+              if (foodItems.length === 1) {
+                setTimeout(function () {
+                  foodItems = normalizeItems(originalItems);
+                  pendingRemovalItem = null;
+                  hasSpun = false;
+                  idleRotation = 0;
+                  winnerElement.innerText = '';
+                  removeResultPopup();
+                  renderWheel(0);
+                  startIdleRotation();
+                }, 3200);
+              }
+            }
           }
+
+          requestAnimationFrame(animateWinnerPulse);
         }
       }
 
@@ -764,12 +960,12 @@ var defaultSegmentColors = [
       soundBtn.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;padding:7px 18px;border-radius:999px;border:1.5px solid var(--wheel-result-text, #4f46e5);background:rgba(255,255,255,0.85);color:var(--brand-heading,#222);font-weight:600;font-size:0.88rem;cursor:pointer;transition:all 0.2s cubic-bezier(0.4,0,0.2,1);box-shadow:0 2px 8px rgba(0,0,0,0.04);';
 
       function applyHover(btn) {
-        btn.addEventListener('mouseenter', function() {
+        btn.addEventListener('mouseenter', function () {
           btn.style.transform = 'translateY(-1px)';
           btn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.08)';
           btn.style.background = '#ffffff';
         });
-        btn.addEventListener('mouseleave', function() {
+        btn.addEventListener('mouseleave', function () {
           btn.style.transform = 'translateY(0)';
           btn.style.boxShadow = '0 2px 8px rgba(0,0,0,0.04)';
           btn.style.background = 'rgba(255,255,255,0.85)';
@@ -779,12 +975,12 @@ var defaultSegmentColors = [
       applyHover(shareBtn);
       applyHover(soundBtn);
 
-      soundBtn.addEventListener('click', function() {
+      soundBtn.addEventListener('click', function () {
         initAudio();
         isSoundMuted = !isSoundMuted;
         try {
           localStorage.setItem('wheelSoundMuted', isSoundMuted ? 'true' : 'false');
-        } catch (e) {}
+        } catch (e) { }
         soundBtn.innerHTML = isSoundMuted ? '<span style="margin-right:6px;">🔇</span><span>Muted</span>' : '<span style="margin-right:6px;">🔊</span><span>Sound</span>';
         if (!isSoundMuted) {
           playRatchetTick(0.5);
@@ -801,13 +997,13 @@ var defaultSegmentColors = [
         modal.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">' +
           '<h3 style="margin:0;font-size:1.25rem;font-weight:700;">✏️ Edit Wheel Choices</h3>' +
           '<button id="closeModalX" type="button" style="background:none;border:none;font-size:1.4rem;line-height:1;cursor:pointer;color:#94a3b8;padding:4px;">&times;</button>' +
-        '</div>' +
-        '<p style="margin:0 0 12px 0;font-size:0.88rem;color:#64748b;line-height:1.4;">Add or edit choices (one per line, or comma-separated):</p>' +
-        '<textarea id="customChoicesInput" rows="7" style="width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid #cbd5e1;font-size:0.95rem;box-sizing:border-box;font-family:inherit;line-height:1.5;resize:vertical;outline:none;">' + currentText + '</textarea>' +
-        '<div style="display:flex;gap:10px;justify-content:flex-end;margin-top:18px;">' +
+          '</div>' +
+          '<p style="margin:0 0 12px 0;font-size:0.88rem;color:#64748b;line-height:1.4;">Add or edit choices (one per line, or comma-separated):</p>' +
+          '<textarea id="customChoicesInput" rows="7" style="width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid #cbd5e1;font-size:0.95rem;box-sizing:border-box;font-family:inherit;line-height:1.5;resize:vertical;outline:none;">' + currentText + '</textarea>' +
+          '<div style="display:flex;gap:10px;justify-content:flex-end;margin-top:18px;">' +
           '<button id="cancelChoicesBtn" type="button" style="padding:10px 18px;border-radius:999px;border:1px solid #cbd5e1;background:#f8fafc;color:#475569;font-weight:600;font-size:0.9rem;cursor:pointer;">Cancel</button>' +
           '<button id="saveChoicesBtn" type="button" style="padding:10px 22px;border-radius:999px;border:none;background:var(--wheel-result-text, #ff3f81);color:#fff;font-weight:700;font-size:0.9rem;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,0.15);">Save & Spin</button>' +
-        '</div>';
+          '</div>';
 
         modalOverlay.appendChild(modal);
         document.body.appendChild(modalOverlay);
@@ -855,7 +1051,6 @@ var defaultSegmentColors = [
       controlsWrap.appendChild(editBtn);
       controlsWrap.appendChild(shareBtn);
       controlsWrap.appendChild(soundBtn);
-      // Place neatly between the preset buttons and the Spin Button
       spinBtn.parentNode.insertBefore(controlsWrap, spinBtn);
     })();
 
