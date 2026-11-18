@@ -178,10 +178,9 @@
         window.dpBreadcrumb.baseUrl = window.location.hostname === 'localhost' ? window.location.origin : 'https://dailypick.dev';
         window.dpBreadcrumb.categoryPages = {
           standup: { name: 'Stand-up Games', url: window.dpBreadcrumb.baseUrl + '/standups/' },
-          randomizer: { name: 'Random Pickers & Decision Tools', url: window.dpBreadcrumb.baseUrl + '/randomizers/' },
+          randomizer: { name: 'Wheel & Pickers', url: window.dpBreadcrumb.baseUrl + '/apps/the-wheel-spinner/' },
           agile: { name: 'Agile Planning Tools', url: window.dpBreadcrumb.baseUrl + '/agile/' },
-          games: { name: 'Games & Group Activities', url: window.dpBreadcrumb.baseUrl + '/games/' },
-          food: { name: 'Food Wheels', url: window.dpBreadcrumb.baseUrl + '/food/' }
+          games: { name: 'Team Icebreakers', url: window.dpBreadcrumb.baseUrl + '/standups/' }
         };
         window.dpBreadcrumb.homeUrl = window.dpBreadcrumb.baseUrl + '/';
         window.dpBreadcrumb.getAppCategoryMap = function () {
@@ -240,11 +239,10 @@
     {% set categoryPages = {
       'standups': { 'name': 'Stand-up Games', 'url': metadata.url + '/standups/' },
       'standup': { 'name': 'Stand-up Games', 'url': metadata.url + '/standups/' },
-      'randomizers': { 'name': 'Random Pickers & Decision Tools', 'url': metadata.url + '/randomizers/' },
-      'randomizer': { 'name': 'Random Pickers & Decision Tools', 'url': metadata.url + '/randomizers/' },
+      'randomizers': { 'name': 'Wheel & Pickers', 'url': metadata.url + '/apps/the-wheel-spinner/' },
+      'randomizer': { 'name': 'Wheel & Pickers', 'url': metadata.url + '/apps/the-wheel-spinner/' },
       'agile': { 'name': 'Agile Planning Tools', 'url': metadata.url + '/agile/' },
-      'games': { 'name': 'Games & Group Activities', 'url': metadata.url + '/games/' },
-      'food': { 'name': 'Food Wheels', 'url': metadata.url + '/food/' }
+      'games': { 'name': 'Team Icebreakers', 'url': metadata.url + '/standups/' }
     } %}
     {% set catMatched = categoryPages[appCategoryInfo] %}
 

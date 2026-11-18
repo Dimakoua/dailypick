@@ -1,17 +1,17 @@
 ---
 layout: base_app.njk
-title: "Choices Spinner – Interactive Decision Wheel | Daily Pick"
-description: "Spin a colorful wheel to choose between options: lunch spots, meeting topics, project priorities, or any decision. Fair, fast, and fun."
-keywords: "choices spinner, decision spinner, option picker, lunch decision, topic selector, interactive choice wheel"
+title: "Spin the Wheel – Free Ad-Free Random Wheel Spinner | Daily Pick"
+description: "Spin a free, ad-free custom wheel online. Edit choices on the page, load instant presets, remove winners after each spin, and share your wheel link."
+keywords: "spin the wheel, wheel spinner, random picker wheel, custom wheel, decision wheel, spinthewheel alternative, random name picker, giveaway wheel"
 canonical: "https://dailypick.dev/apps/the-wheel-spinner/"
 headExtra: |
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Choices Spinner",
+    "name": "Daily Pick Spin the Wheel",
     "operatingSystem": "All",
-    "applicationCategory": "GameApplication",
+    "applicationCategory": "UtilitiesApplication",
     "browserRequirements": "Requires JavaScript. Requires HTML5.",
     "offers": {
       "@type": "Offer",
@@ -61,10 +61,9 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
 
     <header class="page-hero glass-card">
       <div>
-        <p class="hero-eyebrow">Decision Making</p>
-        <h1 id="spinnerHeading">Choices Spinner</h1>
-        <p>Add options, spin the wheel, and let randomness decide. Perfect for lunch, topics, priorities, or any team
-          choice.</p>
+        <p class="hero-eyebrow">100% Free &amp; Ad-Free Wheel Spinner</p>
+        <h1 id="spinnerHeading">Spin the Wheel</h1>
+        <p>Type or paste your options directly below and spin. No sign-up, no ads. Running a daily stand-up with a saved team? Try the <a href="/apps/wheel/">Roster-Powered Stand-up Wheel</a>.</p>
       </div>
     </header>
 
@@ -72,6 +71,22 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
       <div class="spinner-layout">
         <!-- Left: Options Input & Controls -->
         <div class="spinner-sidebar">
+          <div class="form-group">
+            <label for="presetSelect">Quick Presets:</label>
+            <select id="presetSelect" class="preset-select" style="width:100%;padding:8px 10px;border-radius:8px;border:1px solid var(--border-color, rgba(255,255,255,0.2));background:var(--surface-bg, rgba(255,255,255,0.08));color:inherit;">
+              <option value="">-- Choose a preset --</option>
+              <option value="yes-no">Yes / No</option>
+              <option value="names">Random Names</option>
+              <option value="giveaway">Giveaway / Raffle</option>
+              <option value="classroom">Classroom Call-out</option>
+              <option value="dinner">What to Eat</option>
+              <option value="icebreaker">Team Icebreaker</option>
+              <option value="nba">NBA Teams</option>
+              <option value="nhl">NHL Teams</option>
+              <option value="mlb">MLB Teams</option>
+            </select>
+          </div>
+
           <div class="form-group">
             <label for="optionsInput">Options (one per line or comma-separated):</label>
             <textarea id="optionsInput" rows="8"
@@ -86,14 +101,19 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
 
           <div id="uploadedOptionsList" class="uploaded-options"></div>
 
-          <div class="form-actions">
+          <div class="form-actions" style="display:flex;flex-wrap:wrap;gap:8px;">
             <button id="updateBtn" class="btn btn--accent" type="button">🔄 Update</button>
+            <button id="shuffleBtn" class="btn btn--secondary" type="button">🔀 Shuffle</button>
+            <button id="shareBtn" class="btn btn--secondary" type="button">🔗 Share</button>
             <button id="resetBtn" class="btn btn--secondary" type="button">↺ Reset</button>
           </div>
 
-          <div class="form-group checkbox-group">
+          <div class="form-group checkbox-group" style="display:flex;flex-direction:column;gap:6px;">
             <label for="removeAfterSelection">
-              <input id="removeAfterSelection" type="checkbox" /> Remove option after selection
+              <input id="removeAfterSelection" type="checkbox" /> Remove winner after spin
+            </label>
+            <label for="soundToggle">
+              <input id="soundToggle" type="checkbox" checked /> Enable spin sound
             </label>
           </div>
 
@@ -111,8 +131,9 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
             <button id="spinBtn" class="btn btn-spin" type="button">🎡 SPIN!</button>
           </div>
 
-          <div class="result-display">
+          <div class="result-display" style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;">
             <div id="resultText" class="result-value"></div>
+            <button id="copyResultBtn" class="btn btn--secondary btn--small" type="button" hidden>📋 Copy Result</button>
           </div>
         </div>
       </div>
@@ -378,21 +399,75 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
     }
 
 
+    const presetSelect = document.getElementById('presetSelect');
+    const shuffleBtn = document.getElementById('shuffleBtn');
+    const shareBtn = document.getElementById('shareBtn');
+    const copyResultBtn = document.getElementById('copyResultBtn');
+    const soundToggle = document.getElementById('soundToggle');
+
+    const PRESETS = {
+      'yes-no': ['Yes', 'No', 'Maybe', 'Ask Again'],
+      'names': ['Alex', 'Jordan', 'Taylor', 'Morgan', 'Casey', 'Riley'],
+      'giveaway': ['Ticket #101', 'Ticket #102', 'Ticket #103', 'Ticket #104', 'Ticket #105', 'Ticket #106'],
+      'classroom': ['Student 1', 'Student 2', 'Student 3', 'Student 4', 'Student 5', 'Student 6'],
+      'dinner': ['Pizza', 'Tacos', 'Sushi', 'Burgers', 'Thai', 'Salad'],
+      'icebreaker': ['Favorite travel spot?', 'Best recent show?', 'Coffee or tea?', 'One win this week?', 'Dream superpower?'],
+      'nba': ['Celtics', 'Lakers', 'Warriors', 'Nuggets', 'Bucks', 'Knicks', 'Heat', 'Mavericks'],
+      'nhl': ['Oilers', 'Panthers', 'Rangers', 'Avalanche', 'Bruins', 'Maple Leafs', 'Stars', 'Canucks'],
+      'mlb': ['Dodgers', 'Yankees', 'Braves', 'Astros', 'Phillies', 'Padres', 'Red Sox', 'Cubs']
+    };
+
+    function applyPreset(presetKey) {
+      const list = PRESETS[presetKey];
+      if (!list) return false;
+      options = list.map(label => ({ label }));
+      optionsInput.value = getOptionsTextValue();
+      resultText.textContent = '';
+      if (copyResultBtn) copyResultBtn.hidden = true;
+      saveOptions();
+      updateUploadedOptionsList();
+      updateWheelEngine();
+      lastRotation = 0;
+      drawWheel(0);
+      updateInteractionState();
+      return true;
+    }
+
     function loadOptions() {
-      try {
-        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-        const normalized = normalizeSavedOptions(saved);
-        if (normalized && normalized.length > 0) {
-          options = normalized;
-        } else {
+      const params = new URLSearchParams(window.location.search);
+      const choicesParam = params.get('choices');
+      const presetParam = params.get('preset');
+
+      if (choicesParam) {
+        const parsed = choicesParam.split(',').map(s => s.trim()).filter(Boolean).map(parseOptionEntry).filter(Boolean);
+        if (parsed.length > 0) {
+          options = parsed;
+        }
+      } else if (presetParam && PRESETS[presetParam]) {
+        options = PRESETS[presetParam].map(label => ({ label }));
+        if (presetSelect) presetSelect.value = presetParam;
+      } else {
+        try {
+          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+          const normalized = normalizeSavedOptions(saved);
+          if (normalized && normalized.length > 0) {
+            options = normalized;
+          } else {
+            options = DEFAULT_OPTIONS.map(label => ({ label }));
+          }
+        } catch (e) {
           options = DEFAULT_OPTIONS.map(label => ({ label }));
         }
-      } catch (e) {
-        options = DEFAULT_OPTIONS.map(label => ({ label }));
       }
 
       const savedRemoveAfter = localStorage.getItem(REMOVE_AFTER_KEY);
       removeAfterCheckbox.checked = savedRemoveAfter === 'true';
+
+      if (soundToggle) {
+        try {
+          soundToggle.checked = localStorage.getItem('wheelSoundMuted') !== 'true';
+        } catch (e) {}
+      }
 
       optionsInput.value = getOptionsTextValue();
       options.forEach(preloadOptionImage);
@@ -697,6 +772,9 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
           }
 
           // Show result
+          lastWinningLabel = selectedOption.label;
+          resultText.textContent = `🎉 Winner: ${selectedOption.label}`;
+          if (copyResultBtn) copyResultBtn.hidden = false;
           const resultHtml = createResultFormatter()(selectedOption.label);
           resultText.innerHTML = resultHtml;
 
@@ -809,10 +887,94 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
       updateInteractionState();
     });
 
+    let lastWinningLabel = '';
+
+    function syncOptionsFromInput() {
+      const parsed = parseOptions();
+      const uploadedImageOptions = options.filter(option => isUploadedDataImage(option));
+      if (!parsed.length && !uploadedImageOptions.length) return;
+      options = [...parsed, ...uploadedImageOptions];
+      saveOptions();
+      options.forEach(preloadOptionImage);
+      updateUploadedOptionsList();
+      updateWheelEngine();
+      lastRotation = 0;
+      drawWheel(0);
+      updateInteractionState();
+    }
+
+    let inputDebounceTimer = null;
+    optionsInput.addEventListener('input', () => {
+      clearTimeout(inputDebounceTimer);
+      inputDebounceTimer = setTimeout(syncOptionsFromInput, 250);
+    });
+
+    if (presetSelect) {
+      presetSelect.addEventListener('change', (e) => {
+        if (e.target.value) applyPreset(e.target.value);
+      });
+    }
+
+    if (shuffleBtn) {
+      shuffleBtn.addEventListener('click', () => {
+        if (options.length < 2) return;
+        for (let i = options.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [options[i], options[j]] = [options[j], options[i]];
+        }
+        optionsInput.value = getOptionsTextValue();
+        saveOptions();
+        updateWheelEngine();
+        lastRotation = 0;
+        drawWheel(0);
+      });
+    }
+
+    if (shareBtn) {
+      shareBtn.addEventListener('click', async () => {
+        const labels = options.map(o => o.label).filter(Boolean);
+        const shareUrl = new URL(window.location.href);
+        shareUrl.search = '';
+        if (labels.length > 0) {
+          shareUrl.searchParams.set('choices', labels.join(','));
+        }
+        try {
+          await navigator.clipboard.writeText(shareUrl.toString());
+          const orig = shareBtn.textContent;
+          shareBtn.textContent = '✅ Copied!';
+          setTimeout(() => { shareBtn.textContent = orig; }, 1800);
+        } catch (err) {
+          window.history.replaceState(null, '', shareUrl.toString());
+        }
+      });
+    }
+
+    if (copyResultBtn) {
+      copyResultBtn.addEventListener('click', async () => {
+        if (!lastWinningLabel) return;
+        try {
+          await navigator.clipboard.writeText(`🎡 Wheel Result: ${lastWinningLabel}`);
+          const orig = copyResultBtn.textContent;
+          copyResultBtn.textContent = '✅ Copied!';
+          setTimeout(() => { copyResultBtn.textContent = orig; }, 1800);
+        } catch (err) {}
+      });
+    }
+
+    if (soundToggle) {
+      soundToggle.addEventListener('change', () => {
+        try {
+          localStorage.setItem('wheelSoundMuted', String(!soundToggle.checked));
+        } catch (e) {}
+      });
+    }
+
     resetBtn.addEventListener('click', () => {
       options = DEFAULT_OPTIONS.map(label => ({ label }));
       optionsInput.value = getOptionsTextValue();
       resultText.textContent = '';
+      if (copyResultBtn) copyResultBtn.hidden = true;
+      if (presetSelect) presetSelect.value = '';
       saveOptions();
       updateUploadedOptionsList();
       updateWheelEngine();
