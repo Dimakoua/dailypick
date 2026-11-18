@@ -76,40 +76,42 @@ button#restartButton:disabled {
   max-width: var(--letters-max);
   box-sizing: border-box;
 
-  /* glass body with theme-aware trim to blend with the board */
-  background: var(--glass-bg-strong, rgba(255,255,255,0.18));
- 
-  border: 12px solid var(--brand-surface-light, #4a3b31); /* Themed wood/metal trim */
+  /* Bright frosted glass arcade cabinet */
+  background: var(--glass-bg-strong, rgba(255, 255, 255, 0.48));
+  backdrop-filter: blur(12px);
+  border: 6px solid rgba(255, 255, 255, 0.55);
   border-radius: 28px;
-  box-shadow: 0 14px 36px rgba(0,0,0,0.18);
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.16), 0 0 0 1px rgba(148, 163, 184, 0.25) inset;
   padding: 14px;
 }
 
-/* Canvas follows theme background with inward depth */
+/* Canvas follows vibrant royal-blue arcade playfield */
 #gameCanvas {
   display: block;
   flex: 1 1 auto;
   min-width: 0;
-  border-top-left-radius: 90px;
-  border-top-right-radius: 90px;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 0;
-  background: var(--brand-surface, #041a35);
-  box-shadow: inset 0 0 25px rgba(0,0,0,0.6);
-  border: none;
+  aspect-ratio: 450 / 675;
+  border-top-left-radius: 86px;
+  border-top-right-radius: 86px;
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 4px;
+  background: #172554;
+  box-shadow: inset 0 0 28px rgba(15, 23, 42, 0.45), 0 4px 16px rgba(37, 99, 235, 0.18);
+  border: 2px solid rgba(255, 255, 255, 0.35);
 }
 
-/* Names panel becomes a tidy glass sidebar */
+/* Names panel becomes a bright frosted glass sidebar */
 #namesPanel {
   width: var(--letters-panel-w);
   padding: 18px 16px;
   flex-shrink: 0;
   overflow-y: auto;
-  background: var(--glass-bg, rgba(255,255,255,0.12));
-  border-left: 5px solid var(--brand-surface-light, #4a3b31); /* Themed separator */
-  border-top-right-radius: 16px;
-  border-bottom-right-radius: 16px;
-  box-shadow: inset 0 0 0 1px var(--glass-border, rgba(255,255,255,0.38));
+  background: var(--glass-bg, rgba(255, 255, 255, 0.42));
+  border-left: 2px solid rgba(255, 255, 255, 0.45);
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+  color: var(--brand-text, #1e293b);
 }
 #namesPanel h2 {
   margin: 0 0 10px;
@@ -140,22 +142,37 @@ button#restartButton:disabled {
 }
 
 /* Names list items */
+#namesList {
+  counter-reset: matched-order;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 .name-item {
-  padding: 7px 6px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  font-size: 15px;
-  color: var(--brand-text, #374151);
-  opacity: 0.8;
-  transition: background-color .25s ease, transform .25s ease;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: rgba(255, 255, 255, 0.55);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--brand-text, #1e293b);
+  transition: background-color .25s ease, transform .25s ease, border-color .25s ease;
 }
 .name-item.matched {
-  background: var(--brand-accent, rgba(46, 125, 50, 0.15));
-  color: var(--brand-accent-contrast, #fff);
+  counter-increment: matched-order;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(5, 150, 105, 0.28));
+  border-color: rgba(16, 185, 129, 0.55);
+  color: #065f46;
   opacity: 1;
-  border-radius: 6px;
   font-weight: 800;
-  text-decoration: line-through;
+  text-decoration: none;
   animation: highlightName .5s ease-in-out;
+}
+.name-item.matched::before {
+  content: "#" counter(matched-order) " ";
+  color: #059669;
+  font-weight: 900;
+  margin-right: 4px;
 }
 @keyframes highlightName {
   0% { transform: scale(1); }
