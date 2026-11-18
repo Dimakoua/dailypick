@@ -1,7 +1,7 @@
 ---
-title: "Decision-Making Lottery: Fair Teams & Faster Progress | Team Building"
+title: "Decision-Making Lottery: Fair Teams & Faster Progress"
 date: 2025-12-22
-description: "Use unbiased randomness to make fairer, faster team decisions—practical rituals and examples to accelerate progress. Features team building."
+description: "Use unbiased randomness to make fairer, faster team decisions—practical rituals and examples to accelerate progress."
 layout: post.njk
 tags: ["team building", "agile", "productivity", "decision making", "workplace culture", "fairness", "remote work", "team tools"]
 canonical: "https://dailypick.dev/blog/decision-making-lottery-how-unbiased-randomness-fuels-fairer-teams-faster-progress/"

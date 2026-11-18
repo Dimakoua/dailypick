@@ -1,7 +1,7 @@
 ---
 title: Remote Team Building Activities That Actually Work
 date: 2026-03-10
-description: "Practical, proven activities and games that strengthen remote team bonds and keep engagement high, even when everyone is distributed. Features remote team building activities."
+description: "Practical, proven activities and games that strengthen remote team bonds and keep engagement high, even when everyone is distributed."
 layout: post.njk
 tags: 
 section: Team Engagement

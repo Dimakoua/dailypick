@@ -1,7 +1,7 @@
 ---
 title: "Async Standup Alternatives: Keep Teams Aligned Without a Meeting"
 date: 2026-03-10
-description: "Learn how to run effective asynchronous standups that maintain team alignment, boost productivity, and reduce meeting overload. Features async standup."
+description: "Learn how to run effective asynchronous standups that maintain team alignment, boost productivity, and reduce meeting overload."
 layout: post.njk
 tags: 
 section: Team Engagement

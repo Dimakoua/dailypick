@@ -1,7 +1,7 @@
 ---
 title: 8 Best Standup Meeting Ideas for Remote & In-Office Teams
 date: 2026-02-19
-description: "Eight proven standup formats that cut meeting time by 30%, boost engagement, and keep distributed teams aligned—includes templates. Features standup meeting ideas."
+description: "Eight proven standup formats that cut meeting time by 30%, boost engagement, and keep distributed teams aligned—includes templates."
 layout: post.njk
 tags: ["standup meetings", "agile ceremonies", "team collaboration", "remote work", "meeting best practices", "productivity"]
 canonical: "https://dailypick.dev/blog/8-best-standup-meeting-ideas/"

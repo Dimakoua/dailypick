@@ -1,7 +1,7 @@
 ---
-title: "7 Creative Ways to Use a Random Name Picker in the Classroom | Random Name Picker For Teachers"
+title: "7 Creative Ways to Use a Random Name Picker in the Classroom"
 date: 2026-04-03
-description: "From participation to fair group forming, discover how teachers use random name pickers to boost classroom engagement and eliminate bias. Features random name picker for teachers."
+description: "From participation to fair group forming, discover how teachers use random name pickers to boost classroom engagement and eliminate bias."
 layout: post.njk
 tags: ["education", "classroom management", "teachers", "student engagement", "tools"]
 canonical: "https://dailypick.dev/blog/random-name-picker-classroom-guide/"

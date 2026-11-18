@@ -1,7 +1,7 @@
 ---
-title: "How to Pick a Random Giveaway Winner (Fairly & Fast) | Giveaway Winner Picker"
+title: "How to Pick a Random Giveaway Winner (Fairly & Fast)"
 date: 2026-04-03
-description: "Run transparent, unbiased social media or office giveaways in seconds. Learn how to use random picker tools for fair draws every time. Features giveaway winner picker."
+description: "Run transparent, unbiased social media or office giveaways in seconds. Learn how to use random picker tools for fair draws every time."
 layout: post.njk
 tags: ["giveaway", "contest", "random selection", "raffle", "social media", "tools"]
 canonical: "https://dailypick.dev/blog/how-to-pick-random-giveaway-winner/"
