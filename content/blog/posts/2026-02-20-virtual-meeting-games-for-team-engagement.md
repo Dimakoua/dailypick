@@ -128,7 +128,7 @@ Bonus: They take 5-10 minutes, so they don't lengthen meetings. They *improve* e
 ### 4. **Breakout Room Pair Debates** — For Longer Meetings
 
 **How it works:**
-- Pair people randomly (use Zoom's auto-assign or our [Random List Shuffler](/apps/random-list-shuffler/))
+- Pair people randomly (use Zoom's auto-assign or our [Random List Shuffler](/apps/the-wheel-spinner/))
 - Assign a silly debate topic: "Tabs vs. spaces?" "Hot dog is a sandwich?" "Pineapple on pizza?"
 - Pairs have 3 minutes to argue their side
 - Reconvene; pairs pitch their strongest argument (1 min per pair)
@@ -147,7 +147,7 @@ Bonus: They take 5-10 minutes, so they don't lengthen meetings. They *improve* e
 
 **Time:** 10 minutes (including the reveal)
 
-**Daily Pick Tip:** Use Daily Pick's [Random List Shuffler](/apps/random-list-shuffler/) or [Speedway Racer](/apps/speedway/) to randomize your pairs. Ensures no one's left out and builds cross-team relationships.
+**Daily Pick Tip:** Use Daily Pick's [Random List Shuffler](/apps/the-wheel-spinner/) or [Speedway Racer](/apps/speedway/) to randomize your pairs. Ensures no one's left out and builds cross-team relationships.
 
 ---
 
@@ -279,7 +279,7 @@ Bonus: They take 5-10 minutes, so they don't lengthen meetings. They *improve* e
 
 **How it works:**
 - Everyone who attends gets their name in a draw
-- During the meeting, randomly pick a name (use our [Raffle Ticket Puller](/apps/raffle-ticket-puller/) or [Giveaway Winner Picker](/apps/giveaway-winner-picker/))
+- During the meeting, randomly pick a name (use our [Raffle Ticket Puller](/apps/the-wheel-spinner/?preset=giveaway) or [Giveaway Winner Picker](/apps/the-wheel-spinner/?preset=giveaway))
 - Winner gets a small prize: coffee card, book, team dinner, remote day off, etc.
 - Announce it at the start so people know what to expect
 
@@ -296,7 +296,7 @@ Bonus: They take 5-10 minutes, so they don't lengthen meetings. They *improve* e
 
 **Time:** 2 minutes (the draw)
 
-**Daily Pick Tip:** Use Daily Pick's [Giveaway Winner Picker](/apps/giveaway-winner-picker/) or [Prize Wheel](/apps/wheel/) to pick winners live. No one feels the facilitator rigged it.
+**Daily Pick Tip:** Use Daily Pick's [Giveaway Winner Picker](/apps/the-wheel-spinner/?preset=giveaway) or [Prize Wheel](/apps/wheel/) to pick winners live. No one feels the facilitator rigged it.
 
 ---
 

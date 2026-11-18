@@ -71,7 +71,7 @@ Picker Wheel's free tier sounds great until you hit the walls:
 - Custom backgrounds, logos, and embed customization are all **Premium-only**
 - The Premium "Personalized plan" costs real money
 
-With Daily Pick, there is no Premium plan to worry about. Every tool—from the [Giveaway Winner Picker](/apps/giveaway-winner-picker/) to [Planning Poker](/apps/planning-poker/) to the [Morale Thermometer](/apps/morale-thermometer/)—is fully free with zero ads, zero account requirements, and zero limits hidden behind a paywall.
+With Daily Pick, there is no Premium plan to worry about. Every tool—from the [Giveaway Winner Picker](/apps/the-wheel-spinner/?preset=giveaway) to [Planning Poker](/apps/planning-poker/) to the [Morale Thermometer](/apps/morale-thermometer/)—is fully free with zero ads, zero account requirements, and zero limits hidden behind a paywall.
 
 ---
 
@@ -81,17 +81,17 @@ This is where the gap is biggest. Picker Wheel is fundamentally a solo tool that
 
 ### Decision-making tools on Daily Pick:
 - **[Wheel](/apps/wheel/)** – yes, we have a wheel too, clean and ad-free
-- **[Yes or No Wheel](/apps/yes-or-no-wheel/)** – instant binary decisions
+- **[Yes or No Wheel](/apps/the-wheel-spinner/?preset=yes-no)** – instant binary decisions
 - **[Choices Spinner](/apps/the-wheel-spinner/)** – fast custom picks
-- **[Coin Flip & Dice Roller](/apps/coin-flip-dice-roller/)** – classic randomness
-- **[Random Number Generator](/apps/random-number-generator/)** – just the number, nothing else
-- **[Random Letter Generator](/apps/random-letter-generator/)** – for games and icebreakers
-- **[Random List Shuffler](/apps/random-list-shuffler/)** – shuffle any list instantly
+- **[Coin Flip & Dice Roller](/apps/the-wheel-spinner/?preset=yes-no)** – classic randomness
+- **[Random Number Generator](/apps/the-wheel-spinner/)** – just the number, nothing else
+- **[Random Letter Generator](/apps/the-wheel-spinner/)** – for games and icebreakers
+- **[Random List Shuffler](/apps/the-wheel-spinner/)** – shuffle any list instantly
 
 ### Classroom & event tools:
-- **[Classroom Name Roulette](/apps/classroom-name-roulette/)** – built specifically for calling on students
-- **[Raffle Ticket Puller](/apps/raffle-ticket-puller/)** – physical raffle energy, digitally
-- **[Giveaway Winner Picker](/apps/giveaway-winner-picker/)** – transparent contest draws
+- **[Classroom Name Roulette](/apps/the-wheel-spinner/?preset=classroom)** – built specifically for calling on students
+- **[Raffle Ticket Puller](/apps/the-wheel-spinner/?preset=giveaway)** – physical raffle energy, digitally
+- **[Giveaway Winner Picker](/apps/the-wheel-spinner/?preset=giveaway)** – transparent contest draws
 
 ### Real team collaboration tools:
 - **[Planning Poker](/apps/planning-poker/)** – real-time async estimation for agile sprints
@@ -140,12 +140,12 @@ But for the vast majority of teams, classrooms, and casual decision-making? That
 | Use Case | Better Choice |
 |---|---|
 | Quick random spin for a team meeting | **Daily Pick** (no ads, no account) |
-| Classroom name selection | **Daily Pick** ([Classroom Name Roulette](/apps/classroom-name-roulette/)) |
+| Classroom name selection | **Daily Pick** ([Classroom Name Roulette](/apps/the-wheel-spinner/?preset=classroom)) |
 | Agile sprint tools | **Daily Pick** ([Planning Poker](/apps/planning-poker/), [Retro Board](/apps/retro-board/)) |
 | Team morale check | **Daily Pick** ([Morale Thermometer](/apps/morale-thermometer/)) |
 | Team icebreaker games | **Daily Pick** (10+ games vs. zero) |
 | Highly custom weighted wheel config | Picker Wheel |
-| Giveaway winner picker | **Daily Pick** ([Giveaway Winner Picker](/apps/giveaway-winner-picker/)) |
+| Giveaway winner picker | **Daily Pick** ([Giveaway Winner Picker](/apps/the-wheel-spinner/?preset=giveaway)) |
 | Ad-free, free, no-account experience | **Daily Pick** |
 
 If you're an individual who just wants to spin a wheel once in a while, both tools work. But if you're part of a team, running meetings, facilitating workshops, or teaching a classroom—**Daily Pick is the clear choice**.

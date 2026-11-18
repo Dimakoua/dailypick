@@ -107,7 +107,7 @@ Holidays shouldn’t be negotiated in whispers. When you let Daily Pick handle P
 ## Frequently Asked Questions
 
 **Q: How do you handle overlapping holiday PTO requests fairly?**  
-A: Use a transparent weighted lottery or draft order (e.g. via [Random List Shuffler](/apps/random-list-shuffler/)), with guardrails ensuring team members who covered holiday shifts the previous year receive priority selection this year.
+A: Use a transparent weighted lottery or draft order (e.g. via [Random List Shuffler](/apps/the-wheel-spinner/)), with guardrails ensuring team members who covered holiday shifts the previous year receive priority selection this year.
 
 **Q: Can Daily Pick track historical coverage rosters?**  
 A: Daily Pick allows facilitators to export and save roster snapshots directly, making it easy to reference past holiday assignments when planning future coverage.

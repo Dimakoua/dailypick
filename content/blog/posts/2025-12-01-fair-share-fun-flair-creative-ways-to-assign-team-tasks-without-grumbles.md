@@ -64,7 +64,7 @@ Sometimes, the fairest way is simply the most random way. Take human bias out of
 Why just assign when you can make it a game? Gamification introduces an element of fun and friendly competition.
 
 **How it works:**
-1.  **Task Lottery:** Write each undesirable task on a slip of paper (or use our [Random List Shuffler](/apps/random-list-shuffler/)). Team members draw one at random. You can even add a "wild card" that allows the picker to swap their task once with someone else.
+1.  **Task Lottery:** Write each undesirable task on a slip of paper (or use our [Random List Shuffler](/apps/the-wheel-spinner/)). Team members draw one at random. You can even add a "wild card" that allows the picker to swap their task once with someone else.
 2.  **Daily Pick's [Speedway Racer](/apps/speedway/):** If you have multiple tasks that can be claimed on a first-come, first-served basis, use Speedway Racer. Present the tasks, and let team members "race" to claim the one they prefer most within a set time limit. This can work surprisingly well for tasks where individual preference might make one "mundane" task more palatable than another.
 
 **Example:** Need someone to update the team's internal wiki this week? Or triage incoming support tickets? Put a few options out there on a Speedway Racer, and see who picks what first. The excitement of the "race" can override the dread of the chore.
@@ -117,7 +117,7 @@ Explore Daily Pick's suite of tools like the [Decision Wheel](/apps/wheel/), [Sp
 ## Frequently Asked Questions
 
 **Q: How do you handle tasks requiring specialized technical skills that can't be randomly assigned?**  
-A: Segment tasks into two pools: specialized items assigned by domain expertise, and non-specialized chores (on-call rotation, meeting notes, release checks) distributed via transparent tools like [Random List Shuffler](/apps/random-list-shuffler/) or [Decision Wheel](/apps/wheel/).
+A: Segment tasks into two pools: specialized items assigned by domain expertise, and non-specialized chores (on-call rotation, meeting notes, release checks) distributed via transparent tools like [Random List Shuffler](/apps/the-wheel-spinner/) or [Decision Wheel](/apps/wheel/).
 
 **Q: Can team members trade tasks after a random assignment?**  
 A: Yes! A "trade window" (e.g., 5 minutes after sprint planning) encourages peer collaboration and flexibility while keeping the initial baseline distribution neutral and fair.

@@ -62,7 +62,8 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
     <header class="page-hero glass-card">
       <div>
         <p class="hero-eyebrow">100% Free &amp; Ad-Free Wheel Spinner</p>
-        <h1 id="spinnerHeading">Spin the Wheel</h1>
+        <h1 id="spinnerHeading" contenteditable="true" spellcheck="false" title="Click to edit wheel title" style="outline:none;border-bottom:2px dashed transparent;display:inline-block;cursor:text;">Spin the Wheel</h1>
+        <span style="font-size:0.85rem;opacity:0.7;margin-left:8px;">✏️ Click title to edit</span>
         <p>Type or paste your options directly below and spin. No sign-up, no ads. Running a daily stand-up with a saved team? Try the <a href="/apps/wheel/">Roster-Powered Stand-up Wheel</a>.</p>
       </div>
     </header>
@@ -108,13 +109,29 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
             <button id="resetBtn" class="btn btn--secondary" type="button">↺ Reset</button>
           </div>
 
-          <div class="form-group checkbox-group" style="display:flex;flex-direction:column;gap:6px;">
+          <div class="form-group checkbox-group" style="display:flex;flex-direction:column;gap:8px;">
             <label for="removeAfterSelection">
               <input id="removeAfterSelection" type="checkbox" /> Remove winner after spin
             </label>
             <label for="soundToggle">
               <input id="soundToggle" type="checkbox" checked /> Enable spin sound
             </label>
+            <label for="multiWheelToggle">
+              <input id="multiWheelToggle" type="checkbox" /> Multi-Wheel Mode (2 Wheels)
+            </label>
+          </div>
+
+          <div class="form-group" id="wheel2InputGroup" hidden>
+            <label for="optionsInput2">Wheel #2 Options (one per line):</label>
+            <textarea id="optionsInput2" rows="5" placeholder="☕ Coffee&#10;🎉 Shoutout&#10;🏆 Bonus&#10;🎵 Pick Song"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="spinDurationInput" style="display:flex;justify-content:space-between;align-items:center;">
+              <span>⏱️ Spin Duration</span>
+              <strong id="spinDurationValue">6.8s</strong>
+            </label>
+            <input id="spinDurationInput" type="range" min="2" max="8" step="0.5" value="6.8" style="width:100%;" />
           </div>
 
           <p class="form-tip">Use <code>Label|image-url</code> to attach a remote icon, or upload your own photo options from your computer.</p>
@@ -122,13 +139,20 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
 
         <!-- Right: Wheel & Result -->
         <div class="spinner-main">
-          <div id="wheel-container">
-            <div id="indicator"></div>
-            <canvas height="425" id="wheel" width="425"></canvas>
+          <div id="wheelsStage" style="display:flex;flex-wrap:wrap;gap:24px;justify-content:center;align-items:center;width:100%;">
+            <div id="wheel-container">
+              <div id="indicator"></div>
+              <canvas height="425" id="wheel" width="425"></canvas>
+            </div>
+            <div id="wheel-container-2" style="position:relative;display:none;">
+              <div id="indicator2" style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-top:26px solid var(--brand-accent, #ff3f81);z-index:10;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.35));"></div>
+              <canvas height="360" id="wheel2" width="360" style="max-width:100%;height:auto;"></canvas>
+            </div>
           </div>
 
-          <div class="spinner-controls">
+          <div class="spinner-controls" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;">
             <button id="spinBtn" class="btn btn-spin" type="button">🎡 SPIN!</button>
+            <button id="fullscreenBtn" class="btn btn--secondary" type="button">⛶ Fullscreen</button>
           </div>
 
           <div class="result-display" style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;">
@@ -591,10 +615,11 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
         sliceOffset = 0.35 + Math.random() * 0.30;
       }
 
-      const totalDuration = 6800;
-      const rollbackDuration = outcomeType === 1 ? 850 : 0;
+      const durationSec = spinDurationInput ? Number(spinDurationInput.value || 6.8) : 6.8;
+      const totalDuration = Math.max(2000, Math.min(8000, durationSec * 1000));
+      const rollbackDuration = outcomeType === 1 && totalDuration >= 4000 ? 850 : 0;
       const forwardDuration = totalDuration - rollbackDuration;
-      const spinRounds = 5 + (Math.random() < 0.5 ? 1 : 0);
+      const spinRounds = Math.max(3, Math.round(durationSec * 0.8));
       const indicatorAngle = 3 * Math.PI / 2;
 
       const startRotation = lastRotation;
@@ -996,7 +1021,136 @@ localBrandConfig: /apps/the-wheel-spinner/local-brand-config.js
 
     removeAfterCheckbox.addEventListener('change', saveRemoveAfterSelection);
 
-    spinBtn.addEventListener('click', spinWheel);
+    const spinnerHeading = document.getElementById('spinnerHeading');
+    const spinDurationInput = document.getElementById('spinDurationInput');
+    const spinDurationValue = document.getElementById('spinDurationValue');
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const multiWheelToggle = document.getElementById('multiWheelToggle');
+    const wheel2InputGroup = document.getElementById('wheel2InputGroup');
+    const optionsInput2 = document.getElementById('optionsInput2');
+    const wheelContainer2 = document.getElementById('wheel-container-2');
+    const canvas2 = document.getElementById('wheel2');
+
+    const TITLE_STORAGE_KEY = 'dailypick_wheel_title';
+    const DURATION_STORAGE_KEY = 'dailypick_wheel_duration';
+    const WHEEL2_STORAGE_KEY = 'dailypick_wheel2_options';
+    const DEFAULT_WHEEL2_OPTIONS = ['☕ Coffee', '🎉 Shoutout', '🏆 Bonus', '🎵 Pick Song'];
+    let wheel2Engine = null;
+    let wheel2Winner = '';
+
+    // Editable wheel title
+    if (spinnerHeading) {
+      const titleParam = new URLSearchParams(window.location.search).get('title');
+      const savedTitle = titleParam || localStorage.getItem(TITLE_STORAGE_KEY);
+      if (savedTitle && savedTitle.trim()) {
+        spinnerHeading.textContent = savedTitle.trim();
+      }
+      spinnerHeading.addEventListener('input', () => {
+        const val = spinnerHeading.textContent.trim();
+        try {
+          localStorage.setItem(TITLE_STORAGE_KEY, val || 'Spin the Wheel');
+        } catch (e) {}
+      });
+      spinnerHeading.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          spinnerHeading.blur();
+        }
+      });
+    }
+
+    // Spin duration slider (2s - 8s)
+    if (spinDurationInput && spinDurationValue) {
+      try {
+        const savedDuration = localStorage.getItem(DURATION_STORAGE_KEY);
+        if (savedDuration) spinDurationInput.value = savedDuration;
+      } catch (e) {}
+      spinDurationValue.textContent = `${spinDurationInput.value}s`;
+      spinDurationInput.addEventListener('input', () => {
+        spinDurationValue.textContent = `${spinDurationInput.value}s`;
+        try {
+          localStorage.setItem(DURATION_STORAGE_KEY, spinDurationInput.value);
+        } catch (e) {}
+      });
+    }
+
+    // Fullscreen toggle
+    if (fullscreenBtn) {
+      const targetEl = document.querySelector('.spinner-form');
+      fullscreenBtn.addEventListener('click', async () => {
+        if (!document.fullscreenElement && targetEl && targetEl.requestFullscreen) {
+          try {
+            await targetEl.requestFullscreen();
+          } catch (e) {}
+        } else if (document.fullscreenElement && document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      });
+      document.addEventListener('fullscreenchange', () => {
+        fullscreenBtn.textContent = document.fullscreenElement ? '⛶ Exit Fullscreen' : '⛶ Fullscreen';
+      });
+    }
+
+    // Multi-Wheel Mode (2 wheels side-by-side)
+    function initWheel2IfNeeded() {
+      if (wheel2Engine || !canvas2 || !window.FoodWheelEngine) return;
+      let items2 = DEFAULT_WHEEL2_OPTIONS.slice();
+      try {
+        const saved2 = JSON.parse(localStorage.getItem(WHEEL2_STORAGE_KEY));
+        if (Array.isArray(saved2) && saved2.length > 0) items2 = saved2;
+      } catch (e) {}
+      if (optionsInput2) optionsInput2.value = items2.join('\n');
+
+      const dummyBtn = document.createElement('button');
+      const dummyWinner = document.createElement('div');
+      wheel2Engine = window.FoodWheelEngine.init({
+        canvas: canvas2,
+        spinBtn: dummyBtn,
+        winnerElement: dummyWinner,
+        items: items2,
+        enableIdleRotation: false,
+        resultFormatter: (item) => {
+          wheel2Winner = item;
+          if (multiWheelToggle && multiWheelToggle.checked && lastWinningLabel) {
+            resultText.textContent = `🎉 ${lastWinningLabel}  +  ${wheel2Winner}`;
+          }
+          return item;
+        }
+      });
+    }
+
+    if (multiWheelToggle) {
+      multiWheelToggle.addEventListener('change', () => {
+        const enabled = multiWheelToggle.checked;
+        if (wheel2InputGroup) wheel2InputGroup.hidden = !enabled;
+        if (wheelContainer2) wheelContainer2.style.display = enabled ? 'block' : 'none';
+        if (enabled) initWheel2IfNeeded();
+      });
+    }
+
+    if (optionsInput2) {
+      let debounce2 = null;
+      optionsInput2.addEventListener('input', () => {
+        clearTimeout(debounce2);
+        debounce2 = setTimeout(() => {
+          const items2 = optionsInput2.value.split(/[\n,]+/).map(s => s.trim()).filter(Boolean);
+          if (items2.length > 0 && wheel2Engine) {
+            try {
+              localStorage.setItem(WHEEL2_STORAGE_KEY, JSON.stringify(items2));
+            } catch (e) {}
+            wheel2Engine.setItems(items2);
+          }
+        }, 250);
+      });
+    }
+
+    spinBtn.addEventListener('click', () => {
+      wheel2Winner = '';
+      spinWheel();
+      if (multiWheelToggle && multiWheelToggle.checked && wheel2Engine) {
+        wheel2Engine.spinWheel();
+      }
+    });
 
     function updateInteractionState() {
       spinBtn.disabled = options.length === 0;

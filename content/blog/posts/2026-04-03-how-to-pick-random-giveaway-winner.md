@@ -21,7 +21,7 @@ Whether you’re running a giveaway on Instagram, picking a raffle winner for yo
 
 But manually picking a name or using a clunky spreadsheet isn't just slow—it can look biased.
 
-> **Answer: To pick a random giveaway winner fairly, use a dedicated [Giveaway Winner Picker](/apps/giveaway-winner-picker/) tool that ensures unbiased selection. Simply paste your list of participants, hit 'Pick,' and use 'Clear-Results Mode' to record a transparent video for your followers.**
+> **Answer: To pick a random giveaway winner fairly, use a dedicated [Giveaway Winner Picker](/apps/the-wheel-spinner/?preset=giveaway) tool that ensures unbiased selection. Simply paste your list of participants, hit 'Pick,' and use 'Clear-Results Mode' to record a transparent video for your followers.**
 
 ---
 
@@ -36,12 +36,12 @@ But manually picking a name or using a clunky spreadsheet isn't just slow—it c
 
 Depending on the vibe of your event, Daily Pick offers three different ways to draw a name:
 
-### 1. The Professional: [Giveaway Winner Picker](/apps/giveaway-winner-picker/)
+### 1. The Professional: [Giveaway Winner Picker](/apps/the-wheel-spinner/?preset=giveaway)
 This is the "pro" choice for social media managers and marketers. 
 - **Best for:** Large lists from CSVs or clipboard.
 - **Killer Feature:** "Clear-Results Mode." It hides the rest of the list and simplifies the UI, making it perfect for screen recording and sharing on your Stories or feed.
 
-### 2. The Visual: [Raffle Ticket Puller](/apps/raffle-ticket-puller/)
+### 2. The Visual: [Raffle Ticket Puller](/apps/the-wheel-spinner/?preset=giveaway)
 If you want to build suspense and excitement, the Raffle Drum is your best friend.
 - **Best for:** Live events, office parties, and interactive streams.
 - **The Vibe:** Watch the drum spin and wait for that single ticket to drop. It’s the digital equivalent of "drawing a name from a hat."
@@ -56,7 +56,7 @@ Great for choosing between a few specific prizes or final candidates.
 ## How to Run a Fair Giveaway (Step-by-Step)
 
 1.  **Collect Your Entries:** Export your comments or likes into a plain text list (one name per line).
-2.  **Choose Your Tool:** Head to the [Giveaway Winner Picker](/apps/giveaway-winner-picker/).
+2.  **Choose Your Tool:** Head to the [Giveaway Winner Picker](/apps/the-wheel-spinner/?preset=giveaway).
 3.  **Paste & Prep:** Paste your list. If you're recording for social media, toggle on **Clear-Results Mode**.
 4.  **The Draw:** Hit the "Pick" button. 
 5.  **Announce & Prove:** Take a screenshot or video of the result. Our tool provides a timestamped summary you can copy and paste into your announcement post to show the process was fair.
@@ -69,7 +69,7 @@ Using a cryptographically secure random number generator (like the one powering 
 
 **Pro Tip:** Always state the tool you used in your Giveaway Terms & Conditions to prevent any "it was rigged" comments!
 
-Ready to pick your next winner? **[Try the Giveaway Winner Picker now.](/apps/giveaway-winner-picker/)**
+Ready to pick your next winner? **[Try the Giveaway Winner Picker now.](/apps/the-wheel-spinner/?preset=giveaway)**
 
 
 ## Frequently Asked Questions

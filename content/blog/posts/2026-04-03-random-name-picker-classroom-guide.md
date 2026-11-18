@@ -21,7 +21,7 @@ We’ve all been there: you ask the class a question, and the same three hands s
 
 **Fair participation is one of the biggest challenges in modern classroom management.**
 
-> **Answer: A [Random Name Picker](/apps/random-name-picker/) is the perfect tool for teachers to ensure fair participation and keep students engaged. Use it to choose who answers next, to randomly form groups, or to assign classroom roles. By automating the selection, you eliminate any hint of bias and keep the energy high.**
+> **Answer: A [Random Name Picker](/apps/the-wheel-spinner/?preset=names) is the perfect tool for teachers to ensure fair participation and keep students engaged. Use it to choose who answers next, to randomly form groups, or to assign classroom roles. By automating the selection, you eliminate any hint of bias and keep the energy high.**
 
 ---
 
@@ -36,10 +36,10 @@ We’ve all been there: you ask the class a question, and the same three hands s
 Forget the "popsicle sticks in a jar." Digital tools are faster, more visual, and can be shared on your interactive whiteboard or laptop. Here are 7 ways to use them today:
 
 ### 1. The "Fair Call" Participation
-Use the **[Classroom Name Roulette](/apps/classroom-name-roulette/)** for your daily Q&A. When students know the *computer* is picking, they stay alert. Because the selection is truly random, it removes the feeling that a teacher is "picking on" someone.
+Use the **[Classroom Name Roulette](/apps/the-wheel-spinner/?preset=classroom)** for your daily Q&A. When students know the *computer* is picking, they stay alert. Because the selection is truly random, it removes the feeling that a teacher is "picking on" someone.
 
 ### 2. Instant Group Forming
-Need to break the class into groups of four? Paste your roster into our **[Random List Shuffler](/apps/random-list-shuffler/)**. It creates a shuffled list in seconds, which you can then divide top-to-bottom. No more "I always work with my best friend" complaints!
+Need to break the class into groups of four? Paste your roster into our **[Random List Shuffler](/apps/the-wheel-spinner/)**. It creates a shuffled list in seconds, which you can then divide top-to-bottom. No more "I always work with my best friend" complaints!
 
 ### 3. Student of the Week Selection
 Make it a Friday ritual. Use the **[Wheel of Names](/apps/wheel/)** to pick your "Student of the Week." The spinning sound and visual suspense make it a highlight of the week.
@@ -48,10 +48,10 @@ Make it a Friday ritual. Use the **[Wheel of Names](/apps/wheel/)** to pick your
 Who goes to lunch first? Which group presents their project next? Spin the wheel or use the **[Speedway Racer](/apps/speedway/)** to decide the order. It turns a boring transition into a mini-game.
 
 ### 5. "Remove After Pick" for Attendance
-Our **[Random Name Picker](/apps/random-name-picker/)** has a toggle to *remove* a name once it’s been called. This is perfect for ensuring every single student gets a turn to speak during a circle-time check-in.
+Our **[Random Name Picker](/apps/the-wheel-spinner/?preset=names)** has a toggle to *remove* a name once it’s been called. This is perfect for ensuring every single student gets a turn to speak during a circle-time check-in.
 
 ### 6. Prize or Raffle Drawings
-Did your class hit a goal? Pick a random winner for a "No Homework Pass" or a choice of seat for the day using the **[Raffle Ticket Puller](/apps/raffle-ticket-puller/)**.
+Did your class hit a goal? Pick a random winner for a "No Homework Pass" or a choice of seat for the day using the **[Raffle Ticket Puller](/apps/the-wheel-spinner/?preset=giveaway)**.
 
 ### 7. Brain Break Leader
 When it’s time for a 5-minute stretch, let the name picker choose the student who leads the class in their favorite exercise.
@@ -64,7 +64,7 @@ When it’s time for a 5-minute stretch, let the name picker choose the student 
 -   **Projection is Key:** Show the tool on the big screen! The visual element is what creates the "game-show" excitement that students love.
 -   **The "Pass" Rule:** To keep it low-stress, you can give each student one "pass" per week if they aren't ready to answer.
 
-Ready to transform your classroom dynamics? **[Launch the Random Name Picker now.](/apps/random-name-picker/)**
+Ready to transform your classroom dynamics? **[Launch the Random Name Picker now.](/apps/the-wheel-spinner/?preset=names)**
 
 
 ## Frequently Asked Questions

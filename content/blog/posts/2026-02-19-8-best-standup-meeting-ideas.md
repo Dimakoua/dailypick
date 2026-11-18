@@ -403,7 +403,7 @@ A: Depends. Mon + Fri are lower-energy (more admin, less code). Some teams skip 
 Once you've nailed the format, add fairness + engagement with:
 
 - **[Decision Wheel](/apps/wheel/)** — Randomized speaker order and prompt selection
-- **[Random List Shuffler](/apps/random-list-shuffler/)** — Shuffle your full roster in one click and copy the clean speaking queue into Slack or Teams
+- **[Random List Shuffler](/apps/the-wheel-spinner/)** — Shuffle your full roster in one click and copy the clean speaking queue into Slack or Teams
 - **[Speedway Racer](/apps/speedway/)** — Race-based participation that keeps energy high
 - **[Timer](/apps/timer/)** — Visual countdown keeps people concise
 - **[Planning Poker](/apps/planning-poker/)** — If your standup surfaces estimation needs

@@ -76,17 +76,17 @@ Daily Pick ships **30+ apps**, each purpose-built for a different moment:
 
 ### Decision-making:
 - **[Wheel](/apps/wheel/)** – a clean, fast spinner with no ads
-- **[Yes or No Wheel](/apps/yes-or-no-wheel/)** – binary decisions in one click
+- **[Yes or No Wheel](/apps/the-wheel-spinner/?preset=yes-no)** – binary decisions in one click
 - **[Choices Spinner](/apps/the-wheel-spinner/)** – rapid custom picks
-- **[Coin Flip & Dice Roller](/apps/coin-flip-dice-roller/)** – instant classics
-- **[Random Number Generator](/apps/random-number-generator/)** – just the number
-- **[Random Letter Generator](/apps/random-letter-generator/)** – for games and word puzzles
-- **[Random List Shuffler](/apps/random-list-shuffler/)** – reorder anything instantly
+- **[Coin Flip & Dice Roller](/apps/the-wheel-spinner/?preset=yes-no)** – instant classics
+- **[Random Number Generator](/apps/the-wheel-spinner/)** – just the number
+- **[Random Letter Generator](/apps/the-wheel-spinner/)** – for games and word puzzles
+- **[Random List Shuffler](/apps/the-wheel-spinner/)** – reorder anything instantly
 
 ### Classroom & events:
-- **[Classroom Name Roulette](/apps/classroom-name-roulette/)** – designed for educators, not repurposed
-- **[Raffle Ticket Puller](/apps/raffle-ticket-puller/)** – suspenseful draw for live events
-- **[Giveaway Winner Picker](/apps/giveaway-winner-picker/)** – transparent, screen-record-ready
+- **[Classroom Name Roulette](/apps/the-wheel-spinner/?preset=classroom)** – designed for educators, not repurposed
+- **[Raffle Ticket Puller](/apps/the-wheel-spinner/?preset=giveaway)** – suspenseful draw for live events
+- **[Giveaway Winner Picker](/apps/the-wheel-spinner/?preset=giveaway)** – transparent, screen-record-ready
 - **[Pinball Picker](/apps/pinball-picker/)** – a physics-based pick for extra drama
 
 ### Real team collaboration:
@@ -139,11 +139,11 @@ But the moment you need reliability, privacy, team features, or anything beyond 
 |---|---|
 | Ad-free, privacy-respecting spinner | **Daily Pick** |
 | No account required | **Daily Pick** (always) |
-| Team meetings & stand-ups | **Daily Pick** ([Wheel](/apps/wheel/), [Classroom Name Roulette](/apps/classroom-name-roulette/)) |
+| Team meetings & stand-ups | **Daily Pick** ([Wheel](/apps/wheel/), [Classroom Name Roulette](/apps/the-wheel-spinner/?preset=classroom)) |
 | Agile sprint tools | **Daily Pick** ([Planning Poker](/apps/planning-poker/), [Retro Board](/apps/retro-board/)) |
 | Team pulse / morale checks | **Daily Pick** ([Morale Thermometer](/apps/morale-thermometer/)) |
 | Icebreaker games | **Daily Pick** (10+ games built in) |
-| Giveaway or raffle draws | **Daily Pick** ([Giveaway Winner Picker](/apps/giveaway-winner-picker/)) |
+| Giveaway or raffle draws | **Daily Pick** ([Giveaway Winner Picker](/apps/the-wheel-spinner/?preset=giveaway)) |
 | Browsing pre-made themed wheels | Wheel Decide |
 
 If you just need a quick spin and don't mind the ads and tracking, Wheel Decide exists. But if you want a tool that respects your privacy, works without an account, looks good on a shared screen, and grows with your team's needs—**Daily Pick is the obvious choice**.

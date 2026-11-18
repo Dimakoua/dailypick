@@ -64,7 +64,7 @@ For engineering teams, link each line to the relevant ticket or PR to reduce `�
 - **How:** a bot pings each contributor privately at a set time asking the three questions. When responses are collected, the bot posts the summary to the channel with nice formatting and links.
 - **Why it works:** automates the ritual; helpful for larger teams because the bot does the nudging.
 
-You can also use Daily Pick’s [Standup Panel](/apps/standup-panel/) or [Random List Shuffler](/apps/random-list-shuffler/) to randomly order who gets pinged or reports first, keeping things fair and giving everyone a spotlight (even asynchronously).
+You can also use Daily Pick’s [Standup Panel](/apps/standup-panel/) or [Random List Shuffler](/apps/the-wheel-spinner/) to randomly order who gets pinged or reports first, keeping things fair and giving everyone a spotlight (even asynchronously).
 
 #### 4. Email digest / ticket comment
 

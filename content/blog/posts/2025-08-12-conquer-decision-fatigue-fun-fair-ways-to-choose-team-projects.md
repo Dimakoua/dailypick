@@ -32,9 +32,9 @@ But there's a better way.  By incorporating a bit of fun and leveraging the powe
 
 Here are some practical strategies to make project selection a breeze:
 
-*1. The Randomizer Revolution:*  Embrace the power of chance!  Tools like Daily Pick's [Decision Wheel](/apps/wheel/) or our dedicated [Random Name Picker](/apps/random-name-picker/) can inject fairness into the process.  This removes the subjective biases that can creep in during discussions, ensuring everyone has an equal opportunity.  Use this method when there are multiple projects and multiple team members eager to volunteer.
+*1. The Randomizer Revolution:*  Embrace the power of chance!  Tools like Daily Pick's [Decision Wheel](/apps/wheel/) or our dedicated [Random Name Picker](/apps/the-wheel-spinner/?preset=names) can inject fairness into the process.  This removes the subjective biases that can creep in during discussions, ensuring everyone has an equal opportunity.  Use this method when there are multiple projects and multiple team members eager to volunteer.
 
-*2. The Skill-Based Shuffle:*  Identify the key skills needed for each project.  Then, use a visual tool like our [Random List Shuffler](/apps/random-list-shuffler/) or a simple matrix to match team members with the most appropriate roles.  This approach ensures project success while giving team members a chance to work on projects that align with their strengths and interests.
+*2. The Skill-Based Shuffle:*  Identify the key skills needed for each project.  Then, use a visual tool like our [Random List Shuffler](/apps/the-wheel-spinner/) or a simple matrix to match team members with the most appropriate roles.  This approach ensures project success while giving team members a chance to work on projects that align with their strengths and interests.
 
 *3. The Interest Auction:*  Let team members bid for projects based on their level of interest.  Instead of using money, they could "bid" with things like a promise to work extra hours on a particular task or the right to choose the project's meeting time.  This method is particularly effective for projects with varying levels of complexity or desirability.
 

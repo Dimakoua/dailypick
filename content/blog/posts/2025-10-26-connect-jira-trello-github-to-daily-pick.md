@@ -18,7 +18,7 @@ robots: index,follow
 
 Every agile facilitator knows the friction of morning stand-ups: opening three different browser tabs, hunting down who is assigned to which in-flight ticket, and manually copying teammate names into a picker wheel or spreadsheet.
 
-Connecting your project tracking systems—**Jira Cloud**, **Trello**, or **GitHub**—directly into Daily Pick eliminates that repetitive busywork. When linked, Daily Pick automatically synchronizes active assignees into your team roster and surfaces in-flight tasks alongside your favorite selection rituals ([Decision Wheel](/apps/wheel/), [Speedway Racer](/apps/speedway/), or [Random List Shuffler](/apps/random-list-shuffler/)).
+Connecting your project tracking systems—**Jira Cloud**, **Trello**, or **GitHub**—directly into Daily Pick eliminates that repetitive busywork. When linked, Daily Pick automatically synchronizes active assignees into your team roster and surfaces in-flight tasks alongside your favorite selection rituals ([Decision Wheel](/apps/wheel/), [Speedway Racer](/apps/speedway/), or [Random List Shuffler](/apps/the-wheel-spinner/)).
 
 This comprehensive guide walks through obtaining credentials, configuring read-only connections, testing data syncs, and managing token security across all three platforms.
 
